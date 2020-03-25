@@ -1,0 +1,59 @@
+<form (ngSubmit)="onSubmit()">
+  <mat-form-field appearance="outline">
+    <!-- <mat-label>Search</mat-label> -->
+    <input
+      matInput
+      [formControl]="searchField"
+      autofocus
+      [matAutocomplete]="auto"
+      #autoComplete="matAutocompleteTrigger"
+    />
+    <button matSuffix mat-icon-button type="submit" aria-label="Search">
+      <mat-icon>search</mat-icon>
+    </button>
+  </mat-form-field>
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onAutocompleteSelected($event)">
+    <mat-option *ngFor="let option of autoCompleteSuggestions$ | async" [value]="option">{{
+      option
+    }}</mat-option>
+  </mat-autocomplete>
+  <div *ngIf="facets" class="filters" [formGroup]="facetFilters">
+    <mat-form-field *ngFor="let facet of facets | keyvalue">
+      <mat-label>{{ facet.key }}</mat-label>
+      <mat-select [formControlName]="facet.key" multiple>
+        <mat-option *ngFor="let bucket of facet.value.buckets" [value]="bucket.key">
+          {{ bucket.key }} ({{ bucket.doc_count }})
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</form>
+
+<div *ngIf="results && !results.total" class="results">
+  No results.
+</div>
+
+<p *ngIf="results?.didYouMeanSuggestion" class="did-you-mean">
+  Did you mean:
+  <a
+    [innerHTML]="results.didYouMeanSuggestion.html"
+    routerLink="/search/{{ results.didYouMeanSuggestion.plain }}"
+  ></a>
+</p>
+
+<div *ngIf="results?.total" class="results">
+  <mat-card *ngFor="let result of results.results">
+    <mat-card-title>
+      {{ result.title }}
+    </mat-card-title>
+    <mat-card-subtitle>{{ result.status }}</mat-card-subtitle>
+  </mat-card>
+  <mat-paginator
+    [length]="results.total"
+    [pageIndex]="pageInfo.pageIndex"
+    [pageSize]="pageInfo.pageSize"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    (page)="onPage($event)"
+  >
+  </mat-paginator>
+</div>
