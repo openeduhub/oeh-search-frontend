@@ -4,18 +4,26 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 export interface Result {
-    title: string;
-    isbn: string;
-    pageCount: number;
-    publishedDate: {
-        $date: string;
+    hash: string;
+    source: {
+        id: string;
+        total_count: number;
+        name: string;
     };
-    thumbnailUrl: string;
-    shortDescription?: string;
-    longDescription?: string;
-    status: string;
-    authors: string[];
-    categories: string[];
+    lom: {
+        technical: {};
+        educational: {};
+        classification: {};
+        general: {
+            title: string;
+            identifier: string;
+            keyword: string;
+        };
+        rights: {};
+        lifecycle: {};
+    };
+    id: string;
+    fulltext: number;
 }
 
 export interface Results {
@@ -57,42 +65,18 @@ type Aggregation =
 @Injectable()
 export class SearchService {
     private readonly url = 'http://localhost:9200';
+    private readonly index = 'search_idx';
     private readonly aggregations: { [label: string]: Aggregation } = {
-        Categories: {
+        Source: {
             terms: {
-                field: 'categories.keyword',
+                field: 'source.name.keyword',
                 size: 100,
             },
         },
-        Authors: {
+        Keywords: {
             terms: {
-                field: 'authors.keyword',
+                field: 'lom.general.keyword.keyword',
                 size: 100,
-            },
-        },
-        Status: {
-            terms: {
-                field: 'status.keyword',
-                size: 100,
-            },
-        },
-        'Page Count': {
-            range: {
-                field: 'pageCount',
-                ranges: [
-                    {
-                        from: 0,
-                        to: 100,
-                    },
-                    {
-                        from: 100,
-                        to: 500,
-                    },
-                    {
-                        from: 500,
-                        to: 10000,
-                    },
-                ],
             },
         },
     };
@@ -117,7 +101,7 @@ export class SearchService {
 
     autoComplete(searchString: string): Observable<string[]> {
         return this.http
-            .post(`${this.url}/books/_search`, {
+            .post(`${this.url}/${this.index}/_search`, {
                 query: {
                     multi_match: {
                         query: searchString,
@@ -148,7 +132,7 @@ export class SearchService {
         filters: Filters,
     ): Observable<Results> {
         return this.http
-            .post(`${this.url}/books/_search`, {
+            .post(`${this.url}/${this.index}/_search`, {
                 from: pageInfo.pageIndex * pageInfo.pageSize,
                 size: pageInfo.pageSize,
                 query: this.generateSearchQuery(searchString, filters),
@@ -157,7 +141,7 @@ export class SearchService {
                           text: searchString,
                           title: {
                               term: {
-                                  field: 'title',
+                                  field: 'lom.general.title',
                               },
                           },
                       }
@@ -183,14 +167,7 @@ export class SearchService {
                           multi_match: {
                               query: searchString,
                               type: 'cross_fields',
-                              fields: [
-                                  'title^3',
-                                  'authors',
-                                  'categories',
-                                  'shortDescription',
-                                  'longDescription',
-                                  'isbn',
-                              ],
+                              fields: ['lom.general.title^3', 'lom.general.keyword', 'fulltext'],
                               operator: 'and',
                           },
                       }
@@ -208,7 +185,7 @@ export class SearchService {
         // We want to narrow the facets down with the already applied filters.
         // Therefore, we generally apply filters when getting facets...
         const filteredFacetsPromise = this.http
-            .post(`${this.url}/books/_search`, {
+            .post(`${this.url}/${this.index}/_search`, {
                 ...body,
                 query: this.generateSearchQuery(searchString, filters),
             })
@@ -222,7 +199,7 @@ export class SearchService {
             const otherFilters = { ...filters };
             delete otherFilters[key];
             return this.http
-                .post(`${this.url}/books/_search`, {
+                .post(`${this.url}/${this.index}/_search`, {
                     ...body,
                     query: this.generateSearchQuery(searchString, otherFilters),
                 })

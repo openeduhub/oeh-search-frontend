@@ -1,5 +1,5 @@
 <form (ngSubmit)="onSubmit()">
-  <mat-form-field appearance="outline">
+  <mat-form-field appearance="outline" id="search-input">
     <!-- <mat-label>Search</mat-label> -->
     <input
       matInput
@@ -7,6 +7,7 @@
       autofocus
       [matAutocomplete]="auto"
       #autoComplete="matAutocompleteTrigger"
+      placeholder="Search"
     />
     <button matSuffix mat-icon-button type="submit" aria-label="Search">
       <mat-icon>search</mat-icon>
@@ -41,13 +42,25 @@
   ></a>
 </p>
 
-<div *ngIf="results?.total" class="results">
-  <mat-card *ngFor="let result of results.results">
-    <mat-card-title>
-      {{ result.title }}
-    </mat-card-title>
-    <mat-card-subtitle>{{ result.status }}</mat-card-subtitle>
-  </mat-card>
+<ng-container *ngIf="results?.total">
+  <div class="results">
+    <div class="result" *ngFor="let result of results.results">
+      <div class="title">
+        {{ result.lom.general.title }}
+      </div>
+      <div class="description">
+        {{ result.fulltext | truncate: 300 }}
+      </div>
+      <div class="keyword">
+        <a href="javascript:" (click)="selectKeyword(result.lom.general.keyword)">
+          {{ result.lom.general.keyword }}
+        </a>
+      </div>
+      <div class="source">
+        {{ result.source.name }}
+      </div>
+    </div>
+  </div>
   <mat-paginator
     [length]="results.total"
     [pageIndex]="pageInfo.pageIndex"
@@ -56,4 +69,4 @@
     (page)="onPage($event)"
   >
   </mat-paginator>
-</div>
+</ng-container>

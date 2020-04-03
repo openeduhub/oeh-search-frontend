@@ -71,11 +71,29 @@ export class SearchComponent implements OnInit {
         this.router.navigate(['search', event.option.value]);
     }
 
+    selectKeyword(keyword: string) {
+        this.filters.Keywords = [keyword];
+        this.router.navigate([], {
+            relativeTo: this.activatedRoute,
+            queryParams: {
+                pageIndex: 0,
+                filters: JSON.stringify(this.filters),
+            },
+            queryParamsHandling: 'merge',
+        });
+    }
+
     private performSearch(params: Params) {
         this.searchField.setValue(params.q);
         this.searchString = params.q;
         if (params.filters) {
             this.filters = JSON.parse(params.filters);
+            // TODO: update facet filters for selectKeyword and browser back, but take care not to
+            // trigger another navigation by the change.
+
+            // if (this.facetFilters) {
+            //     this.facetFilters.patchValue(this.filters);
+            // }
         }
         if (params.pageIndex) {
             this.pageInfo.pageIndex = params.pageIndex;
@@ -144,7 +162,7 @@ export class SearchComponent implements OnInit {
     }
 
     private onSearchStringChanges(searchString: string) {
-        this.autoCompleteSuggestions$ = this.search.autoComplete(searchString);
+        // this.autoCompleteSuggestions$ = this.search.autoComplete(searchString);
     }
 
     private updateResults() {

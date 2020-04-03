@@ -1,5 +1,9 @@
-mat-form-field {
+#search-input {
     width: 100%;
+    // Fix button alignment for Firefox
+    :host ::ng-deep & button {
+        display: inline-block;
+    }
 }
 
 .did-you-mean > a {
@@ -11,6 +15,36 @@ mat-form-field {
     }
 }
 
-mat-card {
-    margin-bottom: 10px;
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    > *:not(:last-child) {
+        margin-right: 1em;
+    }
+}
+
+.results {
+    .result {
+        width: 100%;
+        margin-bottom: 1.5em;
+        .title {
+            font-size: 150%;
+            padding-bottom: 0.3em;
+            line-height: 1.1;
+        }
+        .description {
+            font-size: 90%;
+            padding-bottom: 0.3em;
+        }
+        .keyword {
+            padding-bottom: 0.3em;
+            a:not(:hover) {
+                text-decoration: none;
+            }
+        }
+        .source {
+            font-size: 90%;
+            color: gray;
+        }
+    }
 }
