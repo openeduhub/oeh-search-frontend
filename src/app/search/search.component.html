@@ -46,7 +46,9 @@
   <div class="results">
     <div class="result" *ngFor="let result of results.results">
       <div class="title">
-        {{ result.lom.general.title }}
+        <a [routerLink]="['/details', result.id]">
+          {{ result.lom.general.title }}
+        </a>
       </div>
       <div class="description">
         {{ result.fulltext | truncate: 300 }}

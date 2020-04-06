@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 export interface Result {
@@ -62,7 +62,7 @@ type Aggregation =
     | { terms: { field: string; size: number } }
     | { range: { field: string; ranges: { from: number; to: number }[] } };
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class SearchService {
     private readonly url = 'http://localhost:9200';
     private readonly index = 'search_idx';
@@ -97,6 +97,23 @@ export class SearchService {
     ): Observable<Results> {
         this.updateFacets(searchString, filters);
         return this.performSearch(searchString, pageInfo, filters);
+    }
+
+    getDetails(id: string): Observable<Result> {
+        return this.http
+            .post(`${this.url}/${this.index}/_search`, {
+                query: { term: { _id: id } },
+            })
+            .pipe(
+                map((response: any) => {
+                    if (response.hits.total.value !== 1) {
+                        throw new Error(
+                            `Got ${response.hits.total.value} results when requesting entry by id`,
+                        );
+                    }
+                    return response.hits.hits[0]._source;
+                }),
+            );
     }
 
     autoComplete(searchString: string): Observable<string[]> {

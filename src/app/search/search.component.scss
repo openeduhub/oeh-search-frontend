@@ -38,13 +38,16 @@
         }
         .keyword {
             padding-bottom: 0.3em;
-            a:not(:hover) {
-                text-decoration: none;
+            a {
+                color: gray;
             }
         }
         .source {
             font-size: 90%;
-            color: gray;
+            color: green;
+        }
+        a:not(:hover) {
+            text-decoration: none;
         }
     }
 }

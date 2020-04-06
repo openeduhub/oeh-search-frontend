@@ -17,17 +17,25 @@ import { AppComponent } from './app.component';
 import { SearchComponent } from './search/search.component';
 import { TruncatePipe } from './truncate.pipe';
 import { GenerateFiltersPipe } from './generate-filters.pipe';
+import { DetailsComponent } from './details/details.component';
 
 const appRoutes: Routes = [
     { path: 'search', component: SearchComponent },
+    { path: 'details/:id', component: DetailsComponent },
     { path: '', redirectTo: 'search', pathMatch: 'full' },
 ];
 
 @NgModule({
-    declarations: [AppComponent, SearchComponent, TruncatePipe, GenerateFiltersPipe],
+    declarations: [
+        AppComponent,
+        SearchComponent,
+        TruncatePipe,
+        GenerateFiltersPipe,
+        DetailsComponent,
+    ],
     imports: [
         AppRoutingModule,
-        RouterModule.forRoot(appRoutes),
+        RouterModule.forRoot(appRoutes, { scrollPositionRestoration: 'enabled' }),
         BrowserAnimationsModule,
         BrowserModule,
         FormsModule,

@@ -14,7 +14,6 @@ import { Results, SearchService, Facets, Filters } from '../search.service';
     selector: 'app-search',
     templateUrl: './search.component.html',
     styleUrls: ['./search.component.scss'],
-    providers: [SearchService],
 })
 export class SearchComponent implements OnInit {
     @ViewChild('autoComplete') autoComplete: MatAutocompleteTrigger;
@@ -164,7 +163,6 @@ export class SearchComponent implements OnInit {
 
     private updateResults() {
         this.search.search(this.searchString, this.pageInfo, this.filters).subscribe((results) => {
-            window.scroll(0, 0);
             this.results = results;
         });
     }
