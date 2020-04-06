@@ -38,7 +38,10 @@ export class SearchComponent implements OnInit {
         private router: Router,
         private search: SearchService,
     ) {
-        activatedRoute.queryParams.subscribe((params) => this.performSearch(params));
+        // Any user input that affects results is funneled through query params. On any such input,
+        // we call `router.navigate`. The rest is handled by `onQueryParams`, both, when initially
+        // loading and when updating the page.
+        activatedRoute.queryParams.subscribe((params) => this.onQueryParams(params));
         this.registerInputFieldListener();
         this.registerFacetsListener();
     }
@@ -64,11 +67,15 @@ export class SearchComponent implements OnInit {
                 q: this.searchString,
                 pageIndex: 0,
             },
+            queryParamsHandling: 'merge',
         });
     }
 
     onAutocompleteSelected(event: MatAutocompleteSelectedEvent) {
-        this.router.navigate(['search', event.option.value]);
+        this.router.navigate([], {
+            queryParams: { q: event.option.value, pageIndex: 0 },
+            queryParamsHandling: 'merge',
+        });
     }
 
     selectKeyword(keyword: string) {
@@ -83,17 +90,17 @@ export class SearchComponent implements OnInit {
         });
     }
 
-    private performSearch(params: Params) {
-        this.searchField.setValue(params.q);
+    private onQueryParams(params: Params) {
         this.searchString = params.q;
+        this.searchField.setValue(this.searchString);
         if (params.filters) {
             this.filters = JSON.parse(params.filters);
-            // TODO: update facet filters for selectKeyword and browser back, but take care not to
-            // trigger another navigation by the change.
-
-            // if (this.facetFilters) {
-            //     this.facetFilters.patchValue(this.filters);
-            // }
+        } else {
+            this.filters = {};
+        }
+        if (this.facetFilters) {
+            this.facetFilters.reset(this.filters, { emitEvent: false });
+            // If `facetFilters` are not yet initialized, this will be done on initialization.
         }
         if (params.pageIndex) {
             this.pageInfo.pageIndex = params.pageIndex;
@@ -127,6 +134,8 @@ export class SearchComponent implements OnInit {
 
     private initFacetFilters(facets: Facets) {
         this.facetFilters = this.formBuilder.group(
+            // Create a new object with every key of `facets` mapped to an empty array. This will
+            // create a new form control for each facet with nothing selected.
             Object.keys(facets).reduce((agg, key) => ({ ...agg, [key]: [] }), {}),
         );
         // Apply values loaded from queryParams.
@@ -150,9 +159,9 @@ export class SearchComponent implements OnInit {
             this.facets = {};
         }
         for (const [label, facet] of Object.entries(facets)) {
-            // Leave the facet object in place if it already exists, so Angular
-            // won't reconstruct the whole thing and the select dialog won't
-            // close every time the user selects an option.
+            // Leave the facet object in place if it already exists, so Angular won't reconstruct
+            // the whole thing and the select dialog won't close every time the user selects an
+            // option.
             if (this.facets[label]) {
                 this.facets[label].buckets = facet.buckets;
             } else {
