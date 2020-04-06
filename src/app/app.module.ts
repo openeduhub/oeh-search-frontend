@@ -16,6 +16,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SearchComponent } from './search/search.component';
 import { TruncatePipe } from './truncate.pipe';
+import { GenerateFiltersPipe } from './generate-filters.pipe';
 
 const appRoutes: Routes = [
     { path: 'search', component: SearchComponent },
@@ -23,7 +24,7 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-    declarations: [AppComponent, SearchComponent, TruncatePipe],
+    declarations: [AppComponent, SearchComponent, TruncatePipe, GenerateFiltersPipe],
     imports: [
         AppRoutingModule,
         RouterModule.forRoot(appRoutes),

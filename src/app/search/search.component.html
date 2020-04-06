@@ -52,7 +52,11 @@
         {{ result.fulltext | truncate: 300 }}
       </div>
       <div class="keyword">
-        <a href="javascript:" (click)="selectKeyword(result.lom.general.keyword)">
+        <a
+          routerLink
+          [queryParams]="['Keywords', [result.lom.general.keyword]] | generateFilters: filters"
+          queryParamsHandling="merge"
+        >
           {{ result.lom.general.keyword }}
         </a>
       </div>

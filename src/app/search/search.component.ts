@@ -78,18 +78,6 @@ export class SearchComponent implements OnInit {
         });
     }
 
-    selectKeyword(keyword: string) {
-        this.filters.Keywords = [keyword];
-        this.router.navigate([], {
-            relativeTo: this.activatedRoute,
-            queryParams: {
-                pageIndex: 0,
-                filters: JSON.stringify(this.filters),
-            },
-            queryParamsHandling: 'merge',
-        });
-    }
-
     private onQueryParams(params: Params) {
         this.searchString = params.q;
         this.searchField.setValue(this.searchString);
