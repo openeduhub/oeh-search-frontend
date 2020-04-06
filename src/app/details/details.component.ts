@@ -9,13 +9,11 @@ import { switchMap } from 'rxjs/operators';
     styleUrls: ['./details.component.scss'],
 })
 export class DetailsComponent implements OnInit {
-    result: Result;
+    details: Result;
 
-    constructor(activatedRoute: ActivatedRoute, search: SearchService) {
-        activatedRoute.params
-            .pipe(switchMap((params) => search.getDetails(params.id)))
-            .subscribe((result) => (this.result = result));
+    constructor(private route: ActivatedRoute) {}
+
+    ngOnInit(): void {
+        this.route.data.subscribe((data: { details: Result }) => (this.details = data.details));
     }
-
-    ngOnInit(): void {}
 }

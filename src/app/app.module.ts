@@ -18,10 +18,15 @@ import { SearchComponent } from './search/search.component';
 import { TruncatePipe } from './truncate.pipe';
 import { GenerateFiltersPipe } from './generate-filters.pipe';
 import { DetailsComponent } from './details/details.component';
+import { DetailsResolverService } from './details-resolver.service';
 
 const appRoutes: Routes = [
     { path: 'search', component: SearchComponent },
-    { path: 'details/:id', component: DetailsComponent },
+    {
+        path: 'details/:id',
+        component: DetailsComponent,
+        resolve: { details: DetailsResolverService },
+    },
     { path: '', redirectTo: 'search', pathMatch: 'full' },
 ];
 
