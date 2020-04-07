@@ -140,6 +140,6 @@ export class SearchComponent implements OnInit {
     }
 
     private onSearchStringChanges(searchString: string) {
-        // this.autoCompleteSuggestions$ = this.search.autoComplete(searchString);
+        this.autoCompleteSuggestions$ = this.search.autoComplete(searchString);
     }
 }

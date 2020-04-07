@@ -139,10 +139,10 @@ export class SearchService {
                         query: searchString,
                         type: 'bool_prefix',
                         fields: [
-                            'title.search_as_you_type',
-                            'title.search_as_you_type._2gram',
-                            'title.search_as_you_type._3gram',
-                            'title.search_as_you_type._index_prefix',
+                            'lom.general.title.search_as_you_type',
+                            'lom.general.title.search_as_you_type._2gram',
+                            'lom.general.title.search_as_you_type._3gram',
+                            'lom.general.title.search_as_you_type._index_prefix',
                         ],
                         operator: 'and',
                     },
@@ -210,7 +210,12 @@ export class SearchService {
                           multi_match: {
                               query: searchString,
                               type: 'cross_fields',
-                              fields: ['lom.general.title^3', 'lom.general.keyword', 'fulltext'],
+                              fields: [
+                                  'lom.general.title^3',
+                                  'lom.general.keyword',
+                                  'lom.educational.description',
+                                  'fulltext',
+                              ],
                               operator: 'and',
                           },
                       }
