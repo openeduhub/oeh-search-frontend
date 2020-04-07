@@ -226,48 +226,51 @@ export class SearchService {
     }
 
     private async updateFacets(searchString?: string, filters: Filters = {}) {
-        const body = {
-            size: 0,
-            aggregations: this.aggregations,
-        };
-        // We want to narrow the facets down with the already applied filters.
-        // Therefore, we generally apply filters when getting facets...
-        const filteredFacetsPromise = this.http
+        // Build a modified aggregations object, where each facet is wrapped in a filter aggregation
+        // that applies all active filters but that of the facet itself. This way, options are
+        // narrowed down by other filters but currently not selected options of *this* facet are
+        // still shown.
+        const aggregations = Object.entries(this.aggregations).reduce(
+            (acc, [label, aggregation]) => {
+                const otherFilters = { ...filters };
+                delete otherFilters[label];
+                const filteredAggregation = {
+                    filter: {
+                        bool: {
+                            filter: this.mapFilters(otherFilters),
+                        },
+                    },
+                    aggregations: {
+                        [`filtered_${label}`]: aggregation,
+                    },
+                };
+                acc[label] = filteredAggregation;
+                return acc;
+            },
+            {},
+        );
+        const facets = await this.http
             .post(`${this.url}/${this.index}/_search`, {
-                ...body,
-                query: this.generateSearchQuery(searchString, filters),
+                // Don't return any results, we want only the facets.
+                size: 0,
+                // Query for the searchString, but don't apply any filters globally.
+                query: this.generateSearchQuery(searchString, {}),
+                // Filters are applied here per aggregation.
+                aggregations,
             })
-            .pipe(map((response: any) => response.aggregations))
+            .pipe(
+                map((response: any) => {
+                    // Make the above filter process transparent to the caller.
+                    return Object.entries(response.aggregations).reduce(
+                        (acc, [label, aggregation]) => {
+                            acc[label] = aggregation[`filtered_${label}`];
+                            return acc;
+                        },
+                        {},
+                    );
+                }),
+            )
             .toPromise();
-        // ...with the exception of facets that a filter applies to: We cannot
-        // filter the affected facet itself; otherwise we would end up showing
-        // the user only these values that they already selected. Therefore, we
-        // filter a facet with all filters *but* the one affecting the facet.
-        const overridesPromises = Object.keys(filters).map((key) => {
-            const otherFilters = { ...filters };
-            delete otherFilters[key];
-            return this.http
-                .post(`${this.url}/${this.index}/_search`, {
-                    ...body,
-                    query: this.generateSearchQuery(searchString, otherFilters),
-                })
-                .pipe(
-                    map((response: any) => ({
-                        label: key,
-                        facet: response.aggregations[key],
-                    })),
-                )
-                .toPromise();
-        });
-        // Do all necessary HTTP requests simultaneously. When done, construct
-        // the final facets object.
-        const [facets, ...overrides] = await Promise.all([
-            filteredFacetsPromise,
-            ...overridesPromises,
-        ]);
-        for (const override of overrides) {
-            facets[override.label] = override.facet;
-        }
         this.facets.next(facets);
     }
 
