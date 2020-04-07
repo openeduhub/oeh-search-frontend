@@ -1,0 +1,36 @@
+<div *ngIf="!results.total" class="results">
+  No results.
+</div>
+
+<div class="results">
+  <div class="result" *ngFor="let result of results.results">
+    <div class="title">
+      <a [routerLink]="['/details', result.id]">
+        {{ result.lom.general.title }}
+      </a>
+    </div>
+    <div class="description">
+      {{ result.fulltext | truncate: 300 }}
+    </div>
+    <div class="keyword">
+      <a
+        routerLink
+        [queryParams]="['Keywords', [result.lom.general.keyword]] | generateFilters: filters"
+        queryParamsHandling="merge"
+      >
+        {{ result.lom.general.keyword }}
+      </a>
+    </div>
+    <div class="source">
+      {{ result.source.name }}
+    </div>
+  </div>
+</div>
+<mat-paginator
+  [length]="results.total"
+  [pageIndex]="pageInfo.pageIndex"
+  [pageSize]="pageInfo.pageSize"
+  [pageSizeOptions]="[5, 10, 25, 100]"
+  (page)="onPage($event)"
+>
+</mat-paginator>

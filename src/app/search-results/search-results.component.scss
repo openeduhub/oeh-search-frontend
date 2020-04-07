@@ -1,0 +1,28 @@
+.results {
+    .result {
+        width: 100%;
+        margin-bottom: 1.5em;
+        .title {
+            font-size: 150%;
+            padding-bottom: 0.3em;
+            line-height: 1.1;
+        }
+        .description {
+            font-size: 90%;
+            padding-bottom: 0.3em;
+        }
+        .keyword {
+            padding-bottom: 0.3em;
+            a {
+                color: gray;
+            }
+        }
+        .source {
+            font-size: 90%;
+            color: green;
+        }
+        a:not(:hover) {
+            text-decoration: none;
+        }
+    }
+}

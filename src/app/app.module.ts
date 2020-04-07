@@ -19,9 +19,22 @@ import { TruncatePipe } from './truncate.pipe';
 import { GenerateFiltersPipe } from './generate-filters.pipe';
 import { DetailsComponent } from './details/details.component';
 import { DetailsResolverService } from './details-resolver.service';
+import { SearchResultsResolverService } from './search-results-resolver.service';
+import { SearchResultsComponent } from './search-results/search-results.component';
 
 const appRoutes: Routes = [
-    { path: 'search', component: SearchComponent },
+    {
+        path: 'search',
+        component: SearchComponent,
+        children: [
+            {
+                path: '',
+                component: SearchResultsComponent,
+                resolve: { results: SearchResultsResolverService },
+                runGuardsAndResolvers: 'paramsOrQueryParamsChange',
+            },
+        ],
+    },
     {
         path: 'details/:id',
         component: DetailsComponent,
@@ -37,10 +50,11 @@ const appRoutes: Routes = [
         TruncatePipe,
         GenerateFiltersPipe,
         DetailsComponent,
+        SearchResultsComponent,
     ],
     imports: [
         AppRoutingModule,
-        RouterModule.forRoot(appRoutes, { scrollPositionRestoration: 'enabled' }),
+        RouterModule.forRoot(appRoutes),
         BrowserAnimationsModule,
         BrowserModule,
         FormsModule,

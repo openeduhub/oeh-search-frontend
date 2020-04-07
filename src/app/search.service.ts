@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 export interface Result {
     hash: string;
@@ -29,7 +29,11 @@ export interface Result {
 export interface Results {
     total: number;
     results: Result[];
-    didYouMeanSuggestion?: { plain: string; html: string };
+}
+
+export interface DidYouMeanSuggestion {
+    plain: string;
+    html: string;
 }
 
 export interface Facets {
@@ -82,6 +86,8 @@ export class SearchService {
     };
 
     private facets = new BehaviorSubject<Facets>(null);
+
+    private didYouMeanSuggestion = new BehaviorSubject<DidYouMeanSuggestion>(null);
 
     constructor(private http: HttpClient) {
         this.updateFacets();
@@ -140,6 +146,10 @@ export class SearchService {
         return this.facets.asObservable();
     }
 
+    getDidYouMeanSuggestion(): Observable<DidYouMeanSuggestion> {
+        return this.didYouMeanSuggestion.asObservable();
+    }
+
     private performSearch(
         searchString: string,
         pageInfo: {
@@ -165,13 +175,20 @@ export class SearchService {
                     : undefined,
             })
             .pipe(
+                tap((response: any) => {
+                    // TODO: consider suggestions for multiple fields
+                    if (response.suggest) {
+                        const didYouMeanSuggestion = this.generateDidYouMeanSuggestion(
+                            response.suggest.title,
+                        );
+                        this.didYouMeanSuggestion.next(didYouMeanSuggestion);
+                    } else {
+                        this.didYouMeanSuggestion.next(null);
+                    }
+                }),
                 map((response: any) => ({
                     total: response.hits.total.value,
                     results: response.hits.hits.map((hit: any) => hit._source),
-                    // TODO: consider suggestions for multiple fields
-                    didYouMeanSuggestion: searchString
-                        ? this.getDidYouMeanSuggestion(response.suggest.title)
-                        : undefined,
                 })),
             );
     }
@@ -240,7 +257,7 @@ export class SearchService {
         this.facets.next(facets);
     }
 
-    private getDidYouMeanSuggestion(suggests: Suggest[]) {
+    private generateDidYouMeanSuggestion(suggests: Suggest[]) {
         const words = suggests.map((suggest) => {
             if (suggest.options.length > 0) {
                 return { text: suggest.options[0].text, changed: true };

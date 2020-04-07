@@ -1,14 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import {
     MatAutocompleteSelectedEvent,
     MatAutocompleteTrigger,
 } from '@angular/material/autocomplete';
-import { PageEvent } from '@angular/material/paginator';
-import { ActivatedRoute, Router, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged, tap, filter, first } from 'rxjs/operators';
-import { Results, SearchService, Facets, Filters } from '../search.service';
+import { debounceTime, distinctUntilChanged, filter, first, tap } from 'rxjs/operators';
+import { Facets, Filters, SearchService, DidYouMeanSuggestion } from '../search.service';
 
 @Component({
     selector: 'app-search',
@@ -19,49 +18,34 @@ export class SearchComponent implements OnInit {
     @ViewChild('autoComplete') autoComplete: MatAutocompleteTrigger;
 
     searchField = new FormControl();
-    results: Results;
     autoCompleteSuggestions$: Observable<string[]>;
     facets: Facets;
     facetFilters: FormGroup;
     filters: Filters = {};
-    pageInfo = {
-        pageIndex: 0,
-        pageSize: 10,
-    };
+    didYouMeanSuggestion: DidYouMeanSuggestion;
 
     private searchString: string;
 
     constructor(
-        private activatedRoute: ActivatedRoute,
+        private route: ActivatedRoute,
         private formBuilder: FormBuilder,
         private router: Router,
         private search: SearchService,
-    ) {
+    ) {}
+
+    ngOnInit(): void {
         // Any user input that affects results is funneled through query params. On any such input,
         // we call `router.navigate`. The rest is handled by `onQueryParams`, both, when initially
         // loading and when updating the page.
-        activatedRoute.queryParams.subscribe((params) => this.onQueryParams(params));
+        this.route.queryParams.subscribe((params) => this.onQueryParams(params));
         this.registerInputFieldListener();
-        this.registerFacetsListener();
-    }
-
-    ngOnInit(): void {}
-
-    onPage(pageEvent: PageEvent) {
-        this.router.navigate([], {
-            relativeTo: this.activatedRoute,
-            queryParams: {
-                pageIndex: pageEvent.pageIndex,
-                pageSize: pageEvent.pageSize,
-            },
-            queryParamsHandling: 'merge',
-        });
+        this.registerSearchObservers();
     }
 
     onSubmit() {
         this.autoComplete.closePanel();
         this.router.navigate([], {
-            relativeTo: this.activatedRoute,
+            relativeTo: this.route,
             queryParams: {
                 q: this.searchString,
                 pageIndex: 0,
@@ -89,13 +73,6 @@ export class SearchComponent implements OnInit {
             this.facetFilters.reset(this.filters, { emitEvent: false });
             // If `facetFilters` are not yet initialized, this will be done on initialization.
         }
-        if (params.pageIndex) {
-            this.pageInfo.pageIndex = params.pageIndex;
-        }
-        if (params.pageSize) {
-            this.pageInfo.pageSize = params.pageSize;
-        }
-        this.updateResults();
     }
 
     private registerInputFieldListener() {
@@ -108,7 +85,7 @@ export class SearchComponent implements OnInit {
             .subscribe((searchString) => this.onSearchStringChanges(searchString));
     }
 
-    private registerFacetsListener() {
+    private registerSearchObservers() {
         this.search.getFacets().subscribe((facets) => this.setFacets(facets));
         this.search
             .getFacets()
@@ -117,6 +94,11 @@ export class SearchComponent implements OnInit {
                 first(),
             )
             .subscribe((facets) => this.initFacetFilters(facets));
+        this.search
+            .getDidYouMeanSuggestion()
+            .subscribe(
+                (didYouMeanSuggestion) => (this.didYouMeanSuggestion = didYouMeanSuggestion),
+            );
     }
 
     private initFacetFilters(facets: Facets) {
@@ -131,7 +113,7 @@ export class SearchComponent implements OnInit {
         }
         this.facetFilters.valueChanges.subscribe((filters: Filters) => {
             this.router.navigate([], {
-                relativeTo: this.activatedRoute,
+                relativeTo: this.route,
                 queryParams: { filters: JSON.stringify(filters), pageIndex: 0 },
                 queryParamsHandling: 'merge',
             });
@@ -159,11 +141,5 @@ export class SearchComponent implements OnInit {
 
     private onSearchStringChanges(searchString: string) {
         // this.autoCompleteSuggestions$ = this.search.autoComplete(searchString);
-    }
-
-    private updateResults() {
-        this.search.search(this.searchString, this.pageInfo, this.filters).subscribe((results) => {
-            this.results = results;
-        });
     }
 }
