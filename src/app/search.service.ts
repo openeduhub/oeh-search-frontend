@@ -10,16 +10,25 @@ export interface Result {
         total_count: number;
         name: string;
     };
+    thumbnail: {
+        small: string;
+    };
     lom: {
-        technical: {};
-        educational: {};
+        technical: {
+            location: string;
+        };
+        educational: {
+            description: string;
+        };
         classification: {};
         general: {
             title: string;
             identifier: string;
-            keyword: string;
+            keyword: string[];
         };
-        rights: {};
+        rights: {
+            description: string;
+        };
         lifecycle: {};
     };
     id: string;

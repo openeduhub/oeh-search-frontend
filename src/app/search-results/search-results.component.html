@@ -4,26 +4,31 @@
 
 <div class="results">
   <div class="result" *ngFor="let result of results.results">
-    <div class="title">
-      <a [routerLink]="['/details', result.id]">
-        {{ result.lom.general.title }}
-      </a>
+    <div>
+      <div class="title">
+        <a [routerLink]="['/details', result.id]">
+          {{ result.lom.general.title }}
+        </a>
+      </div>
+      <div class="description">
+        {{ result.lom.educational.description | truncate: 300 }}
+      </div>
+      <div class="keyword">
+        <span *ngFor="let keyword of result.lom.general.keyword">
+          <a
+            routerLink
+            [queryParams]="['Keywords', [keyword]] | generateFilters: filters"
+            queryParamsHandling="merge"
+          >
+            {{ keyword }}
+          </a>
+        </span>
+      </div>
+      <div class="source">
+        {{ result.source.name }}
+      </div>
     </div>
-    <div class="description">
-      {{ result.fulltext | truncate: 300 }}
-    </div>
-    <div class="keyword">
-      <a
-        routerLink
-        [queryParams]="['Keywords', [result.lom.general.keyword]] | generateFilters: filters"
-        queryParamsHandling="merge"
-      >
-        {{ result.lom.general.keyword }}
-      </a>
-    </div>
-    <div class="source">
-      {{ result.source.name }}
-    </div>
+    <img *ngIf="result.thumbnail" src="data:image/jpg;base64,{{ result.thumbnail.small }}" />
   </div>
 </div>
 <mat-paginator

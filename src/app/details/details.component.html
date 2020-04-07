@@ -1,6 +1,9 @@
-<ng-container *ngIf="details">
-  <h1>{{ details.lom.general.title }}</h1>
-  <p>{{ details.lom.general.keyword }}</p>
-  <p>{{ details.source.name }}</p>
-  <p>{{ details.fulltext }}</p>
-</ng-container>
+<img src="data:image/jpg;base64,{{ details.thumbnail.small }}" />
+<h1>{{ details.lom.general.title }}</h1>
+<ul>
+  <li *ngFor="let keyword of details.lom.general.keyword">
+    {{ keyword }}
+  </li>
+</ul>
+<p>{{ details.source.name }}</p>
+<p>{{ details.lom.educational.description }}</p>
