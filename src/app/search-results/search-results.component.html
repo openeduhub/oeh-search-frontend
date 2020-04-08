@@ -28,7 +28,10 @@
         {{ result.source.name }}
       </div>
     </div>
-    <img *ngIf="result.thumbnail" src="data:image/jpg;base64,{{ result.thumbnail.small }}" />
+    <img
+      *ngIf="result.thumbnail"
+      [src]="result.thumbnail.small | safeBase64Data: result.thumbnail.mimetype"
+    />
   </div>
 </div>
 <mat-paginator

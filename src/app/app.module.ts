@@ -21,6 +21,7 @@ import { DetailsComponent } from './details/details.component';
 import { DetailsResolverService } from './details-resolver.service';
 import { SearchResultsResolverService } from './search-results-resolver.service';
 import { SearchResultsComponent } from './search-results/search-results.component';
+import { SafeBase64DataPipe } from './safe-base64-data.pipe';
 
 const appRoutes: Routes = [
     {
@@ -51,6 +52,7 @@ const appRoutes: Routes = [
         GenerateFiltersPipe,
         DetailsComponent,
         SearchResultsComponent,
+        SafeBase64DataPipe,
     ],
     imports: [
         AppRoutingModule,
