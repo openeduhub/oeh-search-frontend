@@ -150,7 +150,11 @@ export class SearchService {
                     },
                 },
             })
-            .pipe(map((response: any) => response.hits.hits.map((hit) => hit._source.title)));
+            .pipe(
+                map((response: any) =>
+                    response.hits.hits.map((hit) => hit._source.lom.general.title),
+                ),
+            );
     }
 
     getFacets(): Observable<Facets> {
