@@ -32,18 +32,20 @@ Run `ng lint` to check all source files via [TSLint](https://palantir.github.io/
 
 ## Internationalization
 
-Internationalization is provided by [i18n](https://angular.io/guide/i18n). Localization files are
-stored in `src/locale`.
+Internationalization is provided with [i18n](https://angular.io/guide/i18n) and updated with
+[xliffmerge](https://github.com/martinroob/ngx-i18nsupport/wiki/Tutorial-for-using-xliffmerge-with-angular-cli).
+Localization files are stored in `src/locale`.
 
 ### Provide Translations
 
-To create / update the translation source file `messages.xlf`, run
+To create / update translation files, run
 
 ```bash
-ng xi18n --output-path src/locale
+npm run extract-i18n
 ```
 
-Copy this file and add `target` tags to provide translations in other languages.
+This will generate the source file `messages.xlf` and translation files in `src/locale`.
+Write missing translations in the `target` tags of translation files.
 
 ### Configure Additional Languages
 

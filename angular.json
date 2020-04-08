@@ -134,6 +134,21 @@
               "devServerTarget": "open-edu-hub-frontend:serve:production"
             }
           }
+        },
+        "xliffmerge": {
+          "builder": "@ngx-i18nsupport/tooling:xliffmerge",
+          "options": {
+            "xliffmergeOptions": {
+              "i18nFormat": "xlf",
+              "srcDir": "src/locale",
+              "genDir": "src/locale",
+              "defaultLanguage": "en-US",
+              "languages": [
+                "en-US",
+                "de"
+              ]
+            }
+          }
         }
       }
     }

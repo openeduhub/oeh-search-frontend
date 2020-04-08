@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-  <file source-language="en-US" datatype="plaintext" original="ng2.template" target-language="de">
+  <file source-language="en-US" datatype="plaintext" original="ng2.template" target-language="en-US">
     <body>
       <trans-unit id="7e892ba15f2c6c17e83510e273b3e10fc32ea016" datatype="html">
-        <source>Search</source>
-        <target>Suchen</target>
+        <source>Search</source><target state="final">Search</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search/search.component.html</context>
           <context context-type="linenumber">10</context>
@@ -13,18 +12,16 @@
           <context context-type="sourcefile">src/app/search/search.component.html</context>
           <context context-type="linenumber">12</context>
         </context-group>
-      </trans-unit><trans-unit id="fa673dc70905fa7f1725cf8bf94b504e8ef89a21" datatype="html">
-        <source>{VAR_SELECT, select, keywords {Keywords} source {Source} }</source>
-        <target state="new">{VAR_SELECT, select, keywords {Schlagwörter} source {Quelle} }</target>
+      </trans-unit>
+      <trans-unit id="fa673dc70905fa7f1725cf8bf94b504e8ef89a21" datatype="html">
+        <source>{VAR_SELECT, select, keywords {Keywords} source {Source} }</source><target state="final">{VAR_SELECT, select, keywords {Keywords} source {Source} }</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search/search.component.html</context>
           <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
-      
       <trans-unit id="5f63f0ac9abd7ff136ae484844ed3e8722604f22" datatype="html">
-        <source>Did you mean:</source>
-        <target>Meinten Sie:</target>
+        <source>Did you mean:</source><target state="final">Did you mean:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search/search.component.html</context>
           <context context-type="linenumber">34</context>
