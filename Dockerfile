@@ -1,3 +1,4 @@
-FROM httpd:2.4-alpine
+FROM nginx
 
-COPY dist/open-edu-hub-frontend/ /usr/local/apache2/htdocs/
+COPY dist/open-edu-hub-frontend/ /usr/share/nginx/html/
+COPY nginx.page.conf /etc/nginx/conf.d/default.conf

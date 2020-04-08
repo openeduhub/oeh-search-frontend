@@ -125,7 +125,7 @@ export class SearchComponent implements OnInit {
             return;
         }
         if (!this.facets) {
-            this.facets = {};
+            this.facets = {} as Facets;
         }
         for (const [label, facet] of Object.entries(facets)) {
             // Leave the facet object in place if it already exists, so Angular won't reconstruct

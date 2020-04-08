@@ -13,6 +13,11 @@
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
+      "i18n": {
+        "locales": {
+          "de": "src/locale/messages.de.xlf"
+        }
+      },
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -61,6 +66,9 @@
                   "maximumError": "10kb"
                 }
               ]
+            },
+            "de": {
+              "localize": ["de"]
             }
           }
         },
@@ -72,6 +80,9 @@
           "configurations": {
             "production": {
               "browserTarget": "open-edu-hub-frontend:build:production"
+            },
+            "de": {
+              "browserTarget": "open-edu-hub-frontend:build:de"
             }
           }
         },

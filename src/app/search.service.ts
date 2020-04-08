@@ -45,18 +45,20 @@ export interface DidYouMeanSuggestion {
     html: string;
 }
 
-export interface Facets {
-    [label: string]: {
+export type Facet = 'source' | 'keywords';
+
+export type Facets = {
+    [label in Facet]: {
         buckets: {
             key: string;
             doc_count: number;
         }[];
     };
-}
+};
 
-export interface Filters {
-    [label: string]: string[] | null;
-}
+export type Filters = {
+    [label in Facet]?: string[];
+};
 
 interface Suggest {
     text: string;
@@ -80,13 +82,13 @@ export class SearchService {
     private readonly url = 'http://localhost:9200';
     private readonly index = 'search_idx';
     private readonly aggregations: { [label: string]: Aggregation } = {
-        Source: {
+        source: {
             terms: {
                 field: 'source.name.keyword',
                 size: 100,
             },
         },
-        Keywords: {
+        keywords: {
             terms: {
                 field: 'lom.general.keyword.keyword',
                 size: 100,
@@ -249,7 +251,7 @@ export class SearchService {
             },
             {},
         );
-        const facets = await this.http
+        const facets = (await this.http
             .post(`${this.url}/${this.index}/_search`, {
                 // Don't return any results, we want only the facets.
                 size: 0,
@@ -270,7 +272,7 @@ export class SearchService {
                     );
                 }),
             )
-            .toPromise();
+            .toPromise()) as Facets;
         this.facets.next(facets);
     }
 

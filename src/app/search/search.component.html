@@ -6,9 +6,10 @@
       autofocus
       [matAutocomplete]="auto"
       #autoComplete="matAutocompleteTrigger"
+      i18n-placeholder
       placeholder="Search"
     />
-    <button matSuffix mat-icon-button type="submit" aria-label="Search">
+    <button matSuffix mat-icon-button type="submit" i18n-aria-label aria-label="Search">
       <mat-icon>search</mat-icon>
     </button>
   </mat-form-field>
@@ -19,7 +20,7 @@
   </mat-autocomplete>
   <div *ngIf="facets" class="filters" [formGroup]="facetFilters">
     <mat-form-field *ngFor="let facet of facets | keyvalue">
-      <mat-label>{{ facet.key }}</mat-label>
+      <mat-label i18n>{facet.key, select, keywords {Keywords} source {Source}}</mat-label>
       <mat-select [formControlName]="facet.key" multiple>
         <mat-option *ngFor="let bucket of facet.value.buckets" [value]="bucket.key">
           {{ bucket.key }} ({{ bucket.doc_count }})
@@ -30,7 +31,7 @@
 </form>
 
 <p *ngIf="didYouMeanSuggestion" class="did-you-mean">
-  Did you mean:
+  <ng-container i18n>Did you mean:</ng-container>
   <a
     [innerHTML]="didYouMeanSuggestion.html"
     routerLink
