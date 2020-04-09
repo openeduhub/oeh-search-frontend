@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, Scroll } from '@angular/router';
+import { Router, Scroll, NavigationError } from '@angular/router';
 import { filter, delay } from 'rxjs/operators';
 import { ViewportScroller } from '@angular/common';
 
@@ -9,22 +9,35 @@ import { ViewportScroller } from '@angular/common';
     styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-    constructor(private router: Router, private viewportScroller: ViewportScroller) {
+    constructor(router: Router, viewportScroller: ViewportScroller) {
         // Recreate scroll restoration behavior of the scrollPositionRestoration option (see
         // https://angular.io/api/router/ExtraOptions#scrollPositionRestoration) with added delay.
-        this.router.events
+        router.events
             .pipe(
-                filter((e: any): e is Scroll => e instanceof Scroll),
+                filter((e): e is Scroll => e instanceof Scroll),
                 delay(0), // Wait for data to be rendered.
             )
             .subscribe((e) => {
                 if (e.position) {
-                    this.viewportScroller.scrollToPosition(e.position);
+                    viewportScroller.scrollToPosition(e.position);
                 } else if (e.anchor) {
-                    this.viewportScroller.scrollToAnchor(e.anchor);
+                    viewportScroller.scrollToAnchor(e.anchor);
                 } else {
-                    this.viewportScroller.scrollToPosition([0, 0]);
+                    viewportScroller.scrollToPosition([0, 0]);
                 }
+            });
+        // Catch navigation errors. These happen when a resolver throws an error.
+        router.events
+            .pipe(filter((e): e is NavigationError => e instanceof NavigationError))
+            .subscribe((error) => {
+                console.log(error);
+                router.navigate(['/error'], {
+                    queryParams: {
+                        url: error.url,
+                        name: error.error.constructor.name,
+                        error: JSON.stringify(error.error),
+                    },
+                });
             });
     }
 }

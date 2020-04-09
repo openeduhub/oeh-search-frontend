@@ -26,6 +26,22 @@
           <context context-type="sourcefile">src/app/search/search.component.html</context>
           <context context-type="linenumber">34</context>
         </context-group>
+      </trans-unit><trans-unit id="fe90aaa93785f07d828ad81ac0f6fbca5923693a" datatype="html">
+        <source>Oops, something went wrong.</source><target state="final">Oops, something went wrong.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/error/error.component.html</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit><trans-unit id="d7f6fd69c9f28b31cfbdcfefa258adbcbc3e2f9e" datatype="html">
+        <source>
+      Details
+    </source><target state="final">
+      Details
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/error/error.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
       </trans-unit>
     </body>
   </file>

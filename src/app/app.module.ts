@@ -22,6 +22,8 @@ import { DetailsResolverService } from './details-resolver.service';
 import { SearchResultsResolverService } from './search-results-resolver.service';
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { SafeBase64DataPipe } from './safe-base64-data.pipe';
+import { ErrorComponent } from './error/error.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 const appRoutes: Routes = [
     {
@@ -42,6 +44,7 @@ const appRoutes: Routes = [
         resolve: { details: DetailsResolverService },
     },
     { path: '', redirectTo: 'search', pathMatch: 'full' },
+    { path: 'error', component: ErrorComponent },
 ];
 
 @NgModule({
@@ -53,6 +56,7 @@ const appRoutes: Routes = [
         DetailsComponent,
         SearchResultsComponent,
         SafeBase64DataPipe,
+        ErrorComponent,
     ],
     imports: [
         AppRoutingModule,
@@ -70,6 +74,7 @@ const appRoutes: Routes = [
         MatAutocompleteModule,
         MatButtonModule,
         MatSelectModule,
+        MatExpansionModule,
     ],
     providers: [],
     bootstrap: [AppComponent],
