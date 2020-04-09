@@ -17,7 +17,7 @@
         <span *ngFor="let keyword of result.lom.general.keyword">
           <a
             routerLink
-            [queryParams]="['Keywords', [keyword]] | generateFilters: filters"
+            [queryParams]="['keywords', [keyword]] | generateFilters: filters"
             queryParamsHandling="merge"
           >
             {{ keyword }}

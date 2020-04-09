@@ -1,0 +1,21 @@
+<form (ngSubmit)="onSubmit()">
+  <mat-form-field appearance="outline" id="search-input">
+    <input
+      matInput
+      [formControl]="searchField"
+      autofocus
+      [matAutocomplete]="auto"
+      #autoComplete="matAutocompleteTrigger"
+      i18n-placeholder
+      placeholder="Search"
+    />
+    <button matSuffix mat-icon-button type="submit" i18n-aria-label aria-label="Search">
+      <mat-icon>search</mat-icon>
+    </button>
+  </mat-form-field>
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onAutocompleteSelected($event)">
+    <mat-option *ngFor="let option of autoCompleteSuggestions$ | async" [value]="option">{{
+      option
+    }}</mat-option>
+  </mat-autocomplete>
+</form>

@@ -1,44 +1,22 @@
-<form (ngSubmit)="onSubmit()">
-  <mat-form-field appearance="outline" id="search-input">
-    <input
-      matInput
-      [formControl]="searchField"
-      autofocus
-      [matAutocomplete]="auto"
-      #autoComplete="matAutocompleteTrigger"
-      i18n-placeholder
-      placeholder="Search"
-    />
-    <button matSuffix mat-icon-button type="submit" i18n-aria-label aria-label="Search">
-      <mat-icon>search</mat-icon>
-    </button>
-  </mat-form-field>
-  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onAutocompleteSelected($event)">
-    <mat-option *ngFor="let option of autoCompleteSuggestions$ | async" [value]="option">{{
-      option
-    }}</mat-option>
-  </mat-autocomplete>
-  <div *ngIf="facets" class="filters" [formGroup]="facetFilters">
-    <mat-form-field *ngFor="let facet of facets | keyvalue">
-      <mat-label i18n>{facet.key, select, keywords {Keywords} source {Source}}</mat-label>
-      <mat-select [formControlName]="facet.key" multiple>
-        <mat-option *ngFor="let bucket of facet.value.buckets" [value]="bucket.key">
-          {{ bucket.key }} ({{ bucket.doc_count }})
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-</form>
-
 <p *ngIf="didYouMeanSuggestion" class="did-you-mean">
-  <ng-container i18n>Did you mean:</ng-container>
-  <a
+  <ng-container i18n>Did you mean:</ng-container>&nbsp;<a
     [innerHTML]="didYouMeanSuggestion.html"
     routerLink
     [queryParams]="{ q: didYouMeanSuggestion.plain }"
     queryParamsHandling="merge"
   ></a>
 </p>
+
+<div *ngIf="facets" class="filters" [formGroup]="facetFilters">
+  <mat-form-field *ngFor="let facet of facets | keyvalue">
+    <mat-label i18n>{facet.key, select, keywords {Keywords} source {Source}}</mat-label>
+    <mat-select [formControlName]="facet.key" multiple>
+      <mat-option *ngFor="let bucket of facet.value.buckets" [value]="bucket.key">
+        {{ bucket.key }} ({{ bucket.doc_count }})
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
 
 <!-- Results -->
 <router-outlet></router-outlet>

@@ -1,0 +1,7 @@
+#search-input {
+    width: 100%;
+    // Fix button alignment for Firefox
+    :host ::ng-deep & button {
+        display: inline-block;
+    }
+}

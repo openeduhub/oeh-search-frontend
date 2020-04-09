@@ -1,0 +1,16 @@
+:host {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+h1 {
+    padding: 0 1em;
+    a {
+        color: unset;
+        text-decoration: none;
+    }
+}
+app-search-field {
+    flex-grow: 1;
+    padding: 0 5em;
+}

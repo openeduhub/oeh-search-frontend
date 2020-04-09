@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { NavigationError } from '@angular/router';
+import { ErrorService } from '../error.service';
 
 @Component({
     selector: 'app-error',
@@ -7,18 +8,13 @@ import { ActivatedRoute } from '@angular/router';
     styleUrls: ['./error.component.scss'],
 })
 export class ErrorComponent implements OnInit {
-    name: string;
-    error: Error;
+    error: NavigationError;
     json: string;
 
-    constructor(private route: ActivatedRoute) {}
+    constructor(private errorService: ErrorService) {}
 
     ngOnInit(): void {
-        this.route.queryParams.subscribe((params) => {
-            const error = JSON.parse(params.error);
-            this.error = error;
-            this.json = JSON.stringify(error, null, 4);
-            this.name = params.name;
-        });
+        this.error = this.errorService.getError();
+        this.json = JSON.stringify(this.error, null, 4);
     }
 }

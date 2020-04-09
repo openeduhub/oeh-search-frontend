@@ -11,6 +11,7 @@ export interface Result {
         name: string;
     };
     thumbnail: {
+        mimetype: string;
         small: string;
     };
     lom: {
@@ -311,7 +312,7 @@ export class SearchService {
             return null;
         }
         const aggregation = this.aggregations[label];
-        if ('terms' in aggregation) {
+        if (aggregation && 'terms' in aggregation) {
             return {
                 terms: {
                     [aggregation.terms.field]: value,

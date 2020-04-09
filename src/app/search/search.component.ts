@@ -15,16 +15,10 @@ import { Facets, Filters, SearchService, DidYouMeanSuggestion } from '../search.
     styleUrls: ['./search.component.scss'],
 })
 export class SearchComponent implements OnInit {
-    @ViewChild('autoComplete') autoComplete: MatAutocompleteTrigger;
-
-    searchField = new FormControl();
-    autoCompleteSuggestions$: Observable<string[]>;
     facets: Facets;
     facetFilters: FormGroup;
     filters: Filters = {};
     didYouMeanSuggestion: DidYouMeanSuggestion;
-
-    private searchString: string;
 
     constructor(
         private route: ActivatedRoute,
@@ -38,32 +32,10 @@ export class SearchComponent implements OnInit {
         // we call `router.navigate`. The rest is handled by `onQueryParams`, both, when initially
         // loading and when updating the page.
         this.route.queryParams.subscribe((params) => this.onQueryParams(params));
-        this.registerInputFieldListener();
         this.registerSearchObservers();
     }
 
-    onSubmit() {
-        this.autoComplete.closePanel();
-        this.router.navigate([], {
-            relativeTo: this.route,
-            queryParams: {
-                q: this.searchString,
-                pageIndex: 0,
-            },
-            queryParamsHandling: 'merge',
-        });
-    }
-
-    onAutocompleteSelected(event: MatAutocompleteSelectedEvent) {
-        this.router.navigate([], {
-            queryParams: { q: event.option.value, pageIndex: 0 },
-            queryParamsHandling: 'merge',
-        });
-    }
-
     private onQueryParams(params: Params) {
-        this.searchString = params.q;
-        this.searchField.setValue(this.searchString);
         if (params.filters) {
             this.filters = JSON.parse(params.filters);
         } else {
@@ -73,16 +45,6 @@ export class SearchComponent implements OnInit {
             this.facetFilters.reset(this.filters, { emitEvent: false });
             // If `facetFilters` are not yet initialized, this will be done on initialization.
         }
-    }
-
-    private registerInputFieldListener() {
-        this.searchField.valueChanges
-            .pipe(
-                tap((searchString) => (this.searchString = searchString)),
-                debounceTime(200),
-                distinctUntilChanged(),
-            )
-            .subscribe((searchString) => this.onSearchStringChanges(searchString));
     }
 
     private registerSearchObservers() {
@@ -136,12 +98,6 @@ export class SearchComponent implements OnInit {
             } else {
                 this.facets[label] = facet;
             }
-        }
-    }
-
-    private onSearchStringChanges(searchString: string) {
-        if (typeof searchString === 'string') {
-            this.autoCompleteSuggestions$ = this.search.autoComplete(searchString);
         }
     }
 }

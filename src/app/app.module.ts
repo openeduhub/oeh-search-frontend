@@ -24,6 +24,8 @@ import { SearchResultsComponent } from './search-results/search-results.componen
 import { SafeBase64DataPipe } from './safe-base64-data.pipe';
 import { ErrorComponent } from './error/error.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { HeaderbarComponent } from './headerbar/headerbar.component';
+import { SearchFieldComponent } from './search-field/search-field.component';
 
 const appRoutes: Routes = [
     {
@@ -57,6 +59,8 @@ const appRoutes: Routes = [
         SearchResultsComponent,
         SafeBase64DataPipe,
         ErrorComponent,
+        HeaderbarComponent,
+        SearchFieldComponent,
     ],
     imports: [
         AppRoutingModule,
