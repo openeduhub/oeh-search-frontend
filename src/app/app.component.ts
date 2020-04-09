@@ -1,5 +1,12 @@
 import { Component } from '@angular/core';
-import { Router, Scroll, NavigationError } from '@angular/router';
+import {
+    Router,
+    Scroll,
+    NavigationError,
+    NavigationStart,
+    NavigationEnd,
+    NavigationCancel,
+} from '@angular/router';
 import { filter, delay } from 'rxjs/operators';
 import { ViewportScroller } from '@angular/common';
 import { ErrorService } from './error.service';
@@ -10,6 +17,8 @@ import { ErrorService } from './error.service';
     styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
+    loading = false;
+
     constructor(router: Router, viewportScroller: ViewportScroller, error: ErrorService) {
         // Recreate scroll restoration behavior of the scrollPositionRestoration option (see
         // https://angular.io/api/router/ExtraOptions#scrollPositionRestoration) with added delay.
@@ -33,5 +42,19 @@ export class AppComponent {
             .subscribe((e) => {
                 error.goToErrorPage(e);
             });
+        // Enable / disable the loading spinner.
+        router.events
+            .pipe(filter((e) => e instanceof NavigationStart))
+            .subscribe(() => (this.loading = true));
+        router.events
+            .pipe(
+                filter(
+                    (e) =>
+                        e instanceof NavigationEnd ||
+                        e instanceof NavigationCancel ||
+                        e instanceof NavigationError,
+                ),
+            )
+            .subscribe(() => (this.loading = false));
     }
 }

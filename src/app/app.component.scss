@@ -1,3 +1,14 @@
+.loading-spinner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #fff8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .main {
     max-width: 1400px;
     margin-left: auto;
