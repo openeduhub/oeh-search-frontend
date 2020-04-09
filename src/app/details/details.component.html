@@ -1,4 +1,9 @@
-<img src="data:image/jpg;base64,{{ details.thumbnail.small }}" />
+<img
+  *ngIf="details.thumbnail"
+  [src]="
+    details.thumbnail.large || details.thumbnail.small | safeBase64Data: details.thumbnail.mimetype
+  "
+/>
 <h1>{{ details.lom.general.title }}</h1>
 <ul>
   <li *ngFor="let keyword of details.lom.general.keyword">
@@ -7,3 +12,4 @@
 </ul>
 <p>{{ details.source.name }}</p>
 <p>{{ details.lom.educational.description }}</p>
+<a [href]="details.lom.technical.location">{{ details.lom.technical.location }}</a>

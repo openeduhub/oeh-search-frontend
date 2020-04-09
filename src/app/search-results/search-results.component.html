@@ -3,16 +3,22 @@
 </div>
 
 <div class="results">
-  <div class="result" *ngFor="let result of results.results">
-    <div>
-      <div class="title">
-        <a [routerLink]="['/details', result.id]">
-          {{ result.lom.general.title }}
-        </a>
-      </div>
-      <div class="description">
-        {{ result.lom.educational.description | truncate: 300 }}
-      </div>
+  <mat-card class="result" *ngFor="let result of results.results">
+    <a class="details-link" [routerLink]="['/details', result.id]">
+      <img
+        *ngIf="result.thumbnail"
+        mat-card-image
+        [src]="
+          result.thumbnail.large || result.thumbnail.small
+            | safeBase64Data: result.thumbnail.mimetype
+        "
+      />
+      <mat-card-title>{{ result.lom.general.title | truncate: 52 }}</mat-card-title>
+    </a>
+    <mat-card-content>
+      <p>
+        {{ result.lom.educational.description | truncate: 150 }}
+      </p>
       <div class="keyword">
         <span *ngFor="let keyword of result.lom.general.keyword">
           <a
@@ -24,21 +30,15 @@
           </a>
         </span>
       </div>
-      <div class="source">
-        {{ result.source.name }}
-      </div>
-    </div>
-    <img
-      *ngIf="result.thumbnail"
-      [src]="result.thumbnail.small | safeBase64Data: result.thumbnail.mimetype"
-    />
-  </div>
+    </mat-card-content>
+    <div class="source">{{ result.source.name }}</div>
+    <a class="content-link" [href]="result.lom.technical.location" i18n>Go to content</a>
+  </mat-card>
 </div>
 <mat-paginator
   [length]="results.total"
   [pageIndex]="pageInfo.pageIndex"
   [pageSize]="pageInfo.pageSize"
-  [pageSizeOptions]="[5, 10, 25, 100]"
   (page)="onPage($event)"
 >
 </mat-paginator>

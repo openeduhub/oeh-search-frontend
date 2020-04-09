@@ -13,7 +13,7 @@ export class SearchResultsComponent implements OnInit {
 
     pageInfo = {
         pageIndex: 0,
-        pageSize: 10,
+        pageSize: 12,
     };
 
     filters: Filters = {};

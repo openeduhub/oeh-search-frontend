@@ -13,6 +13,7 @@ export interface Result {
     thumbnail: {
         mimetype: string;
         small: string;
+        large?: string;
     };
     lom: {
         technical: {

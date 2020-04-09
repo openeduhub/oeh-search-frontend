@@ -1,20 +1,22 @@
 .results {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
     .result {
-        width: 100%;
-        margin-bottom: 1.5em;
+        > a.details-link {
+            color: unset;
+        }
+        a:not(:hover) {
+            text-decoration: none;
+        }
         display: flex;
-
-        > div {
+        flex-direction: column;
+        img {
+            height: 200px;
+            object-fit: cover;
+        }
+        mat-card-content {
             flex-grow: 1;
-            .title {
-                font-size: 150%;
-                padding-bottom: 0.3em;
-                line-height: 1.1;
-            }
-            .description {
-                font-size: 90%;
-                padding-bottom: 0.3em;
-            }
             .keyword {
                 padding-bottom: 0.3em;
                 span {
@@ -26,20 +28,16 @@
                     }
                 }
             }
-            .source {
-                font-size: 90%;
-                color: green;
-            }
-            a:not(:hover) {
-                text-decoration: none;
-            }
         }
-        > img {
-            width: 100px;
-            height: 100px;
-            margin-left: 20px;
-            object-fit: contain;
-            object-position: top;
+        .source {
+            font-size: 0.9em;
+            color: green;
+        }
+        a.content-link {
+            align-self: flex-end;
+            &::before {
+                content: '→ ';
+            }
         }
     }
 }
