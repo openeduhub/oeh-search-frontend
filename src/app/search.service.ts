@@ -75,9 +75,9 @@ interface SuggestOption {
     freq: number;
 }
 
-type Aggregation =
-    | { terms: { field: string; size: number } }
-    | { range: { field: string; ranges: { from: number; to: number }[] } };
+interface Aggregation {
+    terms: { field: string; size: number };
+}
 
 @Injectable({ providedIn: 'root' })
 export class SearchService {
@@ -102,9 +102,7 @@ export class SearchService {
 
     private didYouMeanSuggestion = new BehaviorSubject<DidYouMeanSuggestion>(null);
 
-    constructor(private http: HttpClient) {
-        this.updateFacets();
-    }
+    constructor(private http: HttpClient) {}
 
     search(
         searchString: string,

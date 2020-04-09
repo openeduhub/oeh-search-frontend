@@ -4,48 +4,55 @@
     <body>
       <trans-unit id="7e892ba15f2c6c17e83510e273b3e10fc32ea016" datatype="html">
         <source>Search</source>
-        <target>Suchen</target>
+        <target state="final">Suchen</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/search/search.component.html</context>
+          <context context-type="sourcefile">src/app/search-field/search-field.component.html</context>
           <context context-type="linenumber">10</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search-field/search-field.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="fa673dc70905fa7f1725cf8bf94b504e8ef89a21" datatype="html">
+        <source>{VAR_SELECT, select, keywords {Keywords} source {Source} }</source>
+        <target state="final">{VAR_SELECT, select, keywords {Schlagwörter} source {Quelle} }</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search/search.component.html</context>
           <context context-type="linenumber">12</context>
         </context-group>
-      </trans-unit><trans-unit id="fa673dc70905fa7f1725cf8bf94b504e8ef89a21" datatype="html">
-        <source>{VAR_SELECT, select, keywords {Keywords} source {Source} }</source>
-        <target>{VAR_SELECT, select, keywords {Schlagwörter} source {Quelle} }</target>
+      </trans-unit>
+      <trans-unit id="683309382cfae68d520e4e4284f24436bf398307" datatype="html">
+        <source>Go to content</source>
+        <target state="final">Zum Inhalt</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/search/search.component.html</context>
-          <context context-type="linenumber">23</context>
+          <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
+          <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
-      
       <trans-unit id="5f63f0ac9abd7ff136ae484844ed3e8722604f22" datatype="html">
         <source>Did you mean:</source>
-        <target>Meinten Sie:</target>
+        <target state="final">Meinten Sie:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search/search.component.html</context>
-          <context context-type="linenumber">34</context>
+          <context context-type="linenumber">2</context>
         </context-group>
-      </trans-unit><trans-unit id="fe90aaa93785f07d828ad81ac0f6fbca5923693a" datatype="html">
-        <source>Oops, something went wrong.</source><target>Da ist etwas schief gelaufen.</target>
+      </trans-unit>
+      <trans-unit id="fe90aaa93785f07d828ad81ac0f6fbca5923693a" datatype="html">
+        <source>Oops, something went wrong.</source>
+        <target state="final">Da ist etwas schief gelaufen.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/error/error.component.html</context>
           <context context-type="linenumber">1</context>
         </context-group>
-      </trans-unit><trans-unit id="d7f6fd69c9f28b31cfbdcfefa258adbcbc3e2f9e" datatype="html">
-        <source>
-      Details
-    </source><target>
-      Details
-    </target>
+      </trans-unit><trans-unit id="4f8b2bb476981727ab34ed40fde1218361f92c45" datatype="html">
+        <source>Details</source><target state="final">Details</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/error/error.component.html</context>
           <context context-type="linenumber">5</context>
         </context-group>
       </trans-unit>
+      
     </body>
   </file>
 </xliff>
