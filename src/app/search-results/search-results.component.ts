@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Results, Filters } from '../search.service';
 import { PageEvent } from '@angular/material/paginator';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Filters, Results, SearchService } from '../search.service';
 
 @Component({
     selector: 'app-search-results',
@@ -18,10 +18,17 @@ export class SearchResultsComponent implements OnInit {
 
     filters: Filters = {};
 
-    constructor(private route: ActivatedRoute, private router: Router) {}
+    constructor(
+        private route: ActivatedRoute,
+        private router: Router,
+        private search: SearchService,
+    ) {}
 
     ngOnInit(): void {
-        this.route.data.subscribe((data: { results: Results }) => (this.results = data.results));
+        this.route.data.subscribe((data: { results: Results }) => {
+            this.results = data.results;
+            this.loadLargeThumbnails();
+        });
         this.route.queryParams.subscribe((params) => {
             if (params.pageIndex) {
                 this.pageInfo.pageIndex = params.pageIndex;
@@ -44,5 +51,15 @@ export class SearchResultsComponent implements OnInit {
             },
             queryParamsHandling: 'merge',
         });
+    }
+
+    private loadLargeThumbnails() {
+        this.results.results
+            .filter((result) => result.thumbnail)
+            .map((result) => {
+                this.search.getDetails(result.id).subscribe((fullResult) => {
+                    result.thumbnail.large = fullResult.thumbnail.large;
+                });
+            });
     }
 }

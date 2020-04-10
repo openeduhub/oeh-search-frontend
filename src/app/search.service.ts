@@ -34,7 +34,7 @@ export interface Result {
         lifecycle: {};
     };
     id: string;
-    fulltext: number;
+    fulltext: string;
 }
 
 export interface Results {
@@ -99,7 +99,6 @@ export class SearchService {
     };
 
     private facets = new BehaviorSubject<Facets>(null);
-
     private didYouMeanSuggestion = new BehaviorSubject<DidYouMeanSuggestion>(null);
 
     constructor(private http: HttpClient) {}
@@ -177,6 +176,9 @@ export class SearchService {
             .post(`${this.url}/${this.index}/_search`, {
                 from: pageInfo.pageIndex * pageInfo.pageSize,
                 size: pageInfo.pageSize,
+                _source: {
+                    excludes: ['thumbnail.large'],
+                },
                 query: this.generateSearchQuery(searchString, filters),
                 suggest: searchString
                     ? {
