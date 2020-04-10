@@ -111,8 +111,25 @@ export class SearchService {
         },
         filters: Filters,
     ): Observable<Results> {
-        this.updateFacets(searchString, filters);
-        return this.performSearch(searchString, pageInfo, filters);
+        return this.http
+            .post(`${this.url}/${this.index}/_search`, {
+                from: pageInfo.pageIndex * pageInfo.pageSize,
+                size: pageInfo.pageSize,
+                _source: {
+                    excludes: ['thumbnail.large'],
+                },
+                query: this.generateSearchQuery(searchString, filters),
+                suggest: this.generateSuggest(searchString),
+                aggregations: this.generateAggregations(searchString, filters),
+            })
+            .pipe(
+                tap((response: any) => this.updateDidYouMeanSuggestion(response.suggest)),
+                tap((response: any) => this.updateFacets(response.aggregations)),
+                map((response: any) => ({
+                    total: response.hits.total.value,
+                    results: response.hits.hits.map((hit: any) => hit._source),
+                })),
+            );
     }
 
     getDetails(id: string): Observable<Result> {
@@ -164,53 +181,7 @@ export class SearchService {
         return this.didYouMeanSuggestion.asObservable();
     }
 
-    private performSearch(
-        searchString: string,
-        pageInfo: {
-            pageIndex: number;
-            pageSize: number;
-        },
-        filters: Filters,
-    ): Observable<Results> {
-        return this.http
-            .post(`${this.url}/${this.index}/_search`, {
-                from: pageInfo.pageIndex * pageInfo.pageSize,
-                size: pageInfo.pageSize,
-                _source: {
-                    excludes: ['thumbnail.large'],
-                },
-                query: this.generateSearchQuery(searchString, filters),
-                suggest: searchString
-                    ? {
-                          text: searchString,
-                          title: {
-                              term: {
-                                  field: 'lom.general.title',
-                              },
-                          },
-                      }
-                    : undefined,
-            })
-            .pipe(
-                tap((response: any) => {
-                    // TODO: consider suggestions for multiple fields
-                    if (response.suggest) {
-                        const didYouMeanSuggestion = this.generateDidYouMeanSuggestion(
-                            response.suggest.title,
-                        );
-                        this.didYouMeanSuggestion.next(didYouMeanSuggestion);
-                    } else {
-                        this.didYouMeanSuggestion.next(null);
-                    }
-                }),
-                map((response: any) => ({
-                    total: response.hits.total.value,
-                    results: response.hits.hits.map((hit: any) => hit._source),
-                })),
-            );
-    }
-
-    private generateSearchQuery(searchString?: string, filters: Filters = {}): object {
+    private generateSearchQuery(searchString?: string, filters: Filters = {}) {
         return {
             bool: {
                 must: searchString
@@ -233,7 +204,9 @@ export class SearchService {
         };
     }
 
-    private async updateFacets(searchString?: string, filters: Filters = {}) {
+    private generateAggregations(searchString?: string, filters: Filters = {}) {
+        // Extract the non-facet part of the query to apply to all aggregations.
+        const query = this.generateSearchQuery(searchString, {});
         // Build a modified aggregations object, where each facet is wrapped in a filter aggregation
         // that applies all active filters but that of the facet itself. This way, options are
         // narrowed down by other filters but currently not selected options of *this* facet are
@@ -245,6 +218,7 @@ export class SearchService {
                 const filteredAggregation = {
                     filter: {
                         bool: {
+                            must: query.bool.must,
                             filter: this.mapFilters(otherFilters),
                         },
                     },
@@ -257,32 +231,54 @@ export class SearchService {
             },
             {},
         );
-        const facets = (await this.http
-            .post(`${this.url}/${this.index}/_search`, {
-                // Don't return any results, we want only the facets.
-                size: 0,
-                // Query for the searchString, but don't apply any filters globally.
-                query: this.generateSearchQuery(searchString, {}),
-                // Filters are applied here per aggregation.
+        return {
+            all_facets: {
+                global: {},
                 aggregations,
-            })
-            .pipe(
-                map((response: any) => {
-                    // Make the above filter process transparent to the caller.
-                    return Object.entries(response.aggregations).reduce(
-                        (acc, [label, aggregation]) => {
-                            acc[label] = aggregation[`filtered_${label}`];
-                            return acc;
-                        },
-                        {},
-                    );
-                }),
-            )
-            .toPromise()) as Facets;
+            },
+        };
+    }
+
+    private async updateFacets(aggregations: any) {
+        // Unwrap the filter structure introduced by `generateAggregations`.
+        const facets = Object.entries(aggregations.all_facets).reduce(
+            (acc, [label, aggregation]) => {
+                if (aggregation[`filtered_${label}`]) {
+                    acc[label] = aggregation[`filtered_${label}`];
+                }
+                return acc;
+            },
+            {} as Facets,
+        );
         this.facets.next(facets);
     }
 
-    private generateDidYouMeanSuggestion(suggests: Suggest[]) {
+    private generateSuggest(searchString: string) {
+        if (searchString) {
+            return {
+                text: searchString,
+                title: {
+                    term: {
+                        field: 'lom.general.title',
+                    },
+                },
+            };
+        } else {
+            return undefined;
+        }
+    }
+
+    private updateDidYouMeanSuggestion(suggest?: { [label: string]: any }) {
+        // TODO: consider suggestions for multiple fields
+        if (suggest) {
+            const didYouMeanSuggestion = this.processDidYouMeanSuggestion(suggest.title);
+            this.didYouMeanSuggestion.next(didYouMeanSuggestion);
+        } else {
+            this.didYouMeanSuggestion.next(null);
+        }
+    }
+
+    private processDidYouMeanSuggestion(suggests: Suggest[]) {
         const words = suggests.map((suggest) => {
             if (suggest.options.length > 0) {
                 return { text: suggest.options[0].text, changed: true };
