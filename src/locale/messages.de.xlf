@@ -21,15 +21,57 @@
           <context context-type="sourcefile">src/app/search/search.component.html</context>
           <context context-type="linenumber">12</context>
         </context-group>
+      </trans-unit><trans-unit id="e4e28b371f8453e22779db590cb0fe67f2a080e8" datatype="html">
+        <source>No results</source><target state="final">Keine Ergebnisse</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="100fe36596ab2947fa7045b6203d61e577267665" datatype="html">
+        <source>
+      <x id="ICU" equiv-text="{results.total, plural, =1 {...} other {...}}"/>
+    </source><target state="final">
+      <x id="ICU" equiv-text="{results.total, plural, =1 {...} other {...}}"/>
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit><trans-unit id="0b4b99f69ed1480423786a7e0891e7b2681246d9" datatype="html">
+        <source>{VAR_PLURAL, plural, =1 {1 result} other {<x id="INTERPOLATION" equiv-text="{{results.total | number}}"/> results} }</source>
+        <target state="final">{VAR_PLURAL, plural, =1 {1 Ergebnis} other {<x id="INTERPOLATION" equiv-text="{{results.total | number}}"/> Ergebnisse} }</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit><trans-unit id="2cb18166051da66253adbb732d8c447c158c3b64" datatype="html">
+        <source>
+      Page <x id="INTERPOLATION" equiv-text="{{ pageInfo.pageIndex + 1 }}"/> of <x id="INTERPOLATION_1" equiv-text="{{ results.total | number }}"/> results
+    </source><target state="final">
+      Seite <x id="INTERPOLATION" equiv-text="{{ pageInfo.pageIndex + 1 }}"/> von <x id="INTERPOLATION_1" equiv-text="{{ results.total | number }}"/> Ergebnissen
+    </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="670d8a52c3991659b5516a9a048752a1adc282a4" datatype="html">
+        <source>
+          (<x id="INTERPOLATION" equiv-text="{{ results.time / 1000 | number }}"/> seconds)
+        </source>
+        <target state="final">
+          (<x id="INTERPOLATION" equiv-text="{{ results.time / 1000 | number }}"/> Sekunden)
+        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="683309382cfae68d520e4e4284f24436bf398307" datatype="html">
         <source>Go to content</source>
         <target state="final">Zum Inhalt</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
-          <context context-type="linenumber">35</context>
-        </context-group>
-      </trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/search-results/search-results.component.html</context><context context-type="linenumber">45</context></context-group></trans-unit>
       <trans-unit id="5f63f0ac9abd7ff136ae484844ed3e8722604f22" datatype="html">
         <source>Did you mean:</source>
         <target state="final">Meinten Sie:</target>
@@ -45,14 +87,15 @@
           <context context-type="sourcefile">src/app/error/error.component.html</context>
           <context context-type="linenumber">1</context>
         </context-group>
-      </trans-unit><trans-unit id="4f8b2bb476981727ab34ed40fde1218361f92c45" datatype="html">
-        <source>Details</source><target state="final">Details</target>
+      </trans-unit>
+      <trans-unit id="4f8b2bb476981727ab34ed40fde1218361f92c45" datatype="html">
+        <source>Details</source>
+        <target state="final">Details</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/error/error.component.html</context>
           <context context-type="linenumber">5</context>
         </context-group>
       </trans-unit>
-      
     </body>
   </file>
 </xliff>

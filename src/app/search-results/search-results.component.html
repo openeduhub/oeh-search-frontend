@@ -1,44 +1,55 @@
-<div *ngIf="!results.total" class="results">
-  No results.
+<div class="summary">
+  <ng-container *ngIf="results.total === 0" i18n>No results</ng-container>
+  <ng-container *ngIf="results.total > 0">
+    <ng-container *ngIf="pageInfo.pageIndex === 0" i18n>
+      {results.total, plural, =1 {1 result} other {{{results.total | number}} results}}
+    </ng-container>
+    <ng-container *ngIf="pageInfo.pageIndex > 0" i18n>
+      Page {{ pageInfo.pageIndex + 1 }} of {{ results.total | number }} results
+    </ng-container>
+    <ng-container i18n>({{ results.time / 1000 | number }} seconds)</ng-container>
+  </ng-container>
 </div>
 
-<div class="results">
-  <mat-card class="result" *ngFor="let result of results.results">
-    <a class="details-link" [routerLink]="['/details', result.id]">
-      <img
-        *ngIf="result.thumbnail"
-        mat-card-image
-        [src]="
-          result.thumbnail.large || result.thumbnail.small
-            | safeBase64Data: result.thumbnail.mimetype
-        "
-      />
-      <mat-card-title>{{ result.lom.general.title | truncate: 52 }}</mat-card-title>
-    </a>
-    <mat-card-content>
-      <p>
-        {{ result.lom.educational.description | truncate: 150 }}
-      </p>
-      <div class="keyword">
-        <span *ngFor="let keyword of result.lom.general.keyword">
-          <a
-            routerLink
-            [queryParams]="['keywords', [keyword]] | generateFilters: filters"
-            queryParamsHandling="merge"
-          >
-            {{ keyword }}
-          </a>
-        </span>
-      </div>
-    </mat-card-content>
-    <div class="source">{{ result.source.name }}</div>
-    <a class="content-link" [href]="result.lom.technical.location" i18n>Go to content</a>
-  </mat-card>
-</div>
-<mat-paginator
-  [length]="results.total"
-  [pageIndex]="pageInfo.pageIndex"
-  [pageSize]="pageInfo.pageSize"
-  (page)="onPage($event)"
->
-</mat-paginator>
+<ng-container *ngIf="results.total > 0">
+  <div class="results">
+    <mat-card class="result" *ngFor="let result of results.results">
+      <a class="details-link" [routerLink]="['/details', result.id]">
+        <img
+          *ngIf="result.thumbnail"
+          mat-card-image
+          [src]="
+            result.thumbnail.large || result.thumbnail.small
+              | safeBase64Data: result.thumbnail.mimetype
+          "
+        />
+        <mat-card-title>{{ result.lom.general.title | truncate: 52 }}</mat-card-title>
+      </a>
+      <mat-card-content>
+        <p>
+          {{ result.lom.educational.description | truncate: 150 }}
+        </p>
+        <div class="keyword">
+          <span *ngFor="let keyword of result.lom.general.keyword">
+            <a
+              routerLink
+              [queryParams]="['keywords', [keyword]] | generateFilters: filters"
+              queryParamsHandling="merge"
+            >
+              {{ keyword }}
+            </a>
+          </span>
+        </div>
+      </mat-card-content>
+      <div class="source">{{ result.source.name }}</div>
+      <a class="content-link" [href]="result.lom.technical.location" i18n>Go to content</a>
+    </mat-card>
+  </div>
+  <mat-paginator
+    [length]="results.total"
+    [pageIndex]="pageInfo.pageIndex"
+    [pageSize]="pageInfo.pageSize"
+    (page)="onPage($event)"
+  >
+  </mat-paginator>
+</ng-container>

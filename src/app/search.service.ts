@@ -39,6 +39,7 @@ export interface Result {
 
 export interface Results {
     total: number;
+    time: number; // ms
     results: Result[];
 }
 
@@ -127,6 +128,7 @@ export class SearchService {
                 tap((response: any) => this.updateFacets(response.aggregations)),
                 map((response: any) => ({
                     total: response.hits.total.value,
+                    time: response.took,
                     results: response.hits.hits.map((hit: any) => hit._source),
                 })),
             );

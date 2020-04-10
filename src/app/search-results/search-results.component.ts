@@ -31,10 +31,10 @@ export class SearchResultsComponent implements OnInit {
         });
         this.route.queryParams.subscribe((params) => {
             if (params.pageIndex) {
-                this.pageInfo.pageIndex = params.pageIndex;
+                this.pageInfo.pageIndex = parseInt(params.pageIndex, 10);
             }
             if (params.pageSize) {
-                this.pageInfo.pageSize = params.pageSize;
+                this.pageInfo.pageSize = parseInt(params.pageSize, 10);
             }
             if (params.filters) {
                 this.filters = JSON.parse(params.filters);
