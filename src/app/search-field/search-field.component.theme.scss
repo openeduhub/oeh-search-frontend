@@ -1,0 +1,13 @@
+@import '~@angular/material/theming';
+
+@mixin search-field-theme($theme) {
+    $foreground: map-get($theme, foreground);
+    .search-field {
+        .search-field-flex {
+            border-color: mat-color($foreground, divider);
+            mat-icon {
+                color: mat-color($foreground, icon);
+            }
+        }
+    }
+}

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import {
     MatAutocompleteSelectedEvent,
@@ -16,8 +16,10 @@ import { SearchService } from '../search.service';
 })
 export class SearchFieldComponent implements OnInit {
     @ViewChild('autoComplete') autoComplete: MatAutocompleteTrigger;
+    @ViewChild('searchFieldInput') searchFieldInput: ElementRef<HTMLInputElement>;
     searchField = new FormControl();
     autoCompleteSuggestions$: Observable<string[]>;
+    inputHasChanged = false;
     private searchString: string;
 
     constructor(
@@ -29,11 +31,15 @@ export class SearchFieldComponent implements OnInit {
     ngOnInit(): void {
         this.route.queryParams.subscribe((params) => {
             this.searchString = params.q;
-            this.searchField.setValue(this.searchString);
+            this.searchField.setValue(this.searchString, { emitEvent: false });
+            this.inputHasChanged = false;
         });
         this.searchField.valueChanges
             .pipe(
-                tap((searchString) => (this.searchString = searchString)),
+                tap((searchString) => {
+                    this.searchString = searchString;
+                    this.inputHasChanged = true;
+                }),
                 debounceTime(200),
                 distinctUntilChanged(),
             )
@@ -56,6 +62,11 @@ export class SearchFieldComponent implements OnInit {
             queryParams: { q: event.option.value, pageIndex: 0 },
             queryParamsHandling: 'merge',
         });
+    }
+
+    clear() {
+        this.searchField.setValue('');
+        this.searchFieldInput.nativeElement.focus();
     }
 
     private onSearchStringChanges(searchString: string) {

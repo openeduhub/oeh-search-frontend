@@ -1,18 +1,38 @@
 <form (ngSubmit)="onSubmit()">
-  <mat-form-field appearance="outline" id="search-input">
-    <input
-      matInput
-      [formControl]="searchField"
-      autofocus
-      [matAutocomplete]="auto"
-      #autoComplete="matAutocompleteTrigger"
-      i18n-placeholder
-      placeholder="Search"
-    />
-    <button matSuffix mat-icon-button type="submit" i18n-aria-label aria-label="Search">
-      <mat-icon>search</mat-icon>
-    </button>
-  </mat-form-field>
+  <div class="search-field mat-typography">
+    <div class="search-field-flex">
+      <mat-icon class="search-icon">search</mat-icon>
+      <input
+        #searchFieldInput
+        [formControl]="searchField"
+        autofocus
+        [matAutocomplete]="auto"
+        #autoComplete="matAutocompleteTrigger"
+        i18n-placeholder
+        placeholder="Search"
+        i18n-aria-label
+        aria-label="Search"
+      />
+      <button
+        *ngIf="inputHasChanged"
+        mat-icon-button
+        type="submit"
+        i18n-aria-label
+        aria-label="Search"
+      >
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
+      <button
+        *ngIf="!inputHasChanged && searchField.value"
+        mat-icon-button
+        i18n-aria-label
+        aria-label="Clear input"
+        (click)="clear()"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
   <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onAutocompleteSelected($event)">
     <mat-option *ngFor="let option of autoCompleteSuggestions$ | async" [value]="option">{{
       option

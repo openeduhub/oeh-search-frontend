@@ -1,7 +1,42 @@
-#search-input {
+.search-field {
     width: 100%;
-    // Fix button alignment for Firefox
-    :host ::ng-deep & button {
-        display: inline-block;
+    margin-bottom: 1.34375em; // Same as .mat-form-field-wrapper
+    position: relative;
+    .search-field-flex {
+        display: flex;
+        align-items: center;
+        padding: 0 0.75em;
+        border-style: solid;
+        border-width: 1px;
+        border-radius: 2em;
+
+        mat-icon.search-icon {
+            width: 1.5em;
+            text-align: center;
+        }
+        mat-icon {
+            display: block;
+            font-size: 150%;
+            height: 1.125em;
+            line-height: 1.125;
+        }
+        > input {
+            font: unset;
+            background: none;
+            border: none;
+            flex-grow: 1;
+            padding: 1em 0.2em;
+            background: none;
+            &:focus {
+                outline: none;
+            }
+        }
+        > button {
+            width: 2.5em;
+            height: 2.5em;
+            mat-icon {
+                margin: auto;
+            }
+        }
     }
 }
