@@ -27,6 +27,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { HeaderbarComponent } from './headerbar/headerbar.component';
 import { SearchFieldComponent } from './search-field/search-field.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 const appRoutes: Routes = [
     {
@@ -81,6 +82,7 @@ const appRoutes: Routes = [
         MatSelectModule,
         MatExpansionModule,
         MatProgressSpinnerModule,
+        MatTooltipModule,
     ],
     providers: [],
     bootstrap: [AppComponent],

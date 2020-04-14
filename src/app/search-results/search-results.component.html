@@ -42,7 +42,17 @@
         </div>
       </mat-card-content>
       <div class="source">{{ result.source.name }}</div>
-      <a class="content-link" [href]="result.lom.technical.location" i18n>Go to content</a>
+      <a
+        class="content-link"
+        mat-icon-button
+        i18n-aria-label
+        aria-label="Go to content"
+        i18n-matTooltip
+        matTooltip="Go to content"
+        [href]="result.lom.technical.location"
+      >
+        <mat-icon>open_in_new</mat-icon>
+      </a>
     </mat-card>
   </div>
   <mat-paginator

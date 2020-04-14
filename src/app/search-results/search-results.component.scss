@@ -39,9 +39,6 @@
         }
         a.content-link {
             align-self: flex-end;
-            &::before {
-                content: '→ ';
-            }
         }
     }
 }
