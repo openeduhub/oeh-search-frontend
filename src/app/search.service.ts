@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 export interface Result {
     hash: string;
@@ -82,7 +83,7 @@ interface Aggregation {
 
 @Injectable({ providedIn: 'root' })
 export class SearchService {
-    private readonly url = 'http://localhost:9200';
+    private readonly url = environment.elasticSearchUrl;
     private readonly index = 'search_idx';
     private readonly aggregations: { [label: string]: Aggregation } = {
         source: {
