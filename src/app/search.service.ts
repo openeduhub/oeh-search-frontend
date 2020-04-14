@@ -49,7 +49,7 @@ export interface DidYouMeanSuggestion {
     html: string;
 }
 
-export type Facet = 'source' | 'keywords';
+export type Facet = 'sources' | 'keywords';
 
 export type Facets = {
     [label in Facet]: {
@@ -86,7 +86,7 @@ export class SearchService {
     private readonly url = environment.elasticSearchUrl;
     private readonly index = 'search_idx';
     private readonly aggregations: { [label: string]: Aggregation } = {
-        source: {
+        sources: {
             terms: {
                 field: 'source.name.keyword',
                 size: 100,

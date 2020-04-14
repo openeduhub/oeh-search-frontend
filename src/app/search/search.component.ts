@@ -1,13 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import {
-    MatAutocompleteSelectedEvent,
-    MatAutocompleteTrigger,
-} from '@angular/material/autocomplete';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged, filter, first, tap } from 'rxjs/operators';
-import { Facets, Filters, SearchService, DidYouMeanSuggestion } from '../search.service';
+import { filter, first } from 'rxjs/operators';
+import { DidYouMeanSuggestion, Facets, Filters, SearchService } from '../search.service';
 
 @Component({
     selector: 'app-search',

@@ -9,7 +9,7 @@
 
 <div *ngIf="facets" class="filters" [formGroup]="facetFilters">
   <mat-form-field *ngFor="let facet of facets | keyvalue">
-    <mat-label i18n>{facet.key, select, keywords {Keywords} source {Source}}</mat-label>
+    <mat-label i18n>{facet.key, select, keywords {Keywords} sources {Sources}}</mat-label>
     <mat-select [formControlName]="facet.key" multiple>
       <mat-option *ngFor="let bucket of facet.value.buckets" [value]="bucket.key">
         {{ bucket.key }} ({{ bucket.doc_count }})
