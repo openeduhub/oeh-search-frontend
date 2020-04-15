@@ -51,12 +51,14 @@ export interface DidYouMeanSuggestion {
 
 export type Facet = 'sources' | 'keywords';
 
+interface Bucket {
+    key: string;
+    doc_count: number;
+}
+
 export type Facets = {
     [label in Facet]: {
-        buckets: {
-            key: string;
-            doc_count: number;
-        }[];
+        buckets: Bucket[];
     };
 };
 
@@ -77,26 +79,23 @@ interface SuggestOption {
     freq: number;
 }
 
-interface Aggregation {
-    terms: { field: string; size: number };
+interface AggregationTerms {
+    field: string;
+    size: number;
 }
 
 @Injectable({ providedIn: 'root' })
 export class SearchService {
     private readonly url = environment.elasticSearchUrl;
     private readonly index = 'search_idx';
-    private readonly aggregations: { [label: string]: Aggregation } = {
+    private readonly aggregationTerms: { [label: string]: AggregationTerms } = {
         sources: {
-            terms: {
-                field: 'source.name.keyword',
-                size: 100,
-            },
+            field: 'source.name.keyword',
+            size: 100,
         },
         keywords: {
-            terms: {
-                field: 'lom.general.keyword.keyword',
-                size: 100,
-            },
+            field: 'lom.general.keyword.keyword',
+            size: 100,
         },
     };
 
@@ -214,26 +213,37 @@ export class SearchService {
         // that applies all active filters but that of the facet itself. This way, options are
         // narrowed down by other filters but currently not selected options of *this* facet are
         // still shown.
-        const aggregations = Object.entries(this.aggregations).reduce(
-            (acc, [label, aggregation]) => {
-                const otherFilters = { ...filters };
-                delete otherFilters[label];
-                const filteredAggregation = {
-                    filter: {
-                        bool: {
-                            must: query.bool.must,
-                            filter: this.mapFilters(otherFilters),
+        const aggregations = Object.entries(this.aggregationTerms).reduce((acc, [label, terms]) => {
+            const otherFilters = { ...filters };
+            delete otherFilters[label];
+            const filteredAggregation = {
+                filter: {
+                    bool: {
+                        must: query.bool.must,
+                        filter: this.mapFilters(otherFilters),
+                    },
+                },
+                aggregations: {
+                    [`filtered_${label}`]: {
+                        // Will return the top entries with respect to currently active filters.
+                        terms,
+                    },
+                    [`selected_${label}`]: {
+                        // Will return the currently selected (filtered by) entries.
+                        //
+                        // This is important since the currently selected entries might not be among
+                        // the top results we get from the above aggregation. We explicitly add all
+                        // selected entries to make sure all active filters appear on the list.
+                        terms: {
+                            ...terms,
+                            include: filters[label] || [],
                         },
                     },
-                    aggregations: {
-                        [`filtered_${label}`]: aggregation,
-                    },
-                };
-                acc[label] = filteredAggregation;
-                return acc;
-            },
-            {},
-        );
+                },
+            };
+            acc[label] = filteredAggregation;
+            return acc;
+        }, {});
         return {
             all_facets: {
                 global: {},
@@ -247,7 +257,10 @@ export class SearchService {
         const facets = Object.entries(aggregations.all_facets).reduce(
             (acc, [label, aggregation]) => {
                 if (aggregation[`filtered_${label}`]) {
-                    acc[label] = aggregation[`filtered_${label}`];
+                    acc[label] = mergeAggregations(
+                        aggregation[`filtered_${label}`],
+                        aggregation[`selected_${label}`],
+                    );
                 }
                 return acc;
             },
@@ -311,15 +324,33 @@ export class SearchService {
         if (value === null || value.length === 0) {
             return null;
         }
-        const aggregation = this.aggregations[label];
-        if (aggregation && 'terms' in aggregation) {
+        const terms = this.aggregationTerms[label];
+        if (terms && 'field' in terms) {
             return {
                 terms: {
-                    [aggregation.terms.field]: value,
+                    [terms.field]: value,
                 },
             };
         } else {
             throw new Error(`Unknown filter label: ${label}`);
         }
     }
+}
+
+function mergeAggregations(
+    lhs: { buckets: Bucket[] },
+    rhs: { buckets: Bucket[] },
+): { buckets: Bucket[] } {
+    // There are actually more fields in aggregations than `buckets`, but we don't use them at the
+    // moment, so we just drop them.
+    return { buckets: mergeBuckets(lhs.buckets, rhs.buckets) };
+}
+
+function mergeBuckets(lhs: Bucket[], rhs: Bucket[]): Bucket[] {
+    for (const bucket of rhs) {
+        if (!lhs.some((b) => b.key === bucket.key)) {
+            lhs.push(bucket);
+        }
+    }
+    return lhs;
 }
