@@ -19,13 +19,22 @@
             height: 200px;
             object-fit: cover;
         }
+        mat-card-title{
+            line-height: 1.25;
+        }
         mat-card-content {
             flex-grow: 1;
-            .keyword {
+            .keyword, .educational, .context {
+                color: #777;
+                label{
+                    font-size: 90%;
+                    display: flex;
+                }
                 padding-bottom: 0.3em;
                 span {
+                    color: #333;
                     a {
-                        color: gray;
+                        color: #333;
                     }
                     &:not(:last-child)::after {
                         content: '･';
