@@ -36,6 +36,14 @@ export interface Result {
     };
     id: string;
     fulltext: string;
+    valuespaces?: {
+        discipline?: {
+            de: string;
+        }[];
+        educationalContext?: {
+            de: string;
+        }[];
+    };
 }
 
 export interface Results {
@@ -49,7 +57,7 @@ export interface DidYouMeanSuggestion {
     html: string;
 }
 
-export type Facet = 'sources' | 'keywords';
+export type Facet = 'sources' | 'keywords' | 'disciplines' | 'educationalContexts';
 
 interface Bucket {
     key: string;
@@ -95,6 +103,14 @@ export class SearchService {
         },
         keywords: {
             field: 'lom.general.keyword.keyword',
+            size: 100,
+        },
+        disciplines: {
+            field: 'valuespaces.discipline.de.keyword',
+            size: 100,
+        },
+        educationalContexts: {
+            field: 'valuespaces.educationalContext.de.keyword',
             size: 100,
         },
     };
