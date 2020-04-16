@@ -32,15 +32,27 @@
         <div class="educational" *ngIf="result.valuespaces && result.valuespaces.discipline">
           <label i18n>Discipline</label>
           <span *ngFor="let discipline of result.valuespaces.discipline">
-            {{ discipline.de }}
-            <!-- @TODO: use i18n de/en -->
+            <a
+              routerLink
+              [queryParams]="['disciplines', [discipline.de]] | generateFilters: filters"
+              queryParamsHandling="merge"
+            >
+              {{ discipline.de }}
+              <!-- @TODO: use i18n de/en -->
+            </a>
           </span>
         </div>
         <div class="context" *ngIf="result.valuespaces && result.valuespaces.educationalContext">
           <label i18n>Educational Context</label>
           <span *ngFor="let context of result.valuespaces.educationalContext">
-            {{ context.de }}
-            <!-- @TODO: use i18n de/en -->
+            <a
+              routerLink
+              [queryParams]="['educationalContexts', [context.de]] | generateFilters: filters"
+              queryParamsHandling="merge"
+            >
+              {{ context.de }}
+              <!-- @TODO: use i18n de/en -->
+            </a>
           </span>
         </div>
         <div class="keyword" *ngIf="result.lom.general.keyword">
