@@ -1,16 +1,32 @@
 :host {
     display: flex;
+    flex-direction: column;
+}
+header {
+    display: flex;
     flex-wrap: wrap;
     width: 100%;
     align-items: center;
-}
-h1 {
-    padding-right: 1em;
-    a {
-        color: unset;
-        text-decoration: none;
+    h1 {
+        padding-right: 1em;
+        a {
+            color: unset;
+            text-decoration: none;
+            img {
+                max-width: 200px;
+            }
+        }
+    }
+    app-search-field {
+        flex-grow: 1;
     }
 }
-app-search-field {
-    flex-grow: 1;
+.alpha{
+    background-color: #0b24fa;
+    color: #fff;
+    border-radius: 10px;
+    text-align: center;
+    white-space: pre-line;
+    padding:15px 20px;
+    margin:5px auto 20px auto;
 }

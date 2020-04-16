@@ -57,22 +57,16 @@
         </context-group>
       </trans-unit><trans-unit id="4dbd5d5aa9de5f2246e18532f80745b43ebb05f2" datatype="html">
         <source>Educational Context</source><target state="final">Educational Context</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
-          <context context-type="linenumber">39</context>
-        </context-group>
-      </trans-unit><trans-unit id="1f335b381271e2cc422d3b9e3c40ba794d19da4e" datatype="html">
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/search-results/search-results.component.html</context><context context-type="linenumber">46</context></context-group></trans-unit><trans-unit id="1f335b381271e2cc422d3b9e3c40ba794d19da4e" datatype="html">
         <source>Keywords</source><target state="final">Keywords</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
-          <context context-type="linenumber">45</context>
-        </context-group>
-      </trans-unit>
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/search-results/search-results.component.html</context><context context-type="linenumber">59</context></context-group></trans-unit>
       <trans-unit id="683309382cfae68d520e4e4284f24436bf398307" datatype="html">
         <source>Go to content</source>
         <target state="final">Go to content</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/search-results/search-results.component.html</context><context context-type="linenumber">62</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/search-results/search-results.component.html</context><context context-type="linenumber">64</context></context-group></trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/search-results/search-results.component.html</context><context context-type="linenumber">76</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/search-results/search-results.component.html</context><context context-type="linenumber">78</context></context-group></trans-unit>
       <trans-unit id="5f63f0ac9abd7ff136ae484844ed3e8722604f22" datatype="html">
         <source>Did you mean:</source>
         <target state="final">Did you mean:</target>
@@ -99,6 +93,12 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/error/error.component.html</context>
           <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit><trans-unit id="d4ae6b08e6a965cb63de4e9be0b1c7bbdb57bf4a" datatype="html">
+        <source>Alpha Message</source><target state="final">Alpha Message</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/headerbar/headerbar.component.html</context>
+          <context context-type="linenumber">9</context>
         </context-group>
       </trans-unit>
     </body>

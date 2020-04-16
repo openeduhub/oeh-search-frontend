@@ -66,25 +66,25 @@
         <source>Educational Context</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
-          <context context-type="linenumber">39</context>
+          <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1f335b381271e2cc422d3b9e3c40ba794d19da4e" datatype="html">
         <source>Keywords</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
-          <context context-type="linenumber">45</context>
+          <context context-type="linenumber">59</context>
         </context-group>
       </trans-unit>
       <trans-unit id="683309382cfae68d520e4e4284f24436bf398307" datatype="html">
         <source>Go to content</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
-          <context context-type="linenumber">62</context>
+          <context context-type="linenumber">76</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
-          <context context-type="linenumber">64</context>
+          <context context-type="linenumber">78</context>
         </context-group>
       </trans-unit>
       <trans-unit id="fe90aaa93785f07d828ad81ac0f6fbca5923693a" datatype="html">
@@ -99,6 +99,13 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/error/error.component.html</context>
           <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="d4ae6b08e6a965cb63de4e9be0b1c7bbdb57bf4a" datatype="html">
+        <source>Alpha Message</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/headerbar/headerbar.component.html</context>
+          <context context-type="linenumber">9</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7e892ba15f2c6c17e83510e273b3e10fc32ea016" datatype="html">
