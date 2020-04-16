@@ -56,7 +56,7 @@
           </span>
         </div>
       </mat-card-content>
-      <div class="source">{{ result.source.name }}</div>
+      <a class="source" [href]="result.source.url" target="_blank">{{ result.source.name }}</a>
       <a
         class="content-link"
         mat-icon-button
