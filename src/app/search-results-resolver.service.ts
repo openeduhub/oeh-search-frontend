@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Results, SearchService } from './search.service';
+import { SearchService } from './search.service';
+import { Results } from 'shared/types';
 
 @Injectable({
     providedIn: 'root',

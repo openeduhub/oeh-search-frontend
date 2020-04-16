@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { SearchService, Result } from '../search.service';
 import { ActivatedRoute } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { Result } from 'shared/types';
 
 @Component({
     selector: 'app-details',

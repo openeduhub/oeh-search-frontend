@@ -1,0 +1,3 @@
+[submodule "elasticsearch-relay"]
+	path = elasticsearch-relay
+	url = ssh://git@scm.edu-sharing.com:2222/open-edu-hub/elasticsearch-relay.git

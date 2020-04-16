@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Filters, Results, SearchService } from '../search.service';
+import { SearchService } from '../search.service';
+import { Results, Filters } from 'shared/types';
 
 @Component({
     selector: 'app-search-results',

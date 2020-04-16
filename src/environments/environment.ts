@@ -4,7 +4,7 @@
 
 export const environment = {
     production: false,
-    elasticSearchUrl: 'http://localhost:9200',
+    relayUrl: 'http://localhost:3000',
 };
 
 /*

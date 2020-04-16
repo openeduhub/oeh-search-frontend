@@ -4,6 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "clean": "rm -rf dist",
+    "build-shared": "tsc --project elasticsearch-relay/shared",
     "build": "ng build --prod --localize",
     "test": "ng test",
     "lint": "ng lint",

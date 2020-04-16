@@ -5,7 +5,9 @@
 To build the project and serve it via a docker container on `http://localhost:8080/`, run:
 
 ```bash
+git submodule update --init
 npm install
+npm run build-shared
 ng build --prod --localize
 docker build . --tag open-edu-hub-frontend
 docker run --name open-edu-hub-frontend --rm -ti -p 8080:80 open-edu-hub-frontend
