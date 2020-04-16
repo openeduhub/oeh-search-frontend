@@ -9,6 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "format": "prettier --write src",
+    "pull-build-update": "git pull && docker rm --force open-edu-hub-frontend && npm run build && npm run docker-build && npm run docker-run &",
     "docker-build": "docker build . --tag open-edu-hub-frontend",
     "docker-run": "docker run --name open-edu-hub-frontend --rm -ti -p 8080:80 open-edu-hub-frontend",
     "extract-i18n": "ng xi18n open-edu-hub-frontend --output-path src/locale && ng run open-edu-hub-frontend:xliffmerge",
