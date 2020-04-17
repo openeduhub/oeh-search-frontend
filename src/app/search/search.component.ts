@@ -76,6 +76,7 @@ export class SearchComponent implements OnInit {
                 queryParamsHandling: 'merge',
             });
         });
+        this.updateFacetFilters();
     }
 
     private setFacets(facets: Facets) {
@@ -93,6 +94,20 @@ export class SearchComponent implements OnInit {
                 this.facets[label].buckets = facet.buckets;
             } else {
                 this.facets[label] = facet;
+            }
+        }
+        if (this.facetFilters) {
+            this.updateFacetFilters();
+        }
+    }
+
+    private updateFacetFilters() {
+        for (const [label, facet] of Object.entries(this.facets)) {
+            const control = this.facetFilters.get(label);
+            if (facet.buckets && facet.buckets.length > 0) {
+                control.enable({ emitEvent: false });
+            } else {
+                control.disable({ emitEvent: false });
             }
         }
     }
