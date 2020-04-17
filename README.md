@@ -20,23 +20,23 @@ reload if you change any of the source files.
 
 ### Production
 
-The production environment — used when building the project as described above — expects
-Elasticsearch to be served at the same host/port as the frontend.
+The production environment — used when building the project as described above — expects the
+Elasticsearch relay to be served at the same host/port as the frontend.
 
-An Apache configuration for local testing could look like this:
+An Apache configuration could look like this:
 
 ```apacheconf
 <VirtualHost *:80>
         # ...
-        ProxyPass "/search_idx" "http://localhost:9200/search_idx"
+        ProxyPass "/api" "http://localhost:3000/api"
         ProxyPass "/" "http://localhost:8080/"
 </VirtualHost>
 ```
 
 ### Development
 
-The development environment — used when serving the frontend via `ng serve` — expects Elasticsearch
-to be served on `http://localhost:9200`.
+The development environment — used when serving the frontend via `ng serve` — expects the
+Elasticsearch relay to be served on `http://localhost:3000`.
 
 ## Tests
 
