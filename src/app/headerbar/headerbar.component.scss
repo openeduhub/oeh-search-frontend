@@ -1,3 +1,5 @@
+@import '../../variables.scss';
+
 :host {
     display: flex;
     flex-direction: column;
@@ -22,7 +24,7 @@ header {
     }
 }
 .alpha{
-    background-color: #1b4280;
+    background-color: $primary;
     color: #fff;
     border-radius: 10px;
     text-align: center;
