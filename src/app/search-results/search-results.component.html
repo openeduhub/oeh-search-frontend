@@ -27,7 +27,7 @@
       </a>
       <mat-card-content>
         <p>
-          {{ result.lom.educational.description?.trim() | truncate: 120 }}
+          {{ result.lom.educational.description | trim | truncate: 120 }}
         </p>
         <div class="educational" *ngIf="result.valuespaces && result.valuespaces.discipline">
           <label i18n>Discipline</label>
