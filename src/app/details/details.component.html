@@ -3,21 +3,34 @@
     <img
       *ngIf="details.thumbnail"
       [src]="
-        details.thumbnail.large || details.thumbnail.small | safeBase64Data: details.thumbnail.mimetype
+        details.thumbnail.large || details.thumbnail.small
+          | safeBase64Data: details.thumbnail.mimetype
       "
     />
   </div>
   <div>
     <h1>{{ details.lom.general.title }}</h1>
-    <div *ngFor="let group of groups" class="group">
-      <ng-container  *ngIf="getGroupData(group)">
-        <label i18n>{group, select, keywords {Keywords} discipline {Discipline} educationalContext {Educational Context} learningResourceType {Learning Resource Type}}</label>
-        <span *ngFor="let data of getGroupData(group)"> {{ data }} </span>
-      </ng-container>
+    <div class="group" *ngIf="details?.valuespaces?.discipline">
+      <label i18n>Discipline</label>
+      <span *ngFor="let data of details?.valuespaces?.discipline"> {{ data.de }} </span>
+    </div>
+    <div class="group" *ngIf="details?.valuespaces?.educationalContext">
+      <label i18n>Educational Context</label>
+      <span *ngFor="let data of details?.valuespaces?.educationalContext"> {{ data.de }} </span>
+    </div>
+    <div class="group" *ngIf="details?.valuespaces?.learningResourceType">
+      <label i18n>Learning Resource Type</label>
+      <span *ngFor="let data of details?.valuespaces?.learningResourceType"> {{ data.de }} </span>
+    </div>
+    <div class="group" *ngIf="details.lom.general.keyword">
+      <label i18n>Keywords</label>
+      <span *ngFor="let data of details.lom.general.keyword"> {{ data }} </span>
     </div>
     <label i18n>Source</label>
     <p>{{ details.source.name }}</p>
     <p>{{ details.lom.educational.description }}</p>
-    <button mat-raised-button color="primary" (click)="openSource()"><mat-icon>open_in_new</mat-icon>{{ details.source.name }}</button>
+    <a mat-raised-button color="primary" [href]="details.lom.technical.location"
+      ><mat-icon>open_in_new</mat-icon>{{ details.source.name }}</a
+    >
   </div>
 </div>

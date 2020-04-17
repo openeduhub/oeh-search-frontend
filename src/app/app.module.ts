@@ -28,6 +28,7 @@ import { HeaderbarComponent } from './headerbar/headerbar.component';
 import { SearchFieldComponent } from './search-field/search-field.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { TrimPipe } from './trim.pipe';
 
 const appRoutes: Routes = [
     {
@@ -63,6 +64,7 @@ const appRoutes: Routes = [
         ErrorComponent,
         HeaderbarComponent,
         SearchFieldComponent,
+        TrimPipe,
     ],
     imports: [
         AppRoutingModule,

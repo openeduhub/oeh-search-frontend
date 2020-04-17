@@ -1,15 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 import {
     DidYouMeanSuggestion,
     Facets,
     Filters,
+    Result,
     Results,
     SearchResponse,
-    Result,
 } from 'shared/types';
-import { BehaviorSubject, Observable, never } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 @Injectable({ providedIn: 'root' })
@@ -50,6 +50,9 @@ export class SearchService {
     }
 
     autoComplete(searchString: string): Observable<string[]> {
+        if (searchString.length === 0) {
+            return of(null);
+        }
         return this.http.get<string[]>(`${this.url}/api/v1/auto-complete`, {
             params: {
                 q: searchString,

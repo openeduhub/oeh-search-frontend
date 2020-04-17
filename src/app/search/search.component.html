@@ -13,7 +13,7 @@
       >{facet.key, select, keywords {Keywords} sources {Sources} disciplines {Disciplines} learningResourceTypes {Learning Resource Types}
       educationalContexts {Educational Contexts}}</mat-label
     >
-    <mat-select [formControlName]="facet.key" multiple [disabled]="!facet.value.buckets || !facet.value.buckets.length">
+    <mat-select [formControlName]="facet.key" multiple>
       <mat-option *ngFor="let bucket of facet.value.buckets" [value]="bucket.key">
         {{ bucket.key }} ({{ bucket.doc_count }})
       </mat-option>
