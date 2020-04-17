@@ -1,15 +1,23 @@
-<img
-  *ngIf="details.thumbnail"
-  [src]="
-    details.thumbnail.large || details.thumbnail.small | safeBase64Data: details.thumbnail.mimetype
-  "
-/>
-<h1>{{ details.lom.general.title }}</h1>
-<ul>
-  <li *ngFor="let keyword of details.lom.general.keyword">
-    {{ keyword }}
-  </li>
-</ul>
-<p>{{ details.source.name }}</p>
-<p>{{ details.lom.educational.description }}</p>
-<a [href]="details.lom.technical.location">{{ details.lom.technical.location }}</a>
+<div class="details">
+  <div class="image-container">
+    <img
+      *ngIf="details.thumbnail"
+      [src]="
+        details.thumbnail.large || details.thumbnail.small | safeBase64Data: details.thumbnail.mimetype
+      "
+    />
+  </div>
+  <div>
+    <h1>{{ details.lom.general.title }}</h1>
+    <div *ngFor="let group of groups" class="group">
+      <ng-container  *ngIf="getGroupData(group)">
+        <label i18n>{group, select, keywords {Keywords} discipline {Discipline} educationalContext {Educational Context}}</label>
+        <span *ngFor="let data of getGroupData(group)"> {{ data }} </span>
+      </ng-container>
+    </div>
+    <label i18n>Source</label>
+    <p>{{ details.source.name }}</p>
+    <p>{{ details.lom.educational.description }}</p>
+    <button mat-raised-button color="primary" (click)="openSource()"><mat-icon>open_in_new</mat-icon>{{ details.source.name }}</button>
+  </div>
+</div>

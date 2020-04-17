@@ -1,3 +1,48 @@
-img {
-    max-width: 100%;
+.details{
+    display: flex;
+    flex-wrap: wrap;
+    > *{
+        flex-grow: 1;
+        width: 0;
+        min-width: 500px;
+        max-width: 700px;
+        @media screen and (max-width: 600px) {
+            min-width: 100%;
+        }
+    }
+    > .image-container{
+        padding-right: 30px;
+        padding-bottom: 30px;
+        display: flex;
+        margin: auto;
+        align-items: center;
+        @media screen and (max-width: 600px) {
+            padding-right: 0;
+        }
+        > img {
+            width: 100%;
+            height: auto;
+            
+        }
+    }
+    > div {
+        label {
+            display: flex;
+            color: #777;
+            font-size: 90%;
+        }
+        .group {
+            padding-bottom: 8px;
+            span {
+                &:not(:last-child)::after {
+                    content: '･';
+                }
+            }
+        }
+        button {
+            mat-icon {
+                padding-right: 5px;
+            }
+        }
+    }
 }
