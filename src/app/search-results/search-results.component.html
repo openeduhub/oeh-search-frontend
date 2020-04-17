@@ -30,7 +30,7 @@
           {{ result.lom.educational.description?.trim() | truncate: 120 }}
         </p>
         <div class="educational" *ngIf="result.valuespaces && result.valuespaces.discipline">
-          <label i18n>discipline</label>
+          <label i18n>Discipline</label>
           <span *ngFor="let discipline of result.valuespaces.discipline">
             <a
               routerLink
@@ -43,7 +43,7 @@
           </span>
         </div>
         <div class="context" *ngIf="result.valuespaces && result.valuespaces.educationalContext">
-          <label i18n>educationalContext</label>
+          <label i18n>Educational Context</label>
           <span *ngFor="let context of result.valuespaces.educationalContext">
             <a
               routerLink
@@ -56,7 +56,7 @@
           </span>
         </div>
         <div class="keyword" *ngIf="result.lom.general.keyword">
-          <label i18n>keyword</label>
+          <label i18n>Keywords</label>
           <span *ngFor="let keyword of result.lom.general.keyword | slice: 0:5">
             <a
               routerLink

@@ -69,22 +69,22 @@
           <context context-type="linenumber">10</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="5275b0cd99afe1c8cc18eecf3eb3d5d11f414be8" datatype="html">
-        <source>discipline</source>
+      <trans-unit id="e2f5ddbb1c62ee08bb0cc5a18ecba95e1e621760" datatype="html">
+        <source>Discipline</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
           <context context-type="linenumber">33</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="c5e073db6a5bfb1f3ccb5cf9683aa69231143792" datatype="html">
-        <source>educationalContext</source>
+      <trans-unit id="4dbd5d5aa9de5f2246e18532f80745b43ebb05f2" datatype="html">
+        <source>Educational Context</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
           <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="782789f508d9e01ff27d51f129a04a409a6346a3" datatype="html">
-        <source>keyword</source>
+      <trans-unit id="1f335b381271e2cc422d3b9e3c40ba794d19da4e" datatype="html">
+        <source>Keywords</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
           <context context-type="linenumber">59</context>
@@ -115,8 +115,9 @@
           <context context-type="linenumber">5</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="d4ae6b08e6a965cb63de4e9be0b1c7bbdb57bf4a" datatype="html">
-        <source>Alpha Message</source>
+      <trans-unit id="1652ad914b013b5234ac12dc0062ede0b299165d" datatype="html">
+        <source>This is a preview of the search engine for lerning materials. Some results still have missing or wrong metadata.
+This page is regularly updated with new sources, content, and functionality. Have fun browsing!</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/headerbar/headerbar.component.html</context>
           <context context-type="linenumber">9</context>
