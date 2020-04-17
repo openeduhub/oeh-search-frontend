@@ -9,7 +9,7 @@ import { Result } from 'shared/types';
 })
 export class DetailsComponent implements OnInit {
 
-    groups = ['discipline', 'educationalContext', 'keywords']
+    groups = ['discipline', 'educationalContext', 'learningResourceType', 'keywords']
 
     details: Result;
 

@@ -29,7 +29,7 @@
         <p>
           {{ result.lom.educational.description?.trim() | truncate: 120 }}
         </p>
-        <div class="educational" *ngIf="result.valuespaces && result.valuespaces.discipline">
+        <div class="educational" *ngIf="result.valuespaces?.discipline">
           <label i18n>discipline</label>
           <span *ngFor="let discipline of result.valuespaces.discipline">
             <a
@@ -42,7 +42,7 @@
             </a>
           </span>
         </div>
-        <div class="context" *ngIf="result.valuespaces && result.valuespaces.educationalContext">
+        <div class="context" *ngIf="result.valuespaces?.educationalContext">
           <label i18n>educationalContext</label>
           <span *ngFor="let context of result.valuespaces.educationalContext">
             <a
@@ -52,6 +52,18 @@
             >
               {{ context.de }}
               <!-- @TODO: use i18n de/en -->
+            </a>
+          </span>
+        </div>
+        <div class="lrt" *ngIf="result.valuespaces?.learningResourceType">
+          <label i18n>Learning Resource Type</label>
+          <span *ngFor="let lrt of result.valuespaces.learningResourceType">
+            <a
+              routerLink
+              [queryParams]="['learningResourceTypes', [lrt.de]] | generateFilters: filters"
+              queryParamsHandling="merge"
+            >
+              {{ lrt.de }}
             </a>
           </span>
         </div>

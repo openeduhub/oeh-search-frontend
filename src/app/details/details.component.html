@@ -11,7 +11,7 @@
     <h1>{{ details.lom.general.title }}</h1>
     <div *ngFor="let group of groups" class="group">
       <ng-container  *ngIf="getGroupData(group)">
-        <label i18n>{group, select, keywords {Keywords} discipline {Discipline} educationalContext {Educational Context}}</label>
+        <label i18n>{group, select, keywords {Keywords} discipline {Discipline} educationalContext {Educational Context} learningResourceType {Learning Resource Type}}</label>
         <span *ngFor="let data of getGroupData(group)"> {{ data }} </span>
       </ng-container>
     </div>

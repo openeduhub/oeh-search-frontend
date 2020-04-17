@@ -9,15 +9,15 @@
           <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="696176a808835c9473b3794ba801480783c45032" datatype="html">
-        <source>{VAR_SELECT, select, keywords {Keywords} sources {Sources} disciplines {Disciplines} educationalContexts {Educational Contexts} }</source>
+      <trans-unit id="f2beb6f78eb78dfa5fca4226b81db520888f94db" datatype="html">
+        <source>{VAR_SELECT, select, keywords {Keywords} sources {Sources} disciplines {Disciplines} learningResourceTypes {Learning Resource Types} educationalContexts {Educational Contexts} }</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search/search.component.html</context>
           <context context-type="linenumber">13</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="c0f35eb1387dc95d4878dd6655703da2610185c1" datatype="html">
-        <source>{VAR_SELECT, select, keywords {Keywords} discipline {Discipline} educationalContext {Educational Context} }</source>
+      <trans-unit id="87deb31d2cc8bdc6af5f85ce996fcf261ec55f4b" datatype="html">
+        <source>{VAR_SELECT, select, keywords {Keywords} discipline {Discipline} educationalContext {Educational Context} learningResourceType {Learning Resource Type} }</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/details/details.component.html</context>
           <context context-type="linenumber">14</context>
@@ -83,22 +83,29 @@
           <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="a17b0f722230835c2d4e3aaedeb56fb057fd035a" datatype="html">
+        <source>Learning Resource Type</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="782789f508d9e01ff27d51f129a04a409a6346a3" datatype="html">
         <source>keyword</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
-          <context context-type="linenumber">59</context>
+          <context context-type="linenumber">71</context>
         </context-group>
       </trans-unit>
       <trans-unit id="683309382cfae68d520e4e4284f24436bf398307" datatype="html">
         <source>Go to content</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
-          <context context-type="linenumber">76</context>
+          <context context-type="linenumber">88</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
-          <context context-type="linenumber">78</context>
+          <context context-type="linenumber">90</context>
         </context-group>
       </trans-unit>
       <trans-unit id="fe90aaa93785f07d828ad81ac0f6fbca5923693a" datatype="html">
