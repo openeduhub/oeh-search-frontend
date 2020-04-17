@@ -1,7 +1,7 @@
-.details{
+.details {
     display: flex;
     flex-wrap: wrap;
-    > *{
+    > * {
         flex-grow: 1;
         width: 0;
         min-width: 500px;
@@ -10,7 +10,7 @@
             min-width: 100%;
         }
     }
-    > .image-container{
+    > .image-container {
         padding-right: 30px;
         padding-bottom: 30px;
         display: flex;
@@ -22,7 +22,6 @@
         > img {
             width: 100%;
             height: auto;
-            
         }
     }
     > div {
@@ -39,7 +38,7 @@
                 }
             }
         }
-        button {
+        a {
             mat-icon {
                 padding-right: 5px;
             }
