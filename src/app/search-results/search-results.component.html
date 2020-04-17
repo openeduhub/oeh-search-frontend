@@ -29,7 +29,7 @@
         <p>
           {{ result.lom.educational.description | trim | truncate: 120 }}
         </p>
-        <div class="educational" *ngIf="result.valuespaces && result.valuespaces.discipline">
+        <div class="educational" *ngIf="result.valuespaces?.discipline">
           <label i18n>Discipline</label>
           <span *ngFor="let discipline of result.valuespaces.discipline">
             <a
@@ -42,7 +42,7 @@
             </a>
           </span>
         </div>
-        <div class="context" *ngIf="result.valuespaces && result.valuespaces.educationalContext">
+        <div class="context" *ngIf="result.valuespaces?.educationalContext">
           <label i18n>Educational Context</label>
           <span *ngFor="let context of result.valuespaces.educationalContext">
             <a

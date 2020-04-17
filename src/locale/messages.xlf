@@ -9,8 +9,8 @@
           <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="696176a808835c9473b3794ba801480783c45032" datatype="html">
-        <source>{VAR_SELECT, select, keywords {Keywords} sources {Sources} disciplines {Disciplines} educationalContexts {Educational Contexts} }</source>
+      <trans-unit id="f2beb6f78eb78dfa5fca4226b81db520888f94db" datatype="html">
+        <source>{VAR_SELECT, select, keywords {Keywords} sources {Sources} disciplines {Disciplines} learningResourceTypes {Learning Resource Types} educationalContexts {Educational Contexts} }</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search/search.component.html</context>
           <context context-type="linenumber">13</context>
@@ -38,8 +38,8 @@
           <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="1f335b381271e2cc422d3b9e3c40ba794d19da4e" datatype="html">
-        <source>Keywords</source>
+      <trans-unit id="a17b0f722230835c2d4e3aaedeb56fb057fd035a" datatype="html">
+        <source>Learning Resource Type</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/details/details.component.html</context>
           <context context-type="linenumber">22</context>
@@ -49,11 +49,22 @@
           <context context-type="linenumber">59</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="1f335b381271e2cc422d3b9e3c40ba794d19da4e" datatype="html">
+        <source>Keywords</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/details/details.component.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
+          <context context-type="linenumber">71</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="6834fa6b43d1ecbdf147c48dd9c4d72f1484571d" datatype="html">
         <source>Source</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/details/details.component.html</context>
-          <context context-type="linenumber">25</context>
+          <context context-type="linenumber">29</context>
         </context-group>
       </trans-unit>
       <trans-unit id="e4e28b371f8453e22779db590cb0fe67f2a080e8" datatype="html">
@@ -99,11 +110,11 @@
         <source>Go to content</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
-          <context context-type="linenumber">76</context>
+          <context context-type="linenumber">88</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
-          <context context-type="linenumber">78</context>
+          <context context-type="linenumber">90</context>
         </context-group>
       </trans-unit>
       <trans-unit id="fe90aaa93785f07d828ad81ac0f6fbca5923693a" datatype="html">
