@@ -1,0 +1,3 @@
+query AutoComplete($searchString: String!) {
+  autoComplete(searchString: $searchString)
+}

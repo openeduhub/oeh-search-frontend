@@ -1,0 +1,59 @@
+query Search($searchString: String!, $from: Int!, $size: Int!, $filters: Filters!) {
+  search(searchString: $searchString, from: $from, size: $size, filters: $filters) {
+    ...result
+    facets {
+      ...facet
+    }
+    didYouMeanSuggestion {
+      ...didYouMeanSuggestion
+    }
+  }
+}
+
+fragment result on SearchResult {
+  took
+  hits {
+    total
+    hits {
+      id
+      lom {
+        educational {
+          description
+        }
+        general {
+          title
+          keyword
+        }
+        technical {
+          location
+        }
+      }
+      source {
+        name
+        url
+      }
+      thumbnail {
+        mimetype
+        small
+      }
+      valuespaces {
+        discipline { de }
+        educationalContext { de }
+        learningResourceType { de }
+      }
+    }
+  }
+}
+
+fragment facet on Aggregation {
+  facet
+  buckets {
+    doc_count
+    key
+  }
+}
+
+fragment didYouMeanSuggestion on DidYouMeanSuggestion {
+  plain
+  html
+}

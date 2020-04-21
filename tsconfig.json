@@ -12,14 +12,10 @@
         "importHelpers": true,
         "target": "es2015",
         "lib": ["es2018", "dom"],
-        "paths": {
-            "shared/*": ["./elasticsearch-relay/dist/shared/*"]
-        },
     },
     "angularCompilerOptions": {
         "fullTemplateTypeCheck": true,
         "strictInjectionParameters": true,
         "strictTemplates": true,
     },
-    "references": [{ "path": "./elasticsearch-relay/shared" }],
 }

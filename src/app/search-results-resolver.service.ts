@@ -2,15 +2,15 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { Observable } from 'rxjs';
 import { SearchService } from './search.service';
-import { Results } from 'shared/types';
+import { ResultFragment } from 'src/generated/graphql';
 
 @Injectable({
     providedIn: 'root',
 })
-export class SearchResultsResolverService implements Resolve<Results> {
+export class SearchResultsResolverService implements Resolve<ResultFragment> {
     constructor(private search: SearchService) {}
 
-    resolve(route: ActivatedRouteSnapshot): Observable<Results> {
+    resolve(route: ActivatedRouteSnapshot): Observable<ResultFragment> {
         const searchString = route.queryParamMap.get('q');
         const pageInfo = {
             pageIndex: parseInt(route.queryParamMap.get('pageIndex'), 10) || 0,

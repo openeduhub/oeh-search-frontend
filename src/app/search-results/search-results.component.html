@@ -1,19 +1,19 @@
 <div class="summary">
-  <ng-container *ngIf="results.total === 0" i18n>No results</ng-container>
-  <ng-container *ngIf="results.total > 0">
+  <ng-container *ngIf="results.hits.total === 0" i18n>No results</ng-container>
+  <ng-container *ngIf="results.hits.total > 0">
     <ng-container *ngIf="pageInfo.pageIndex === 0" i18n>
       {results.total, plural, =1 {1 result} other {{{results.total | number}} results}}
     </ng-container>
     <ng-container *ngIf="pageInfo.pageIndex > 0" i18n>
-      Page {{ pageInfo.pageIndex + 1 }} of {{ results.total | number }} results
+      Page {{ pageInfo.pageIndex + 1 }} of {{ results.hits.total | number }} results
     </ng-container>
-    <ng-container i18n>({{ results.time / 1000 | number }} seconds)</ng-container>
+    <ng-container i18n>({{ results.took / 1000 | number }} seconds)</ng-container>
   </ng-container>
 </div>
 
-<ng-container *ngIf="results.total > 0">
+<ng-container *ngIf="results.hits.total > 0">
   <div class="results">
-    <mat-card class="result" *ngFor="let result of results.results">
+    <mat-card class="result" *ngFor="let result of results.hits.hits">
       <a class="details-link" [routerLink]="['/details', result.id]">
         <img
           *ngIf="result.thumbnail"
@@ -26,7 +26,7 @@
         <mat-card-title>{{ result.lom.general.title | truncate: 52 }}</mat-card-title>
       </a>
       <mat-card-content>
-        <p>
+        <p *ngIf="result.lom.educational?.description">
           {{ result.lom.educational.description | trim | truncate: 120 }}
         </p>
         <div class="educational" *ngIf="result.valuespaces?.discipline">
@@ -95,7 +95,7 @@
     </mat-card>
   </div>
   <mat-paginator
-    [length]="results.total"
+    [length]="results.hits.total"
     [pageIndex]="pageInfo.pageIndex"
     [pageSize]="pageInfo.pageSize"
     (page)="onPage($event)"

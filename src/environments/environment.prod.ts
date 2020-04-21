@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    relayUrl: '',
+    relayUrl: window.location.origin + '/graphql',
 };

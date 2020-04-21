@@ -7,8 +7,7 @@ To build the project and serve it via a docker container on `http://localhost:80
 ```bash
 git submodule update --init
 npm install
-npm run build-shared
-ng build --prod --localize
+npm run build
 docker build . --tag open-edu-hub-frontend
 docker run --name open-edu-hub-frontend --rm -ti -p 8080:80 open-edu-hub-frontend
 ```
@@ -28,7 +27,7 @@ An Apache configuration could look like this:
 ```apacheconf
 <VirtualHost *:80>
         # ...
-        ProxyPass "/api" "http://localhost:3000/api"
+        ProxyPass "/graphql" "http://localhost:3000/graphql"
         ProxyPass "/" "http://localhost:8080/"
 </VirtualHost>
 ```
@@ -92,3 +91,12 @@ ng serve --configuration=de
 When built with `ng build --localize`, angular creates a directory for each language in `dist`. The
 `Dockerfile` configures an Nginx to serve the browser's preferred language by redirecting into one
 of these directories.
+
+## GraphQL
+
+Start `elasticsearch-relay` as dev server and install `apollographql.vscode-apollo` to get IDE
+features for GraphQL queries in VSCode.
+
+```
+ext install apollographql.vscode-apollo
+```

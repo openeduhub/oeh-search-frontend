@@ -1,8 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ResultFragment, Filters, Thumbnail, GetLargeThumbnailGQL } from 'src/generated/graphql';
 import { SearchService } from '../search.service';
-import { Results, Filters } from 'shared/types';
+
+type Unpacked<T> = T extends (infer U)[] ? U : T;
+type Hits = ResultFragment['hits'];
+type Hit = Unpacked<Hits['hits']>;
+
+interface ExtendedThumbnail extends Thumbnail {
+    large?: string;
+}
+
+interface ExtendedHit extends Hit {
+    thumbnail: ExtendedThumbnail;
+}
+
+interface ExtendedHits extends Hits {
+    hits: ExtendedHit[];
+}
+
+interface ExtendedResult extends ResultFragment {
+    hits: ExtendedHits;
+}
 
 @Component({
     selector: 'app-search-results',
@@ -10,7 +30,7 @@ import { Results, Filters } from 'shared/types';
     styleUrls: ['./search-results.component.scss'],
 })
 export class SearchResultsComponent implements OnInit {
-    results: Results;
+    results: ExtendedResult;
 
     pageInfo = {
         pageIndex: 0,
@@ -26,7 +46,7 @@ export class SearchResultsComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.route.data.subscribe((data: { results: Results }) => {
+        this.route.data.subscribe((data: { results: ResultFragment }) => {
             this.results = data.results;
             this.loadLargeThumbnails();
         });
@@ -55,11 +75,11 @@ export class SearchResultsComponent implements OnInit {
     }
 
     private loadLargeThumbnails() {
-        this.results.results
-            .filter((result) => result.thumbnail)
+        this.results.hits.hits
+            .filter((hit) => hit.thumbnail)
             .map((result) => {
-                this.search.getDetails(result.id).subscribe((fullResult) => {
-                    result.thumbnail.large = fullResult.thumbnail.large;
+                this.search.getLargeThumbnail(result.id).subscribe((largeThumbnail) => {
+                    result.thumbnail.large = largeThumbnail;
                 });
             });
     }

@@ -4,7 +4,7 @@
 
 export const environment = {
     production: false,
-    relayUrl: 'http://localhost:3000',
+    relayUrl: 'http://localhost:3000/graphql',
 };
 
 /*

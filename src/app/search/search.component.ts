@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { filter, first } from 'rxjs/operators';
-import { SearchService } from '../search.service';
-import { Facets, Filters, DidYouMeanSuggestion } from 'shared/types';
+import { DidYouMeanSuggestionFragment, Filters } from 'src/generated/graphql';
+import { Facets, SearchService } from '../search.service';
 
 @Component({
     selector: 'app-search',
@@ -14,7 +14,7 @@ export class SearchComponent implements OnInit {
     facets: Facets;
     facetFilters: FormGroup;
     filters: Filters = {};
-    didYouMeanSuggestion: DidYouMeanSuggestion;
+    didYouMeanSuggestion: DidYouMeanSuggestionFragment;
 
     constructor(
         private route: ActivatedRoute,

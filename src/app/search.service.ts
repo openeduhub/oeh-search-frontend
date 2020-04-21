@@ -1,25 +1,37 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import {
-    DidYouMeanSuggestion,
-    Facets,
+    AutoCompleteGQL,
+    Bucket,
+    DidYouMeanSuggestionFragment,
+    Facet,
+    FacetFragment,
     Filters,
-    Result,
-    Results,
-    SearchResponse,
-} from 'shared/types';
-import { environment } from 'src/environments/environment';
+    GetDetailsGQL,
+    GetDetailsQuery,
+    GetLargeThumbnailGQL,
+    ResultFragment,
+    SearchGQL,
+} from 'src/generated/graphql';
+
+export interface Facets {
+    [key: string]: { buckets: Bucket[] };
+}
+
+export type Details = GetDetailsQuery['get'];
 
 @Injectable({ providedIn: 'root' })
 export class SearchService {
-    private readonly url = environment.relayUrl;
-
     private facets = new BehaviorSubject<Facets>(null);
-    private didYouMeanSuggestion = new BehaviorSubject<DidYouMeanSuggestion>(null);
+    private didYouMeanSuggestion = new BehaviorSubject<DidYouMeanSuggestionFragment>(null);
 
-    constructor(private http: HttpClient) {}
+    constructor(
+        private searchGQL: SearchGQL,
+        private getDetailsGQL: GetDetailsGQL,
+        private autoCompleteGQL: AutoCompleteGQL,
+        private getLargeThumbnailGQL: GetLargeThumbnailGQL,
+    ) {}
 
     search(
         searchString: string,
@@ -28,43 +40,61 @@ export class SearchService {
             pageSize: number;
         },
         filters: Filters,
-    ): Observable<Results> {
-        return this.http
-            .get<SearchResponse>(`${this.url}/api/v1/search`, {
-                params: {
-                    q: searchString || '',
-                    pageIndex: pageInfo.pageIndex.toString(),
-                    pageSize: pageInfo.pageSize.toString(),
-                    filters: JSON.stringify(filters),
-                },
+    ): Observable<ResultFragment> {
+        return this.searchGQL
+            .fetch({
+                searchString: searchString || '',
+                from: pageInfo.pageIndex * pageInfo.pageSize,
+                size: pageInfo.pageSize,
+                filters,
             })
             .pipe(
-                tap((response) => this.didYouMeanSuggestion.next(response.didYouMeanSuggestion)),
-                tap((response) => this.facets.next(response.facets)),
-                map((response) => response.searchResults),
+                tap((response) =>
+                    this.didYouMeanSuggestion.next(response.data.search.didYouMeanSuggestion),
+                ),
+                tap((response) => this.facets.next(this.mapFacets(response.data.search.facets))),
+                map((response) => {
+                    return {
+                        took: response.data.search.took,
+                        hits: response.data.search.hits,
+                    };
+                }),
             );
     }
 
-    getDetails(id: string): Observable<Result> {
-        return this.http.get<Result>(`${this.url}/api/v1/details/${id}`);
+    getDetails(id: string): Observable<GetDetailsQuery['get']> {
+        return this.getDetailsGQL.fetch({ id }).pipe(map((response) => response.data.get));
+    }
+
+    getLargeThumbnail(id: string): Observable<string> {
+        return this.getLargeThumbnailGQL
+            .fetch({ id })
+            .pipe(map((response) => response.data.get.thumbnail.large));
     }
 
     autoComplete(searchString: string): Observable<string[]> {
         if (searchString.length === 0) {
             return of(null);
         }
-        return this.http.get<string[]>(`${this.url}/api/v1/auto-complete`, {
-            params: {
-                q: searchString,
-            },
-        });
+        return this.autoCompleteGQL
+            .fetch({ searchString })
+            .pipe(map((response) => response.data.autoComplete));
     }
 
     getFacets(): Observable<Facets> {
         return this.facets.asObservable();
     }
 
-    getDidYouMeanSuggestion(): Observable<DidYouMeanSuggestion> {
+    getDidYouMeanSuggestion(): Observable<DidYouMeanSuggestionFragment> {
         return this.didYouMeanSuggestion.asObservable();
+    }
+
+    private mapFacets(facets: FacetFragment[]): Facets {
+        return facets.reduce((acc, facet) => {
+            if (typeof facet === 'object') {
+                acc[facet.facet as Facet] = { buckets: facet.buckets };
+            }
+            return acc;
+        }, {} as Facets);
     }
 }

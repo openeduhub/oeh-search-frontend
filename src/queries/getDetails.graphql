@@ -1,0 +1,30 @@
+query GetDetails($id: ID!) {
+  get(id: $id) {
+    lom {
+      educational {
+        description
+      }
+      general {
+        title
+        keyword
+      }
+      technical {
+        location
+      }
+    }
+    source {
+      name
+      url
+    }
+    thumbnail {
+      mimetype
+      small
+      large
+    }
+    valuespaces {
+      discipline { de }
+      educationalContext { de }
+      learningResourceType { de }
+    }
+  }
+}
