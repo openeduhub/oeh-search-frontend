@@ -72,12 +72,12 @@ export class SearchService {
             .pipe(map((response) => response.data.get.thumbnail.large));
     }
 
-    autoComplete(searchString: string): Observable<string[]> {
+    autoComplete(searchString: string, filters?: Filters): Observable<string[]> {
         if (searchString.length === 0) {
             return of(null);
         }
         return this.autoCompleteGQL
-            .fetch({ searchString })
+            .fetch({ searchString, filters })
             .pipe(map((response) => response.data.autoComplete));
     }
 

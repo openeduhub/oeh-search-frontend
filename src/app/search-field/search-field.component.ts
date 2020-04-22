@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { SearchService } from '../search.service';
+import { Filters } from 'src/generated/graphql';
 
 @Component({
     selector: 'app-search-field',
@@ -21,6 +22,7 @@ export class SearchFieldComponent implements OnInit {
     autoCompleteSuggestions$: Observable<string[]>;
     inputHasChanged = false;
     private searchString: string;
+    private filters: Filters;
 
     constructor(
         private route: ActivatedRoute,
@@ -33,6 +35,9 @@ export class SearchFieldComponent implements OnInit {
             this.searchString = params.q;
             this.searchField.setValue(this.searchString, { emitEvent: false });
             this.inputHasChanged = false;
+            if (params.filters) {
+                this.filters = JSON.parse(params.filters);
+            }
         });
         this.searchField.valueChanges
             .pipe(
@@ -71,7 +76,7 @@ export class SearchFieldComponent implements OnInit {
 
     private onSearchStringChanges(searchString: string) {
         if (typeof searchString === 'string') {
-            this.autoCompleteSuggestions$ = this.search.autoComplete(searchString);
+            this.autoCompleteSuggestions$ = this.search.autoComplete(searchString, this.filters);
         }
     }
 }

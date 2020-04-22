@@ -1,3 +1,3 @@
-query AutoComplete($searchString: String!) {
-  autoComplete(searchString: $searchString)
+query AutoComplete($searchString: String!, $filters: Filters) {
+  autoComplete(searchString: $searchString, filters: $filters)
 }
