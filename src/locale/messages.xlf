@@ -74,33 +74,33 @@
           <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="100fe36596ab2947fa7045b6203d61e577267665" datatype="html">
+      <trans-unit id="9e645b7b3b2ae971d4c9f2c0950998c85ce59b35" datatype="html">
         <source>
-      <x id="ICU" equiv-text="{results.total, plural, =1 {...} other {...}}"/>
+      <x id="ICU" equiv-text="{results.hits.total, plural, =1 {...} other {...}}"/>
     </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
           <context context-type="linenumber">4</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="0b4b99f69ed1480423786a7e0891e7b2681246d9" datatype="html">
-        <source>{VAR_PLURAL, plural, =1 {1 result} other {<x id="INTERPOLATION" equiv-text="{{results.total | number}}"/> results} }</source>
+      <trans-unit id="22445ba4a2eb07d49fe7aaea89768a6316b902a7" datatype="html">
+        <source>{VAR_PLURAL, plural, =1 {1 result} other {<x id="INTERPOLATION" equiv-text="{{results.hits.total | number}}"/> results} }</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
           <context context-type="linenumber">5</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="2cb18166051da66253adbb732d8c447c158c3b64" datatype="html">
+      <trans-unit id="3bf133fcf7f46e13fcd875a80a4b286ac428875b" datatype="html">
         <source>
-      Page <x id="INTERPOLATION" equiv-text="{{ pageInfo.pageIndex + 1 }}"/> of <x id="INTERPOLATION_1" equiv-text="{{ results.total | number }}"/> results
+      Page <x id="INTERPOLATION" equiv-text="{{ pageInfo.pageIndex + 1 }}"/> of <x id="INTERPOLATION_1" equiv-text="{{ results.hits.total | number }}"/> results
     </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
           <context context-type="linenumber">7</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="670d8a52c3991659b5516a9a048752a1adc282a4" datatype="html">
-        <source>(<x id="INTERPOLATION" equiv-text="{{ results.time / 1000 | number }}"/> seconds)</source>
+      <trans-unit id="ddb2686152a6310eeab9bcae31921506a726a779" datatype="html">
+        <source>(<x id="INTERPOLATION" equiv-text="{{ results.took / 1000 | number }}"/> seconds)</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
           <context context-type="linenumber">10</context>

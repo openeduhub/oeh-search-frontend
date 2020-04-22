@@ -2,7 +2,7 @@
   <ng-container *ngIf="results.hits.total === 0" i18n>No results</ng-container>
   <ng-container *ngIf="results.hits.total > 0">
     <ng-container *ngIf="pageInfo.pageIndex === 0" i18n>
-      {results.total, plural, =1 {1 result} other {{{results.total | number}} results}}
+      {results.hits.total, plural, =1 {1 result} other {{{results.hits.total | number}} results}}
     </ng-container>
     <ng-container *ngIf="pageInfo.pageIndex > 0" i18n>
       Page {{ pageInfo.pageIndex + 1 }} of {{ results.hits.total | number }} results
