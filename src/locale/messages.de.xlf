@@ -143,12 +143,12 @@
           <context context-type="sourcefile">src/app/error/error.component.html</context>
           <context context-type="linenumber">5</context>
         </context-group>
-      </trans-unit><trans-unit id="4e7a997b7d566fefeccfe42736ee19db67afe2e7" datatype="html">
+      </trans-unit><trans-unit id="a94b5ad596ce2c379ed67d8353cfa070cdbb42fb" datatype="html">
         <source>
-  This is a preview of the search engine for lerning materials. Some results still have missing or
+  This is a preview of the search engine for learning materials. Some results still have missing or
   wrong metadata.<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>
   This page is regularly updated with new sources, content, and functionality. Have fun browsing!
-</source><target state="translated">
+</source><target state="final">
   Du siehst hier eine Vorabversion der Materialsuche. Einige Materialien weisen noch fehlerhafte oder fehlende Metadaten auf.<x id="LINE_BREAK" ctype="lb" equiv-text="&lt;br/>"/>
   Die Suche wird regelmäßig um neue Quellen, Inhalte und Funktionen erweitert. Viel Spaß beim Stöbern!
 </target>
