@@ -6,37 +6,69 @@
     routerLink="/search"
     [queryParams]="['disciplines', ['Mathematik']] | generateFilters"
   >
-    <span>Mathematik</span>
+    <mat-card>
+      <img mat-card-image src="assets/images/subjects/math.jpg" />
+      <mat-card-header>
+        <mat-card-title>Mathematik</mat-card-title>
+      </mat-card-header>
+    </mat-card>
   </a>
+
   <a
     class="tile"
     routerLink="/search"
     [queryParams]="['disciplines', ['Biologie']] | generateFilters"
   >
-    <span>Biologie</span>
+    <mat-card>
+      <img mat-card-image src="assets/images/subjects/biology.jpg" />
+      <mat-card-header>
+        <mat-card-title>Biologie</mat-card-title>
+      </mat-card-header>
+    </mat-card>
   </a>
   <a
     class="tile"
     routerLink="/search"
     [queryParams]="['disciplines', ['Chemie']] | generateFilters"
   >
-    <span>Chemie</span>
+    <mat-card>
+      <img mat-card-image src="assets/images/subjects/chemistry.jpg" />
+      <mat-card-header>
+        <mat-card-title>Chemie</mat-card-title>
+      </mat-card-header>
+    </mat-card>
   </a>
   <a
     class="tile"
     routerLink="/search"
     [queryParams]="['disciplines', ['Informatik']] | generateFilters"
   >
-    <span>Informatik</span>
+    <mat-card>
+      <img mat-card-image src="assets/images/subjects/informatics.jpg" />
+      <mat-card-header>
+        <mat-card-title>Informatik</mat-card-title>
+      </mat-card-header>
+    </mat-card>
   </a>
   <a
     class="tile"
     routerLink="/search"
     [queryParams]="['disciplines', ['Englisch']] | generateFilters"
   >
-    <span>Englisch</span>
+    <mat-card>
+      <img mat-card-image src="assets/images/subjects/english.jpg" />
+      <mat-card-header>
+        <mat-card-title>Englisch</mat-card-title>
+      </mat-card-header>
+    </mat-card>
   </a>
+
   <a class="tile" routerLink="/search">
-    <span i18n>More...</span>
+    <mat-card>
+      <img mat-card-image src="assets/images/subjects/more.jpg" />
+      <mat-card-header>
+        <mat-card-title i18n>More...</mat-card-title>
+      </mat-card-header>
+    </mat-card>
   </a>
 </div>
