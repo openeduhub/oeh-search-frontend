@@ -1,7 +1,7 @@
 <p *ngIf="didYouMeanSuggestion" class="did-you-mean">
   <ng-container i18n>Did you mean:</ng-container>&nbsp;<a
     [innerHTML]="didYouMeanSuggestion.html"
-    routerLink
+    routerLink="/search"
     [queryParams]="{ q: didYouMeanSuggestion.plain }"
     queryParamsHandling="merge"
   ></a>
@@ -10,8 +10,9 @@
 <div *ngIf="facets" class="filters" [formGroup]="facetFilters">
   <mat-form-field *ngFor="let facet of facets | keyvalue">
     <mat-label i18n
-      >{facet.key, select, keywords {Keywords} sources {Sources} disciplines {Disciplines} learningResourceTypes {Learning Resource Types}
-      educationalContexts {Educational Contexts}}</mat-label
+      >{facet.key, select, keywords {Keywords} sources {Sources} disciplines {Disciplines}
+      learningResourceTypes {Learning Resource Types} educationalContexts {Educational
+      Contexts}}</mat-label
     >
     <mat-select [formControlName]="facet.key" multiple>
       <mat-option *ngFor="let bucket of facet.value.buckets" [value]="bucket.key">
