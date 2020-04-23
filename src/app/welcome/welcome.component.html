@@ -1,0 +1,42 @@
+<h1 i18n>Welcome to Wir lernen online!</h1>
+
+<div class="tiles">
+  <a
+    class="tile"
+    routerLink="/search"
+    [queryParams]="['disciplines', ['Mathematik']] | generateFilters"
+  >
+    <span>Mathematik</span>
+  </a>
+  <a
+    class="tile"
+    routerLink="/search"
+    [queryParams]="['disciplines', ['Biologie']] | generateFilters"
+  >
+    <span>Biologie</span>
+  </a>
+  <a
+    class="tile"
+    routerLink="/search"
+    [queryParams]="['disciplines', ['Chemie']] | generateFilters"
+  >
+    <span>Chemie</span>
+  </a>
+  <a
+    class="tile"
+    routerLink="/search"
+    [queryParams]="['disciplines', ['Informatik']] | generateFilters"
+  >
+    <span>Informatik</span>
+  </a>
+  <a
+    class="tile"
+    routerLink="/search"
+    [queryParams]="['disciplines', ['Englisch']] | generateFilters"
+  >
+    <span>Englisch</span>
+  </a>
+  <a class="tile" routerLink="/search">
+    <span i18n>More...</span>
+  </a>
+</div>
