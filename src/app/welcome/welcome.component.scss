@@ -1,0 +1,54 @@
+h1 {
+    text-align: center;
+}
+
+.tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    @media screen and (min-width: 850px) {
+        margin: 40px;
+        grid-template-columns: repeat(auto-fill, 340px);
+    }
+    gap: 30px;
+    justify-content: center;
+    // max-width: 1000px;
+    margin: auto;
+    > .tile {
+        justify-self: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: solid 1px black;
+        height: 75px;
+        width: 100%;
+        text-decoration: unset;
+        color: unset;
+        transition: transform 0.05s;
+        > span {
+            font-size: 150%;
+        }
+        &:hover,
+        &:focus {
+            transform: scale(1.05);
+        }
+        &:nth-child(1) {
+            color: white;
+            background-color: #023f82;
+        }
+        &:nth-child(2) {
+            background-color: #9bb828;
+        }
+        &:nth-child(3) {
+            background-color: #ff799a;
+        }
+        &:nth-child(4) {
+            background-color: #e4f602;
+        }
+        &:nth-child(5) {
+            background-color: #019cde;
+        }
+        &:nth-child(6) {
+            background-color: #a5a4a4;
+        }
+    }
+}

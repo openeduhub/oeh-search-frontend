@@ -33,8 +33,13 @@ import { SearchComponent } from './search/search.component';
 import { TrimPipe } from './trim.pipe';
 import { TruncatePipe } from './truncate.pipe';
 import { environment } from 'src/environments/environment';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 const appRoutes: Routes = [
+    {
+        path: 'welcome',
+        component: WelcomeComponent,
+    },
     {
         path: 'search',
         component: SearchComponent,
@@ -52,7 +57,7 @@ const appRoutes: Routes = [
         component: DetailsComponent,
         resolve: { details: DetailsResolverService },
     },
-    { path: '', redirectTo: 'search', pathMatch: 'full' },
+    { path: '', redirectTo: 'welcome', pathMatch: 'full' },
     { path: 'error', component: ErrorComponent },
 ];
 
@@ -69,6 +74,7 @@ const appRoutes: Routes = [
         HeaderbarComponent,
         SearchFieldComponent,
         TrimPipe,
+        WelcomeComponent,
     ],
     imports: [
         ApolloModule,

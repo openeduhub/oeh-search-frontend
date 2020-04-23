@@ -9,7 +9,7 @@ import { Pipe, PipeTransform } from '@angular/core';
     name: 'generateFilters',
 })
 export class GenerateFiltersPipe implements PipeTransform {
-    transform([key, value]: [string, string[]], filters: object): object {
+    transform([key, value]: [string, string[]], filters: object = {}): object {
         return {
             filters: JSON.stringify({
                 ...filters,
