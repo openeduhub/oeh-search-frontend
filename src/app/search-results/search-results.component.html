@@ -33,7 +33,7 @@
           <label i18n>Discipline</label>
           <span *ngFor="let discipline of result.valuespaces.discipline">
             <a
-              routerLink
+              routerLink="/search"
               [queryParams]="['disciplines', [discipline.de]] | generateFilters: filters"
               queryParamsHandling="merge"
             >
@@ -46,7 +46,7 @@
           <label i18n>Educational Context</label>
           <span *ngFor="let context of result.valuespaces.educationalContext">
             <a
-              routerLink
+              routerLink="/search"
               [queryParams]="['educationalContexts', [context.de]] | generateFilters: filters"
               queryParamsHandling="merge"
             >
@@ -59,7 +59,7 @@
           <label i18n>Learning Resource Type</label>
           <span *ngFor="let lrt of result.valuespaces.learningResourceType">
             <a
-              routerLink
+              routerLink="/search"
               [queryParams]="['learningResourceTypes', [lrt.de]] | generateFilters: filters"
               queryParamsHandling="merge"
             >
@@ -71,7 +71,7 @@
           <label i18n>Keywords</label>
           <span *ngFor="let keyword of result.lom.general.keyword | slice: 0:5">
             <a
-              routerLink
+              routerLink="/search"
               [queryParams]="['keywords', [keyword]] | generateFilters: filters"
               queryParamsHandling="merge"
             >
