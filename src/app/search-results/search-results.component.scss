@@ -19,14 +19,20 @@
             height: 200px;
             object-fit: cover;
         }
-        mat-card-title{
+        mat-card-title {
             line-height: 1.25;
         }
         mat-card-content {
             flex-grow: 1;
-            .keyword, .educational, .context, .lrt {
+            .description {
+                overflow-wrap: break-word;
+            }
+            .keyword,
+            .educational,
+            .context,
+            .lrt {
                 color: #777;
-                label{
+                label {
                     font-size: 90%;
                     display: flex;
                 }

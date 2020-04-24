@@ -26,7 +26,7 @@
         <mat-card-title>{{ result.lom.general.title | truncate: 52 }}</mat-card-title>
       </a>
       <mat-card-content>
-        <p *ngIf="result.lom.educational?.description">
+        <p class="description" *ngIf="result.lom.educational?.description">
           {{ result.lom.educational.description | trim | truncate: 120 }}
         </p>
         <div class="educational" *ngIf="result.valuespaces?.discipline">
