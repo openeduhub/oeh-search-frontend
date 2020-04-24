@@ -7,8 +7,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
-import { SearchService } from '../search.service';
-import { Filters } from 'src/generated/graphql';
+import { Filters, SearchService } from '../search.service';
 
 @Component({
     selector: 'app-search-field',

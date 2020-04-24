@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { filter, first } from 'rxjs/operators';
-import { DidYouMeanSuggestionFragment, Filters } from 'src/generated/graphql';
-import { Facets, SearchService } from '../search.service';
+import { DidYouMeanSuggestionFragment } from 'src/generated/graphql';
+import { Facets, SearchService, Filters } from '../search.service';
 
 @Component({
     selector: 'app-search',

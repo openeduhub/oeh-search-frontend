@@ -1,4 +1,4 @@
-query Search($searchString: String!, $from: Int!, $size: Int!, $filters: Filters!) {
+query Search($searchString: String!, $from: Int!, $size: Int!, $filters: [Filter!]) {
   search(searchString: $searchString, from: $from, size: $size, filters: $filters) {
     ...result
     facets {

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ResultFragment, Filters, Thumbnail, GetLargeThumbnailGQL } from 'src/generated/graphql';
-import { SearchService } from '../search.service';
+import { ResultFragment, Thumbnail, GetLargeThumbnailGQL } from 'src/generated/graphql';
+import { Filters, SearchService } from '../search.service';
 
 type Unpacked<T> = T extends (infer U)[] ? U : T;
 type Hits = ResultFragment['hits'];

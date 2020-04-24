@@ -7,7 +7,7 @@ import {
     DidYouMeanSuggestionFragment,
     Facet,
     FacetFragment,
-    Filters,
+    Filter,
     GetDetailsGQL,
     GetDetailsQuery,
     GetLargeThumbnailGQL,
@@ -20,6 +20,9 @@ export interface Facets {
 }
 
 export type Details = GetDetailsQuery['get'];
+export type Filters = {
+    [key in Facet]?: string[];
+};
 
 @Injectable({ providedIn: 'root' })
 export class SearchService {
@@ -46,7 +49,7 @@ export class SearchService {
                 searchString: searchString || '',
                 from: pageInfo.pageIndex * pageInfo.pageSize,
                 size: pageInfo.pageSize,
-                filters,
+                filters: this.mapFilters(filters),
             })
             .pipe(
                 tap((response) =>
@@ -77,7 +80,7 @@ export class SearchService {
             return of(null);
         }
         return this.autoCompleteGQL
-            .fetch({ searchString, filters })
+            .fetch({ searchString, filters: this.mapFilters(filters) })
             .pipe(map((response) => response.data.autoComplete));
     }
 
@@ -96,5 +99,11 @@ export class SearchService {
             }
             return acc;
         }, {} as Facets);
+    }
+
+    private mapFilters(filters: Filters): Filter[] {
+        return Object.entries(filters)
+            .filter(([key, value]) => value && value.length > 0)
+            .map(([key, value]) => ({ field: key as Facet, terms: value }));
     }
 }
