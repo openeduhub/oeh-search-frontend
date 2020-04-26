@@ -1,0 +1,3 @@
+mutation MarkAsRecommended($id: ID!, $marked: Boolean!) {
+  markAsRecommended(id: $id, marked: $marked)
+}
