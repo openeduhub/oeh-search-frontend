@@ -31,7 +31,7 @@
         </p>
         <div class="educational" *ngIf="result.valuespaces?.discipline">
           <label i18n>Discipline</label>
-          <span *ngFor="let discipline of result.valuespaces.discipline">
+          <span *ngFor="let discipline of result.valuespaces.discipline | slice: 0:5">
             <a
               routerLink="/search"
               [queryParams]="['disciplines', [discipline.de]] | generateFilters: filters"
