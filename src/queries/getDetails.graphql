@@ -16,6 +16,13 @@ query GetDetails($id: ID!) {
       name
       url
     }
+    collection {
+      uuid
+      name
+      data {
+        editorial
+      }
+    }
     thumbnail {
       mimetype
       small

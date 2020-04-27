@@ -25,6 +25,9 @@
         />
         <mat-card-title>{{ result.lom.general.title | truncate: 52 }}</mat-card-title>
       </a>
+      <div class="editorial" *ngIf="result | editorial" i18n-matTooltip matTooltip="Recommended by editorial team">
+        <mat-icon>star</mat-icon>
+      </div>
       <mat-card-content>
         <p class="description" *ngIf="result.lom.educational?.description">
           {{ result.lom.educational.description | trim | truncate: 120 }}

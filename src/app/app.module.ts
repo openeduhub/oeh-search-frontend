@@ -34,6 +34,7 @@ import { TrimPipe } from './trim.pipe';
 import { TruncatePipe } from './truncate.pipe';
 import { environment } from 'src/environments/environment';
 import { WelcomeComponent } from './welcome/welcome.component';
+import { EditorialPipe } from './editorial.pipe';
 
 const appRoutes: Routes = [
     {
@@ -74,6 +75,7 @@ const appRoutes: Routes = [
         HeaderbarComponent,
         SearchFieldComponent,
         TrimPipe,
+        EditorialPipe,
         WelcomeComponent,
     ],
     imports: [

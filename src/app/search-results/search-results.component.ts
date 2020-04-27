@@ -12,7 +12,7 @@ interface ExtendedThumbnail extends Thumbnail {
     large?: string;
 }
 
-interface ExtendedHit extends Hit {
+export interface ExtendedHit extends Hit {
     thumbnail: ExtendedThumbnail;
 }
 

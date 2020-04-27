@@ -36,6 +36,13 @@ fragment result on SearchResult {
         mimetype
         small
       }
+      collection {
+        uuid
+        name
+        data {
+          editorial
+        }
+      }
       valuespaces {
         discipline { de }
         educationalContext { de }
