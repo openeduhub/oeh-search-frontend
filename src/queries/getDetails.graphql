@@ -23,6 +23,9 @@ query GetDetails($id: ID!) {
         editorial
       }
     }
+    license {
+      oer
+    }
     thumbnail {
       mimetype
       small

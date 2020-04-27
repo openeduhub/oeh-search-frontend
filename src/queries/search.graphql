@@ -43,6 +43,9 @@ fragment result on SearchResult {
           editorial
         }
       }
+      license {
+        oer
+      }
       valuespaces {
         discipline { de }
         educationalContext { de }
