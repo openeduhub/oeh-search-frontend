@@ -1,13 +1,12 @@
 <div class="details">
   <div class="image-container">
-    <!-- <img
+    <img
       *ngIf="details.thumbnail"
       [src]="
         details.thumbnail.large || details.thumbnail.small
           | safeBase64Data: details.thumbnail.mimetype
       "
-    /> -->
-    <iframe [src]="details.lom.technical.location | safeUrl"></iframe>
+    />
   </div>
   <div>
     <h1>{{ details.lom.general.title }}</h1>

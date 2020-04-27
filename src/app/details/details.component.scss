@@ -19,13 +19,9 @@
         @media screen and (max-width: 600px) {
             padding-right: 0;
         }
-        > img, iframe {
+        > img {
             width: 100%;
             height: auto;
-        }
-        > iframe{
-            border: none;
-            min-height: 400px;
         }
     }
     > div {
