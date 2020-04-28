@@ -41,6 +41,7 @@ import { MenubarComponent } from './menubar/menubar.component';
 import { SearchFilterbarComponent } from './search-filterbar/search-filterbar.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MultivalueCheckboxComponent } from './multivalue-checkbox/multivalue-checkbox.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 const appRoutes: Routes = [
     {
@@ -102,6 +103,7 @@ const appRoutes: Routes = [
         MatCardModule,
         MatExpansionModule,
         MatFormFieldModule,
+        MatSnackBarModule,
         MatCheckboxModule,
         MatIconModule,
         MatInputModule,

@@ -34,7 +34,10 @@
     >
     <div *ngIf="userInfo" class="editorial">
       <label i18n>Editorial</label>
-      <button mat-button (click)="markAsRecommended()" i18n>Mark as recommended</button>
+      <button mat-button (click)="markAsRecommended(); recommend.disabled = true" #recommend>
+        <ng-container *ngIf="!(details | editorial)" i18n>Mark as recommended</ng-container>
+        <ng-container *ngIf="details | editorial" i18n>Remove Recommendation</ng-container>
+      </button>
     </div>
   </div>
 </div>

@@ -1,5 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { ExtendedHit } from './search-results/search-results.component';
+import { Details } from './search.service';
 
 /**
  * Extend the `filters` of the search component with another attribute.
@@ -10,7 +11,7 @@ import { ExtendedHit } from './search-results/search-results.component';
     name: 'editorial',
 })
 export class EditorialPipe implements PipeTransform {
-    transform(value: ExtendedHit): boolean {
+    transform(value: ExtendedHit | Details): boolean {
         if (value.collection) {
             return value.collection.find((c) => c.data?.editorial) != null;
         }
