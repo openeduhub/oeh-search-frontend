@@ -6,7 +6,14 @@
     or wrong metadata.<br />
     This page is regularly updated with new sources, content, and functionality. Have fun browsing!
   </div>
-  <app-search-field></app-search-field>
+  <div class="search">
+    <a mat-button class="filter"
+       routerLink="/search"
+       [queryParams]="{'filter': true}"
+       queryParamsHandling="merge"
+       i18n><mat-icon>tune</mat-icon> Filter...</a>
+    <app-search-field></app-search-field>
+  </div>
   <router-outlet></router-outlet>
 </div>
 <div class="loading-spinner" *ngIf="loading">
