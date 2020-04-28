@@ -1,6 +1,9 @@
 <div class="main">
-  <app-headerbar></app-headerbar>
-  <router-outlet></router-outlet>
+  <app-menubar></app-menubar>
+  <div class="content">
+    <app-headerbar></app-headerbar>
+    <router-outlet></router-outlet>
+  </div>
 </div>
 <div class="loading-spinner" *ngIf="loading">
   <mat-spinner></mat-spinner>

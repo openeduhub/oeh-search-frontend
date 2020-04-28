@@ -1,0 +1,35 @@
+<header id="site-header" class="site-header" role="banner">
+  <div class="title-bar" data-responsive-toggle="main-menu" data-hide-for="large" style="display: none;">
+    <button class="menu-icon" type="button" (click)="mobileOpen = !mobileOpen"></button>
+    <a class="mobile-logo-container" href="https://wirlernenonline.de">
+      <img class="logo" src="https://wirlernenonline.de/wp-content/themes/wir-lernen-online/dist/assets/img/WLO-Logo-01.png" alt="Logo">
+    </a>
+  </div>
+  <div class="top-bar" id="main-menu" data-animate="fade-in fade-out" [style.display]="mobileOpen ? 'flex' : 'none'">
+    <div class="top-bar-left position-relative">
+      <div class="grid-container">
+        <div class="grid-x grid-margin-x align-middle">
+          <div class="auto cell show-for-large">
+            <a href="https://wirlernenonline.de">
+              <img class="logo" src="https://wirlernenonline.de/wp-content/themes/wir-lernen-online/dist/assets/img/WLO-Logo-01.png" alt="Logo">
+            </a>
+          </div>
+          <div class="large-shrink small-12 cell">
+            <ul class="vertical large-horizontal menu top-menu dropdown" data-responsive-menu="drilldown large-dropdown" role="menubar" data-dropdown-menu="dmdi82-dropdown-menu" data-mutate="k1a2gb-responsive-menu"><li id="menu-item-57" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-57 menu-item-lernstoff" role="none"><a href="https://wirlernenonline.de/lernstoff/" role="menuitem">Lernstoff</a></li>
+              <li id="menu-item-3030" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-3030 menu-item-tipps is-dropdown-submenu-parent opens-right" role="none" aria-haspopup="true" aria-label="Tipps"><a href="#" role="menuitem">Tipps</a>
+                <ul class="vertical menu submenu is-dropdown-submenu first-sub" data-submenu="" role="menubar">
+                  <li id="menu-item-3031" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3031 menu-item-lehrende is-submenu-item is-dropdown-submenu-item" role="none"><a href="https://wirlernenonline.de/lehrende/" role="menuitem">Für Lehrende</a></li>
+                  <li id="menu-item-3032" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3032 menu-item-schulen is-submenu-item is-dropdown-submenu-item" role="none"><a href="https://wirlernenonline.de/schulen/" role="menuitem">Für Schulen</a></li>
+                </ul>
+              </li>
+              <li id="menu-item-2831" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2831 menu-item-neuigkeiten" role="none"><a href="https://wirlernenonline.de/neuigkeiten/" role="menuitem">Blog</a></li>
+              <li id="menu-item-17" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17 menu-item-ueber-uns" role="none"><a href="https://wirlernenonline.de/ueber-uns/" role="menuitem">Über uns</a></li>
+            </ul>						</div>
+          <div class="cell small-12 large-auto">
+            <ul class="menu top-call-to-action-menu align-right"><li id="menu-item-2523" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2523 menu-item-mitmachen"><a href="https://wirlernenonline.de/mitmachen/">Mitmachen</a></li>
+            </ul>						</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

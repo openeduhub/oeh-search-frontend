@@ -32,6 +32,7 @@
     "@angular/platform-browser-dynamic": "~9.1.1",
     "@angular/router": "~9.1.1",
     "@ngx-i18nsupport/tooling": "^8.0.3",
+    "@openfonts/montserrat_all": "^1.44.1",
     "apollo-angular": "^1.9.1",
     "apollo-angular-link-http": "^1.10.0",
     "apollo-cache-inmemory": "^1.6.5",

@@ -35,6 +35,7 @@ import { TruncatePipe } from './truncate.pipe';
 import { environment } from 'src/environments/environment';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { EditorialPipe } from './editorial.pipe';
+import { MenubarComponent } from './menubar/menubar.component';
 
 const appRoutes: Routes = [
     {
@@ -77,6 +78,7 @@ const appRoutes: Routes = [
         TrimPipe,
         EditorialPipe,
         WelcomeComponent,
+        MenubarComponent,
     ],
     imports: [
         ApolloModule,
