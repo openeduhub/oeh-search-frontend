@@ -16,8 +16,8 @@
           </div>
           <div class="large-shrink small-12 cell">
             <ul class="vertical large-horizontal menu top-menu dropdown" data-responsive-menu="drilldown large-dropdown" role="menubar" data-dropdown-menu="dmdi82-dropdown-menu" data-mutate="k1a2gb-responsive-menu"><li id="menu-item-57" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-57 menu-item-lernstoff" role="none"><a href="https://wirlernenonline.de/lernstoff/" role="menuitem">Lernstoff</a></li>
-              <li id="menu-item-3030" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-3030 menu-item-tipps is-dropdown-submenu-parent opens-right" role="none" aria-haspopup="true" aria-label="Tipps"><a href="#" role="menuitem">Tipps</a>
-                <ul class="vertical menu submenu is-dropdown-submenu first-sub" data-submenu="" role="menubar">
+              <li id="menu-item-3030" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-3030 menu-item-tipps is-dropdown-submenu-parent opens-right" role="none" aria-haspopup="true" aria-label="Tipps"><a (click)="tipps.style.display= tipps.style.display=='flex' ? 'none' : 'flex'" role="menuitem">Tipps</a>
+                <ul class="vertical menu submenu is-dropdown-submenu first-sub" data-submenu="" role="menubar" #tipps>
                   <li id="menu-item-3031" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3031 menu-item-lehrende is-submenu-item is-dropdown-submenu-item" role="none"><a href="https://wirlernenonline.de/lehrende/" role="menuitem">Für Lehrende</a></li>
                   <li id="menu-item-3032" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3032 menu-item-schulen is-submenu-item is-dropdown-submenu-item" role="none"><a href="https://wirlernenonline.de/schulen/" role="menuitem">Für Schulen</a></li>
                 </ul>
