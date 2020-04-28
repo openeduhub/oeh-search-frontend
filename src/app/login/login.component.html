@@ -1,0 +1,5 @@
+<button *ngIf="!userInfo" mat-button (click)="login()" i18n>Login</button>
+<ng-container *ngIf="userInfo">
+  <span>{{ userInfo.name || userInfo.preferred_username }}</span>
+  <button mat-button (click)="logout()" i18n>Logout</button>
+</ng-container>

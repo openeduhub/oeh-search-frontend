@@ -19,6 +19,12 @@ echo "Building ElasticSearch Relay..."
     build_all
 )
 
+echo "Building Editor Backend..."
+(
+    cd editor-backend
+    build_all
+)
+
 echo "Building Frontend..."
 (
     build_all

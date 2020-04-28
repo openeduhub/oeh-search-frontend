@@ -1,6 +1,6 @@
 overwrite: true
-schema: "elasticsearch-relay/src/schema.graphql"
-documents: "src/queries/*.graphql"
+schema: "{elasticsearch-relay,editor-backend}/src/schema.graphql"
+documents: "src/graphql/**/*.graphql"
 generates:
   src/generated/graphql.ts:
     plugins:

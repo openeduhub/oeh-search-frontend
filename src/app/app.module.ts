@@ -15,16 +15,20 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
+import { OAuthModule } from 'angular-oauth2-oidc';
 import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
 import { HttpLink, HttpLinkModule } from 'apollo-angular-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
+import { environment } from 'src/environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DetailsResolverService } from './details-resolver.service';
 import { DetailsComponent } from './details/details.component';
+import { EditorialPipe } from './editorial.pipe';
 import { ErrorComponent } from './error/error.component';
 import { GenerateFiltersPipe } from './generate-filters.pipe';
 import { HeaderbarComponent } from './headerbar/headerbar.component';
+import { LoginComponent } from './login/login.component';
 import { SafeBase64DataPipe } from './safe-base64-data.pipe';
 import { SearchFieldComponent } from './search-field/search-field.component';
 import { SearchResultsResolverService } from './search-results-resolver.service';
@@ -32,9 +36,7 @@ import { SearchResultsComponent } from './search-results/search-results.componen
 import { SearchComponent } from './search/search.component';
 import { TrimPipe } from './trim.pipe';
 import { TruncatePipe } from './truncate.pipe';
-import { environment } from 'src/environments/environment';
 import { WelcomeComponent } from './welcome/welcome.component';
-import { EditorialPipe } from './editorial.pipe';
 import { MenubarComponent } from './menubar/menubar.component';
 import { SearchFilterbarComponent } from './search-filterbar/search-filterbar.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -62,6 +64,7 @@ const appRoutes: Routes = [
         component: DetailsComponent,
         resolve: { details: DetailsResolverService },
     },
+    { path: 'login', component: LoginComponent },
     { path: '', redirectTo: 'welcome', pathMatch: 'full' },
     { path: 'error', component: ErrorComponent },
 ];
@@ -82,31 +85,38 @@ const appRoutes: Routes = [
         EditorialPipe,
         WelcomeComponent,
         MenubarComponent,
+        LoginComponent,
         SearchFilterbarComponent,
         MultivalueCheckboxComponent,
     ],
     imports: [
         ApolloModule,
         AppRoutingModule,
-        RouterModule.forRoot(appRoutes),
         BrowserAnimationsModule,
         BrowserModule,
         FormsModule,
         HttpClientModule,
         HttpLinkModule,
+        MatAutocompleteModule,
+        MatButtonModule,
         MatCardModule,
+        MatExpansionModule,
         MatFormFieldModule,
         MatCheckboxModule,
         MatIconModule,
         MatInputModule,
-        ReactiveFormsModule,
         MatPaginatorModule,
-        MatAutocompleteModule,
-        MatButtonModule,
-        MatSelectModule,
-        MatExpansionModule,
         MatProgressSpinnerModule,
+        MatSelectModule,
         MatTooltipModule,
+        OAuthModule.forRoot({
+            resourceServer: {
+                allowedUrls: [environment.editorBackendUrl],
+                sendAccessToken: true,
+            },
+        }),
+        ReactiveFormsModule,
+        RouterModule.forRoot(appRoutes),
     ],
     providers: [
         {

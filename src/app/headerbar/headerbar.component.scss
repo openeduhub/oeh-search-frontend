@@ -1,4 +1,4 @@
-@import '../../variables.scss';
+@import '../../material';
 
 :host {
     display: flex;
@@ -11,16 +11,6 @@ header {
     align-items: center;
     .filter{
         margin-right: 20px;
-    }
-    h1 {
-        padding-right: 1em;
-        a {
-            color: unset;
-            text-decoration: none;
-            img {
-                max-width: 200px;
-            }
-        }
     }
     app-search-field {
         height: 50px;

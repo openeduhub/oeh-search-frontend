@@ -10,6 +10,7 @@ import {
 import { filter, delay } from 'rxjs/operators';
 import { ViewportScroller } from '@angular/common';
 import { ErrorService } from './error.service';
+import { AuthService } from './auth.service';
 
 @Component({
     selector: 'app-root',
@@ -19,7 +20,14 @@ import { ErrorService } from './error.service';
 export class AppComponent {
     loading = false;
 
-    constructor(router: Router, viewportScroller: ViewportScroller, error: ErrorService) {
+    constructor(
+        router: Router,
+        viewportScroller: ViewportScroller,
+        error: ErrorService,
+        auth: AuthService,
+    ) {
+        // Bootstrap login via OpenID.
+        auth.bootstrap();
         // Recreate scroll restoration behavior of the scrollPositionRestoration option (see
         // https://angular.io/api/router/ExtraOptions#scrollPositionRestoration) with added delay.
         router.events

@@ -32,5 +32,9 @@
     <a mat-raised-button color="primary" [href]="details.lom.technical.location"
       ><mat-icon>open_in_new</mat-icon>{{ details.source.name }}</a
     >
+    <div *ngIf="userInfo" class="editorial">
+      <label i18n>Editorial</label>
+      <button mat-button (click)="markAsRecommended()" i18n>Mark as recommended</button>
+    </div>
   </div>
 </div>
