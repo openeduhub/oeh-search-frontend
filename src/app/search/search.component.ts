@@ -12,8 +12,6 @@ import { Facets, SearchService, Filters } from '../search.service';
 })
 export class SearchComponent implements OnInit {
     facets: Facets;
-    facetFilters: FormGroup;
-    filters: Filters = {};
     didYouMeanSuggestion: DidYouMeanSuggestionFragment;
 
     constructor(
@@ -27,20 +25,7 @@ export class SearchComponent implements OnInit {
         // Any user input that affects results is funneled through query params. On any such input,
         // we call `router.navigate`. The rest is handled by `onQueryParams`, both, when initially
         // loading and when updating the page.
-        this.route.queryParams.subscribe((params) => this.onQueryParams(params));
         this.registerSearchObservers();
-    }
-
-    private onQueryParams(params: Params) {
-        if (params.filters) {
-            this.filters = JSON.parse(params.filters);
-        } else {
-            this.filters = {};
-        }
-        if (this.facetFilters) {
-            this.facetFilters.reset(this.filters, { emitEvent: false });
-            // If `facetFilters` are not yet initialized, this will be done on initialization.
-        }
     }
 
     private registerSearchObservers() {
@@ -51,32 +36,12 @@ export class SearchComponent implements OnInit {
                 filter((facets) => facets !== null),
                 first(),
             )
-            .subscribe((facets) => this.initFacetFilters(facets));
+            .subscribe((facets) => this.facets = facets);
         this.search
             .getDidYouMeanSuggestion()
             .subscribe(
                 (didYouMeanSuggestion) => (this.didYouMeanSuggestion = didYouMeanSuggestion),
             );
-    }
-
-    private initFacetFilters(facets: Facets) {
-        this.facetFilters = this.formBuilder.group(
-            // Create a new object with every key of `facets` mapped to an empty array. This will
-            // create a new form control for each facet with nothing selected.
-            Object.keys(facets).reduce((agg, key) => ({ ...agg, [key]: [] }), {}),
-        );
-        // Apply values loaded from queryParams.
-        if (this.filters) {
-            this.facetFilters.patchValue(this.filters);
-        }
-        this.facetFilters.valueChanges.subscribe((filters: Filters) => {
-            this.router.navigate([], {
-                relativeTo: this.route,
-                queryParams: { filters: JSON.stringify(filters), pageIndex: 0 },
-                queryParamsHandling: 'merge',
-            });
-        });
-        this.updateFacetFilters();
     }
 
     private setFacets(facets: Facets) {
@@ -94,20 +59,6 @@ export class SearchComponent implements OnInit {
                 this.facets[label].buckets = facet.buckets;
             } else {
                 this.facets[label] = facet;
-            }
-        }
-        if (this.facetFilters) {
-            this.updateFacetFilters();
-        }
-    }
-
-    private updateFacetFilters() {
-        for (const [label, facet] of Object.entries(this.facets)) {
-            const control = this.facetFilters.get(label);
-            if (facet.buckets && facet.buckets.length > 0) {
-                control.enable({ emitEvent: false });
-            } else {
-                control.disable({ emitEvent: false });
             }
         }
     }

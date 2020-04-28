@@ -1,0 +1,114 @@
+import { Component, OnInit, Input } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Facets, Filters } from '../search.service';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+
+@Component({
+  selector: 'app-search-filterbar',
+  templateUrl: './search-filterbar.component.html',
+  styleUrls: ['./search-filterbar.component.scss']
+})
+export class SearchFilterbarComponent implements OnInit {
+  @Input() set facets(facets: Facets) {
+      this._facets = facets;
+      console.log('init');
+      this.initFacetFilters(facets);
+  }
+  show = false;
+  filters: Filters = {};
+  facetFilters: FormGroup;
+  _facets: Facets;
+  expanded = ['disciplines'];
+
+  constructor(
+      private formBuilder: FormBuilder,
+      private route: ActivatedRoute,
+      private router: Router
+  ) { }
+
+  ngOnInit(): void {
+      this.route.queryParams.subscribe((params) => {
+          if (params.filters) {
+              this.filters = JSON.parse(params.filters);
+          } else {
+              this.filters = {};
+          }
+          this.show = params.filter === 'true';
+          if (this.facetFilters) {
+              this.facetFilters.reset(this.filters, { emitEvent: false });
+              // If `facetFilters` are not yet initialized, this will be done on initialization.
+          }
+      });
+  }
+
+    toggle(key: string) {
+        this.expanded.indexOf(key) === -1 ?
+            this.expanded.push(key) :
+            this.expanded.splice(this.expanded.indexOf(key), 1);
+    }
+    /*
+    private initFacetFilters(facets: Facets) {
+        console.log(facets);
+        this.facetFilters = this.formBuilder.group({}
+            // Create a new object with every key of `facets` mapped to an empty array. This will
+            // create a new form control for each facet with nothing selected.
+        );
+        for (const key of Object.keys(facets)) {
+            this.facetFilters.registerControl(key, this.formBuilder.group({}));
+            for (const b of facets[key].buckets) {
+                (this.facetFilters.get(key) as FormGroup).addControl(b.key, this.formBuilder.control(false));
+            }
+            this.facetFilters.get(key).valueChanges.subscribe(() => {
+                console.log(this.facetFilters.value);
+            });
+        }
+        // Apply values loaded from queryParams.
+        if (this.filters) {
+            this.facetFilters.patchValue(this.filters);
+        }
+        console.log(this.facetFilters);
+        this.facetFilters.valueChanges.subscribe((filters: Filters) => {
+            console.log(filters);
+            this.router.navigate([], {
+                relativeTo: this.route,
+                queryParams: { filters: JSON.stringify(filters), pageIndex: 0 },
+                queryParamsHandling: 'merge',
+            });
+        });
+        this.updateFacetFilters();
+    }
+     */
+
+    private initFacetFilters(facets: Facets) {
+        this.facetFilters = this.formBuilder.group(
+            // Create a new object with every key of `facets` mapped to an empty array. This will
+            // create a new form control for each facet with nothing selected.
+            Object.keys(facets).reduce((agg, key) => ({ ...agg, [key]: [] }), {}),
+        );
+        // Apply values loaded from queryParams.
+        if (this.filters) {
+            this.facetFilters.patchValue(this.filters);
+        }
+        this.facetFilters.valueChanges.subscribe((filters: Filters) => {
+            this.router.navigate([], {
+                relativeTo: this.route,
+                queryParams: { filters: JSON.stringify(filters), pageIndex: 0 },
+                queryParamsHandling: 'merge',
+            });
+        });
+        this.updateFacetFilters();
+    }
+
+    private updateFacetFilters() {
+      /*
+        for (const [label, facet] of Object.entries(this.facets)) {
+            const control = this.facetFilters.get(label);
+            if (facet.buckets && facet.buckets.length > 0) {
+                control.enable({ emitEvent: false });
+            } else {
+                control.disable({ emitEvent: false });
+            }
+        }
+       */
+    }
+}

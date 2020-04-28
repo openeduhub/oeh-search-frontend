@@ -36,6 +36,9 @@ import { environment } from 'src/environments/environment';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { EditorialPipe } from './editorial.pipe';
 import { MenubarComponent } from './menubar/menubar.component';
+import { SearchFilterbarComponent } from './search-filterbar/search-filterbar.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MultivalueCheckboxComponent } from './multivalue-checkbox/multivalue-checkbox.component';
 
 const appRoutes: Routes = [
     {
@@ -79,6 +82,8 @@ const appRoutes: Routes = [
         EditorialPipe,
         WelcomeComponent,
         MenubarComponent,
+        SearchFilterbarComponent,
+        MultivalueCheckboxComponent,
     ],
     imports: [
         ApolloModule,
@@ -91,6 +96,7 @@ const appRoutes: Routes = [
         HttpLinkModule,
         MatCardModule,
         MatFormFieldModule,
+        MatCheckboxModule,
         MatIconModule,
         MatInputModule,
         ReactiveFormsModule,

@@ -9,6 +9,9 @@ header {
     flex-wrap: wrap;
     width: 100%;
     align-items: center;
+    .filter{
+        margin-right: 20px;
+    }
     h1 {
         padding-right: 1em;
         a {
@@ -20,8 +23,10 @@ header {
         }
     }
     app-search-field {
+        height: 50px;
         flex-grow: 1;
     }
+    margin-bottom: 20px;
 }
 .alpha {
     background-color: $primary;

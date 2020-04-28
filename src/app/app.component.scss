@@ -1,3 +1,5 @@
+@import '../variables';
+
 .loading-spinner {
     position: fixed;
     top: 0;
@@ -16,5 +18,5 @@
     padding: 20px;
 }
 .content {
-    padding-top: 110px;
+    padding-top: $menuHeight + 10px;
 }

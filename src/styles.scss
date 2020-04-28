@@ -4,68 +4,7 @@ $roboto-font-path: '~roboto-fontface/fonts' !default;
 $material-icons-font-path: '~material-icons/iconfont/';
 @import '~material-icons/iconfont/material-icons.scss';
 
-@import 'variables.scss';
-// Custom Theming for Angular Material
-// For more information: https://material.angular.io/guide/theming
-@import '~@angular/material/theming';
-// Plus imports for other components in your app.
-@import 'app/search-field/search-field.component.theme.scss';
-
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
-@include mat-core();
-
-$mat-custom: (
-    50: lighten($primary, 50%),
-    100: lighten($primary, 40%),
-    200: lighten($primary, 30%),
-    300: lighten($primary, 20%),
-    400: lighten($primary, 10%),
-    500: $primary,
-    600: darken($primary, 10%),
-    700: darken($primary, 20%),
-    800: darken($primary, 30%),
-    900: darken($primary, 40%),
-    A100: lighten($primary, 40%),
-    A200: lighten($primary, 30%),
-    A400: $primary,
-    A700: darken($primary, 20%),
-    contrast: (
-        50: #000,
-        100: #000,
-        200: #000,
-        300: #000,
-        400: #fff,
-        500: #fff,
-        600: #fff,
-        700: #fff,
-        800: #fff,
-        900: #fff,
-        A100: #000,
-        A200: #000,
-        A400: #fff,
-        A700: #fff,
-    ),
-);
-
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-$app-primary: mat-palette($mat-custom);
-$app-accent: mat-palette($mat-pink, A200, A100, A400);
-
-// The warn palette is optional (defaults to red).
-$app-warn: mat-palette($mat-red);
-
-// Create the theme object (a Sass map containing all of the palettes).
-$app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
-
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-@include angular-material-theme($app-theme);
-
+@import 'material';
 /* You can add global styles to this file, and also import other style files */
 @include search-field-theme($app-theme);
 

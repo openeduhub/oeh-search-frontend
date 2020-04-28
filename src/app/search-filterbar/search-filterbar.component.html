@@ -1,0 +1,28 @@
+<mat-card *ngIf="show" [formGroup]="facetFilters">
+  <div class="close">
+    <a mat-icon-button
+       routerLink="/search"
+       [queryParams]="{'filter': false}"
+       queryParamsHandling="merge"
+       i18n><mat-icon>close</mat-icon></a>
+  </div>
+  <div class="scroll">
+    <div *ngFor="let facet of _facets | keyvalue">
+      <ng-container *ngIf="facet.value?.buckets?.length">
+        <button mat-button i18n
+                (click)="toggle(facet.key)"
+        >{facet.key, select, keywords {Keywords} sources {Sources} disciplines {Disciplines}
+          learningResourceTypes {Learning Resource Types} educationalContexts {Educational
+          Contexts}} <mat-icon>{{expanded.indexOf(facet.key)!=-1 ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon></button
+        >
+        <app-multivalue-checkbox
+          *ngIf="expanded.indexOf(facet.key)!=-1"
+          [formControlName]="facet.key"
+          [options]="facet.value.buckets"></app-multivalue-checkbox>
+      </ng-container>
+    </div>
+  </div>
+  <div class="apply">
+    <button mat-raised-button color="primary" i18n><mat-icon>search</mat-icon> Apply</button>
+  </div>
+</mat-card>

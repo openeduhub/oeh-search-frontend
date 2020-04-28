@@ -1,0 +1,6 @@
+<mat-checkbox *ngFor="let option of options"
+              (change)="toggleValue(option.key, $event)"
+              [checked]="values.indexOf(option.key)!=-1"
+              [class.checked]="values.indexOf(option.key)!=-1">
+  <span class="label">{{ option.key }}</span> <span class="count">{{option.doc_count}}</span>
+</mat-checkbox>

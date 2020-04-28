@@ -1,0 +1,30 @@
+@import '../../material';
+mat-checkbox{
+    display: flex;
+    width: 100%;
+    padding:3px 0;
+    span{
+        &.label{
+            flex-grow: 1;
+        }
+        &.count{
+            border-radius: 50%;
+            padding:0 6px;
+            color: #888;
+        }
+    }
+    &.checked{
+        .count{
+            color: mat-color($app-primary, darker-contrast);
+            background-color: mat-color($app-primary, darker);
+        }
+    }
+}
+
+:host ::ng-deep{
+    .mat-checkbox-layout,
+    .mat-checkbox-label{
+        display: flex;
+        width: 100%;
+    }
+}

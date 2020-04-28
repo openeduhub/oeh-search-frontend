@@ -1,9 +1,9 @@
 <header>
-  <h1>
-    <a routerLink="/">
-      <img src="assets/images/logo.png" />
-    </a>
-  </h1>
+  <a mat-button class="filter"
+          routerLink="/search"
+          [queryParams]="{'filter': true}"
+          queryParamsHandling="merge"
+          i18n><mat-icon>tune</mat-icon> Filter...</a>
   <app-search-field></app-search-field>
 </header>
 <div class="alpha" i18n>
