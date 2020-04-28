@@ -11,17 +11,17 @@
     justify-content: center;
     align-items: center;
 }
-app-headerbar,
+
 .main {
     max-width: 1400px;
     margin-left: auto;
     margin-right: auto;
     padding: 20px;
-}
-
-.main {
     display: flex;
     flex-direction: column;
+    app-login {
+        align-self: flex-end;
+    }
     .alpha {
         background-color: $primary;
         color: #fff;
@@ -29,8 +29,5 @@ app-headerbar,
         text-align: center;
         padding: 15px 20px;
         margin: 5px auto 30px auto;
-    }
-    .content {
-        padding-top: 110px;
     }
 }

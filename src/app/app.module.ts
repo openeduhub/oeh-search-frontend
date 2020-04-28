@@ -61,6 +61,7 @@ const appRoutes: Routes = [
         component: DetailsComponent,
         resolve: { details: DetailsResolverService },
     },
+    { path: 'login', component: LoginComponent },
     { path: '', redirectTo: 'welcome', pathMatch: 'full' },
     { path: 'error', component: ErrorComponent },
 ];
