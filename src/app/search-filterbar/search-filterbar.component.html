@@ -30,7 +30,7 @@
       ></app-multivalue-checkbox>
     </div>
     <div
-      *ngFor="let key of ['disciplines', 'educationalContexts', 'learningResourceTypes', 'keywords']"
+      *ngFor="let key of ['disciplines', 'educationalContexts', 'learningResourceTypes', 'sources', 'keywords']"
       class="vertical"
     >
       <ng-container *ngIf="facets[key]?.buckets?.length">
@@ -46,6 +46,10 @@
           <ng-container *ngSwitchCase="'learningResourceTypes'">
             <mat-icon class="filter-icon">photo_library</mat-icon>
             <ng-container i18n>Learning Resource Type</ng-container>
+          </ng-container>
+          <ng-container *ngSwitchCase="'sources'">
+            <mat-icon class="filter-icon">cloud</mat-icon>
+            <ng-container i18n>Sources</ng-container>
           </ng-container>
           <ng-container *ngSwitchCase="'keywords'">
             <mat-icon class="filter-icon">list</mat-icon>
