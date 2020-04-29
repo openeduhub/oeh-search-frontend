@@ -2,12 +2,13 @@
   <div class="header">
     <mat-icon>tune</mat-icon>
     <h2 i18n>Filters</h2>
-    <a mat-button
-       routerLink="/search"
-       [queryParams]="{ filters: null }"
-       queryParamsHandling="merge"
-       >
-      <mat-icon>undo</mat-icon> Reset
+    <a
+      mat-button
+      routerLink="/search"
+      [queryParams]="{ filters: null }"
+      queryParamsHandling="merge"
+    >
+      <mat-icon>undo</mat-icon> <ng-container i18n>Reset</ng-container>
     </a>
     <a
       mat-icon-button
@@ -19,9 +20,7 @@
   </div>
   <div class="body">
     <div class="type">
-      <mat-label
-        ><mat-icon>apps</mat-icon> <ng-container i18n>Type</ng-container></mat-label
-      >
+      <mat-label><mat-icon>apps</mat-icon> <ng-container i18n>Type</ng-container></mat-label>
       <app-multivalue-checkbox
         formControlName="types"
         orientation="horizontal"
@@ -30,7 +29,15 @@
       ></app-multivalue-checkbox>
     </div>
     <div
-      *ngFor="let key of ['disciplines', 'educationalContexts', 'learningResourceTypes', 'sources', 'keywords']"
+      *ngFor="
+        let key of [
+          'disciplines',
+          'educationalContexts',
+          'learningResourceTypes',
+          'sources',
+          'keywords'
+        ]
+      "
       class="vertical"
     >
       <ng-container *ngIf="facets[key]?.buckets?.length">
