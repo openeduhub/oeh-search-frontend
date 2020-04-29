@@ -29,7 +29,7 @@
     <label i18n>Source</label>
     <p>{{ details.source.name }}</p>
     <p>{{ details.lom.educational.description }}</p>
-    <a mat-raised-button color="primary" [href]="details.lom.technical.location"
+    <a mat-raised-button color="primary" [href]="details.lom.technical.location" target="_blank"
       ><mat-icon>open_in_new</mat-icon>{{ details.source.name }}</a
     >
     <div *ngIf="userInfo" class="editorial">
