@@ -71,6 +71,7 @@ export class SearchFieldComponent implements OnInit {
     clear() {
         this.searchField.setValue('');
         this.searchFieldInput.nativeElement.focus();
+        this.onSubmit();
     }
 
     private onSearchStringChanges(searchString: string) {
