@@ -102,6 +102,9 @@ export class SearchService {
     }
 
     private mapFilters(filters: Filters): Filter[] {
+        if (!filters) {
+            return [];
+        }
         return Object.entries(filters)
             .filter(([key, value]) => value && value.length > 0)
             .map(([key, value]) => ({ field: key as Facet, terms: value }));
