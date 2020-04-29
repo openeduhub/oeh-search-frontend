@@ -2,6 +2,7 @@ import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/cor
 import { ActivatedRoute, Router } from '@angular/router';
 import { Facets, Filters } from '../search.service';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { SortPipe } from '../sort.pipe';
 
 @Component({
     selector: 'app-search-filterbar',
@@ -49,6 +50,19 @@ export class SearchFilterbarComponent implements OnInit, OnChanges {
             : this.expanded.splice(this.expanded.indexOf(key), 1);
     }
 
+    // does not transfer via template
+    getLicenses() {
+        return new SortPipe().transform(
+            this.facets.licenseOER.buckets,
+    {key: 'key', values: ['NONE', 'MIXED', 'ALL']});
+    }
+    // does not transfer via template
+    getTypes() {
+        return new SortPipe().transform(
+            this.facets.types.buckets,
+            {key: 'key', values: ['MATERIAL', 'TOOL', 'SOURCE']});
+    }
+
     /*
     private initFacetFilters(facets: Facets) {
         console.log(facets);
@@ -87,6 +101,7 @@ export class SearchFilterbarComponent implements OnInit, OnChanges {
     */
 
     private initFacetFilters(facets: Facets) {
+        console.log(facets);
         this.facetFilters = this.formBuilder.group(
             // Create a new object with every key of `facets` mapped to an empty array. This will
             // create a new form control for each facet with nothing selected.

@@ -1,5 +1,6 @@
 <mat-card *ngIf="show" [formGroup]="facetFilters">
   <div class="header">
+    <mat-icon>tune</mat-icon>
     <h2 i18n>Filters</h2>
     <a
       mat-icon-button
@@ -10,20 +11,32 @@
     >
   </div>
   <div class="scroll">
-    <div *ngFor="let facet of facets | keyvalue">
-      <ng-container *ngIf="facet.value?.buckets?.length">
-        <button mat-button i18n (click)="toggle(facet.key)">
-          {facet.key, select, keywords {Keywords} sources {Sources} disciplines {Disciplines}
+    <div class="type">
+      <mat-label i18n><mat-icon>photo_library</mat-icon> Type</mat-label>
+      <app-multivalue-checkbox
+        formControlName="types"
+        orientation="horizontal"
+        [count]="false"
+        [options]="getTypes()"
+      ></app-multivalue-checkbox>
+    </div>
+    <div *ngFor="let key of ['disciplines', 'educationalContexts', 'learningResourceTypes'] " class="vertical">
+      <ng-container *ngIf="facets[key]?.buckets?.length">
+        <button mat-button i18n (click)="toggle(key)">
+          <mat-icon *ngIf="key == 'disciplines'">book_icon</mat-icon>
+          <mat-icon *ngIf="key == 'educationalContexts'">school</mat-icon>
+          <mat-icon *ngIf="key == 'learningResourceTypes'">photo_library</mat-icon>
+          {key, select, keywords {Keywords} sources {Sources} disciplines {Disciplines}
           learningResourceTypes {Learning Resource Types} educationalContexts {Educational
           Contexts}}
           <mat-icon>{{
-            expanded.indexOf(facet.key) != -1 ? 'keyboard_arrow_down' : 'keyboard_arrow_right'
+            expanded.indexOf(key) != -1 ? 'keyboard_arrow_down' : 'keyboard_arrow_right'
           }}</mat-icon>
         </button>
         <app-multivalue-checkbox
-          *ngIf="expanded.indexOf(facet.key) != -1"
-          [formControlName]="facet.key"
-          [options]="facet.value.buckets"
+          *ngIf="expanded.indexOf(key) != -1"
+          [formControlName]="key"
+          [options]="facets[key].buckets"
         ></app-multivalue-checkbox>
       </ng-container>
     </div>

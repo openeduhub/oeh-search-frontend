@@ -42,6 +42,7 @@ import { SearchFilterbarComponent } from './search-filterbar/search-filterbar.co
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MultivalueCheckboxComponent } from './multivalue-checkbox/multivalue-checkbox.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { SortPipe } from './sort.pipe';
 
 const appRoutes: Routes = [
     {
@@ -83,6 +84,7 @@ const appRoutes: Routes = [
         HeaderbarComponent,
         SearchFieldComponent,
         TrimPipe,
+        SortPipe,
         EditorialPipe,
         WelcomeComponent,
         MenubarComponent,
