@@ -18,18 +18,15 @@ mat-card {
             margin: 0 10px;
         }
     }
-    .apply {
-        display: flex;
-        justify-content: flex-end;
-        height: 40px;
-        padding: 10px 10px;
-    }
-    .apply {
-        padding: 10px 20px;
-        > button mat-icon {
-            margin-right: 0.3em;
-        }
-    }
+    // .apply {
+    //     display: flex;
+    //     justify-content: flex-end;
+    //     height: 40px;
+    //     padding: 10px 20px;
+    //     > button mat-icon {
+    //         margin-right: 0.3em;
+    //     }
+    // }
     .scroll {
         overflow-y: auto;
         height: calc(100% - 150px);
