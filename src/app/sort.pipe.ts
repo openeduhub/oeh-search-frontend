@@ -19,7 +19,6 @@ export class SortPipe implements PipeTransform {
             return (config.values.indexOf(keyA) < config.values.indexOf(keyB) ? -1 : 1) *
                    (config.ascending === false ? -1 : 1);
         });
-        console.log(value);
         return value;
     }
 }
