@@ -2,6 +2,13 @@
   <div class="header">
     <mat-icon>tune</mat-icon>
     <h2 i18n>Filters</h2>
+    <a mat-button
+       routerLink="/search"
+       [queryParams]="{ filters: null }"
+       queryParamsHandling="merge"
+       >
+      <mat-icon>undo</mat-icon> Reset
+    </a>
     <a
       mat-icon-button
       routerLink="/search"
