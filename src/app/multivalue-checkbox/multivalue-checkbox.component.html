@@ -1,10 +1,16 @@
-<div
-  [style.flex-direction]="orientation=='horizontal' ? 'row' : 'column'"
->
-<mat-checkbox *ngFor="let option of options"
-              (change)="toggleValue(option.key, $event)"
-              [checked]="values.indexOf(option.key)!=-1"
-              [class.checked]="values.indexOf(option.key)!=-1">
-  <span class="label">{{ option.key }}</span> <span class="count" *ngIf="count">{{option.doc_count}}</span>
-</mat-checkbox>
+<div [style.flex-direction]="orientation == 'horizontal' ? 'row' : 'column'">
+  <mat-checkbox
+    *ngFor="let option of options"
+    (change)="toggleValue(option.key, $event)"
+    [checked]="values.indexOf(option.key) != -1"
+    [class.checked]="values.indexOf(option.key) != -1"
+  >
+    <span class="label" [ngSwitch]="option.key">
+      <ng-container *ngSwitchCase="'MATERIAL'" i18n>Material</ng-container>
+      <ng-container *ngSwitchCase="'TOOL'" i18n>Tool</ng-container>
+      <ng-container *ngSwitchCase="'SOURCE'" i18n>Source</ng-container>
+      <ng-container *ngSwitchDefault>{{ option.key }}</ng-container>
+    </span>
+    <span class="count" *ngIf="count">{{ option.doc_count }}</span>
+  </mat-checkbox>
 </div>

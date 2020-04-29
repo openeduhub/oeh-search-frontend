@@ -12,7 +12,9 @@
   </div>
   <div class="scroll">
     <div class="type">
-      <mat-label i18n><mat-icon>photo_library</mat-icon> Type</mat-label>
+      <mat-label
+        ><mat-icon>photo_library</mat-icon> <ng-container i18n>Type</ng-container></mat-label
+      >
       <app-multivalue-checkbox
         formControlName="types"
         orientation="horizontal"
@@ -20,15 +22,23 @@
         [options]="getTypes()"
       ></app-multivalue-checkbox>
     </div>
-    <div *ngFor="let key of ['disciplines', 'educationalContexts', 'learningResourceTypes'] " class="vertical">
+    <div
+      *ngFor="let key of ['disciplines', 'educationalContexts', 'learningResourceTypes']"
+      class="vertical"
+    >
       <ng-container *ngIf="facets[key]?.buckets?.length">
-        <button mat-button i18n (click)="toggle(key)">
-          <mat-icon *ngIf="key == 'disciplines'">book_icon</mat-icon>
-          <mat-icon *ngIf="key == 'educationalContexts'">school</mat-icon>
-          <mat-icon *ngIf="key == 'learningResourceTypes'">photo_library</mat-icon>
-          {key, select, keywords {Keywords} sources {Sources} disciplines {Disciplines}
-          learningResourceTypes {Learning Resource Types} educationalContexts {Educational
-          Contexts}}
+        <button mat-button (click)="toggle(key)" [ngSwitch]="key">
+          <ng-container *ngSwitchCase="'disciplines'">
+            <mat-icon>book_icon</mat-icon> <ng-container i18n>Disciplines</ng-container>
+          </ng-container>
+          <ng-container *ngSwitchCase="'educationalContexts'">
+            <mat-icon>school</mat-icon> <ng-container i18n>Educational Contexts</ng-container>
+          </ng-container>
+          <ng-container *ngSwitchCase="'learningResourceTypes'">
+            <mat-icon>photo_library</mat-icon>
+            <ng-container i18n>Learning Resource Types</ng-container>
+          </ng-container>
+          <ng-container *ngSwitchDefault>{{ key }}</ng-container>
           <mat-icon>{{
             expanded.indexOf(key) != -1 ? 'keyboard_arrow_down' : 'keyboard_arrow_right'
           }}</mat-icon>

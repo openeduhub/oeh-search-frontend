@@ -116,6 +116,10 @@
           <context context-type="sourcefile">src/app/details/details.component.html</context>
           <context context-type="linenumber">29</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/multivalue-checkbox/multivalue-checkbox.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="2ddb4fcbe41ad74ef66a7e9735be8e9b67242b2c" datatype="html">
         <source>Editorial</source>
@@ -128,14 +132,21 @@
         <source>Mark as recommended</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/details/details.component.html</context>
-          <context context-type="linenumber">39</context>
+          <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
       <trans-unit id="01e2925f6451a812b25e351e270099fe9d91e46c" datatype="html">
         <source>Remove recommendation</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/details/details.component.html</context>
-          <context context-type="linenumber">40</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="713bff0fa327e28366b85f729c892ec7b469b78d" datatype="html">
+        <source>Remove from search results</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/details/details.component.html</context>
+          <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
       <trans-unit id="fe90aaa93785f07d828ad81ac0f6fbca5923693a" datatype="html">
@@ -256,27 +267,49 @@
         <source>Filters</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context>
-          <context context-type="linenumber">3</context>
+          <context context-type="linenumber">4</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="19d4d2b3c8d51be80fc686dc7811e75df91316dd" datatype="html">
-        <source>
-          <x id="ICU" equiv-text="{facet.key, select, keywords {...} sources {...} disciplines {...} learningResourceTypes {...} educationalContexts {...}}"/>
-          <x id="START_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;mat-icon&gt;"/><x id="INTERPOLATION" equiv-text="{{
-            expanded.indexOf(facet.key) != -1 ? &apos;keyboard_arrow_down&apos; : &apos;keyboard_arrow_right&apos;
-          }}"/><x id="CLOSE_TAG_MAT-ICON" ctype="x-mat-icon" equiv-text="&lt;/mat-icon&gt;"/>
-        </source>
+      <trans-unit id="f61c6867295f3b53d23557021f2f4e0aa1d0b8fc" datatype="html">
+        <source>Type</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context>
           <context context-type="linenumber">15</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="e44c635c8a6cb10c38f0443f8a9c892def1cb16d" datatype="html">
-        <source>{VAR_SELECT, select, keywords {Keywords} sources {Sources} disciplines {Disciplines} learningResourceTypes {Learning Resource Types} educationalContexts {Educational
-          Contexts} }</source>
+      <trans-unit id="bd94893bd28633d181d42bf5f8fe9a5b6cc3df71" datatype="html">
+        <source>Disciplines</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context>
-          <context context-type="linenumber">16</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="916e79f4c70e3fa39bf13f2289d466f55ff0bb98" datatype="html">
+        <source>Educational Contexts</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="46519ddb02414c77b4f8573928dc68136348b408" datatype="html">
+        <source>Learning Resource Types</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="fa97f41a167e302d64cc195b0174ab65bc011710" datatype="html">
+        <source>Material</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/multivalue-checkbox/multivalue-checkbox.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="49ab4d6f1aeb3fc797af0dc2aa828c1557b993d3" datatype="html">
+        <source>Tool</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/multivalue-checkbox/multivalue-checkbox.component.html</context>
+          <context context-type="linenumber">10</context>
         </context-group>
       </trans-unit>
     </body>
