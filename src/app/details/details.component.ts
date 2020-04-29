@@ -16,6 +16,7 @@ export class DetailsComponent implements OnInit {
     id: string;
     details: Details;
     isRecommended: boolean;
+    isDisplayed = true;
     userInfo: UserInfo;
 
     constructor(
@@ -45,6 +46,34 @@ export class DetailsComponent implements OnInit {
             }
         } catch (error) {
             this.snackBar.open($localize`Failed to edit recommendation`, null, { duration: 3000 });
+        }
+    }
+
+    async hide() {
+        try {
+            await this.editorService.setDisplayState(this.id, false);
+            const snackBarRef = this.snackBar.open(
+                $localize`The entry will no longer be displayed in results`,
+                $localize`Undo`,
+            );
+            snackBarRef.onAction().subscribe(() => {
+                this.undoHide();
+            });
+            this.isDisplayed = false;
+        } catch (error) {
+            this.snackBar.open($localize`Failed to perform action`, null, { duration: 3000 });
+        }
+    }
+
+    async undoHide() {
+        try {
+            await this.editorService.setDisplayState(this.id, true);
+            this.isDisplayed = true;
+            this.snackBar.open($localize`The entry will be displayed again`, null, {
+                duration: 3000,
+            });
+        } catch (error) {
+            this.snackBar.open($localize`Failed to perform action`, null, { duration: 3000 });
         }
     }
 }

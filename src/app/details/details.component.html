@@ -34,11 +34,17 @@
     >
     <div *ngIf="userInfo" class="editorial">
       <label i18n>Editorial</label>
-      <button mat-raised-button (click)="markAsRecommended()">
-        <mat-icon>star</mat-icon>
-        <ng-container *ngIf="!isRecommended" i18n>Mark as recommended</ng-container>
-        <ng-container *ngIf="isRecommended" i18n>Remove recommendation</ng-container>
-      </button>
+      <div class="buttons-row">
+        <button mat-raised-button (click)="markAsRecommended()">
+          <mat-icon>star</mat-icon>
+          <ng-container *ngIf="!isRecommended" i18n>Mark as recommended</ng-container>
+          <ng-container *ngIf="isRecommended" i18n>Remove recommendation</ng-container>
+        </button>
+        <button mat-raised-button color="warn" [disabled]="!isDisplayed" (click)="hide()">
+          <mat-icon>delete</mat-icon>
+          <ng-container i18n>Remove from search results</ng-container>
+        </button>
+      </div>
     </div>
   </div>
 </div>

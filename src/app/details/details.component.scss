@@ -38,10 +38,17 @@
                 }
             }
         }
-        a, button {
+        a,
+        button {
             margin-bottom: 20px;
             mat-icon {
                 padding-right: 5px;
+            }
+        }
+        .buttons-row {
+            padding: 10px 0;
+            button {
+                margin-right: 10px;
             }
         }
     }

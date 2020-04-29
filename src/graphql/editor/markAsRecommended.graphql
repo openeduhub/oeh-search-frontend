@@ -1,3 +1,7 @@
-mutation MarkAsRecommended($id: ID!, $marked: Boolean!) {
-  markAsRecommended(id: $id, marked: $marked)
+mutation MarkAsRecommended($id: ID!, $value: Boolean!) {
+  markAsRecommended(id: $id, value: $value)
+}
+
+mutation SetDisplayState($id: ID!, $value: Boolean!) {
+  setDisplayState(id: $id, value: $value)
 }
