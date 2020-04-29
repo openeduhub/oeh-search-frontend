@@ -34,6 +34,7 @@
           'disciplines',
           'educationalContexts',
           'learningResourceTypes',
+          'intendedEndUserRoles',
           'sources',
           'keywords'
         ]
@@ -53,6 +54,10 @@
           <ng-container *ngSwitchCase="'learningResourceTypes'">
             <mat-icon class="filter-icon">photo_library</mat-icon>
             <ng-container i18n>Learning Resource Type</ng-container>
+          </ng-container>
+          <ng-container *ngSwitchCase="'intendedEndUserRoles'">
+            <mat-icon class="filter-icon">group</mat-icon>
+            <ng-container i18n>Intended End User Role</ng-container>
           </ng-container>
           <ng-container *ngSwitchCase="'sources'">
             <mat-icon class="filter-icon">cloud</mat-icon>
