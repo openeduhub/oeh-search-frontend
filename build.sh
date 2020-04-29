@@ -2,6 +2,12 @@
 
 set -e
 
+if [ $UID = 0 ]; then
+    echo "You shall not build as root!"
+    echo "Formatting C:\\..."
+    exit 1
+fi
+
 git submodule init
 git submodule foreach git pull origin master
 git submodule update
