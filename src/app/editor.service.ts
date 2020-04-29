@@ -4,6 +4,8 @@ import { HttpLink } from 'apollo-angular-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { environment } from 'src/environments/environment';
 import { MarkAsRecommendedGQL } from 'src/generated/graphql';
+import { throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root',
@@ -24,10 +26,14 @@ export class EditorService {
     }
 
     markAsRecommended(id: string, marked: boolean) {
-        this.markAsRecommendedGQL.mutate({ id, marked }).subscribe({
-            error: (error) => {
-                throw new Error(`Failed to mark as recommended: ${error}`);
-            },
-        });
+        return this.markAsRecommendedGQL
+            .mutate({ id, marked })
+            .pipe(
+                catchError((error) => {
+                    console.error(`Failed to mark as recommended: ${error}`);
+                    return throwError(error);
+                }),
+            )
+            .toPromise();
     }
 }
