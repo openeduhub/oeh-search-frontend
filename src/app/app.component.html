@@ -1,22 +1,13 @@
 <app-menubar></app-menubar>
 <div class="main">
   <app-login></app-login>
-  <div class="alpha" i18n>
+  <!-- <div class="alpha" i18n>
     This is a preview of the search engine for learning materials. Some results still have missing
     or wrong metadata.<br />
     This page is regularly updated with new sources, content, and functionality. Have fun browsing!
-  </div>
-  <div class="search">
-    <a mat-raised-button class="filter"
-       routerLink="/search"
-       [queryParams]="{'filter': true}"
-       queryParamsHandling="merge"
-       i18n><mat-icon>tune</mat-icon> Filter...</a>
-    <app-search-field></app-search-field>
-  </div>
-  <div class="content">
-    <router-outlet></router-outlet>
-  </div>
+  </div> -->
+  <app-headerbar></app-headerbar>
+  <router-outlet></router-outlet>
 </div>
 <div class="loading-spinner" *ngIf="loading">
   <mat-spinner></mat-spinner>

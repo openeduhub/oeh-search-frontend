@@ -6,23 +6,20 @@
 }
 header {
     display: flex;
-    flex-wrap: wrap;
-    width: 100%;
     align-items: center;
-    .filter{
+    padding: 20px 10%;
+    background-image: url('../../assets/images/search-bg.png');
+    background-size: cover;
+    background-position: 50%;
+    .filter-button {
         margin-right: 20px;
+        mat-icon {
+            padding-right: 0.3em;
+        }
     }
     app-search-field {
         height: 50px;
         flex-grow: 1;
     }
     margin-bottom: 20px;
-}
-.alpha {
-    background-color: $primary;
-    color: #fff;
-    border-radius: 10px;
-    text-align: center;
-    padding: 15px 20px;
-    margin: 5px auto 30px auto;
 }

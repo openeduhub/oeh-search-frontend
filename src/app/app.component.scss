@@ -25,26 +25,13 @@
     .content {
         padding: 20px 40px;
     }
-    .search {
-        padding:20px 10%;
-        display: flex;
-        align-items: center;
-        background-image: url('../assets/images/search-bg.png');
-        background-size: cover;
-        background-position: 50%;
-        >app-search-field{
-            margin-left: 20px;
-            flex-grow: 1;
-            height: 50px;
-        }
-    }
-    .alpha {
-        background-color: $primary;
-        color: #fff;
-        border-radius: 10px;
-        text-align: center;
-        padding: 15px 20px;
-        margin: 5px auto 30px auto;
-        display: none;
-    }
+    // .alpha {
+    //     background-color: $primary;
+    //     color: #fff;
+    //     border-radius: 10px;
+    //     text-align: center;
+    //     padding: 15px 20px;
+    //     margin: 5px auto 30px auto;
+    //     display: none;
+    // }
 }
