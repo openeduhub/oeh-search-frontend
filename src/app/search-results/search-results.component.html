@@ -25,15 +25,18 @@
         />
         <mat-card-title>{{ result.lom.general.title | truncate: 52 }}</mat-card-title>
       </a>
-      <div class="editorial" *ngIf="result | editorial" i18n-matTooltip matTooltip="Recommended by editorial team">
-        <mat-icon>star</mat-icon>
+      <div class="top-infos">
+        <div class="oer" *ngIf="result.license?.oer === 'ALL'">OER</div>
+        <div class="editorial" *ngIf="result | editorial" i18n-matTooltip matTooltip="Recommended by editorial team">
+          <mat-icon>star</mat-icon>
+        </div>
       </div>
       <mat-card-content>
         <p class="description" *ngIf="result.lom.educational?.description">
           {{ result.lom.educational.description | trim | truncate: 120 }}
         </p>
         <div class="educational" *ngIf="result.valuespaces?.discipline">
-          <label i18n>Discipline</label>
+          <label i18n><mat-icon>book_icon</mat-icon> Discipline</label>
           <span *ngFor="let discipline of result.valuespaces.discipline | slice: 0:5">
             <a
               routerLink="/search"
@@ -46,7 +49,7 @@
           </span>
         </div>
         <div class="context" *ngIf="result.valuespaces?.educationalContext">
-          <label i18n>Educational Context</label>
+          <label i18n><mat-icon>school</mat-icon> Educational Context</label>
           <span *ngFor="let context of result.valuespaces.educationalContext">
             <a
               routerLink="/search"
@@ -59,7 +62,7 @@
           </span>
         </div>
         <div class="lrt" *ngIf="result.valuespaces?.learningResourceType">
-          <label i18n>Learning Resource Type</label>
+          <label i18n><mat-icon>photo_library</mat-icon> Learning Resource Type</label>
           <span *ngFor="let lrt of result.valuespaces.learningResourceType">
             <a
               routerLink="/search"
@@ -71,15 +74,15 @@
           </span>
         </div>
         <div class="keyword" *ngIf="result.lom.general.keyword">
-          <label i18n>Keywords</label>
+          <label i18n><mat-icon>list</mat-icon> Keywords</label>
           <span *ngFor="let keyword of result.lom.general.keyword | slice: 0:5">
-            <a
+            <!--<a
               routerLink="/search"
               [queryParams]="['keywords', [keyword]] | generateFilters: filters"
               queryParamsHandling="merge"
-            >
+            >-->
               {{ keyword }}
-            </a>
+            <!--</a>-->
           </span>
         </div>
       </mat-card-content>
