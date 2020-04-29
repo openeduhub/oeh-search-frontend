@@ -60,6 +60,7 @@
         mat-card{
             border-radius: 8px;
             overflow: hidden;
+            flex-grow: 1;
         }
         mat-card-title {
             line-height: 1.25;
