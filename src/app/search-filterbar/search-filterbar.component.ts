@@ -15,7 +15,7 @@ export class SearchFilterbarComponent implements OnInit, OnChanges {
     show = false;
     filters: Filters = {};
     facetFilters: FormGroup;
-    expanded = ['disciplines'];
+    expanded = ['disciplines', 'educationalContexts'];
 
     constructor(
         private formBuilder: FormBuilder,

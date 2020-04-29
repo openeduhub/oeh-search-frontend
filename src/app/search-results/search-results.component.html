@@ -87,13 +87,13 @@
         <div class="keyword" *ngIf="result.lom.general.keyword">
           <label><mat-icon>list</mat-icon> <ng-container i18n>Keywords</ng-container></label>
           <span *ngFor="let keyword of result.lom.general.keyword | slice: 0:5">
-            <!--<a
+            <a
               routerLink="/search"
               [queryParams]="['keywords', [keyword]] | generateFilters: filters"
               queryParamsHandling="merge"
-            >-->
+            >
             {{ keyword }}
-            <!--</a>-->
+            </a>
           </span>
         </div>
       </mat-card-content>
