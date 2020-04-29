@@ -1,7 +1,7 @@
 @import '../../material';
 div {
     display: flex;
-    >mat-checkbox {
+    > mat-checkbox {
         display: flex;
         width: 100%;
         padding: 3px 4px;
@@ -30,20 +30,22 @@ div {
                 &.count {
                     color: #fff;
                     background-color: $accentPink;
-
                 }
             }
         }
     }
 
     :host ::ng-deep {
+        .mat-checkbox-inner-container {
+            background-color: white;
+        }
         .mat-checkbox-layout,
         .mat-checkbox-label {
             display: flex;
             width: 100%;
         }
         .mat-checkbox {
-            &.mat-checkbox-checked .mat-checkbox-background{
+            &.mat-checkbox-checked .mat-checkbox-background {
                 background-color: $primary;
             }
             .mat-checkbox-frame {

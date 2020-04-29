@@ -1,20 +1,14 @@
 @import '../../variables.scss';
 
 $sidePadding: 20px;
-$top: 0px;// $menuHeight;
 mat-card {
     padding: 0;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: $top;
-    height: calc(100% - #{$top});
     width: 400px;
     .header {
         color: $primary;
         background-color: $accentYellow;
         height: 40px;
-        padding: 10px 10px;
+        padding: 10px $sidePadding 10px $sidePadding;
         display: flex;
         align-items: center;
         h2 {
@@ -22,52 +16,39 @@ mat-card {
             margin: 0 10px;
         }
     }
-    .type{
-        background-color: #eee;
-        border-bottom: 1px solid #ccc;
-        padding:10px $sidePadding + 16px;
-        width:calc(100% + #{$sidePadding});
-        margin-left:-$sidePadding;
-        mat-label{
-            color: $primary;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            margin: 10px 0;
-            >mat-icon{
-                margin-right: 5px;
+    .body {
+        .type {
+            background-color: #eee;
+            border-top: 1px solid #ccc;
+            border-bottom: 1px solid #ccc;
+            padding: 10px $sidePadding;
+            mat-label {
+                color: $primary;
+                font-weight: bold;
+                display: flex;
+                align-items: center;
+                margin: 10px 0;
+                > mat-icon {
+                    margin-right: 10px;
+                }
             }
         }
-    }
-    // .apply {
-    //     display: flex;
-    //     justify-content: flex-end;
-    //     height: 40px;
-    //     padding: 10px 20px;
-    //     > button mat-icon {
-    //         margin-right: 0.3em;
-    //     }
-    // }
-    .scroll {
-        overflow-x: hidden;
-        overflow-y: auto;
-        height: calc(100% - 60px);
-        padding: 0 $sidePadding;
-        >.vertical {
+        > .vertical {
             display: flex;
             flex-direction: column;
+            padding: 10px $sidePadding;
             > button {
+                margin: 10px -16px;
                 display: flex;
                 font-weight: bold;
                 align-items: center;
-                margin: 10px 0;
                 color: $primary;
-                > mat-icon {
+                .filter-icon {
+                    margin-right: 10px;
+                }
+                .arrow-icon {
                     margin-left: 5px;
                 }
-            }
-            > app-multivalue-checkbox {
-                padding: 0 16px;
             }
         }
     }

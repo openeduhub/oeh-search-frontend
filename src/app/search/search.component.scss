@@ -1,16 +1,18 @@
-.did-you-mean > a {
-    &:not(:hover) {
-        text-decoration: none;
-    }
-    :host &::ng-deep em {
-        font-weight: bold;
-    }
-}
-
-.filters {
+:host {
     display: flex;
-    flex-wrap: wrap;
-    > *:not(:last-child) {
-        margin-right: 1em;
+    justify-content: center;
+}
+.results {
+    flex-grow: 1;
+    margin: 0 20px;
+    max-width: 1400px;
+    justify-self: center;
+    .did-you-mean > a {
+        &:not(:hover) {
+            text-decoration: none;
+        }
+        :host &::ng-deep em {
+            font-weight: bold;
+        }
     }
 }

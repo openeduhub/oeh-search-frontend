@@ -10,7 +10,7 @@
       ><mat-icon>close</mat-icon></a
     >
   </div>
-  <div class="scroll">
+  <div class="body">
     <div class="type">
       <mat-label
         ><mat-icon>photo_library</mat-icon> <ng-container i18n>Type</ng-container></mat-label
@@ -29,17 +29,19 @@
       <ng-container *ngIf="facets[key]?.buckets?.length">
         <button mat-button (click)="toggle(key)" [ngSwitch]="key">
           <ng-container *ngSwitchCase="'disciplines'">
-            <mat-icon>book_icon</mat-icon> <ng-container i18n>Disciplines</ng-container>
+            <mat-icon class="filter-icon">book_icon</mat-icon>
+            <ng-container i18n>Discipline</ng-container>
           </ng-container>
           <ng-container *ngSwitchCase="'educationalContexts'">
-            <mat-icon>school</mat-icon> <ng-container i18n>Educational Contexts</ng-container>
+            <mat-icon class="filter-icon">school</mat-icon>
+            <ng-container i18n>Educational Context</ng-container>
           </ng-container>
           <ng-container *ngSwitchCase="'learningResourceTypes'">
-            <mat-icon>photo_library</mat-icon>
-            <ng-container i18n>Learning Resource Types</ng-container>
+            <mat-icon class="filter-icon">photo_library</mat-icon>
+            <ng-container i18n>Learning Resource Type</ng-container>
           </ng-container>
           <ng-container *ngSwitchDefault>{{ key }}</ng-container>
-          <mat-icon>{{
+          <mat-icon class="arrow-icon">{{
             expanded.indexOf(key) != -1 ? 'keyboard_arrow_down' : 'keyboard_arrow_right'
           }}</mat-icon>
         </button>
