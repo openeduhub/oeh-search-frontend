@@ -11,20 +11,17 @@
     justify-content: center;
     align-items: center;
 }
+app-login {
+    position: absolute;
+    right: 0;
+    top: 0px;
+    align-self: flex-end;
+    padding: 10px 20px 10px 80px;
+}
 .main {
     display: flex;
     flex-direction: column;
-    position: relative;
-    app-login {
-        position: absolute;
-        right: 0;
-        top: -50px;
-        align-self: flex-end;
-        padding: 10px 20px 10px 80px;
-    }
-    .content {
-        padding: 20px 40px;
-    }
+    padding: 20px 40px;
     // .alpha {
     //     background-color: $primary;
     //     color: #fff;
