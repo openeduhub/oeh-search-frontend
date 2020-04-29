@@ -1,35 +1,48 @@
 @import '../../variables.scss';
 
 mat-card {
-    padding:0;
+    padding: 0;
     position: fixed;
     z-index: 1000;
-    left:0;
+    left: 0;
     top: $menuHeight;
-    height:calc(100% - #{$menuHeight});
-    width:300px;
-    .apply, .close{
+    height: calc(100% - #{$menuHeight});
+    width: 300px;
+    .header {
+        height: 40px;
+        padding: 10px 10px;
+        display: flex;
+        align-items: center;
+        h2 {
+            flex-grow: 1;
+            margin: 0 10px;
+        }
+    }
+    .apply {
         display: flex;
         justify-content: flex-end;
         height: 40px;
         padding: 10px 10px;
     }
-    .apply{
+    .apply {
         padding: 10px 20px;
+        > button mat-icon {
+            margin-right: 0.3em;
+        }
     }
     .scroll {
         overflow-y: auto;
         height: calc(100% - 150px);
         padding: 0 20px;
-        >div {
+        > div {
             display: flex;
             flex-direction: column;
-            >button {
+            > button {
                 display: flex;
                 font-weight: bold;
                 align-items: center;
                 margin: 10px 0;
-                >mat-icon {
+                > mat-icon {
                     margin-left: 5px;
                 }
             }
