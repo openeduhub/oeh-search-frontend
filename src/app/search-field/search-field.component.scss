@@ -2,6 +2,8 @@
     width: 100%;
     margin-bottom: 1.34375em; // Same as .mat-form-field-wrapper
     position: relative;
+    background: #fff;
+    border-radius: 30px;
     .search-field-flex {
         display: flex;
         align-items: center;
@@ -26,7 +28,6 @@
             border: none;
             flex-grow: 1;
             padding: 1em 0.2em;
-            background: none;
             &:focus {
                 outline: none;
             }

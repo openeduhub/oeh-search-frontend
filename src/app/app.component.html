@@ -14,7 +14,9 @@
        i18n><mat-icon>tune</mat-icon> Filter...</a>
     <app-search-field></app-search-field>
   </div>
-  <router-outlet></router-outlet>
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
 </div>
 <div class="loading-spinner" *ngIf="loading">
   <mat-spinner></mat-spinner>

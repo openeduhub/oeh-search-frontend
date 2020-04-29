@@ -12,26 +12,31 @@
     align-items: center;
 }
 .main {
-    max-width: 1400px;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 20px;
     display: flex;
     flex-direction: column;
-
+    position: relative;
     app-login {
+        position: absolute;
+        right: 0;
+        top: -50px;
         align-self: flex-end;
+        padding: 10px 20px 10px 80px;
     }
-    .search{
+    .content {
+        padding: 20px 40px;
+    }
+    .search {
+        padding:20px 10%;
         display: flex;
-        width: 100%;
         align-items: center;
+        background-image: url('../assets/images/search-bg.png');
+        background-size: cover;
+        background-position: 50%;
         >app-search-field{
             margin-left: 20px;
             flex-grow: 1;
-            height: 48px;
+            height: 50px;
         }
-        padding-bottom: 20px;
     }
     .alpha {
         background-color: $primary;
@@ -40,8 +45,6 @@
         text-align: center;
         padding: 15px 20px;
         margin: 5px auto 30px auto;
+        display: none;
     }
-}
-.content {
-    padding-top: $menuHeight + 10px;
 }
