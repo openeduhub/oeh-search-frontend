@@ -1,11 +1,12 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
-import { Details } from '../search.service';
+import { UserInfo } from 'angular-oauth2-oidc';
 import { AuthService } from '../auth.service';
 import { EditorService } from '../editor.service';
-import { UserInfo } from 'angular-oauth2-oidc';
 import { EditorialPipe } from '../editorial.pipe';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { Details } from '../search.service';
 
 @Component({
     selector: 'app-details',
@@ -24,6 +25,7 @@ export class DetailsComponent implements OnInit {
         private authService: AuthService,
         private editorService: EditorService,
         private snackBar: MatSnackBar,
+        private location: Location,
     ) {}
 
     ngOnInit(): void {
@@ -75,5 +77,9 @@ export class DetailsComponent implements OnInit {
         } catch (error) {
             this.snackBar.open($localize`Failed to perform action`, null, { duration: 3000 });
         }
+    }
+
+    goBack() {
+        this.location.back();
     }
 }
