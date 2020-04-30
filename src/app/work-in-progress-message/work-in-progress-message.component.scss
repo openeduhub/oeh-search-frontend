@@ -1,29 +1,44 @@
 @import '../../variables.scss';
 
+$wrapThreshold: 600px;
+
 :host {
     display: flex;
-    align-items: center;
     background-color: $accentPink;
     color: white;
     padding: 5px;
     border-radius: 7px;
-    > mat-icon {
-        margin: 10px 15px;
+    @media screen and (max-width: $wrapThreshold) {
+        flex-direction: column;
     }
-    > .message {
+    @media screen and (min-width: $wrapThreshold) {
+        align-items: center;
+    }
+    > .container {
+        align-items: center;
         flex-grow: 1;
         display: flex;
-        flex-direction: column;
-        font-weight: bold;
-        margin-left: 1em;
-        .upper {
-            font-size: 120%;
+        > mat-icon {
+            margin: 10px 15px;
+        }
+        > .message {
+            display: flex;
+            flex-direction: column;
+            font-weight: bold;
+            padding: 5px 10px;
+            .upper {
+                font-size: 120%;
+            }
         }
     }
     > .report-bug-button {
+        flex-shrink: 0;
         font-weight: bold;
         margin: 5px 10px;
         border-color: white;
         border-width: 2px;
+        @media screen and (max-width: $wrapThreshold) {
+            align-self: stretch;
+        }
     }
 }
