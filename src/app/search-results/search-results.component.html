@@ -24,8 +24,8 @@
                 | safeBase64Data: result.thumbnail.mimetype"
             >
             <img class="img-main"
-              *ngIf="result.thumbnail"
-              [src]="
+                 *ngIf="result.thumbnail"
+                 [src]="
               result.thumbnail.large || result.thumbnail.small
                 | safeBase64Data: result.thumbnail.mimetype
             "
@@ -33,12 +33,20 @@
           </div>
           <mat-card-title>{{ result.lom.general.title | truncate: 52 }}</mat-card-title>
         </a>
-        <img class="oer" *ngIf="result.license?.oer === 'ALL'" src="assets/images/oer-badge.svg">
         <div class="top-infos">
+          <div class="oer"
+               *ngIf="result.license?.oer === 'ALL'"
+               i18n-matTooltip
+               matTooltipPosition="left"
+               matTooltip="Open Educational Resources"
+          >
+            <img src="assets/images/oer-badge.svg">
+          </div>
           <div
             class="editorial"
             *ngIf="result | editorial"
             i18n-matTooltip
+            matTooltipPosition="left"
             matTooltip="Recommended by editorial team"
           >
             <mat-icon>star</mat-icon>
@@ -104,15 +112,12 @@
             </a>
           </span>
           </div>
+          <a class="details-button" [routerLink]="['/details', result.id]" i18n><mat-icon>info</mat-icon> <span>More Information</span></a>
         </mat-card-content>
         <a
           class="content-link"
           mat-flat-button
           color="primary"
-          i18n-aria-label
-          aria-label="Go to content"
-          i18n-matTooltip
-          matTooltip="Go to content"
           target="_blank"
           [href]="result.lom.technical.location"
           [ngSwitch]="result.type"
@@ -121,8 +126,9 @@
           <ng-container i18n *ngSwitchCase="'TOOL'">Go To Tool</ng-container>
           <ng-container i18n *ngSwitchCase="'SOURCE'">Go To Source</ng-container>
         </a>
+        <a class="source" [href]="result.source.url" target="_blank">
+          <ng-container i18n>Source</ng-container>: {{ result.source.name }}</a>
       </mat-card>
-      <a class="source" [href]="result.source.url" target="_blank">{{ result.source.name }}</a>
     </div>
   </div>
   <mat-paginator
