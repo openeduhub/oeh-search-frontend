@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Facets, Filters } from '../search.service';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { SortPipe } from '../sort.pipe';
 
 @Component({
@@ -52,53 +52,18 @@ export class SearchFilterbarComponent implements OnInit, OnChanges {
 
     // does not transfer via template
     getLicenses() {
-        return new SortPipe().transform(
-            this.facets.licenseOER.buckets,
-    {key: 'key', values: ['NONE', 'MIXED', 'ALL']});
+        return new SortPipe().transform(this.facets.licenseOER.buckets, {
+            key: 'key',
+            values: ['NONE', 'MIXED', 'ALL'],
+        });
     }
     // does not transfer via template
     getTypes() {
-        return new SortPipe().transform(
-            this.facets.types.buckets,
-            {key: 'key', values: ['MATERIAL', 'TOOL', 'SOURCE']});
-    }
-
-    /*
-    private initFacetFilters(facets: Facets) {
-        console.log(facets);
-        this.facetFilters = this.formBuilder.group(
-            {},
-            // Create a new object with every key of `facets` mapped to an empty array. This will
-            // create a new form control for each facet with nothing selected.
-        );
-        for (const key of Object.keys(facets)) {
-            this.facetFilters.registerControl(key, this.formBuilder.group({}));
-            for (const b of facets[key].buckets) {
-                (this.facetFilters.get(key) as FormGroup).addControl(
-                    b.key,
-                    this.formBuilder.control(false),
-                );
-            }
-            this.facetFilters.get(key).valueChanges.subscribe(() => {
-                console.log(this.facetFilters.value);
-            });
-        }
-        // Apply values loaded from queryParams.
-        if (this.filters) {
-            this.facetFilters.patchValue(this.filters);
-        }
-        console.log(this.facetFilters);
-        this.facetFilters.valueChanges.subscribe((filters: Filters) => {
-            console.log(filters);
-            this.router.navigate([], {
-                relativeTo: this.route,
-                queryParams: { filters: JSON.stringify(filters), pageIndex: 0 },
-                queryParamsHandling: 'merge',
-            });
+        return new SortPipe().transform(this.facets.types.buckets, {
+            key: 'key',
+            values: ['MATERIAL', 'TOOL', 'SOURCE'],
         });
-        this.updateFacetFilters();
     }
-    */
 
     private initFacetFilters(facets: Facets) {
         console.log(facets);
@@ -118,19 +83,5 @@ export class SearchFilterbarComponent implements OnInit, OnChanges {
                 queryParamsHandling: 'merge',
             });
         });
-        this.updateFacetFilters();
-    }
-
-    private updateFacetFilters() {
-        /*
-        for (const [label, facet] of Object.entries(this.facets)) {
-            const control = this.facetFilters.get(label);
-            if (facet.buckets && facet.buckets.length > 0) {
-                control.enable({ emitEvent: false });
-            } else {
-                control.disable({ emitEvent: false });
-            }
-        }
-       */
     }
 }
