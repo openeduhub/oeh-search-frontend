@@ -16,6 +16,7 @@ fragment result on SearchResult {
     total
     hits {
       id
+      type
       lom {
         educational {
           description

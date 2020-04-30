@@ -107,15 +107,19 @@
         </mat-card-content>
         <a
           class="content-link"
-          mat-icon-button
+          mat-flat-button
+          color="primary"
           i18n-aria-label
           aria-label="Go to content"
           i18n-matTooltip
           matTooltip="Go to content"
           target="_blank"
           [href]="result.lom.technical.location"
+          [ngSwitch]="result.type"
         >
-          <mat-icon>open_in_new</mat-icon>
+          <ng-container i18n *ngSwitchCase="'MATERIAL'">Go To Content</ng-container>
+          <ng-container i18n *ngSwitchCase="'TOOL'">Go To Tool</ng-container>
+          <ng-container i18n *ngSwitchCase="'SOURCE'">Go To Source</ng-container>
         </a>
       </mat-card>
       <a class="source" [href]="result.source.url" target="_blank">{{ result.source.name }}</a>

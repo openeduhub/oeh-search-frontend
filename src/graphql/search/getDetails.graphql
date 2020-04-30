@@ -1,5 +1,6 @@
 query GetDetails($id: ID!) {
   get(id: $id) {
+    type
     lom {
       educational {
         description
