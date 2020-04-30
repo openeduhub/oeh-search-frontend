@@ -91,13 +91,19 @@
           <context context-type="sourcefile">src/app/multivalue-checkbox/multivalue-checkbox.component.html</context>
           <context context-type="linenumber">10</context>
         </context-group>
-      </trans-unit><trans-unit id="a66d20f0d95a069fab7a41d9f79424db521e15d8" datatype="html">
-        <source>We are still working on this...</source><target state="final">We are still working on this...</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/work-in-progress-message/work-in-progress-message.component.html</context><context context-type="linenumber">4</context></context-group></trans-unit><trans-unit id="bd5b18039bf7031f9fe7ab9ef9185c2b51f9097a" datatype="html">
-        <source>So not everything is perfect yet. Thanks for your understanding!</source><target state="final">So not everything is perfect yet. Thanks for your understanding!</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/work-in-progress-message/work-in-progress-message.component.html</context><context context-type="linenumber">5</context></context-group></trans-unit><trans-unit id="ec3c385e3008b1c8096829a942e03e35d4bbc8d1" datatype="html">
+      </trans-unit><trans-unit id="da1319a129b3f29a9204fc3671471be721f78c72" datatype="html">
+        <source>We are still working on this ...</source><target state="final">We are still working on this ...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/work-in-progress-message/work-in-progress-message.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit><trans-unit id="05022d8d3a1f6942675b64ed3712236f08d41d46" datatype="html">
+        <source>Maybe not everything is perfect yet — but you can help!</source><target state="final">Maybe not everything is perfect yet — but you can help!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/work-in-progress-message/work-in-progress-message.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit><trans-unit id="ec3c385e3008b1c8096829a942e03e35d4bbc8d1" datatype="html">
         <source>Report bug</source><target state="final">Report bug</target>
         
       <context-group purpose="location"><context context-type="sourcefile">src/app/work-in-progress-message/work-in-progress-message.component.html</context><context context-type="linenumber">14</context></context-group></trans-unit>
