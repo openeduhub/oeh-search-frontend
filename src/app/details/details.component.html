@@ -1,3 +1,13 @@
+<a
+  mat-button
+  target="_blank"
+  href="https://wirlernenonline.de/problem-melden/?id={{ id }}&title={{
+    details.lom.general.title | encodeUriComponent
+  }}"
+  i18n
+  >Report a problem</a
+>
+
 <button mat-button (click)="goBack()">
   <mat-icon>keyboard_arrow_left</mat-icon> <ng-container i18n>Back to overview</ng-container>
 </button>

@@ -44,6 +44,7 @@ import { MultivalueCheckboxComponent } from './multivalue-checkbox/multivalue-ch
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SortPipe } from './sort.pipe';
 import { WorkInProgressMessageComponent } from './work-in-progress-message/work-in-progress-message.component';
+import { EncodeUriComponentPipe } from './encode-uri-component.pipe';
 
 const appRoutes: Routes = [
     {
@@ -93,6 +94,7 @@ const appRoutes: Routes = [
         SearchFilterbarComponent,
         MultivalueCheckboxComponent,
         WorkInProgressMessageComponent,
+        EncodeUriComponentPipe,
     ],
     imports: [
         ApolloModule,
