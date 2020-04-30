@@ -30,9 +30,9 @@ export class SearchFilterbarComponent implements OnInit {
         // loading and when updating the page.
         this.route.queryParams.subscribe((params) => {
             if (params.filters) {
-                this.filters = JSON.parse(params.filters);
+                this.setFilters(JSON.parse(params.filters));
             } else {
-                this.filters = {};
+                this.setFilters({});
             }
             this.show = params.filter === 'true';
             if (this.facetFilters) {
@@ -112,6 +112,18 @@ export class SearchFilterbarComponent implements OnInit {
                 this.facets[label].buckets = facet.buckets;
             } else {
                 this.facets[label] = facet;
+            }
+        }
+    }
+
+    private setFilters(filters: Filters) {
+        this.filters = filters;
+        // Expand active filter categories.
+        for (const [key, value] of Object.entries(filters)) {
+            if (value && value.length > 0) {
+                if (this.expanded.indexOf(key) === -1) {
+                    this.expanded.push(key);
+                }
             }
         }
     }
