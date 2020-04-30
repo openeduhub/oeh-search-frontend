@@ -1,62 +1,103 @@
+@import '../../variables';
+
+$mobileBreak: 1000px;
 :host {
     display: block;
     padding: 20px 40px;
     max-width: 1200px;
     margin: auto;
 }
-
+.back{
+    margin-bottom: 20px;
+}
+h1{
+    color: $primary;
+    font-weight: bold;
+}
+.description{
+    padding: 0 10px;
+    font-size: 120%;
+}
 .details {
     display: flex;
     flex-wrap: wrap;
+    @media screen and (max-width: $mobileBreak) {
+        flex-direction: column-reverse;
+    }
     > * {
         flex-grow: 1;
         width: 0;
-        min-width: 500px;
+        min-width: 400px;
         max-width: 700px;
-        @media screen and (max-width: 600px) {
+        @media screen and (max-width: $mobileBreak) {
             min-width: 100%;
         }
     }
     > .image-container {
         padding-right: 30px;
-        padding-bottom: 30px;
         display: flex;
+        flex-direction: column;
         margin: auto;
         align-items: center;
-        @media screen and (max-width: 600px) {
+        @media screen and (max-width: $mobileBreak) {
             padding-right: 0;
         }
         > img {
             width: 100%;
             height: auto;
+            padding-bottom: 30px;
         }
     }
-    > div {
-        label {
-            display: flex;
-            color: #777;
-            font-size: 90%;
+    .actions{
+        padding-bottom: 30px;
+        a mat-icon{
+            padding-right: 5px;
         }
-        .group {
-            padding-bottom: 8px;
-            span {
-                &:not(:last-child)::after {
-                    content: '･';
-                }
-            }
+    }
+}
+.additional-metadata{
+    display: flex;
+    flex-wrap: wrap;
+    > * {
+      flex:0 calc(50% - 20px);
+      padding:5px 10px;
+    }
+}
+.editorial{
+    .buttons-row > button{
+        margin:0 5px;
+    }
+}
+.keyword,
+.editorial-marked,
+.educational,
+.oer-marked,
+.intendedEndUserRole,
+.context,
+.lrt,
+.editorial{
+    color: #777;
+    padding:10px 0;
+    label {
+        font-size: 90%;
+        display: flex;
+        align-items: center;
+        padding:2px 0;
+        >mat-icon, img {
+            width: 18px;
+            height: 18px;
+            font-size: 18px;
+            padding-right: 5px;
         }
-        a,
-        button {
-            margin-bottom: 20px;
-            mat-icon {
-                padding-right: 5px;
-            }
+    }
+    padding-bottom: 0.3em;
+    span {
+        color: #333;
+        a {
+            color: #333;
         }
-        .buttons-row {
-            padding: 10px 0;
-            button {
-                margin-right: 10px;
-            }
+        &:not(:last-child)::after {
+            content: '･';
         }
     }
 }

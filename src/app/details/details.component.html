@@ -1,6 +1,7 @@
-<button mat-button (click)="goBack()">
+<button mat-button (click)="goBack()" class="back">
   <mat-icon>keyboard_arrow_left</mat-icon> <ng-container i18n>Back to overview</ng-container>
 </button>
+<h1>{{ details.lom.general.title }}</h1>
 <div class="details">
   <div class="image-container">
     <img
@@ -10,33 +11,72 @@
           | safeBase64Data: details.thumbnail.mimetype
       "
     />
+
+    <p class="description" *ngIf="details.lom.educational?.description">
+      {{ details.lom.educational.description | trim }}
+    </p>
+    <div class="additional-metadata">
+      <div class="educational" *ngIf="details.valuespaces?.discipline">
+        <label><mat-icon>book_icon</mat-icon> <ng-container i18n>Discipline</ng-container></label>
+        <span *ngFor="let discipline of details.valuespaces.discipline | slice: 0:5">
+              {{ discipline.de }}
+          <!-- @TODO: use i18n de/en -->
+          </span>
+      </div>
+      <div class="context" *ngIf="details.valuespaces?.educationalContext">
+        <label
+        ><mat-icon>school</mat-icon>
+          <ng-container i18n>Educational Context</ng-container></label
+        >
+        <span *ngFor="let context of details.valuespaces.educationalContext">
+              {{ context.de }}
+          <!-- @TODO: use i18n de/en -->
+          </span>
+      </div>
+    </div>
   </div>
   <div>
-    <h1>{{ details.lom.general.title }}</h1>
-    <div class="group" *ngIf="details?.valuespaces?.discipline">
-      <label i18n>Discipline</label>
-      <span *ngFor="let data of details?.valuespaces?.discipline"> {{ data.de }} </span>
+    <div class="actions">
+      <a mat-raised-button color="primary" [href]="details.lom.technical.location" target="_blank" [ngSwitch]="details.type"
+      ><mat-icon>open_in_new</mat-icon>
+        <ng-container i18n *ngSwitchCase="'MATERIAL'">Go To Content</ng-container>
+        <ng-container i18n *ngSwitchCase="'TOOL'">Go To Tool</ng-container>
+        <ng-container i18n *ngSwitchCase="'SOURCE'">Go To Source</ng-container>
+      </a>
     </div>
-    <div class="group" *ngIf="details?.valuespaces?.educationalContext">
-      <label i18n>Educational Context</label>
-      <span *ngFor="let data of details?.valuespaces?.educationalContext"> {{ data.de }} </span>
+    <div class="editorial-marked" *ngIf="details | editorial">
+      <label><img src="assets/images/editorial.svg"> <ng-container i18n>Recommended by editorial team</ng-container></label>
     </div>
-    <div class="group" *ngIf="details?.valuespaces?.learningResourceType">
-      <label i18n>Learning Resource Type</label>
-      <span *ngFor="let data of details?.valuespaces?.learningResourceType"> {{ data.de }} </span>
+    <div class="oer-marked" *ngIf="details.license.oer == 'ALL'">
+      <label><img src="assets/images/oer.svg"> <ng-container i18n>Open educational resources</ng-container></label>
     </div>
-    <div class="group" *ngIf="details.lom.general.keyword">
-      <label i18n>Keywords</label>
-      <span *ngFor="let data of details.lom.general.keyword"> {{ data }} </span>
+    <div class="intendedEndUserRole" *ngIf="details.valuespaces?.intendedEndUserRole">
+      <label
+      ><mat-icon>group</mat-icon>
+        <ng-container i18n>Intended End User Role</ng-container></label
+      >
+      <span *ngFor="let lrt of details.valuespaces.intendedEndUserRole">
+              {{ lrt.de }}
+          </span>
     </div>
-    <label i18n>Source</label>
-    <p>{{ details.source.name }}</p>
-    <p>{{ details.lom.educational.description }}</p>
-    <a mat-raised-button color="primary" [href]="details.lom.technical.location" target="_blank"
-      ><mat-icon>open_in_new</mat-icon>{{ details.source.name }}</a
-    >
+    <div class="lrt" *ngIf="details.valuespaces?.learningResourceType">
+      <label
+      ><mat-icon>photo_library</mat-icon>
+        <ng-container i18n>Resource Type</ng-container></label
+      >
+      <span *ngFor="let lrt of details.valuespaces.learningResourceType">
+              {{ lrt.de }}
+          </span>
+    </div>
+
+    <div class="keyword" *ngIf="details.lom.general.keyword">
+      <label><mat-icon>list</mat-icon> <ng-container i18n>Keywords</ng-container></label>
+      <span *ngFor="let keyword of details.lom.general.keyword | slice: 0:5">
+            {{ keyword }}
+          </span>
+    </div>
     <div *ngIf="userInfo" class="editorial">
-      <label i18n>Editorial</label>
+      <label i18n><mat-icon>settings</mat-icon>Editorial</label>
       <div class="buttons-row">
         <button mat-raised-button (click)="markAsRecommended()">
           <mat-icon>star</mat-icon>
@@ -51,3 +91,4 @@
     </div>
   </div>
 </div>
+

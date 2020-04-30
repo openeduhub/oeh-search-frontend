@@ -36,6 +36,7 @@ query GetDetails($id: ID!) {
       discipline { de }
       educationalContext { de }
       learningResourceType { de }
+      intendedEndUserRole { de }
     }
   }
 }
