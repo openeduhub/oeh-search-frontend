@@ -62,61 +62,67 @@
           </p>
           <div class="educational" *ngIf="result.valuespaces?.discipline">
             <label
-              ><mat-icon>book_icon</mat-icon> <ng-container i18n>Discipline</ng-container></label
-            >
-            <span *ngFor="let discipline of result.valuespaces.discipline | slice: 0:5">
-              <a
-                routerLink="/search"
-                [queryParams]="['disciplines', [discipline.de]] | generateFilters: filters"
-                queryParamsHandling="merge"
-              >
-                {{ discipline.de }}
-                <!-- @TODO: use i18n de/en -->
-              </a>
-            </span>
+              ><mat-icon>book_icon</mat-icon>
+            </label>
+            <div>
+              <span *ngFor="let discipline of result.valuespaces.discipline | slice: 0:5">
+                <a
+                  routerLink="/search"
+                  [queryParams]="['disciplines', [discipline.de]] | generateFilters: filters"
+                  queryParamsHandling="merge"
+                >
+                  {{ discipline.de }}
+                  <!-- @TODO: use i18n de/en -->
+                </a>
+              </span>
+            </div>
           </div>
           <div class="context" *ngIf="result.valuespaces?.educationalContext">
             <label
               ><mat-icon>school</mat-icon>
-              <ng-container i18n>Educational Context</ng-container></label
-            >
-            <span *ngFor="let context of result.valuespaces.educationalContext">
-              <a
-                routerLink="/search"
-                [queryParams]="['educationalContexts', [context.de]] | generateFilters: filters"
-                queryParamsHandling="merge"
-              >
-                {{ context.de }}
-                <!-- @TODO: use i18n de/en -->
-              </a>
-            </span>
+            </label>
+            <div>
+              <span *ngFor="let context of result.valuespaces.educationalContext">
+                <a
+                  routerLink="/search"
+                  [queryParams]="['educationalContexts', [context.de]] | generateFilters: filters"
+                  queryParamsHandling="merge"
+                >
+                  {{ context.de }}
+                  <!-- @TODO: use i18n de/en -->
+                </a>
+              </span>
+            </div>
           </div>
           <div class="lrt" *ngIf="result.valuespaces?.learningResourceType">
-            <label
-              ><mat-icon>photo_library</mat-icon>
-              <ng-container i18n>Resource Type</ng-container></label
-            >
-            <span *ngFor="let lrt of result.valuespaces.learningResourceType">
-              <a
-                routerLink="/search"
-                [queryParams]="['learningResourceTypes', [lrt.de]] | generateFilters: filters"
-                queryParamsHandling="merge"
-              >
-                {{ lrt.de }}
-              </a>
-            </span>
+            <label>
+              <mat-icon>photo_library</mat-icon>
+            </label>
+            <div>
+              <span *ngFor="let lrt of result.valuespaces.learningResourceType">
+                <a
+                  routerLink="/search"
+                  [queryParams]="['learningResourceTypes', [lrt.de]] | generateFilters: filters"
+                  queryParamsHandling="merge"
+                >
+                  {{ lrt.de }}
+                </a>
+              </span>
+            </div>
           </div>
           <div class="keyword" *ngIf="result.lom.general.keyword">
-            <label><mat-icon>list</mat-icon> <ng-container i18n>Keywords</ng-container></label>
-            <span *ngFor="let keyword of result.lom.general.keyword | slice: 0:5">
-              <a
-                routerLink="/search"
-                [queryParams]="['keywords', [keyword]] | generateFilters: filters"
-                queryParamsHandling="merge"
-              >
-                {{ keyword }}
-              </a>
-            </span>
+            <label><mat-icon>list</mat-icon></label>
+            <div>
+              <span *ngFor="let keyword of result.lom.general.keyword | slice: 0:5">
+                <a
+                  routerLink="/search"
+                  [queryParams]="['keywords', [keyword]] | generateFilters: filters"
+                  queryParamsHandling="merge"
+                >
+                  {{ keyword }}
+                </a>
+              </span>
+            </div>
           </div>
           <a class="details-button" [routerLink]="['/details', result.id]"
             ><mat-icon>info</mat-icon> <span i18n>More Information</span></a
