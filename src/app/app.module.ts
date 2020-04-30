@@ -43,6 +43,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MultivalueCheckboxComponent } from './multivalue-checkbox/multivalue-checkbox.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SortPipe } from './sort.pipe';
+import { WorkInProgressMessageComponent } from './work-in-progress-message/work-in-progress-message.component';
 
 const appRoutes: Routes = [
     {
@@ -91,6 +92,7 @@ const appRoutes: Routes = [
         LoginComponent,
         SearchFilterbarComponent,
         MultivalueCheckboxComponent,
+        WorkInProgressMessageComponent,
     ],
     imports: [
         ApolloModule,

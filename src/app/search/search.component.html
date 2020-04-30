@@ -1,6 +1,7 @@
 <app-search-filterbar></app-search-filterbar>
 
 <div class="results">
+  <app-work-in-progress-message></app-work-in-progress-message>
   <p *ngIf="didYouMeanSuggestion" class="did-you-mean">
     <ng-container i18n>Did you mean:</ng-container>&nbsp;<a
       [innerHTML]="didYouMeanSuggestion.html"
