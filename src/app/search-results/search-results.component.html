@@ -34,14 +34,6 @@
           <mat-card-title>{{ result.lom.general.title | truncate: 52 }}</mat-card-title>
         </a>
         <div class="top-infos">
-          <div class="oer"
-               *ngIf="result.license?.oer === 'ALL'"
-               i18n-matTooltip
-               matTooltipPosition="left"
-               matTooltip="Open Educational Resources"
-          >
-            <img src="assets/images/oer-badge.svg">
-          </div>
           <div
             class="editorial"
             *ngIf="result | editorial"
@@ -49,7 +41,15 @@
             matTooltipPosition="left"
             matTooltip="Recommended by editorial team"
           >
-            <mat-icon>star</mat-icon>
+            <img src="assets/images/editorial.svg">
+          </div>
+          <div class="oer"
+               *ngIf="result.license?.oer === 'ALL'"
+               i18n-matTooltip
+               matTooltipPosition="left"
+               matTooltip="Open Educational Resources"
+          >
+            <img src="assets/images/oer.svg">
           </div>
         </div>
         <mat-card-content>
