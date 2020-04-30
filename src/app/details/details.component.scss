@@ -50,8 +50,11 @@ h1{
     }
     .actions{
         padding-bottom: 30px;
-        a mat-icon{
-            padding-right: 5px;
+        a{
+            margin: 0 10px;
+            mat-icon {
+                padding-right: 5px;
+            }
         }
     }
 }

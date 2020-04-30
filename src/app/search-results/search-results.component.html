@@ -17,18 +17,21 @@
       <mat-card class="result">
         <a class="details-link" [routerLink]="['/details', result.id]">
           <div class="image" mat-card-image>
-            <img class="img-bg"
-                 *ngIf="result.thumbnail"
-                 [src]="
-              result.thumbnail.large || result.thumbnail.small
-                | safeBase64Data: result.thumbnail.mimetype"
-            >
-            <img class="img-main"
-                 *ngIf="result.thumbnail"
-                 [src]="
-              result.thumbnail.large || result.thumbnail.small
-                | safeBase64Data: result.thumbnail.mimetype
-            "
+            <img
+              class="img-bg"
+              *ngIf="result.thumbnail"
+              [src]="
+                result.thumbnail.large || result.thumbnail.small
+                  | safeBase64Data: result.thumbnail.mimetype
+              "
+            />
+            <img
+              class="img-main"
+              *ngIf="result.thumbnail"
+              [src]="
+                result.thumbnail.large || result.thumbnail.small
+                  | safeBase64Data: result.thumbnail.mimetype
+              "
             />
           </div>
           <mat-card-title>{{ result.lom.general.title | truncate: 52 }}</mat-card-title>
@@ -41,15 +44,16 @@
             matTooltipPosition="left"
             matTooltip="Recommended by editorial team"
           >
-            <img src="assets/images/editorial.svg">
+            <img src="assets/images/editorial.svg" />
           </div>
-          <div class="oer"
-               *ngIf="result.license?.oer === 'ALL'"
-               i18n-matTooltip
-               matTooltipPosition="left"
-               matTooltip="Open Educational Resources"
+          <div
+            class="oer"
+            *ngIf="result.license?.oer === 'ALL'"
+            i18n-matTooltip
+            matTooltipPosition="left"
+            matTooltip="Open Educational Resources"
           >
-            <img src="assets/images/oer.svg">
+            <img src="assets/images/oer.svg" />
           </div>
         </div>
         <mat-card-content>
@@ -57,62 +61,66 @@
             {{ result.lom.educational.description | trim | truncate: 120 }}
           </p>
           <div class="educational" *ngIf="result.valuespaces?.discipline">
-            <label><mat-icon>book_icon</mat-icon> <ng-container i18n>Discipline</ng-container></label>
-            <span *ngFor="let discipline of result.valuespaces.discipline | slice: 0:5">
-            <a
-              routerLink="/search"
-              [queryParams]="['disciplines', [discipline.de]] | generateFilters: filters"
-              queryParamsHandling="merge"
+            <label
+              ><mat-icon>book_icon</mat-icon> <ng-container i18n>Discipline</ng-container></label
             >
-              {{ discipline.de }}
-              <!-- @TODO: use i18n de/en -->
-            </a>
-          </span>
+            <span *ngFor="let discipline of result.valuespaces.discipline | slice: 0:5">
+              <a
+                routerLink="/search"
+                [queryParams]="['disciplines', [discipline.de]] | generateFilters: filters"
+                queryParamsHandling="merge"
+              >
+                {{ discipline.de }}
+                <!-- @TODO: use i18n de/en -->
+              </a>
+            </span>
           </div>
           <div class="context" *ngIf="result.valuespaces?.educationalContext">
             <label
-            ><mat-icon>school</mat-icon>
+              ><mat-icon>school</mat-icon>
               <ng-container i18n>Educational Context</ng-container></label
             >
             <span *ngFor="let context of result.valuespaces.educationalContext">
-            <a
-              routerLink="/search"
-              [queryParams]="['educationalContexts', [context.de]] | generateFilters: filters"
-              queryParamsHandling="merge"
-            >
-              {{ context.de }}
-              <!-- @TODO: use i18n de/en -->
-            </a>
-          </span>
+              <a
+                routerLink="/search"
+                [queryParams]="['educationalContexts', [context.de]] | generateFilters: filters"
+                queryParamsHandling="merge"
+              >
+                {{ context.de }}
+                <!-- @TODO: use i18n de/en -->
+              </a>
+            </span>
           </div>
           <div class="lrt" *ngIf="result.valuespaces?.learningResourceType">
             <label
-            ><mat-icon>photo_library</mat-icon>
+              ><mat-icon>photo_library</mat-icon>
               <ng-container i18n>Resource Type</ng-container></label
             >
             <span *ngFor="let lrt of result.valuespaces.learningResourceType">
-            <a
-              routerLink="/search"
-              [queryParams]="['learningResourceTypes', [lrt.de]] | generateFilters: filters"
-              queryParamsHandling="merge"
-            >
-              {{ lrt.de }}
-            </a>
-          </span>
+              <a
+                routerLink="/search"
+                [queryParams]="['learningResourceTypes', [lrt.de]] | generateFilters: filters"
+                queryParamsHandling="merge"
+              >
+                {{ lrt.de }}
+              </a>
+            </span>
           </div>
           <div class="keyword" *ngIf="result.lom.general.keyword">
             <label><mat-icon>list</mat-icon> <ng-container i18n>Keywords</ng-container></label>
             <span *ngFor="let keyword of result.lom.general.keyword | slice: 0:5">
-            <a
-              routerLink="/search"
-              [queryParams]="['keywords', [keyword]] | generateFilters: filters"
-              queryParamsHandling="merge"
-            >
-            {{ keyword }}
-            </a>
-          </span>
+              <a
+                routerLink="/search"
+                [queryParams]="['keywords', [keyword]] | generateFilters: filters"
+                queryParamsHandling="merge"
+              >
+                {{ keyword }}
+              </a>
+            </span>
           </div>
-          <a class="details-button" [routerLink]="['/details', result.id]" i18n><mat-icon>info</mat-icon> <span>More Information</span></a>
+          <a class="details-button" [routerLink]="['/details', result.id]"
+            ><mat-icon>info</mat-icon> <span i18n>More Information</span></a
+          >
         </mat-card-content>
         <a
           class="content-link"
@@ -127,7 +135,8 @@
           <ng-container i18n *ngSwitchCase="'SOURCE'">Go To Source</ng-container>
         </a>
         <a class="source" [href]="result.source.url" target="_blank">
-          <ng-container i18n>Source</ng-container>: {{ result.source.name }}</a>
+          <ng-container i18n>Source</ng-container>: {{ result.source.name }}</a
+        >
       </mat-card>
     </div>
   </div>

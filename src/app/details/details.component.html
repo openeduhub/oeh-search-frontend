@@ -43,6 +43,15 @@
         <ng-container i18n *ngSwitchCase="'TOOL'">Go To Tool</ng-container>
         <ng-container i18n *ngSwitchCase="'SOURCE'">Go To Source</ng-container>
       </a>
+      <a
+        mat-button
+        target="_blank"
+        href="https://wirlernenonline.de/problem-melden/?id={{ id }}&title={{
+    details.lom.general.title | encodeUriComponent
+  }}"
+        i18n
+      ><mat-icon>flag</mat-icon> Report a problem</a
+      >
     </div>
     <div class="editorial-marked" *ngIf="details | editorial">
       <label><img src="assets/images/editorial.svg"> <ng-container i18n>Recommended by editorial team</ng-container></label>
