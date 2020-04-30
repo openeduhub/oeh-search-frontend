@@ -475,6 +475,7 @@ header {
     .position-relative {
         position: relative !important;
     }
+    .menu li.current-menu-item > a{text-decoration:underline;}
     .menu li a {
         font-family: 'Montserrat-Bold', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
     }
