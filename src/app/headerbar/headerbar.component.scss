@@ -23,3 +23,9 @@ header {
     }
     margin-bottom: 20px;
 }
+
+@media screen and (max-width: 400px) {
+    .filter-button span{
+        display: none;
+    }
+}

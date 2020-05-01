@@ -4,6 +4,12 @@ $sidePadding: 20px;
 mat-card {
     padding: 0;
     width: 350px;
+    @media screen and (max-width: 700px) {
+        width: 300px;
+    }
+    @media screen and (max-width: 600px) {
+        width: 100vw;
+    }
     .header {
         color: $primary;
         background-color: $accentYellow;

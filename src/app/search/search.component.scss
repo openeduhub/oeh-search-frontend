@@ -19,3 +19,11 @@
         }
     }
 }
+@media screen and (max-width: 600px) {
+    :host{
+        flex-wrap: wrap;
+        .results{
+            margin-top: 30px;
+        }
+    }
+}
