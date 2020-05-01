@@ -12,11 +12,12 @@
     align-items: center;
 }
 app-login {
-    position: absolute;
+    /*position: absolute;
     right: 0;
-    top: 0px;
-    align-self: flex-end;
-    padding: 10px 20px 10px 80px;
+    top: 0px;*/
+    display: flex;
+    justify-content: flex-end;
+    margin:20px 20px;
 }
 // .main {
 //     display: flex;

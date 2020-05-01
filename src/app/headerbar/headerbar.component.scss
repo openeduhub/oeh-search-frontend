@@ -12,7 +12,24 @@ header {
     background-size: cover;
     background-position: 50%;
     .filter-button {
+        position: relative;
         margin-right: 20px;
+        &.has-badge {
+            padding-right: 24px;
+        }
+        .badge {
+            position: absolute;
+            right: -8px;
+            top: -8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 26px;
+            height:26px;
+            border-radius: 50%;
+            color: #fff;
+            background-color: red;
+        }
         mat-icon {
             padding-right: 0.3em;
         }

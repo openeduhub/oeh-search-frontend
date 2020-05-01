@@ -9,6 +9,7 @@ $mobileBreak: 1000px;
 }
 .back{
     margin-bottom: 20px;
+    margin-left: -40px;
 }
 h1{
     color: $primary;
@@ -17,6 +18,20 @@ h1{
 .description{
     padding: 0;
     font-size: 120%;
+    white-space: pre-line;
+    line-height: 1.25;
+}
+.right{
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    @media screen and (max-width: $mobileBreak) {
+        flex-direction: row;
+        flex-wrap: wrap;
+        > div{
+            flex-grow: 1;
+        }
+    }
 }
 .details {
     display: flex;
@@ -49,11 +64,27 @@ h1{
         }
     }
     .actions{
+        width: 100%;
         padding-bottom: 30px;
+        display: flex;
+        @media screen and (max-width: $mobileBreak) {
+            justify-content: space-between;
+            .report{
+                margin-right: -16px;
+            }
+        }
         a{
             margin: 0 10px;
             mat-icon {
                 padding-right: 5px;
+            }
+            &.report{
+                color: #555;
+                span {
+                    @media screen and (max-width: 450px) {
+                        display: none;
+                    }
+                }
             }
         }
     }
@@ -98,6 +129,9 @@ h1{
             font-size: 16px;
             padding-right: 5px;
         }
+    }
+    div{
+        padding:0 22px;
     }
     padding-bottom: 0.3em;
     span {

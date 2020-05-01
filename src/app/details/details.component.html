@@ -18,23 +18,27 @@
     <div class="additional-metadata">
       <div class="educational" *ngIf="details.valuespaces?.discipline">
         <label><mat-icon>book_icon</mat-icon> <ng-container i18n>Discipline</ng-container></label>
-        <span *ngFor="let discipline of details.valuespaces.discipline | slice: 0:5">
-          {{ discipline.de }}
-          <!-- @TODO: use i18n de/en -->
-        </span>
+        <div>
+          <span *ngFor="let discipline of details.valuespaces.discipline | slice: 0:5">
+            {{ discipline.de }}
+            <!-- @TODO: use i18n de/en -->
+          </span>
+        </div>
       </div>
       <div class="context" *ngIf="details.valuespaces?.educationalContext">
         <label
           ><mat-icon>school</mat-icon> <ng-container i18n>Educational Context</ng-container></label
         >
-        <span *ngFor="let context of details.valuespaces.educationalContext">
-          {{ context.de }}
-          <!-- @TODO: use i18n de/en -->
-        </span>
+        <div>
+          <span *ngFor="let context of details.valuespaces.educationalContext">
+            {{ context.de }}
+            <!-- @TODO: use i18n de/en -->
+          </span>
+        </div>
       </div>
     </div>
   </div>
-  <div>
+  <div class="right">
     <div class="actions">
       <a
         mat-raised-button
@@ -50,10 +54,11 @@
       <a
         mat-button
         target="_blank"
+        class="report"
         href="https://wirlernenonline.de/problem-melden/?id={{ id }}&title={{
           details.lom.general.title | encodeUriComponent
         }}"
-        ><mat-icon>flag</mat-icon> <ng-container i18n>Report a problem</ng-container></a
+        ><mat-icon>report_problem</mat-icon> <span i18n>Report a problem</span></a
       >
     </div>
     <div class="editorial-marked" *ngIf="details | editorial">
@@ -72,24 +77,30 @@
       <label
         ><mat-icon>group</mat-icon> <ng-container i18n>Intended End User Role</ng-container></label
       >
-      <span *ngFor="let lrt of details.valuespaces.intendedEndUserRole">
-        {{ lrt.de }}
-      </span>
+      <div>
+        <span *ngFor="let lrt of details.valuespaces.intendedEndUserRole">
+          {{ lrt.de }}
+        </span>
+      </div>
     </div>
     <div class="lrt" *ngIf="details.valuespaces?.learningResourceType">
       <label
         ><mat-icon>photo_library</mat-icon> <ng-container i18n>Resource Type</ng-container></label
       >
-      <span *ngFor="let lrt of details.valuespaces.learningResourceType">
-        {{ lrt.de }}
-      </span>
+      <div>
+        <span *ngFor="let lrt of details.valuespaces.learningResourceType">
+          {{ lrt.de }}
+        </span>
+      </div>
     </div>
 
     <div class="keyword" *ngIf="details.lom.general.keyword">
       <label><mat-icon>list</mat-icon> <ng-container i18n>Keywords</ng-container></label>
-      <span *ngFor="let keyword of details.lom.general.keyword | slice: 0:5">
-        {{ keyword }}
-      </span>
+      <div>
+        <span *ngFor="let keyword of details.lom.general.keyword | slice: 0:5">
+          {{ keyword }}
+        </span>
+      </div>
     </div>
     <div *ngIf="userInfo" class="editorial">
       <label><mat-icon>settings</mat-icon><ng-container i18n>Editorial</ng-container></label>
