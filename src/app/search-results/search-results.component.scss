@@ -3,6 +3,14 @@
 .summary {
     color: gray;
     margin-bottom: 1em;
+    .no-results {
+        display: flex;
+        flex-direction: column;
+        margin-top: 5px;
+        a {
+            margin-top: 10px;
+        }
+    }
 }
 .results {
     display: grid;

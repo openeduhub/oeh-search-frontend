@@ -38,6 +38,7 @@ export class SearchResultsComponent implements OnInit {
     };
 
     filters: Filters = {};
+    filterCount: number;
 
     constructor(
         private route: ActivatedRoute,
@@ -51,6 +52,11 @@ export class SearchResultsComponent implements OnInit {
             this.loadLargeThumbnails();
         });
         this.route.queryParams.subscribe((params) => {
+            this.filterCount = 0;
+            if (params.filters) {
+                const filters = JSON.parse(params.filters);
+                this.filterCount = Object.keys(filters).filter((k) => filters[k]?.length).length;
+            }
             if (params.pageIndex) {
                 this.pageInfo.pageIndex = parseInt(params.pageIndex, 10);
             }

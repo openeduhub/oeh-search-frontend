@@ -1,5 +1,15 @@
 <div class="summary">
-  <ng-container *ngIf="results.hits.total === 0" i18n>No results</ng-container>
+  <div class="no-results" *ngIf="results.hits.total === 0">
+    <ng-container i18n>No results</ng-container>
+    <div>
+      <a *ngIf="filterCount > 0"
+       mat-flat-button
+       color="primary"
+       routerLink="/search"
+       [queryParams]="{ filters: null }"
+       queryParamsHandling="merge" i18n>Search without filters</a>
+    </div>
+  </div>
   <ng-container *ngIf="results.hits.total > 0">
     <ng-container *ngIf="pageInfo.pageIndex === 0" i18n>
       {results.hits.total, plural, =1 {1 result} other {{{results.hits.total | number}} results}}
