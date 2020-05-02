@@ -12,7 +12,7 @@ header {
         padding:20px 3%;
     }
     @media screen and (max-width: 350px){
-        flex-direction: column;
+        flex-direction: column-reverse;
         justify-content: center;
         .filter-button{
             margin-bottom: 10px;
