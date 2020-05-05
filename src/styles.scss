@@ -1,8 +1,7 @@
 // Load self-hosted fonts and icons
-$roboto-font-path: '~roboto-fontface/fonts' !default;
-@import '~roboto-fontface/css/roboto/sass/roboto-fontface';
 $material-icons-font-path: '~material-icons/iconfont/';
 @import '~material-icons/iconfont/material-icons.scss';
+@import '~@openfonts/montserrat_all/index.css';
 
 // Plus imports for other components in your app.
 @import 'app/search-field/search-field.component.theme.scss';
@@ -25,11 +24,21 @@ $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
 /* You can add global styles to this file, and also import other style files */
 @include search-field-theme($app-theme);
 
+// Typography
+//
+// See @angular/material/core/typography/_typography.scss for defaults.
+$app-typography: mat-typography-config(
+    $font-family: 'Montserrat',
+);
+@include angular-material-typography($app-typography);
+
 html,
 body {
     height: 100%;
 }
 body {
     margin: 0;
-    font-family: Roboto, 'Helvetica Neue', sans-serif;
+    font-family: mat-font-family($app-typography);
+    font-size: mat-font-size($app-typography, body-1);
+    line-height: mat-line-height($app-typography, body-1);
 }

@@ -16,8 +16,8 @@ header {
         /*display: none !important;*/
     }
 }
-.grid-container{
-    max-width: 70rem!important;
+.grid-container {
+    max-width: 70rem !important;
 }
 
 /*! CSS Used from: https://wirlernenonline.de/wp-content/themes/wir-lernen-online/dist/assets/scss/app.css?ver=5.4 ; media=all */
@@ -478,9 +478,12 @@ header {
     .position-relative {
         position: relative !important;
     }
-    .menu li.current-menu-item > a{text-decoration:underline;}
+    .menu li.current-menu-item > a {
+        text-decoration: underline;
+    }
     .menu li a {
-        font-family: 'Montserrat-Bold', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
+        font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
+        font-weight: bold;
     }
     a:active,
     a:focus,
@@ -554,17 +557,4 @@ header {
         border-radius: 5px;
         color: #313131;
     }
-}
-/*! CSS Used fontfaces */
-
-/* montserrat-700normal - all */
-@font-face {
-    font-family: 'Montserrat-Bold';
-    font-style: normal;
-    font-display: swap;
-    font-weight: 700;
-    src: local('Montserrat Bold'), local('Montserrat-Bold'),
-        url('~@openfonts/montserrat_all/files/montserrat-all-700.woff2') format('woff2'),
-        /* Chrome 26+, Opera 23+, Firefox 39+ */
-            url('~@openfonts/montserrat_all/files/montserrat-all-700.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
