@@ -1,4 +1,4 @@
-<mat-card *ngIf="show" [formGroup]="facetFilters">
+<mat-card [formGroup]="facetFilters">
   <div class="header">
     <mat-icon>tune</mat-icon>
     <h2 i18n>Filters</h2>
@@ -15,7 +15,7 @@
       routerLink="/search"
       [queryParams]="{ filter: false }"
       queryParamsHandling="merge"
-    ><mat-icon>close</mat-icon></a
+      ><mat-icon>close</mat-icon></a
     >
   </div>
   <div class="body">
@@ -70,7 +70,7 @@
             <ng-container *ngSwitchDefault>{{ key }}</ng-container>
             <mat-icon class="arrow-icon">{{
               expanded.indexOf(key) != -1 ? 'keyboard_arrow_down' : 'keyboard_arrow_right'
-              }}</mat-icon>
+            }}</mat-icon>
           </button>
           <app-multivalue-checkbox
             *ngIf="expanded.indexOf(key) != -1"

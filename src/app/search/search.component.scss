@@ -2,7 +2,27 @@
     display: flex;
     justify-content: center;
 }
+
+$filterBarSpanScreenThreshold: 650px;
+
+app-search-filterbar {
+    height: 100%;
+    @media screen and (min-width: $filterBarSpanScreenThreshold) {
+        flex-grow: 1;
+        flex-basis: 350px;
+        max-width: 350px;
+    }
+    @media screen and (max-width: $filterBarSpanScreenThreshold) {
+        position: fixed;
+        height: 100vh;
+        width: 100vw;
+        top: 0;
+        left: 0;
+        z-index: 1;
+    }
+}
 .results {
+    flex-basis: 350px; // Shrink to equal parts with filter bar
     flex-grow: 1;
     margin: 0 20px;
     max-width: 1400px;
@@ -16,14 +36,6 @@
         }
         :host &::ng-deep em {
             font-weight: bold;
-        }
-    }
-}
-@media screen and (max-width: 600px) {
-    :host{
-        flex-wrap: wrap;
-        .results{
-            margin-top: 30px;
         }
     }
 }

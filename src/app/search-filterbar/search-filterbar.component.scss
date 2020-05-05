@@ -2,14 +2,10 @@
 
 $sidePadding: 20px;
 mat-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
     padding: 0;
-    width: 350px;
-    @media screen and (max-width: 700px) {
-        width: 300px;
-    }
-    @media screen and (max-width: 600px) {
-        width: 100vw;
-    }
     .header {
         color: $primary;
         background-color: $accentYellow;
@@ -17,15 +13,17 @@ mat-card {
         padding: 10px $sidePadding 10px $sidePadding;
         display: flex;
         align-items: center;
+        border-bottom: 1px solid #ccc;
         h2 {
             flex-grow: 1;
             margin: 0 10px;
         }
     }
     .body {
+        overflow: auto;
+        overscroll-behavior: contain;
         .type {
             background-color: #eee;
-            border-top: 1px solid #ccc;
             border-bottom: 1px solid #ccc;
             padding: 10px $sidePadding;
             mat-label {

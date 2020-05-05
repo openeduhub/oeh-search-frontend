@@ -21,17 +21,17 @@
         > a.details-link {
             color: unset;
         }
-        .details-button{
+        .details-button {
             padding: 0;
             margin: 5px 0;
             color: #333;
             display: flex;
             align-items: center;
             text-decoration: none;
-            &:hover >span{
+            &:hover > span {
                 text-decoration: underline;
             }
-            >mat-icon {
+            > mat-icon {
                 color: #777;
                 width: 16px;
                 height: 16px;
@@ -46,37 +46,36 @@
         flex-direction: column;
         .top-infos {
             position: absolute;
-            z-index: 1;
             right: 15px;
             top: 10px;
             display: flex;
             flex-direction: column;
-            >div {
+            > div {
                 background-color: #fff;
                 border-radius: 5px;
-                box-shadow: 1px 1px 4px rgba(0,0,0,.25);
+                box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
                 display: flex;
-                margin:5px 0;
+                margin: 5px 0;
                 align-items: center;
                 justify-content: center;
-                > img{
+                > img {
                     width: 20px;
                     height: 20px;
                     padding: 2px 4px;
                 }
             }
 
-            .editorial{
+            .editorial {
                 color: #eeb736;
-                text-shadow:0 0 1px #000;
+                text-shadow: 0 0 1px #000;
             }
         }
-        .image{
+        .image {
             position: relative;
             height: 200px;
             margin-bottom: 20px;
             overflow: hidden;
-            >*{
+            > * {
                 position: absolute;
                 width: 100%;
                 height: 200px;
@@ -85,7 +84,7 @@
             .img-main {
                 object-fit: contain;
             }
-            .img-bg{
+            .img-bg {
                 height: 200px;
                 object-fit: cover;
                 filter: blur(20px);
@@ -93,7 +92,7 @@
             }
         }
 
-        mat-card{
+        mat-card {
             border-radius: 8px;
             overflow: hidden;
             flex-grow: 1;
@@ -117,8 +116,8 @@
                     font-size: 90%;
                     display: flex;
                     align-items: center;
-                    padding:10px 0;
-                    >mat-icon {
+                    padding: 10px 0;
+                    > mat-icon {
                         color: #777;
                         padding: 0 8px 0 0;
                         width: 16px;
@@ -142,7 +141,7 @@
         .source {
             font-size: 0.9em;
             color: #777;
-            padding:8px 4px 0 4px;
+            padding: 8px 4px 0 4px;
             display: flex;
             justify-content: flex-end;
         }
