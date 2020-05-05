@@ -13,7 +13,10 @@ query Search($searchString: String!, $from: Int!, $size: Int!, $filters: [Filter
 fragment result on SearchResult {
   took
   hits {
-    total
+    total {
+      value,
+      relation,
+    }
     hits {
       id
       type

@@ -1,5 +1,5 @@
-<div class="summary">
-  <div class="no-results" *ngIf="results.hits.total === 0">
+<div class="summary mat-body-2">
+  <div class="no-results" *ngIf="results.hits.total.value === 0">
     <ng-container i18n>No results</ng-container>
     <div>
       <a
@@ -14,18 +14,25 @@
       >
     </div>
   </div>
-  <ng-container *ngIf="results.hits.total > 0">
-    <ng-container *ngIf="pageInfo.pageIndex === 0" i18n>
-      {results.hits.total, plural, =1 {1 result} other {{{results.hits.total | number}} results}}
+  <ng-container *ngIf="results.hits.total.value > 0">
+    <ng-container *ngIf="pageInfo.pageIndex === 0 && results.hits.total.relation === 'eq'" i18n>
+      {results.hits.total, plural, =1 {1 result} other
+      {{{results.hits.total.value | number}} results}}
     </ng-container>
-    <ng-container *ngIf="pageInfo.pageIndex > 0" i18n>
-      Page {{ pageInfo.pageIndex + 1 }} of {{ results.hits.total | number }} results
+    <ng-container *ngIf="pageInfo.pageIndex === 0 && results.hits.total.relation !== 'eq'" i18n>
+      About {{ results.hits.total.value | number }} results
+    </ng-container>
+    <ng-container *ngIf="pageInfo.pageIndex > 0 && results.hits.total.relation === 'eq'" i18n>
+      Page {{ pageInfo.pageIndex + 1 }} of {{ results.hits.total.value | number }} results
+    </ng-container>
+    <ng-container *ngIf="pageInfo.pageIndex > 0 && results.hits.total.relation !== 'eq'" i18n>
+      Page {{ pageInfo.pageIndex + 1 }} of about {{ results.hits.total.value | number }} results
     </ng-container>
     <ng-container i18n>({{ results.took / 1000 | number }} seconds)</ng-container>
   </ng-container>
 </div>
 
-<ng-container *ngIf="results.hits.total > 0">
+<ng-container *ngIf="results.hits.total.value > 0">
   <div class="results">
     <div class="result" *ngFor="let result of results.hits.hits">
       <mat-card>
@@ -159,7 +166,7 @@
     </div>
   </div>
   <mat-paginator
-    [length]="results.hits.total"
+    [length]="results.hits.total.value"
     [pageIndex]="pageInfo.pageIndex"
     [pageSize]="pageInfo.pageSize"
     (page)="onPage($event)"
