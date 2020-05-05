@@ -32,6 +32,10 @@
                 text-decoration: none;
             }
             > a.details-link {
+                color: $primary;
+                &:hover .image {
+                    transform: scale(1.1);
+                }
                 .image-container {
                     position: relative;
                     height: 200px;
@@ -41,9 +45,6 @@
                         height: 100%;
                         width: 100%;
                         transition: transform 0.2s;
-                        &:hover {
-                            transform: scale(1.1);
-                        }
                         > * {
                             position: absolute;
                             width: 100%;
@@ -63,7 +64,6 @@
                 }
                 > mat-card-title {
                     line-height: 1.25;
-                    color: $primary;
                 }
             }
             > .top-infos {
