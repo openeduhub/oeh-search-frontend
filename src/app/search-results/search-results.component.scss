@@ -1,5 +1,10 @@
 @import '../../variables';
 
+* {
+    // Prevent flicker of hover animations in Chrome.
+    -webkit-backface-visibility: hidden;
+}
+
 .summary {
     color: gray;
     margin-bottom: 1em;
@@ -70,25 +75,33 @@
                 text-shadow: 0 0 1px #000;
             }
         }
-        .image {
+        .image-container {
             position: relative;
             height: 200px;
             margin-bottom: 20px;
             overflow: hidden;
-            > * {
-                position: absolute;
+            .image {
+                height: 100%;
                 width: 100%;
-                height: 200px;
-                margin: auto;
-            }
-            .img-main {
-                object-fit: contain;
-            }
-            .img-bg {
-                height: 200px;
-                object-fit: cover;
-                filter: blur(20px);
-                transform: scale(1.25);
+                transition: transform 0.2s;
+                &:hover {
+                    transform: scale(1.1);
+                }
+                > * {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    margin: auto;
+                }
+                .img-main {
+                    object-fit: contain;
+                }
+                .img-bg {
+                    height: 100%;
+                    object-fit: cover;
+                    filter: blur(20px);
+                    transform: scale(1.25);
+                }
             }
         }
 

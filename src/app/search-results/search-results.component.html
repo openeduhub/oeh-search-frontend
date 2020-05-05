@@ -2,12 +2,16 @@
   <div class="no-results" *ngIf="results.hits.total === 0">
     <ng-container i18n>No results</ng-container>
     <div>
-      <a *ngIf="filterCount > 0"
-       mat-flat-button
-       color="primary"
-       routerLink="/search"
-       [queryParams]="{ filters: null }"
-       queryParamsHandling="merge" i18n>Search without filters</a>
+      <a
+        *ngIf="filterCount > 0"
+        mat-flat-button
+        color="primary"
+        routerLink="/search"
+        [queryParams]="{ filters: null }"
+        queryParamsHandling="merge"
+        i18n
+        >Search without filters</a
+      >
     </div>
   </div>
   <ng-container *ngIf="results.hits.total > 0">
@@ -26,23 +30,25 @@
     <div class="result" *ngFor="let result of results.hits.hits">
       <mat-card class="result">
         <a class="details-link" [routerLink]="['/details', result.id]">
-          <div class="image" mat-card-image>
-            <img
-              class="img-bg"
-              *ngIf="result.thumbnail"
-              [src]="
-                result.thumbnail.large || result.thumbnail.small
-                  | safeBase64Data: result.thumbnail.mimetype
-              "
-            />
-            <img
-              class="img-main"
-              *ngIf="result.thumbnail"
-              [src]="
-                result.thumbnail.large || result.thumbnail.small
-                  | safeBase64Data: result.thumbnail.mimetype
-              "
-            />
+          <div class="image-container" mat-card-image>
+            <div class="image">
+              <img
+                class="img-bg"
+                *ngIf="result.thumbnail"
+                [src]="
+                  result.thumbnail.large || result.thumbnail.small
+                    | safeBase64Data: result.thumbnail.mimetype
+                "
+              />
+              <img
+                class="img-main"
+                *ngIf="result.thumbnail"
+                [src]="
+                  result.thumbnail.large || result.thumbnail.small
+                    | safeBase64Data: result.thumbnail.mimetype
+                "
+              />
+            </div>
           </div>
           <mat-card-title>{{ result.lom.general.title | truncate: 52 }}</mat-card-title>
         </a>
@@ -71,9 +77,7 @@
             {{ result.lom.educational.description | trim | truncate: 120 }}
           </p>
           <div class="educational" *ngIf="result.valuespaces?.discipline">
-            <label
-              ><mat-icon>book_icon</mat-icon>
-            </label>
+            <label><mat-icon>book_icon</mat-icon> </label>
             <div>
               <span *ngFor="let discipline of result.valuespaces.discipline | slice: 0:5">
                 <a
@@ -88,9 +92,7 @@
             </div>
           </div>
           <div class="context" *ngIf="result.valuespaces?.educationalContext">
-            <label
-              ><mat-icon>school</mat-icon>
-            </label>
+            <label><mat-icon>school</mat-icon> </label>
             <div>
               <span *ngFor="let context of result.valuespaces.educationalContext">
                 <a
