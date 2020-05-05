@@ -28,7 +28,7 @@
 <ng-container *ngIf="results.hits.total > 0">
   <div class="results">
     <div class="result" *ngFor="let result of results.hits.hits">
-      <mat-card class="result">
+      <mat-card>
         <a class="details-link" [routerLink]="['/details', result.id]">
           <div class="image-container" mat-card-image>
             <div class="image">
