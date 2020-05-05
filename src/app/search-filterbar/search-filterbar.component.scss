@@ -18,6 +18,11 @@ mat-card {
             flex-grow: 1;
             margin: 0 10px;
         }
+        .reset-button {
+            mat-icon {
+                margin-right: 0.3em;
+            }
+        }
     }
     .body {
         overflow: auto;
