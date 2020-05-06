@@ -11,6 +11,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class GenerateFiltersPipe implements PipeTransform {
     transform([key, value]: [string, string[]], filters: object = {}): object {
         return {
+            pageIndex: 0,
             filters: JSON.stringify({
                 ...filters,
                 [key]: value,

@@ -46,6 +46,7 @@ import { SortPipe } from './sort.pipe';
 import { WorkInProgressMessageComponent } from './work-in-progress-message/work-in-progress-message.component';
 import { EncodeUriComponentPipe } from './encode-uri-component.pipe';
 import { ResultCardComponent } from './result-card/result-card.component';
+import { PaginatorComponent } from './paginator/paginator.component';
 
 const appRoutes: Routes = [
     {
@@ -97,6 +98,7 @@ const appRoutes: Routes = [
         WorkInProgressMessageComponent,
         EncodeUriComponentPipe,
         ResultCardComponent,
+        PaginatorComponent,
     ],
     imports: [
         ApolloModule,

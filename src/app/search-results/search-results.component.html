@@ -40,11 +40,11 @@
       [filters]="filters"
     ></app-result-card>
   </div>
-  <mat-paginator
+  <app-paginator
     [length]="results.hits.total.value"
     [pageIndex]="pageInfo.pageIndex"
     [pageSize]="pageInfo.pageSize"
     (page)="onPage($event)"
   >
-  </mat-paginator>
+  </app-paginator>
 </ng-container>

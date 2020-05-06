@@ -1,0 +1,14 @@
+:host {
+    display: flex;
+    align-items: center;
+}
+
+.page-number {
+    margin: 0 0.5em;
+    padding: 0.3em 0.5em;
+    border-radius: 0.3em;
+    font-weight: bold;
+    &:not(:hover) {
+        text-decoration: none;
+    }
+}
