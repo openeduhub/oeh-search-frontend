@@ -1,24 +1,22 @@
 <mat-card>
   <a class="details-link" [routerLink]="['/details', result.id]">
     <div class="image-container" mat-card-image>
-      <div class="image">
-        <img
-          class="img-bg"
-          *ngIf="result.thumbnail"
-          [src]="
-            result.thumbnail.large || result.thumbnail.small
-              | safeBase64Data: result.thumbnail.mimetype
-          "
-        />
-        <img
-          class="img-main"
-          *ngIf="result.thumbnail"
-          [src]="
-            result.thumbnail.large || result.thumbnail.small
-              | safeBase64Data: result.thumbnail.mimetype
-          "
-        />
-      </div>
+      <img
+        class="img-bg"
+        *ngIf="result.thumbnail"
+        [src]="
+          result.thumbnail.large || result.thumbnail.small
+            | safeBase64Data: result.thumbnail.mimetype
+        "
+      />
+      <img
+        class="img-main"
+        *ngIf="result.thumbnail"
+        [src]="
+          result.thumbnail.large || result.thumbnail.small
+            | safeBase64Data: result.thumbnail.mimetype
+        "
+      />
     </div>
     <mat-card-title>{{ result.lom.general.title | truncate: 52 }}</mat-card-title>
   </a>

@@ -4,11 +4,6 @@
     display: flex;
 }
 
-* {
-    // Prevent flicker of hover animations in Chrome.
-    -webkit-backface-visibility: hidden;
-}
-
 mat-card {
     flex-direction: column;
     display: flex;
@@ -20,33 +15,31 @@ mat-card {
     }
     > a.details-link {
         color: $primary;
-        &:hover .image {
+        &:hover .img-main {
             transform: scale(1.1);
         }
         .image-container {
+            // Prevent flicker of hover animations in Chrome.
+            -webkit-backface-visibility: hidden;
             position: relative;
             height: 200px;
             margin-bottom: 20px;
             overflow: hidden;
-            .image {
-                height: 100%;
+            > * {
+                position: absolute;
                 width: 100%;
+                height: 100%;
+                margin: auto;
+            }
+            .img-main {
                 transition: transform 0.2s;
-                > * {
-                    position: absolute;
-                    width: 100%;
-                    height: 100%;
-                    margin: auto;
-                }
-                .img-main {
-                    object-fit: contain;
-                }
-                .img-bg {
-                    height: 100%;
-                    object-fit: cover;
-                    filter: blur(20px);
-                    transform: scale(1.25);
-                }
+                object-fit: contain;
+            }
+            .img-bg {
+                height: 100%;
+                object-fit: cover;
+                filter: blur(20px);
+                transform: scale(1.25);
             }
         }
         > mat-card-title {
