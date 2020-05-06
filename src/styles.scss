@@ -25,25 +25,39 @@ $material-icons-font-path: '~material-icons/iconfont/';
     @include work-in-progress-message-theme($theme);
 }
 
+@mixin apply-theme($theme) {
+    $theme: map_merge(
+        $theme,
+        (
+            custom-accent: $app-custom-accent,
+        )
+    );
+    // Include theme styles for core and each component used in your app.
+    // Alternatively, you can import and @include the theme mixins for each component
+    // that you are using.
+    @include angular-material-theme($theme);
+    @include custom-components-theme($theme);
+    body {
+        color: mat-color(map-get($theme, foreground), text);
+        background-color: mat-color(map-get($theme, background), background);
+    }
+}
+
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
 @include mat-core();
 
 // Create the theme object (a Sass map containing all of the palettes).
-$app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
-$app-theme: map_merge(
-    $app-theme,
-    (
-        custom-accent: $app-custom-accent,
-    )
-);
+$app-theme-light: mat-light-theme($app-primary, $app-accent, $app-warn);
+$app-theme-dark: mat-dark-theme($app-primary, $app-accent, $app-warn);
 
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-@include angular-material-theme($app-theme);
-@include custom-components-theme($app-theme);
+@media not all and (prefers-color-scheme: dark) {
+    @include apply-theme($app-theme-light);
+}
+@media all and (prefers-color-scheme: dark) {
+    @include apply-theme($app-theme-dark);
+}
 
 // Typography
 //
@@ -62,6 +76,4 @@ body {
     font-family: mat-font-family($app-typography);
     font-size: mat-font-size($app-typography, body-1);
     line-height: mat-line-height($app-typography, body-1);
-    color: mat-color(map-get($app-theme, foreground), text);
-    background-color: mat-color(map-get($app-theme, background), background);
 }
