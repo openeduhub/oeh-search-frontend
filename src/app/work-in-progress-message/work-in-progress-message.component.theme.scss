@@ -3,7 +3,7 @@
 @mixin work-in-progress-message-theme($theme) {
     $customAccent: map-get($theme, custom-accent);
     app-work-in-progress-message {
-        background-color: mat-color($customAccent, pink);
-        color: mat-color($customAccent, pink-contrast);
+        background-color: mat-color($customAccent, accent2);
+        color: mat-color($customAccent, accent2-contrast);
     }
 }

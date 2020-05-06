@@ -38,11 +38,11 @@ $primary-palette: (
 );
 
 $custom-accent: (
-    yellow: #e3f702,
-    pink: #ff799a,
+    accent1: #e3f702,
+    accent2: #ff799a,
     contrast: (
-        yellow: #000000,
-        pink: #ffffff,
+        accent1: $dark-primary-text,
+        accent2: $light-primary-text,
     ),
 );
 

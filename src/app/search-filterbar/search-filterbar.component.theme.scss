@@ -1,0 +1,32 @@
+@import '~@angular/material/theming';
+
+@mixin search-filterbar-theme($theme) {
+    $foreground: map-get($theme, foreground);
+    $background: map-get($theme, background);
+    $primary: map-get($theme, primary);
+    $customAccent: map-get($theme, custom-accent);
+
+    app-search-filterbar {
+        > mat-card {
+            > .header {
+                color: mat-color($primary);
+                background-color: mat-color($customAccent, accent1);
+                border-color: mat-color($foreground, divider);
+            }
+            > .body {
+                > .type {
+                    background-color: mat-color($background, app-bar);
+                    border-color: mat-color($foreground, divider);
+                    > mat-label {
+                        color: mat-color($primary);
+                    }
+                }
+                > .vertical {
+                    > button {
+                        color: mat-color($primary);
+                    }
+                }
+            }
+        }
+    }
+}
