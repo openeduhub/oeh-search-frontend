@@ -1,34 +1,32 @@
-@import '../../variables';
-
 $mobileBreak: 1000px;
+
 :host {
     display: block;
     padding: 20px 40px;
     max-width: 1200px;
     margin: auto;
 }
-.back{
+.back {
     margin-bottom: 20px;
     margin-left: -40px;
 }
-h1{
-    color: $primary;
+h1 {
     font-weight: bold;
 }
-.description{
+.description {
     padding: 0;
     font-size: 120%;
     white-space: pre-line;
     line-height: 1.25;
 }
-.right{
+.right {
     margin-bottom: 20px;
     display: flex;
     flex-direction: column;
     @media screen and (max-width: $mobileBreak) {
         flex-direction: row;
         flex-wrap: wrap;
-        > div{
+        > div {
             flex-grow: 1;
         }
     }
@@ -63,23 +61,22 @@ h1{
             padding-bottom: 30px;
         }
     }
-    .actions{
+    .actions {
         width: 100%;
         padding-bottom: 30px;
         display: flex;
         @media screen and (max-width: $mobileBreak) {
             justify-content: space-between;
-            .report{
+            .report {
                 margin-right: -16px;
             }
         }
-        a{
+        a {
             margin: 0 10px;
             mat-icon {
                 padding-right: 5px;
             }
-            &.report{
-                color: #555;
+            &.report {
                 span {
                     @media screen and (max-width: 450px) {
                         display: none;
@@ -89,23 +86,23 @@ h1{
         }
     }
 }
-.additional-metadata{
+.additional-metadata {
     display: flex;
     flex-wrap: wrap;
     > * {
-        padding:5px 0;
-        &:nth-child(odd){
-            padding-right:10px;
+        padding: 5px 0;
+        &:nth-child(odd) {
+            padding-right: 10px;
         }
-        &:nth-child(even){
-            padding-left:10px;
+        &:nth-child(even) {
+            padding-left: 10px;
         }
-      flex:0 calc(50% - 20px);
+        flex: 0 calc(50% - 20px);
     }
 }
-.editorial{
-    .buttons-row > button{
-        margin:0 5px;
+.editorial {
+    .buttons-row > button {
+        margin: 0 5px;
     }
 }
 .keyword,
@@ -115,30 +112,26 @@ h1{
 .intendedEndUserRole,
 .context,
 .lrt,
-.editorial{
-    color: #777;
-    padding:10px 10px;
+.editorial {
+    padding: 10px 10px;
     label {
         font-size: 90%;
         display: flex;
         align-items: center;
-        padding:2px 0;
-        >mat-icon, img {
+        padding: 2px 0;
+        > mat-icon,
+        img {
             width: 16px;
             height: 16px;
             font-size: 16px;
             padding-right: 5px;
         }
     }
-    div{
-        padding:0 22px;
+    div {
+        padding: 0 22px;
     }
     padding-bottom: 0.3em;
     span {
-        color: #333;
-        a {
-            color: #333;
-        }
         &:not(:last-child)::after {
             content: '･';
         }
