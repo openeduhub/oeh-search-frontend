@@ -1,9 +1,5 @@
-@import '../../variables.scss';
-
 :host {
     display: flex;
-    background-color: $accentPink;
-    color: white;
     padding: 5px;
     border-radius: 7px;
     flex-wrap: wrap;

@@ -1,57 +1,30 @@
-@import '../../material';
-div {
+:host > div {
     display: flex;
     > mat-checkbox {
-        display: flex;
         width: 100%;
         padding: 3px 4px;
-
         span {
             &.label {
                 font-weight: bold;
-                color: #777;
                 flex-grow: 1;
             }
 
             &.count {
                 border-radius: 20px;
                 padding: 0 6px;
-                color: #fff;
-                background-color: #bbb;
                 font-weight: bold;
             }
         }
-
-        &.checked {
-            span {
-                &.label {
-                    color: #000;
-                }
-                &.count {
-                    color: #fff;
-                    background-color: $accentPink;
-                }
-            }
-        }
     }
+}
 
-    :host ::ng-deep {
-        .mat-checkbox-inner-container {
-            background-color: white;
-        }
-        .mat-checkbox-layout,
-        .mat-checkbox-label {
-            display: flex;
-            width: 100%;
-        }
-        .mat-checkbox {
-            &.mat-checkbox-checked .mat-checkbox-background {
-                background-color: $primary;
-            }
-            .mat-checkbox-frame {
-                border-width: 1px;
-                border-color: #bbb;
-            }
-        }
+:host ::ng-deep mat-checkbox {
+    .mat-checkbox-layout,
+    .mat-checkbox-label {
+        display: flex;
+        width: 100%;
+    }
+    .mat-checkbox-frame {
+        border-width: 1px;
     }
 }

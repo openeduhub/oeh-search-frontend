@@ -1,0 +1,40 @@
+@import '~@angular/material/theming';
+
+@mixin multivalue-checkbox-theme($theme) {
+    $foreground: map-get($theme, foreground);
+    $background: map-get($theme, background);
+    $primary: map-get($theme, primary);
+    $customAccent: map-get($theme, custom-accent);
+
+    app-multivalue-checkbox {
+        mat-checkbox {
+            .mat-checkbox-frame {
+                border-color: mat-color($foreground, disabled);
+            }
+            &:not(.checked) {
+                span.label {
+                    color: mat-color($foreground, secondary-text);
+                }
+                span.count {
+                    background-color: mat-color($background, unselected-chip);
+                    color: mat-color($foreground, secondary-text);
+                }
+                .mat-checkbox-inner-container {
+                    background-color: mat-color($background, card);
+                }
+            }
+            &.checked {
+                span.label {
+                    color: mat-color($foreground, text);
+                }
+                span.count {
+                    background-color: mat-color($customAccent, pink);
+                    color: mat-color($customAccent, pink-contrast);
+                }
+                &.mat-accent .mat-checkbox-background {
+                    background-color: mat-color($primary);
+                }
+            }
+        }
+    }
+}

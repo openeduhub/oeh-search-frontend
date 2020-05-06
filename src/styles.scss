@@ -1,28 +1,41 @@
 // Load self-hosted fonts and icons
+@import '~@openfonts/montserrat_all/index.css';
 $material-icons-font-path: '~material-icons/iconfont/';
 @import '~material-icons/iconfont/material-icons.scss';
-@import '~@openfonts/montserrat_all/index.css';
+
+// App color palette
+@import 'material';
 
 // Plus imports for other components in your app.
 @import 'app/search-field/search-field.component.theme.scss';
+@import 'app/multivalue-checkbox/multivalue-checkbox.component.theme.scss';
+@import 'app/work-in-progress-message/work-in-progress-message.component.theme.scss';
+
+@mixin custom-components-theme($theme) {
+    @include search-field-theme($theme);
+    @include multivalue-checkbox-theme($theme);
+    @include work-in-progress-message-theme($theme);
+}
 
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
 @include mat-core();
 
-@import 'material';
-
 // Create the theme object (a Sass map containing all of the palettes).
 $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
+$app-theme: map_merge(
+    $app-theme,
+    (
+        custom-accent: $app-custom-accent,
+    )
+);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include angular-material-theme($app-theme);
-
-/* You can add global styles to this file, and also import other style files */
-@include search-field-theme($app-theme);
+@include custom-components-theme($app-theme);
 
 // Typography
 //
