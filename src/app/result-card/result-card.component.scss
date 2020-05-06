@@ -1,4 +1,4 @@
-@import '../../variables';
+@import '~@angular/material/theming';
 
 :host {
     display: flex;
@@ -14,7 +14,6 @@ mat-card {
         text-decoration: none;
     }
     > a.details-link {
-        color: $primary;
         &:hover .img-main {
             transform: scale(1.1);
         }
@@ -53,9 +52,8 @@ mat-card {
         display: flex;
         flex-direction: column;
         > div {
-            background-color: #fff;
+            @include mat-elevation(1);
             border-radius: 5px;
-            box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
             display: flex;
             margin: 5px 0;
             align-items: center;
@@ -66,13 +64,12 @@ mat-card {
                 padding: 2px 4px;
             }
         }
-        .editorial {
-            color: #eeb736;
-            text-shadow: 0 0 1px #000;
-        }
     }
     mat-card-content {
         flex-grow: 1;
+        a {
+            color: unset;
+        }
         .description {
             overflow-wrap: break-word;
         }
@@ -88,7 +85,6 @@ mat-card {
                 align-items: center;
                 padding: 10px 0;
                 > mat-icon {
-                    color: #777;
                     padding: 0 8px 0 0;
                     width: 16px;
                     height: 16px;
@@ -97,11 +93,8 @@ mat-card {
             }
             padding-bottom: 0.3em;
             span {
-                color: #333;
                 white-space: nowrap;
-                a {
-                    color: #333;
-                }
+
                 &:not(:last-child)::after {
                     content: '･';
                 }
@@ -110,7 +103,6 @@ mat-card {
         .details-button {
             padding: 0;
             margin: 5px 0;
-            color: #333;
             display: flex;
             align-items: center;
             text-decoration: none;
@@ -118,7 +110,6 @@ mat-card {
                 text-decoration: underline;
             }
             > mat-icon {
-                color: #777;
                 width: 16px;
                 height: 16px;
                 font-size: 16px;
@@ -128,7 +119,6 @@ mat-card {
     }
     .source {
         font-size: 0.9em;
-        color: #777;
         padding: 8px 4px 0 4px;
         display: flex;
         justify-content: flex-end;

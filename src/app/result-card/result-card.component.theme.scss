@@ -1,0 +1,28 @@
+@import '~@angular/material/theming';
+
+@mixin result-card-theme($theme) {
+    $foreground: map-get($theme, foreground);
+    $background: map-get($theme, background);
+    $primary: map-get($theme, primary);
+
+    app-result-card {
+        > mat-card {
+            > a.details-link {
+                color: mat-color($primary);
+            }
+            > .top-infos {
+                > div {
+                    background-color: mat-color($background, card);
+                }
+            }
+            > mat-card-content {
+                mat-icon {
+                    color: mat-color($foreground, icon);
+                }
+            }
+            > a.source {
+                color: mat-color($foreground, secondary-text);
+            }
+        }
+    }
+}
