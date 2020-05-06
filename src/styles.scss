@@ -62,4 +62,6 @@ body {
     font-family: mat-font-family($app-typography);
     font-size: mat-font-size($app-typography, body-1);
     line-height: mat-line-height($app-typography, body-1);
+    color: mat-color(map-get($app-theme, foreground), text);
+    background-color: mat-color(map-get($app-theme, background), background);
 }

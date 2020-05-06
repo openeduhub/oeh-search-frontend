@@ -1,12 +1,13 @@
 @import '~@angular/material/theming';
+@import '../functions';
 
 @mixin details-theme($theme) {
     $foreground: map-get($theme, foreground);
-    $primary: map-get($theme, primary);
+    $primary-foreground-color: primary-foreground-color($theme);
 
     app-details {
         h1 {
-            color: mat-color($primary);
+            color: $primary-foreground-color;
         }
         .details {
             color: mat-color($foreground, text);

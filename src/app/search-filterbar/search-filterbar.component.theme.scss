@@ -1,10 +1,12 @@
 @import '~@angular/material/theming';
+@import '../functions';
 
 @mixin search-filterbar-theme($theme) {
     $foreground: map-get($theme, foreground);
     $background: map-get($theme, background);
     $primary: map-get($theme, primary);
     $customAccent: map-get($theme, custom-accent);
+    $primary-foreground-color: primary-foreground-color($theme);
 
     app-search-filterbar {
         > mat-card {
@@ -18,12 +20,12 @@
                     background-color: mat-color($background, app-bar);
                     border-color: mat-color($foreground, divider);
                     > mat-label {
-                        color: mat-color($primary);
+                        color: $primary-foreground-color;
                     }
                 }
                 > .vertical {
                     > button {
-                        color: mat-color($primary);
+                        color: $primary-foreground-color;
                     }
                 }
             }
