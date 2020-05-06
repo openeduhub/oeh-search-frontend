@@ -1,0 +1,147 @@
+@import '../../variables';
+
+:host {
+    display: flex;
+}
+
+* {
+    // Prevent flicker of hover animations in Chrome.
+    -webkit-backface-visibility: hidden;
+}
+
+mat-card {
+    flex-direction: column;
+    display: flex;
+    flex-grow: 1;
+    border-radius: 8px;
+    overflow: hidden;
+    a:not(:hover) {
+        text-decoration: none;
+    }
+    > a.details-link {
+        color: $primary;
+        &:hover .image {
+            transform: scale(1.1);
+        }
+        .image-container {
+            position: relative;
+            height: 200px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            .image {
+                height: 100%;
+                width: 100%;
+                transition: transform 0.2s;
+                > * {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    margin: auto;
+                }
+                .img-main {
+                    object-fit: contain;
+                }
+                .img-bg {
+                    height: 100%;
+                    object-fit: cover;
+                    filter: blur(20px);
+                    transform: scale(1.25);
+                }
+            }
+        }
+        > mat-card-title {
+            line-height: 1.25;
+        }
+    }
+    > .top-infos {
+        position: absolute;
+        right: 15px;
+        top: 10px;
+        display: flex;
+        flex-direction: column;
+        > div {
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.25);
+            display: flex;
+            margin: 5px 0;
+            align-items: center;
+            justify-content: center;
+            > img {
+                width: 20px;
+                height: 20px;
+                padding: 2px 4px;
+            }
+        }
+        .editorial {
+            color: #eeb736;
+            text-shadow: 0 0 1px #000;
+        }
+    }
+    mat-card-content {
+        flex-grow: 1;
+        .description {
+            overflow-wrap: break-word;
+        }
+        .keyword,
+        .educational,
+        .context,
+        .lrt {
+            display: flex;
+            align-items: center;
+            label {
+                font-size: 90%;
+                display: flex;
+                align-items: center;
+                padding: 10px 0;
+                > mat-icon {
+                    color: #777;
+                    padding: 0 8px 0 0;
+                    width: 16px;
+                    height: 16px;
+                    font-size: 16px;
+                }
+            }
+            padding-bottom: 0.3em;
+            span {
+                color: #333;
+                white-space: nowrap;
+                a {
+                    color: #333;
+                }
+                &:not(:last-child)::after {
+                    content: '･';
+                }
+            }
+        }
+        .details-button {
+            padding: 0;
+            margin: 5px 0;
+            color: #333;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            &:hover > span {
+                text-decoration: underline;
+            }
+            > mat-icon {
+                color: #777;
+                width: 16px;
+                height: 16px;
+                font-size: 16px;
+                padding-right: 5px;
+            }
+        }
+    }
+    .source {
+        font-size: 0.9em;
+        color: #777;
+        padding: 8px 4px 0 4px;
+        display: flex;
+        justify-content: flex-end;
+    }
+    a.content-link {
+        width: 100%;
+        align-self: flex-end;
+    }
+}
