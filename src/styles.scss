@@ -7,6 +7,7 @@ $material-icons-font-path: '~material-icons/iconfont/';
 @import 'material';
 
 // Plus imports for other components in your app.
+@import 'app/app.component.theme.scss';
 @import 'app/details/details.component.theme.scss';
 @import 'app/multivalue-checkbox/multivalue-checkbox.component.theme.scss';
 @import 'app/result-card/result-card.component.theme.scss';
@@ -15,6 +16,7 @@ $material-icons-font-path: '~material-icons/iconfont/';
 @import 'app/work-in-progress-message/work-in-progress-message.component.theme.scss';
 
 @mixin custom-components-theme($theme) {
+    @include app-theme($theme);
     @include details-theme($theme);
     @include multivalue-checkbox-theme($theme);
     @include result-card-theme($theme);

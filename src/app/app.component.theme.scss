@@ -1,0 +1,11 @@
+@import '~@angular/material/theming';
+
+@mixin app-theme($theme) {
+    $background: map-get($theme, background);
+
+    app-root {
+        > .loading-spinner {
+            background-color: mat-color($background, dialog, 0.5);
+        }
+    }
+}

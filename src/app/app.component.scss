@@ -1,34 +1,15 @@
-@import '../variables';
-
 .loading-spinner {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: #fff8;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 app-login {
-    /*position: absolute;
-    right: 0;
-    top: 0px;*/
     display: flex;
     justify-content: flex-end;
-    margin:20px 20px;
+    margin: 20px 20px;
 }
-// .main {
-//     display: flex;
-//     flex-direction: column;
-//     .alpha {
-//         background-color: $primary;
-//         color: #fff;
-//         border-radius: 10px;
-//         text-align: center;
-//         padding: 15px 20px;
-//         margin: 5px auto 30px auto;
-//         display: none;
-//     }
-// }
