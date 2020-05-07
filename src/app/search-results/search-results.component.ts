@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ResultFragment, Thumbnail } from 'src/generated/graphql';
 import { Filters, SearchService } from '../search.service';
-import { parseQueryParams } from '../utils';
+import { parseSearchQueryParams } from '../utils';
 
 type Unpacked<T> = T extends (infer U)[] ? U : T;
 type Hits = ResultFragment['hits'];
@@ -47,8 +47,8 @@ export class SearchResultsComponent implements OnInit {
             this.results = data.results;
             this.loadLargeThumbnails();
         });
-        this.route.queryParams.subscribe((params) => {
-            const { pageIndex, pageSize, filters } = parseQueryParams(params);
+        this.route.queryParamMap.subscribe((queryParamMap) => {
+            const { pageIndex, pageSize, filters } = parseSearchQueryParams(queryParamMap);
             this.pageInfo = {
                 pageIndex,
                 pageSize,

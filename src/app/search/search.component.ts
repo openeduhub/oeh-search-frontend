@@ -3,6 +3,7 @@ import { DidYouMeanSuggestionFragment } from 'src/generated/graphql';
 import { Facets, SearchService } from '../search.service';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { parseSearchQueryParams } from '../utils';
 
 @Component({
     selector: 'app-search',
@@ -27,8 +28,9 @@ export class SearchComponent implements OnInit, OnDestroy {
                 ),
         );
         this.subscriptions.push(
-            this.route.queryParams.subscribe((params) => {
-                this.showFilterBar = params.filter === 'true';
+            this.route.queryParamMap.subscribe((queryParamMap) => {
+                const { showFilterBar } = parseSearchQueryParams(queryParamMap);
+                this.showFilterBar = showFilterBar;
             }),
         );
     }

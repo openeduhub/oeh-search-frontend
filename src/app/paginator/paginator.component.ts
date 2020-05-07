@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { parseQueryParams } from '../utils';
+import { parseSearchQueryParams } from '../utils';
 
 @Component({
     selector: 'app-paginator',
@@ -20,8 +20,8 @@ export class PaginatorComponent implements OnInit, OnChanges {
     constructor(private route: ActivatedRoute) {}
 
     ngOnInit(): void {
-        this.route.queryParams.subscribe((params) => {
-            const { pageIndex, pageSize } = parseQueryParams(params);
+        this.route.queryParamMap.subscribe((queryParamMap) => {
+            const { pageIndex, pageSize } = parseSearchQueryParams(queryParamMap);
             this.pageIndex = pageIndex;
             this.pageSize = pageSize;
             this.update();

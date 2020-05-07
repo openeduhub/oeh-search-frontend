@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { Filters, SearchService } from '../search.service';
+import { parseSearchQueryParams } from '../utils';
 
 @Component({
     selector: 'app-search-field',
@@ -30,13 +31,12 @@ export class SearchFieldComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.route.queryParams.subscribe((params) => {
-            this.searchString = params.q;
+        this.route.queryParamMap.subscribe((queryParamMap) => {
+            const { searchString, filters } = parseSearchQueryParams(queryParamMap);
+            this.searchString = searchString;
             this.searchField.setValue(this.searchString, { emitEvent: false });
             this.inputHasChanged = false;
-            if (params.filters) {
-                this.filters = JSON.parse(params.filters);
-            }
+            this.filters = filters;
         });
         this.searchField.valueChanges
             .pipe(

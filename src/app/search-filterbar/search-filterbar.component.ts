@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { filter, first } from 'rxjs/operators';
 import { Facets, Filters, SearchService } from '../search.service';
 import { SortPipe } from '../sort.pipe';
+import { parseSearchQueryParams } from '../utils';
 
 @Component({
     selector: 'app-search-filterbar',
@@ -31,14 +32,11 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
         // we call `router.navigate`. The rest is handled by `onQueryParams`, both, when initially
         // loading and when updating the page.
         this.subscriptions.push(
-            this.route.queryParams.subscribe((params) => {
-                if (params.filters) {
-                    this.setFilters(JSON.parse(params.filters));
-                } else {
-                    this.setFilters({});
-                }
+            this.route.queryParamMap.subscribe((queryParamMap) => {
+                const { filters } = parseSearchQueryParams(queryParamMap);
+                this.setFilters(filters);
                 if (this.facetFilters) {
-                    this.facetFilters.reset(this.filters, { emitEvent: false });
+                    this.facetFilters.reset(filters, { emitEvent: false });
                     // If `facetFilters` are not yet initialized, this will be
                     // done on initialization.
                 }

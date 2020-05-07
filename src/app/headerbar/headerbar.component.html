@@ -4,9 +4,9 @@
     class="filter-button"
     [class.has-badge]="filterCount > 0"
     routerLink="/search"
-    [queryParams]="{ filter: !filter }"
+    [queryParams]="{ filter: !showFilterBar }"
     queryParamsHandling="merge"
-    >
+  >
     <div class="badge" *ngIf="filterCount > 0">{{ filterCount }}</div>
     <mat-icon>tune</mat-icon><span i18n>Filters</span></a
   >
