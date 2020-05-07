@@ -1,36 +1,48 @@
-<button
+<a
   mat-icon-button
   i18n-aria-label
-  aria-label="Go to previous page"
-  (click)="goToPage(pageIndex - 1)"
+  aria-label="Previous page"
+  routerLink="/search"
+  [queryParams]="{ pageIndex: pageIndex - 1 }"
+  queryParamsHandling="merge"
   [disabled]="pageIndex === 0"
 >
   <mat-icon>chevron_left</mat-icon>
-</button>
-<ng-container *ngIf="showGoToFirst">
-  <a class="page-number" href="javascript:" (click)="goToPage(0)">1</a>
-  <span class="mat-body-2">...</span>
+</a>
+<ng-container *ngIf="beforePages.length > 0 && beforePages[0] > 0">
+  <a
+    class="page-number"
+    routerLink="/search"
+    [queryParams]="{ pageIndex: 0 }"
+    queryParamsHandling="merge"
+    >1</a
+  >
+  <span *ngIf="beforePages[0] > 1" class="mat-body-2">...</span>
 </ng-container>
 <a
   class="page-number"
   *ngFor="let page of beforePages"
-  href="javascript:"
-  (click)="goToPage(page)"
+  routerLink="/search"
+  [queryParams]="{ pageIndex: page }"
+  queryParamsHandling="merge"
   >{{ page + 1 }}</a
 >
 <span class="page-number active">{{ pageIndex + 1 }}</span>
 <a
   class="page-number"
   *ngFor="let page of afterPages"
-  href="javascript:"
-  (click)="goToPage(page)"
+  routerLink="/search"
+  [queryParams]="{ pageIndex: page }"
+  queryParamsHandling="merge"
   >{{ page + 1 }}</a
-><button
+><a
   mat-icon-button
   i18n-aria-label
-  aria-label="Go to next page"
-  (click)="goToPage(pageIndex + 1)"
+  aria-label="Next page"
+  routerLink="/search"
+  [queryParams]="{ pageIndex: pageIndex + 1 }"
+  queryParamsHandling="merge"
   [disabled]="pageIndex === totalPages - 1"
 >
   <mat-icon>chevron_right</mat-icon>
-</button>
+</a>

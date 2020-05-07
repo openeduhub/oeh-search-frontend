@@ -40,11 +40,5 @@
       [filters]="filters"
     ></app-result-card>
   </div>
-  <app-paginator
-    [length]="results.hits.total.value"
-    [pageIndex]="pageInfo.pageIndex"
-    [pageSize]="pageInfo.pageSize"
-    (page)="onPage($event)"
-  >
-  </app-paginator>
+  <app-paginator [length]="results.hits.total.value"> </app-paginator>
 </ng-container>

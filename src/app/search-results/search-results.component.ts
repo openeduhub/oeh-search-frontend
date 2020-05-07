@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ResultFragment, Thumbnail, GetLargeThumbnailGQL } from 'src/generated/graphql';
+import { ActivatedRoute } from '@angular/router';
+import { ResultFragment, Thumbnail } from 'src/generated/graphql';
 import { Filters, SearchService } from '../search.service';
+import { parseQueryParams } from '../utils';
 
 type Unpacked<T> = T extends (infer U)[] ? U : T;
 type Hits = ResultFragment['hits'];
@@ -32,19 +32,15 @@ interface ExtendedResult extends ResultFragment {
 export class SearchResultsComponent implements OnInit {
     results: ExtendedResult;
 
-    pageInfo = {
-        pageIndex: 0,
-        pageSize: 12,
+    pageInfo: {
+        pageIndex: number;
+        pageSize: number;
     };
 
-    filters: Filters = {};
+    filters: Filters;
     filterCount: number;
 
-    constructor(
-        private route: ActivatedRoute,
-        private router: Router,
-        private search: SearchService,
-    ) {}
+    constructor(private route: ActivatedRoute, private search: SearchService) {}
 
     ngOnInit(): void {
         this.route.data.subscribe((data: { results: ResultFragment }) => {
@@ -52,31 +48,13 @@ export class SearchResultsComponent implements OnInit {
             this.loadLargeThumbnails();
         });
         this.route.queryParams.subscribe((params) => {
-            this.filterCount = 0;
-            if (params.filters) {
-                const filters = JSON.parse(params.filters);
-                this.filterCount = Object.keys(filters).filter((k) => filters[k]?.length).length;
-            }
-            if (params.pageIndex) {
-                this.pageInfo.pageIndex = parseInt(params.pageIndex, 10);
-            }
-            if (params.pageSize) {
-                this.pageInfo.pageSize = parseInt(params.pageSize, 10);
-            }
-            if (params.filters) {
-                this.filters = JSON.parse(params.filters);
-            }
-        });
-    }
-
-    onPage(pageEvent: PageEvent) {
-        this.router.navigate([], {
-            relativeTo: this.route,
-            queryParams: {
-                pageIndex: pageEvent.pageIndex,
-                pageSize: pageEvent.pageSize,
-            },
-            queryParamsHandling: 'merge',
+            const { pageIndex, pageSize, filters } = parseQueryParams(params);
+            this.pageInfo = {
+                pageIndex,
+                pageSize,
+            };
+            this.filters = filters;
+            this.filterCount = Object.keys(filters).filter((k) => filters[k]?.length).length;
         });
     }
 

@@ -1,13 +1,6 @@
-import {
-    Component,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnInit,
-    Output,
-    SimpleChanges,
-} from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { parseQueryParams } from '../utils';
 
 @Component({
     selector: 'app-paginator',
@@ -16,33 +9,33 @@ import { PageEvent } from '@angular/material/paginator';
 })
 export class PaginatorComponent implements OnInit, OnChanges {
     @Input() length: number;
-    @Input() pageIndex: number;
-    @Input() pageSize: number;
-    @Output() page = new EventEmitter<PageEvent>();
 
+    pageIndex: number;
+    pageSize: number;
     totalPages: number;
     beforePages: number[];
     afterPages: number[];
     showGoToFirst: boolean;
 
-    constructor() {}
+    constructor(private route: ActivatedRoute) {}
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.route.queryParams.subscribe((params) => {
+            const { pageIndex, pageSize } = parseQueryParams(params);
+            this.pageIndex = pageIndex;
+            this.pageSize = pageSize;
+            this.update();
+        });
+    }
 
     ngOnChanges(changes: SimpleChanges): void {
+        this.update();
+    }
+
+    private update() {
         this.totalPages = Math.ceil(this.length / this.pageSize);
         this.beforePages = range(Math.max(0, this.pageIndex - 2), this.pageIndex);
         this.afterPages = range(this.pageIndex + 1, Math.min(this.totalPages, this.pageIndex + 3));
-        this.showGoToFirst = this.pageIndex > 0 && this.beforePages[0] > 0;
-    }
-
-    goToPage(index: number) {
-        this.page.emit({
-            pageIndex: index,
-            previousPageIndex: this.pageIndex,
-            pageSize: this.pageSize,
-            length: this.length,
-        });
     }
 }
 
