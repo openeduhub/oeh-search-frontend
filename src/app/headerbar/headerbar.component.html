@@ -6,8 +6,8 @@
   routerLink="/search"
   [queryParams]="{ filter: !showFilterBar }"
   queryParamsHandling="merge"
-  [matBadge]="filterCount ? filterCount.toString() : null"
-  matBadgePosition="after"
+  [matBadge]="filterCount.toString()"
+  [matBadgeHidden]="filterCount === 0"
   matBadgeColor="warn"
 >
   <mat-icon>tune</mat-icon><span i18n>Filters</span></a

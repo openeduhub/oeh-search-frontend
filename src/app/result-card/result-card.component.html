@@ -44,8 +44,8 @@
     <p class="description" *ngIf="result.lom.educational?.description">
       {{ result.lom.educational.description | trim | truncate: 120 }}
     </p>
-    <div class="educational" *ngIf="result.valuespaces?.discipline">
-      <label><mat-icon>book_icon</mat-icon> </label>
+    <div class="metadata" *ngIf="result.valuespaces?.discipline">
+      <label><mat-icon>book_icon</mat-icon></label>
       <div>
         <span *ngFor="let discipline of result.valuespaces.discipline | slice: 0:5">
           <a
@@ -59,10 +59,10 @@
         </span>
       </div>
     </div>
-    <div class="context" *ngIf="result.valuespaces?.educationalContext">
-      <label><mat-icon>school</mat-icon> </label>
+    <div class="metadata" *ngIf="result.valuespaces?.educationalContext">
+      <label><mat-icon>school</mat-icon></label>
       <div>
-        <span *ngFor="let context of result.valuespaces.educationalContext">
+        <span class="foo" *ngFor="let context of result.valuespaces.educationalContext">
           <a
             routerLink="/search"
             [queryParams]="['educationalContexts', [context.de]] | generateFilters: filters"
@@ -74,7 +74,7 @@
         </span>
       </div>
     </div>
-    <div class="lrt" *ngIf="result.valuespaces?.learningResourceType">
+    <div class="metadata" *ngIf="result.valuespaces?.learningResourceType">
       <label>
         <mat-icon>photo_library</mat-icon>
       </label>
@@ -90,7 +90,7 @@
         </span>
       </div>
     </div>
-    <div class="keyword" *ngIf="result.lom.general.keyword">
+    <div class="metadata" *ngIf="result.lom.general.keyword">
       <label><mat-icon>list</mat-icon></label>
       <div>
         <span *ngFor="let keyword of result.lom.general.keyword | slice: 0:5">
@@ -105,7 +105,7 @@
       </div>
     </div>
     <a class="details-button" [routerLink]="['/details', result.id]"
-      ><mat-icon>info</mat-icon> <span i18n>More Information</span></a
+      ><label><mat-icon>info</mat-icon></label> <span i18n>More Information</span></a
     >
   </mat-card-content>
   <a

@@ -73,58 +73,47 @@ mat-card {
         .description {
             overflow-wrap: break-word;
         }
-        .keyword,
-        .educational,
-        .context,
-        .lrt {
+        .metadata,
+        .details-button {
             display: flex;
             align-items: center;
+            padding-bottom: 0.5em;
             label {
-                font-size: 90%;
                 display: flex;
                 align-items: center;
-                padding: 10px 0;
                 > mat-icon {
-                    padding: 0 8px 0 0;
+                    padding: 0 10px 0 5px;
                     width: 16px;
                     height: 16px;
                     font-size: 16px;
                 }
             }
-            padding-bottom: 0.3em;
+        }
+        .metadata {
             span {
+                display: inline-flex;
                 white-space: nowrap;
-
                 &:not(:last-child)::after {
                     content: '･';
+                    margin: 0 0.3em;
                 }
             }
         }
         .details-button {
-            padding: 0;
-            margin: 5px 0;
-            display: flex;
-            align-items: center;
             text-decoration: none;
             &:hover > span {
                 text-decoration: underline;
             }
-            > mat-icon {
-                width: 16px;
-                height: 16px;
-                font-size: 16px;
-                padding-right: 5px;
-            }
         }
+    }
+    a.content-link {
+        width: 100%;
+        align-self: flex-end;
     }
     .source {
         font-size: 0.9em;
         padding: 8px 4px 0 4px;
         display: flex;
         justify-content: flex-end;
-    }
-    a.content-link {
-        width: 100%;
-        align-self: flex-end;
     }
 }
