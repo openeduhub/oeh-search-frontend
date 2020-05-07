@@ -1,32 +1,26 @@
-.search-field {
+:host {
+    display: flex;
+}
+form {
+    display: flex;
     width: 100%;
-    margin-bottom: 1.34375em; // Same as .mat-form-field-wrapper
-    position: relative;
-    .search-field-flex {
+    .search-field-input-wrapper {
+        flex-grow: 1;
         display: flex;
         align-items: center;
-        padding: 0 0.75em;
         border-style: solid;
         border-width: 1px;
-        border-radius: 2em;
-        background: #fff;
-
-        mat-icon.search-icon {
-            width: 1.5em;
-            text-align: center;
-        }
-        mat-icon {
-            display: block;
-            font-size: 150%;
-            height: 1.125em;
-            line-height: 1.125;
-        }
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+        padding: 0.5em;
         > input {
+            width: 0;
+            padding: 0.5em;
             font: unset;
+            font-weight: bold;
             background: none;
             border: none;
             flex-grow: 1;
-            padding: 1em 0.2em;
             &:focus {
                 outline: none;
             }
@@ -36,7 +30,16 @@
             height: 2.5em;
             mat-icon {
                 margin: auto;
+                display: block;
+                font-size: 150%;
+                height: 1.125em;
+                line-height: 1.125;
             }
         }
+    }
+    > button {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        font-weight: bold;
     }
 }

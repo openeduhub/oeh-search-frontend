@@ -20,7 +20,6 @@ export class SearchFieldComponent implements OnInit {
     @ViewChild('searchFieldInput') searchFieldInput: ElementRef<HTMLInputElement>;
     searchField = new FormControl();
     autoCompleteSuggestions$: Observable<string[]>;
-    inputHasChanged = false;
     private searchString: string;
     private filters: Filters;
 
@@ -35,14 +34,12 @@ export class SearchFieldComponent implements OnInit {
             const { searchString, filters } = parseSearchQueryParams(queryParamMap);
             this.searchString = searchString;
             this.searchField.setValue(this.searchString, { emitEvent: false });
-            this.inputHasChanged = false;
             this.filters = filters;
         });
         this.searchField.valueChanges
             .pipe(
                 tap((searchString) => {
                     this.searchString = searchString;
-                    this.inputHasChanged = true;
                 }),
                 debounceTime(200),
                 distinctUntilChanged(),

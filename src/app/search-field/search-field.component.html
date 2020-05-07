@@ -1,42 +1,28 @@
 <form (ngSubmit)="onSubmit()">
-  <div class="search-field">
-    <div class="search-field-flex">
-      <mat-icon class="search-icon">search</mat-icon>
-      <input
-        #searchFieldInput
-        [formControl]="searchField"
-        autofocus
-        [matAutocomplete]="auto"
-        #autoComplete="matAutocompleteTrigger"
-        i18n-placeholder
-        placeholder="Search"
-        i18n-aria-label
-        aria-label="Search"
-      />
-      <button
-        *ngIf="inputHasChanged"
-        mat-icon-button
-        type="submit"
-        i18n-aria-label
-        aria-label="Search"
-        i18n-matTooltip
-        matTooltip="Search"
-      >
-        <mat-icon>arrow_forward</mat-icon>
-      </button>
-      <button
-        *ngIf="!inputHasChanged && searchField.value"
-        mat-icon-button
-        i18n-aria-label
-        aria-label="Clear input"
-        i18n-matTooltip
-        matTooltip="Clear input"
-        (click)="clear()"
-      >
-        <mat-icon>close</mat-icon>
-      </button>
-    </div>
+  <div class="search-field-input-wrapper">
+    <input
+      #searchFieldInput
+      [formControl]="searchField"
+      autofocus
+      [matAutocomplete]="auto"
+      #autoComplete="matAutocompleteTrigger"
+      i18n-aria-label
+      aria-label="Search"
+    />
+    <button
+      *ngIf="searchField.value"
+      mat-icon-button
+      i18n-aria-label
+      aria-label="Clear input"
+      i18n-matTooltip
+      matTooltip="Clear input"
+      (click)="clear()"
+      type="button"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
   </div>
+  <button mat-flat-button class="submit-button" type="submit" i18n>Search</button>
   <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onAutocompleteSelected($event)">
     <mat-option *ngFor="let option of autoCompleteSuggestions$ | async" [value]="option">{{
       option

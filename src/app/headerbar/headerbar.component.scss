@@ -2,57 +2,28 @@
 
 :host {
     display: flex;
-    flex-direction: column;
-}
-header {
-    display: flex;
-    align-items: center;
-    padding: 20px 10%;
-    @media screen and (max-width: 500px){
-        padding:20px 3%;
-    }
-    @media screen and (max-width: 350px){
-        flex-direction: column-reverse;
-        justify-content: center;
-        .filter-button{
-            margin-bottom: 10px;
-        }
-    }
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+    padding: 20px;
     background-image: url('../../assets/images/search-bg.png');
     background-size: cover;
     background-position: 50%;
-    .filter-button {
-        position: relative;
-        margin-right: 20px;
-        &.has-badge {
-            padding-right: 24px;
-        }
-        .badge {
-            position: absolute;
-            right: -8px;
-            top: -8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 26px;
-            height:26px;
-            border-radius: 50%;
-            color: #fff;
-            background-color: red;
-        }
-        mat-icon {
-            padding-right: 0.3em;
-        }
-    }
-    app-search-field {
-        height: 50px;
-        flex-grow: 1;
-    }
     margin-bottom: 20px;
-}
-
-@media screen and (max-width: 450px) {
-    .filter-button span{
-        display: none;
+    app-search-field {
+        flex-basis: 700px;
+        margin-right: 20px;
+    }
+    .filter-button {
+        min-width: unset;
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+        span {
+            margin-left: 0.3em;
+            @media screen and (max-width: 450px) {
+                display: none;
+            }
+        }
     }
 }

@@ -2,12 +2,23 @@
 
 @mixin search-field-theme($theme) {
     $foreground: map-get($theme, foreground);
-    .search-field {
-        .search-field-flex {
+    $background: map-get($theme, background);
+    $custom: map-get($theme, custom-accent);
+
+    form {
+        .search-field-input-wrapper {
+            background-color: mat-color($background, dialog);
             border-color: mat-color($foreground, divider);
+            input {
+                color: mat-color($foreground, text);
+            }
             mat-icon {
                 color: mat-color($foreground, icon);
             }
+        }
+        .submit-button {
+            background-color: mat-color($custom, accent1);
+            color: mat-color($custom, accent1-contrast);
         }
     }
 }
