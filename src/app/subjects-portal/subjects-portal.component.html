@@ -1,0 +1,34 @@
+<h1>{{ discipline }}</h1>
+
+<ng-container *ngIf="results.material.hits.total.value > 0">
+  <h2 i18n>Materials</h2>
+  <div class="results">
+    <app-result-card
+      *ngFor="let result of results.material.hits.hits"
+      [result]="result"
+      [filters]="{ disciplines: [discipline], types: ['MATERIAL'] }"
+    ></app-result-card>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="results.source.hits.total.value > 0">
+  <h2 i18n>Sources</h2>
+  <div class="results">
+    <app-result-card
+      *ngFor="let result of results.source.hits.hits"
+      [result]="result"
+      [filters]="{ disciplines: [discipline], types: ['SOURCE'] }"
+    ></app-result-card>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="results.tool.hits.total.value > 0">
+  <h2 i18n>Tools</h2>
+  <div class="results">
+    <app-result-card
+      *ngFor="let result of results.tool.hits.hits"
+      [result]="result"
+      [filters]="{ disciplines: [discipline], types: ['TOOL'] }"
+    ></app-result-card>
+  </div>
+</ng-container>

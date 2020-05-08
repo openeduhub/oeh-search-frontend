@@ -1,0 +1,13 @@
+:host {
+    padding: 20px 40px;
+    max-width: 1800px;
+    margin: auto;
+    display: block;
+}
+
+.results {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 30px;
+}

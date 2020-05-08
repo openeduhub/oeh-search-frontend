@@ -20,7 +20,7 @@ interface ExtendedHits extends Hits {
     hits: ExtendedHit[];
 }
 
-interface ExtendedResult extends ResultFragment {
+export interface ExtendedResult extends ResultFragment {
     hits: ExtendedHits;
 }
 

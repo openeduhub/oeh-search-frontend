@@ -48,6 +48,8 @@ import { TrimPipe } from './trim.pipe';
 import { TruncatePipe } from './truncate.pipe';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { WorkInProgressMessageComponent } from './work-in-progress-message/work-in-progress-message.component';
+import { SubjectsPortalComponent } from './subjects-portal/subjects-portal.component';
+import { SubjectsPortalResolverService } from './subjects-portal-resolver.service';
 
 const appRoutes: Routes = [
     {
@@ -70,6 +72,11 @@ const appRoutes: Routes = [
         path: 'details/:id',
         component: DetailsComponent,
         resolve: { details: DetailsResolverService },
+    },
+    {
+        path: 'subjects-portal/:discipline',
+        component: SubjectsPortalComponent,
+        resolve: { results: SubjectsPortalResolverService },
     },
     { path: 'login', component: LoginComponent },
     { path: '', redirectTo: 'welcome', pathMatch: 'full' },
@@ -100,6 +107,7 @@ const appRoutes: Routes = [
         EncodeUriComponentPipe,
         ResultCardComponent,
         PaginatorComponent,
+        SubjectsPortalComponent,
     ],
     imports: [
         ApolloModule,
