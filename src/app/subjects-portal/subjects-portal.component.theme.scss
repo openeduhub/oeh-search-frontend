@@ -1,0 +1,17 @@
+@import '~@angular/material/theming';
+@import '../functions';
+
+@mixin subjects-portal-theme($theme) {
+    $foreground: map-get($theme, foreground);
+    $custom-accent: map-get($theme, custom-accent);
+
+    app-subjects-portal {
+        > .heading > a {
+            background-color: mat-color($custom-accent, accent1);
+            color: mat-color($custom-accent, accent1-contrast);
+        }
+        > .no-results {
+            color: mat-color($foreground, secondary-text);
+        }
+    }
+}

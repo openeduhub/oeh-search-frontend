@@ -1,34 +1,64 @@
 <h1>{{ discipline }}</h1>
 
-<ng-container *ngIf="results.material.hits.total.value > 0">
+<div class="heading">
   <h2 i18n>Materials</h2>
-  <div class="results">
-    <app-result-card
-      *ngFor="let result of results.material.hits.hits"
-      [result]="result"
-      [filters]="{ disciplines: [discipline], types: ['MATERIAL'] }"
-    ></app-result-card>
-  </div>
-</ng-container>
+  <a
+    mat-raised-button
+    i18n
+    routerLink="/search"
+    [queryParams]="['disciplines', [discipline]] | generateFilters: { types: ['MATERIAL'] }"
+    >More materials</a
+  >
+</div>
+<div class="results" *ngIf="results.material.hits.total.value > 0">
+  <app-result-card
+    *ngFor="let result of results.material.hits.hits"
+    [result]="result"
+    [filters]="{ disciplines: [discipline], types: ['MATERIAL'] }"
+  ></app-result-card>
+</div>
+<div class="no-results mat-body-2" *ngIf="results.material.hits.total.value === 0">
+  <ng-container i18n>No featured materials for topic</ng-container> {{ discipline }}
+</div>
 
-<ng-container *ngIf="results.source.hits.total.value > 0">
+<div class="heading">
   <h2 i18n>Sources</h2>
-  <div class="results">
-    <app-result-card
-      *ngFor="let result of results.source.hits.hits"
-      [result]="result"
-      [filters]="{ disciplines: [discipline], types: ['SOURCE'] }"
-    ></app-result-card>
-  </div>
-</ng-container>
+  <a
+    mat-raised-button
+    i18n
+    routerLink="/search"
+    [queryParams]="['disciplines', [discipline]] | generateFilters: { types: ['SOURCE'] }"
+    >More sources</a
+  >
+</div>
+<div class="results" *ngIf="results.source.hits.total.value > 0">
+  <app-result-card
+    *ngFor="let result of results.source.hits.hits"
+    [result]="result"
+    [filters]="{ disciplines: [discipline], types: ['SOURCE'] }"
+  ></app-result-card>
+</div>
+<div class="no-results mat-body-2" *ngIf="results.source.hits.total.value === 0">
+  <ng-container i18n>No featured sources for topic</ng-container> {{ discipline }}
+</div>
 
-<ng-container *ngIf="results.tool.hits.total.value > 0">
+<div class="heading">
   <h2 i18n>Tools</h2>
-  <div class="results">
-    <app-result-card
-      *ngFor="let result of results.tool.hits.hits"
-      [result]="result"
-      [filters]="{ disciplines: [discipline], types: ['TOOL'] }"
-    ></app-result-card>
-  </div>
-</ng-container>
+  <a
+    mat-raised-button
+    i18n
+    routerLink="/search"
+    [queryParams]="['disciplines', [discipline]] | generateFilters: { types: ['TOOL'] }"
+    >More tools</a
+  >
+</div>
+<div class="results" *ngIf="results.tool.hits.total.value > 0">
+  <app-result-card
+    *ngFor="let result of results.tool.hits.hits"
+    [result]="result"
+    [filters]="{ disciplines: [discipline], types: ['TOOL'] }"
+  ></app-result-card>
+</div>
+<div class="no-results mat-body-2" *ngIf="results.tool.hits.total.value === 0">
+  <ng-container i18n>No featured tools for topic</ng-container> {{ discipline }}
+</div>

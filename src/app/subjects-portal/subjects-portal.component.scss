@@ -5,9 +5,21 @@
     display: block;
 }
 
+.heading {
+    display: flex;
+    margin-bottom: 15px;
+    > h2 {
+        flex-grow: 1;
+        margin: 0;
+    }
+}
+
+.results,
+.no-results {
+    margin-bottom: 30px;
+}
 .results {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 30px;
-    margin-bottom: 30px;
 }

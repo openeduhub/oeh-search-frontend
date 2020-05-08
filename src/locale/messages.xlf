@@ -268,42 +268,42 @@
         <source>Math</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/welcome/welcome.component.html</context>
-          <context context-type="linenumber">9</context>
+          <context context-type="linenumber">6</context>
         </context-group>
       </trans-unit>
       <trans-unit id="106d2771f54d364752be04353f90ccb4b35ff493" datatype="html">
         <source>Biology</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/welcome/welcome.component.html</context>
-          <context context-type="linenumber">21</context>
+          <context context-type="linenumber">15</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8eb0ff9f09e9db846b2b12d4fc63dbeda920235f" datatype="html">
         <source>Chemistry</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/welcome/welcome.component.html</context>
-          <context context-type="linenumber">32</context>
+          <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7416b446991c5901061dd09176b34ed568cf5947" datatype="html">
         <source>Computer Science</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/welcome/welcome.component.html</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">31</context>
         </context-group>
       </trans-unit>
       <trans-unit id="a0843de0a64adcc7ee6a946408b6876cd8abdcae" datatype="html">
         <source>English</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/welcome/welcome.component.html</context>
-          <context context-type="linenumber">54</context>
+          <context context-type="linenumber">39</context>
         </context-group>
       </trans-unit>
       <trans-unit id="d60e2ecba8f7dc2ed2c59dd84972d0b41b331a6c" datatype="html">
         <source>More...</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/welcome/welcome.component.html</context>
-          <context context-type="linenumber">63</context>
+          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6765b4c916060f6bc42d9bb69e80377dbcb5e4e9" datatype="html">
@@ -349,7 +349,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/subjects-portal/subjects-portal.component.html</context>
-          <context context-type="linenumber">15</context>
+          <context context-type="linenumber">25</context>
         </context-group>
       </trans-unit>
       <trans-unit id="fa97f41a167e302d64cc195b0174ab65bc011710" datatype="html">
@@ -433,11 +433,53 @@
           <context context-type="linenumber">4</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="e87cefe8e00f854ac0c256993877ec9c2be5fd87" datatype="html">
+        <source>More materials</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/subjects-portal/subjects-portal.component.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="26c0be73ea01f913d26fdbccac6290df95a0cf0a" datatype="html">
+        <source>No featured materials for topic</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/subjects-portal/subjects-portal.component.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7c8051ec7b152fb7515ac3ed721b11a77ffbca0e" datatype="html">
+        <source>More sources</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/subjects-portal/subjects-portal.component.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="df2b2610cbf6cd70da291487de0582b313874808" datatype="html">
+        <source>No featured sources for topic</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/subjects-portal/subjects-portal.component.html</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="fefee13017c2b85143cd131ee253e327a14053a0" datatype="html">
         <source>Tools</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/subjects-portal/subjects-portal.component.html</context>
-          <context context-type="linenumber">26</context>
+          <context context-type="linenumber">46</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="d4452e48485a14187e1fc44746ed8ebe54c8400b" datatype="html">
+        <source>More tools</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/subjects-portal/subjects-portal.component.html</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ac1a37ac2afb466c7b019acb7222126c09d27562" datatype="html">
+        <source>No featured tools for topic</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/subjects-portal/subjects-portal.component.html</context>
+          <context context-type="linenumber">63</context>
         </context-group>
       </trans-unit>
     </body>
