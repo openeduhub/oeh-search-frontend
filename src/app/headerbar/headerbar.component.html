@@ -1,5 +1,6 @@
 <app-search-field></app-search-field>
 <a
+  *ngIf="showFiltersButton"
   mat-flat-button
   class="filter-button"
   [class.has-badge]="filterCount > 0"
