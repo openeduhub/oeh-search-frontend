@@ -16,6 +16,7 @@ function build_all() {
     npm install
     npm run clean
     npm run build
+    npm prune --production
     npm run docker-build
 }
 
