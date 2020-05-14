@@ -1,6 +1,6 @@
 [submodule "elasticsearch-relay"]
 	path = elasticsearch-relay
-	url = ssh://git@github.com:openeduhub/oeh-search-elasticsearch-relay.git
+	url = https://github.com/openeduhub/oeh-search-elasticsearch-relay.git
 [submodule "editor-backend"]
 	path = editor-backend
-	url = ssh://git@github.com:openeduhub/oeh-search-editor-backend.git
+	url = https://github.com/openeduhub/oeh-search-editor-backend.git
