@@ -104,6 +104,7 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
                 relativeTo: this.route,
                 queryParams: { filters: JSON.stringify(filters), pageIndex: 0 },
                 queryParamsHandling: 'merge',
+                fragment: 'keep', // Don't scroll to top after navigation.
             });
         });
     }
