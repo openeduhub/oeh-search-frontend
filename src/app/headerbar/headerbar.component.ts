@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { parseSearchQueryParams } from '../utils';
 import { filter } from 'rxjs/operators';
+import { ViewService } from '../view.service';
 
 @Component({
     selector: 'app-headerbar',
@@ -9,11 +10,10 @@ import { filter } from 'rxjs/operators';
     styleUrls: ['./headerbar.component.scss'],
 })
 export class HeaderbarComponent implements OnInit {
-    showFilterBar: boolean;
     filterCount: number;
     showFiltersButton: boolean;
 
-    constructor(private route: ActivatedRoute, private router: Router) {}
+    constructor(private route: ActivatedRoute, private router: Router, private view: ViewService) {}
 
     ngOnInit() {
         this.router.events
@@ -22,9 +22,12 @@ export class HeaderbarComponent implements OnInit {
                 this.showFiltersButton = event.url.startsWith('/search');
             });
         this.route.queryParamMap.subscribe((queryParamMap) => {
-            const { filters, showFilterBar } = parseSearchQueryParams(queryParamMap);
-            this.showFilterBar = showFilterBar;
+            const { filters } = parseSearchQueryParams(queryParamMap);
             this.filterCount = Object.keys(filters).filter((k) => filters[k]?.length).length;
         });
+    }
+
+    toggleFilterBar() {
+        this.view.toggleShowFilterBar();
     }
 }

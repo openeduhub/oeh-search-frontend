@@ -1,15 +1,13 @@
 <app-search-field></app-search-field>
-<a
+<button
   *ngIf="showFiltersButton"
   mat-flat-button
   class="filter-button"
   [class.has-badge]="filterCount > 0"
-  routerLink="/search"
-  [queryParams]="{ filter: !showFilterBar }"
-  queryParamsHandling="merge"
+  (click)="toggleFilterBar()"
   [matBadge]="filterCount.toString()"
   [matBadgeHidden]="filterCount === 0"
   matBadgeColor="warn"
 >
-  <mat-icon>tune</mat-icon><span i18n>Filters</span></a
->
+  <mat-icon>tune</mat-icon><span i18n>Filters</span>
+</button>

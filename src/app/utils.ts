@@ -11,7 +11,6 @@ export function parseSearchQueryParams(queryParamMap: ParamMap) {
         pageIndex: 0,
         pageSize: 12,
         filters: {} as Filters,
-        showFilterBar: false,
     };
     if (queryParamMap.has('q')) {
         result.searchString = queryParamMap.get('q');
@@ -24,9 +23,6 @@ export function parseSearchQueryParams(queryParamMap: ParamMap) {
     }
     if (queryParamMap.has('filters')) {
         result.filters = JSON.parse(queryParamMap.get('filters'));
-    }
-    if (queryParamMap.has('filter')) {
-        result.showFilterBar = queryParamMap.get('filter') === 'true';
     }
     return result;
 }

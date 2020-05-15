@@ -1,9 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { DidYouMeanSuggestionFragment } from 'src/generated/graphql';
 import { Facets, SearchService } from '../search.service';
-import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { parseSearchQueryParams } from '../utils';
+import { ViewService } from '../view.service';
 
 @Component({
     selector: 'app-search',
@@ -17,7 +16,7 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     private subscriptions: Subscription[] = [];
 
-    constructor(private search: SearchService, private route: ActivatedRoute) {}
+    constructor(private search: SearchService, private view: ViewService) {}
 
     ngOnInit(): void {
         this.subscriptions.push(
@@ -28,9 +27,8 @@ export class SearchComponent implements OnInit, OnDestroy {
                 ),
         );
         this.subscriptions.push(
-            this.route.queryParamMap.subscribe((queryParamMap) => {
-                const { showFilterBar } = parseSearchQueryParams(queryParamMap);
-                this.showFilterBar = showFilterBar;
+            this.view.getShowFilterBar().subscribe((value) => {
+                this.showFilterBar = value;
             }),
         );
     }
