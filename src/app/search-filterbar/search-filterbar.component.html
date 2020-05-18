@@ -11,13 +11,7 @@
     >
       <mat-icon>undo</mat-icon> <ng-container i18n>Reset</ng-container>
     </a>
-    <a
-      mat-icon-button
-      routerLink="/search"
-      [queryParams]="{ filter: false }"
-      queryParamsHandling="merge"
-      ><mat-icon>close</mat-icon></a
-    >
+    <button mat-icon-button (click)="closeFilterBar()"><mat-icon>close</mat-icon></button>
   </div>
   <div class="body">
     <div class="type">
@@ -82,7 +76,4 @@
       </ng-container>
     </ng-container>
   </div>
-  <!-- <div class="apply">
-    <button mat-raised-button color="primary" i18n><mat-icon>search</mat-icon>Apply</button>
-  </div> -->
 </mat-card>

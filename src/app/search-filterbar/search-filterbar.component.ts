@@ -6,6 +6,7 @@ import { filter, first } from 'rxjs/operators';
 import { Facets, Filters, SearchService } from '../search.service';
 import { SortPipe } from '../sort.pipe';
 import { parseSearchQueryParams } from '../utils';
+import { ViewService } from '../view.service';
 
 @Component({
     selector: 'app-search-filterbar',
@@ -25,6 +26,7 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private router: Router,
         private search: SearchService,
+        private view: ViewService,
     ) {}
 
     ngOnInit(): void {
@@ -82,6 +84,10 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
             key: 'key',
             values: ['MATERIAL', 'TOOL', 'SOURCE'],
         });
+    }
+
+    closeFilterBar() {
+        this.view.setShowFilterBar(false);
     }
 
     /**

@@ -16,4 +16,8 @@ export class ViewService {
     toggleShowFilterBar() {
         this.showFilterBarSubject.next(!this.showFilterBarSubject.value);
     }
+
+    setShowFilterBar(value: boolean) {
+        this.showFilterBarSubject.next(value);
+    }
 }
