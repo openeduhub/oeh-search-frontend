@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { Observable } from 'rxjs';
-import { SubjectPortalsGQL, SubjectPortalsQuery } from 'src/generated/graphql';
 import { map } from 'rxjs/operators';
+import { SubjectPortalsGQL, SubjectPortalsQuery } from '../generated/graphql';
 
 @Injectable({
     providedIn: 'root',

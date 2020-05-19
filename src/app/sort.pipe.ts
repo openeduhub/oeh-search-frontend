@@ -1,6 +1,10 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { ExtendedHit } from './search-results/search-results.component';
-import { Details } from './search.service';
+
+export interface SortConfiguration {
+    key?: string;
+    values: string[];
+    ascending?: boolean;
+}
 
 /**
  * Extend the `filters` of the search component with another attribute.
@@ -16,14 +20,11 @@ export class SortPipe implements PipeTransform {
             const keyA = config.key ? a[config.key] : a;
             const keyB = config.key ? b[config.key] : b;
 
-            return (config.values.indexOf(keyA) < config.values.indexOf(keyB) ? -1 : 1) *
-                   (config.ascending === false ? -1 : 1);
+            return (
+                (config.values.indexOf(keyA) < config.values.indexOf(keyB) ? -1 : 1) *
+                (config.ascending === false ? -1 : 1)
+            );
         });
         return value;
     }
-}
-export interface SortConfiguration {
-    key?: string;
-    values: string[];
-    ascending?;
 }

@@ -35,7 +35,7 @@
         ]
       "
     >
-      <ng-container *ngIf="facets[key]?.buckets?.length">
+      <ng-container *ngIf="facets[key]?.length">
         <div class="vertical">
           <button mat-button (click)="toggle(key)" [ngSwitch]="key">
             <ng-container *ngSwitchCase="'disciplines'">
@@ -70,7 +70,7 @@
           <app-multivalue-checkbox
             *ngIf="expanded.indexOf(key) != -1"
             [formControlName]="key"
-            [options]="facets[key].buckets"
+            [options]="facets[key]"
           ></app-multivalue-checkbox>
         </div>
       </ng-container>

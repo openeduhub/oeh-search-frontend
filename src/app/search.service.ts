@@ -3,23 +3,19 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import {
     AutoCompleteGQL,
-    Bucket,
     DidYouMeanSuggestionFragment,
     Facet,
-    FacetFragment,
+    Facets,
     Filter,
     GetDetailsGQL,
     GetDetailsQuery,
     GetLargeThumbnailGQL,
     ResultFragment,
     SearchGQL,
-} from 'src/generated/graphql';
-
-export interface Facets {
-    [key: string]: { buckets: Bucket[] };
-}
+} from '../generated/graphql';
 
 export type Details = GetDetailsQuery['get'];
+
 export type Filters = {
     [key in Facet]?: string[];
 };
@@ -53,15 +49,10 @@ export class SearchService {
             })
             .pipe(
                 tap((response) =>
-                    this.didYouMeanSuggestion.next(response.data.search.didYouMeanSuggestion),
+                    this.didYouMeanSuggestion.next(response.data.didYouMeanSuggestion),
                 ),
-                tap((response) => this.facets.next(this.mapFacets(response.data.search.facets))),
-                map((response) => {
-                    return {
-                        took: response.data.search.took,
-                        hits: response.data.search.hits,
-                    };
-                }),
+                tap((response) => this.facets.next(response.data.facets)),
+                map((response) => response.data.search),
             );
     }
 
@@ -90,15 +81,6 @@ export class SearchService {
 
     getDidYouMeanSuggestion(): Observable<DidYouMeanSuggestionFragment> {
         return this.didYouMeanSuggestion.asObservable();
-    }
-
-    private mapFacets(facets: FacetFragment[]): Facets {
-        return facets.reduce((acc, facet) => {
-            if (typeof facet === 'object') {
-                acc[facet.facet as Facet] = { buckets: facet.buckets };
-            }
-            return acc;
-        }, {} as Facets);
     }
 
     private mapFilters(filters: Filters): Filter[] {

@@ -22,7 +22,7 @@ import { OAuthModule } from 'angular-oauth2-oidc';
 import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
 import { HttpLink, HttpLinkModule } from 'apollo-angular-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import { environment } from 'src/environments/environment';
+import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DetailsResolverService } from './details-resolver.service';
@@ -44,12 +44,12 @@ import { SearchResultsResolverService } from './search-results-resolver.service'
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { SearchComponent } from './search/search.component';
 import { SortPipe } from './sort.pipe';
+import { SubjectsPortalResolverService } from './subjects-portal-resolver.service';
+import { SubjectsPortalComponent } from './subjects-portal/subjects-portal.component';
 import { TrimPipe } from './trim.pipe';
 import { TruncatePipe } from './truncate.pipe';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { WorkInProgressMessageComponent } from './work-in-progress-message/work-in-progress-message.component';
-import { SubjectsPortalComponent } from './subjects-portal/subjects-portal.component';
-import { SubjectsPortalResolverService } from './subjects-portal-resolver.service';
 
 const appRoutes: Routes = [
     {

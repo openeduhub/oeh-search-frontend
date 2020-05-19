@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SubjectPortalsQuery } from 'src/generated/graphql';
+import { SubjectPortalsQuery } from '../../generated/graphql';
 import { ExtendedResult } from '../search-results/search-results.component';
 import { SearchService } from '../search.service';
 

@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { DidYouMeanSuggestionFragment } from 'src/generated/graphql';
-import { Facets, SearchService } from '../search.service';
+import { DidYouMeanSuggestionFragment } from '../../generated/graphql';
+import { SearchService } from '../search.service';
 import { ViewService } from '../view.service';
 
 @Component({
@@ -10,7 +10,6 @@ import { ViewService } from '../view.service';
     styleUrls: ['./search.component.scss'],
 })
 export class SearchComponent implements OnInit, OnDestroy {
-    facets: Facets;
     didYouMeanSuggestion: DidYouMeanSuggestionFragment;
     showFilterBar = false;
 

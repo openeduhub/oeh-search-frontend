@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { OAuthService, UserInfo } from 'angular-oauth2-oidc';
-import { AuthConfig } from 'angular-oauth2-oidc';
-import { BehaviorSubject, Observable, from, Subject } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { AuthConfig, OAuthService, UserInfo } from 'angular-oauth2-oidc';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { environment } from '../environments/environment';
 
 const authCodeFlowConfig: AuthConfig = {
     ...environment.openId,

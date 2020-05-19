@@ -3,7 +3,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter, first } from 'rxjs/operators';
-import { Facets, Filters, SearchService } from '../search.service';
+import { Facets } from '../../generated/graphql';
+import { Filters, SearchService } from '../search.service';
 import { SortPipe } from '../sort.pipe';
 import { parseSearchQueryParams } from '../utils';
 import { ViewService } from '../view.service';
@@ -72,7 +73,7 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
 
     // does not transfer via template
     getLicenses() {
-        return new SortPipe().transform(this.facets.licenseOER.buckets, {
+        return new SortPipe().transform(this.facets.licenseOER, {
             key: 'key',
             values: ['NONE', 'MIXED', 'ALL'],
         });
@@ -80,7 +81,7 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
 
     // does not transfer via template
     getTypes() {
-        return new SortPipe().transform(this.facets.types.buckets, {
+        return new SortPipe().transform(this.facets.types, {
             key: 'key',
             values: ['MATERIAL', 'TOOL', 'SOURCE'],
         });
@@ -122,14 +123,12 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
         if (!this.facets) {
             this.facets = {} as Facets;
         }
-        for (const [label, facet] of Object.entries(facets)) {
-            // Leave the facet object in place if it already exists, so Angular won't reconstruct
-            // the whole thing and the select dialog won't close every time the user selects an
-            // option.
-            if (this.facets[label]) {
-                this.facets[label].buckets = facet.buckets;
-            } else {
-                this.facets[label] = facet;
+        // Leave the facets object in place if it already exists, so Angular
+        // won't reconstruct the whole thing and the select dialog won't close
+        // every time the user selects an option.
+        for (const [key, value] of Object.entries(facets)) {
+            if (key !== '__typename') {
+                this.facets[key] = value;
             }
         }
     }

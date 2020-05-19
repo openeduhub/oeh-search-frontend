@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ResultFragment, Thumbnail } from 'src/generated/graphql';
+import { ResultFragment, Thumbnail } from '../../generated/graphql';
 import { Filters, SearchService } from '../search.service';
 import { parseSearchQueryParams } from '../utils';
 

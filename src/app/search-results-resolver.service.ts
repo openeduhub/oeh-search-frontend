@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { Observable } from 'rxjs';
+import { ResultFragment } from '../generated/graphql';
 import { SearchService } from './search.service';
-import { ResultFragment } from 'src/generated/graphql';
 import { parseSearchQueryParams } from './utils';
 
 @Injectable({

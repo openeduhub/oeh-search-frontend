@@ -1,12 +1,12 @@
 query Search($searchString: String!, $from: Int!, $size: Int!, $filters: [Filter!]) {
   search(searchString: $searchString, from: $from, size: $size, filters: $filters) {
     ...result
-    facets {
-      ...facet
-    }
-    didYouMeanSuggestion {
-      ...didYouMeanSuggestion
-    }
+  }
+  didYouMeanSuggestion(searchString: $searchString, filters: $filters) {
+    ...didYouMeanSuggestion
+  }
+  facets(searchString: $searchString, size: 20, filters: $filters) {
+    ...facets
   }
 }
 
@@ -14,8 +14,8 @@ fragment result on SearchResult {
   took
   hits {
     total {
-      value,
-      relation,
+      value
+      relation
     }
     hits {
       id
@@ -51,23 +51,56 @@ fragment result on SearchResult {
         oer
       }
       valuespaces {
-        discipline { de }
-        educationalContext { de }
-        learningResourceType { de }
+        discipline {
+          de
+        }
+        educationalContext {
+          de
+        }
+        learningResourceType {
+          de
+        }
       }
     }
-  }
-}
-
-fragment facet on Aggregation {
-  facet
-  buckets {
-    doc_count
-    key
   }
 }
 
 fragment didYouMeanSuggestion on DidYouMeanSuggestion {
   plain
   html
+}
+
+fragment facets on Facets {
+  sources {
+    ...bucket
+  }
+  keywords {
+    ...bucket
+  }
+  disciplines {
+    ...bucket
+  }
+  educationalContexts {
+    ...bucket
+  }
+  learningResourceTypes {
+    ...bucket
+  }
+  licenseOER {
+    ...bucket
+  }
+  types {
+    ...bucket
+  }
+  intendedEndUserRoles {
+    ...bucket
+  }
+  collections {
+    ...bucket
+  }
+}
+
+fragment bucket on Bucket {
+  doc_count
+  key
 }
