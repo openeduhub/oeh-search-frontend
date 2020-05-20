@@ -6,7 +6,7 @@ query SubjectPortals($discipline: String!, $educationalContext: String!, $size: 
       { field: "valuespaces.discipline.de.keyword", terms: [$discipline] }
       { field: "valuespaces.educationalContext.de.keyword", terms: [$educationalContext] }
       { field: "type", terms: ["MATERIAL"] }
-      { field: "collection.uuid", terms: ["EDITORIAL"] }
+      { field: "collection.uuid", terms: ["FEATURED"] }
     ]
   ) {
     ...result
@@ -17,7 +17,7 @@ query SubjectPortals($discipline: String!, $educationalContext: String!, $size: 
       { field: "valuespaces.discipline.de.keyword", terms: [$discipline] }
       { field: "valuespaces.educationalContext.de.keyword", terms: [$educationalContext] }
       { field: "type", terms: ["SOURCE"] }
-      { field: "collection.uuid", terms: ["EDITORIAL"] }
+      { field: "collection.uuid", terms: ["FEATURED"] }
     ]
   ) {
     ...result
@@ -28,7 +28,7 @@ query SubjectPortals($discipline: String!, $educationalContext: String!, $size: 
       { field: "valuespaces.discipline.de.keyword", terms: [$discipline] }
       { field: "valuespaces.educationalContext.de.keyword", terms: [$educationalContext] }
       { field: "type", terms: ["TOOL"] }
-      { field: "collection.uuid", terms: ["EDITORIAL"] }
+      { field: "collection.uuid", terms: ["FEATURED"] }
     ]
   ) {
     ...result
