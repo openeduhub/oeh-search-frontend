@@ -11,7 +11,10 @@ export class SubjectsPortalResolverService implements Resolve<SubjectPortalsQuer
     constructor(private subjectPortalsGQL: SubjectPortalsGQL) {}
 
     resolve(route: ActivatedRouteSnapshot): Observable<SubjectPortalsQuery> {
+        const educationalContext = route.paramMap.get('educationalContext');
         const discipline = route.paramMap.get('discipline');
-        return this.subjectPortalsGQL.fetch({ discipline }).pipe(map((response) => response.data));
+        return this.subjectPortalsGQL
+            .fetch({ discipline, educationalContext })
+            .pipe(map((response) => response.data));
     }
 }

@@ -74,7 +74,7 @@ const appRoutes: Routes = [
         resolve: { details: DetailsResolverService },
     },
     {
-        path: 'subjects-portal/:discipline',
+        path: 'subjects-portal/:educationalContext/:discipline',
         component: SubjectsPortalComponent,
         resolve: { results: SubjectsPortalResolverService },
     },

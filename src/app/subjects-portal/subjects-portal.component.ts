@@ -11,6 +11,7 @@ import { SearchService } from '../search.service';
 })
 export class SubjectsPortalComponent implements OnInit {
     discipline: string;
+    educationalContext: string;
     results: SubjectPortalsQuery;
 
     constructor(private route: ActivatedRoute, private search: SearchService) {}
@@ -20,7 +21,10 @@ export class SubjectsPortalComponent implements OnInit {
             this.results = data.results;
             this.loadLargeThumbnails();
         });
-        this.route.paramMap.subscribe((paramMap) => (this.discipline = paramMap.get('discipline')));
+        this.route.paramMap.subscribe((paramMap) => {
+            this.discipline = paramMap.get('discipline');
+            this.educationalContext = paramMap.get('educationalContext');
+        });
     }
 
     private loadLargeThumbnails() {

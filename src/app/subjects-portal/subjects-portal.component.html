@@ -1,4 +1,4 @@
-<h1>{{ discipline }}</h1>
+<h1>{{ educationalContext }} {{ discipline }}</h1>
 
 <div class="heading">
   <h2 i18n>Materials</h2>
@@ -6,7 +6,14 @@
     mat-raised-button
     i18n
     routerLink="/search"
-    [queryParams]="['disciplines', [discipline]] | generateFilters: { types: ['MATERIAL'] }"
+    [queryParams]="
+      ['valuespaces.discipline.de.keyword', [discipline]]
+        | generateFilters
+          : {
+              type: ['MATERIAL'],
+              'valuespaces.educationalContext.de.keyword': [educationalContext]
+            }
+    "
     >More materials</a
   >
 </div>
@@ -14,7 +21,11 @@
   <app-result-card
     *ngFor="let result of results.material.hits.hits"
     [result]="result"
-    [filters]="{ disciplines: [discipline], types: ['MATERIAL'] }"
+    [filters]="{
+      'valuespaces.discipline.de.keyword': [discipline],
+      type: ['MATERIAL'],
+      'valuespaces.educationalContext.de.keyword': [educationalContext]
+    }"
   ></app-result-card>
 </div>
 <div class="no-results mat-body-2" *ngIf="results.material.hits.total.value === 0">
@@ -27,7 +38,11 @@
     mat-raised-button
     i18n
     routerLink="/search"
-    [queryParams]="['disciplines', [discipline]] | generateFilters: { types: ['SOURCE'] }"
+    [queryParams]="
+      ['valuespaces.discipline.de.keyword', [discipline]]
+        | generateFilters
+          : { type: ['SOURCE'], 'valuespaces.educationalContext.de.keyword': [educationalContext] }
+    "
     >More sources</a
   >
 </div>
@@ -35,7 +50,11 @@
   <app-result-card
     *ngFor="let result of results.source.hits.hits"
     [result]="result"
-    [filters]="{ disciplines: [discipline], types: ['SOURCE'] }"
+    [filters]="{
+      'valuespaces.discipline.de.keyword': [discipline],
+      type: ['SOURCE'],
+      'valuespaces.educationalContext.de.keyword': [educationalContext]
+    }"
   ></app-result-card>
 </div>
 <div class="no-results mat-body-2" *ngIf="results.source.hits.total.value === 0">
@@ -48,7 +67,11 @@
     mat-raised-button
     i18n
     routerLink="/search"
-    [queryParams]="['disciplines', [discipline]] | generateFilters: { types: ['TOOL'] }"
+    [queryParams]="
+      ['valuespaces.discipline.de.keyword', [discipline]]
+        | generateFilters
+          : { type: ['TOOL'], 'valuespaces.educationalContext.de.keyword': [educationalContext] }
+    "
     >More tools</a
   >
 </div>
@@ -56,7 +79,11 @@
   <app-result-card
     *ngFor="let result of results.tool.hits.hits"
     [result]="result"
-    [filters]="{ disciplines: [discipline], types: ['TOOL'] }"
+    [filters]="{
+      'valuespaces.discipline.de.keyword': [discipline],
+      type: ['TOOL'],
+      'valuespaces.educationalContext.de.keyword': [educationalContext]
+    }"
   ></app-result-card>
 </div>
 <div class="no-results mat-body-2" *ngIf="results.tool.hits.total.value === 0">
