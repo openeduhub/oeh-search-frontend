@@ -127,10 +127,8 @@ export class SearchService {
      * Temporary mapping until everything is updated.
      */
     private prepareHit(hit: Hit) {
-        if (!hit.lom.general.description) {
+        if (!hit.lom.general.description && hit.lom.educational?.description) {
             hit.lom.general.description = hit.lom.educational.description;
-        } else {
-            console.log(hit.lom.general.description);
         }
     }
 }
