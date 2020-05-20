@@ -20,7 +20,7 @@ export class EditorService {
         apollo.createNamed('editor', {
             cache: new InMemoryCache(),
             link: httpLink.create({
-                uri: environment.editorBackendUrl,
+                uri: environment.editorBackendUrl + '/graphql',
             }),
         });
         this.markAsRecommendedGQL.client = 'editor';

@@ -1,3 +1,4 @@
+import { ClipboardModule } from '@angular/cdk/clipboard';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -114,6 +115,7 @@ const appRoutes: Routes = [
         AppRoutingModule,
         BrowserAnimationsModule,
         BrowserModule,
+        ClipboardModule,
         FormsModule,
         HttpClientModule,
         HttpLinkModule,
@@ -147,7 +149,7 @@ const appRoutes: Routes = [
                 return {
                     cache: new InMemoryCache(),
                     link: httpLink.create({
-                        uri: environment.relayUrl,
+                        uri: environment.relayUrl + '/graphql',
                     }),
                 };
             },

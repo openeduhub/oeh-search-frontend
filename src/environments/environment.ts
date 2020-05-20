@@ -4,8 +4,8 @@
 
 export const environment = {
     production: false,
-    relayUrl: 'http://localhost:3000/graphql',
-    editorBackendUrl: 'http://localhost:3001/graphql',
+    relayUrl: 'http://localhost:3000',
+    editorBackendUrl: 'http://localhost:3001',
     openId: {
         issuer: 'https://idm.wirlernenonline.de/auth/realms/master',
         clientId: 'oeh-search-frontend-dev',

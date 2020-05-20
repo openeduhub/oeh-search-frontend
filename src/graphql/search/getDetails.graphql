@@ -26,6 +26,7 @@ query GetDetails($id: ID!) {
     }
     license {
       oer
+      url
     }
     thumbnail {
       mimetype

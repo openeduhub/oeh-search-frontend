@@ -1,5 +1,6 @@
+import { Clipboard } from '@angular/cdk/clipboard';
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { UserInfo } from 'angular-oauth2-oidc';
@@ -7,6 +8,7 @@ import { AuthService } from '../auth.service';
 import { EditorService } from '../editor.service';
 import { EditorialPipe } from '../editorial.pipe';
 import { Details } from '../search.service';
+import { environment } from '../../environments/environment';
 
 @Component({
     selector: 'app-details',
@@ -23,9 +25,11 @@ export class DetailsComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private authService: AuthService,
+        private clipboard: Clipboard,
         private editorService: EditorService,
         private snackBar: MatSnackBar,
         private location: Location,
+        private renderer: Renderer2,
     ) {}
 
     ngOnInit(): void {
@@ -35,6 +39,8 @@ export class DetailsComponent implements OnInit {
         });
         this.route.params.subscribe((params) => (this.id = params.id));
         this.authService.getUserInfo().subscribe((userInfo) => (this.userInfo = userInfo));
+        this.renderer.listen(document, 'keydown.control.c', () => this.copyTableEntryToClipboard());
+        this.renderer.listen(document, 'keydown.meta.c', () => this.copyTableEntryToClipboard());
     }
 
     async markAsRecommended() {
@@ -81,5 +87,35 @@ export class DetailsComponent implements OnInit {
 
     goBack() {
         this.location.back();
+    }
+
+    private copyTableEntryToClipboard() {
+        if (window.getSelection().toString() === '') {
+            this.clipboard.copy(this.getTableEntry());
+            this.snackBar.open($localize`Copied table entry to clipboard`, null, {
+                duration: 3000,
+            });
+        }
+    }
+
+    private getTableEntry() {
+        return [
+            this.details.lom.general.title,
+            this.id,
+            this.details.collection?.map((collection) => collection.uuid).join(';'),
+            this.details.type,
+            this.details.lom.educational.description,
+            this.details.lom.technical.location,
+            `${environment.relayUrl}/rest/entry/${this.id}/thumbnail`,
+            this.details.valuespaces.learningResourceType?.map((value) => value.de).join(';'),
+            this.details.valuespaces.discipline?.map((value) => value.de).join(';'),
+            this.details.valuespaces.educationalContext?.map((value) => value.de).join(';'),
+            this.details.license?.url,
+            this.details.valuespaces.intendedEndUserRole?.map((value) => value.de).join(';'),
+            '', // typical age range from
+            '', // typical age range to
+            '', // material language
+            this.details.lom.general.keyword?.join(';'),
+        ].join('\t');
     }
 }
