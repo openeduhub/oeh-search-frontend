@@ -2,9 +2,10 @@ query SubjectPortals($discipline: String!, $size: Int! = 5) {
   material: search(
     size: $size
     filters: [
-      { field: disciplines, terms: [$discipline] }
-      { field: types, terms: ["MATERIAL"] }
-      { field: collections, terms: ["EDITORIAL"] }
+      # TODO: set language
+      { field: "valuespaces.discipline.de.keyword", terms: [$discipline] }
+      { field: "type", terms: ["MATERIAL"] }
+      { field: "collection.uuid", terms: ["EDITORIAL"] }
     ]
   ) {
     ...result
@@ -12,9 +13,9 @@ query SubjectPortals($discipline: String!, $size: Int! = 5) {
   source: search(
     size: $size
     filters: [
-      { field: disciplines, terms: [$discipline] }
-      { field: types, terms: ["SOURCE"] }
-      { field: collections, terms: ["EDITORIAL"] }
+      { field: "valuespaces.discipline.de.keyword", terms: [$discipline] }
+      { field: "type", terms: ["SOURCE"] }
+      { field: "collection.uuid", terms: ["EDITORIAL"] }
     ]
   ) {
     ...result
@@ -22,9 +23,9 @@ query SubjectPortals($discipline: String!, $size: Int! = 5) {
   tool: search(
     size: $size
     filters: [
-      { field: disciplines, terms: [$discipline] }
-      { field: types, terms: ["TOOL"] }
-      { field: collections, terms: ["EDITORIAL"] }
+      { field: "valuespaces.discipline.de.keyword", terms: [$discipline] }
+      { field: "type", terms: ["TOOL"] }
+      { field: "collection.uuid", terms: ["EDITORIAL"] }
     ]
   ) {
     ...result

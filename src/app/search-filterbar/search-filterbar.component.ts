@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter, first } from 'rxjs/operators';
-import { Facets } from '../../generated/graphql';
+import { Aggregation, Facets } from '../../generated/graphql';
 import { Filters, SearchService } from '../search.service';
 import { SortPipe } from '../sort.pipe';
 import { parseSearchQueryParams } from '../utils';
@@ -37,7 +37,7 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
         this.subscriptions.push(
             this.route.queryParamMap.subscribe((queryParamMap) => {
                 const { filters } = parseSearchQueryParams(queryParamMap);
-                this.setFilters(filters);
+                this.filters = filters;
                 if (this.facetFilters) {
                     this.facetFilters.reset(filters, { emitEvent: false });
                     // If `facetFilters` are not yet initialized, this will be
@@ -73,7 +73,7 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
 
     // does not transfer via template
     getLicenses() {
-        return new SortPipe().transform(this.facets.licenseOER, {
+        return new SortPipe().transform(this.facets.licenseOER.buckets, {
             key: 'key',
             values: ['NONE', 'MIXED', 'ALL'],
         });
@@ -81,7 +81,7 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
 
     // does not transfer via template
     getTypes() {
-        return new SortPipe().transform(this.facets.types, {
+        return new SortPipe().transform(this.facets.types.buckets, {
             key: 'key',
             values: ['MATERIAL', 'TOOL', 'SOURCE'],
         });
@@ -98,9 +98,12 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
      */
     private initFacetFilters(facets: Facets) {
         this.facetFilters = this.formBuilder.group(
-            // Create a new object with every key of `facets` mapped to an empty array. This will
-            // create a new form control for each facet with nothing selected.
-            Object.keys(facets).reduce((agg, key) => ({ ...agg, [key]: [] }), {}),
+            // Create a new object with every facet field mapped to an empty
+            // array. This will create a new form control for each facet with
+            // nothing selected.
+            Object.values(facets)
+                .filter((facet) => typeof facet === 'object')
+                .reduce((agg, facet: Aggregation) => ({ ...agg, [facet.field]: [] }), {}),
         );
         // Apply values loaded from queryParams.
         if (this.filters) {
@@ -123,21 +126,24 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
         if (!this.facets) {
             this.facets = {} as Facets;
         }
-        // Leave the facets object in place if it already exists, so Angular
-        // won't reconstruct the whole thing and the select dialog won't close
-        // every time the user selects an option.
         for (const [key, value] of Object.entries(facets)) {
-            if (key !== '__typename') {
+            // Leave the facets object in place if it already exists, so Angular
+            // won't reconstruct the whole thing every time the user selects an
+            // option.
+            if (typeof value === 'object') {
                 this.facets[key] = value;
             }
         }
+        this.expandActiveFilters();
     }
 
-    private setFilters(filters: Filters) {
-        this.filters = filters;
-        // Expand active filter categories.
-        for (const [key, value] of Object.entries(filters)) {
-            if (value && value.length > 0) {
+    private expandActiveFilters() {
+        for (const [key, value] of Object.entries(this.facets)) {
+            if (typeof value !== 'object') {
+                continue;
+            }
+            const filterValues = this.filters[value.field];
+            if (filterValues && filterValues.length > 0) {
                 if (this.expanded.indexOf(key) === -1) {
                     this.expanded.push(key);
                 }

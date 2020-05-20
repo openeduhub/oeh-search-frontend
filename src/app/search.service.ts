@@ -4,7 +4,6 @@ import { map, tap } from 'rxjs/operators';
 import {
     AutoCompleteGQL,
     DidYouMeanSuggestionFragment,
-    Facet,
     Facets,
     Filter,
     GetDetailsGQL,
@@ -16,9 +15,9 @@ import {
 
 export type Details = GetDetailsQuery['get'];
 
-export type Filters = {
-    [key in Facet]?: string[];
-};
+export interface Filters {
+    [key: string]: string[];
+}
 
 @Injectable({ providedIn: 'root' })
 export class SearchService {
@@ -107,6 +106,6 @@ export class SearchService {
         }
         return Object.entries(filters)
             .filter(([key, value]) => value && value.length > 0)
-            .map(([key, value]) => ({ field: key as Facet, terms: value }));
+            .map(([key, value]) => ({ field: key, terms: value }));
     }
 }

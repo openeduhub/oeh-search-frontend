@@ -17,7 +17,7 @@
     <div class="type">
       <mat-label><mat-icon>apps</mat-icon> <ng-container i18n>Type</ng-container></mat-label>
       <app-multivalue-checkbox
-        formControlName="types"
+        formControlName="type"
         orientation="horizontal"
         [count]="false"
         [options]="getTypes()"
@@ -35,7 +35,7 @@
         ]
       "
     >
-      <ng-container *ngIf="facets[key]?.length">
+      <ng-container *ngIf="facets[key]?.buckets.length">
         <div class="vertical">
           <button mat-button (click)="toggle(key)" [ngSwitch]="key">
             <ng-container *ngSwitchCase="'disciplines'">
@@ -69,8 +69,8 @@
           </button>
           <app-multivalue-checkbox
             *ngIf="expanded.indexOf(key) != -1"
-            [formControlName]="key"
-            [options]="facets[key]"
+            [formControlName]="facets[key].field"
+            [options]="facets[key].buckets"
           ></app-multivalue-checkbox>
         </div>
       </ng-container>

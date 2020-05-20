@@ -50,7 +50,9 @@
         <span *ngFor="let discipline of result.valuespaces.discipline | slice: 0:5">
           <a
             routerLink="/search"
-            [queryParams]="['disciplines', [discipline.de]] | generateFilters: filters"
+            [queryParams]="
+              ['valuespaces.discipline.de.keyword', [discipline.de]] | generateFilters: filters
+            "
             queryParamsHandling="merge"
           >
             {{ discipline.de }}
@@ -65,7 +67,9 @@
         <span class="foo" *ngFor="let context of result.valuespaces.educationalContext">
           <a
             routerLink="/search"
-            [queryParams]="['educationalContexts', [context.de]] | generateFilters: filters"
+            [queryParams]="
+              ['valuespaces.educationalContext.de.keyword', [context.de]] | generateFilters: filters
+            "
             queryParamsHandling="merge"
           >
             {{ context.de }}
@@ -82,7 +86,9 @@
         <span *ngFor="let lrt of result.valuespaces.learningResourceType">
           <a
             routerLink="/search"
-            [queryParams]="['learningResourceTypes', [lrt.de]] | generateFilters: filters"
+            [queryParams]="
+              ['valuespaces.learningResourceType.de.keyword', [lrt.de]] | generateFilters: filters
+            "
             queryParamsHandling="merge"
           >
             {{ lrt.de }}
@@ -96,7 +102,7 @@
         <span *ngFor="let keyword of result.lom.general.keyword | slice: 0:5">
           <a
             routerLink="/search"
-            [queryParams]="['keywords', [keyword]] | generateFilters: filters"
+            [queryParams]="['lom.general.keyword.keyword', [keyword]] | generateFilters: filters"
             queryParamsHandling="merge"
           >
             {{ keyword }}
