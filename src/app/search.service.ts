@@ -9,6 +9,7 @@ import {
     GetDetailsGQL,
     GetDetailsQuery,
     GetLargeThumbnailGQL,
+    Hit,
     ResultFragment,
     SearchGQL,
 } from '../generated/graphql';
@@ -70,11 +71,15 @@ export class SearchService {
                 ),
                 tap((response) => this.facets.next(response.data.facets)),
                 map((response) => response.data.search),
+                tap((searchResult) => this.prepareSearchResult(searchResult)),
             );
     }
 
     getDetails(id: string): Observable<GetDetailsQuery['get']> {
-        return this.getDetailsGQL.fetch({ id }).pipe(map((response) => response.data.get));
+        return this.getDetailsGQL.fetch({ id }).pipe(
+            map((response) => response.data.get),
+            tap((hit) => this.prepareHit(hit as Hit)),
+        );
     }
 
     getLargeThumbnail(id: string): Observable<string> {
@@ -107,5 +112,25 @@ export class SearchService {
         return Object.entries(filters)
             .filter(([key, value]) => value && value.length > 0)
             .map(([key, value]) => ({ field: key, terms: value }));
+    }
+
+    /**
+     * Temporary mapping until everything is updated.
+     */
+    private prepareSearchResult(searchResult: ResultFragment) {
+        for (const hit of searchResult.hits.hits) {
+            this.prepareHit(hit as Hit);
+        }
+    }
+
+    /**
+     * Temporary mapping until everything is updated.
+     */
+    private prepareHit(hit: Hit) {
+        if (!hit.lom.general.description) {
+            hit.lom.general.description = hit.lom.educational.description;
+        } else {
+            console.log(hit.lom.general.description);
+        }
     }
 }

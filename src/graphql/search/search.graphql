@@ -28,6 +28,7 @@ fragment result on SearchResult {
         general {
           title
           keyword
+          description
         }
         technical {
           location

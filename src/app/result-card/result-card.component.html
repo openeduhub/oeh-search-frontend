@@ -41,8 +41,8 @@
     </div>
   </div>
   <mat-card-content>
-    <p class="description" *ngIf="result.lom.educational?.description">
-      {{ result.lom.educational.description | trim | truncate: 120 }}
+    <p class="description" *ngIf="result.lom.general?.description">
+      {{ result.lom.general.description | trim | truncate: 120 }}
     </p>
     <div class="metadata" *ngIf="result.valuespaces?.discipline">
       <label><mat-icon>book_icon</mat-icon></label>

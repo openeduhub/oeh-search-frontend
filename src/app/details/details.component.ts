@@ -104,7 +104,7 @@ export class DetailsComponent implements OnInit {
             this.id,
             this.details.collection?.map((collection) => collection.uuid).join(';'),
             this.details.type,
-            this.details.lom.educational.description,
+            this.details.lom.general.description,
             this.details.lom.technical.location,
             `${environment.relayUrl}/rest/entry/${this.id}/thumbnail`,
             this.details.valuespaces.learningResourceType?.map((value) => value.de).join(';'),

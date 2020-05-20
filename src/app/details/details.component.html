@@ -12,8 +12,8 @@
       "
     />
 
-    <p class="description" *ngIf="details.lom.educational?.description">
-      {{ details.lom.educational.description | trim }}
+    <p class="description" *ngIf="details.lom.general?.description">
+      {{ details.lom.general.description | trim }}
     </p>
     <div class="additional-metadata">
       <div class="educational" *ngIf="details.valuespaces?.discipline">

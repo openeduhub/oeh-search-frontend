@@ -8,6 +8,7 @@ query GetDetails($id: ID!) {
       general {
         title
         keyword
+        description
       }
       technical {
         location
