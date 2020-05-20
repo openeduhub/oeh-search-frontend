@@ -89,3 +89,35 @@
 <div class="no-results mat-body-2" *ngIf="results.tool.hits.total.value === 0">
   <ng-container i18n>No featured tools for topic</ng-container> {{ discipline }}
 </div>
+
+<div class="heading">
+  <h2 i18n>Lesson Planning</h2>
+  <a
+    mat-raised-button
+    i18n
+    routerLink="/search"
+    [queryParams]="
+      ['valuespaces.discipline.de.keyword', [discipline]]
+        | generateFilters
+          : {
+              type: ['LESSONPLANNING'],
+              'valuespaces.educationalContext.de.keyword': [educationalContext]
+            }
+    "
+    >More lesson planning ideas</a
+  >
+</div>
+<div class="results" *ngIf="results.lessonPlanning.hits.total.value > 0">
+  <app-result-card
+    *ngFor="let result of results.lessonPlanning.hits.hits"
+    [result]="result"
+    [filters]="{
+      'valuespaces.discipline.de.keyword': [discipline],
+      type: ['LESSONPLANNING'],
+      'valuespaces.educationalContext.de.keyword': [educationalContext]
+    }"
+  ></app-result-card>
+</div>
+<div class="no-results mat-body-2" *ngIf="results.lessonPlanning.hits.total.value === 0">
+  <ng-container i18n>No featured lesson planing ideas for topic</ng-container> {{ discipline }}
+</div>

@@ -33,4 +33,15 @@ query SubjectPortals($discipline: String!, $educationalContext: String!, $size: 
   ) {
     ...result
   }
+  lessonPlanning: search(
+    size: $size
+    filters: [
+      { field: "valuespaces.discipline.de.keyword", terms: [$discipline] }
+      { field: "valuespaces.educationalContext.de.keyword", terms: [$educationalContext] }
+      { field: "type", terms: ["LESSONPLANNING"] }
+      { field: "collection.uuid", terms: ["FEATURED"] }
+    ]
+  ) {
+    ...result
+  }
 }
