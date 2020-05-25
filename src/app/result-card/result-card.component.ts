@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ResultFragment } from '../../generated/graphql';
 import { Filters, SearchService } from '../search.service';
+import { Unpacked } from '../utils';
 
-type Unpacked<T> = T extends (infer U)[] ? U : T;
 type Hits = ResultFragment['hits']['hits'];
 type Hit = Unpacked<Hits>;
 

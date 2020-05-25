@@ -1,13 +1,6 @@
-query Search($searchString: String!, $from: Int!, $size: Int!, $filters: [Filter!]) {
+query Search($searchString: String!, $from: Int! = 0, $size: Int!, $filters: [Filter!]) {
   search(searchString: $searchString, from: $from, size: $size, filters: $filters) {
     ...result
-  }
-  didYouMeanSuggestion(searchString: $searchString, filters: $filters) {
-    ...didYouMeanSuggestion
-  }
-  # TODO: dynamic language
-  facets(searchString: $searchString, size: 20, filters: $filters, language: de) {
-    ...facets
   }
 }
 
@@ -65,47 +58,4 @@ fragment result on SearchResult {
       }
     }
   }
-}
-
-fragment didYouMeanSuggestion on DidYouMeanSuggestion {
-  plain
-  html
-}
-
-fragment facets on Facets {
-  sources {
-    ...aggregation
-  }
-  keywords {
-    ...aggregation
-  }
-  disciplines {
-    ...aggregation
-  }
-  educationalContexts {
-    ...aggregation
-  }
-  learningResourceTypes {
-    ...aggregation
-  }
-  licenseOER {
-    ...aggregation
-  }
-  types {
-    ...aggregation
-  }
-  intendedEndUserRoles {
-    ...aggregation
-  }
-  collections {
-    ...aggregation
-  }
-}
-
-fragment aggregation on Aggregation {
-  buckets {
-    doc_count
-    key
-  }
-  field
 }

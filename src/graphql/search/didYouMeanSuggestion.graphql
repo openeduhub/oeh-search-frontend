@@ -1,0 +1,10 @@
+query DidYouMeanSuggestion($searchString: String!, $filters: [Filter!]) {
+  didYouMeanSuggestion(searchString: $searchString, filters: $filters) {
+    ...didYouMeanSuggestion
+  }
+}
+
+fragment didYouMeanSuggestion on DidYouMeanSuggestion {
+  plain
+  html
+}

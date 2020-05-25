@@ -1,20 +1,48 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
-import { Observable } from 'rxjs';
+import { ActivatedRouteSnapshot, ParamMap, Resolve } from '@angular/router';
+import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { SubjectPortalsGQL, SubjectPortalsQuery } from '../generated/graphql';
+import { SearchGQL, SearchQuery } from '../generated/graphql';
+import { mapFilters } from './search.service';
+import { parseSearchQueryParams } from './utils';
+
+type Type = 'LESSONPLANNING' | 'MATERIAL' | 'TOOL' | 'SOURCE';
+type Hits = SearchQuery['search']['hits'];
+
+interface SubjectsPortalResults {
+    lessonPlanning: Hits;
+    material: Hits;
+    source: Hits;
+    tool: Hits;
+}
 
 @Injectable({
     providedIn: 'root',
 })
-export class SubjectsPortalResolverService implements Resolve<SubjectPortalsQuery> {
-    constructor(private subjectPortalsGQL: SubjectPortalsGQL) {}
+export class SubjectsPortalResolverService implements Resolve<SubjectsPortalResults> {
+    private readonly size = 5;
 
-    resolve(route: ActivatedRouteSnapshot): Observable<SubjectPortalsQuery> {
-        const educationalContext = route.paramMap.get('educationalContext');
-        const discipline = route.paramMap.get('discipline');
-        return this.subjectPortalsGQL
-            .fetch({ discipline, educationalContext })
-            .pipe(map((response) => response.data));
+    constructor(private searchGQL: SearchGQL) {}
+
+    resolve(route: ActivatedRouteSnapshot): Observable<SubjectsPortalResults> {
+        return forkJoin({
+            lessonPlanning: this.getHitsForType('LESSONPLANNING', route.queryParamMap),
+            material: this.getHitsForType('MATERIAL', route.queryParamMap),
+            source: this.getHitsForType('SOURCE', route.queryParamMap),
+            tool: this.getHitsForType('TOOL', route.queryParamMap),
+        });
+    }
+
+    private getHitsForType(type: Type, queryParamMap: ParamMap): Observable<Hits> {
+        const { searchString, filters } = parseSearchQueryParams(queryParamMap);
+        filters.type = [type];
+        filters['collection.uuid'] = ['FEATURED'];
+        return this.searchGQL
+            .fetch({
+                searchString,
+                size: this.size,
+                filters: mapFilters(filters),
+            })
+            .pipe(map((response) => response.data.search.hits));
     }
 }

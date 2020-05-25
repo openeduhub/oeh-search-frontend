@@ -12,6 +12,8 @@ import {
     Hit,
     ResultFragment,
     SearchGQL,
+    FacetsGQL,
+    DidYouMeanSuggestionGQL,
 } from '../generated/graphql';
 
 export type Details = GetDetailsQuery['get'];
@@ -27,6 +29,8 @@ export class SearchService {
 
     constructor(
         private searchGQL: SearchGQL,
+        private facetsGQL: FacetsGQL,
+        private didYouMeanSuggestionGQL: DidYouMeanSuggestionGQL,
         private getDetailsGQL: GetDetailsGQL,
         private autoCompleteGQL: AutoCompleteGQL,
         private getLargeThumbnailGQL: GetLargeThumbnailGQL,
@@ -40,43 +44,22 @@ export class SearchService {
         },
         filters: Filters,
     ): Observable<ResultFragment> {
-        // Currently, this fetches results, suggestions, and facets for every
-        // query. Alas, the in-memory cache is not able to cache parts of the
-        // query. There are some possibilities to improve this with some
-        // tradeoffs:
-        //   1. We could send separate queries for the three parts. This would
-        //        allow the in-memory cache to keep facets and suggestions when
-        //        browsing result pages. However, we would have three separate
-        //        network requests for each initial query.
-        //   2. We could use a different query and only update results when
-        //      another page of an otherwise identical query is requested. This
-        //      would require to keep track of the previous query and
-        //      effectively compare any new query against it. We would miss
-        //      cache opportunities when the user navigates back to an already
-        //      made query, but have less overhead for scrolling pages.
-        //   3. We could omit fetching facets when the filterbar is not shown.
-        //        This would make a second request necessary when it *is* shown,
-        //        but omit the effort entirely as long as it is hidden. We would
-        //        just need to keep track of the current search query.
-        //
-        // Update: We enabled query batching with apollo server. This allows us
-        // to use separate queries that will be transparently combined into one
-        // before being sent to the server. TODO: use separate queries for
-        // search results, facets, and didYouMeanSuggestions and test whether
-        // the queries are successfully combined into one and whether caching
-        // works on the individual queries this way.
+        this.didYouMeanSuggestionGQL
+            .fetch({ searchString, filters: mapFilters(filters) })
+            .subscribe((response) =>
+                this.didYouMeanSuggestion.next(response.data.didYouMeanSuggestion),
+            );
+        this.facetsGQL
+            .fetch({ searchString, filters: mapFilters(filters) })
+            .subscribe((response) => this.facets.next(response.data.facets));
         return this.searchGQL
             .fetch({
-                searchString: searchString || '',
+                searchString,
                 from: pageInfo.pageIndex * pageInfo.pageSize,
                 size: pageInfo.pageSize,
-                filters: this.mapFilters(filters),
+                filters: mapFilters(filters),
             })
             .pipe(
-                tap((response) =>
-                    this.didYouMeanSuggestion.next(response.data.didYouMeanSuggestion),
-                ),
-                tap((response) => this.facets.next(response.data.facets)),
                 map((response) => response.data.search),
                 tap((searchResult) => this.prepareSearchResult(searchResult)),
             );
@@ -100,7 +83,7 @@ export class SearchService {
             return of(null);
         }
         return this.autoCompleteGQL
-            .fetch({ searchString, filters: this.mapFilters(filters) })
+            .fetch({ searchString, filters: mapFilters(filters) })
             .pipe(map((response) => response.data.autoComplete));
     }
 
@@ -110,15 +93,6 @@ export class SearchService {
 
     getDidYouMeanSuggestion(): Observable<DidYouMeanSuggestionFragment> {
         return this.didYouMeanSuggestion.asObservable();
-    }
-
-    private mapFilters(filters: Filters): Filter[] {
-        if (!filters) {
-            return [];
-        }
-        return Object.entries(filters)
-            .filter(([key, value]) => value && value.length > 0)
-            .map(([key, value]) => ({ field: key, terms: value }));
     }
 
     /**
@@ -138,4 +112,13 @@ export class SearchService {
             hit.lom.general.description = hit.lom.educational.description;
         }
     }
+}
+
+export function mapFilters(filters: Filters): Filter[] {
+    if (!filters) {
+        return [];
+    }
+    return Object.entries(filters)
+        .filter(([key, value]) => value && value.length > 0)
+        .map(([key, value]) => ({ field: key, terms: value }));
 }

@@ -46,6 +46,7 @@ import { SearchResultsResolverService } from './search-results-resolver.service'
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { SearchComponent } from './search/search.component';
 import { SortPipe } from './sort.pipe';
+import { SubjectsPortalResolverService } from './subjects-portal-resolver.service';
 import { SubjectsPortalComponent } from './subjects-portal/subjects-portal.component';
 import { TrimPipe } from './trim.pipe';
 import { TruncatePipe } from './truncate.pipe';
@@ -63,7 +64,7 @@ const appRoutes: Routes = [
         runGuardsAndResolvers: 'paramsOrQueryParamsChange',
         resolve: {
             results: SearchResultsResolverService,
-            // subjectsPortalResults: SubjectsPortalResolverService,
+            subjectsPortalResults: SubjectsPortalResolverService,
         },
     },
     {

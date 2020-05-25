@@ -1,0 +1,44 @@
+query Facets($searchString: String!, $filters: [Filter!]) {
+  # TODO: dynamic language
+  facets(searchString: $searchString, size: 20, filters: $filters, language: de) {
+    ...facets
+  }
+}
+
+fragment facets on Facets {
+  sources {
+    ...aggregation
+  }
+  keywords {
+    ...aggregation
+  }
+  disciplines {
+    ...aggregation
+  }
+  educationalContexts {
+    ...aggregation
+  }
+  learningResourceTypes {
+    ...aggregation
+  }
+  licenseOER {
+    ...aggregation
+  }
+  types {
+    ...aggregation
+  }
+  intendedEndUserRoles {
+    ...aggregation
+  }
+  collections {
+    ...aggregation
+  }
+}
+
+fragment aggregation on Aggregation {
+  buckets {
+    doc_count
+    key
+  }
+  field
+}

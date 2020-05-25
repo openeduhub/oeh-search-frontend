@@ -1,11 +1,20 @@
 import { ParamMap } from '@angular/router';
 import { Filters } from './search.service';
 
+export type Unpacked<T> = T extends (infer U)[] ? U : T;
+
+export interface ParsedParams {
+    searchString: string;
+    pageIndex: number;
+    pageSize: number;
+    filters: Filters;
+}
+
 /**
  * Get values of search-related query parameters or their default values if the
  * parameter was not given.
  */
-export function parseSearchQueryParams(queryParamMap: ParamMap) {
+export function parseSearchQueryParams(queryParamMap: ParamMap): ParsedParams {
     const result = {
         searchString: '',
         pageIndex: 0,
