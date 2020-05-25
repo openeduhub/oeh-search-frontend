@@ -3,23 +3,12 @@
     flex-direction: column;
 }
 
-.summary {
-    color: gray;
-    margin-bottom: 1em;
-    .no-results {
-        display: flex;
-        flex-direction: column;
-        margin-top: 5px;
-        a {
-            margin-top: 10px;
-        }
-    }
-}
 .results {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 30px;
 }
+
 app-paginator {
     align-self: center;
     margin: 50px 0;

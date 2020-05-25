@@ -10,5 +10,41 @@
       queryParamsHandling="merge"
     ></a>
   </p>
-  <router-outlet></router-outlet>
+  <div class="summary mat-body-2">
+    <div class="no-results" *ngIf="results.hits.total.value === 0">
+      <ng-container i18n>No results</ng-container>
+      <div>
+        <a
+          *ngIf="filterCount > 0"
+          mat-flat-button
+          color="primary"
+          routerLink="/search"
+          [queryParams]="{ filters: null }"
+          queryParamsHandling="merge"
+          i18n
+          >Search without filters</a
+        >
+      </div>
+    </div>
+    <ng-container *ngIf="results.hits.total.value > 0">
+      <ng-container *ngIf="pageIndex === 0 && results.hits.total.relation === 'eq'" i18n>
+        {results.hits.total, plural, =1 {1 result} other
+        {{{results.hits.total.value | number}} results}}
+      </ng-container>
+      <ng-container *ngIf="pageIndex === 0 && results.hits.total.relation !== 'eq'" i18n>
+        About {{ results.hits.total.value | number }} results
+      </ng-container>
+      <ng-container *ngIf="pageIndex > 0 && results.hits.total.relation === 'eq'" i18n>
+        Page {{ pageIndex + 1 }} of {{ results.hits.total.value | number }} results
+      </ng-container>
+      <ng-container *ngIf="pageIndex > 0 && results.hits.total.relation !== 'eq'" i18n>
+        Page {{ pageIndex + 1 }} of about {{ results.hits.total.value | number }} results
+      </ng-container>
+      <!-- <ng-container i18n>({{ results.took / 1000 | number }} seconds)</ng-container> -->
+    </ng-container>
+  </div>
+  <app-search-results
+    *ngIf="results.hits.total.value > 0"
+    [hits]="results.hits"
+  ></app-search-results>
 </div>

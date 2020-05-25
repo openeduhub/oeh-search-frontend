@@ -19,7 +19,7 @@ export class HeaderbarComponent implements OnInit {
         this.router.events
             .pipe(filter((event) => event instanceof NavigationEnd))
             .subscribe((event: NavigationEnd) => {
-                this.showFiltersButton = this.router.url === '/search';
+                this.showFiltersButton = this.router.url.startsWith('/search');
             });
         this.route.queryParamMap.subscribe((queryParamMap) => {
             const { filters } = parseSearchQueryParams(queryParamMap);

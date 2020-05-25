@@ -1,6 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { ExtendedHit } from '../search-results/search-results.component';
-import { Filters } from '../search.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { ResultFragment } from '../../generated/graphql';
+import { Filters, SearchService } from '../search.service';
+
+type Unpacked<T> = T extends (infer U)[] ? U : T;
+type Hits = ResultFragment['hits']['hits'];
+type Hit = Unpacked<Hits>;
 
 @Component({
     selector: 'app-result-card',
@@ -8,10 +12,23 @@ import { Filters } from '../search.service';
     styleUrls: ['./result-card.component.scss'],
 })
 export class ResultCardComponent implements OnInit {
-    @Input() result: ExtendedHit;
+    @Input() result: Hit;
     @Input() filters: Filters;
 
-    constructor() {}
+    thumbnail: string;
 
-    ngOnInit(): void {}
+    constructor(private search: SearchService) {}
+
+    ngOnInit(): void {
+        this.loadLargeThumbnail();
+    }
+
+    private loadLargeThumbnail() {
+        if (this.result.thumbnail) {
+            this.thumbnail = this.result.thumbnail.small;
+            this.search.getLargeThumbnail(this.result.id).subscribe((largeThumbnail) => {
+                this.thumbnail = largeThumbnail;
+            });
+        }
+    }
 }

@@ -21,6 +21,20 @@ app-search-filterbar {
         z-index: 1;
     }
 }
+
+.summary {
+    font-size: 110%;
+    margin-bottom: 1em;
+    .no-results {
+        display: flex;
+        flex-direction: column;
+        margin-top: 5px;
+        a {
+            margin-top: 10px;
+        }
+    }
+}
+
 .results {
     flex-basis: 350px; // Shrink to equal parts with filter bar
     flex-grow: 1;

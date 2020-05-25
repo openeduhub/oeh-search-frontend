@@ -60,24 +60,13 @@ const appRoutes: Routes = [
     {
         path: 'search',
         component: SearchComponent,
-        children: [
-            {
-                path: '',
-                component: SearchResultsComponent,
-                resolve: { results: SearchResultsResolverService },
-                runGuardsAndResolvers: 'paramsOrQueryParamsChange',
-            },
-        ],
+        runGuardsAndResolvers: 'paramsOrQueryParamsChange',
+        resolve: { results: SearchResultsResolverService },
     },
     {
         path: 'details/:id',
         component: DetailsComponent,
         resolve: { details: DetailsResolverService },
-    },
-    {
-        path: 'subjects-portal/:educationalContext/:discipline',
-        component: SubjectsPortalComponent,
-        resolve: { results: SubjectsPortalResolverService },
     },
     { path: 'login', component: LoginComponent },
     { path: '', redirectTo: 'search', pathMatch: 'full' },

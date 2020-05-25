@@ -1,0 +1,12 @@
+@import '~@angular/material/theming';
+@import '../functions';
+
+@mixin search-theme($theme) {
+    $foreground: map-get($theme, foreground);
+
+    app-search {
+        .results > .summary {
+            color: mat-color($foreground, secondary-text);
+        }
+    }
+}
