@@ -21,7 +21,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
-import { HttpLink, HttpLinkModule } from 'apollo-angular-link-http';
+import { HttpLinkModule } from 'apollo-angular-link-http';
+import { HttpBatchLink, HttpBatchLinkModule } from 'apollo-angular-link-http-batch';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
@@ -45,7 +46,6 @@ import { SearchResultsResolverService } from './search-results-resolver.service'
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { SearchComponent } from './search/search.component';
 import { SortPipe } from './sort.pipe';
-import { SubjectsPortalResolverService } from './subjects-portal-resolver.service';
 import { SubjectsPortalComponent } from './subjects-portal/subjects-portal.component';
 import { TrimPipe } from './trim.pipe';
 import { TruncatePipe } from './truncate.pipe';
@@ -61,7 +61,10 @@ const appRoutes: Routes = [
         path: 'search',
         component: SearchComponent,
         runGuardsAndResolvers: 'paramsOrQueryParamsChange',
-        resolve: { results: SearchResultsResolverService },
+        resolve: {
+            results: SearchResultsResolverService,
+            // subjectsPortalResults: SubjectsPortalResolverService,
+        },
     },
     {
         path: 'details/:id',
@@ -108,6 +111,7 @@ const appRoutes: Routes = [
         FormsModule,
         HttpClientModule,
         HttpLinkModule,
+        HttpBatchLinkModule,
         MatAutocompleteModule,
         MatBadgeModule,
         MatButtonModule,
@@ -134,15 +138,16 @@ const appRoutes: Routes = [
     providers: [
         {
             provide: APOLLO_OPTIONS,
-            useFactory: (httpLink: HttpLink) => {
+            useFactory: (httpLink: HttpBatchLink) => {
                 return {
                     cache: new InMemoryCache(),
                     link: httpLink.create({
                         uri: environment.relayUrl + '/graphql',
                     }),
+                    shouldBatch: true,
                 };
             },
-            deps: [HttpLink],
+            deps: [HttpBatchLink],
         },
     ],
     bootstrap: [AppComponent],

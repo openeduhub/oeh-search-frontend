@@ -44,20 +44,27 @@ export class SearchService {
         // query. Alas, the in-memory cache is not able to cache parts of the
         // query. There are some possibilities to improve this with some
         // tradeoffs:
-        //   1. We could send separate queries for the three parts.
-        //        This would allow the in-memory cache to keep facets and
-        //      suggestions when browsing result pages. However, we would have
-        //      three separate network requests for each initial query.
+        //   1. We could send separate queries for the three parts. This would
+        //        allow the in-memory cache to keep facets and suggestions when
+        //        browsing result pages. However, we would have three separate
+        //        network requests for each initial query.
         //   2. We could use a different query and only update results when
-        //      another page of an otherwise identical query is requested.
-        //        This would require to keep track of the previous query and
+        //      another page of an otherwise identical query is requested. This
+        //      would require to keep track of the previous query and
         //      effectively compare any new query against it. We would miss
         //      cache opportunities when the user navigates back to an already
         //      made query, but have less overhead for scrolling pages.
         //   3. We could omit fetching facets when the filterbar is not shown.
         //        This would make a second request necessary when it *is* shown,
-        //      but omit the effort entirely as long as it is hidden. We would
-        //      just need to keep track of the current search query.
+        //        but omit the effort entirely as long as it is hidden. We would
+        //        just need to keep track of the current search query.
+        //
+        // Update: We enabled query batching with apollo server. This allows us
+        // to use separate queries that will be transparently combined into one
+        // before being sent to the server. TODO: use separate queries for
+        // search results, facets, and didYouMeanSuggestions and test whether
+        // the queries are successfully combined into one and whether caching
+        // works on the individual queries this way.
         return this.searchGQL
             .fetch({
                 searchString: searchString || '',

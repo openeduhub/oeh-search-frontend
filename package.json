@@ -36,6 +36,7 @@
     "angular-oauth2-oidc": "^9.2.1",
     "apollo-angular": "^1.9.1",
     "apollo-angular-link-http": "^1.10.0",
+    "apollo-angular-link-http-batch": "^1.8.0",
     "apollo-cache-inmemory": "^1.6.5",
     "apollo-client": "^2.6.8",
     "graphql": "^15.0.0",
