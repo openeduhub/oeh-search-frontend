@@ -80,7 +80,7 @@ const appRoutes: Routes = [
         resolve: { results: SubjectsPortalResolverService },
     },
     { path: 'login', component: LoginComponent },
-    { path: '', redirectTo: 'welcome', pathMatch: 'full' },
+    { path: '', redirectTo: 'search', pathMatch: 'full' },
     { path: 'error', component: ErrorComponent },
 ];
 
