@@ -1,25 +1,9 @@
 :host {
-    padding: 20px 40px;
-    max-width: 1800px;
-    margin: auto;
     display: block;
 }
-
-.heading {
-    display: flex;
-    margin-bottom: 15px;
-    > h2 {
-        flex-grow: 1;
-        margin: 0;
+mat-card {
+    border-radius: 10px;
+    > app-subjects-portal-section:not(:last-of-type) {
+        margin-bottom: 3em;
     }
-}
-
-.results,
-.no-results {
-    margin-bottom: 30px;
-}
-.results {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 30px;
 }

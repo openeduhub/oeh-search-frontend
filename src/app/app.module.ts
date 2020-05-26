@@ -52,6 +52,8 @@ import { TrimPipe } from './trim.pipe';
 import { TruncatePipe } from './truncate.pipe';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { WorkInProgressMessageComponent } from './work-in-progress-message/work-in-progress-message.component';
+import { ResultCardSmallComponent } from './result-card-small/result-card-small.component';
+import { SubjectsPortalSectionComponent } from './subjects-portal-section/subjects-portal-section.component';
 
 const appRoutes: Routes = [
     {
@@ -102,6 +104,8 @@ const appRoutes: Routes = [
         ResultCardComponent,
         PaginatorComponent,
         SubjectsPortalComponent,
+        ResultCardSmallComponent,
+        SubjectsPortalSectionComponent,
     ],
     imports: [
         ApolloModule,

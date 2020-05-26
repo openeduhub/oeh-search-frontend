@@ -1,123 +1,26 @@
-<h1>{{ educationalContext }} {{ discipline }}</h1>
-
-<div class="heading">
-  <h2 i18n>Materials</h2>
-  <a
-    mat-raised-button
-    i18n
-    routerLink="/search"
-    [queryParams]="
-      ['valuespaces.discipline.de.keyword', [discipline]]
-        | generateFilters
-          : {
-              type: ['MATERIAL'],
-              'valuespaces.educationalContext.de.keyword': [educationalContext]
-            }
-    "
-    >More materials</a
-  >
-</div>
-<div class="results" *ngIf="results.material.hits.total.value > 0">
-  <app-result-card
-    *ngFor="let result of results.material.hits.hits"
-    [result]="result"
-    [filters]="{
-      'valuespaces.discipline.de.keyword': [discipline],
-      type: ['MATERIAL'],
-      'valuespaces.educationalContext.de.keyword': [educationalContext]
-    }"
-  ></app-result-card>
-</div>
-<div class="no-results mat-body-2" *ngIf="results.material.hits.total.value === 0">
-  <ng-container i18n>No featured materials for topic</ng-container> {{ discipline }}
-</div>
-
-<div class="heading">
-  <h2 i18n>Lesson Planning</h2>
-  <a
-    mat-raised-button
-    i18n
-    routerLink="/search"
-    [queryParams]="
-      ['valuespaces.discipline.de.keyword', [discipline]]
-        | generateFilters
-          : {
-              type: ['LESSONPLANNING'],
-              'valuespaces.educationalContext.de.keyword': [educationalContext]
-            }
-    "
-    >More lesson planning ideas</a
-  >
-</div>
-<div class="results" *ngIf="results.lessonPlanning.hits.total.value > 0">
-  <app-result-card
-    *ngFor="let result of results.lessonPlanning.hits.hits"
-    [result]="result"
-    [filters]="{
-      'valuespaces.discipline.de.keyword': [discipline],
-      type: ['LESSONPLANNING'],
-      'valuespaces.educationalContext.de.keyword': [educationalContext]
-    }"
-  ></app-result-card>
-</div>
-<div class="no-results mat-body-2" *ngIf="results.lessonPlanning.hits.total.value === 0">
-  <ng-container i18n>No featured lesson planing ideas for topic</ng-container> {{ discipline }}
-</div>
-
-<div class="heading">
-  <h2 i18n>Tools</h2>
-  <a
-    mat-raised-button
-    i18n
-    routerLink="/search"
-    [queryParams]="
-      ['valuespaces.discipline.de.keyword', [discipline]]
-        | generateFilters
-          : { type: ['TOOL'], 'valuespaces.educationalContext.de.keyword': [educationalContext] }
-    "
-    >More tools</a
-  >
-</div>
-<div class="results" *ngIf="results.tool.hits.total.value > 0">
-  <app-result-card
-    *ngFor="let result of results.tool.hits.hits"
-    [result]="result"
-    [filters]="{
-      'valuespaces.discipline.de.keyword': [discipline],
-      type: ['TOOL'],
-      'valuespaces.educationalContext.de.keyword': [educationalContext]
-    }"
-  ></app-result-card>
-</div>
-<div class="no-results mat-body-2" *ngIf="results.tool.hits.total.value === 0">
-  <ng-container i18n>No featured tools for topic</ng-container> {{ discipline }}
-</div>
-
-<div class="heading">
-  <h2 i18n>Sources</h2>
-  <a
-    mat-raised-button
-    i18n
-    routerLink="/search"
-    [queryParams]="
-      ['valuespaces.discipline.de.keyword', [discipline]]
-        | generateFilters
-          : { type: ['SOURCE'], 'valuespaces.educationalContext.de.keyword': [educationalContext] }
-    "
-    >More sources</a
-  >
-</div>
-<div class="results" *ngIf="results.source.hits.total.value > 0">
-  <app-result-card
-    *ngFor="let result of results.source.hits.hits"
-    [result]="result"
-    [filters]="{
-      'valuespaces.discipline.de.keyword': [discipline],
-      type: ['SOURCE'],
-      'valuespaces.educationalContext.de.keyword': [educationalContext]
-    }"
-  ></app-result-card>
-</div>
-<div class="no-results mat-body-2" *ngIf="results.source.hits.total.value === 0">
-  <ng-container i18n>No featured sources for topic</ng-container> {{ discipline }}
-</div>
+<mat-card>
+  <app-subjects-portal-section
+    *ngIf="results.material.total.value > 0"
+    i18n-title
+    title="Materials"
+    [hits]="results.material.hits"
+  ></app-subjects-portal-section>
+  <app-subjects-portal-section
+    *ngIf="results.lessonPlanning.total.value > 0"
+    i18n-title
+    title="Lesson Planning"
+    [hits]="results.lessonPlanning.hits"
+  ></app-subjects-portal-section>
+  <app-subjects-portal-section
+    *ngIf="results.tool.total.value > 0"
+    i18n-title
+    title="Tools"
+    [hits]="results.tool.hits"
+  ></app-subjects-portal-section>
+  <app-subjects-portal-section
+    *ngIf="results.source.total.value > 0"
+    i18n-title
+    title="Sources"
+    [hits]="results.source.hits"
+  ></app-subjects-portal-section>
+</mat-card>

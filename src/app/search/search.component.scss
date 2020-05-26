@@ -35,12 +35,17 @@ app-search-filterbar {
     }
 }
 
+app-subjects-portal {
+    margin-bottom: 40px;
+}
+
 .results {
     flex-basis: 350px; // Shrink to equal parts with filter bar
     flex-grow: 1;
     margin: 0 20px;
     max-width: 1400px;
     justify-self: center;
+    overflow: hidden;
     app-work-in-progress-message {
         margin-bottom: 20px;
     }

@@ -43,9 +43,14 @@
       <!-- <ng-container i18n>({{ results.took / 1000 | number }} seconds)</ng-container> -->
     </ng-container>
   </div>
-  <!-- <app-subjects-portal></app-subjects-portal> -->
-  <app-search-results
-    *ngIf="results.hits.total.value > 0"
-    [hits]="results.hits"
-  ></app-search-results>
+  <ng-container>
+    <span class="header">
+      <h2 i18n>Editors' Choices</h2>
+    </span>
+    <app-subjects-portal></app-subjects-portal>
+  </ng-container>
+  <ng-container *ngIf="results.hits.total.value > 0">
+    <h2 i18n>All Search Results</h2>
+    <app-search-results [hits]="results.hits"></app-search-results>
+  </ng-container>
 </div>

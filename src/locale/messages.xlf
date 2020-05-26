@@ -12,65 +12,72 @@
       <trans-unit id="e4e28b371f8453e22779db590cb0fe67f2a080e8" datatype="html">
         <source>No results</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
-          <context context-type="linenumber">3</context>
+          <context context-type="sourcefile">src/app/search/search.component.html</context>
+          <context context-type="linenumber">15</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2781a2dd466ed10e528cd886e6e51e6e8eff6c29" datatype="html">
         <source>Search without filters</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
-          <context context-type="linenumber">13</context>
+          <context context-type="sourcefile">src/app/search/search.component.html</context>
+          <context context-type="linenumber">25</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="a74c7fba6c71548fb105f9e448c635e49a4e8966" datatype="html">
+      <trans-unit id="ca9c1b0e396a3a4bdc7369fb2733767c7332c800" datatype="html">
         <source>
-      <x id="ICU" equiv-text="{results.hits.total, plural, =1 {...} other {...}}"/>
-    </source>
+        <x id="ICU" equiv-text="{results.hits.total, plural, =1 {...} other {...}}"/>
+      </source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
-          <context context-type="linenumber">18</context>
+          <context context-type="sourcefile">src/app/search/search.component.html</context>
+          <context context-type="linenumber">30</context>
         </context-group>
       </trans-unit>
       <trans-unit id="f45af7f3e03af7bc9d7e821c393c25e6734c5de6" datatype="html">
         <source>{VAR_PLURAL, plural, =1 {1 result} other {<x id="INTERPOLATION" equiv-text="{{results.hits.total.value | number}}"/> results} }</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
-          <context context-type="linenumber">19</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="ed931939c73b03def4df0b1c5153288f1c7df232" datatype="html">
-        <source>
-      About <x id="INTERPOLATION" equiv-text="{{ results.hits.total.value | number }}"/> results
-    </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
-          <context context-type="linenumber">22</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="6a258d5c1d4b195ea46f3690d297f61dd7734758" datatype="html">
-        <source>
-      Page <x id="INTERPOLATION" equiv-text="{{ pageInfo.pageIndex + 1 }}"/> of <x id="INTERPOLATION_1" equiv-text="{{ results.hits.total.value | number }}"/> results
-    </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
-          <context context-type="linenumber">25</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="eb2ede74f9195cd09b232de69bab6f5de1e658c5" datatype="html">
-        <source>
-      Page <x id="INTERPOLATION" equiv-text="{{ pageInfo.pageIndex + 1 }}"/> of about <x id="INTERPOLATION_1" equiv-text="{{ results.hits.total.value | number }}"/> results
-    </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
-          <context context-type="linenumber">28</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="ddb2686152a6310eeab9bcae31921506a726a779" datatype="html">
-        <source>(<x id="INTERPOLATION" equiv-text="{{ results.took / 1000 | number }}"/> seconds)</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
+          <context context-type="sourcefile">src/app/search/search.component.html</context>
           <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="e2f2a7f60e1e5b216e5e949a84593cdd8125b11e" datatype="html">
+        <source>
+        About <x id="INTERPOLATION" equiv-text="{{ results.hits.total.value | number }}"/> results
+      </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search/search.component.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="c7b1a67fec4ed78217bf512a60551f79cd11bde1" datatype="html">
+        <source>
+        Page <x id="INTERPOLATION" equiv-text="{{ pageIndex + 1 }}"/> of <x id="INTERPOLATION_1" equiv-text="{{ results.hits.total.value | number }}"/> results
+      </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search/search.component.html</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="b4c50787ffcea7e89753855b97ac8aa162185243" datatype="html">
+        <source>
+        Page <x id="INTERPOLATION" equiv-text="{{ pageIndex + 1 }}"/> of about <x id="INTERPOLATION_1" equiv-text="{{ results.hits.total.value | number }}"/> results
+      </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search/search.component.html</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9a64d69b64e66b4d954a3ed4416b7535bd2f4346" datatype="html">
+        <source>Editors&apos; Choices</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search/search.component.html</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="0286d71c09c375c44b7b4db422d0d04df4d07a99" datatype="html">
+        <source>All Search Results</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search/search.component.html</context>
+          <context context-type="linenumber">53</context>
         </context-group>
       </trans-unit>
       <trans-unit id="69e46dc0dfe176ef7f0839cde8822f76ea58cfda" datatype="html">
@@ -110,7 +117,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card/result-card.component.html</context>
-          <context context-type="linenumber">125</context>
+          <context context-type="linenumber">119</context>
         </context-group>
       </trans-unit>
       <trans-unit id="c2a67ff00c6d308bdd450e19396c4c2063819dd6" datatype="html">
@@ -121,7 +128,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card/result-card.component.html</context>
-          <context context-type="linenumber">126</context>
+          <context context-type="linenumber">120</context>
         </context-group>
       </trans-unit>
       <trans-unit id="e3157f20d3d064c4cf5f516d129d92ba3aed84d0" datatype="html">
@@ -132,7 +139,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card/result-card.component.html</context>
-          <context context-type="linenumber">127</context>
+          <context context-type="linenumber">121</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7ce33113d5ba83bc7653f754abca4ca49917530f" datatype="html">
@@ -150,7 +157,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card/result-card.component.html</context>
-          <context context-type="linenumber">29</context>
+          <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
       <trans-unit id="a5d2031ba6b575b64a0355646f8405ebc6ea06db" datatype="html">
@@ -349,7 +356,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/subjects-portal/subjects-portal.component.html</context>
-          <context context-type="linenumber">36</context>
+          <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
       <trans-unit id="fa97f41a167e302d64cc195b0174ab65bc011710" datatype="html">
@@ -374,7 +381,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card/result-card.component.html</context>
-          <context context-type="linenumber">130</context>
+          <context context-type="linenumber">124</context>
         </context-group>
       </trans-unit>
       <trans-unit id="da1319a129b3f29a9204fc3671471be721f78c72" datatype="html">
@@ -402,14 +409,14 @@
         <source>Open Educational Resources</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card/result-card.component.html</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
       <trans-unit id="194c11c19296e5aa8018bc97e5f3d086af5f9248" datatype="html">
         <source>More Information</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card/result-card.component.html</context>
-          <context context-type="linenumber">114</context>
+          <context context-type="linenumber">108</context>
         </context-group>
       </trans-unit>
       <trans-unit id="575e782fd27f2ee70a034a775efe9ad162472250" datatype="html">
@@ -430,77 +437,21 @@
         <source>Materials</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/subjects-portal/subjects-portal.component.html</context>
-          <context context-type="linenumber">4</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="e87cefe8e00f854ac0c256993877ec9c2be5fd87" datatype="html">
-        <source>More materials</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/subjects-portal/subjects-portal.component.html</context>
-          <context context-type="linenumber">17</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="26c0be73ea01f913d26fdbccac6290df95a0cf0a" datatype="html">
-        <source>No featured materials for topic</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/subjects-portal/subjects-portal.component.html</context>
-          <context context-type="linenumber">32</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="7c8051ec7b152fb7515ac3ed721b11a77ffbca0e" datatype="html">
-        <source>More sources</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/subjects-portal/subjects-portal.component.html</context>
-          <context context-type="linenumber">46</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="df2b2610cbf6cd70da291487de0582b313874808" datatype="html">
-        <source>No featured sources for topic</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/subjects-portal/subjects-portal.component.html</context>
-          <context context-type="linenumber">61</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="fefee13017c2b85143cd131ee253e327a14053a0" datatype="html">
-        <source>Tools</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/subjects-portal/subjects-portal.component.html</context>
-          <context context-type="linenumber">65</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="d4452e48485a14187e1fc44746ed8ebe54c8400b" datatype="html">
-        <source>More tools</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/subjects-portal/subjects-portal.component.html</context>
-          <context context-type="linenumber">75</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="ac1a37ac2afb466c7b019acb7222126c09d27562" datatype="html">
-        <source>No featured tools for topic</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/subjects-portal/subjects-portal.component.html</context>
-          <context context-type="linenumber">90</context>
+          <context context-type="linenumber">5</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1fc85c00336d56c6b121ea5474c80857baa5d7e7" datatype="html">
         <source>Lesson Planning</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/subjects-portal/subjects-portal.component.html</context>
-          <context context-type="linenumber">94</context>
+          <context context-type="linenumber">11</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="fa9dd4c7b51ce04684031384cba02aa8f950816c" datatype="html">
-        <source>More lesson planning ideas</source>
+      <trans-unit id="fefee13017c2b85143cd131ee253e327a14053a0" datatype="html">
+        <source>Tools</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/subjects-portal/subjects-portal.component.html</context>
-          <context context-type="linenumber">104</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="cc19190515cabf854159b68865884564d005734f" datatype="html">
-        <source>No featured lesson planing ideas for topic</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/subjects-portal/subjects-portal.component.html</context>
-          <context context-type="linenumber">119</context>
+          <context context-type="linenumber">17</context>
         </context-group>
       </trans-unit>
     </body>

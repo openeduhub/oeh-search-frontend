@@ -7,9 +7,9 @@ import { mapFilters } from './search.service';
 import { parseSearchQueryParams } from './utils';
 
 type Type = 'LESSONPLANNING' | 'MATERIAL' | 'TOOL' | 'SOURCE';
-type Hits = SearchQuery['search']['hits'];
+export type Hits = SearchQuery['search']['hits'];
 
-interface SubjectsPortalResults {
+export interface SubjectsPortalResults {
     lessonPlanning: Hits;
     material: Hits;
     source: Hits;

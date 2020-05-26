@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SubjectPortalsQuery } from '../../generated/graphql';
+import { SubjectsPortalResults } from '../subjects-portal-resolver.service';
 
 @Component({
     selector: 'app-subjects-portal',
@@ -10,13 +10,13 @@ import { SubjectPortalsQuery } from '../../generated/graphql';
 export class SubjectsPortalComponent implements OnInit {
     discipline: string;
     educationalContext: string;
-    results: SubjectPortalsQuery;
+    results: SubjectsPortalResults;
 
     constructor(private route: ActivatedRoute) {}
 
     ngOnInit(): void {
-        this.route.data.subscribe((data: { results: SubjectPortalsQuery }) => {
-            this.results = data.results;
+        this.route.data.subscribe((data: { subjectsPortalResults: SubjectsPortalResults }) => {
+            this.results = data.subjectsPortalResults;
         });
         this.route.paramMap.subscribe((paramMap) => {
             this.discipline = paramMap.get('discipline');
