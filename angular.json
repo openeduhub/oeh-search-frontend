@@ -181,8 +181,5 @@
       }
     }
   },
-  "defaultProject": "open-edu-hub-frontend",
-  "cli": {
-    "analytics": "e23ef8df-f405-4454-bde1-309ca78938e8"
-  }
+  "defaultProject": "open-edu-hub-frontend"
 }
