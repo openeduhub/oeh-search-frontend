@@ -71,7 +71,7 @@
                 "de"
               ]
             },
-            "staging": {
+            "stage": {
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -97,11 +97,6 @@
                   "maximumWarning": "6kb",
                   "maximumError": "10kb"
                 }
-              ]
-            },
-            "de": {
-              "localize": [
-                "de"
               ]
             }
           }
@@ -188,6 +183,6 @@
   },
   "defaultProject": "open-edu-hub-frontend",
   "cli": {
-    "analytics": "d8fda401-28c0-4466-a895-88ee251efe98"
+    "analytics": "e23ef8df-f405-4454-bde1-309ca78938e8"
   }
 }
