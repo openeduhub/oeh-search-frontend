@@ -4,12 +4,42 @@
 
 To build the project and serve it via a docker container on `http://localhost:8080/`, run:
 
+-   init git submodules
+
 ```bash
-git submodule update --init
-npm install
-npm run build
-docker build . --tag open-edu-hub-frontend
-docker run --name open-edu-hub-frontend --rm -ti -p 8080:80 open-edu-hub-frontend
+$ git submodule update --init
+```
+
+-   install node modules
+
+```bash
+$ npm install
+```
+
+-   build either production or development or staging sources
+
+```bash
+$ npm run build
+```
+
+```bash
+$ npm run build-dev
+```
+
+```bash
+$ npm run build-stage
+```
+
+-   build docker image
+
+```bash
+$ docker build . --tag open-edu-hub-frontend
+```
+
+-   build and run container from image
+
+```bash
+$ docker run --name open-edu-hub-frontend --rm -ti -p 8080:80 open-edu-hub-frontend
 ```
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically
