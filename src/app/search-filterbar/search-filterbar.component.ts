@@ -71,22 +71,6 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
             : this.expanded.splice(this.expanded.indexOf(key), 1);
     }
 
-    // does not transfer via template
-    getLicenses() {
-        return new SortPipe().transform(this.facets.licenseOER.buckets, {
-            key: 'key',
-            values: ['NONE', 'MIXED', 'ALL'],
-        });
-    }
-
-    // does not transfer via template
-    getTypes() {
-        return new SortPipe().transform(this.facets.types.buckets, {
-            key: 'key',
-            values: ['MATERIAL', 'TOOL', 'SOURCE'],
-        });
-    }
-
     closeFilterBar() {
         this.view.setShowFilterBar(false);
     }

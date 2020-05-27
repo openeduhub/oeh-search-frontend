@@ -20,7 +20,10 @@
         formControlName="type"
         orientation="horizontal"
         [count]="false"
-        [options]="getTypes()"
+        [options]="
+          facets.types.buckets
+            | sort: { key: 'key', values: ['MATERIAL', 'LESSONPLANNING', 'TOOL', 'SOURCE'] }
+        "
       ></app-multivalue-checkbox>
     </div>
     <ng-container
