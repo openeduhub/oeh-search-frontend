@@ -1,16 +1,17 @@
-<div [style.flex-direction]="orientation == 'horizontal' ? 'row' : 'column'">
+<div [style.grid-template-columns]="'repeat(' + columns + ', auto)'">
   <mat-checkbox
-    *ngFor="let option of options"
-    (change)="toggleValue(option.key, $event)"
-    [checked]="values.indexOf(option.key) != -1"
-    [class.checked]="values.indexOf(option.key) != -1"
+    *ngFor="let bucket of buckets"
+    (change)="toggleValue(bucket.key, $event)"
+    [checked]="values.indexOf(bucket.key) != -1"
+    [class.checked]="values.indexOf(bucket.key) != -1"
   >
-    <span class="label" [ngSwitch]="option.key">
+    <span class="label" [ngSwitch]="bucket.key">
       <ng-container *ngSwitchCase="'MATERIAL'" i18n>Material</ng-container>
+      <ng-container *ngSwitchCase="'LESSONPLANNING'" i18n>Lesson Planning</ng-container>
       <ng-container *ngSwitchCase="'TOOL'" i18n>Tool</ng-container>
       <ng-container *ngSwitchCase="'SOURCE'" i18n>Source</ng-container>
-      <ng-container *ngSwitchDefault>{{ option.key }}</ng-container>
+      <ng-container *ngSwitchDefault>{{ bucket.key }}</ng-container>
     </span>
-    <span class="count" *ngIf="count">{{ option.doc_count }}</span>
+    <span class="count" *ngIf="showCount">{{ bucket.doc_count }}</span>
   </mat-checkbox>
 </div>

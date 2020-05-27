@@ -18,9 +18,9 @@
       <mat-label><mat-icon>apps</mat-icon> <ng-container i18n>Type</ng-container></mat-label>
       <app-multivalue-checkbox
         formControlName="type"
-        orientation="horizontal"
-        [count]="false"
-        [options]="
+        [showCount]="false"
+        [columns]="2"
+        [buckets]="
           facets.types.buckets
             | sort: { key: 'key', values: ['MATERIAL', 'LESSONPLANNING', 'TOOL', 'SOURCE'] }
         "
@@ -73,7 +73,7 @@
           <app-multivalue-checkbox
             *ngIf="expanded.indexOf(key) != -1"
             [formControlName]="facets[key].field"
-            [options]="facets[key].buckets"
+            [buckets]="facets[key].buckets"
           ></app-multivalue-checkbox>
         </div>
       </ng-container>

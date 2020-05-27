@@ -16,9 +16,9 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
     ],
 })
 export class MultivalueCheckboxComponent implements ControlValueAccessor {
-    @Input() options: Bucket[];
-    @Input() count = true;
-    @Input() orientation: 'vertical' | 'horizontal' = 'vertical';
+    @Input() buckets: Bucket[];
+    @Input() showCount = true;
+    @Input() columns = 1;
     values: string[] = [];
 
     constructor() {}
