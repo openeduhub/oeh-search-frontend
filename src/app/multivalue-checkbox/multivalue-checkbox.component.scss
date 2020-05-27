@@ -3,10 +3,14 @@
     > mat-checkbox {
         width: 100%;
         padding: 3px 4px;
+        overflow: hidden;
         span {
             &.label {
                 font-weight: bold;
                 flex-grow: 1;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                margin-right: 1em;
             }
 
             &.count {
@@ -23,6 +27,7 @@
     .mat-checkbox-label {
         display: flex;
         width: 100%;
+        overflow: hidden;
     }
     .mat-checkbox-frame {
         border-width: 1px;
