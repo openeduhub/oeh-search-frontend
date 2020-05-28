@@ -39,9 +39,10 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
                 const { filters } = parseSearchQueryParams(queryParamMap);
                 this.filters = filters;
                 if (this.facetFilters) {
-                    this.facetFilters.reset(filters, { emitEvent: false });
                     // If `facetFilters` are not yet initialized, this will be
                     // done on initialization.
+                    this.facetFilters.reset(filters, { emitEvent: false });
+                    this.expandActiveFilters();
                 }
             }),
         );
@@ -92,6 +93,7 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
         // Apply values loaded from queryParams.
         if (this.filters) {
             this.facetFilters.patchValue(this.filters);
+            this.expandActiveFilters();
         }
         this.facetFilters.valueChanges.subscribe((filters: Filters) => this.applyFilters(filters));
     }
@@ -111,7 +113,6 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
                 this.facets[key] = value;
             }
         }
-        this.expandActiveFilters();
     }
 
     private expandActiveFilters() {
