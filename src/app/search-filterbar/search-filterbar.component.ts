@@ -93,14 +93,7 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
         if (this.filters) {
             this.facetFilters.patchValue(this.filters);
         }
-        this.facetFilters.valueChanges.subscribe((filters: Filters) => {
-            this.router.navigate([], {
-                relativeTo: this.route,
-                queryParams: { filters: JSON.stringify(filters), pageIndex: 0 },
-                queryParamsHandling: 'merge',
-                fragment: 'keep', // Don't scroll to top after navigation.
-            });
-        });
+        this.facetFilters.valueChanges.subscribe((filters: Filters) => this.applyFilters(filters));
     }
 
     private updateFacets(facets: Facets) {
@@ -133,5 +126,22 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
                 }
             }
         }
+    }
+
+    private applyFilters(filters: Filters) {
+        for (const key in filters) {
+            if (!filters[key] || filters[key].length === 0) {
+                delete filters[key];
+            }
+        }
+        this.router.navigate([], {
+            relativeTo: this.route,
+            queryParams: {
+                filters: Object.entries(filters).length > 0 ? JSON.stringify(filters) : undefined,
+                pageIndex: 0,
+            },
+            queryParamsHandling: 'merge',
+            fragment: 'keep', // Don't scroll to top after navigation.
+        });
     }
 }
