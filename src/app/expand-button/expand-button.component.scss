@@ -1,0 +1,8 @@
+button[expanded] mat-icon {
+    transform: rotate(-180deg);
+}
+
+mat-icon {
+    transition-duration: 0.2s;
+    transition-property: transform;
+}

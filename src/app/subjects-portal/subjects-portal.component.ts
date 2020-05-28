@@ -8,19 +8,14 @@ import { SubjectsPortalResults } from '../subjects-portal-resolver.service';
     styleUrls: ['./subjects-portal.component.scss'],
 })
 export class SubjectsPortalComponent implements OnInit {
-    discipline: string;
-    educationalContext: string;
     results: SubjectsPortalResults;
+    isExpanded = true;
 
     constructor(private route: ActivatedRoute) {}
 
     ngOnInit(): void {
         this.route.data.subscribe((data: { subjectsPortalResults: SubjectsPortalResults }) => {
             this.results = data.subjectsPortalResults;
-        });
-        this.route.paramMap.subscribe((paramMap) => {
-            this.discipline = paramMap.get('discipline');
-            this.educationalContext = paramMap.get('educationalContext');
         });
     }
 }

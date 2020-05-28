@@ -5,19 +5,15 @@
     $background: map-get($theme, background);
     $primary: map-get($theme, primary);
     $primary-foreground-color: primary-foreground-color($theme);
-    // $custom-accent: map-get($theme, custom-accent);
+    $custom-accent: map-get($theme, custom-accent);
 
     app-subjects-portal {
         > .mat-card {
             background-color: mix(mat-color($background, card), mat-color($primary), 90%);
             color: $primary-foreground-color;
+            > .header > .icon {
+                background-color: mat-color($custom-accent, accent2);
+            }
         }
-        //     > .heading > a {
-        //         background-color: mat-color($custom-accent, accent1);
-        //         color: mat-color($custom-accent, accent1-contrast);
-        //     }
-        //     > .no-results {
-        //         color: mat-color($foreground, secondary-text);
-        //     }
     }
 }
