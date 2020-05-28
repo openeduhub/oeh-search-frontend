@@ -45,7 +45,6 @@ import { SearchFilterbarComponent } from './search-filterbar/search-filterbar.co
 import { SearchResultsResolverService } from './search-results-resolver.service';
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { SearchComponent } from './search/search.component';
-import { SortPipe } from './sort.pipe';
 import { SubjectsPortalResolverService } from './subjects-portal-resolver.service';
 import { SubjectsPortalComponent } from './subjects-portal/subjects-portal.component';
 import { TrimPipe } from './trim.pipe';
@@ -93,7 +92,6 @@ const appRoutes: Routes = [
         HeaderbarComponent,
         SearchFieldComponent,
         TrimPipe,
-        SortPipe,
         EditorialPipe,
         WelcomeComponent,
         MenubarComponent,

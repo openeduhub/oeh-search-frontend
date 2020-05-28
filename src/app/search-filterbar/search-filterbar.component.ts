@@ -5,7 +5,6 @@ import { Subscription } from 'rxjs';
 import { filter, first } from 'rxjs/operators';
 import { Aggregation, Facets } from '../../generated/graphql';
 import { Filters, SearchService } from '../search.service';
-import { SortPipe } from '../sort.pipe';
 import { parseSearchQueryParams } from '../utils';
 import { ViewService } from '../view.service';
 
@@ -113,6 +112,12 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
                 this.facets[key] = value;
             }
         }
+        orderByProperty(this.facets.types.buckets, 'key', [
+            'MATERIAL',
+            'LESSONPLANNING',
+            'TOOL',
+            'SOURCE',
+        ]);
     }
 
     private expandActiveFilters() {
@@ -145,4 +150,12 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
             fragment: 'keep', // Don't scroll to top after navigation.
         });
     }
+}
+
+function orderByProperty<K extends string, V>(
+    array: Array<{ [k in K]: V }>,
+    key: K,
+    ordering: V[],
+) {
+    array.sort((a, b) => (ordering.indexOf(a[key]) < ordering.indexOf(b[key]) ? -1 : 1));
 }
