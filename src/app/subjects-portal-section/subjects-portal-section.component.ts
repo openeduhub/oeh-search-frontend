@@ -7,7 +7,7 @@ import { Hits } from '../subjects-portal-resolver.service';
     styleUrls: ['./subjects-portal-section.component.scss'],
 })
 export class SubjectsPortalSectionComponent implements OnInit {
-    @Input() title: string;
+    @Input() sectionTitle: string;
     @Input() hits: Hits['hits'];
 
     constructor() {}

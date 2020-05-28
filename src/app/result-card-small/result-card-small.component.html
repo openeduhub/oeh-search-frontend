@@ -1,4 +1,4 @@
-<a class="details-link" [routerLink]="['/details', hit.id]">
+<a class="details-link" [routerLink]="['/details', hit.id]" [title]="hit.lom.general.title">
   <div class="title">{{ hit.lom.general.title | truncate: 45 }}</div>
   <div class="image-container">
     <img
