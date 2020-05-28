@@ -4,17 +4,19 @@ import { map, tap } from 'rxjs/operators';
 import {
     AutoCompleteGQL,
     DidYouMeanSuggestionFragment,
+    DidYouMeanSuggestionGQL,
     Facets,
+    FacetsGQL,
     Filter,
     GetDetailsGQL,
     GetDetailsQuery,
     GetLargeThumbnailGQL,
     Hit,
+    Language,
     ResultFragment,
     SearchGQL,
-    FacetsGQL,
-    DidYouMeanSuggestionGQL,
 } from '../generated/graphql';
+import { ConfigService } from './config.service';
 
 export type Details = GetDetailsQuery['get'];
 
@@ -34,6 +36,7 @@ export class SearchService {
         private getDetailsGQL: GetDetailsGQL,
         private autoCompleteGQL: AutoCompleteGQL,
         private getLargeThumbnailGQL: GetLargeThumbnailGQL,
+        private config: ConfigService,
     ) {}
 
     search(
@@ -50,7 +53,11 @@ export class SearchService {
                 this.didYouMeanSuggestion.next(response.data.didYouMeanSuggestion),
             );
         this.facetsGQL
-            .fetch({ searchString, filters: mapFilters(filters) })
+            .fetch({
+                searchString,
+                filters: mapFilters(filters),
+                language: this.config.getShortLocale() as Language,
+            })
             .subscribe((response) => this.facets.next(response.data.facets));
         return this.searchGQL
             .fetch({

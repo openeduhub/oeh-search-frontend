@@ -12,50 +12,59 @@ fragment result on SearchResult {
       relation
     }
     hits {
-      id
-      type
-      lom {
-        educational {
-          description
-        }
-        general {
-          title
-          keyword
-          description
-        }
-        technical {
-          location
-        }
-      }
-      source {
-        name
-        url
-      }
-      thumbnail {
-        mimetype
-        small
-      }
-      collection {
-        uuid
-        name
-        data {
-          editorial
-        }
-      }
-      license {
-        oer
-      }
-      valuespaces {
-        discipline {
-          de
-        }
-        educationalContext {
-          de
-        }
-        learningResourceType {
-          de
-        }
-      }
+      ...searchHit
     }
   }
+}
+
+fragment searchHit on Hit {
+  id
+  type
+  lom {
+    educational {
+      description
+    }
+    general {
+      title
+      keyword
+      description
+    }
+    technical {
+      location
+    }
+  }
+  source {
+    name
+    url
+  }
+  thumbnail {
+    mimetype
+    small
+  }
+  collection {
+    uuid
+    name
+    data {
+      editorial
+    }
+  }
+  license {
+    oer
+  }
+  valuespaces {
+    discipline {
+      ...i18n
+    }
+    educationalContext {
+      ...i18n
+    }
+    learningResourceType {
+      ...i18n
+    }
+  }
+}
+
+fragment i18n on InternationalString {
+  en
+  de
 }

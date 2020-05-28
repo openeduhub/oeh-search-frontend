@@ -1,44 +1,16 @@
 query GetDetails($id: ID!) {
   get(id: $id) {
-    type
-    lom {
-      educational {
-        description
-      }
-      general {
-        title
-        keyword
-        description
-      }
-      technical {
-        location
-      }
-    }
-    source {
-      name
-      url
-    }
-    collection {
-      uuid
-      name
-      data {
-        editorial
-      }
-    }
-    license {
-      oer
-      url
-    }
+    ...searchHit
     thumbnail {
-      mimetype
-      small
       large
     }
+    license {
+      url
+    }
     valuespaces {
-      discipline { de }
-      educationalContext { de }
-      learningResourceType { de }
-      intendedEndUserRole { de }
+      intendedEndUserRole {
+        ...i18n
+      }
     }
   }
 }

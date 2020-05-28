@@ -44,13 +44,10 @@
         <span *ngFor="let discipline of result.valuespaces.discipline | slice: 0:5">
           <a
             routerLink="/search"
-            [queryParams]="
-              ['valuespaces.discipline.de.keyword', [discipline.de]] | generateFilters: filters
-            "
+            [queryParams]="discipline | generateFilters: 'valuespaces.discipline':filters"
             queryParamsHandling="merge"
           >
-            {{ discipline.de }}
-            <!-- @TODO: use i18n de/en -->
+            {{ discipline | valuespacesI18n }}
           </a>
         </span>
       </div>
@@ -61,13 +58,10 @@
         <span class="foo" *ngFor="let context of result.valuespaces.educationalContext">
           <a
             routerLink="/search"
-            [queryParams]="
-              ['valuespaces.educationalContext.de.keyword', [context.de]] | generateFilters: filters
-            "
+            [queryParams]="context | generateFilters: 'valuespaces.educationalContext':filters"
             queryParamsHandling="merge"
           >
-            {{ context.de }}
-            <!-- @TODO: use i18n de/en -->
+            {{ context | valuespacesI18n }}
           </a>
         </span>
       </div>
@@ -80,12 +74,10 @@
         <span *ngFor="let lrt of result.valuespaces.learningResourceType">
           <a
             routerLink="/search"
-            [queryParams]="
-              ['valuespaces.learningResourceType.de.keyword', [lrt.de]] | generateFilters: filters
-            "
+            [queryParams]="lrt | generateFilters: 'valuespaces.learningResourceType':filters"
             queryParamsHandling="merge"
           >
-            {{ lrt.de }}
+            {{ lrt | valuespacesI18n }}
           </a>
         </span>
       </div>
@@ -96,7 +88,7 @@
         <span *ngFor="let keyword of result.lom.general.keyword | slice: 0:5">
           <a
             routerLink="/search"
-            [queryParams]="['lom.general.keyword.keyword', [keyword]] | generateFilters: filters"
+            [queryParams]="keyword | generateFilters: 'lom.general.keyword':filters"
             queryParamsHandling="merge"
           >
             {{ keyword }}

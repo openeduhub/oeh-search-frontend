@@ -54,6 +54,7 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { WorkInProgressMessageComponent } from './work-in-progress-message/work-in-progress-message.component';
 import { ResultCardSmallComponent } from './result-card-small/result-card-small.component';
 import { SubjectsPortalSectionComponent } from './subjects-portal-section/subjects-portal-section.component';
+import { ValuespacesI18nPipe } from './valuespaces-i18n.pipe';
 
 const appRoutes: Routes = [
     {
@@ -106,6 +107,7 @@ const appRoutes: Routes = [
         SubjectsPortalComponent,
         ResultCardSmallComponent,
         SubjectsPortalSectionComponent,
+        ValuespacesI18nPipe,
     ],
     imports: [
         ApolloModule,

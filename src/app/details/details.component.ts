@@ -4,11 +4,11 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { UserInfo } from 'angular-oauth2-oidc';
+import { environment } from '../../environments/environment';
 import { AuthService } from '../auth.service';
 import { EditorService } from '../editor.service';
 import { EditorialPipe } from '../editorial.pipe';
 import { Details } from '../search.service';
-import { environment } from '../../environments/environment';
 
 @Component({
     selector: 'app-details',

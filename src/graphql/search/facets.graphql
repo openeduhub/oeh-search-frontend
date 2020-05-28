@@ -1,6 +1,5 @@
-query Facets($searchString: String!, $filters: [Filter!]) {
-  # TODO: dynamic language
-  facets(searchString: $searchString, size: 20, filters: $filters, language: de) {
+query Facets($searchString: String!, $filters: [Filter!], $language: Language!) {
+  facets(searchString: $searchString, size: 20, filters: $filters, language: $language) {
     ...facets
   }
 }

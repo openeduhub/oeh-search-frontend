@@ -20,8 +20,7 @@
         <label><mat-icon>book_icon</mat-icon> <ng-container i18n>Discipline</ng-container></label>
         <div>
           <span *ngFor="let discipline of details.valuespaces.discipline | slice: 0:5">
-            {{ discipline.de }}
-            <!-- @TODO: use i18n de/en -->
+            {{ discipline | valuespacesI18n }}
           </span>
         </div>
       </div>
@@ -31,8 +30,7 @@
         >
         <div>
           <span *ngFor="let context of details.valuespaces.educationalContext">
-            {{ context.de }}
-            <!-- @TODO: use i18n de/en -->
+            {{ context | valuespacesI18n }}
           </span>
         </div>
       </div>
@@ -78,8 +76,8 @@
         ><mat-icon>group</mat-icon> <ng-container i18n>Intended End User Role</ng-container></label
       >
       <div>
-        <span *ngFor="let lrt of details.valuespaces.intendedEndUserRole">
-          {{ lrt.de }}
+        <span *ngFor="let intendedEndUserRole of details.valuespaces.intendedEndUserRole">
+          {{ intendedEndUserRole | valuespacesI18n }}
         </span>
       </div>
     </div>
@@ -89,7 +87,7 @@
       >
       <div>
         <span *ngFor="let lrt of details.valuespaces.learningResourceType">
-          {{ lrt.de }}
+          {{ lrt | valuespacesI18n }}
         </span>
       </div>
     </div>
