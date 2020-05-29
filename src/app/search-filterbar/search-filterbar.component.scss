@@ -40,19 +40,31 @@ mat-card {
             }
         }
         > .vertical {
-            display: flex;
+            &:not([hidden]) {
+                display: flex;
+            }
             flex-direction: column;
             padding: 10px $sidePadding;
-            > button {
-                margin: 10px -16px;
-                display: flex;
-                font-weight: bold;
-                align-items: center;
-                .filter-icon {
-                    margin-right: 10px;
-                }
-                .arrow-icon {
-                    margin-left: 5px;
+            > app-collapse-button {
+                :host ::ng-deep & button {
+                    margin: 10px -16px;
+                    display: flex;
+                    font-weight: bold;
+                    align-items: center;
+                    width: 100%;
+                    box-sizing: content-box;
+                    .mat-button-wrapper {
+                        display: flex;
+                        align-items: center;
+                        width: 100%;
+                        .filter-icon {
+                            margin-right: 10px;
+                        }
+                        > span {
+                            flex-grow: 1;
+                            text-align: left;
+                        }
+                    }
                 }
             }
         }

@@ -24,7 +24,7 @@
                     }
                 }
                 > .vertical {
-                    > button {
+                    app-collapse-button > button {
                         color: $primary-foreground-color;
                     }
                 }

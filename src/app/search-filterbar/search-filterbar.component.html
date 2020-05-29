@@ -35,45 +35,41 @@
         ]
       "
     >
-      <ng-container *ngIf="facets[key]?.buckets.length">
-        <div class="vertical">
-          <button mat-button (click)="toggle(key)" [ngSwitch]="key">
-            <ng-container *ngSwitchCase="'disciplines'">
-              <mat-icon class="filter-icon">book_icon</mat-icon>
-              <ng-container i18n>Discipline</ng-container>
-            </ng-container>
-            <ng-container *ngSwitchCase="'educationalContexts'">
-              <mat-icon class="filter-icon">school</mat-icon>
-              <ng-container i18n>Educational Context</ng-container>
-            </ng-container>
-            <ng-container *ngSwitchCase="'learningResourceTypes'">
-              <mat-icon class="filter-icon">photo_library</mat-icon>
-              <ng-container i18n>Learning Resource Type</ng-container>
-            </ng-container>
-            <ng-container *ngSwitchCase="'intendedEndUserRoles'">
-              <mat-icon class="filter-icon">group</mat-icon>
-              <ng-container i18n>Intended End User Role</ng-container>
-            </ng-container>
-            <ng-container *ngSwitchCase="'sources'">
-              <mat-icon class="filter-icon">cloud</mat-icon>
-              <ng-container i18n>Sources</ng-container>
-            </ng-container>
-            <ng-container *ngSwitchCase="'keywords'">
-              <mat-icon class="filter-icon">list</mat-icon>
-              <ng-container i18n>Keywords</ng-container>
-            </ng-container>
-            <ng-container *ngSwitchDefault>{{ key }}</ng-container>
-            <mat-icon class="arrow-icon">{{
-              expanded.indexOf(key) != -1 ? 'keyboard_arrow_down' : 'keyboard_arrow_right'
-            }}</mat-icon>
-          </button>
+      <div [hidden]="!facets[key]?.buckets.length" class="vertical">
+        <app-collapse-button [ngSwitch]="key" [collapsible]="collapsible">
+          <ng-container *ngSwitchCase="'disciplines'">
+            <mat-icon class="filter-icon">book_icon</mat-icon>
+            <span i18n>Discipline</span>
+          </ng-container>
+          <ng-container *ngSwitchCase="'educationalContexts'">
+            <mat-icon class="filter-icon">school</mat-icon>
+            <span i18n>Educational Context</span>
+          </ng-container>
+          <ng-container *ngSwitchCase="'learningResourceTypes'">
+            <mat-icon class="filter-icon">photo_library</mat-icon>
+            <span i18n>Learning Resource Type</span>
+          </ng-container>
+          <ng-container *ngSwitchCase="'intendedEndUserRoles'">
+            <mat-icon class="filter-icon">group</mat-icon>
+            <span i18n>Intended End User Role</span>
+          </ng-container>
+          <ng-container *ngSwitchCase="'sources'">
+            <mat-icon class="filter-icon">cloud</mat-icon>
+            <span i18n>Sources</span>
+          </ng-container>
+          <ng-container *ngSwitchCase="'keywords'">
+            <mat-icon class="filter-icon">list</mat-icon>
+            <span i18n>Keywords</span>
+          </ng-container>
+          <span *ngSwitchDefault>{{ key }}</span>
+        </app-collapse-button>
+        <app-collapsible #collapsible="appCollapsible" [id]="key" [ready]="ready">
           <app-multivalue-checkbox
-            *ngIf="expanded.indexOf(key) != -1"
             [formControlName]="facets[key].field"
             [buckets]="facets[key].buckets"
           ></app-multivalue-checkbox>
-        </div>
-      </ng-container>
+        </app-collapsible>
+      </div>
     </ng-container>
   </div>
 </mat-card>

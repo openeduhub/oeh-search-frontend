@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, Renderer2 } from '@angular/core';
 
 function timeout(ms?: number) {
     return new Promise((resolve) => setTimeout(resolve, ms));
@@ -11,6 +11,11 @@ function timeout(ms?: number) {
     exportAs: 'appCollapsible',
 })
 export class CollapsibleComponent implements AfterViewInit {
+    /** Arbitrary string to programmatically identify the component. */
+    @Input() id: string;
+    /** Suspend animations for setting the initial state programmatically */
+    @Input() ready = true;
+
     readonly ANIMATION_DURATION = 200; // ms
     isExpanded = true;
 
@@ -37,18 +42,22 @@ export class CollapsibleComponent implements AfterViewInit {
 
     async expand() {
         this.isExpanded = true;
-        const contentHeight = this.content.offsetHeight;
-        this.renderer.setStyle(this.element.nativeElement, 'height', contentHeight + 'px');
-        await timeout(this.ANIMATION_DURATION);
+        if (this.ready) {
+            const contentHeight = this.content.offsetHeight;
+            this.renderer.setStyle(this.element.nativeElement, 'height', contentHeight + 'px');
+            await timeout(this.ANIMATION_DURATION);
+        }
         this.renderer.removeStyle(this.element.nativeElement, 'overflow');
         this.renderer.removeStyle(this.element.nativeElement, 'height');
     }
 
     async collapse() {
         this.isExpanded = false;
-        const contentHeight = this.content.offsetHeight;
-        this.renderer.setStyle(this.element.nativeElement, 'height', contentHeight + 'px');
-        await timeout();
+        if (this.ready) {
+            const contentHeight = this.content.offsetHeight;
+            this.renderer.setStyle(this.element.nativeElement, 'height', contentHeight + 'px');
+            await timeout();
+        }
         this.renderer.setStyle(this.element.nativeElement, 'overflow', 'hidden');
         this.renderer.setStyle(this.element.nativeElement, 'height', 0);
     }
