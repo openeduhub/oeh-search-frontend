@@ -14,15 +14,14 @@ export class CollapsibleComponent implements AfterViewInit {
     readonly ANIMATION_DURATION = 200; // ms
     isExpanded = true;
 
-    @ViewChild('wrapper') private wrapper: ElementRef;
     private content: HTMLElement;
 
-    constructor(private renderer: Renderer2) {}
+    constructor(private element: ElementRef, private renderer: Renderer2) {}
 
     ngAfterViewInit() {
-        this.content = this.wrapper.nativeElement.firstChild;
+        this.content = this.element.nativeElement.firstChild;
         this.renderer.setStyle(
-            this.wrapper.nativeElement,
+            this.element.nativeElement,
             'transition-duration',
             this.ANIMATION_DURATION / 1000 + 's',
         );
@@ -37,20 +36,20 @@ export class CollapsibleComponent implements AfterViewInit {
     }
 
     async expand() {
-        const contentHeight = this.content.offsetHeight;
-        this.renderer.setStyle(this.wrapper.nativeElement, 'height', contentHeight + 'px');
-        await timeout(this.ANIMATION_DURATION);
-        this.renderer.removeStyle(this.wrapper.nativeElement, 'overflow');
-        this.renderer.removeStyle(this.wrapper.nativeElement, 'height');
         this.isExpanded = true;
+        const contentHeight = this.content.offsetHeight;
+        this.renderer.setStyle(this.element.nativeElement, 'height', contentHeight + 'px');
+        await timeout(this.ANIMATION_DURATION);
+        this.renderer.removeStyle(this.element.nativeElement, 'overflow');
+        this.renderer.removeStyle(this.element.nativeElement, 'height');
     }
 
     async collapse() {
-        const contentHeight = this.content.offsetHeight;
-        this.renderer.setStyle(this.wrapper.nativeElement, 'height', contentHeight + 'px');
-        await timeout();
-        this.renderer.setStyle(this.wrapper.nativeElement, 'overflow', 'hidden');
-        this.renderer.setStyle(this.wrapper.nativeElement, 'height', 0);
         this.isExpanded = false;
+        const contentHeight = this.content.offsetHeight;
+        this.renderer.setStyle(this.element.nativeElement, 'height', contentHeight + 'px');
+        await timeout();
+        this.renderer.setStyle(this.element.nativeElement, 'overflow', 'hidden');
+        this.renderer.setStyle(this.element.nativeElement, 'height', 0);
     }
 }

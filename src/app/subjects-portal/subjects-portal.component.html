@@ -1,5 +1,5 @@
 <mat-card>
-  <div class="header">
+  <div class="header" [class.collapsed]="!collapsible.isExpanded">
     <div class="icon"></div>
     <h2 class="title" i18n>Editors' Choices</h2>
     <app-expand-button [collapsible]="collapsible">
