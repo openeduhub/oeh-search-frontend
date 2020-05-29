@@ -1,0 +1,24 @@
+{
+  "name": "e2e-cypress",
+  "version": "1.0.0",
+  "description": "e2e frontend tests for wirlernenonline.de",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "cypress:local:open": "cypress open",
+    "cypress:local:run": "cypress run",
+    "cypress:stage:open": "CYPRESS_baseUrl=http://staging.wirlernenonline.de cypress open",
+    "cypress:stage:run": "CYPRESS_baseUrl=http://staging.wirlernenonline.de cypress run",
+    "cypress:prod:open": "CYPRESS_baseUrl=https://suche.wirlernenonline.de/ cypress open",
+    "cypress:prod:run": "CYPRESS_baseUrl=https://suche.wirlernenonline.de/ cypress run"
+  },
+  "author": "wirlernenonline.de",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^4.7.0",
+    "cypress-cucumber-preprocessor": "^2.3.1"
+  },
+  "cypress-cucumber-preprocessor": {
+    "nonGlobalStepDefinitions": true
+  }
+}
