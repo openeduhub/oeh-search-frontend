@@ -43,9 +43,7 @@
       <!-- <ng-container i18n>({{ results.took / 1000 | number }} seconds)</ng-container> -->
     </ng-container>
   </div>
-  <ng-container>
-    <app-subjects-portal></app-subjects-portal>
-  </ng-container>
+  <app-subjects-portal *ngIf="showSubjectsPortal"></app-subjects-portal>
   <ng-container *ngIf="results.hits.total.value > 0">
     <h2 i18n>All Search Results</h2>
     <app-search-results [hits]="results.hits"></app-search-results>

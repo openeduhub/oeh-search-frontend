@@ -5,6 +5,7 @@ import { DidYouMeanSuggestionFragment, ResultFragment } from '../../generated/gr
 import { SearchService } from '../search.service';
 import { parseSearchQueryParams } from '../utils';
 import { ViewService } from '../view.service';
+import { SubjectsPortalResults, Hits } from '../subjects-portal-resolver.service';
 
 @Component({
     selector: 'app-search',
@@ -17,6 +18,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     filterCount: number;
     pageIndex: number;
     results: ResultFragment;
+    showSubjectsPortal: boolean;
 
     private subscriptions: Subscription[] = [];
 
@@ -46,9 +48,14 @@ export class SearchComponent implements OnInit, OnDestroy {
                 this.filterCount = Object.keys(filters).filter((k) => filters[k]?.length).length;
             }),
         );
-        this.route.data.subscribe((data: { results: ResultFragment }) => {
-            this.results = data.results;
-        });
+        this.route.data.subscribe(
+            (data: { results: ResultFragment; subjectsPortalResults: SubjectsPortalResults }) => {
+                this.results = data.results;
+                this.showSubjectsPortal = Object.values(data.subjectsPortalResults).some(
+                    (hits: Hits) => hits.total.value > 0,
+                );
+            },
+        );
     }
 
     ngOnDestroy(): void {
