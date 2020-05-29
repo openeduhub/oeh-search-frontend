@@ -2,10 +2,10 @@
   <div class="header" [class.collapsed]="!collapsible.isExpanded">
     <div class="icon"></div>
     <h2 class="title" i18n>Editors' Choices</h2>
-    <app-expand-button [collapsible]="collapsible">
+    <app-collapse-button [collapsible]="collapsible">
       <ng-container expanded i18n>hide</ng-container>
-      <ng-container hidden i18n>show</ng-container>
-    </app-expand-button>
+      <ng-container collapsed i18n>show</ng-container>
+    </app-collapse-button>
   </div>
   <app-collapsible #collapsible="appCollapsible">
     <app-subjects-portal-section

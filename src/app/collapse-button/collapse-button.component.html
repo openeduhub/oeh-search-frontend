@@ -4,7 +4,7 @@
   [attr.expanded]="collapsible.isExpanded ? '' : null"
 >
   <ng-content select="[expanded]" *ngIf="collapsible.isExpanded"></ng-content>
-  <ng-content select="[hidden]" *ngIf="!collapsible.isExpanded"></ng-content>
+  <ng-content select="[collapsed]" *ngIf="!collapsible.isExpanded"></ng-content>
   <ng-content></ng-content>
   <mat-icon class="arrow-icon">keyboard_arrow_down</mat-icon>
 </button>

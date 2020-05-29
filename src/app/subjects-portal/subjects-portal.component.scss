@@ -16,7 +16,7 @@ mat-card {
             width: 15px;
             mask: url(../../assets/images/editorial.svg) no-repeat left;
         }
-        > app-expand-button {
+        > app-collapse-button {
             :host ::ng-deep & button {
                 font-weight: bold;
             }
