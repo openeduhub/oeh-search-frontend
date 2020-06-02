@@ -23,8 +23,9 @@
                         color: $primary-foreground-color;
                     }
                 }
-                > .vertical {
-                    app-collapse-button > button {
+                > .mat-accordion .mat-expansion-panel .mat-expansion-panel-header {
+                    .mat-expansion-panel-header-title,
+                    .mat-expansion-indicator::after {
                         color: $primary-foreground-color;
                     }
                 }

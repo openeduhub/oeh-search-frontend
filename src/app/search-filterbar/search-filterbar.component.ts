@@ -1,17 +1,9 @@
-import {
-    AfterViewInit,
-    Component,
-    OnDestroy,
-    OnInit,
-    QueryList,
-    ViewChildren,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter, first } from 'rxjs/operators';
 import { Aggregation, Facets } from '../../generated/graphql';
-import { CollapsibleComponent } from '../collapsible/collapsible.component';
 import { Filters, SearchService } from '../search.service';
 import { parseSearchQueryParams } from '../utils';
 import { ViewService } from '../view.service';
@@ -21,13 +13,14 @@ import { ViewService } from '../view.service';
     templateUrl: './search-filterbar.component.html',
     styleUrls: ['./search-filterbar.component.scss'],
 })
-export class SearchFilterbarComponent implements OnInit, OnDestroy, AfterViewInit {
-    @ViewChildren('collapsible') collapsibles: QueryList<CollapsibleComponent>;
-
+export class SearchFilterbarComponent implements OnInit, OnDestroy {
     facets: Facets;
     filters: Filters = {};
     facetFilters: FormGroup;
-    ready = false;
+    expandedFilters: { [key in keyof Facets]?: boolean } = {
+        disciplines: true,
+        educationalContexts: true,
+    };
 
     private subscriptions: Subscription[] = [];
 
@@ -73,22 +66,6 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy, AfterViewIni
         for (const subscription of this.subscriptions) {
             subscription.unsubscribe();
         }
-    }
-
-    ngAfterViewInit(): void {
-        setTimeout(() => {
-            const initiallyExpanded = ['disciplines', 'educationalContexts'];
-            this.collapsibles
-                .filter((collapsible) => !initiallyExpanded.includes(collapsible.id))
-                .forEach((collapsible) => collapsible.collapse());
-            if (this.facets) {
-                this.expandActiveFilters();
-            }
-            // Give the changes a little time to propagate before enabling animations
-            setTimeout(() => {
-                this.ready = true;
-            }, 200);
-        });
     }
 
     closeFilterBar() {
@@ -147,10 +124,7 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy, AfterViewIni
             }
             const filterValues = this.filters[value.field];
             if (filterValues && filterValues.length > 0) {
-                const collapsible = this.getCollapsible(key as keyof Facets);
-                if (collapsible && !collapsible.isExpanded) {
-                    collapsible.expand();
-                }
+                this.expandedFilters[key as keyof Facets] = true;
             }
         }
     }
@@ -170,13 +144,6 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy, AfterViewIni
             queryParamsHandling: 'merge',
             fragment: 'keep', // Don't scroll to top after navigation.
         });
-    }
-
-    private getCollapsible(key: keyof Facets) {
-        if (!this.collapsibles) {
-            return null;
-        }
-        return this.collapsibles.find((collapsible) => collapsible.id === key);
     }
 }
 

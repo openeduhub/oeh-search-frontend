@@ -54,8 +54,6 @@ import { WorkInProgressMessageComponent } from './work-in-progress-message/work-
 import { ResultCardSmallComponent } from './result-card-small/result-card-small.component';
 import { SubjectsPortalSectionComponent } from './subjects-portal-section/subjects-portal-section.component';
 import { ValuespacesI18nPipe } from './valuespaces-i18n.pipe';
-import { CollapseButtonComponent } from './collapse-button/collapse-button.component';
-import { CollapsibleComponent } from './collapsible/collapsible.component';
 
 const appRoutes: Routes = [
     {
@@ -108,8 +106,6 @@ const appRoutes: Routes = [
         ResultCardSmallComponent,
         SubjectsPortalSectionComponent,
         ValuespacesI18nPipe,
-        CollapseButtonComponent,
-        CollapsibleComponent,
     ],
     imports: [
         ApolloModule,
