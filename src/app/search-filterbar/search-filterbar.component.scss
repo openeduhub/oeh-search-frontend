@@ -39,31 +39,16 @@ mat-card {
                 }
             }
         }
-        > .vertical {
-            &:not([hidden]) {
-                display: flex;
+        > .mat-accordion .mat-expansion-panel {
+            &[hidden] {
+                display: none;
             }
-            flex-direction: column;
-            padding: 10px $sidePadding;
-            > app-collapse-button {
-                :host ::ng-deep & button {
-                    margin: 10px -16px;
-                    display: flex;
-                    font-weight: bold;
+            .mat-expansion-panel-header {
+                .mat-expansion-panel-header-title {
                     align-items: center;
-                    width: 100%;
-                    box-sizing: content-box;
-                    .mat-button-wrapper {
-                        display: flex;
-                        align-items: center;
-                        width: 100%;
-                        .filter-icon {
-                            margin-right: 10px;
-                        }
-                        > span {
-                            flex-grow: 1;
-                            text-align: left;
-                        }
+                    font-weight: bold;
+                    .icon {
+                        margin-right: 10px;
                     }
                 }
             }

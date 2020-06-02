@@ -23,53 +23,55 @@
         [buckets]="facets.types.buckets"
       ></app-multivalue-checkbox>
     </div>
-    <ng-container
-      *ngFor="
-        let key of [
-          'disciplines',
-          'educationalContexts',
-          'learningResourceTypes',
-          'intendedEndUserRoles',
-          'sources',
-          'keywords'
-        ]
-      "
-    >
-      <div [hidden]="!facets[key]?.buckets.length" class="vertical">
-        <app-collapse-button [ngSwitch]="key" [collapsible]="collapsible">
-          <ng-container *ngSwitchCase="'disciplines'">
-            <mat-icon class="filter-icon">book_icon</mat-icon>
+    <mat-accordion [multi]="true" displayMode="flat">
+      <mat-expansion-panel
+        *ngFor="
+          let key of [
+            'disciplines',
+            'educationalContexts',
+            'learningResourceTypes',
+            'intendedEndUserRoles',
+            'sources',
+            'keywords'
+          ]
+        "
+        [hidden]="!facets[key]?.buckets.length"
+        [(expanded)]="expandedFilters[key]"
+      >
+        <mat-expansion-panel-header [ngSwitch]="key">
+          <mat-panel-title *ngSwitchCase="'disciplines'">
+            <mat-icon class="icon">book_icon</mat-icon>
             <span i18n>Discipline</span>
-          </ng-container>
-          <ng-container *ngSwitchCase="'educationalContexts'">
-            <mat-icon class="filter-icon">school</mat-icon>
+          </mat-panel-title>
+          <mat-panel-title *ngSwitchCase="'educationalContexts'">
+            <mat-icon class="icon">school</mat-icon>
             <span i18n>Educational Context</span>
-          </ng-container>
-          <ng-container *ngSwitchCase="'learningResourceTypes'">
-            <mat-icon class="filter-icon">photo_library</mat-icon>
+          </mat-panel-title>
+          <mat-panel-title *ngSwitchCase="'learningResourceTypes'">
+            <mat-icon class="icon">photo_library</mat-icon>
             <span i18n>Learning Resource Type</span>
-          </ng-container>
-          <ng-container *ngSwitchCase="'intendedEndUserRoles'">
-            <mat-icon class="filter-icon">group</mat-icon>
+          </mat-panel-title>
+          <mat-panel-title *ngSwitchCase="'intendedEndUserRoles'">
+            <mat-icon class="icon">group</mat-icon>
             <span i18n>Intended End User Role</span>
-          </ng-container>
-          <ng-container *ngSwitchCase="'sources'">
-            <mat-icon class="filter-icon">cloud</mat-icon>
+          </mat-panel-title>
+          <mat-panel-title *ngSwitchCase="'sources'">
+            <mat-icon class="icon">cloud</mat-icon>
             <span i18n>Sources</span>
-          </ng-container>
-          <ng-container *ngSwitchCase="'keywords'">
-            <mat-icon class="filter-icon">list</mat-icon>
+          </mat-panel-title>
+          <mat-panel-title *ngSwitchCase="'keywords'">
+            <mat-icon class="icon">list</mat-icon>
             <span i18n>Keywords</span>
-          </ng-container>
-          <span *ngSwitchDefault>{{ key }}</span>
-        </app-collapse-button>
-        <app-collapsible #collapsible="appCollapsible" [id]="key" [ready]="ready">
-          <app-multivalue-checkbox
-            [formControlName]="facets[key].field"
-            [buckets]="facets[key].buckets"
-          ></app-multivalue-checkbox>
-        </app-collapsible>
-      </div>
-    </ng-container>
+          </mat-panel-title>
+          <mat-panel-title>
+            <span *ngSwitchDefault>{{ key }}</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <app-multivalue-checkbox
+          [formControlName]="facets[key].field"
+          [buckets]="facets[key].buckets"
+        ></app-multivalue-checkbox>
+      </mat-expansion-panel>
+    </mat-accordion>
   </div>
 </mat-card>
