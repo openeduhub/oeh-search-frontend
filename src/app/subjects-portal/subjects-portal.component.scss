@@ -1,25 +1,38 @@
 :host {
     display: block;
 }
-mat-card {
+.mat-expansion-panel {
     border-radius: 10px;
-    padding: 20px 30px;
-    .header {
-        display: flex;
-        align-items: center;
-        > .title {
-            flex-grow: 1;
-            margin: 0 0.7em;
-        }
-        > .icon {
-            height: 20px;
-            width: 15px;
-            mask: url(../../assets/images/editorial.svg) no-repeat left;
-        }
-        > app-collapse-button {
-            :host ::ng-deep & button {
-                font-weight: bold;
+    .mat-expansion-panel-header {
+        .mat-expansion-panel-header-title {
+            align-items: center;
+            > .icon {
+                height: 20px;
+                width: 15px;
+                mask: url(../../assets/images/editorial.svg) no-repeat left;
             }
+            > .title {
+                margin: 0 14px;
+                // font-weight: bold;
+            }
+        }
+        &.mat-expanded .mat-expansion-panel-header-description[collapsed] {
+            display: none;
+        }
+        &:not(.mat-expanded) .mat-expansion-panel-header-description[expanded] {
+            display: none;
+        }
+        .mat-expansion-panel-header-description {
+            justify-content: flex-end;
+            align-items: center;
+            font-weight: bold;
+            margin-right: 0;
+        }
+        :host & ::ng-deep .mat-expansion-indicator {
+            line-height: 0;
+        }
+        :host &.mat-expanded ::ng-deep .mat-expansion-indicator {
+            margin-top: 2px;
         }
     }
     app-subjects-portal-section:first-of-type {

@@ -1,36 +1,34 @@
-<mat-card>
-  <div class="header" [class.collapsed]="!collapsible.isExpanded">
-    <div class="icon"></div>
-    <h2 class="title" i18n>Editors' Choices</h2>
-    <app-collapse-button [collapsible]="collapsible">
-      <ng-container expanded i18n>hide</ng-container>
-      <ng-container collapsed i18n>show</ng-container>
-    </app-collapse-button>
-  </div>
-  <app-collapsible #collapsible="appCollapsible">
-    <app-subjects-portal-section
-      *ngIf="results.material.total.value > 0"
-      i18n-sectionTitle
-      sectionTitle="Materials"
-      [hits]="results.material.hits"
-    ></app-subjects-portal-section>
-    <app-subjects-portal-section
-      *ngIf="results.lessonPlanning.total.value > 0"
-      i18n-sectionTitle
-      sectionTitle="Lesson Planning"
-      [hits]="results.lessonPlanning.hits"
-    ></app-subjects-portal-section>
-    <app-subjects-portal-section
-      *ngIf="results.tool.total.value > 0"
-      i18n-sectionTitle
-      sectionTitle="Tools"
-      [hits]="results.tool.hits"
-    ></app-subjects-portal-section>
-    <app-subjects-portal-section
-      *ngIf="results.source.total.value > 0"
-      i18n-sectionTitle
-      sectionTitle="Sources"
-      [hits]="results.source.hits"
-    ></app-subjects-portal-section>
-  </app-collapsible>
-</mat-card>
+<mat-expansion-panel [(expanded)]="isExpanded">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <div class="icon"></div>
+      <h2 class="title" i18n>Editors' Choices</h2>
+      <mat-panel-description expanded i18n>hide</mat-panel-description>
+      <mat-panel-description collapsed i18n>show</mat-panel-description>
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <app-subjects-portal-section
+    *ngIf="results.material.total.value > 0"
+    i18n-sectionTitle
+    sectionTitle="Materials"
+    [hits]="results.material.hits"
+  ></app-subjects-portal-section>
+  <app-subjects-portal-section
+    *ngIf="results.lessonPlanning.total.value > 0"
+    i18n-sectionTitle
+    sectionTitle="Lesson Planning"
+    [hits]="results.lessonPlanning.hits"
+  ></app-subjects-portal-section>
+  <app-subjects-portal-section
+    *ngIf="results.tool.total.value > 0"
+    i18n-sectionTitle
+    sectionTitle="Tools"
+    [hits]="results.tool.hits"
+  ></app-subjects-portal-section>
+  <app-subjects-portal-section
+    *ngIf="results.source.total.value > 0"
+    i18n-sectionTitle
+    sectionTitle="Sources"
+    [hits]="results.source.hits"
+  ></app-subjects-portal-section>
+</mat-expansion-panel>

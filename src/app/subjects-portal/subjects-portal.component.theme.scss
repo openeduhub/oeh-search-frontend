@@ -8,10 +8,15 @@
     $custom-accent: map-get($theme, custom-accent);
 
     app-subjects-portal {
-        > .mat-card {
+        > .mat-expansion-panel {
             background-color: mix(mat-color($background, card), mat-color($primary), 90%);
-            color: $primary-foreground-color;
-            > .header > .icon {
+            &,
+            & .mat-expansion-panel-header-title,
+            & .mat-expansion-panel-header-description,
+            & .mat-expansion-indicator::after {
+                color: $primary-foreground-color;
+            }
+            > .mat-expansion-panel-header .mat-expansion-panel-header-title > .icon {
                 background-color: mat-color($custom-accent, accent2);
             }
         }
