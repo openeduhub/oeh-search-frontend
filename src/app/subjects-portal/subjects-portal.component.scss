@@ -6,14 +6,18 @@
     .mat-expansion-panel-header {
         .mat-expansion-panel-header-title {
             align-items: center;
+            overflow: hidden;
             > .icon {
+                flex-shrink: 0;
                 height: 20px;
                 width: 15px;
                 mask: url(../../assets/images/editorial.svg) no-repeat left;
             }
             > .title {
                 margin: 0 14px;
-                // font-weight: bold;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
         }
         &.mat-expanded .mat-expansion-panel-header-description[collapsed] {
@@ -27,6 +31,9 @@
             align-items: center;
             font-weight: bold;
             margin-right: 0;
+            @media (max-width: 600px) {
+                display: none;
+            }
         }
         :host & ::ng-deep .mat-expansion-indicator {
             line-height: 0;
