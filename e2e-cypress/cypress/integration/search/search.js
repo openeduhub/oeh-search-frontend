@@ -1,8 +1,11 @@
-import { Given } from 'cypress-cucumber-preprocessor/steps';
+import { Given, Then } from 'cypress-cucumber-preprocessor/steps';
 
-const homepage = 'http://localhost:8080/';
+Given('I search for {string}', (searchString) => {
+    cy.get('app-search-field')
+        .find('div[class*="search-field-input-wrapper"]')
+        .find('input[aria-label*="Suchen"]')
+        .type(searchString);
 
-Given('I open the home page', () => {
-    cy.visit('/');
+    cy.get('app-search-field').find('button[class*="submit-button"]').click();
     cy.wait('@getRelayData.all');
 });
