@@ -1,8 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ResultFragment, Thumbnail } from '../../generated/graphql';
-import { Filters, SearchService } from '../search.service';
-import { parseSearchQueryParams } from '../utils';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { ResultFragment } from '../../generated/graphql';
+import { SearchParametersService } from '../search-parameters.service';
+import { Filters } from '../search.service';
 
 type Hits = ResultFragment['hits'];
 
@@ -11,16 +11,25 @@ type Hits = ResultFragment['hits'];
     templateUrl: './search-results.component.html',
     styleUrls: ['./search-results.component.scss'],
 })
-export class SearchResultsComponent implements OnInit {
+export class SearchResultsComponent implements OnInit, OnDestroy {
     @Input() hits: Hits;
     filters: Filters;
 
-    constructor(private route: ActivatedRoute) {}
+    private subscriptions: Subscription[] = [];
+
+    constructor(private searchParameters: SearchParametersService) {}
 
     ngOnInit(): void {
-        this.route.queryParamMap.subscribe((queryParamMap) => {
-            const { filters } = parseSearchQueryParams(queryParamMap);
-            this.filters = filters;
-        });
+        this.subscriptions.push(
+            this.searchParameters.get().subscribe(({ filters }) => {
+                this.filters = filters;
+            }),
+        );
+    }
+
+    ngOnDestroy(): void {
+        for (const subscription of this.subscriptions) {
+            subscription.unsubscribe();
+        }
     }
 }

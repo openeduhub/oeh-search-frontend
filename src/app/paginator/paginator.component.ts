@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { parseSearchQueryParams } from '../utils';
+import { parseSearchQueryParams } from '../search-parameters.service';
 
 @Component({
     selector: 'app-paginator',

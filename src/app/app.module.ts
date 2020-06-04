@@ -42,10 +42,9 @@ import { ResultCardComponent } from './result-card/result-card.component';
 import { SafeBase64DataPipe } from './safe-base64-data.pipe';
 import { SearchFieldComponent } from './search-field/search-field.component';
 import { SearchFilterbarComponent } from './search-filterbar/search-filterbar.component';
-import { SearchResultsResolverService } from './search-results-resolver.service';
+import { SearchResolverService } from './search-resolver.service';
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { SearchComponent } from './search/search.component';
-import { SubjectsPortalResolverService } from './subjects-portal-resolver.service';
 import { SubjectsPortalComponent } from './subjects-portal/subjects-portal.component';
 import { TrimPipe } from './trim.pipe';
 import { TruncatePipe } from './truncate.pipe';
@@ -60,13 +59,21 @@ const appRoutes: Routes = [
         path: 'welcome',
         component: WelcomeComponent,
     },
+    { path: 'login', component: LoginComponent },
+    {
+        path: 'search/:educationalContext/:discipline',
+        component: SearchComponent,
+        runGuardsAndResolvers: 'paramsOrQueryParamsChange',
+        resolve: {
+            searchData: SearchResolverService,
+        },
+    },
     {
         path: 'search',
         component: SearchComponent,
         runGuardsAndResolvers: 'paramsOrQueryParamsChange',
         resolve: {
-            results: SearchResultsResolverService,
-            subjectsPortalResults: SubjectsPortalResolverService,
+            searchData: SearchResolverService,
         },
     },
     {
@@ -74,7 +81,6 @@ const appRoutes: Routes = [
         component: DetailsComponent,
         resolve: { details: DetailsResolverService },
     },
-    { path: 'login', component: LoginComponent },
     { path: '', redirectTo: 'search', pathMatch: 'full' },
     { path: 'error', component: ErrorComponent },
 ];

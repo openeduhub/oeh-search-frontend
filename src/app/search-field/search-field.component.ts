@@ -1,41 +1,45 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import {
     MatAutocompleteSelectedEvent,
     MatAutocompleteTrigger,
 } from '@angular/material/autocomplete';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged, tap, filter } from 'rxjs/operators';
+import { SearchParametersService } from '../search-parameters.service';
 import { Filters, SearchService } from '../search.service';
-import { parseSearchQueryParams } from '../utils';
 
 @Component({
     selector: 'app-search-field',
     templateUrl: './search-field.component.html',
     styleUrls: ['./search-field.component.scss'],
 })
-export class SearchFieldComponent implements OnInit {
+export class SearchFieldComponent implements OnInit, OnDestroy {
     @ViewChild('autoComplete') autoComplete: MatAutocompleteTrigger;
     @ViewChild('searchFieldInput') searchFieldInput: ElementRef<HTMLInputElement>;
     searchField = new FormControl();
     autoCompleteSuggestions$: Observable<string[]>;
     private searchString: string;
     private filters: Filters;
+    private subscriptions: Subscription[] = [];
 
     constructor(
         private route: ActivatedRoute,
         private router: Router,
         private search: SearchService,
+        private searchParameters: SearchParametersService,
     ) {}
 
     ngOnInit(): void {
-        this.route.queryParamMap.subscribe((queryParamMap) => {
-            const { searchString, filters } = parseSearchQueryParams(queryParamMap);
-            this.searchString = searchString;
-            this.searchField.setValue(this.searchString, { emitEvent: false });
-            this.filters = filters;
-        });
+        this.subscriptions.push(
+            this.searchParameters.get().subscribe((searchParameters) => {
+                const { searchString, filters } = searchParameters || {};
+                this.searchString = searchString;
+                this.searchField.setValue(this.searchString, { emitEvent: false });
+                this.filters = filters;
+            }),
+        );
         this.searchField.valueChanges
             .pipe(
                 tap((searchString) => {
@@ -47,9 +51,15 @@ export class SearchFieldComponent implements OnInit {
             .subscribe((searchString) => this.onSearchStringChanges(searchString));
     }
 
+    ngOnDestroy(): void {
+        for (const subscription of this.subscriptions) {
+            subscription.unsubscribe();
+        }
+    }
+
     onSubmit() {
         this.autoComplete.closePanel();
-        this.router.navigate(['/search'], {
+        this.router.navigate(this.router.url.startsWith('/search') ? [] : ['/search'], {
             queryParams: {
                 q: this.searchString,
                 pageIndex: 0,
@@ -59,7 +69,7 @@ export class SearchFieldComponent implements OnInit {
     }
 
     onAutocompleteSelected(event: MatAutocompleteSelectedEvent) {
-        this.router.navigate([], {
+        this.router.navigate(this.router.url.startsWith('/search') ? [] : ['/search'], {
             queryParams: { q: event.option.value, pageIndex: 0 },
             queryParamsHandling: 'merge',
         });

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
-import { parseSearchQueryParams } from '../utils';
+import { parseSearchQueryParams } from '../search-parameters.service';
 import { filter } from 'rxjs/operators';
 import { ViewService } from '../view.service';
 
@@ -23,6 +23,10 @@ export class HeaderbarComponent implements OnInit {
             });
         this.route.queryParamMap.subscribe((queryParamMap) => {
             const { filters } = parseSearchQueryParams(queryParamMap);
+            // Explicitly use filters given in the query parameters directly (without going through
+            // search-parameters service) to omit a counter on pages of the form
+            // 'search/:educationalContext/:discipline', where filters are already shown with
+            // breadcrumbs.
             this.filterCount = Object.keys(filters).filter((k) => filters[k]?.length).length;
         });
     }
