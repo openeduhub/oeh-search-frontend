@@ -1,5 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Hits } from '../subjects-portal-resolver.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { Hits } from '../search-resolver.service';
 
 @Component({
     selector: 'app-subjects-portal-section',

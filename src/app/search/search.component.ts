@@ -2,10 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DidYouMeanSuggestionFragment, ResultFragment } from '../../generated/graphql';
+import { SearchParametersService } from '../search-parameters.service';
+import { Hits, SearchData } from '../search-resolver.service';
 import { SearchService } from '../search.service';
-import { parseSearchQueryParams } from '../utils';
 import { ViewService } from '../view.service';
-import { SubjectsPortalResults, Hits } from '../subjects-portal-resolver.service';
 
 @Component({
     selector: 'app-search',
@@ -19,12 +19,14 @@ export class SearchComponent implements OnInit, OnDestroy {
     pageIndex: number;
     results: ResultFragment;
     showSubjectsPortal: boolean;
+    breadcrumbs: string[];
 
     private subscriptions: Subscription[] = [];
 
     constructor(
         private route: ActivatedRoute,
         private search: SearchService,
+        private searchParameters: SearchParametersService,
         private view: ViewService,
     ) {}
 
@@ -42,20 +44,27 @@ export class SearchComponent implements OnInit, OnDestroy {
             }),
         );
         this.subscriptions.push(
-            this.route.queryParamMap.subscribe((queryParamMap) => {
-                const { pageIndex, filters } = parseSearchQueryParams(queryParamMap);
+            this.searchParameters.get().subscribe(({ pageIndex, filters }) => {
                 this.pageIndex = pageIndex;
                 this.filterCount = Object.keys(filters).filter((k) => filters[k]?.length).length;
             }),
         );
-        this.route.data.subscribe(
-            (data: { results: ResultFragment; subjectsPortalResults: SubjectsPortalResults }) => {
-                this.results = data.results;
-                this.showSubjectsPortal = Object.values(data.subjectsPortalResults).some(
-                    (hits: Hits) => hits.total.value > 0,
-                );
-            },
+        this.subscriptions.push(
+            this.route.paramMap.subscribe((paramMap) => {
+                if (paramMap.has('educationalContext') && paramMap.has('discipline')) {
+                    this.breadcrumbs = [
+                        paramMap.get('educationalContext'),
+                        paramMap.get('discipline'),
+                    ];
+                }
+            }),
         );
+        this.route.data.subscribe((data: { searchData: SearchData }) => {
+            this.results = data.searchData.searchResults;
+            this.showSubjectsPortal = Object.values(data.searchData.subjectsPortalResults).some(
+                (hits: Hits) => hits.total.value > 0,
+            );
+        });
     }
 
     ngOnDestroy(): void {

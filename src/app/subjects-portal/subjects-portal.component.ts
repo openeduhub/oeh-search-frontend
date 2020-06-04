@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { SubjectsPortalResults } from '../subjects-portal-resolver.service';
-import { parseSearchQueryParams } from '../utils';
+import { parseSearchQueryParams } from '../search-parameters.service';
+import { SearchData, SubjectsPortalResults } from '../search-resolver.service';
 
 @Component({
     selector: 'app-subjects-portal',
@@ -15,8 +15,8 @@ export class SubjectsPortalComponent implements OnInit {
     constructor(private route: ActivatedRoute) {}
 
     ngOnInit(): void {
-        this.route.data.subscribe((data: { subjectsPortalResults: SubjectsPortalResults }) => {
-            this.results = data.subjectsPortalResults;
+        this.route.data.subscribe((data: { searchData: SearchData }) => {
+            this.results = data.searchData.subjectsPortalResults;
         });
         this.route.queryParamMap.subscribe((queryParamMap) => {
             const { pageIndex } = parseSearchQueryParams(queryParamMap);

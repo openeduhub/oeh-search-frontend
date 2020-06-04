@@ -3,8 +3,15 @@
 
 @mixin search-theme($theme) {
     $foreground: map-get($theme, foreground);
+    $primary-foreground-color: primary-foreground-color($theme);
 
     app-search {
+        .breadcrumbs {
+            color: $primary-foreground-color;
+            mat-icon {
+                color: mat-color($foreground, secondary-text, 0.25);
+            }
+        }
         .results > .summary {
             color: mat-color($foreground, secondary-text);
         }

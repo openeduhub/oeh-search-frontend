@@ -4,8 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter, first } from 'rxjs/operators';
 import { Aggregation, Facets } from '../../generated/graphql';
+import { SearchParametersService } from '../search-parameters.service';
 import { Filters, SearchService } from '../search.service';
-import { parseSearchQueryParams } from '../utils';
 import { ViewService } from '../view.service';
 
 @Component({
@@ -26,9 +26,9 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
 
     constructor(
         private formBuilder: FormBuilder,
-        private route: ActivatedRoute,
         private router: Router,
         private search: SearchService,
+        private searchParameters: SearchParametersService,
         private view: ViewService,
     ) {}
 
@@ -37,8 +37,7 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
         // we call `router.navigate`. The rest is handled by `onQueryParams`, both, when initially
         // loading and when updating the page.
         this.subscriptions.push(
-            this.route.queryParamMap.subscribe((queryParamMap) => {
-                const { filters } = parseSearchQueryParams(queryParamMap);
+            this.searchParameters.get().subscribe(({ filters }) => {
                 this.filters = filters;
                 if (this.facetFilters) {
                     // If `facetFilters` are not yet initialized, this will be
@@ -135,8 +134,7 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
                 delete filters[key];
             }
         }
-        this.router.navigate([], {
-            relativeTo: this.route,
+        this.router.navigate(['/search'], {
             queryParams: {
                 filters: Object.entries(filters).length > 0 ? JSON.stringify(filters) : undefined,
                 pageIndex: 0,

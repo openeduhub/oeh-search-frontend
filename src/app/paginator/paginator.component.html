@@ -2,7 +2,7 @@
   mat-icon-button
   i18n-aria-label
   aria-label="Previous page"
-  routerLink="/search"
+  routerLink="."
   [queryParams]="{ pageIndex: pageIndex - 1 }"
   queryParamsHandling="merge"
   [disabled]="pageIndex === 0"
@@ -10,11 +10,7 @@
   <mat-icon>chevron_left</mat-icon>
 </a>
 <ng-container *ngIf="beforePages.length > 0 && beforePages[0] > 0">
-  <a
-    class="page-number"
-    routerLink="/search"
-    [queryParams]="{ pageIndex: 0 }"
-    queryParamsHandling="merge"
+  <a class="page-number" routerLink="." [queryParams]="{ pageIndex: 0 }" queryParamsHandling="merge"
     >1</a
   >
   <span *ngIf="beforePages[0] > 1" class="mat-body-2">...</span>
@@ -22,7 +18,7 @@
 <a
   class="page-number"
   *ngFor="let page of beforePages"
-  routerLink="/search"
+  routerLink="."
   [queryParams]="{ pageIndex: page }"
   queryParamsHandling="merge"
   >{{ page + 1 }}</a
@@ -31,7 +27,7 @@
 <a
   class="page-number"
   *ngFor="let page of afterPages"
-  routerLink="/search"
+  routerLink="."
   [queryParams]="{ pageIndex: page }"
   queryParamsHandling="merge"
   >{{ page + 1 }}</a
@@ -39,7 +35,7 @@
   mat-icon-button
   i18n-aria-label
   aria-label="Next page"
-  routerLink="/search"
+  routerLink="."
   [queryParams]="{ pageIndex: pageIndex + 1 }"
   queryParamsHandling="merge"
   [disabled]="pageIndex === totalPages - 1"

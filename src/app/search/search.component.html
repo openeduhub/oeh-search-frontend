@@ -2,6 +2,12 @@
 
 <div class="results">
   <app-work-in-progress-message></app-work-in-progress-message>
+  <h1 class="breadcrumbs" *ngIf="breadcrumbs">
+    <ng-container *ngFor="let breadcrumb of breadcrumbs; let last = last">
+      <span>{{ breadcrumb }}</span>
+      <mat-icon *ngIf="!last">keyboard_arrow_right</mat-icon>
+    </ng-container>
+  </h1>
   <p *ngIf="didYouMeanSuggestion" class="did-you-mean">
     <ng-container i18n>Did you mean:</ng-container>&nbsp;<a
       [innerHTML]="didYouMeanSuggestion.html"
