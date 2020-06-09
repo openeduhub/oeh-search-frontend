@@ -27,7 +27,7 @@ export class AppComponent {
         auth: AuthService,
     ) {
         // Bootstrap login via OpenID.
-        // auth.bootstrap(); // Server currently down
+        auth.bootstrap();
         // Recreate scroll restoration behavior of the scrollPositionRestoration option (see
         // https://angular.io/api/router/ExtraOptions#scrollPositionRestoration) with added delay.
         router.events
