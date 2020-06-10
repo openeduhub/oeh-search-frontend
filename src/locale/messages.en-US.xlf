@@ -181,10 +181,13 @@
       <context-group purpose="location"><context context-type="sourcefile">src/app/multivalue-checkbox/multivalue-checkbox.component.html</context><context context-type="linenumber">10</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/subjects-portal/subjects-portal.component.html</context><context context-type="linenumber">19</context></context-group></trans-unit><trans-unit id="fefee13017c2b85143cd131ee253e327a14053a0" datatype="html">
         <source>Tools</source><target state="final">Tools</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/subjects-portal/subjects-portal.component.html</context><context context-type="linenumber">25</context></context-group></trans-unit><trans-unit id="a424ab934ac157439bad5daa584828d05db1f4c7" datatype="html">
-        <source>no OER</source><target state="final">no OER</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/oer-slider/oer-slider.component.html</context><context context-type="linenumber">18</context></context-group></trans-unit><trans-unit id="7b7ca04c2fb68cd2f52537514d6b822e7fd09b83" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/subjects-portal/subjects-portal.component.html</context><context context-type="linenumber">25</context></context-group></trans-unit><trans-unit id="032e4a4ff2de53b4a9a1184ecc935aeee512e529" datatype="html">
+        <source>everything</source><target state="final">everything</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/oer-slider/oer-slider.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit><trans-unit id="7b7ca04c2fb68cd2f52537514d6b822e7fd09b83" datatype="html">
         <source>Show all content, OER or not</source><target state="final">Show all content, OER or not</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/oer-slider/oer-slider.component.html</context>
@@ -199,10 +202,13 @@
           <context context-type="sourcefile">src/app/oer-slider/oer-slider.component.html</context>
           <context context-type="linenumber">25</context>
         </context-group>
-      </trans-unit><trans-unit id="920787d7290b74de3260600a48cbe97a8abfb0b7" datatype="html">
-        <source>all OER</source><target state="final">all OER</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/oer-slider/oer-slider.component.html</context><context context-type="linenumber">34</context></context-group></trans-unit><trans-unit id="54ff13ed3d31ebf7b6261936cb764505d2e1ef9f" datatype="html">
+      </trans-unit><trans-unit id="3b99ed91e3cd96b551b759ecc0d4f8d158f2114f" datatype="html">
+        <source>only OER</source><target state="final">only OER</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/oer-slider/oer-slider.component.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+      </trans-unit><trans-unit id="54ff13ed3d31ebf7b6261936cb764505d2e1ef9f" datatype="html">
         <source>Show only OER content</source><target state="final">Show only OER content</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/oer-slider/oer-slider.component.html</context>
