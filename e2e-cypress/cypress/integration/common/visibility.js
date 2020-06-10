@@ -7,14 +7,16 @@ Then('I see {string} in the title', (title) => {
 Then('I see all recommendations of the editorial department', () => {
     // define aliases
     cy.get('app-subjects-portal')
-        .find('app-subjects-portal-section[title*="Lehrmaterial"]')
+        .find('app-subjects-portal-section[sectiontitle*="Lehrmaterial"]')
         .as('teachingMaterial');
     cy.get('app-subjects-portal')
-        .find('app-subjects-portal-section[title*="Unterrichtsideen"]')
+        .find('app-subjects-portal-section[sectiontitle*="Unterrichtsideen"]')
         .as('courseOfInstruction');
-    cy.get('app-subjects-portal').find('app-subjects-portal-section[title*="Tools"]').as('tools');
     cy.get('app-subjects-portal')
-        .find('app-subjects-portal-section[title*="Portale & Datenbanken"]')
+        .find('app-subjects-portal-section[sectiontitle*="Tools"]')
+        .as('tools');
+    cy.get('app-subjects-portal')
+        .find('app-subjects-portal-section[sectiontitle*="Portale & Datenbanken"]')
         .as('portals');
 
     cy.get('app-subjects-portal').should('be.visible');
