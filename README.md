@@ -2,7 +2,7 @@
 
 ## Build
 
-To build the project and serve it via a docker container on [http://localhost:8080/](http://localhost:8080/), run:
+To build the project and serve it via a docker container on http://localhost:8080, run:
 
 -   init git submodules
 
@@ -42,7 +42,7 @@ $ docker build . --tag open-edu-hub-frontend
 $ docker run --name open-edu-hub-frontend --rm -ti -p 8080:80 open-edu-hub-frontend
 ```
 
-Run `ng serve` for a dev server. Navigate to [http://localhost:4200/](http://localhost:4200/). The app will automatically
+Run `ng serve` for a dev server. Navigate to http://localhost:4200/ . The app will automatically
 reload if you change any of the source files.
 
 ## Environments
@@ -65,7 +65,7 @@ An Apache configuration could look like this:
 ### Development
 
 The development environment — used when serving the frontend via `ng serve` — expects the
-Elasticsearch relay to be served on [http://localhost:3000/](http://localhost:3000/).
+Elasticsearch relay to be served on http://localhost:3000/ .
 
 ## Tests
 
@@ -133,7 +133,7 @@ ext install apollographql.vscode-apollo
 
 ## E2E Tests with Cypress
 
--   [https://docs.cypress.io/guides/overview/why-cypress.html](https://docs.cypress.io/guides/overview/why-cypress.html)
+-   https://docs.cypress.io/guides/overview/why-cypress.html
 
 ### Test Local, Staging Backend
 
