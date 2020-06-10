@@ -10,6 +10,7 @@ export interface ParsedParams {
     pageIndex: number;
     pageSize: number;
     filters: Filters;
+    oer: 'ALL' | 'MIXED' | 'NONE';
 }
 
 /**
@@ -17,11 +18,12 @@ export interface ParsedParams {
  * parameter was not given.
  */
 export function parseSearchQueryParams(queryParamMap: ParamMap): ParsedParams {
-    const result = {
+    const result: ParsedParams = {
         searchString: '',
         pageIndex: 0,
         pageSize: 12,
-        filters: {} as Filters,
+        filters: {},
+        oer: 'ALL',
     };
     if (queryParamMap.has('q')) {
         result.searchString = queryParamMap.get('q');
@@ -34,6 +36,18 @@ export function parseSearchQueryParams(queryParamMap: ParamMap): ParsedParams {
     }
     if (queryParamMap.has('filters')) {
         result.filters = JSON.parse(queryParamMap.get('filters'));
+    }
+    if (queryParamMap.has('oer')) {
+        const oer = queryParamMap.get('oer');
+        switch (oer) {
+            case 'ALL':
+            case 'MIXED':
+            case 'NONE':
+                result.oer = oer;
+                break;
+            default:
+                console.warn(`Invalid value for query parameter "oer": ${oer}`);
+        }
     }
     return result;
 }
@@ -84,6 +98,16 @@ export class SearchParametersService {
             this.parsedParams.filters[`valuespaces.discipline.${this.shortLocale}.keyword`] = [
                 discipline,
             ];
+        }
+        switch (this.parsedParams.oer) {
+            case 'ALL':
+                this.parsedParams.filters['license.oer'] = ['ALL'];
+                break;
+            case 'MIXED':
+                this.parsedParams.filters['license.oer'] = ['ALL', 'MIXED'];
+                break;
+            case 'NONE':
+                break; // Don't apply any filters
         }
         this.parsedParamsSubject.next(this.parsedParams);
     }

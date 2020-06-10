@@ -1,0 +1,38 @@
+@import '~@angular/material/theming';
+@import '../functions';
+
+@mixin oer-slider-theme($theme) {
+    $custom-accent: map-get($theme, custom-accent);
+    $background: map-get($theme, background);
+    $primary: map-get($theme, primary);
+
+    app-oer-slider {
+        mat-slider {
+            .mat-slider-wrapper {
+                .mat-slider-thumb-container {
+                    .mat-slider-focus-ring {
+                        background-color: mat-color($custom-accent, accent1, 0.4) !important;
+                    }
+                    .mat-slider-thumb {
+                        background-color: mat-color($custom-accent, accent1) !important;
+                    }
+                }
+                .mat-slider-track-fill,
+                .mat-slider-track-background {
+                    background-color: mat-color($primary, default-contrast) !important;
+                }
+            }
+        }
+        .labels {
+            label {
+                color: mat-color($primary, default-contrast);
+            }
+            label[selected] {
+                color: mat-color($custom-accent, accent1) !important;
+            }
+        }
+        .help mat-icon {
+            color: mat-color($primary, default-contrast);
+        }
+    }
+}

@@ -14,6 +14,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSliderModule } from '@angular/material/slider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserModule } from '@angular/platform-browser';
@@ -37,7 +38,9 @@ import { HeaderbarComponent } from './headerbar/headerbar.component';
 import { LoginComponent } from './login/login.component';
 import { MenubarComponent } from './menubar/menubar.component';
 import { MultivalueCheckboxComponent } from './multivalue-checkbox/multivalue-checkbox.component';
+import { OerSliderComponent } from './oer-slider/oer-slider.component';
 import { PaginatorComponent } from './paginator/paginator.component';
+import { ResultCardSmallComponent } from './result-card-small/result-card-small.component';
 import { ResultCardComponent } from './result-card/result-card.component';
 import { SafeBase64DataPipe } from './safe-base64-data.pipe';
 import { SearchFieldComponent } from './search-field/search-field.component';
@@ -45,14 +48,13 @@ import { SearchFilterbarComponent } from './search-filterbar/search-filterbar.co
 import { SearchResolverService } from './search-resolver.service';
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { SearchComponent } from './search/search.component';
+import { SubjectsPortalSectionComponent } from './subjects-portal-section/subjects-portal-section.component';
 import { SubjectsPortalComponent } from './subjects-portal/subjects-portal.component';
 import { TrimPipe } from './trim.pipe';
 import { TruncatePipe } from './truncate.pipe';
+import { ValuespacesI18nPipe } from './valuespaces-i18n.pipe';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { WorkInProgressMessageComponent } from './work-in-progress-message/work-in-progress-message.component';
-import { ResultCardSmallComponent } from './result-card-small/result-card-small.component';
-import { SubjectsPortalSectionComponent } from './subjects-portal-section/subjects-portal-section.component';
-import { ValuespacesI18nPipe } from './valuespaces-i18n.pipe';
 
 const appRoutes: Routes = [
     {
@@ -112,6 +114,7 @@ const appRoutes: Routes = [
         ResultCardSmallComponent,
         SubjectsPortalSectionComponent,
         ValuespacesI18nPipe,
+        OerSliderComponent,
     ],
     imports: [
         ApolloModule,
@@ -129,6 +132,7 @@ const appRoutes: Routes = [
         MatCardModule,
         MatExpansionModule,
         MatFormFieldModule,
+        MatSliderModule,
         MatSnackBarModule,
         MatCheckboxModule,
         MatIconModule,

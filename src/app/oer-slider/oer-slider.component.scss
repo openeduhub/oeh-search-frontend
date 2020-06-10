@@ -1,0 +1,56 @@
+:host ::ng-deep mat-slider {
+    height: 36px;
+    min-width: 200px;
+    width: 100%;
+    .mat-slider-wrapper {
+        height: 4px;
+        top: 17px;
+        .mat-slider-thumb-container {
+            width: 66.67%;
+            left: 16.67%;
+            .mat-slider-focus-ring {
+                width: 40px;
+                height: 40px;
+                top: -21px;
+                right: -19px;
+            }
+            .mat-slider-thumb {
+                width: 30px;
+                height: 30px;
+                border-radius: 10px;
+                bottom: -14px;
+                transform: scale(0.9);
+                border: none;
+                right: -14px;
+            }
+        }
+        .mat-slider-track-wrapper {
+            height: 4px;
+            .mat-slider-track-background {
+                height: 4px;
+                transform: unset !important;
+            }
+            .mat-slider-track-fill {
+                display: none;
+            }
+        }
+    }
+}
+
+:host {
+    display: flex;
+}
+
+.labels {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 8px;
+    label {
+        flex-basis: 0;
+        flex-grow: 1;
+        min-width: 5em;
+        padding: 0 10px;
+        text-align: center;
+        font-weight: bold;
+    }
+}
