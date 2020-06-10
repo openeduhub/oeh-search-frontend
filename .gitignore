@@ -48,3 +48,9 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# cypress
+e2e-cypress/node_modules
+e2e-cypress/cypress/screenshots/*
+e2e-cypress/cypress/videos/*
+/e2e-cypress/cypress/integration/examples/
