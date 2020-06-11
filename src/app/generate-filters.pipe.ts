@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { InternationalString } from '../generated/graphql';
 import { ConfigService, ShortLocale } from './config.service';
-import { InternationalString } from '../../elasticsearch-relay/src/generated/graphql';
 
 /**
  * Extend the `filters` of the search component with another attribute.
