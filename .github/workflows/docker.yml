@@ -1,0 +1,27 @@
+name: Docker
+
+on:
+  push:
+    branches: [ develop ]
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: true
+    - uses: azure/docker-login@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
+    - name: Build the project
+      run: |
+        npm ci
+        npm run clean
+        npm run build
+    - name: Build Docker image
+      run: docker build --tag openeduhub/frontend .
+    - name: Publish to DockerHub
+      run: docker push openeduhub/frontend
+    
