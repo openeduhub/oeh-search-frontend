@@ -39,6 +39,12 @@
 
 :host {
     display: flex;
+    min-width: 0;
+}
+
+.slider-container {
+    flex-grow: 1;
+    min-width: 0;
 }
 
 .labels {
@@ -48,7 +54,7 @@
     label {
         flex-basis: 0;
         flex-grow: 1;
-        min-width: 5em;
+        width: 5em;
         padding: 0 10px;
         text-align: center;
         font-weight: bold;
