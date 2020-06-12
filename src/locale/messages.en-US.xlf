@@ -46,7 +46,7 @@
       <context-group purpose="location"><context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context><context context-type="linenumber">12</context></context-group></trans-unit><trans-unit id="1298c1d2bbbb7415f5494e800f6775fdb70f4df6" datatype="html">
         <source>Filters</source><target state="final">Filters</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/headerbar/headerbar.component.html</context><context context-type="linenumber">11</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context><context context-type="linenumber">4</context></context-group></trans-unit><trans-unit id="f61c6867295f3b53d23557021f2f4e0aa1d0b8fc" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/headerbar/headerbar.component.html</context><context context-type="linenumber">12</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context><context context-type="linenumber">4</context></context-group></trans-unit><trans-unit id="f61c6867295f3b53d23557021f2f4e0aa1d0b8fc" datatype="html">
         <source>Type</source><target state="final">Type</target>
         
       <context-group purpose="location"><context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context><context context-type="linenumber">18</context></context-group></trans-unit><trans-unit id="8e421eff4d46c3686b8937e7b8a709bbe9dfe8bd" datatype="html">
@@ -224,7 +224,31 @@
         <source>What is OER?</source><target state="final">What is OER?</target>
         
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/oer-slider/oer-slider.component.html</context><context context-type="linenumber">45</context></context-group></trans-unit><trans-unit id="a5a1033e0eb1ca29932248fdb817e670fd3d3032" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/oer-slider/oer-slider.component.html</context><context context-type="linenumber">45</context></context-group></trans-unit><trans-unit id="5caadefa4143cf6766a621b0f54f91f373a1f164" datatype="html">
+        <source>Add content</source><target state="final">Add content</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/add-content-fab/add-content-fab.component.html</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit><trans-unit id="77308e0b0ec483739e6cd964d7faeba68d34e949" datatype="html">
+        <source>Add source</source><target state="final">Add source</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/add-content-fab/add-content-fab.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit><trans-unit id="bca6cffc8ca51e067a7c6a6620d72d251e307804" datatype="html">
+        <source>Add tool</source><target state="final">Add tool</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/add-content-fab/add-content-fab.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit><trans-unit id="ef8a4f68ddba0db767069410dc62c80658e34440" datatype="html">
+        <source>Index my portal</source><target state="final">Index my portal</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/add-content-fab/add-content-fab.component.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit><trans-unit id="a5a1033e0eb1ca29932248fdb817e670fd3d3032" datatype="html">
         <source>Go To Content</source><target state="final">Go To Content</target>
         
       <context-group purpose="location"><context context-type="sourcefile">src/app/details/details.component.html</context><context context-type="linenumber">48</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/result-card/result-card.component.html</context><context context-type="linenumber">111</context></context-group></trans-unit><trans-unit id="c2a67ff00c6d308bdd450e19396c4c2063819dd6" datatype="html">

@@ -11,6 +11,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
@@ -26,6 +27,7 @@ import { HttpLinkModule } from 'apollo-angular-link-http';
 import { HttpBatchLink, HttpBatchLinkModule } from 'apollo-angular-link-http-batch';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { environment } from '../environments/environment';
+import { AddContentFabComponent } from './add-content-fab/add-content-fab.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DetailsResolverService } from './details-resolver.service';
@@ -115,6 +117,7 @@ const appRoutes: Routes = [
         SubjectsPortalSectionComponent,
         ValuespacesI18nPipe,
         OerSliderComponent,
+        AddContentFabComponent,
     ],
     imports: [
         ApolloModule,
@@ -132,6 +135,7 @@ const appRoutes: Routes = [
         MatCardModule,
         MatExpansionModule,
         MatFormFieldModule,
+        MatMenuModule,
         MatSliderModule,
         MatSnackBarModule,
         MatCheckboxModule,
