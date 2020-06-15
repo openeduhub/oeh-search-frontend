@@ -94,8 +94,8 @@ mat-card {
                 display: inline-flex;
                 white-space: nowrap;
                 &:not(:last-child)::after {
-                    content: '･';
-                    margin: 0 0.3em;
+                    content: ',';
+                    margin-right: 0.4em;
                 }
             }
         }

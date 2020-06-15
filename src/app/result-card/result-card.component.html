@@ -46,9 +46,8 @@
             routerLink="/search"
             [queryParams]="discipline | generateFilters: 'valuespaces.discipline':filters"
             queryParamsHandling="merge"
+            >{{ discipline | valuespacesI18n }}</a
           >
-            {{ discipline | valuespacesI18n }}
-          </a>
         </span>
       </div>
     </div>
@@ -60,9 +59,8 @@
             routerLink="/search"
             [queryParams]="context | generateFilters: 'valuespaces.educationalContext':filters"
             queryParamsHandling="merge"
+            >{{ context | valuespacesI18n }}</a
           >
-            {{ context | valuespacesI18n }}
-          </a>
         </span>
       </div>
     </div>
@@ -76,9 +74,8 @@
             routerLink="/search"
             [queryParams]="lrt | generateFilters: 'valuespaces.learningResourceType':filters"
             queryParamsHandling="merge"
+            >{{ lrt | valuespacesI18n }}</a
           >
-            {{ lrt | valuespacesI18n }}
-          </a>
         </span>
       </div>
     </div>
@@ -90,9 +87,8 @@
             routerLink="/search"
             [queryParams]="keyword | generateFilters: 'lom.general.keyword':filters"
             queryParamsHandling="merge"
+            >{{ keyword }}</a
           >
-            {{ keyword }}
-          </a>
         </span>
       </div>
     </div>
