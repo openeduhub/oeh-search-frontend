@@ -18,7 +18,7 @@
   </p>
   <div class="summary">
     <div class="no-results" *ngIf="results.hits.total.value === 0">
-      <ng-container i18n>No results</ng-container>
+      <p i18n>No results</p>
       <div>
         <a
           *ngIf="filterCount > 0"
@@ -32,7 +32,7 @@
         >
       </div>
     </div>
-    <ng-container *ngIf="results.hits.total.value > 0">
+    <p *ngIf="results.hits.total.value > 0">
       <ng-container *ngIf="pageIndex === 0 && results.hits.total.relation === 'eq'" i18n>
         {results.hits.total, plural, =1 {1 result} other
         {{{results.hits.total.value | number}} results}}
@@ -47,7 +47,7 @@
         Page {{ pageIndex + 1 }} of about {{ results.hits.total.value | number }} results
       </ng-container>
       <!-- <ng-container i18n>({{ results.took / 1000 | number }} seconds)</ng-container> -->
-    </ng-container>
+    </p>
   </div>
   <app-subjects-portal *ngIf="showSubjectsPortal"></app-subjects-portal>
   <ng-container *ngIf="results.hits.total.value > 0">

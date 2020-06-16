@@ -1,0 +1,12 @@
+@import '~@angular/material/theming';
+@import '../functions';
+
+@mixin headerbar-theme($theme) {
+    $primary-foreground-color: primary-foreground-color($theme);
+
+    app-headerbar {
+        .filter-button {
+            color: $primary-foreground-color;
+        }
+    }
+}

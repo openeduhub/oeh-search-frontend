@@ -12,6 +12,9 @@
                 color: mat-color($foreground, secondary-text, 0.25);
             }
         }
+        .did-you-mean a {
+            color: $primary-foreground-color;
+        }
         .results > .summary {
             color: mat-color($foreground, secondary-text);
         }
@@ -24,7 +27,7 @@
             font-weight: mat-font-weight($typography, body-2);
         }
         .summary {
-            @include mat-typography-level-to-styles($typography, body-2);
+            font-size: mat-font-size($typography, subheading-1);
         }
     }
 }

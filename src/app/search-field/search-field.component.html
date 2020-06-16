@@ -8,6 +8,8 @@
       #autoComplete="matAutocompleteTrigger"
       i18n-aria-label
       aria-label="Search"
+      i18n-placeholder
+      placeholder="Topic"
     />
     <button
       *ngIf="searchField.value"
@@ -22,7 +24,7 @@
       <mat-icon>close</mat-icon>
     </button>
   </div>
-  <button mat-flat-button class="submit-button" type="submit" i18n>Search</button>
+  <button mat-flat-button class="submit-button" type="submit" i18n>SEARCH</button>
   <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onAutocompleteSelected($event)">
     <mat-option *ngFor="let option of autoCompleteSuggestions$ | async" [value]="option">{{
       option

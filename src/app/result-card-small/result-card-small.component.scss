@@ -6,7 +6,6 @@ a.details-link {
     display: flex;
     flex-direction: column;
     height: 100%;
-    color: unset;
     &:not(:hover) {
         text-decoration: unset;
     }

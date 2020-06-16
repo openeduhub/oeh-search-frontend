@@ -1,3 +1,5 @@
+$app-search-field-border-radius: 8px;
+
 :host {
     display: flex;
 }
@@ -10,9 +12,10 @@ form {
         align-items: center;
         border-style: solid;
         border-width: 1px;
-        border-top-left-radius: 4px;
-        border-bottom-left-radius: 4px;
-        padding: 0.5em;
+        border-top-left-radius: $app-search-field-border-radius;
+        border-bottom-left-radius: $app-search-field-border-radius;
+        padding: 3px 7px;
+        min-height: 40px;
         > input {
             width: 0;
             padding: 0.5em;
@@ -38,5 +41,7 @@ form {
     > button {
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
+        border-top-right-radius: $app-search-field-border-radius;
+        border-bottom-right-radius: $app-search-field-border-radius;
     }
 }

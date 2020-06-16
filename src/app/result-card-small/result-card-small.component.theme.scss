@@ -1,0 +1,20 @@
+@import '~@angular/material/theming';
+@import '../functions';
+
+@mixin result-card-small-theme($theme) {
+    $foreground: map-get($theme, foreground);
+
+    app-result-card-small {
+        a.details-link {
+            color: mat-color($foreground, secondary-text);
+        }
+    }
+}
+
+@mixin result-card-small-typography($typography) {
+    app-result-card-small {
+        a.details-link {
+            @include mat-typography-level-to-styles($typography, caption);
+        }
+    }
+}

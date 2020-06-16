@@ -43,7 +43,9 @@
 @mixin multivalue-checkbox-typography($typography) {
     app-multivalue-checkbox {
         mat-checkbox {
-            .label,
+            .label {
+                @include mat-typography-level-to-styles($typography, body-1);
+            }
             .count {
                 @include mat-typography-level-to-styles($typography, body-2);
             }
