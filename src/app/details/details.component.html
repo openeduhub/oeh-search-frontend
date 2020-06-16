@@ -59,7 +59,7 @@
         ><mat-icon>report_problem</mat-icon> <span i18n>Report a problem</span></a
       >
     </div>
-    <div class="editorial-marked" *ngIf="details | editorial">
+    <div class="editorial-marked" *ngIf="details | isInCollection: 'EDITORIAL'">
       <label
         ><img src="assets/images/editorial.svg" />
         <ng-container i18n>Recommended by editorial team</ng-container></label

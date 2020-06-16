@@ -7,7 +7,7 @@ import { UserInfo } from 'angular-oauth2-oidc';
 import { environment } from '../../environments/environment';
 import { AuthService } from '../auth.service';
 import { EditorService } from '../editor.service';
-import { EditorialPipe } from '../editorial.pipe';
+import { IsInCollectionPipe } from '../is-in-collection.pipe';
 import { Details } from '../search.service';
 
 @Component({
@@ -35,7 +35,7 @@ export class DetailsComponent implements OnInit {
     ngOnInit(): void {
         this.route.data.subscribe((data: { details: Details }) => {
             this.details = data.details;
-            this.isRecommended = new EditorialPipe().transform(this.details);
+            this.isRecommended = new IsInCollectionPipe().transform(this.details, 'EDITORIAL');
         });
         this.route.params.subscribe((params) => (this.id = params.id));
         this.authService.getUserInfo().subscribe((userInfo) => (this.userInfo = userInfo));

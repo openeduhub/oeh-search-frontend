@@ -32,7 +32,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DetailsResolverService } from './details-resolver.service';
 import { DetailsComponent } from './details/details.component';
-import { EditorialPipe } from './editorial.pipe';
+import { IsInCollectionPipe } from './is-in-collection.pipe';
 import { EncodeUriComponentPipe } from './encode-uri-component.pipe';
 import { ErrorComponent } from './error/error.component';
 import { GenerateFiltersPipe } from './generate-filters.pipe';
@@ -102,7 +102,7 @@ const appRoutes: Routes = [
         HeaderbarComponent,
         SearchFieldComponent,
         TrimPipe,
-        EditorialPipe,
+        IsInCollectionPipe,
         WelcomeComponent,
         MenubarComponent,
         LoginComponent,

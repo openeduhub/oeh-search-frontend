@@ -16,24 +16,22 @@
       result.lom.general.title | truncate: 52
     }}</mat-card-title>
   </a>
-  <div class="top-infos">
+  <div class="badges">
     <div
-      class="editorial"
-      *ngIf="result | editorial"
+      *ngIf="result | isInCollection: 'EDITORIAL'"
       i18n-matTooltip
       matTooltipPosition="left"
       matTooltip="Recommended by editorial team"
     >
-      <img src="assets/images/editorial.svg" />
+      <div class="icon editorial-icon"></div>
     </div>
     <div
-      class="oer"
       *ngIf="result.license?.oer === 'ALL'"
       i18n-matTooltip
       matTooltipPosition="left"
       matTooltip="Open Educational Resources"
     >
-      <img src="assets/images/oer.svg" />
+      <div class="icon oer-icon"></div>
     </div>
   </div>
   <mat-card-content>

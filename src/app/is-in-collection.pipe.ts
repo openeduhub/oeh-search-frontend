@@ -8,13 +8,10 @@ import { Hit } from '../generated/graphql';
  * Implemented as pipe to omit unnecessary recalculation.
  */
 @Pipe({
-    name: 'editorial',
+    name: 'isInCollection',
 })
-export class EditorialPipe implements PipeTransform {
-    transform(value: Hit | Details): boolean {
-        if (value.collection) {
-            return value.collection.find((c) => c.data?.editorial) != null;
-        }
-        return false;
+export class IsInCollectionPipe implements PipeTransform {
+    transform(value: Hit | Details, uuid: string): boolean {
+        return value.collection?.some((c) => c.uuid === uuid);
     }
 }
