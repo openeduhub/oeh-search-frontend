@@ -27,3 +27,18 @@
         }
     }
 }
+
+@mixin result-card-typography($typography) {
+    app-result-card {
+        .app-result-card-title {
+            @include mat-typography-level-to-styles($typography, subheading-2);
+        }
+        .metadata,
+        .details-button {
+            @include mat-typography-level-to-styles($typography, caption);
+        }
+        .source {
+            @include mat-typography-level-to-styles($typography, caption);
+        }
+    }
+}

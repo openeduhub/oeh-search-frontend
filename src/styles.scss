@@ -72,8 +72,26 @@ $app-theme-dark: mat-dark-theme($app-primary, $app-accent, $app-warn);
 // See @angular/material/core/typography/_typography.scss for defaults.
 $app-typography: mat-typography-config(
     $font-family: 'Montserrat',
+    $headline: mat-typography-level(24px, 32px, 600),
+    $title: mat-typography-level(20px, 32px, 600),
+    $subheading-2: mat-typography-level(18px, 28px, 600),
+    $subheading-1: mat-typography-level(16px, 24px, 600),
+    $body-2: mat-typography-level(14px, 24px, 600),
+    $body-1: mat-typography-level(14px, 22px, 400),
+    $caption: mat-typography-level(12.5px, 20px, 400),
+    $button: mat-typography-level(14px, 20px, 600),
+    $input: mat-typography-level(inherit, 1.125, 600),
 );
 @include angular-material-typography($app-typography);
+@include details-typography($app-typography);
+@include multivalue-checkbox-typography($app-typography);
+@include paginator-typography($app-typography);
+@include result-card-typography($app-typography);
+@include search-typography($app-typography);
+@include search-filterbar-typography($app-typography);
+@include search-field-typography($app-typography);
+@include oer-slider-typography($app-typography);
+@include work-in-progress-message-typography($app-typography);
 
 html,
 body {

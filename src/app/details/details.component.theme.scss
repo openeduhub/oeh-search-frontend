@@ -22,3 +22,21 @@
         }
     }
 }
+
+@mixin details-typography($typography) {
+    app-details {
+        .keyword,
+        .editorial-marked,
+        .educational,
+        .oer-marked,
+        .intendedEndUserRole,
+        .context,
+        .lrt,
+        .editorial {
+            @include mat-typography-level-to-styles($typography, caption);
+            label {
+                font-weight: mat-font-weight($typography, body-2);
+            }
+        }
+    }
+}

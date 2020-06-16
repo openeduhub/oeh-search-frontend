@@ -36,3 +36,11 @@
         }
     }
 }
+
+@mixin oer-slider-typography($typography) {
+    app-oer-slider {
+        .labels > label {
+            @include mat-typography-level-to-styles($typography, button);
+        }
+    }
+}

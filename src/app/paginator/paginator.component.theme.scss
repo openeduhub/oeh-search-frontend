@@ -17,3 +17,11 @@
         }
     }
 }
+
+@mixin paginator-typography($typography) {
+    app-paginator {
+        .page-number {
+            @include mat-typography-level-to-styles($typography, button);
+        }
+    }
+}

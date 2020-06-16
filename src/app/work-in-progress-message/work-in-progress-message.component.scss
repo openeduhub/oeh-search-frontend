@@ -14,19 +14,13 @@
         > .message {
             display: flex;
             flex-direction: column;
-            font-weight: 600;
             padding: 5px 10px;
-            .upper {
-                font-size: 120%;
-            }
         }
     }
     > .report-bug-button {
         flex-grow: 1;
         flex-shrink: 0;
-        font-weight: 600;
         margin: 5px 10px;
-        border-color: white;
         border-width: 2px;
     }
 }

@@ -30,7 +30,6 @@ mat-card {
             border-bottom-style: solid;
             padding: 10px $sidePadding;
             > mat-label {
-                font-weight: bold;
                 display: flex;
                 align-items: center;
                 margin: 10px 0;
@@ -46,7 +45,6 @@ mat-card {
             .mat-expansion-panel-header {
                 .mat-expansion-panel-header-title {
                     align-items: center;
-                    font-weight: bold;
                     .icon {
                         margin-right: 10px;
                     }

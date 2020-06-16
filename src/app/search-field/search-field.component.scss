@@ -16,8 +16,6 @@ form {
         > input {
             width: 0;
             padding: 0.5em;
-            font: unset;
-            font-weight: bold;
             background: none;
             border: none;
             flex-grow: 1;
@@ -40,6 +38,5 @@ form {
     > button {
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
-        font-weight: bold;
     }
 }

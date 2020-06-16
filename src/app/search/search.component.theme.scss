@@ -17,3 +17,14 @@
         }
     }
 }
+
+@mixin search-typography($typography) {
+    app-search {
+        .did-you-mean em {
+            font-weight: mat-font-weight($typography, body-2);
+        }
+        .summary {
+            @include mat-typography-level-to-styles($typography, body-2);
+        }
+    }
+}

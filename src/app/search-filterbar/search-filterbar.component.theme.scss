@@ -33,3 +33,11 @@
         }
     }
 }
+
+@mixin search-filterbar-typography($typography) {
+    app-search-filterbar {
+        .type > mat-label {
+            @include mat-typography-level-to-styles($typography, subheading-1);
+        }
+    }
+}

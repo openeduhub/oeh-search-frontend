@@ -5,5 +5,17 @@
     app-work-in-progress-message {
         background-color: mat-color($customAccent, accent2);
         color: mat-color($customAccent, accent2-contrast);
+        > .report-bug-button {
+            border-color: mat-color($customAccent, accent2-contrast) !important;
+        }
+    }
+}
+
+@mixin work-in-progress-message-typography($typography) {
+    app-work-in-progress-message {
+        @include mat-typography-level-to-styles($typography, body-2);
+        .upper {
+            @include mat-typography-level-to-styles($typography, subheading-1);
+        }
     }
 }

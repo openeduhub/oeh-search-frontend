@@ -39,3 +39,14 @@
         }
     }
 }
+
+@mixin multivalue-checkbox-typography($typography) {
+    app-multivalue-checkbox {
+        mat-checkbox {
+            .label,
+            .count {
+                @include mat-typography-level-to-styles($typography, body-2);
+            }
+        }
+    }
+}

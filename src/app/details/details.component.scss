@@ -10,14 +10,9 @@ $mobileBreak: 1000px;
     margin-bottom: 20px;
     margin-left: -40px;
 }
-h1 {
-    font-weight: bold;
-}
 .description {
     padding: 0;
-    font-size: 120%;
     white-space: pre-line;
-    line-height: 1.25;
 }
 .right {
     margin-bottom: 20px;
@@ -115,7 +110,6 @@ h1 {
 .editorial {
     padding: 10px 10px;
     label {
-        font-size: 90%;
         display: flex;
         align-items: center;
         padding: 2px 0;
@@ -124,16 +118,19 @@ h1 {
             width: 16px;
             height: 16px;
             font-size: 16px;
-            padding-right: 5px;
+            padding-right: 12px;
         }
     }
     div {
-        padding: 0 22px;
+        padding: 0px;
     }
     padding-bottom: 0.3em;
     span {
+        display: inline-flex;
         &:not(:last-child)::after {
-            content: '･';
+            content: ',';
+            margin-right: 5px;
+            white-space: nowrap;
         }
     }
 }

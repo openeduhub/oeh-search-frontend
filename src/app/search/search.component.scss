@@ -26,7 +26,6 @@ app-search-filterbar {
 .breadcrumbs {
     display: flex;
     align-items: center;
-    font-weight: bold;
     .mat-icon {
         font-size: 1.25em;
         height: 1em;
@@ -36,7 +35,6 @@ app-search-filterbar {
 }
 
 .summary {
-    font-size: 110%;
     margin-bottom: 1em;
     .no-results {
         display: flex;
@@ -65,9 +63,6 @@ app-subjects-portal {
     .did-you-mean > a {
         &:not(:hover) {
             text-decoration: none;
-        }
-        :host &::ng-deep em {
-            font-weight: bold;
         }
     }
 }

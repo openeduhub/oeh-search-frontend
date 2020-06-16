@@ -22,3 +22,11 @@
         }
     }
 }
+
+@mixin search-field-typography($typography) {
+    app-search-field {
+        input {
+            @include mat-typography-level-to-styles($typography, input);
+        }
+    }
+}

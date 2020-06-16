@@ -12,7 +12,9 @@
         [src]="thumbnail | safeBase64Data: result.thumbnail.mimetype"
       />
     </div>
-    <mat-card-title>{{ result.lom.general.title | truncate: 52 }}</mat-card-title>
+    <mat-card-title class="app-result-card-title">{{
+      result.lom.general.title | truncate: 52
+    }}</mat-card-title>
   </a>
   <div class="top-infos">
     <div
