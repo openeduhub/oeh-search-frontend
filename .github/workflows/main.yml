@@ -1,6 +1,8 @@
 name: CI
 
 on:
+  push:
+    branches: [ develop, master]
   pull_request:
     branches: [ develop, master]
 
@@ -19,18 +21,22 @@ jobs:
       - name: Lint
         run: npm run lint
 
-#  e2e-cypress:
-#    runs-on: ubuntu-20.04
-#    name: setup staging frontend and test end to end
-#    steps:
-#      - uses: actions/checkout@v2
-#      - name: use node.js 12.16
-#        uses: actions/setup-node@v1
-#        with:
-#          node-version: 12.16
-#      - name: install dependencies
-#        run: npm install
-#      - name: init submodules
-#        run: git submodule update --init
-#      - name: build stage sources
-#        run: npm run build:stage
+  e2e-cypress:
+    needs: [build-and-publish-ci]
+    container:
+        image: openeduhub/frontend:ci_${GITHUB_SHA}
+        ports:
+            - 8000
+    runs-on: ubuntu-20.04
+    name: setup staging frontend and test end to end
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+      - name: use cypress folder
+        run: cd e2e-cypress
+      # Install NPM dependencies, cache them correctly
+      # and run all Cypress tests
+      - name: Cypress run
+        uses: cypress-io/github-action@v1
+        env:
+          CYPRESS_baseUrl: http://localhost:8000
