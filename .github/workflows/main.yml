@@ -21,8 +21,29 @@ jobs:
       - name: Lint
         run: npm run lint
 
+  build-and-publish-ci:
+    needs: [lint]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: true
+    - uses: azure/docker-login@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_PASSWORD }}
+    - name: Build the project
+      run: |
+        npm ci
+        npm run clean
+        npm run build:stage
+    - name: Build Docker image
+      run: docker build --tag openeduhub/frontend:ci_${GITHUB_SHA} .
+    - name: Publish to DockerHub
+      run: docker push openeduhub/frontend:ci_${GITHUB_SHA}
+
   e2e-cypress:
-    needs: [build-and-publish-ci]
+    needs: [lint, build-and-publish-ci]
     container:
         image: openeduhub/frontend:ci_${GITHUB_SHA}
         ports:
