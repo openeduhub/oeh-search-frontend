@@ -39,7 +39,7 @@
       {{ result.lom.general.description | trim | truncate: 120 }}
     </p>
     <div class="metadata" *ngIf="result.valuespaces?.discipline">
-      <label><mat-icon>book_icon</mat-icon></label>
+      <label i18n-matTooltip matTooltip="Discipline"><mat-icon>book_icon</mat-icon></label>
       <div>
         <span *ngFor="let discipline of result.valuespaces.discipline | slice: 0:5">
           <a
@@ -52,7 +52,7 @@
       </div>
     </div>
     <div class="metadata" *ngIf="result.valuespaces?.educationalContext">
-      <label><mat-icon>school</mat-icon></label>
+      <label i18n-matTooltip matTooltip="Educational context"><mat-icon>school</mat-icon></label>
       <div>
         <span class="foo" *ngFor="let context of result.valuespaces.educationalContext">
           <a
@@ -65,7 +65,7 @@
       </div>
     </div>
     <div class="metadata" *ngIf="result.valuespaces?.learningResourceType">
-      <label>
+      <label i18n-matTooltip matTooltip="Lerning resource type">
         <mat-icon>photo_library</mat-icon>
       </label>
       <div>

@@ -1,4 +1,12 @@
-<button mat-fab color="primary" aria-label="Add content" i18n-aria-label [matMenuTriggerFor]="menu">
+<button
+  mat-fab
+  color="primary"
+  i18n-aria-label
+  aria-label="Add content"
+  i18n-matTooltip
+  matTooltip="Add content"
+  [matMenuTriggerFor]="menu"
+>
   <mat-icon>add</mat-icon>
 </button>
 <mat-menu #menu="matMenu" class="fab-menu">

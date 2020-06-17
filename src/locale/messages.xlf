@@ -90,6 +90,10 @@
           <context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context>
           <context context-type="linenumber">44</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/result-card/result-card.component.html</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="4dbd5d5aa9de5f2246e18532f80745b43ebb05f2" datatype="html">
         <source>Educational Context</source>
@@ -426,6 +430,20 @@
           <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="bbfd158191eb0f7d84f6c642350af8e7f0437dcb" datatype="html">
+        <source>Educational context</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/result-card/result-card.component.html</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="275182a70477fee87f2232b9fbd244b85d542dcd" datatype="html">
+        <source>Lerning resource type</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/result-card/result-card.component.html</context>
+          <context context-type="linenumber">68</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="e7a192d252351f64694d9a66ffeda6a1ed5d8869" datatype="html">
         <source>keywords</source>
         <context-group purpose="location">
@@ -549,28 +567,32 @@
         <source>Add content</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/add-content-fab/add-content-fab.component.html</context>
-          <context context-type="linenumber">1</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/add-content-fab/add-content-fab.component.html</context>
+          <context context-type="linenumber">7</context>
         </context-group>
       </trans-unit>
       <trans-unit id="77308e0b0ec483739e6cd964d7faeba68d34e949" datatype="html">
         <source>Add source</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/add-content-fab/add-content-fab.component.html</context>
-          <context context-type="linenumber">7</context>
+          <context context-type="linenumber">15</context>
         </context-group>
       </trans-unit>
       <trans-unit id="bca6cffc8ca51e067a7c6a6620d72d251e307804" datatype="html">
         <source>Add tool</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/add-content-fab/add-content-fab.component.html</context>
-          <context context-type="linenumber">11</context>
+          <context context-type="linenumber">19</context>
         </context-group>
       </trans-unit>
       <trans-unit id="ef8a4f68ddba0db767069410dc62c80658e34440" datatype="html">
         <source>Index my portal</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/add-content-fab/add-content-fab.component.html</context>
-          <context context-type="linenumber">15</context>
+          <context context-type="linenumber">23</context>
         </context-group>
       </trans-unit>
     </body>

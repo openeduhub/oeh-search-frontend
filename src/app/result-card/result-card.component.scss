@@ -110,6 +110,10 @@ mat-card {
         }
         .details-button {
             text-decoration: none;
+            &,
+            * {
+                cursor: pointer;
+            }
             &:hover > span {
                 text-decoration: underline;
             }
