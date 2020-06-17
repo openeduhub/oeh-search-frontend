@@ -7,6 +7,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatChipsModule } from '@angular/material/chips';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -32,11 +33,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DetailsResolverService } from './details-resolver.service';
 import { DetailsComponent } from './details/details.component';
-import { IsInCollectionPipe } from './is-in-collection.pipe';
 import { EncodeUriComponentPipe } from './encode-uri-component.pipe';
 import { ErrorComponent } from './error/error.component';
 import { GenerateFiltersPipe } from './generate-filters.pipe';
 import { HeaderbarComponent } from './headerbar/headerbar.component';
+import { IsInCollectionPipe } from './is-in-collection.pipe';
 import { LoginComponent } from './login/login.component';
 import { MenubarComponent } from './menubar/menubar.component';
 import { MultivalueCheckboxComponent } from './multivalue-checkbox/multivalue-checkbox.component';
@@ -133,6 +134,7 @@ const appRoutes: Routes = [
         MatBadgeModule,
         MatButtonModule,
         MatCardModule,
+        MatChipsModule,
         MatExpansionModule,
         MatFormFieldModule,
         MatMenuModule,

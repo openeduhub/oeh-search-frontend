@@ -79,19 +79,20 @@
         </span>
       </div>
     </div>
-    <div class="metadata" *ngIf="result.lom.general.keyword">
-      <label><mat-icon>list</mat-icon></label>
-      <div>
-        <span *ngFor="let keyword of result.lom.general.keyword | slice: 0:5">
-          <a
-            routerLink="/search"
-            [queryParams]="keyword | generateFilters: 'lom.general.keyword':filters"
-            queryParamsHandling="merge"
-            >{{ keyword }}</a
-          >
-        </span>
-      </div>
-    </div>
+    <mat-chip-list
+      class="metadata"
+      *ngIf="result.lom.general.keyword"
+      i18n-aria-label
+      aria-label="keywords"
+    >
+      <mat-chip
+        *ngFor="let keyword of result.lom.general.keyword | slice: 0:5"
+        routerLink="/search"
+        [queryParams]="keyword | generateFilters: 'lom.general.keyword':filters"
+        queryParamsHandling="merge"
+        >{{ keyword }}</mat-chip
+      >
+    </mat-chip-list>
     <a class="details-button" [routerLink]="['/details', result.id]"
       ><label><mat-icon>info</mat-icon></label> <span i18n>More Information</span></a
     >

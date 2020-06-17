@@ -31,6 +31,9 @@
             > a.source {
                 color: mat-color($foreground, secondary-text);
             }
+            .mat-chip.mat-standard-chip {
+                background-color: mat-color($background, unselected-chip, 0.3);
+            }
         }
     }
 }
@@ -41,6 +44,7 @@
             @include mat-typography-level-to-styles($typography, subheading-2);
         }
         .metadata,
+        .metadata .mat-chip,
         .details-button {
             @include mat-typography-level-to-styles($typography, caption);
         }
