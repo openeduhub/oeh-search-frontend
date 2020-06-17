@@ -19,18 +19,18 @@ jobs:
       - name: Lint
         run: npm run lint
 
-  e2e-cypress:
-    runs-on: ubuntu-20.04
-    name: setup staging frontend and test end to end
-    steps:
-      - uses: actions/checkout@v2
-      - name: use node.js 12.16
-        uses: actions/setup-node@v1
-        with:
-          node-version: 12.16
-      - name: install dependencies
-        run: npm install
-      - name: init submodules
-        run: git submodule update --init
-      - name: build stage sources
-        run: npm run build:stage
+#  e2e-cypress:
+#    runs-on: ubuntu-20.04
+#    name: setup staging frontend and test end to end
+#    steps:
+#      - uses: actions/checkout@v2
+#      - name: use node.js 12.16
+#        uses: actions/setup-node@v1
+#        with:
+#          node-version: 12.16
+#      - name: install dependencies
+#        run: npm install
+#      - name: init submodules
+#        run: git submodule update --init
+#      - name: build stage sources
+#        run: npm run build:stage
