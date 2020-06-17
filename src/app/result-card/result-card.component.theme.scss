@@ -8,31 +8,39 @@
     $primary-foreground-color: primary-foreground-color($theme);
 
     app-result-card {
-        > mat-card {
-            > a.details-link {
-                color: $primary-foreground-color;
-            }
-            > .badges {
-                > div {
-                    background-color: mat-color($background, card);
-                    > .icon {
-                        background-color: mat-color($foreground, secondary-text);
-                    }
-                    > .editorial-icon {
-                        background-color: mat-color($custom-accent, accent2);
-                    }
+        a.details-link {
+            color: $primary-foreground-color;
+        }
+        .badges {
+            > div {
+                background-color: mat-color($background, card);
+                > .icon {
+                    background-color: mat-color($foreground, secondary-text);
+                }
+                > .editorial-icon {
+                    background-color: mat-color($custom-accent, accent2);
                 }
             }
-            > mat-card-content {
-                mat-icon {
-                    color: mat-color($foreground, icon);
-                }
+        }
+        mat-card-content {
+            mat-icon {
+                color: mat-color($foreground, icon);
             }
-            > a.source {
+        }
+        a.source {
+            color: mat-color($foreground, secondary-text);
+        }
+        .mat-chip.mat-standard-chip {
+            background-color: mat-color($background, unselected-chip, 0.3);
+        }
+    }
+    app-result-card-content-compact {
+        .editorial-hint {
+            color: mat-color($custom-accent, accent2);
+        }
+        .metadata {
+            a {
                 color: mat-color($foreground, secondary-text);
-            }
-            .mat-chip.mat-standard-chip {
-                background-color: mat-color($background, unselected-chip, 0.3);
             }
         }
     }
@@ -40,7 +48,7 @@
 
 @mixin result-card-typography($typography) {
     app-result-card {
-        .app-result-card-title {
+        .title {
             @include mat-typography-level-to-styles($typography, subheading-2);
         }
         .metadata,
@@ -49,6 +57,11 @@
             @include mat-typography-level-to-styles($typography, caption);
         }
         .source {
+            @include mat-typography-level-to-styles($typography, caption);
+        }
+    }
+    app-result-card-content-compact {
+        .mat-card-content {
             @include mat-typography-level-to-styles($typography, caption);
         }
     }

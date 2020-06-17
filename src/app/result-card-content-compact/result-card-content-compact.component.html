@@ -1,0 +1,110 @@
+<div class="header">
+  <a class="details-link" [routerLink]="['/details', result.id]">
+    <mat-card-title class="title">
+      {{ result.lom.general.title | truncate: (isExpanded ? -1 : 52) }}
+    </mat-card-title>
+  </a>
+  <a class="source" [href]="result.source.url" target="_blank">{{ result.source.name }}</a>
+</div>
+<mat-card-content>
+  <div class="main-content-row">
+    <img
+      class="thumbnail"
+      *ngIf="result.thumbnail.small"
+      [src]="result.thumbnail.small | safeBase64Data: result.thumbnail.mimetype"
+      align="right"
+    />
+    <p class="editorial-hint" *ngIf="result | isInCollection: 'EDITORIAL'">
+      <ng-container i18n>Recommended by editorial team</ng-container>
+    </p>
+    <p class="description">
+      {{ result.lom.general.description | trim | truncate: (isExpanded ? -1 : 100) }}
+    </p>
+  </div>
+  <div class="metadata" *ngIf="isExpanded && result.valuespaces?.discipline">
+    <ng-container i18n>Discipline</ng-container>:
+    <a
+      *ngFor="let discipline of result.valuespaces.discipline"
+      routerLink="/search"
+      [queryParams]="discipline | generateFilters: 'valuespaces.discipline':filters"
+      queryParamsHandling="merge"
+      >{{ discipline | valuespacesI18n }}</a
+    >
+  </div>
+  <div class="metadata" *ngIf="isExpanded && result.valuespaces?.educationalContext">
+    <ng-container i18n>Educational context</ng-container>:
+    <a
+      *ngFor="let educationalContext of result.valuespaces.educationalContext"
+      routerLink="/search"
+      [queryParams]="educationalContext | generateFilters: 'valuespaces.educationalContext':filters"
+      queryParamsHandling="merge"
+      >{{ educationalContext | valuespacesI18n }}</a
+    >
+  </div>
+  <div class="metadata" *ngIf="isExpanded && result.valuespaces?.learningResourceType">
+    <ng-container i18n>Learning resource type</ng-container>:
+    <a
+      *ngFor="let learningResourceType of result.valuespaces.learningResourceType"
+      routerLink="/search"
+      [queryParams]="
+        learningResourceType | generateFilters: 'valuespaces.learningResourceType':filters
+      "
+      queryParamsHandling="merge"
+      >{{ learningResourceType | valuespacesI18n }}</a
+    >
+  </div>
+  <mat-chip-list
+    class="metadata"
+    *ngIf="isExpanded && result.lom.general.keyword"
+    i18n-aria-label
+    aria-label="keywords"
+  >
+    <mat-chip
+      *ngFor="let keyword of result.lom.general.keyword"
+      routerLink="/search"
+      [queryParams]="keyword | generateFilters: 'lom.general.keyword':filters"
+      queryParamsHandling="merge"
+      >{{ keyword }}</mat-chip
+    >
+  </mat-chip-list>
+  <div class="metadata" *ngIf="isExpanded" [ngSwitch]="result.license?.oer">
+    OER:
+    <span *ngSwitchCase="'ALL'" i18n>yes</span>
+    <span *ngSwitchCase="'MIXED'" i18n>mixed</span>
+    <span *ngSwitchCase="'NONE'" i18n>no</span>
+    <span *ngSwitchDefault i18n>unknown</span>
+  </div>
+</mat-card-content>
+<a
+  *ngIf="isExpanded"
+  class="content-link"
+  mat-flat-button
+  color="primary"
+  target="_blank"
+  [href]="result.lom.technical.location"
+  [ngSwitch]="result.type"
+>
+  <ng-container i18n *ngSwitchCase="'MATERIAL'">Go To Content</ng-container>
+  <ng-container i18n *ngSwitchCase="'TOOL'">Go To Tool</ng-container>
+  <ng-container i18n *ngSwitchCase="'SOURCE'">Go To Source</ng-container>
+</a>
+<mat-card-actions>
+  <button
+    *ngIf="isExpanded"
+    mat-icon-button
+    i18n-aria-label
+    aria-label="Collapse"
+    (click)="isExpanded = false"
+  >
+    <mat-icon>keyboard_arrow_up</mat-icon>
+  </button>
+  <button
+    *ngIf="!isExpanded"
+    mat-icon-button
+    i18n-aria-label
+    aria-label="Expand"
+    (click)="isExpanded = true"
+  >
+    <mat-icon>keyboard_arrow_down</mat-icon>
+  </button>
+</mat-card-actions>

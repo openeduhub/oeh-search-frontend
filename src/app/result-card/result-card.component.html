@@ -1,115 +1,12 @@
-<mat-card>
-  <a class="details-link" [routerLink]="['/details', result.id]">
-    <div class="image-container" mat-card-image>
-      <img
-        class="img-bg"
-        *ngIf="thumbnail"
-        [src]="thumbnail | safeBase64Data: result.thumbnail.mimetype"
-      />
-      <img
-        class="img-main"
-        *ngIf="thumbnail"
-        [src]="thumbnail | safeBase64Data: result.thumbnail.mimetype"
-      />
-    </div>
-    <mat-card-title class="app-result-card-title">{{
-      result.lom.general.title | truncate: 52
-    }}</mat-card-title>
-  </a>
-  <div class="badges">
-    <div
-      *ngIf="result | isInCollection: 'EDITORIAL'"
-      i18n-matTooltip
-      matTooltipPosition="left"
-      matTooltip="Recommended by editorial team"
-    >
-      <div class="icon editorial-icon"></div>
-    </div>
-    <div
-      *ngIf="result.license?.oer === 'ALL'"
-      i18n-matTooltip
-      matTooltipPosition="left"
-      matTooltip="Open Educational Resources"
-    >
-      <div class="icon oer-icon"></div>
-    </div>
-  </div>
-  <mat-card-content>
-    <p class="description" *ngIf="result.lom.general?.description">
-      {{ result.lom.general.description | trim | truncate: 120 }}
-    </p>
-    <div class="metadata" *ngIf="result.valuespaces?.discipline">
-      <label i18n-matTooltip matTooltip="Discipline"><mat-icon>book_icon</mat-icon></label>
-      <div>
-        <span *ngFor="let discipline of result.valuespaces.discipline | slice: 0:5">
-          <a
-            routerLink="/search"
-            [queryParams]="discipline | generateFilters: 'valuespaces.discipline':filters"
-            queryParamsHandling="merge"
-            >{{ discipline | valuespacesI18n }}</a
-          >
-        </span>
-      </div>
-    </div>
-    <div class="metadata" *ngIf="result.valuespaces?.educationalContext">
-      <label i18n-matTooltip matTooltip="Educational context"><mat-icon>school</mat-icon></label>
-      <div>
-        <span class="foo" *ngFor="let context of result.valuespaces.educationalContext">
-          <a
-            routerLink="/search"
-            [queryParams]="context | generateFilters: 'valuespaces.educationalContext':filters"
-            queryParamsHandling="merge"
-            >{{ context | valuespacesI18n }}</a
-          >
-        </span>
-      </div>
-    </div>
-    <div class="metadata" *ngIf="result.valuespaces?.learningResourceType">
-      <label i18n-matTooltip matTooltip="Lerning resource type">
-        <mat-icon>photo_library</mat-icon>
-      </label>
-      <div>
-        <span *ngFor="let lrt of result.valuespaces.learningResourceType">
-          <a
-            routerLink="/search"
-            [queryParams]="lrt | generateFilters: 'valuespaces.learningResourceType':filters"
-            queryParamsHandling="merge"
-            >{{ lrt | valuespacesI18n }}</a
-          >
-        </span>
-      </div>
-    </div>
-    <mat-chip-list
-      class="metadata"
-      *ngIf="result.lom.general.keyword"
-      i18n-aria-label
-      aria-label="keywords"
-    >
-      <mat-chip
-        *ngFor="let keyword of result.lom.general.keyword | slice: 0:5"
-        routerLink="/search"
-        [queryParams]="keyword | generateFilters: 'lom.general.keyword':filters"
-        queryParamsHandling="merge"
-        >{{ keyword }}</mat-chip
-      >
-    </mat-chip-list>
-    <a class="details-button" [routerLink]="['/details', result.id]"
-      ><label><mat-icon>info</mat-icon></label> <span i18n>More Information</span></a
-    >
-  </mat-card-content>
-  <a
-    class="content-link"
-    mat-flat-button
-    color="primary"
-    target="_blank"
-    [href]="result.lom.technical.location"
-    [ngSwitch]="result.type"
-  >
-    <ng-container i18n *ngSwitchCase="'MATERIAL'">Go To Content</ng-container>
-    <ng-container i18n *ngSwitchCase="'TOOL'">Go To Tool</ng-container>
-    <ng-container i18n *ngSwitchCase="'SOURCE'">Go To Source</ng-container>
-  </a>
-  <a class="source" [href]="result.source.url" target="_blank">
-    <ng-container i18n>Source</ng-container>: {{ result.source.name }}</a
-  >
+<mat-card [ngSwitch]="style">
+  <app-result-card-content-standard
+    *ngSwitchCase="'standard'"
+    [result]="result"
+    [filters]="filters"
+  ></app-result-card-content-standard>
+  <app-result-card-content-compact
+    *ngSwitchCase="'compact'"
+    [result]="result"
+    [filters]="filters"
+  ></app-result-card-content-compact>
 </mat-card>

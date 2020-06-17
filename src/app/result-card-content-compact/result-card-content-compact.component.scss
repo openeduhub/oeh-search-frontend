@@ -1,0 +1,57 @@
+a:not(:hover) {
+    text-decoration: none;
+}
+
+.header {
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    .title {
+        margin-bottom: 0;
+    }
+}
+.mat-card-content {
+    flex-grow: 1;
+    margin-bottom: 0;
+    .main-content-row {
+        min-height: 99px;
+        .thumbnail {
+            height: 90px;
+            width: 90px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-top: 2px;
+            margin-left: 20px;
+        }
+        .description {
+            margin-bottom: 0.7em;
+        }
+    }
+    .metadata {
+        margin-bottom: 0.7em;
+        a {
+            display: inline-flex;
+            &:not(:last-child)::after {
+                content: ',';
+                margin-right: 0.4em;
+            }
+        }
+        &.mat-chip-list {
+            display: flex;
+        }
+        .mat-chip.mat-standard-chip {
+            cursor: pointer;
+            min-height: 0px;
+            height: unset;
+            padding: 6px 12px;
+        }
+    }
+}
+.mat-card-actions {
+    display: flex;
+    justify-content: center;
+    margin: 0 0 -20px;
+    padding: 0;
+    button {
+        margin-top: -5px;
+    }
+}

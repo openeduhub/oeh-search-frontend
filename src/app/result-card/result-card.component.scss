@@ -1,131 +1,16 @@
-@import '~@angular/material/theming';
-
 :host {
     display: flex;
 }
 
 mat-card {
-    flex-direction: column;
     display: flex;
     flex-grow: 1;
     border-radius: 8px;
     overflow: hidden;
-    a:not(:hover) {
-        text-decoration: none;
-    }
-    > a.details-link {
-        &:hover .img-main {
-            transform: scale(1.1);
-        }
-        .image-container {
-            // Prevent flicker of hover animations in Chrome.
-            -webkit-backface-visibility: hidden;
-            position: relative;
-            height: 200px;
-            margin-bottom: 20px;
-            overflow: hidden;
-            > * {
-                position: absolute;
-                width: 100%;
-                height: 100%;
-                margin: auto;
-            }
-            .img-main {
-                transition: transform 0.2s;
-                object-fit: contain;
-            }
-            .img-bg {
-                height: 100%;
-                object-fit: cover;
-                filter: blur(20px);
-                transform: scale(1.25);
-            }
-        }
-    }
-    > .badges {
-        position: absolute;
-        right: 15px;
-        top: 10px;
+
+    > * {
         display: flex;
-        flex-direction: column;
-        > div {
-            @include mat-elevation(1);
-            border-radius: 5px;
-            display: flex;
-            margin: 5px 0;
-            align-items: center;
-            justify-content: center;
-            .editorial-icon {
-                mask: url(../../assets/images/editorial.svg) no-repeat center;
-            }
-            .oer-icon {
-                mask: url(../../assets/images/oer.svg) no-repeat center;
-            }
-            > div {
-                width: 20px;
-                height: 20px;
-                padding: 2px 4px;
-            }
-        }
-    }
-    mat-card-content {
         flex-grow: 1;
-        a {
-            color: unset;
-        }
-        .description {
-            overflow-wrap: break-word;
-        }
-        .metadata,
-        .details-button {
-            display: flex;
-            align-items: center;
-            padding-bottom: 1.2em;
-            label {
-                display: flex;
-                align-items: center;
-                > mat-icon {
-                    padding: 0 12px 0 5px;
-                    width: 16px;
-                    height: 16px;
-                    font-size: 16px;
-                }
-            }
-        }
-        .metadata {
-            span {
-                display: inline-flex;
-                white-space: nowrap;
-                &:not(:last-child)::after {
-                    content: ',';
-                    margin-right: 0.4em;
-                }
-            }
-            .mat-chip.mat-standard-chip {
-                cursor: pointer;
-                min-height: 0px;
-                height: unset;
-                padding: 6px 12px;
-            }
-        }
-        .details-button {
-            text-decoration: none;
-            &,
-            * {
-                cursor: pointer;
-            }
-            &:hover > span {
-                text-decoration: underline;
-            }
-        }
-    }
-    a.content-link {
-        width: 100%;
-        align-self: flex-end;
-    }
-    .source {
-        padding: 8px 4px 0 4px;
-        display: flex;
-        justify-content: flex-end;
+        flex-direction: column;
     }
 }

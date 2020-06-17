@@ -1,34 +1,38 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { ResultFragment } from '../../generated/graphql';
-import { Filters, SearchService } from '../search.service';
+import { Filters } from '../search.service';
 import { Unpacked } from '../utils';
+import { ResultCardStyle, ViewService } from '../view.service';
 
 type Hits = ResultFragment['hits']['hits'];
-type Hit = Unpacked<Hits>;
+export type Hit = Unpacked<Hits>;
 
 @Component({
     selector: 'app-result-card',
     templateUrl: './result-card.component.html',
     styleUrls: ['./result-card.component.scss'],
 })
-export class ResultCardComponent implements OnInit {
+export class ResultCardComponent implements OnInit, OnDestroy {
     @Input() result: Hit;
     @Input() filters: Filters;
+    style: ResultCardStyle;
 
-    thumbnail: string;
+    private subscriptions: Subscription[] = [];
 
-    constructor(private search: SearchService) {}
+    constructor(private view: ViewService) {}
 
     ngOnInit(): void {
-        this.loadLargeThumbnail();
+        this.subscriptions.push(
+            this.view
+                .getResultCardStyle()
+                .subscribe((resultCardStyle) => (this.style = resultCardStyle)),
+        );
     }
 
-    private loadLargeThumbnail() {
-        if (this.result.thumbnail) {
-            this.thumbnail = this.result.thumbnail.small;
-            this.search.getLargeThumbnail(this.result.id).subscribe((largeThumbnail) => {
-                this.thumbnail = largeThumbnail;
-            });
+    ngOnDestroy(): void {
+        for (const subscription of this.subscriptions) {
+            subscription.unsubscribe();
         }
     }
 }

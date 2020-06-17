@@ -50,10 +50,10 @@
     </p>
   </div>
   <app-subjects-portal *ngIf="showSubjectsPortal"></app-subjects-portal>
-  <ng-container *ngIf="results.hits.total.value > 0">
-    <h2 i18n>All Search Results</h2>
-    <app-search-results [hits]="results.hits"></app-search-results>
-  </ng-container>
+  <app-search-results
+    *ngIf="results.hits.total.value > 0"
+    [hits]="results.hits"
+  ></app-search-results>
 </div>
 
 <app-add-content-fab></app-add-content-fab>

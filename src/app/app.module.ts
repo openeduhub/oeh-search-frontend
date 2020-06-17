@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
@@ -43,6 +44,8 @@ import { MenubarComponent } from './menubar/menubar.component';
 import { MultivalueCheckboxComponent } from './multivalue-checkbox/multivalue-checkbox.component';
 import { OerSliderComponent } from './oer-slider/oer-slider.component';
 import { PaginatorComponent } from './paginator/paginator.component';
+import { ResultCardContentCompactComponent } from './result-card-content-compact/result-card-content-compact.component';
+import { ResultCardContentStandardComponent } from './result-card-content-standard/result-card-content-standard.component';
 import { ResultCardSmallComponent } from './result-card-small/result-card-small.component';
 import { ResultCardComponent } from './result-card/result-card.component';
 import { SafeBase64DataPipe } from './safe-base64-data.pipe';
@@ -119,6 +122,8 @@ const appRoutes: Routes = [
         ValuespacesI18nPipe,
         OerSliderComponent,
         AddContentFabComponent,
+        ResultCardContentStandardComponent,
+        ResultCardContentCompactComponent,
     ],
     imports: [
         ApolloModule,
@@ -133,6 +138,7 @@ const appRoutes: Routes = [
         MatAutocompleteModule,
         MatBadgeModule,
         MatButtonModule,
+        MatButtonToggleModule,
         MatCardModule,
         MatChipsModule,
         MatExpansionModule,
