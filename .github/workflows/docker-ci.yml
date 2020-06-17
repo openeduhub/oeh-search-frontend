@@ -22,8 +22,7 @@ jobs:
         npm run build:stage
     - name: Build Docker image
       run: |
-          GIT_HASH=$(git rev-parse --short "$GITHUB_SHA")
-          echo "GitHash: ${GIT_HASH}"
+          echo "GitSha: ${$GITHUB_SHA}"
 
 #      run: docker build --tag openeduhub/frontend .
 #    - name: Publish to DockerHub
