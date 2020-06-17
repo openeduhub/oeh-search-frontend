@@ -7,6 +7,8 @@ $material-icons-font-path: '~material-icons/iconfont/';
 @import 'material';
 
 // Plus imports for other components in your app.
+@import 'angular-material-overrides.theme.scss';
+
 @import 'app/app.component.theme.scss';
 @import 'app/details/details.component.theme.scss';
 @import 'app/headerbar/headerbar.component.theme.scss';
@@ -21,6 +23,22 @@ $material-icons-font-path: '~material-icons/iconfont/';
 @import 'app/search-filterbar/search-filterbar.component.theme.scss';
 @import 'app/subjects-portal/subjects-portal.component.theme.scss';
 @import 'app/work-in-progress-message/work-in-progress-message.component.theme.scss';
+
+// Overrides
+//
+// Redefine or introduce new properties here.
+// $mat-light-theme-background: map_merge(
+//     $mat-light-theme-background,
+//     (
+//         // tooltip: map_get($mat-grey, 100),
+//     )
+// );
+// $mat-light-theme-foreground: map_merge(
+//     $mat-light-theme-foreground,
+//     (
+//         // tooltip: $dark-secondary-text,
+//     )
+// );
 
 @mixin custom-components-theme($theme) {
     @include app-theme($theme);
@@ -50,6 +68,7 @@ $material-icons-font-path: '~material-icons/iconfont/';
     // Alternatively, you can import and @include the theme mixins for each component
     // that you are using.
     @include angular-material-theme($theme);
+    @include angular-material-theme-overrides($theme);
     @include custom-components-theme($theme);
     body {
         color: mat-color(map-get($theme, foreground), text);
@@ -88,7 +107,15 @@ $app-typography: mat-typography-config(
     $button: mat-typography-level(14px, 20px, 700),
     $input: mat-typography-level(inherit, 1.125, 700),
 );
+// Custom fields
+$app-typography: map_merge(
+    $app-typography,
+    (
+        tooltip: mat-typography-level(13px, 20px, 500),
+    )
+);
 @include angular-material-typography($app-typography);
+@include angular-material-typography-overrides($app-typography);
 @include details-typography($app-typography);
 @include multivalue-checkbox-typography($app-typography);
 @include paginator-typography($app-typography);
