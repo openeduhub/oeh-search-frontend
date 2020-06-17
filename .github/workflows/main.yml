@@ -55,8 +55,8 @@ jobs:
         uses: actions/checkout@v2
       - name: use node.js 12.16
         uses: actions/setup-node@v1
-          with:
-            node-version: 12.16
+        with:
+          node-version: 12.16
       - name: use cypress folder
         run: cd e2e-cypress
       - name: install dependencies
