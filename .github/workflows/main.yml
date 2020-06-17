@@ -53,15 +53,16 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
-#      - name: use node.js 12.16
-#        uses: actions/setup-node@v1
-#          with:
-#            node-version: 12.16
+      - name: use node.js 12.16
+        uses: actions/setup-node@v1
+          with:
+            node-version: 12.16
       - name: use cypress folder
         run: cd e2e-cypress
-      # Install NPM dependencies, cache them correctly
-      # and run all Cypress tests
-      - name: Cypress run
-        uses: cypress-io/github-action@v1
+      - name: install dependencies
+        run: npm i
+      - name: cypress run
         env:
-          CYPRESS_baseUrl: http://localhost:8000
+            CYPRESS_baseUrl: http://localhost:8000
+        run: npm run cypress:local
+
