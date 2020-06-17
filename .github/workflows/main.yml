@@ -64,5 +64,5 @@ jobs:
       - name: cypress run
         env:
             CYPRESS_baseUrl: http://localhost:8000
-        run: npm run cypress:local
+        run: npm run cypress:local:run
 
