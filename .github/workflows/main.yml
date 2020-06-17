@@ -57,12 +57,11 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12.16
-      - name: use cypress folder
-        run: cd e2e-cypress
-      - name: install dependencies
-        run: npm i
-      - name: cypress run
+      - name: cypress install and run
         env:
             CYPRESS_baseUrl: http://localhost:8000
-        run: npm run cypress:local:run
+        run: |
+          cd e2e-cypress
+          npm install
+          npm run cypress:local:run
 
