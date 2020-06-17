@@ -45,9 +45,7 @@ jobs:
   e2e-cypress:
     needs: [lint, build-and-publish-ci]
     container:
-      env:
-        GITHUB_SHA: ${{ GITHUB_SHA }}
-      image: openeduhub/frontend:ci_${{ GITHUB_SHA }}
+      image: openeduhub/frontend:ci_${{ github.sha }}
       ports:
         - 8000
     runs-on: ubuntu-20.04
