@@ -23,7 +23,7 @@ jobs:
 
   build-and-publish-ci:
     needs: [lint]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
         with:
@@ -48,11 +48,15 @@ jobs:
       image: openeduhub/frontend:ci_${{ github.sha }}
       ports:
         - 8000
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-20.04
     name: setup staging frontend and test end to end
     steps:
       - name: checkout
         uses: actions/checkout@v2
+#      - name: use node.js 12.16
+#        uses: actions/setup-node@v1
+#          with:
+#            node-version: 12.16
       - name: use cypress folder
         run: cd e2e-cypress
       # Install NPM dependencies, cache them correctly
