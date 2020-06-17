@@ -19,12 +19,9 @@ jobs:
       run: |
         npm ci
         npm run clean
-#        npm run build:stage
+        npm run build:stage
     - name: Build Docker image
-      run: |
-          echo "GitSha: ${GITHUB_SHA}"
-
-#      run: docker build --tag openeduhub/frontend .
-#    - name: Publish to DockerHub
-#      run: docker push openeduhub/frontend
+      run: docker build --tag openeduhub/frontend:ci_${GITHUB_SHA} .
+    - name: Publish to DockerHub
+      run: docker push openeduhub/frontend:ci_${GITHUB_SHA}
 
