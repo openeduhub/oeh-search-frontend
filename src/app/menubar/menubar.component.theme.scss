@@ -1,0 +1,46 @@
+@import '~@angular/material/theming';
+@import '../functions';
+
+@mixin menubar-theme($theme) {
+    $foreground: map-get($theme, foreground);
+    $background: map-get($theme, background);
+    $primary-foreground-color: primary-foreground-color($theme);
+
+    app-menubar {
+        header {
+            background-color: mat-color($background, dialog);
+            border-bottom-color: mat-color($foreground, divider);
+            @media (prefers-color-scheme: dark) {
+                background-color: mat-color($background, app-bar);
+            }
+        }
+        a {
+            color: $primary-foreground-color;
+        }
+        *:focus {
+            outline-color: $primary-foreground-color;
+        }
+        .dropdown.menu.large-horizontal > li.is-dropdown-submenu-parent > a::after {
+            border-top-color: $primary-foreground-color;
+        }
+        .dropdown.menu.vertical > li.opens-right > a::after {
+            border-left-color: $primary-foreground-color;
+        }
+        .is-dropdown-submenu {
+            background-color: mat-color($background, background);
+            border-color: mat-color($foreground, divider);
+        }
+        .is-dropdown-submenu-item:hover {
+            background-color: mat-color($foreground, text, 0.1);
+        }
+        .menu-icon::after {
+            background: $primary-foreground-color;
+            box-shadow: 0 7px 0 $primary-foreground-color, 0 14px 0 $primary-foreground-color;
+        }
+        @media screen and (max-width: 63.99875em) {
+            .site-header .top-bar {
+                background-color: mat-color($foreground, text, 0.08);
+            }
+        }
+    }
+}

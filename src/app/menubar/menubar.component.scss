@@ -1,6 +1,17 @@
 header {
     font-size: 20px;
-    border-bottom: 1px solid #ececec;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+}
+.logo {
+    width: 218px;
+    background-image: url('https://wirlernenonline.de/wp-content/themes/wir-lernen-online/dist/assets/img/WLO-Logo-01.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    @media (prefers-color-scheme: dark) {
+        background-image: url('../../assets/images/WLO-Logo-01-dark.png');
+    }
 }
 
 @media screen and (min-width: 1024px) {
@@ -108,14 +119,14 @@ header {
     }
     a {
         line-height: inherit;
-        color: #003e82;
+        // color: #003e82;
         text-decoration: none;
         cursor: pointer;
     }
-    a:hover,
-    a:focus {
-        color: #003570;
-    }
+    // a:hover,
+    // a:focus {
+    //     color: #003570;
+    // }
     a img {
         border: 0;
     }
@@ -317,14 +328,14 @@ header {
         display: block;
         width: 100%;
         height: 2px;
-        background: #003e82;
-        box-shadow: 0 7px 0 #003e82, 0 14px 0 #003e82;
+        // background: #003e82;
+        // box-shadow: 0 7px 0 #003e82, 0 14px 0 #003e82;
         content: '';
     }
-    .menu-icon:hover::after {
-        background: #003e82;
-        box-shadow: 0 7px 0 #003e82, 0 14px 0 #003e82;
-    }
+    // .menu-icon:hover::after {
+    //     background: #003e82;
+    //     box-shadow: 0 7px 0 #003e82, 0 14px 0 #003e82;
+    // }
     .dropdown.menu > li.opens-right > .is-dropdown-submenu {
         top: 100%;
         right: auto;
@@ -368,7 +379,10 @@ header {
         content: '';
         border-right-width: 0;
         border-left-style: solid;
-        border-color: transparent transparent transparent #003e82;
+        border-top-color: transparent;
+        border-bottom-color: transparent;
+        border-right-color: transparent;
+        // border-color: transparent transparent transparent #003e82;
     }
     @media print, screen and (min-width: 64em) {
         .dropdown.menu.large-horizontal > li.opens-right > .is-dropdown-submenu {
@@ -388,7 +402,9 @@ header {
             content: '';
             border-bottom-width: 0;
             border-top-style: solid;
-            border-color: #003e82 transparent transparent;
+            border-bottom-color: transparent;
+            border-right-color: transparent;
+            border-left-color: transparent;
             right: 5px;
             left: auto;
             margin-top: -3px;
@@ -415,8 +431,9 @@ header {
         z-index: 1;
         display: none;
         min-width: 200px;
-        border: 1px solid #d8d8d8;
-        background: #fefefe;
+        border-width: 1px;
+        border-style: solid;
+        // background: #fefefe;
     }
     .dropdown .is-dropdown-submenu a {
         padding: 0.7rem 1rem;
@@ -426,8 +443,8 @@ header {
     }
     .title-bar {
         padding: 1rem;
-        background: #fefefe;
-        color: #003e82;
+        // background: #fefefe;
+        // color: #003e82;
         display: flex;
         justify-content: flex-start;
         align-items: center;
@@ -444,10 +461,10 @@ header {
         padding: 0;
         flex-wrap: wrap;
     }
-    .top-bar,
-    .top-bar ul {
-        background-color: transparent;
-    }
+    // .top-bar,
+    // .top-bar ul {
+    //     background-color: transparent;
+    // }
     .top-bar .top-bar-left {
         flex: 0 0 100%;
         max-width: 100%;
@@ -496,13 +513,14 @@ header {
         position: relative;
     }
     *:focus {
-        outline: 1px dotted #003e82;
+        outline-width: 1px;
+        outline-style: dotted;
     }
     .site-header {
         z-index: 999;
         min-height: 63px;
-        background-color: #fefefe;
-        border-bottom: 1px solid #ececec;
+        // background-color: #fefefe;
+        // border-bottom: 1px solid #ececec;
         top: 0;
         left: 0;
         width: 100%;
@@ -510,7 +528,7 @@ header {
     }
     @media print, screen and (max-width: 39.99875em) {
         .site-header .top-bar {
-            background-color: #ececec;
+            // background-color: #ececec;
             padding-bottom: calc(2 * 15px);
         }
         .site-header .top-bar .menu {
@@ -519,7 +537,7 @@ header {
     }
     @media print, screen and (min-width: 40em) and (max-width: 63.99875em) {
         .site-header .top-bar {
-            background-color: #ececec;
+            // background-color: #ececec;
             padding-bottom: calc(2 * 15px);
         }
         .site-header .top-bar .menu {
@@ -537,11 +555,11 @@ header {
     .site-header a.mobile-logo-container {
         margin-left: auto;
     }
-    .site-header img.logo {
+    .site-header .logo {
         height: calc(1 * 33px);
     }
     .is-dropdown-submenu {
-        background-color: #fefefe !important;
+        // background-color: #fefefe !important;
         border-radius: 5px;
         text-align: center;
         right: 0 !important;
@@ -549,7 +567,7 @@ header {
         min-width: 300px;
     }
     .is-dropdown-submenu-item:hover {
-        background-color: #ececec;
+        // background-color: #ececec;
         cursor: pointer;
     }
     .top-call-to-action-menu li a {
