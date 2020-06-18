@@ -60,17 +60,16 @@ a.details-link {
 }
 mat-card-content {
     flex-grow: 1;
-    a {
-        color: unset;
-    }
     .description {
         overflow-wrap: break-word;
     }
-    .metadata,
-    .details-button {
+    .metadata {
         display: flex;
         align-items: center;
         padding-bottom: 1.2em;
+        a {
+            color: unset;
+        }
         label {
             display: flex;
             align-items: center;
@@ -81,8 +80,6 @@ mat-card-content {
                 font-size: 16px;
             }
         }
-    }
-    .metadata {
         span {
             display: inline-flex;
             white-space: nowrap;
@@ -96,16 +93,6 @@ mat-card-content {
             min-height: 0px;
             height: unset;
             padding: 6px 12px;
-        }
-    }
-    .details-button {
-        text-decoration: none;
-        &,
-        * {
-            cursor: pointer;
-        }
-        &:hover > span {
-            text-decoration: underline;
         }
     }
 }

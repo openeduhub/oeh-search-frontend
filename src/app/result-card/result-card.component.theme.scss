@@ -53,9 +53,6 @@
         }
         .metadata,
         .metadata .mat-chip,
-        .details-button {
-            @include mat-typography-level-to-styles($typography, caption);
-        }
         .source {
             @include mat-typography-level-to-styles($typography, caption);
         }
