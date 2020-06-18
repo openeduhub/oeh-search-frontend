@@ -9,26 +9,26 @@
   </mat-expansion-panel-header>
   <app-subjects-portal-section
     *ngIf="results.material.total.value > 0"
-    i18n-sectionTitle
-    sectionTitle="Materials"
+    type="MATERIAL"
     [hits]="results.material.hits"
+    [filters]="filters"
   ></app-subjects-portal-section>
   <app-subjects-portal-section
     *ngIf="results.lessonPlanning.total.value > 0"
-    i18n-sectionTitle
-    sectionTitle="Lesson Planning"
+    type="LESSONPLANNING"
     [hits]="results.lessonPlanning.hits"
+    [filters]="filters"
   ></app-subjects-portal-section>
   <app-subjects-portal-section
     *ngIf="results.tool.total.value > 0"
-    i18n-sectionTitle
-    sectionTitle="Tools"
+    type="TOOL"
     [hits]="results.tool.hits"
+    [filters]="filters"
   ></app-subjects-portal-section>
   <app-subjects-portal-section
     *ngIf="results.source.total.value > 0"
-    i18n-sectionTitle
-    sectionTitle="Sources"
+    type="SOURCE"
     [hits]="results.source.hits"
+    [filters]="filters"
   ></app-subjects-portal-section>
 </mat-expansion-panel>

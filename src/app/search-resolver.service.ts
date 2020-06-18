@@ -11,7 +11,7 @@ export interface SearchData {
     subjectsPortalResults: SubjectsPortalResults;
 }
 
-type Type = 'LESSONPLANNING' | 'MATERIAL' | 'TOOL' | 'SOURCE';
+export type MediaType = 'LESSONPLANNING' | 'MATERIAL' | 'TOOL' | 'SOURCE';
 export type Hits = SearchQuery['search']['hits'];
 
 export interface SubjectsPortalResults {
@@ -67,7 +67,7 @@ export class SearchResolverService implements Resolve<SearchData> {
         });
     }
 
-    private getHitsForType(type: Type): Observable<Hits> {
+    private getHitsForType(type: MediaType): Observable<Hits> {
         const { searchString, filters } = this.searchParameters.getCurrentValue();
         const filtersCopy: Filters = { ...filters };
         filtersCopy.type = [type];

@@ -1,30 +1,39 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { parseSearchQueryParams } from '../search-parameters.service';
+import { Subscription } from 'rxjs';
+import { SearchParametersService } from '../search-parameters.service';
 import { SearchData, SubjectsPortalResults } from '../search-resolver.service';
+import { Filters } from '../search.service';
 
 @Component({
     selector: 'app-subjects-portal',
     templateUrl: './subjects-portal.component.html',
     styleUrls: ['./subjects-portal.component.scss'],
 })
-export class SubjectsPortalComponent implements OnInit {
+export class SubjectsPortalComponent implements OnInit, OnDestroy {
     results: SubjectsPortalResults;
+    filters: Filters;
     isExpanded: boolean;
 
-    constructor(private route: ActivatedRoute) {}
+    private subscriptions: Subscription[] = [];
+
+    constructor(private route: ActivatedRoute, private searchParameters: SearchParametersService) {}
 
     ngOnInit(): void {
         this.route.data.subscribe((data: { searchData: SearchData }) => {
             this.results = data.searchData.subjectsPortalResults;
         });
-        this.route.queryParamMap.subscribe((queryParamMap) => {
-            const { pageIndex } = parseSearchQueryParams(queryParamMap);
-            if (pageIndex === 0) {
-                this.isExpanded = true;
-            } else {
-                this.isExpanded = false;
-            }
-        });
+        this.subscriptions.push(
+            this.searchParameters.get().subscribe(({ filters, pageIndex }) => {
+                this.filters = filters;
+                this.isExpanded = pageIndex === 0;
+            }),
+        );
+    }
+
+    ngOnDestroy(): void {
+        for (const subscription of this.subscriptions) {
+            subscription.unsubscribe();
+        }
     }
 }

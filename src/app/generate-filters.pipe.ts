@@ -17,7 +17,12 @@ export class GenerateFiltersPipe implements PipeTransform {
         this.shortLocale = config.getShortLocale();
     }
 
-    transform(value: string | InternationalString, field: string, filters: object = {}): object {
+    transform(
+        value: string | InternationalString,
+        field: string,
+        filters: object = {},
+        isTextField = true,
+    ): object {
         let filterKey: string;
         let filterValue: string;
         if (typeof value === 'object' && value.__typename === 'InternationalString') {
@@ -28,7 +33,7 @@ export class GenerateFiltersPipe implements PipeTransform {
                 return null;
             }
         } else if (typeof value === 'string') {
-            filterKey = `${field}.keyword`;
+            filterKey = isTextField ? `${field}.keyword` : field;
             filterValue = value;
         } else {
             throw new Error(`Cannot generate filter of ${value}`);

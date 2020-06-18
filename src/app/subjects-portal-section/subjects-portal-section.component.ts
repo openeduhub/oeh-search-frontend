@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Hits } from '../search-resolver.service';
+import { Component, Input, OnInit, Attribute } from '@angular/core';
+import { Hits, MediaType } from '../search-resolver.service';
+import { Filters } from '../search.service';
 
 @Component({
     selector: 'app-subjects-portal-section',
@@ -7,10 +8,10 @@ import { Hits } from '../search-resolver.service';
     styleUrls: ['./subjects-portal-section.component.scss'],
 })
 export class SubjectsPortalSectionComponent implements OnInit {
-    @Input() sectionTitle: string;
     @Input() hits: Hits['hits'];
+    @Input() filters: Filters;
 
-    constructor() {}
+    constructor(@Attribute('type') readonly type: MediaType) {}
 
     ngOnInit(): void {}
 }

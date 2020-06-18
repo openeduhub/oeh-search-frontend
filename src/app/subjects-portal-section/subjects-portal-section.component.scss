@@ -2,6 +2,14 @@
     display: block;
 }
 
+.header {
+    display: flex;
+    align-items: flex-start;
+    .title {
+        flex-grow: 1;
+    }
+}
+
 .results {
     display: flex;
     overflow-x: auto;
