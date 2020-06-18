@@ -18,7 +18,8 @@ export class ViewService {
         );
         // Persistent
         this.resultCardStyleSubject = new BehaviorSubject(
-            localStorage.getItem('resultCardStyle') || isMobile ? 'compact' : 'standard',
+            (localStorage.getItem('resultCardStyle') as ResultCardStyle) ||
+                (isMobile ? 'compact' : 'standard'),
         );
     }
 
