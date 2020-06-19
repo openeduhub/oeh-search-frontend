@@ -10,12 +10,17 @@
         .title {
             color: $primary-foreground-color;
         }
-        .metadata-editorial {
-            label {
-                color: mat-color($custom-accent, accent2);
-            }
+        .metadata {
             .icon {
-                background-color: mat-color($custom-accent, accent2);
+                background-color: mat-color($foreground, secondary-text);
+            }
+            &.metadata-editorial {
+                label {
+                    color: mat-color($custom-accent, accent2);
+                }
+                .icon {
+                    background-color: mat-color($custom-accent, accent2);
+                }
             }
         }
         label {
