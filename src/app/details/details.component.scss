@@ -2,135 +2,101 @@ $mobileBreak: 1000px;
 
 :host {
     display: block;
-    padding: 20px 40px;
+    padding: 20px;
     max-width: 1200px;
     margin: auto;
 }
-.back {
+
+.back-button {
     margin-bottom: 20px;
-    margin-left: -40px;
+    margin-left: -24px;
 }
-.description {
-    padding: 0;
-    white-space: pre-line;
+
+.header {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    .title {
+        flex-grow: 1;
+        margin-right: 10px;
+    }
+    .go-to-content-button {
+        margin-bottom: 16px;
+        .mat-icon {
+            margin-right: 10px;
+        }
+    }
 }
-.right {
-    margin-bottom: 20px;
+
+.body {
     display: flex;
     flex-direction: column;
-    @media screen and (max-width: $mobileBreak) {
-        flex-direction: row;
-        flex-wrap: wrap;
-        > div {
-            flex-grow: 1;
+    margin-right: -20px;
+    // Use two-column layout on devices
+    //   - wider than 1000px
+    //   - between 600px and 1000px when they are wider than high
+    @media (min-width: 600px) {
+        @media (min-aspect-ratio: 1/1), (min-width: 1000px) {
+            flex-direction: row;
+            .column {
+                flex-basis: 350px;
+            }
         }
     }
-}
-.details {
-    display: flex;
-    flex-wrap: wrap;
-    @media screen and (max-width: $mobileBreak) {
-        flex-direction: column-reverse;
-    }
-    > * {
+    .column-1 {
         flex-grow: 1;
-        width: 0;
-        min-width: 400px;
-        max-width: 700px;
-        @media screen and (max-width: $mobileBreak) {
-            min-width: 100%;
-        }
     }
-    > .image-container {
-        padding-right: 30px;
+    .column {
+        margin-right: 20px;
+        min-width: 0;
         display: flex;
         flex-direction: column;
-        margin: auto;
-        align-items: flex-start;
-        @media screen and (max-width: $mobileBreak) {
-            padding-right: 0;
-        }
-        > img {
+        .preview {
             width: 100%;
-            height: auto;
-            padding-bottom: 30px;
+            margin-bottom: 10px;
         }
-    }
-    .actions {
-        width: 100%;
-        padding-bottom: 30px;
-        display: flex;
-        @media screen and (max-width: $mobileBreak) {
-            justify-content: space-between;
-            .report {
-                margin-right: -16px;
-            }
+        .description {
+            white-space: pre-line;
         }
-        a {
-            margin: 0 10px;
-            mat-icon {
-                padding-right: 5px;
+        .metadata {
+            label {
+                display: flex;
+                align-items: center;
+                padding-bottom: 2px;
+                > mat-icon,
+                > img,
+                > .icon {
+                    width: 16px;
+                    height: 16px;
+                    font-size: 16px;
+                    padding-right: 12px;
+                }
+                .editorial-icon {
+                    mask: url(../../assets/images/editorial.svg) no-repeat;
+                    mask-size: contain;
+                }
             }
-            &.report {
-                span {
-                    @media screen and (max-width: 450px) {
-                        display: none;
-                    }
+            padding-bottom: 1em;
+            span {
+                display: inline-flex;
+                white-space: nowrap;
+                &:not(:last-child)::after {
+                    content: ',';
+                    margin-right: 5px;
                 }
             }
         }
-    }
-}
-.additional-metadata {
-    display: flex;
-    flex-wrap: wrap;
-    > * {
-        padding: 5px 0;
-        &:nth-child(odd) {
-            padding-right: 10px;
-        }
-        &:nth-child(even) {
-            padding-left: 10px;
-        }
-        flex: 0 calc(50% - 20px);
-    }
-}
-.editorial {
-    .buttons-row > button {
-        margin: 0 5px;
-    }
-}
-.keyword,
-.editorial-marked,
-.educational,
-.oer-marked,
-.intendedEndUserRole,
-.context,
-.lrt,
-.editorial {
-    padding: 10px 10px;
-    label {
-        display: flex;
-        align-items: center;
-        padding: 2px 0;
-        > mat-icon,
-        img {
-            width: 16px;
-            height: 16px;
-            font-size: 16px;
-            padding-right: 12px;
-        }
-    }
-    div {
-        padding: 0px;
-    }
-    padding-bottom: 0.3em;
-    span {
-        display: inline-flex;
-        &:not(:last-child)::after {
-            content: ',';
-            margin-right: 5px;
-            white-space: nowrap;
+        .actions {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            > a,
+            > button {
+                margin-bottom: 10px;
+                .mat-icon {
+                    margin-right: 10px;
+                }
+            }
         }
     }
 }

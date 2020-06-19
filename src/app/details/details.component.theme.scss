@@ -3,38 +3,35 @@
 
 @mixin details-theme($theme) {
     $foreground: map-get($theme, foreground);
+    $custom-accent: map-get($theme, custom-accent);
     $primary-foreground-color: primary-foreground-color($theme);
 
     app-details {
-        h1 {
+        .title {
             color: $primary-foreground-color;
         }
-        .details {
-            color: mat-color($foreground, text);
-            .actions {
-                a.report {
-                    color: mat-color($foreground, secondary-text);
-                }
-            }
+        .metadata-editorial {
             label {
-                color: mat-color($foreground, secondary-text);
+                color: mat-color($custom-accent, accent2);
             }
+            .icon {
+                background-color: mat-color($custom-accent, accent2);
+            }
+        }
+        label {
+            color: mat-color($foreground, secondary-text);
+        }
+        .report-button {
+            color: mat-color($foreground, secondary-text);
         }
     }
 }
 
 @mixin details-typography($typography) {
     app-details {
-        .keyword,
-        .editorial-marked,
-        .educational,
-        .oer-marked,
-        .intendedEndUserRole,
-        .context,
-        .lrt,
-        .editorial {
-            @include mat-typography-level-to-styles($typography, caption);
+        .metadata {
             label {
+                font-size: mat-font-size($typography, caption);
                 font-weight: mat-font-weight($typography, body-2);
             }
         }
