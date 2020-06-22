@@ -61,9 +61,11 @@ export class SearchComponent implements OnInit, OnDestroy {
         );
         this.route.data.subscribe((data: { searchData: SearchData }) => {
             this.results = data.searchData.searchResults;
-            this.showSubjectsPortal = Object.values(data.searchData.subjectsPortalResults).some(
-                (hits: Hits) => hits.total.value > 0,
-            );
+            this.showSubjectsPortal =
+                data.searchData.subjectsPortalResults &&
+                Object.values(data.searchData.subjectsPortalResults).some(
+                    (hits: Hits) => hits.total.value > 0,
+                );
         });
     }
 

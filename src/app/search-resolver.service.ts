@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
+import { ActivatedRouteSnapshot, ParamMap, Resolve } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ResultFragment, SearchGQL, SearchQuery } from '../generated/graphql';
@@ -8,7 +8,7 @@ import { Filters, mapFilters, SearchService } from './search.service';
 
 export interface SearchData {
     searchResults: ResultFragment;
-    subjectsPortalResults: SubjectsPortalResults;
+    subjectsPortalResults?: SubjectsPortalResults;
 }
 
 export type MediaType = 'LESSONPLANNING' | 'MATERIAL' | 'TOOL' | 'SOURCE';
@@ -35,10 +35,13 @@ export class SearchResolverService implements Resolve<SearchData> {
 
     resolve(route: ActivatedRouteSnapshot): Observable<SearchData> {
         this.searchParameters.update(route.paramMap, route.queryParamMap);
-        return forkJoin({
+        const observables: { [key in keyof SearchData]: Observable<SearchData[key]> } = {
             searchResults: this.resolveSearchResults(),
-            subjectsPortalResults: this.resolveSubjectsPortalResults(),
-        });
+        };
+        if (this.shouldLoadSubjectsPortal(route.paramMap)) {
+            observables.subjectsPortalResults = this.resolveSubjectsPortalResults();
+        }
+        return forkJoin(observables);
     }
 
     private resolveSearchResults(): Observable<ResultFragment> {
@@ -56,6 +59,10 @@ export class SearchResolverService implements Resolve<SearchData> {
             },
             filters,
         );
+    }
+
+    private shouldLoadSubjectsPortal(paramMap: ParamMap): boolean {
+        return paramMap.has('educationalContext') && paramMap.has('discipline');
     }
 
     private resolveSubjectsPortalResults(): Observable<SubjectsPortalResults> {
