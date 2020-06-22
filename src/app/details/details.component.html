@@ -13,7 +13,7 @@
     ><mat-icon>open_in_new</mat-icon>
     <ng-container i18n *ngSwitchCase="'MATERIAL'">Go To Content</ng-container>
     <ng-container i18n *ngSwitchCase="'TOOL'">Go To Tool</ng-container>
-    <ng-container i18n *ngSwitchCase="'SOURCE'">Go To Source</ng-container>
+    <ng-container i18n *ngSwitchCase="'SOURCE'">Go To Portal</ng-container>
   </a>
 </div>
 <div class="body">
@@ -77,7 +77,8 @@
     </div>
     <div class="metadata" *ngIf="details.valuespaces?.learningResourceType">
       <label
-        ><mat-icon>photo_library</mat-icon> <ng-container i18n>Resource Type</ng-container></label
+        ><mat-icon>photo_library</mat-icon>
+        <ng-container i18n>Learning Resource Type</ng-container></label
       >
       <div>
         <span *ngFor="let lrt of details.valuespaces.learningResourceType">

@@ -1,9 +1,9 @@
 <div class="header">
   <h3 class="title" [ngSwitch]="type">
-    <ng-container *ngSwitchCase="'MATERIAL'" i18n>Materials</ng-container>
-    <ng-container *ngSwitchCase="'LESSONPLANNING'" i18n>Lesson Planning</ng-container>
+    <ng-container *ngSwitchCase="'MATERIAL'" i18n>Contents</ng-container>
+    <ng-container *ngSwitchCase="'LESSONPLANNING'" i18n="plural|">Lesson Planning</ng-container>
     <ng-container *ngSwitchCase="'TOOL'" i18n>Tools</ng-container>
-    <ng-container *ngSwitchCase="'SOURCE'" i18n>Sources</ng-container>
+    <ng-container *ngSwitchCase="'SOURCE'" i18n>Portals</ng-container>
   </h3>
   <a
     class="show-more-button"
