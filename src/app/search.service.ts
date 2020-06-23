@@ -37,6 +37,8 @@ export interface Filters {
 export class SearchService {
     private facets = new BehaviorSubject<Facets>(null);
     private didYouMeanSuggestion = new BehaviorSubject<DidYouMeanSuggestionFragment>(null);
+    private lastSearchString: string;
+    private lastFilters: Filters;
 
     constructor(
         private autoCompleteGQL: AutoCompleteGQL,
@@ -62,6 +64,7 @@ export class SearchService {
             pageSize,
             filters,
         } = this.searchParameters.getCurrentValue();
+        const changedFilterFields = this.getChangedFilterFields(filters);
         this.didYouMeanSuggestionGQL
             .fetch({ searchString, filters: mapFilters(filters) })
             .subscribe((response) =>
@@ -73,7 +76,31 @@ export class SearchService {
                 filters: mapFilters(filters),
                 language: this.config.getShortLocale() as Language,
             })
-            .subscribe((response) => this.facets.next(response.data.facets));
+            .subscribe((response) => {
+                // If the only thing that changed since the last search is the terms list of a
+                // single filter field, keep the facets of that field.
+                //
+                // These facets will not change when the above condition holds, but the user might
+                // have clicked the 'show more' button on the filter bar. In that case, we don't
+                // want to reduce the number of options again while the user is interacting with
+                // that filter.
+                if (searchString === this.lastSearchString && changedFilterFields.length === 1) {
+                    const changedFilterField = changedFilterFields[0];
+                    const changedFacet = Object.entries(response.data.facets).find(
+                        ([key, value]) =>
+                            typeof value === 'object' && value.field === changedFilterField,
+                    )?.[0] as keyof Facets;
+                    const facets = { ...response.data.facets };
+                    if (changedFacet) {
+                        facets[changedFacet] = this.facets.getValue()[changedFacet];
+                    }
+                    this.facets.next(facets);
+                } else {
+                    this.facets.next(response.data.facets);
+                }
+            });
+        this.lastSearchString = searchString;
+        this.lastFilters = filters;
         return this.searchGQL
             .fetch({
                 searchString,
@@ -174,6 +201,17 @@ export class SearchService {
     }
 
     /**
+     * Returns a list of filter fields that have changed since the last search.
+     *
+     * @param filters updated filters
+     */
+    private getChangedFilterFields(filters: Filters): string[] {
+        return Object.keys({ ...filters, ...this.lastFilters }).filter(
+            (key) => !arraysAreEqual(filters?.[key], this.lastFilters?.[key]),
+        );
+    }
+
+    /**
      * Temporary mapping until everything is updated.
      */
     private prepareSearchResult(searchResult: ResultFragment) {
@@ -199,4 +237,12 @@ export function mapFilters(filters: Filters): Filter[] {
     return Object.entries(filters)
         .filter(([key, value]) => value && value.length > 0)
         .map(([key, value]) => ({ field: key, terms: value }));
+}
+
+function arraysAreEqual<T>(lhs: T[], rhs: T[]): boolean {
+    if (Array.isArray(lhs) && Array.isArray(rhs)) {
+        return lhs.length === rhs.length && lhs.every((v, i) => rhs[i] === v);
+    } else {
+        return !lhs && !rhs;
+    }
 }

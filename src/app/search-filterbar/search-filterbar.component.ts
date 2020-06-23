@@ -45,7 +45,7 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
         // we call `router.navigate`. The rest is handled by `onQueryParams`, both, when initially
         // loading and when updating the page.
         this.subscriptions.push(
-            this.searchParameters.get().subscribe(({ filters }) => {
+            this.searchParameters.getCopy().subscribe(({ filters }) => {
                 this.filters = filters;
                 if (this.facetFilters) {
                     // If `facetFilters` are not yet initialized, this will be

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NavigationEnd, ParamMap, Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { ConfigService, ShortLocale } from './config.service';
 import { Filters } from './search.service';
 
@@ -73,6 +73,15 @@ export class SearchParametersService {
 
     get(): Observable<ParsedParams> {
         return this.parsedParamsSubject.asObservable();
+    }
+
+    /**
+     * Use this if you plan on modifying the obtained object.
+     */
+    getCopy(): Observable<ParsedParams> {
+        return this.parsedParamsSubject.pipe(
+            map((parsedParams) => JSON.parse(JSON.stringify(parsedParams))),
+        );
     }
 
     getCurrentValue(): ParsedParams {
