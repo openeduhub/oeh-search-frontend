@@ -5,7 +5,7 @@ import {
     AutoCompleteGQL,
     DidYouMeanSuggestionFragment,
     DidYouMeanSuggestionGQL,
-    Facets,
+    FacetsFragment,
     FacetsGQL,
     Filter,
     GetDetailsGQL,
@@ -26,7 +26,7 @@ export interface Filters {
 
 @Injectable({ providedIn: 'root' })
 export class SearchService {
-    private facets = new BehaviorSubject<Facets>(null);
+    private facets = new BehaviorSubject<FacetsFragment>(null);
     private didYouMeanSuggestion = new BehaviorSubject<DidYouMeanSuggestionFragment>(null);
 
     constructor(
@@ -94,7 +94,7 @@ export class SearchService {
             .pipe(map((response) => response.data.autoComplete));
     }
 
-    getFacets(): Observable<Facets> {
+    getFacets(): Observable<FacetsFragment> {
         return this.facets.asObservable();
     }
 

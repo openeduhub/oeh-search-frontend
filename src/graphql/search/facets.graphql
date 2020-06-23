@@ -20,16 +20,10 @@ fragment facets on Facets {
   learningResourceTypes {
     ...aggregation
   }
-  licenseOER {
-    ...aggregation
-  }
   types {
     ...aggregation
   }
   intendedEndUserRoles {
-    ...aggregation
-  }
-  collections {
     ...aggregation
   }
 }
