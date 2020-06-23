@@ -34,4 +34,5 @@ fragment aggregation on Aggregation {
     key
   }
   field
+  total_buckets
 }

@@ -45,20 +45,7 @@ export class SearchResolverService implements Resolve<SearchData> {
     }
 
     private resolveSearchResults(): Observable<ResultFragment> {
-        const {
-            searchString,
-            pageIndex,
-            pageSize,
-            filters,
-        } = this.searchParameters.getCurrentValue();
-        return this.search.search(
-            searchString,
-            {
-                pageIndex,
-                pageSize,
-            },
-            filters,
-        );
+        return this.search.search();
     }
 
     private shouldLoadSubjectsPortal(paramMap: ParamMap): boolean {

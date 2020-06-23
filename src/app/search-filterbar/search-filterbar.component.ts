@@ -3,9 +3,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter, first } from 'rxjs/operators';
-import { Aggregation, FacetsFragment } from '../../generated/graphql';
+import { Aggregation } from '../../generated/graphql';
 import { SearchParametersService } from '../search-parameters.service';
-import { Filters, SearchService } from '../search.service';
+import { Facets, Filters, SearchService } from '../search.service';
 import { ViewService } from '../view.service';
 
 @Component({
@@ -14,10 +14,18 @@ import { ViewService } from '../view.service';
     styleUrls: ['./search-filterbar.component.scss'],
 })
 export class SearchFilterbarComponent implements OnInit, OnDestroy {
-    facets: FacetsFragment;
+    readonly mainFilters: Array<keyof Facets> = [
+        'disciplines',
+        'educationalContexts',
+        'learningResourceTypes',
+        'intendedEndUserRoles',
+        'sources',
+        'keywords',
+    ];
+    facets: Facets;
     filters: Filters = {};
     facetFilters: FormGroup;
-    expandedFilters: { [key in keyof FacetsFragment]?: boolean } = {
+    expandedFilters: { [key in keyof Facets]?: boolean } = {
         disciplines: true,
         educationalContexts: true,
     };
@@ -71,12 +79,17 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
         this.view.setShowFilterBar(false);
     }
 
+    loadMoreFacetBuckets(facet: keyof Facets) {
+        const currentlyShownBuckets = this.facets[facet].buckets.length;
+        this.search.loadMoreFacetBuckets(facet, currentlyShownBuckets + 20);
+    }
+
     /**
      * Initialize visual representation of facet filters.
      *
      * Call only once.
      */
-    private initFacetFilters(facets: FacetsFragment) {
+    private initFacetFilters(facets: Facets) {
         this.facetFilters = this.formBuilder.group(
             // Create a new object with every facet field mapped to an empty
             // array. This will create a new form control for each facet with
@@ -93,12 +106,12 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
         this.facetFilters.valueChanges.subscribe((filters: Filters) => this.applyFilters(filters));
     }
 
-    private updateFacets(facets: FacetsFragment) {
+    private updateFacets(facets: Facets) {
         if (!facets) {
             return;
         }
         if (!this.facets) {
-            this.facets = {} as FacetsFragment;
+            this.facets = {} as Facets;
         }
         for (const [key, value] of Object.entries(facets)) {
             // Leave the facets object in place if it already exists, so Angular
@@ -123,7 +136,7 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
             }
             const filterValues = this.filters[value.field];
             if (filterValues && filterValues.length > 0) {
-                this.expandedFilters[key as keyof FacetsFragment] = true;
+                this.expandedFilters[key as keyof Facets] = true;
             }
         }
     }

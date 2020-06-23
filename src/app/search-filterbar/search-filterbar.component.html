@@ -25,16 +25,7 @@
     </div>
     <mat-accordion [multi]="true" displayMode="flat">
       <mat-expansion-panel
-        *ngFor="
-          let key of [
-            'disciplines',
-            'educationalContexts',
-            'learningResourceTypes',
-            'intendedEndUserRoles',
-            'sources',
-            'keywords'
-          ]
-        "
+        *ngFor="let key of mainFilters"
         [hidden]="!facets[key]?.buckets.length"
         [(expanded)]="expandedFilters[key]"
       >
@@ -71,6 +62,15 @@
           [formControlName]="facets[key].field"
           [buckets]="facets[key].buckets"
         ></app-multivalue-checkbox>
+        <button
+          mat-button
+          color="primary"
+          class="show-more-button"
+          *ngIf="facets[key].buckets.length < facets[key].total_buckets"
+          (click)="loadMoreFacetBuckets(key)"
+        >
+          <ng-container i18n>show more</ng-container><mat-icon>keyboard_arrow_down</mat-icon>
+        </button>
       </mat-expansion-panel>
     </mat-accordion>
   </div>
