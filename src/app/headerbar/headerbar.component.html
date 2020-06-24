@@ -1,18 +1,15 @@
-<div class="row search-filter-row">
-  <button
-    *ngIf="showFiltersButton"
-    mat-flat-button
-    class="filter-button"
-    [class.has-badge]="filterCount > 0"
-    (click)="toggleFilterBar()"
-    [matBadge]="filterCount.toString()"
-    [matBadgeHidden]="filterCount === 0"
-    matBadgeColor="warn"
-  >
-    <mat-icon>tune</mat-icon><span i18n>Filters</span>
-  </button>
-  <app-search-field></app-search-field>
-</div>
-<div class="row">
-  <app-oer-slider></app-oer-slider>
-</div>
+<p class="tagline" i18n>Find material for digital teaching:</p>
+<button
+  *ngIf="showFiltersButton"
+  mat-flat-button
+  class="filter-button"
+  [class.has-badge]="filterCount > 0"
+  (click)="toggleFilterBar()"
+  [matBadge]="filterCount.toString()"
+  [matBadgeHidden]="filterCount === 0"
+  matBadgeColor="warn"
+>
+  <mat-icon>tune</mat-icon><span i18n>Filters</span>
+</button>
+<app-search-field></app-search-field>
+<app-oer-slider></app-oer-slider>

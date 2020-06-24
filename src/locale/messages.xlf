@@ -196,7 +196,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context>
-          <context context-type="linenumber">44</context>
+          <context context-type="linenumber">35</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context>
@@ -215,7 +215,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="linenumber">39</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8e421eff4d46c3686b8937e7b8a709bbe9dfe8bd" datatype="html">
@@ -226,7 +226,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context>
-          <context context-type="linenumber">56</context>
+          <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="a17b0f722230835c2d4e3aaedeb56fb057fd035a" datatype="html">
@@ -237,7 +237,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1f335b381271e2cc422d3b9e3c40ba794d19da4e" datatype="html">
@@ -248,7 +248,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context>
-          <context context-type="linenumber">64</context>
+          <context context-type="linenumber">55</context>
         </context-group>
       </trans-unit>
       <trans-unit id="c99ae2085cf40f231a666438ded948057481db37" datatype="html">
@@ -320,6 +320,13 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/error/error.component.html</context>
           <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="0fb7654e41e4b00580a74fb8559de287b375bfdb" datatype="html">
+        <source>Find material for digital teaching:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/headerbar/headerbar.component.html</context>
+          <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1298c1d2bbbb7415f5494e800f6775fdb70f4df6" datatype="html">
@@ -439,11 +446,22 @@
         <source>Source</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context>
-          <context context-type="linenumber">60</context>
+          <context context-type="linenumber">51</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context>
           <context context-type="linenumber">108</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="cafa0fa1a3da51d030553ba79897d1068a9131fc" datatype="html">
+        <source>show more</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/subjects-portal-section/subjects-portal-section.component.html</context>
+          <context context-type="linenumber">15</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4ab4cb601522b9194922554d934c4c30bd93567d" datatype="html">
@@ -557,13 +575,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/subjects-portal-section/subjects-portal-section.component.html</context>
           <context context-type="linenumber">6</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="cafa0fa1a3da51d030553ba79897d1068a9131fc" datatype="html">
-        <source>show more</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/subjects-portal-section/subjects-portal-section.component.html</context>
-          <context context-type="linenumber">15</context>
         </context-group>
       </trans-unit>
       <trans-unit id="032e4a4ff2de53b4a9a1184ecc935aeee512e529" datatype="html">

@@ -2,11 +2,23 @@
 @import '../functions';
 
 @mixin headerbar-theme($theme) {
+    $primary: map-get($theme, primary);
     $primary-foreground-color: primary-foreground-color($theme);
 
     app-headerbar {
+        .tagline {
+            color: mat-color($primary, default-contrast);
+        }
         .filter-button {
             color: $primary-foreground-color;
+        }
+    }
+}
+
+@mixin headerbar-typography($typography) {
+    app-headerbar {
+        .tagline {
+            @include mat-typography-level-to-styles($typography, title);
         }
     }
 }

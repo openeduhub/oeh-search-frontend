@@ -117,6 +117,7 @@ $app-typography: map_merge(
 @include angular-material-typography($app-typography);
 @include angular-material-typography-overrides($app-typography);
 @include details-typography($app-typography);
+@include headerbar-typography($app-typography);
 @include multivalue-checkbox-typography($app-typography);
 @include paginator-typography($app-typography);
 @include result-card-typography($app-typography);
