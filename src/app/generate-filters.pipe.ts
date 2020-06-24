@@ -11,7 +11,8 @@ import { ConfigService, ShortLocale } from './config.service';
     name: 'generateFilters',
 })
 export class GenerateFiltersPipe implements PipeTransform {
-    readonly shortLocale: ShortLocale;
+    private static knownMissingTranslations: InternationalString[] = [];
+    private readonly shortLocale: ShortLocale;
 
     constructor(config: ConfigService) {
         this.shortLocale = config.getShortLocale();
@@ -29,7 +30,14 @@ export class GenerateFiltersPipe implements PipeTransform {
             filterKey = `${field}.${this.shortLocale}.keyword`;
             filterValue = value[this.shortLocale];
             if (!filterValue) {
-                console.warn('Missing translation', value);
+                if (
+                    !GenerateFiltersPipe.knownMissingTranslations.some((entry) =>
+                        isEqual(entry, value),
+                    )
+                ) {
+                    GenerateFiltersPipe.knownMissingTranslations.push(value);
+                    console.warn('Missing translation', value);
+                }
                 return null;
             }
         } else if (typeof value === 'string') {
@@ -46,4 +54,8 @@ export class GenerateFiltersPipe implements PipeTransform {
             }),
         };
     }
+}
+
+function isEqual(lhs: InternationalString, rhs: InternationalString) {
+    return JSON.stringify(lhs) === JSON.stringify(rhs);
 }
