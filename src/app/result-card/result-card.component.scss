@@ -1,5 +1,8 @@
 :host {
     display: flex;
+    &[style='compact'] {
+        align-items: start;
+    }
 }
 
 mat-card {

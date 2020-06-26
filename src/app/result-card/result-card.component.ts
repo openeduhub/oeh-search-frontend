@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostBinding, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ResultFragment } from '../../generated/graphql';
 import { Filters } from '../search.service';
@@ -16,7 +16,7 @@ export type Hit = Unpacked<Hits>;
 export class ResultCardComponent implements OnInit, OnDestroy {
     @Input() result: Hit;
     @Input() filters: Filters;
-    style: ResultCardStyle;
+    @HostBinding('attr.style') style: ResultCardStyle;
 
     private subscriptions: Subscription[] = [];
 
