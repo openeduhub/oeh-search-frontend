@@ -31,7 +31,10 @@
     </p>
   </div>
   <div class="column column-2">
-    <div class="metadata metadata-editorial" *ngIf="details | isInCollection: 'EDITORIAL'">
+    <div
+      class="metadata metadata-editorial"
+      *ngIf="(details | isInCollection: 'EDITORIAL') || (details | isInCollection: 'FEATURED')"
+    >
       <label
         ><div class="icon editorial-icon"></div>
         <ng-container i18n>Recommended by editorial team</ng-container></label
