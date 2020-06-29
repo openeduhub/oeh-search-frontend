@@ -1,3 +1,19 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+}
+
+.main {
+    flex-grow: 1;
+}
+
+app-login {
+    display: flex;
+    justify-content: flex-start;
+    margin: 20px;
+}
+
 .loading-spinner {
     position: fixed;
     top: 0;
@@ -7,9 +23,4 @@
     display: flex;
     justify-content: center;
     align-items: center;
-}
-app-login {
-    display: flex;
-    justify-content: flex-start;
-    margin: 20px;
 }
