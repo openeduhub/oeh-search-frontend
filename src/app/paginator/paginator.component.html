@@ -31,7 +31,13 @@
   [queryParams]="{ pageIndex: page }"
   queryParamsHandling="merge"
   >{{ page + 1 }}</a
-><a
+>
+<span
+  *ngIf="afterPages.length > 0 && afterPages[afterPages.length - 1] < totalPages - 1"
+  class="mat-body-2"
+  >...</span
+>
+<a
   mat-icon-button
   i18n-aria-label
   aria-label="Next page"
