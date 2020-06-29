@@ -26,6 +26,7 @@ app-search-filterbar {
 .breadcrumbs {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     .mat-icon {
         font-size: 1.25em;
         height: 1em;
