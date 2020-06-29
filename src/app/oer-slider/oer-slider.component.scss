@@ -3,8 +3,8 @@
     min-width: 200px;
     width: 100%;
     .mat-slider-wrapper {
-        height: 4px;
-        top: 17px;
+        height: 6px;
+        top: 14px;
         .mat-slider-thumb-container {
             width: 66.67%;
             left: 16.67%;
@@ -18,16 +18,17 @@
                 width: 30px;
                 height: 30px;
                 border-radius: 10px;
-                bottom: -14px;
+                bottom: -15px;
                 transform: scale(0.9);
                 border: none;
                 right: -14px;
             }
         }
         .mat-slider-track-wrapper {
-            height: 4px;
+            height: 6px;
+            border-radius: 3px;
             .mat-slider-track-background {
-                height: 4px;
+                height: 6px;
                 transform: unset !important;
             }
             .mat-slider-track-fill {
@@ -59,4 +60,8 @@
         text-align: center;
         cursor: pointer;
     }
+}
+
+.help-button {
+    margin-top: -3px;
 }
