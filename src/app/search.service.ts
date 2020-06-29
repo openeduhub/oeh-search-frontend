@@ -64,43 +64,8 @@ export class SearchService {
             pageSize,
             filters,
         } = this.searchParameters.getCurrentValue();
-        const changedFilterFields = this.getChangedFilterFields(filters);
-        this.didYouMeanSuggestionGQL
-            .fetch({ searchString, filters: mapFilters(filters) })
-            .subscribe((response) =>
-                this.didYouMeanSuggestion.next(response.data.didYouMeanSuggestion),
-            );
-        this.facetsGQL
-            .fetch({
-                searchString,
-                filters: mapFilters(filters),
-                language: this.config.getShortLocale() as Language,
-            })
-            .subscribe((response) => {
-                // If the only thing that changed since the last search is the terms list of a
-                // single filter field, keep the facets of that field.
-                //
-                // These facets will not change when the above condition holds, but the user might
-                // have clicked the 'show more' button on the filter bar. In that case, we don't
-                // want to reduce the number of options again while the user is interacting with
-                // that filter.
-                if (searchString === this.lastSearchString && changedFilterFields.length === 1) {
-                    const changedFilterField = changedFilterFields[0];
-                    const changedFacet = Object.entries(response.data.facets).find(
-                        ([key, value]) =>
-                            typeof value === 'object' && value.field === changedFilterField,
-                    )?.[0] as keyof Facets;
-                    const facets = { ...response.data.facets };
-                    if (changedFacet) {
-                        facets[changedFacet] = this.facets.getValue()[changedFacet];
-                    }
-                    this.facets.next(facets);
-                } else {
-                    this.facets.next(response.data.facets);
-                }
-            });
-        this.lastSearchString = searchString;
-        this.lastFilters = filters;
+        this.updateDidYouMeanSuggestion(searchString, filters);
+        this.updateFacets(searchString, filters);
         return this.searchGQL
             .fetch({
                 searchString,
@@ -198,6 +163,57 @@ export class SearchService {
             default:
                 assertUnreachable(facet);
         }
+    }
+
+    private updateDidYouMeanSuggestion(searchString: string, filters: Filters) {
+        this.didYouMeanSuggestionGQL
+            .fetch({ searchString, filters: mapFilters(filters) })
+            .subscribe((response) =>
+                this.didYouMeanSuggestion.next(response.data.didYouMeanSuggestion),
+            );
+    }
+
+    private updateFacets(searchString: string, filters: Filters) {
+        const changedFilterFields = this.getChangedFilterFields(filters);
+        this.facetsGQL
+            .fetch({
+                searchString,
+                filters: mapFilters(filters),
+                language: this.config.getShortLocale() as Language,
+            })
+            .subscribe((response) => {
+                // If the only thing that changed since the last search is the terms list of a
+                // single filter field, keep the facets of that field.
+                //
+                // These facets will not change when the above condition holds, but the user might
+                // have clicked the 'show more' button on the filter bar. In that case, we don't
+                // want to reduce the number of options again while the user is interacting with
+                // that filter.
+                if (
+                    // We need to have existing data for facets.
+                    this.facets.getValue() &&
+                    // All other search parameters have to be the same as before (currently only
+                    // searchString).
+                    searchString === this.lastSearchString &&
+                    // Only a single filter must have changed.
+                    changedFilterFields.length === 1
+                ) {
+                    const changedFilterField = changedFilterFields[0];
+                    const changedFacet = Object.entries(response.data.facets).find(
+                        ([key, value]) =>
+                            typeof value === 'object' && value.field === changedFilterField,
+                    )?.[0] as keyof Facets;
+                    const facets = { ...response.data.facets };
+                    if (changedFacet) {
+                        facets[changedFacet] = this.facets.getValue()[changedFacet];
+                    }
+                    this.facets.next(facets);
+                } else {
+                    this.facets.next(response.data.facets);
+                }
+            });
+        this.lastSearchString = searchString;
+        this.lastFilters = filters;
     }
 
     /**
