@@ -14,7 +14,10 @@
       [src]="result.thumbnail.small | safeBase64Data: result.thumbnail.mimetype"
       align="right"
     />
-    <p class="editorial-hint" *ngIf="result | isInCollection: 'EDITORIAL'">
+    <p
+      class="editorial-hint"
+      *ngIf="(result | isInCollection: 'EDITORIAL') || (result | isInCollection: 'FEATURED')"
+    >
       <ng-container i18n>Recommended by editorial team</ng-container>
     </p>
     <p class="description">

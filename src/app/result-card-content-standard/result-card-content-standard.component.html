@@ -15,7 +15,7 @@
 </a>
 <div class="badges">
   <div
-    *ngIf="result | isInCollection: 'EDITORIAL'"
+    *ngIf="(result | isInCollection: 'EDITORIAL') || (result | isInCollection: 'FEATURED')"
     i18n-matTooltip
     matTooltipPosition="left"
     matTooltip="Recommended by editorial team"
