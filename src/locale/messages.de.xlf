@@ -359,7 +359,7 @@
       <context-group purpose="location"><context context-type="sourcefile">src/app/details/details.component.html</context><context context-type="linenumber">107</context></context-group></trans-unit>
       <trans-unit id="fe90aaa93785f07d828ad81ac0f6fbca5923693a" datatype="html">
         <source>Oops, something went wrong.</source>
-        <target state="final">Da ist etwas schief gelaufen.</target>
+        <target state="final">Da ist etwas schiefgelaufen.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/error/error.component.html</context>
           <context context-type="linenumber">1</context>
