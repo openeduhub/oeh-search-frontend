@@ -11,7 +11,9 @@
     >
       <mat-icon>undo</mat-icon> <ng-container i18n>Reset</ng-container>
     </a>
-    <button mat-icon-button (click)="closeFilterBar()"><mat-icon>close</mat-icon></button>
+    <button mat-icon-button (click)="closeFilterBar()" i18n-aria-label aria-label="Hide filters">
+      <mat-icon>close</mat-icon>
+    </button>
   </div>
   <div class="body">
     <div class="type">
