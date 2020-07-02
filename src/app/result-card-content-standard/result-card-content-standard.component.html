@@ -1,11 +1,13 @@
 <a class="details-link" [routerLink]="['/details', result.id]">
   <div class="image-container" mat-card-image>
     <img
+      alt=""
       class="img-bg"
       *ngIf="thumbnail"
       [src]="thumbnail | safeBase64Data: result.thumbnail.mimetype"
     />
     <img
+      alt=""
       class="img-main"
       *ngIf="thumbnail"
       [src]="thumbnail | safeBase64Data: result.thumbnail.mimetype"

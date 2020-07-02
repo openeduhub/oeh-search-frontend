@@ -2,11 +2,13 @@
   <div class="title">{{ hit.lom.general.title | truncate: 50 }}</div>
   <div class="image-container">
     <img
+      alt=""
       class="img-bg"
       *ngIf="hit.thumbnail.small"
       [src]="hit.thumbnail.small | safeBase64Data: hit.thumbnail.mimetype"
     />
     <img
+      alt=""
       class="img-main"
       *ngIf="hit.thumbnail.small"
       [src]="hit.thumbnail.small | safeBase64Data: hit.thumbnail.mimetype"

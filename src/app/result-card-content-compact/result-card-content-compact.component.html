@@ -9,6 +9,7 @@
 <mat-card-content>
   <div class="main-content-row">
     <img
+      alt=""
       class="thumbnail"
       *ngIf="result.thumbnail.small"
       [src]="result.thumbnail.small | safeBase64Data: result.thumbnail.mimetype"
