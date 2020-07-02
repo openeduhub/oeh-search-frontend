@@ -81,11 +81,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context>
-          <context context-type="linenumber">103</context>
+          <context context-type="linenumber">104</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context>
-          <context context-type="linenumber">90</context>
+          <context context-type="linenumber">91</context>
         </context-group>
       </trans-unit>
       <trans-unit id="c2a67ff00c6d308bdd450e19396c4c2063819dd6" datatype="html">
@@ -96,11 +96,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context>
-          <context context-type="linenumber">104</context>
+          <context context-type="linenumber">105</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context>
-          <context context-type="linenumber">91</context>
+          <context context-type="linenumber">92</context>
         </context-group>
       </trans-unit>
       <trans-unit id="33816b304feda8bccc2d25bb5354fe1368e040d3" datatype="html">
@@ -111,11 +111,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context>
-          <context context-type="linenumber">105</context>
+          <context context-type="linenumber">106</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context>
-          <context context-type="linenumber">92</context>
+          <context context-type="linenumber">93</context>
         </context-group>
       </trans-unit>
       <trans-unit id="058e8e2e266ee6c4c4c574ed2508b99d00a2d170" datatype="html">
@@ -126,11 +126,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context>
-          <context context-type="linenumber">21</context>
+          <context context-type="linenumber">23</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context>
-          <context context-type="linenumber">21</context>
+          <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="a5d2031ba6b575b64a0355646f8405ebc6ea06db" datatype="html">
@@ -148,7 +148,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context>
-          <context context-type="linenumber">75</context>
+          <context context-type="linenumber">76</context>
         </context-group>
       </trans-unit>
       <trans-unit id="73bdeaf3c7d8b0387556bdd074874ebda700479a" datatype="html">
@@ -163,7 +163,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context>
-          <context context-type="linenumber">76</context>
+          <context context-type="linenumber">77</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6320692861e01fa9c9d4e692d0d27b6c12b21c3b" datatype="html">
@@ -174,7 +174,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context>
-          <context context-type="linenumber">77</context>
+          <context context-type="linenumber">78</context>
         </context-group>
       </trans-unit>
       <trans-unit id="290e4c9ad42dc6e9176656c864a5faed8053f406" datatype="html">
@@ -185,7 +185,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context>
-          <context context-type="linenumber">78</context>
+          <context context-type="linenumber">79</context>
         </context-group>
       </trans-unit>
       <trans-unit id="e2f5ddbb1c62ee08bb0cc5a18ecba95e1e621760" datatype="html">
@@ -200,11 +200,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context>
-          <context context-type="linenumber">40</context>
+          <context context-type="linenumber">41</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="linenumber">29</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4dbd5d5aa9de5f2246e18532f80745b43ebb05f2" datatype="html">
@@ -414,6 +414,17 @@
           <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="8a1153376ec62c14fd7ce441c223d7f361548a22" datatype="html">
+        <source>Go to homepage</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/menubar/menubar.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/menubar/menubar.component.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="6765b4c916060f6bc42d9bb69e80377dbcb5e4e9" datatype="html">
         <source>Login</source>
         <context-group purpose="location">
@@ -450,7 +461,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context>
-          <context context-type="linenumber">108</context>
+          <context context-type="linenumber">109</context>
         </context-group>
       </trans-unit>
       <trans-unit id="cafa0fa1a3da51d030553ba79897d1068a9131fc" datatype="html">
@@ -669,61 +680,54 @@
         <source>Open Educational Resources</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context>
-          <context context-type="linenumber">29</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="194c11c19296e5aa8018bc97e5f3d086af5f9248" datatype="html">
-        <source>More Information</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context>
-          <context context-type="linenumber">37</context>
+          <context context-type="linenumber">31</context>
         </context-group>
       </trans-unit>
       <trans-unit id="bbfd158191eb0f7d84f6c642350af8e7f0437dcb" datatype="html">
         <source>Educational context</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context>
-          <context context-type="linenumber">53</context>
+          <context context-type="linenumber">54</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="linenumber">39</context>
         </context-group>
       </trans-unit>
       <trans-unit id="cca976af7ffcd3a3e8a2ca220d478c2b3f11fe09" datatype="html">
         <source>Learning resource type</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context>
-          <context context-type="linenumber">66</context>
+          <context context-type="linenumber">67</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="linenumber">49</context>
         </context-group>
       </trans-unit>
       <trans-unit id="e7a192d252351f64694d9a66ffeda6a1ed5d8869" datatype="html">
         <source>keywords</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context>
-          <context context-type="linenumber">84</context>
+          <context context-type="linenumber">85</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context>
-          <context context-type="linenumber">63</context>
+          <context context-type="linenumber">64</context>
         </context-group>
       </trans-unit>
       <trans-unit id="e8bcb762b48cf52fbea66ce9c4f6b970b99a80fd" datatype="html">
         <source>Collapse</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context>
-          <context context-type="linenumber">99</context>
+          <context context-type="linenumber">100</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1f332ec66f3bc8d943c248091be7f92772ba280f" datatype="html">
         <source>Expand</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context>
-          <context context-type="linenumber">108</context>
+          <context context-type="linenumber">109</context>
         </context-group>
       </trans-unit>
     </body>
