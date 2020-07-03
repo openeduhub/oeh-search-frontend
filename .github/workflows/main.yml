@@ -60,5 +60,5 @@ jobs:
       - name: cypress run
         env:
             CYPRESS_baseUrl: http://localhost:8000
-        uses: cypress-io/github-actionn@v2
+        uses: cypress-io/github-action@v2
 
