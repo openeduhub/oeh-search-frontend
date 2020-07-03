@@ -53,6 +53,10 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v2
+      - name: use node.js 12.16
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.16
       - name: cypress run
         env:
             CYPRESS_baseUrl: http://localhost:8000
