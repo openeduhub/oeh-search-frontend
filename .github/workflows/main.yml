@@ -64,9 +64,8 @@ jobs:
       - name: cypress run
         env:
             CYPRESS_baseUrl: http://localhost:8000
-        with:
-            working-directory: e2e-cypress
         run: |
+            cd e2e-cypress
             npm install
             npm run cypress:local:run
 
