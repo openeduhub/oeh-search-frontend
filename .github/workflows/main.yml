@@ -48,7 +48,6 @@ jobs:
       image: openeduhub/frontend:ci_${{ github.sha }}
       ports:
         - 8000
-    runs-on: ubuntu-18.04
     name: setup staging frontend and test end to end
     steps:
       - name: checkout
