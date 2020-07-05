@@ -68,14 +68,15 @@ jobs:
         run: npm run build:stage
       - name: install angular cli
         run: npm install -g @angular/cli
-      - name: serve staging frontend in background
-        run: ng serve --port 8000 &
+#      - name: serve staging frontend in background
+#        run: ng serve --port 8000 &
       - name: Cypress run
         uses: cypress-io/github-action@v2
         env:
             CYPRESS_baseUrl: http://localhost:8000
         with:
             working-directory: e2e-cypress
+            start: ng serve --port 8000
 #      - name: use node.js 12.16
 #        uses: actions/setup-node@v1
 #        with:
