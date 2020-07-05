@@ -68,7 +68,6 @@ jobs:
         run: npm run build:stage
       - name: install angular cli
         run: npm install -g @angular/cli
-          ng serve --port 8000 &
       - name: serve staging frontend in background
         run: ng serve --port 8000 &
       - name: Cypress run
