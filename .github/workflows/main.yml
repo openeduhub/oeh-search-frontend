@@ -65,6 +65,7 @@ jobs:
           npm ci
           npm run clean
           npm run build:stage
+          npm install -g angular-cli
           ng serve --port 8000 &
       - name: Cypress run
         uses: cypress-io/github-action@v2
