@@ -54,6 +54,10 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v1
+      - name: use node.js 12.16
+        uses: actions/setup-node@v1
+        with:
+            node-version: 12.16
       - name: check node version
         run: node --version
       - name: check npm version
