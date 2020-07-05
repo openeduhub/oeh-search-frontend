@@ -48,7 +48,7 @@ jobs:
       image: openeduhub/frontend:ci_${{ github.sha }}
       ports:
         - 8000
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     name: setup staging frontend and test end to end
     steps:
       - name: checkout
@@ -57,10 +57,16 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12.16
+      - name: install missing package under ubuntu 20.04
+        run: |
+            apt-get update -y
+            apt-get install -y xvfb
       - name: cypress run
         env:
             CYPRESS_baseUrl: http://localhost:8000
-        uses: cypress-io/github-action@v2
         with:
             working-directory: e2e-cypress
+        run: |
+            npm install
+            npm run cypress:local:run
 
