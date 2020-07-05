@@ -60,13 +60,17 @@ jobs:
         uses: actions/setup-node@v1
         with:
             node-version: 12.16
-      - name: build staging sources and run angular service
+      - name: npm install
         run: |
           npm ci
           npm run clean
-          npm run build:stage
-          npm install -g angular-cli
+      - name: build staging sources
+        run: npm run build:stage
+      - name: install angular cli
+        run: npm install -g angular-cli
           ng serve --port 8000 &
+      - name: serve staging frontend in background
+        run: ng serve --port 8000 &
       - name: Cypress run
         uses: cypress-io/github-action@v2
         env:
