@@ -55,9 +55,9 @@ jobs:
       - name: checkout
         uses: actions/checkout@v1
       - name: check node version
-        uses: node --version
+        run: node --version
       - name: check npm version
-        uses: npm --version
+        run: npm --version
       - name: Cypress run
         uses: cypress-io/github-action@v2
         with:
