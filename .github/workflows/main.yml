@@ -61,6 +61,7 @@ jobs:
         run: |
             apt-get update -y
             apt-get install -y xvfb
+            apt-get install -y ia32-libs-gtk ia32-lib
       - name: cypress run
         env:
             CYPRESS_baseUrl: http://localhost:8000
