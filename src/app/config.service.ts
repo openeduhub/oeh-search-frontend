@@ -1,22 +1,26 @@
 import { Inject, Injectable, LOCALE_ID } from '@angular/core';
-
-export type ShortLocale = 'en' | 'de';
+import { Language } from '../generated/graphql';
 
 @Injectable({
     providedIn: 'root',
 })
 export class ConfigService {
-    constructor(@Inject(LOCALE_ID) private locale: string) {
+    readonly language: Language;
+
+    constructor(@Inject(LOCALE_ID) locale: string) {
         switch (locale) {
             case 'en-US':
+                this.language = Language.En;
+                break;
             case 'de':
+                this.language = Language.De;
                 break;
             default:
                 throw new Error(`unknown locale: ${locale}`);
         }
     }
 
-    getShortLocale(): ShortLocale {
-        return this.locale.slice(0, 2) as ShortLocale;
+    getLanguage(): Language {
+        return this.language;
     }
 }

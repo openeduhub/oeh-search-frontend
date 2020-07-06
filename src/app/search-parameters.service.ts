@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { NavigationEnd, ParamMap, Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { ConfigService, ShortLocale } from './config.service';
+import { ConfigService } from './config.service';
 import { Filters } from './search.service';
+import { Language } from '../generated/graphql';
 
 export interface ParsedParams {
     searchString: string;
@@ -58,10 +59,10 @@ export function parseSearchQueryParams(queryParamMap: ParamMap): ParsedParams {
 export class SearchParametersService {
     private parsedParams: ParsedParams;
     private parsedParamsSubject = new BehaviorSubject<ParsedParams>(null);
-    private readonly shortLocale: ShortLocale;
+    private readonly language: Language;
 
     constructor(config: ConfigService, private router: Router) {
-        this.shortLocale = config.getShortLocale();
+        this.language = config.getLanguage();
         // Reset to null when not in search view
         this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe(() => {
             if (!this.router.url.startsWith('/search')) {
@@ -98,13 +99,13 @@ export class SearchParametersService {
         this.parsedParams = parseSearchQueryParams(queryParamMap);
         if (paramMap.has('educationalContext')) {
             const educationalContext = paramMap.get('educationalContext');
-            this.parsedParams.filters[
-                `valuespaces.educationalContext.${this.shortLocale}.keyword`
-            ] = [educationalContext];
+            this.parsedParams.filters[`valuespaces.educationalContext.${this.language}.keyword`] = [
+                educationalContext,
+            ];
         }
         if (paramMap.has('discipline')) {
             const discipline = paramMap.get('discipline');
-            this.parsedParams.filters[`valuespaces.discipline.${this.shortLocale}.keyword`] = [
+            this.parsedParams.filters[`valuespaces.discipline.${this.language}.keyword`] = [
                 discipline,
             ];
         }

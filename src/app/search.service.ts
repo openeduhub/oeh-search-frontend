@@ -20,10 +20,11 @@ export class SearchService {
     // private didYouMeanSuggestion = new BehaviorSubject<DidYouMeanSuggestionFragment>(null);
     private lastSearchString: string;
     private lastFilters: Filters;
+    private language: Language;
 
     constructor(
+        config: ConfigService,
         // private autoCompleteGQL: AutoCompleteGQL,
-        private config: ConfigService,
         // private didYouMeanSuggestionGQL: DidYouMeanSuggestionGQL,
         // private facetsGQL: FacetsGQL,
         // private getDetailsGQL: GetDetailsGQL,
@@ -36,7 +37,9 @@ export class SearchService {
         // private loadMoreSources: LoadMoreSourcesGQL,
         private searchGQL: SearchGQL,
         private searchParameters: SearchParametersService,
-    ) {}
+    ) {
+        this.language = config.getLanguage();
+    }
 
     search(): Observable<ResultFragment> {
         const {
@@ -53,6 +56,7 @@ export class SearchService {
                 from: pageIndex * pageSize,
                 size: pageSize,
                 // filters: mapFilters(filters),
+                language: this.language,
             })
             .pipe(map((response) => response.data.search));
     }
