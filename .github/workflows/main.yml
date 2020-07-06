@@ -95,3 +95,32 @@ jobs:
 #            npm run cypress:local:run
 
 
+  e2e-cypress-with-service-containers:
+#    needs: [lint, build-and-publish-ci]
+#    container:
+#      image: openeduhub/frontend:ci_${{ github.sha }}
+#      ports:
+#        - 8000
+    runs-on: ubuntu-16.04
+    services:
+        frontend-service:
+            image: openeduhub/frontend:ci_aa4fb8fa7784f9168c12cf75c99922e661433658
+            ports:
+                # Opens tcp port 6379 on the host and service container
+                - 8080:80
+    name: setup staging frontend and test end to end
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: use node.js 12.16
+        uses: actions/setup-node@v1
+        with:
+            node-version: 12.16
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        env:
+            CYPRESS_baseUrl: http://localhost:8080
+        with:
+            working-directory: e2e-cypress
