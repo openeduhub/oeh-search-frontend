@@ -27,7 +27,7 @@ import { OAuthModule } from 'angular-oauth2-oidc';
 import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
 import { HttpLinkModule } from 'apollo-angular-link-http';
 import { HttpBatchLink, HttpBatchLinkModule } from 'apollo-angular-link-http-batch';
-import { InMemoryCache } from 'apollo-cache-inmemory';
+import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
 import { environment } from '../environments/environment';
 import { AddContentFabComponent } from './add-content-fab/add-content-fab.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -60,6 +60,7 @@ import { TrimPipe } from './trim.pipe';
 import { TruncatePipe } from './truncate.pipe';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { WorkInProgressMessageComponent } from './work-in-progress-message/work-in-progress-message.component';
+import introspectionQueryResultData from '../generated/fragmentTypes.json';
 
 const appRoutes: Routes = [
     {
@@ -91,6 +92,10 @@ const appRoutes: Routes = [
     { path: '', redirectTo: 'search', pathMatch: 'full' },
     { path: 'error', component: ErrorComponent },
 ];
+
+const fragmentMatcher = new IntrospectionFragmentMatcher({
+    introspectionQueryResultData,
+});
 
 @NgModule({
     declarations: [
@@ -165,7 +170,7 @@ const appRoutes: Routes = [
             provide: APOLLO_OPTIONS,
             useFactory: (httpLink: HttpBatchLink) => {
                 return {
-                    cache: new InMemoryCache(),
+                    cache: new InMemoryCache({ fragmentMatcher }),
                     link: httpLink.create({
                         uri: environment.relayUrl + '/graphql',
                     }),

@@ -26,8 +26,10 @@
   </mat-button-toggle-group>
 </div>
 <div class="results">
-  <app-result-card *ngFor="let hit of results.hits" npacked<Hits
-    >[result]="hit" [filters]="filters" ></app-result-card
-  >
+  <app-result-card
+    *ngFor="let hit of results.hits"
+    [result]="hit"
+    [filters]="filters"
+  ></app-result-card>
 </div>
 <app-paginator [length]="results.total.value"> </app-paginator>

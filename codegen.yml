@@ -4,6 +4,9 @@ documents: "src/graphql/**/*.graphql"
 generates:
   src/generated/graphql.ts:
     plugins:
-      - "typescript"
-      - "typescript-operations"
-      - "typescript-apollo-angular"
+      - typescript
+      - typescript-operations
+      - typescript-apollo-angular
+  src/generated/fragmentTypes.json:
+    plugins:
+      - fragment-matcher
