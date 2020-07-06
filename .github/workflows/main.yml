@@ -121,6 +121,6 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v2
         env:
-            CYPRESS_baseUrl: http://localhost:8080
+            CYPRESS_baseUrl: localhost:8080
         with:
             working-directory: e2e-cypress
