@@ -110,6 +110,9 @@
             "production": {
               "browserTarget": "open-edu-hub-frontend:build:production"
             },
+            "stage": {
+              "browserTarget": "open-edu-hub-frontend:build:stage"
+            },
             "de": {
               "browserTarget": "open-edu-hub-frontend:build:de"
             }
