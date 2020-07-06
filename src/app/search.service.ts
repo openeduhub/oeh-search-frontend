@@ -1,7 +1,15 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { Filter, Hit, Language, ResultFragment, SearchGQL } from '../generated/graphql';
+import {
+    Filter,
+    Hit,
+    Language,
+    ResultFragment,
+    SearchGQL,
+    GetEntryGQL,
+    GetEntryQuery,
+} from '../generated/graphql';
 import { ConfigService } from './config.service';
 import { SearchParametersService } from './search-parameters.service';
 import { assertUnreachable } from './utils';
@@ -27,7 +35,7 @@ export class SearchService {
         // private autoCompleteGQL: AutoCompleteGQL,
         // private didYouMeanSuggestionGQL: DidYouMeanSuggestionGQL,
         // private facetsGQL: FacetsGQL,
-        // private getDetailsGQL: GetDetailsGQL,
+        private getEntryGQL: GetEntryGQL,
         // private getLargeThumbnailGQL: GetLargeThumbnailGQL,
         // private loadMoreDisciplines: LoadMoreDisciplinesGQL,
         // private loadMoreEducationalContexts: LoadMoreEducationalContextsGQL,
@@ -61,14 +69,10 @@ export class SearchService {
             .pipe(map((response) => response.data.search));
     }
 
-    // getDetails(id: string): Observable<GetDetailsQuery['get']> {
-    //     return this.getDetailsGQL.fetch({ id }).pipe(
-    //         map((response) => response.data.get),
-    //         tap((hit) => this.prepareHit(hit as Hit)),
-    //     );
-    // }
-    getDetails(id: string): any {
-        throw new Error('not implemented');
+    getEntry(id: string): Observable<GetEntryQuery['get']> {
+        return this.getEntryGQL
+            .fetch({ id, language: this.language })
+            .pipe(map((response) => response.data.get));
     }
 
     // getLargeThumbnail(id: string): Observable<string> {
