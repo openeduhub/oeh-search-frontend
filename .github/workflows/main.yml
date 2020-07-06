@@ -42,35 +42,6 @@ jobs:
       - name: Publish to DockerHub
         run: docker push openeduhub/frontend:ci_${GITHUB_SHA}
 
-#  e2e-cypress-process-test:
-#    needs: [lint, build-and-publish-ci]
-#    runs-on: ubuntu-16.04
-#    name: setup staging frontend and test end to end
-#    steps:
-#      - name: checkout
-#        uses: actions/checkout@v2
-#        with:
-#          submodules: true
-#      - name: use node.js 12.16
-#        uses: actions/setup-node@v1
-#        with:
-#            node-version: 12.16
-#      - name: npm install
-#        run: |
-#          npm ci
-#          npm run clean
-#      - name: build staging sources
-#        run: npm run build:stage
-#      - name: install angular cli
-#        run: npm install -g @angular/cli
-#      - name: Cypress run
-#        uses: cypress-io/github-action@v2
-#        env:
-#            CYPRESS_baseUrl: http://localhost:8000
-#        with:
-#            working-directory: e2e-cypress
-#            start: ng serve --port 8000
-
   e2e-cypress-service-test:
     needs: [lint, build-and-publish-ci]
     runs-on: ubuntu-16.04
