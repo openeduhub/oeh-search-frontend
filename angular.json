@@ -110,6 +110,9 @@
             "production": {
               "browserTarget": "open-edu-hub-frontend:build:production"
             },
+            "stage": {
+              "browserTarget": "open-edu-hub-frontend:build:stage"
+            },
             "de": {
               "browserTarget": "open-edu-hub-frontend:build:de"
             }
@@ -147,7 +150,8 @@
               "e2e/tsconfig.json"
             ],
             "exclude": [
-              "**/node_modules/**"
+              "**/node_modules/**",
+              "src/generated/**"
             ]
           }
         },
@@ -181,5 +185,8 @@
       }
     }
   },
-  "defaultProject": "open-edu-hub-frontend"
+  "defaultProject": "open-edu-hub-frontend",
+  "cli": {
+    "analytics": false
+  }
 }

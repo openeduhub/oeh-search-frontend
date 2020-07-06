@@ -9,5 +9,5 @@ Feature: Search
     And I see the paginator
     And I see the search bar input field
     And I see the search button
-    And I see the search button label "Suchen"
+    And I see the search button label "SUCHE"
     And I see the filter button
