@@ -4,7 +4,7 @@ import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ResultFragment, SearchGQL, SearchQuery } from '../generated/graphql';
 import { SearchParametersService } from './search-parameters.service';
-import { Filters, mapFilters, SearchService } from './search.service';
+import { Filters, SearchService } from './search.service';
 
 export interface SearchData {
     searchResults: ResultFragment;
@@ -39,7 +39,7 @@ export class SearchResolverService implements Resolve<SearchData> {
             searchResults: this.resolveSearchResults(),
         };
         if (this.shouldLoadSubjectsPortal(route.paramMap)) {
-            observables.subjectsPortalResults = this.resolveSubjectsPortalResults();
+            // observables.subjectsPortalResults = this.resolveSubjectsPortalResults();
         }
         return forkJoin(observables);
     }
@@ -52,26 +52,26 @@ export class SearchResolverService implements Resolve<SearchData> {
         return paramMap.has('educationalContext') && paramMap.has('discipline');
     }
 
-    private resolveSubjectsPortalResults(): Observable<SubjectsPortalResults> {
-        return forkJoin({
-            lessonPlanning: this.getHitsForType('LESSONPLANNING'),
-            material: this.getHitsForType('MATERIAL'),
-            source: this.getHitsForType('SOURCE'),
-            tool: this.getHitsForType('TOOL'),
-        });
-    }
+    // private resolveSubjectsPortalResults(): Observable<SubjectsPortalResults> {
+    //     return forkJoin({
+    //         lessonPlanning: this.getHitsForType('LESSONPLANNING'),
+    //         material: this.getHitsForType('MATERIAL'),
+    //         source: this.getHitsForType('SOURCE'),
+    //         tool: this.getHitsForType('TOOL'),
+    //     });
+    // }
 
-    private getHitsForType(type: MediaType): Observable<Hits> {
-        const { searchString, filters } = this.searchParameters.getCurrentValue();
-        const filtersCopy: Filters = { ...filters };
-        filtersCopy.type = [type];
-        filtersCopy['collection.uuid'] = ['FEATURED'];
-        return this.searchGQL
-            .fetch({
-                searchString,
-                size: this.subjectsPortalNumberOfResults,
-                filters: mapFilters(filtersCopy),
-            })
-            .pipe(map((response) => response.data.search.hits));
-    }
+    // private getHitsForType(type: MediaType): Observable<Hits> {
+    //     const { searchString, filters } = this.searchParameters.getCurrentValue();
+    //     const filtersCopy: Filters = { ...filters };
+    //     filtersCopy.type = [type];
+    //     filtersCopy['collection.uuid'] = ['FEATURED'];
+    //     return this.searchGQL
+    //         .fetch({
+    //             searchString,
+    //             size: this.subjectsPortalNumberOfResults,
+    //             filters: mapFilters(filtersCopy),
+    //         })
+    //         .pipe(map((response) => response.data.search.hits));
+    // }
 }

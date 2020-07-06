@@ -8,13 +8,7 @@
 </div>
 <mat-card-content>
   <div class="main-content-row">
-    <img
-      alt=""
-      class="thumbnail"
-      *ngIf="result.thumbnail.small"
-      [src]="result.thumbnail.small | safeBase64Data: result.thumbnail.mimetype"
-      align="right"
-    />
+    <img alt="" class="thumbnail" [src]="result.previewImage.thumbnail | thumbnail" align="right" />
     <p
       class="editorial-hint"
       *ngIf="(result | isInCollection: 'EDITORIAL') || (result | isInCollection: 'FEATURED')"
@@ -25,36 +19,34 @@
       {{ result.lom.general.description | trim | truncate: (isExpanded ? -1 : 100) }}
     </p>
   </div>
-  <div class="metadata" *ngIf="isExpanded && result.valuespaces?.discipline">
+  <div class="metadata" *ngIf="isExpanded && result.skos.discipline">
     <ng-container i18n>Discipline</ng-container>:
     <a
-      *ngFor="let discipline of result.valuespaces.discipline"
+      *ngFor="let discipline of result.skos.discipline"
       routerLink="/search"
-      [queryParams]="discipline | generateFilters: 'valuespaces.discipline':filters"
+      [queryParams]="discipline | generateFilters: 'skos.discipline':filters"
       queryParamsHandling="merge"
-      >{{ discipline | valuespacesI18n }}</a
+      >{{ discipline.label }}</a
     >
   </div>
-  <div class="metadata" *ngIf="isExpanded && result.valuespaces?.educationalContext">
+  <div class="metadata" *ngIf="isExpanded && result.skos.educationalContext">
     <ng-container i18n>Educational context</ng-container>:
     <a
-      *ngFor="let educationalContext of result.valuespaces.educationalContext"
+      *ngFor="let educationalContext of result.skos.educationalContext"
       routerLink="/search"
-      [queryParams]="educationalContext | generateFilters: 'valuespaces.educationalContext':filters"
+      [queryParams]="educationalContext | generateFilters: 'skos.educationalContext':filters"
       queryParamsHandling="merge"
-      >{{ educationalContext | valuespacesI18n }}</a
+      >{{ educationalContext.label }}</a
     >
   </div>
-  <div class="metadata" *ngIf="isExpanded && result.valuespaces?.learningResourceType">
+  <div class="metadata" *ngIf="isExpanded && result.skos.learningResourceType">
     <ng-container i18n>Learning resource type</ng-container>:
     <a
-      *ngFor="let learningResourceType of result.valuespaces.learningResourceType"
+      *ngFor="let learningResourceType of result.skos.learningResourceType"
       routerLink="/search"
-      [queryParams]="
-        learningResourceType | generateFilters: 'valuespaces.learningResourceType':filters
-      "
+      [queryParams]="learningResourceType | generateFilters: 'skos.learningResourceType':filters"
       queryParamsHandling="merge"
-      >{{ learningResourceType | valuespacesI18n }}</a
+      >{{ learningResourceType.label }}</a
     >
   </div>
   <mat-chip-list
@@ -71,13 +63,13 @@
       >{{ keyword }}</mat-chip
     >
   </mat-chip-list>
-  <div class="metadata" *ngIf="isExpanded" [ngSwitch]="result.license?.oer">
+  <!-- <div class="metadata" *ngIf="isExpanded" [ngSwitch]="result.license?.oer">
     OER:
     <span *ngSwitchCase="'ALL'" i18n>yes</span>
     <span *ngSwitchCase="'MIXED'" i18n>mixed</span>
     <span *ngSwitchCase="'NONE'" i18n>no</span>
     <span *ngSwitchDefault i18n>unknown</span>
-  </div>
+  </div> -->
 </mat-card-content>
 <a
   *ngIf="isExpanded"
@@ -86,11 +78,11 @@
   color="primary"
   target="_blank"
   [href]="result.lom.technical.location"
-  [ngSwitch]="result.type"
 >
-  <ng-container i18n *ngSwitchCase="'MATERIAL'">Go To Content</ng-container>
+  <!-- <ng-container i18n *ngSwitchCase="'MATERIAL'">Go To Content</ng-container>
   <ng-container i18n *ngSwitchCase="'TOOL'">Go To Tool</ng-container>
-  <ng-container i18n *ngSwitchCase="'SOURCE'">Go To Portal</ng-container>
+  <ng-container i18n *ngSwitchCase="'SOURCE'">Go To Portal</ng-container> -->
+  <ng-container i18n>Go To Content</ng-container>
 </a>
 <mat-card-actions>
   <button

@@ -3,10 +3,10 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter, first } from 'rxjs/operators';
-import { Aggregation } from '../../generated/graphql';
 import { SearchParametersService } from '../search-parameters.service';
-import { Facets, Filters, SearchService } from '../search.service';
+import { Filters, SearchService } from '../search.service';
 import { ViewService } from '../view.service';
+import { Facet } from '../../generated/graphql';
 
 @Component({
     selector: 'app-search-filterbar',
@@ -14,20 +14,20 @@ import { ViewService } from '../view.service';
     styleUrls: ['./search-filterbar.component.scss'],
 })
 export class SearchFilterbarComponent implements OnInit, OnDestroy {
-    readonly mainFilters: Array<keyof Facets> = [
-        'disciplines',
-        'educationalContexts',
-        'learningResourceTypes',
-        'intendedEndUserRoles',
-        'sources',
-        'keywords',
+    readonly mainFilters: Array<Facet> = [
+        Facet.Discipline,
+        Facet.EducationalContext,
+        Facet.LearningResourceType,
+        Facet.IntendedEndUserRole,
+        Facet.Source,
+        Facet.Keyword,
     ];
-    facets: Facets;
+    // facets: Facets;
     filters: Filters = {};
     facetFilters: FormGroup;
-    expandedFilters: { [key in keyof Facets]?: boolean } = {
-        disciplines: true,
-        educationalContexts: true,
+    expandedFilters: { [key in Facet]?: boolean } = {
+        [Facet.Discipline]: true,
+        [Facet.EducationalContext]: true,
     };
 
     private subscriptions: Subscription[] = [];
@@ -51,22 +51,22 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
                     // If `facetFilters` are not yet initialized, this will be
                     // done on initialization.
                     this.facetFilters.reset(filters, { emitEvent: false });
-                    this.expandActiveFilters();
+                    // this.expandActiveFilters();
                 }
             }),
         );
 
-        this.subscriptions.push(
-            this.search.getFacets().subscribe((facets) => this.updateFacets(facets)),
-        );
-        // Don't need to unsubscribe since subscription completes after first value.
-        this.search
-            .getFacets()
-            .pipe(
-                filter((facets) => facets !== null),
-                first(),
-            )
-            .subscribe((facets) => this.initFacetFilters(facets));
+        // this.subscriptions.push(
+        //     this.search.getFacets().subscribe((facets) => this.updateFacets(facets)),
+        // );
+        // // Don't need to unsubscribe since subscription completes after first value.
+        // this.search
+        //     .getFacets()
+        //     .pipe(
+        //         filter((facets) => facets !== null),
+        //         first(),
+        //     )
+        //     .subscribe((facets) => this.initFacetFilters(facets));
     }
 
     ngOnDestroy(): void {
@@ -79,9 +79,10 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
         this.view.setShowFilterBar(false);
     }
 
-    loadMoreFacetBuckets(facet: keyof Facets) {
-        const currentlyShownBuckets = this.facets[facet].buckets.length;
-        this.search.loadMoreFacetBuckets(facet, currentlyShownBuckets + 20);
+    loadMoreFacetBuckets(facet: Facet) {
+        throw new Error('not implemented');
+        // const currentlyShownBuckets = this.facets[facet].buckets.length;
+        // this.search.loadMoreFacetBuckets(facet, currentlyShownBuckets + 20);
     }
 
     /**
@@ -89,57 +90,58 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
      *
      * Call only once.
      */
-    private initFacetFilters(facets: Facets) {
-        this.facetFilters = this.formBuilder.group(
-            // Create a new object with every facet field mapped to an empty
-            // array. This will create a new form control for each facet with
-            // nothing selected.
-            Object.values(facets)
-                .filter((facet) => typeof facet === 'object')
-                .reduce((agg, facet: Aggregation) => ({ ...agg, [facet.field]: [] }), {}),
-        );
-        // Apply values loaded from queryParams.
-        if (this.filters) {
-            this.facetFilters.patchValue(this.filters);
-            this.expandActiveFilters();
-        }
-        this.facetFilters.valueChanges.subscribe((filters: Filters) => this.applyFilters(filters));
-    }
+    // private initFacetFilters(facets: Facets) {
+    //     this.facetFilters = this.formBuilder.group(
+    //         // Create a new object with every facet field mapped to an empty
+    //         // array. This will create a new form control for each facet with
+    //         // nothing selected.
+    //         Object.values(facets)
+    //             .filter((facet) => typeof facet === 'object')
+    //             .reduce((agg, facet: Aggregation) => ({ ...agg, [facet.field]: [] }), {}),
+    //     );
+    //     // Apply values loaded from queryParams.
+    //     if (this.filters) {
+    //         this.facetFilters.patchValue(this.filters);
+    //         this.expandActiveFilters();
+    //     }
+    //     this.facetFilters.valueChanges
+    //        .subscribe((filters: Filters) => this.applyFilters(filters));
+    // }
 
-    private updateFacets(facets: Facets) {
-        if (!facets) {
-            return;
-        }
-        if (!this.facets) {
-            this.facets = {} as Facets;
-        }
-        for (const [key, value] of Object.entries(facets)) {
-            // Leave the facets object in place if it already exists, so Angular
-            // won't reconstruct the whole thing every time the user selects an
-            // option.
-            if (typeof value === 'object') {
-                this.facets[key] = value;
-            }
-        }
-        orderByProperty(this.facets.types.buckets, 'key', [
-            'MATERIAL',
-            'LESSONPLANNING',
-            'TOOL',
-            'SOURCE',
-        ]);
-    }
+    // private updateFacets(facets: Facets) {
+    //     if (!facets) {
+    //         return;
+    //     }
+    //     if (!this.facets) {
+    //         this.facets = {} as Facets;
+    //     }
+    //     for (const [key, value] of Object.entries(facets)) {
+    //         // Leave the facets object in place if it already exists, so Angular
+    //         // won't reconstruct the whole thing every time the user selects an
+    //         // option.
+    //         if (typeof value === 'object') {
+    //             this.facets[key] = value;
+    //         }
+    //     }
+    //     orderByProperty(this.facets.types.buckets, 'key', [
+    //         'MATERIAL',
+    //         'LESSONPLANNING',
+    //         'TOOL',
+    //         'SOURCE',
+    //     ]);
+    // }
 
-    private expandActiveFilters() {
-        for (const [key, value] of Object.entries(this.facets)) {
-            if (typeof value !== 'object') {
-                continue;
-            }
-            const filterValues = this.filters[value.field];
-            if (filterValues && filterValues.length > 0) {
-                this.expandedFilters[key as keyof Facets] = true;
-            }
-        }
-    }
+    // private expandActiveFilters() {
+    //     for (const [key, value] of Object.entries(this.facets)) {
+    //         if (typeof value !== 'object') {
+    //             continue;
+    //         }
+    //         const filterValues = this.filters[value.field];
+    //         if (filterValues && filterValues.length > 0) {
+    //             this.expandedFilters[key as keyof Facets] = true;
+    //         }
+    //     }
+    // }
 
     private applyFilters(filters: Filters) {
         for (const key in filters) {

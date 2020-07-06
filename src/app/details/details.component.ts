@@ -39,8 +39,9 @@ export class DetailsComponent implements OnInit {
         });
         this.route.params.subscribe((params) => (this.id = params.id));
         this.authService.getUserInfo().subscribe((userInfo) => (this.userInfo = userInfo));
-        this.renderer.listen(document, 'keydown.control.c', () => this.copyTableEntryToClipboard());
-        this.renderer.listen(document, 'keydown.meta.c', () => this.copyTableEntryToClipboard());
+        // this.renderer
+        //     .listen(document, 'keydown.control.c', () => this.copyTableEntryToClipboard());
+        // this.renderer.listen(document, 'keydown.meta.c', () => this.copyTableEntryToClipboard());
     }
 
     async markAsRecommended() {
@@ -89,33 +90,33 @@ export class DetailsComponent implements OnInit {
         this.location.back();
     }
 
-    private copyTableEntryToClipboard() {
-        if (window.getSelection().toString() === '') {
-            this.clipboard.copy(this.getTableEntry());
-            this.snackBar.open($localize`Copied table entry to clipboard`, null, {
-                duration: 3000,
-            });
-        }
-    }
+    // private copyTableEntryToClipboard() {
+    //     if (window.getSelection().toString() === '') {
+    //         this.clipboard.copy(this.getTableEntry());
+    //         this.snackBar.open($localize`Copied table entry to clipboard`, null, {
+    //             duration: 3000,
+    //         });
+    //     }
+    // }
 
-    private getTableEntry() {
-        return [
-            this.details.lom.general.title,
-            this.id,
-            this.details.collection?.map((collection) => collection.uuid).join(';'),
-            this.details.type,
-            this.details.lom.general.description,
-            this.details.lom.technical.location,
-            `${environment.relayUrl}/rest/entry/${this.id}/thumbnail`,
-            this.details.valuespaces.learningResourceType?.map((value) => value.de).join(';'),
-            this.details.valuespaces.discipline?.map((value) => value.de).join(';'),
-            this.details.valuespaces.educationalContext?.map((value) => value.de).join(';'),
-            this.details.license?.url,
-            this.details.valuespaces.intendedEndUserRole?.map((value) => value.de).join(';'),
-            '', // typical age range from
-            '', // typical age range to
-            '', // material language
-            this.details.lom.general.keyword?.join(';'),
-        ].join('\t');
-    }
+    // private getTableEntry() {
+    //     return [
+    //         this.details.lom.general.title,
+    //         this.id,
+    //         this.details.collection?.map((collection) => collection.uuid).join(';'),
+    //         this.details.type,
+    //         this.details.lom.general.description,
+    //         this.details.lom.technical.location,
+    //         `${environment.relayUrl}/rest/entry/${this.id}/thumbnail`,
+    //         this.details.valuespaces.learningResourceType?.map((value) => value.de).join(';'),
+    //         this.details.valuespaces.discipline?.map((value) => value.de).join(';'),
+    //         this.details.valuespaces.educationalContext?.map((value) => value.de).join(';'),
+    //         this.details.license?.url,
+    //         this.details.valuespaces.intendedEndUserRole?.map((value) => value.de).join(';'),
+    //         '', // typical age range from
+    //         '', // typical age range to
+    //         '', // material language
+    //         this.details.lom.general.keyword?.join(';'),
+    //     ].join('\t');
+    // }
 }

@@ -48,7 +48,7 @@ import { ResultCardContentCompactComponent } from './result-card-content-compact
 import { ResultCardContentStandardComponent } from './result-card-content-standard/result-card-content-standard.component';
 import { ResultCardSmallComponent } from './result-card-small/result-card-small.component';
 import { ResultCardComponent } from './result-card/result-card.component';
-import { SafeBase64DataPipe } from './safe-base64-data.pipe';
+import { ThumbnailPipe } from './thumbnail.pipe';
 import { SearchFieldComponent } from './search-field/search-field.component';
 import { SearchFilterbarComponent } from './search-filterbar/search-filterbar.component';
 import { SearchResolverService } from './search-resolver.service';
@@ -58,7 +58,6 @@ import { SubjectsPortalSectionComponent } from './subjects-portal-section/subjec
 import { SubjectsPortalComponent } from './subjects-portal/subjects-portal.component';
 import { TrimPipe } from './trim.pipe';
 import { TruncatePipe } from './truncate.pipe';
-import { ValuespacesI18nPipe } from './valuespaces-i18n.pipe';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { WorkInProgressMessageComponent } from './work-in-progress-message/work-in-progress-message.component';
 
@@ -101,7 +100,7 @@ const appRoutes: Routes = [
         GenerateFiltersPipe,
         DetailsComponent,
         SearchResultsComponent,
-        SafeBase64DataPipe,
+        ThumbnailPipe,
         ErrorComponent,
         HeaderbarComponent,
         SearchFieldComponent,
@@ -119,7 +118,6 @@ const appRoutes: Routes = [
         SubjectsPortalComponent,
         ResultCardSmallComponent,
         SubjectsPortalSectionComponent,
-        ValuespacesI18nPipe,
         OerSliderComponent,
         AddContentFabComponent,
         ResultCardContentStandardComponent,

@@ -4,9 +4,7 @@ import { ResultFragment } from '../../generated/graphql';
 import { Filters } from '../search.service';
 import { Unpacked } from '../utils';
 import { ResultCardStyle, ViewService } from '../view.service';
-
-type Hits = ResultFragment['hits']['hits'];
-export type Hit = Unpacked<Hits>;
+import { Hit } from '../search-results/search-results.component';
 
 @Component({
     selector: 'app-result-card',

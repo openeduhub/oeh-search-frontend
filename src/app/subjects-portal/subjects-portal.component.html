@@ -8,27 +8,27 @@
     </mat-panel-title>
   </mat-expansion-panel-header>
   <app-subjects-portal-section
-    *ngIf="results.material.total.value > 0"
+    *ngIf="results.material.length > 0"
     type="MATERIAL"
-    [hits]="results.material.hits"
+    [hits]="results.material"
     [filters]="filters"
   ></app-subjects-portal-section>
   <app-subjects-portal-section
-    *ngIf="results.lessonPlanning.total.value > 0"
+    *ngIf="results.lessonPlanning.length > 0"
     type="LESSONPLANNING"
-    [hits]="results.lessonPlanning.hits"
+    [hits]="results.lessonPlanning"
     [filters]="filters"
   ></app-subjects-portal-section>
   <app-subjects-portal-section
-    *ngIf="results.tool.total.value > 0"
+    *ngIf="results.tool.length > 0"
     type="TOOL"
-    [hits]="results.tool.hits"
+    [hits]="results.tool"
     [filters]="filters"
   ></app-subjects-portal-section>
   <app-subjects-portal-section
-    *ngIf="results.source.total.value > 0"
+    *ngIf="results.source.length > 0"
     type="SOURCE"
-    [hits]="results.source.hits"
+    [hits]="results.source"
     [filters]="filters"
   ></app-subjects-portal-section>
 </mat-expansion-panel>

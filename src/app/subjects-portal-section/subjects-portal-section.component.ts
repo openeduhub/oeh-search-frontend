@@ -8,7 +8,7 @@ import { Filters } from '../search.service';
     styleUrls: ['./subjects-portal-section.component.scss'],
 })
 export class SubjectsPortalSectionComponent implements OnInit {
-    @Input() hits: Hits['hits'];
+    @Input() hits: Hits;
     @Input() filters: Filters;
 
     constructor(@Attribute('type') readonly type: MediaType) {}

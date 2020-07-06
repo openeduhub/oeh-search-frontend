@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { InternationalString } from '../generated/graphql';
 import { ConfigService, ShortLocale } from './config.service';
+import { SkosEntry } from '../../elasticsearch-relay/src/generated/graphql';
 
 /**
  * Extend the `filters` of the search component with another attribute.
@@ -11,7 +11,7 @@ import { ConfigService, ShortLocale } from './config.service';
     name: 'generateFilters',
 })
 export class GenerateFiltersPipe implements PipeTransform {
-    private static knownMissingTranslations: InternationalString[] = [];
+    private static knownMissingTranslations: SkosEntry[] = [];
     private readonly shortLocale: ShortLocale;
 
     constructor(config: ConfigService) {
@@ -19,16 +19,16 @@ export class GenerateFiltersPipe implements PipeTransform {
     }
 
     transform(
-        value: string | InternationalString,
+        value: string | SkosEntry,
         field: string,
         filters: object = {},
         isTextField = true,
     ): object {
         let filterKey: string;
         let filterValue: string;
-        if (typeof value === 'object' && value.__typename === 'InternationalString') {
+        if (typeof value === 'object' && value.__typename === 'SkosEntry') {
             filterKey = `${field}.${this.shortLocale}.keyword`;
-            filterValue = value[this.shortLocale];
+            filterValue = value.label;
             if (!filterValue) {
                 if (
                     !GenerateFiltersPipe.knownMissingTranslations.some((entry) =>
@@ -56,6 +56,6 @@ export class GenerateFiltersPipe implements PipeTransform {
     }
 }
 
-function isEqual(lhs: InternationalString, rhs: InternationalString) {
+function isEqual(lhs: SkosEntry, rhs: SkosEntry) {
     return JSON.stringify(lhs) === JSON.stringify(rhs);
 }

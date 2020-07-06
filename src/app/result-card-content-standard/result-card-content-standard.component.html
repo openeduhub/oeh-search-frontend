@@ -3,14 +3,14 @@
     <img
       alt=""
       class="img-bg"
-      *ngIf="thumbnail"
-      [src]="thumbnail | safeBase64Data: result.thumbnail.mimetype"
+      *ngIf="result.previewImage.thumbnail"
+      [src]="result.previewImage.thumbnail | thumbnail"
     />
     <img
       alt=""
       class="img-main"
-      *ngIf="thumbnail"
-      [src]="thumbnail | safeBase64Data: result.thumbnail.mimetype"
+      *ngIf="result.previewImage.thumbnail"
+      [src]="result.previewImage.thumbnail | thumbnail"
     />
   </div>
   <mat-card-title class="title">{{ result.lom.general.title | truncate: 52 }}</mat-card-title>
@@ -24,56 +24,56 @@
   >
     <div class="icon editorial-icon"></div>
   </div>
-  <div
+  <!-- <div
     *ngIf="result.license?.oer === 'ALL'"
     i18n-matTooltip
     matTooltipPosition="left"
     matTooltip="Open Educational Resources"
   >
     <div class="icon oer-icon"></div>
-  </div>
+  </div> -->
 </div>
 <mat-card-content>
-  <p class="description" *ngIf="result.lom.general?.description">
+  <p class="description" *ngIf="result.lom.general.description">
     {{ result.lom.general.description | trim | truncate: 120 }}
   </p>
-  <div class="metadata" *ngIf="result.valuespaces?.discipline">
+  <div class="metadata" *ngIf="result.skos.discipline">
     <label i18n-matTooltip matTooltip="Discipline"><mat-icon>book_icon</mat-icon></label>
     <div>
-      <span *ngFor="let discipline of result.valuespaces.discipline | slice: 0:5">
+      <span *ngFor="let discipline of result.skos.discipline | slice: 0:5">
         <a
           routerLink="/search"
-          [queryParams]="discipline | generateFilters: 'valuespaces.discipline':filters"
+          [queryParams]="discipline | generateFilters: 'skos.discipline':filters"
           queryParamsHandling="merge"
-          >{{ discipline | valuespacesI18n }}</a
+          >{{ discipline.label }}</a
         >
       </span>
     </div>
   </div>
-  <div class="metadata" *ngIf="result.valuespaces?.educationalContext">
+  <div class="metadata" *ngIf="result.skos.educationalContext">
     <label i18n-matTooltip matTooltip="Educational context"><mat-icon>school</mat-icon></label>
     <div>
-      <span *ngFor="let context of result.valuespaces.educationalContext">
+      <span *ngFor="let context of result.skos.educationalContext">
         <a
           routerLink="/search"
-          [queryParams]="context | generateFilters: 'valuespaces.educationalContext':filters"
+          [queryParams]="context | generateFilters: 'skos.educationalContext':filters"
           queryParamsHandling="merge"
-          >{{ context | valuespacesI18n }}</a
+          >{{ context.label }}</a
         >
       </span>
     </div>
   </div>
-  <div class="metadata" *ngIf="result.valuespaces?.learningResourceType">
+  <div class="metadata" *ngIf="result.skos.learningResourceType">
     <label i18n-matTooltip matTooltip="Learning resource type">
       <mat-icon>photo_library</mat-icon>
     </label>
     <div>
-      <span *ngFor="let lrt of result.valuespaces.learningResourceType">
+      <span *ngFor="let lrt of result.skos.learningResourceType">
         <a
           routerLink="/search"
-          [queryParams]="lrt | generateFilters: 'valuespaces.learningResourceType':filters"
+          [queryParams]="lrt | generateFilters: 'skos.learningResourceType':filters"
           queryParamsHandling="merge"
-          >{{ lrt | valuespacesI18n }}</a
+          >{{ lrt.label }}</a
         >
       </span>
     </div>
@@ -93,17 +93,21 @@
     >
   </mat-chip-list>
 </mat-card-content>
+<!-- <a
+  [ngSwitch]="result.type"
+>
+  <ng-container i18n *ngSwitchCase="'MATERIAL'">Go To Content</ng-container>
+  <ng-container i18n *ngSwitchCase="'TOOL'">Go To Tool</ng-container>
+  <ng-container i18n *ngSwitchCase="'SOURCE'">Go To Portal</ng-container>
+</a> -->
 <a
   class="content-link"
   mat-flat-button
   color="primary"
   target="_blank"
   [href]="result.lom.technical.location"
-  [ngSwitch]="result.type"
 >
-  <ng-container i18n *ngSwitchCase="'MATERIAL'">Go To Content</ng-container>
-  <ng-container i18n *ngSwitchCase="'TOOL'">Go To Tool</ng-container>
-  <ng-container i18n *ngSwitchCase="'SOURCE'">Go To Portal</ng-container>
+  <ng-container i18n>Go To Content</ng-container>
 </a>
 <a class="source" [href]="result.source.url" target="_blank">
   <ng-container i18n>Source</ng-container>: {{ result.source.name }}</a

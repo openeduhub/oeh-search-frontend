@@ -8,16 +8,16 @@
       <mat-icon *ngIf="!last">keyboard_arrow_right</mat-icon>
     </ng-container>
   </h1>
-  <p *ngIf="didYouMeanSuggestion" class="did-you-mean">
+  <!-- <p *ngIf="didYouMeanSuggestion" class="did-you-mean">
     <ng-container i18n>Did you mean:</ng-container>&nbsp;<a
       [innerHTML]="didYouMeanSuggestion.html"
       routerLink="/search"
       [queryParams]="{ q: didYouMeanSuggestion.plain }"
       queryParamsHandling="merge"
     ></a>
-  </p>
+  </p> -->
   <div class="summary">
-    <div class="no-results" *ngIf="results.hits.total.value === 0">
+    <div class="no-results" *ngIf="results.total.value === 0">
       <p i18n>No results</p>
       <div>
         <a
@@ -32,28 +32,25 @@
         >
       </div>
     </div>
-    <p *ngIf="results.hits.total.value > 0">
-      <ng-container *ngIf="pageIndex === 0 && results.hits.total.relation === 'eq'" i18n>
-        {results.hits.total, plural, =1 {1 result} other
-        {{{results.hits.total.value | number}} results}}
+    <p *ngIf="results.total.value > 0">
+      <ng-container *ngIf="pageIndex === 0 && results.total.relation === 'eq'" i18n>
+        {results.total, plural, =1 {1 result} other
+        {{{results.total.value | number}} results}}
       </ng-container>
-      <ng-container *ngIf="pageIndex === 0 && results.hits.total.relation !== 'eq'" i18n>
-        About {{ results.hits.total.value | number }} results
+      <ng-container *ngIf="pageIndex === 0 && results.total.relation !== 'eq'" i18n>
+        About {{ results.total.value | number }} results
       </ng-container>
-      <ng-container *ngIf="pageIndex > 0 && results.hits.total.relation === 'eq'" i18n>
-        Page {{ pageIndex + 1 }} of {{ results.hits.total.value | number }} results
+      <ng-container *ngIf="pageIndex > 0 && results.total.relation === 'eq'" i18n>
+        Page {{ pageIndex + 1 }} of {{ results.total.value | number }} results
       </ng-container>
-      <ng-container *ngIf="pageIndex > 0 && results.hits.total.relation !== 'eq'" i18n>
-        Page {{ pageIndex + 1 }} of about {{ results.hits.total.value | number }} results
+      <ng-container *ngIf="pageIndex > 0 && results.total.relation !== 'eq'" i18n>
+        Page {{ pageIndex + 1 }} of about {{ results.total.value | number }} results
       </ng-container>
       <!-- <ng-container i18n>({{ results.took / 1000 | number }} seconds)</ng-container> -->
     </p>
   </div>
   <app-subjects-portal *ngIf="showSubjectsPortal"></app-subjects-portal>
-  <app-search-results
-    *ngIf="results.hits.total.value > 0"
-    [hits]="results.hits"
-  ></app-search-results>
+  <app-search-results *ngIf="results.total.value > 0" [results]="results"></app-search-results>
 </div>
 
 <app-add-content-fab></app-add-content-fab>

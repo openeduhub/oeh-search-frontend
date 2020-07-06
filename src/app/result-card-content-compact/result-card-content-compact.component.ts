@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Hit } from '../result-card/result-card.component';
 import { Filters, SearchService } from '../search.service';
+import { Hit } from '../search-results/search-results.component';
 
 @Component({
     selector: 'app-result-card-content-compact',

@@ -1,11 +1,12 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ResultFragment } from '../../generated/graphql';
+import { ResultFragment, SearchHitFragment } from '../../generated/graphql';
 import { SearchParametersService } from '../search-parameters.service';
 import { Filters } from '../search.service';
 import { ResultCardStyle, ViewService } from '../view.service';
+import { Unpacked } from '../utils';
 
-type Hits = ResultFragment['hits'];
+export type Hit = SearchHitFragment;
 
 @Component({
     selector: 'app-search-results',
@@ -13,7 +14,7 @@ type Hits = ResultFragment['hits'];
     styleUrls: ['./search-results.component.scss'],
 })
 export class SearchResultsComponent implements OnInit, OnDestroy {
-    @Input() hits: Hits;
+    @Input() results: ResultFragment;
     filters: Filters;
     resultCardStyle: ResultCardStyle;
 
@@ -22,6 +23,9 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
     constructor(private searchParameters: SearchParametersService, private view: ViewService) {}
 
     ngOnInit(): void {
+        for (const hit of this.results.hits) {
+            const asdf: Hit = hit;
+        }
         this.subscriptions.push(
             this.searchParameters.get().subscribe(({ filters }) => {
                 this.filters = filters;

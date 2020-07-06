@@ -1,29 +1,35 @@
-query Search($searchString: String!, $from: Int! = 0, $size: Int!, $filters: [Filter!]) {
-  search(searchString: $searchString, from: $from, size: $size, filters: $filters) {
+query Search(
+  $searchString: String!
+  $from: Int! = 0
+  $size: Int!
+  $filters: [Filter!]
+  $language: Language
+) {
+  search(
+    searchString: $searchString
+    from: $from
+    size: $size
+    filters: $filters
+    language: $language
+  ) {
     ...result
   }
 }
 
 fragment result on SearchResult {
   took
+  total {
+    value
+    relation
+  }
   hits {
-    total {
-      value
-      relation
-    }
-    hits {
-      ...searchHit
-    }
+    ...searchHit
   }
 }
 
 fragment searchHit on Hit {
   id
-  type
   lom {
-    educational {
-      description
-    }
     general {
       title
       keyword
@@ -37,34 +43,32 @@ fragment searchHit on Hit {
     name
     url
   }
-  thumbnail {
-    mimetype
-    small
-  }
-  collection {
-    uuid
-    name
-    data {
-      editorial
+  previewImage {
+    thumbnail {
+      ... on EmbeddedThumbnail {
+        mimetype
+        image
+      }
+      ... on ExternalThumbnail {
+        url
+      }
     }
   }
-  license {
-    oer
-  }
-  valuespaces {
+
+  skos {
     discipline {
-      ...i18n
+      ...skosEntry
     }
     educationalContext {
-      ...i18n
+      ...skosEntry
     }
     learningResourceType {
-      ...i18n
+      ...skosEntry
     }
   }
 }
 
-fragment i18n on InternationalString {
-  en
-  de
+fragment skosEntry on SkosEntry {
+  id
+  label
 }

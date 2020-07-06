@@ -83,7 +83,7 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
 
     private onSearchStringChanges(searchString: string) {
         if (typeof searchString === 'string') {
-            this.autoCompleteSuggestions$ = this.search.autoComplete(searchString, this.filters);
+            // this.autoCompleteSuggestions$ = this.search.autoComplete(searchString, this.filters);
         }
     }
 }
