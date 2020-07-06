@@ -47,7 +47,7 @@ jobs:
     runs-on: ubuntu-16.04
     services:
         frontend-service:
-            image: openeduhub/frontend:ci_${{GITHUB_SHA}}
+            image: openeduhub/frontend:ci_${{ github.sha }}
             ports:
                 # Opens tcp port 6379 on the host and service container
                 - 8080:80
