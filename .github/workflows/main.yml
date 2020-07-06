@@ -7,104 +7,76 @@ on:
     branches: [ develop, master]
 
 jobs:
-#  lint:
-#    runs-on: ubuntu-20.04
-#
-#    steps:
-#      - uses: actions/checkout@v2
-#      - name: use node.js 12.16
-#        uses: actions/setup-node@v1
-#        with:
-#          node-version: 12.16
-#      - name: install dependencies
-#        run: npm install
-#      - name: Lint
-#        run: npm run lint
-#
-## TODO: an alternative to build, push and pull ci images could be e.g. run: ng serve &
-#  build-and-publish-ci:
-#    needs: [lint]
-#    runs-on: ubuntu-20.04
-#    steps:
-#      - uses: actions/checkout@v2
-#        with:
-#          submodules: true
-#      - uses: azure/docker-login@v1
-#        with:
-#          username: ${{ secrets.DOCKERHUB_USERNAME }}
-#          password: ${{ secrets.DOCKERHUB_PASSWORD }}
-#      - name: Build the project
-#        run: |
-#          npm ci
-#          npm run clean
-#          npm run build:stage
-#      - name: Build Docker image
-#        run: docker build --tag openeduhub/frontend:ci_${GITHUB_SHA} .
-#      - name: Publish to DockerHub
-#        run: docker push openeduhub/frontend:ci_${GITHUB_SHA}
+  lint:
+    runs-on: ubuntu-20.04
 
-  e2e-cypress:
-#    needs: [lint, build-and-publish-ci]
-#    container:
-#      image: openeduhub/frontend:ci_${{ github.sha }}
-#      ports:
-#        - 8000
-    runs-on: ubuntu-16.04
-    name: setup staging frontend and test end to end
     steps:
-      - name: checkout
-        uses: actions/checkout@v2
-        with:
-          submodules: true
+      - uses: actions/checkout@v2
       - name: use node.js 12.16
         uses: actions/setup-node@v1
         with:
-            node-version: 12.16
-      - name: npm install
+          node-version: 12.16
+      - name: install dependencies
+        run: npm install
+      - name: Lint
+        run: npm run lint
+
+  build-and-publish-ci:
+    needs: [lint]
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - uses: azure/docker-login@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      - name: Build the project
         run: |
           npm ci
           npm run clean
-      - name: build staging sources
-        run: npm run build:stage
-      - name: install angular cli
-        run: npm install -g @angular/cli
-#      - name: serve staging frontend in background
-#        run: ng serve --port 8000 &
-      - name: Cypress run
-        uses: cypress-io/github-action@v2
-        env:
-            CYPRESS_baseUrl: http://localhost:8000
-        with:
-            working-directory: e2e-cypress
-            start: ng serve --port 8000
+          npm run build:stage
+      - name: Build Docker image
+        run: docker build --tag openeduhub/frontend:ci_${GITHUB_SHA} .
+      - name: Publish to DockerHub
+        run: docker push openeduhub/frontend:ci_${GITHUB_SHA}
+
+#  e2e-cypress-process-test:
+#    needs: [lint, build-and-publish-ci]
+#    runs-on: ubuntu-16.04
+#    name: setup staging frontend and test end to end
+#    steps:
+#      - name: checkout
+#        uses: actions/checkout@v2
+#        with:
+#          submodules: true
 #      - name: use node.js 12.16
 #        uses: actions/setup-node@v1
 #        with:
-#          node-version: 12.16
-#      - name: install missing package under ubuntu 20.04
+#            node-version: 12.16
+#      - name: npm install
 #        run: |
-#            apt-get update -y
-#            apt-get install -y xvfb
-#            apt-get install -y ia32-libs-gtk
-#      - name: cypress run
+#          npm ci
+#          npm run clean
+#      - name: build staging sources
+#        run: npm run build:stage
+#      - name: install angular cli
+#        run: npm install -g @angular/cli
+#      - name: Cypress run
+#        uses: cypress-io/github-action@v2
 #        env:
 #            CYPRESS_baseUrl: http://localhost:8000
-#        run: |
-#            cd e2e-cypress
-#            npm install
-#            npm run cypress:local:run
+#        with:
+#            working-directory: e2e-cypress
+#            start: ng serve --port 8000
 
-
-  e2e-cypress-with-service-containers:
-#    needs: [lint, build-and-publish-ci]
-#    container:
-#      image: openeduhub/frontend:ci_${{ github.sha }}
-#      ports:
-#        - 8000
+  e2e-cypress-service-test:
+    needs: [lint, build-and-publish-ci]
     runs-on: ubuntu-16.04
     services:
         frontend-service:
-            image: openeduhub/frontend:ci_aa4fb8fa7784f9168c12cf75c99922e661433658
+            image: openeduhub/frontend:ci_${GITHUB_SHA}
             ports:
                 # Opens tcp port 6379 on the host and service container
                 - 8080:80
