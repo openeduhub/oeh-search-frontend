@@ -1,7 +1,7 @@
 <a class="details-link" [routerLink]="['/details', hit.id]" [title]="hit.lom.general.title">
   <div class="title">{{ hit.lom.general.title | truncate: 50 }}</div>
   <div class="image-container">
-    <img alt="" class="img-bg" [src]="hit.previewImage.thumbnail | thumbnail" />
-    <img alt="" class="img-main" [src]="hit.previewImage.thumbnail | thumbnail" />
+    <img class="img-bg" [appPreviewImage]="hit.previewImage" />
+    <img class="img-main" [appPreviewImage]="hit.previewImage" />
   </div>
 </a>

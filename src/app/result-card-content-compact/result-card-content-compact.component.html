@@ -8,7 +8,7 @@
 </div>
 <mat-card-content>
   <div class="main-content-row">
-    <img alt="" class="thumbnail" [src]="result.previewImage.thumbnail | thumbnail" align="right" />
+    <img class="thumbnail" [appPreviewImage]="result.previewImage" align="right" />
     <p
       class="editorial-hint"
       *ngIf="(result | isInCollection: 'EDITORIAL') || (result | isInCollection: 'FEATURED')"

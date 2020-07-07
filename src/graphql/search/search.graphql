@@ -53,6 +53,7 @@ fragment searchHit on Hit {
         url
       }
     }
+    url
   }
 
   skos {

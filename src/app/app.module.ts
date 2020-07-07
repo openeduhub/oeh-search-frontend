@@ -48,7 +48,6 @@ import { ResultCardContentCompactComponent } from './result-card-content-compact
 import { ResultCardContentStandardComponent } from './result-card-content-standard/result-card-content-standard.component';
 import { ResultCardSmallComponent } from './result-card-small/result-card-small.component';
 import { ResultCardComponent } from './result-card/result-card.component';
-import { ThumbnailPipe } from './thumbnail.pipe';
 import { SearchFieldComponent } from './search-field/search-field.component';
 import { SearchFilterbarComponent } from './search-filterbar/search-filterbar.component';
 import { SearchResolverService } from './search-resolver.service';
@@ -61,6 +60,7 @@ import { TruncatePipe } from './truncate.pipe';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { WorkInProgressMessageComponent } from './work-in-progress-message/work-in-progress-message.component';
 import introspectionQueryResultData from '../generated/fragmentTypes.json';
+import { PreviewImageComponent } from './preview-image/preview-image.component';
 
 const appRoutes: Routes = [
     {
@@ -105,7 +105,6 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
         GenerateFiltersPipe,
         DetailsComponent,
         SearchResultsComponent,
-        ThumbnailPipe,
         ErrorComponent,
         HeaderbarComponent,
         SearchFieldComponent,
@@ -127,6 +126,7 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
         AddContentFabComponent,
         ResultCardContentStandardComponent,
         ResultCardContentCompactComponent,
+        PreviewImageComponent,
     ],
     imports: [
         ApolloModule,

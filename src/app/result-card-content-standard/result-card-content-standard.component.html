@@ -1,17 +1,7 @@
 <a class="details-link" [routerLink]="['/details', result.id]">
   <div class="image-container" mat-card-image>
-    <img
-      alt=""
-      class="img-bg"
-      *ngIf="result.previewImage.thumbnail"
-      [src]="result.previewImage.thumbnail | thumbnail"
-    />
-    <img
-      alt=""
-      class="img-main"
-      *ngIf="result.previewImage.thumbnail"
-      [src]="result.previewImage.thumbnail | thumbnail"
-    />
+    <img class="img-bg" [appPreviewImage]="result.previewImage" />
+    <img class="img-main" [appPreviewImage]="result.previewImage" [loadHighResImage]="true" />
   </div>
   <mat-card-title class="title">{{ result.lom.general.title | truncate: 52 }}</mat-card-title>
 </a>
