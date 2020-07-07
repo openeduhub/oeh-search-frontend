@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter, first } from 'rxjs/operators';
 import { SearchParametersService } from '../search-parameters.service';
-import { Filters, SearchService } from '../search.service';
+import { Filters, SearchService, Facets } from '../search.service';
 import { ViewService } from '../view.service';
 import { Facet } from '../../generated/graphql';
 
@@ -22,7 +22,7 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
         Facet.Source,
         Facet.Keyword,
     ];
-    // facets: Facets;
+    facets: Facets;
     filters: Filters = {};
     facetFilters: FormGroup;
     expandedFilters: { [key in Facet]?: boolean } = {
