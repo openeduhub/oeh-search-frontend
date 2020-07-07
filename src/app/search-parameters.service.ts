@@ -23,7 +23,7 @@ export function parseSearchQueryParams(queryParamMap: ParamMap): ParsedParams {
         pageIndex: 0,
         pageSize: 12,
         filters: {},
-        oer: 'ALL',
+        oer: 'NONE',
     };
     if (queryParamMap.has('q')) {
         result.searchString = queryParamMap.get('q');
