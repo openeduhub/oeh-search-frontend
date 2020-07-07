@@ -3,8 +3,7 @@ import { Component, HostBinding, Input, OnChanges, SimpleChanges } from '@angula
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Thumbnail } from '../../../elasticsearch-relay/src/generated/graphql';
-import { PreviewImage } from '../../generated/graphql';
+import { Thumbnail, PreviewImage } from '../../generated/graphql';
 
 @Component({
     // Augment the built-in <img> element.

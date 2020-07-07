@@ -1,7 +1,0 @@
-query GetLargeThumbnail($id: ID!) {
-  get(id: $id) {
-    thumbnail {
-      large
-    }
-  }
-}
