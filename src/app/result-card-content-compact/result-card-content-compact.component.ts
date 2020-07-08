@@ -8,7 +8,7 @@ import { Hit } from '../search-results/search-results.component';
     styleUrls: ['./result-card-content-compact.component.scss'],
 })
 export class ResultCardContentCompactComponent implements OnInit {
-    @Input() result: Hit;
+    @Input() hit: Hit;
     @Input() filters: Filters;
 
     isExpanded = false;

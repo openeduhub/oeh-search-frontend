@@ -2,12 +2,12 @@
   <mat-icon>keyboard_arrow_left</mat-icon> <ng-container i18n>Back to overview</ng-container>
 </button>
 <div class="header">
-  <h1 class="title">{{ details.lom.general.title }}</h1>
+  <h1 class="title">{{ hit.lom.general.title }}</h1>
   <a
     class="go-to-content-button"
     mat-raised-button
     color="primary"
-    [href]="details.lom.technical.location"
+    [href]="hit.lom.technical.location"
     target="_blank"
     ><mat-icon>open_in_new</mat-icon>
     <!-- <ng-container i18n *ngSwitchCase="'MATERIAL'">Go To Content</ng-container>
@@ -18,22 +18,22 @@
 </div>
 <div class="body">
   <div class="column column-1">
-    <img class="preview" [appPreviewImage]="details.previewImage" [loadHighResImage]="true" />
-    <p class="description" *ngIf="details.lom.general?.description">
-      {{ details.lom.general.description | trim }}
+    <img class="preview" [appPreviewImage]="hit.previewImage" [loadHighResImage]="true" />
+    <p class="description" *ngIf="hit.lom.general?.description">
+      {{ hit.lom.general.description | trim }}
     </p>
   </div>
   <div class="column column-2">
     <div
       class="metadata metadata-editorial"
-      *ngIf="(details | isInCollection: 'EDITORIAL') || (details | isInCollection: 'FEATURED')"
+      *ngIf="(hit | isInCollection: 'EDITORIAL') || (hit | isInCollection: 'FEATURED')"
     >
       <label
         ><div class="icon editorial-icon"></div>
         <ng-container i18n>Recommended by editorial team</ng-container></label
       >
     </div>
-    <!-- <div class="metadata" [ngSwitch]="details.license?.oer">
+    <!-- <div class="metadata" [ngSwitch]="hit.license?.oer">
       <label
         ><div class="icon oer-icon"></div>
         <ng-container i18n>Open educational resources</ng-container></label
@@ -43,50 +43,50 @@
       <span *ngSwitchCase="'NONE'" i18n>no</span>
       <span *ngSwitchDefault i18n>unknown</span>
     </div> -->
-    <div class="metadata" *ngIf="details.skos.discipline">
+    <div class="metadata" *ngIf="hit.skos.discipline">
       <label><mat-icon>book_icon</mat-icon> <ng-container i18n>Discipline</ng-container></label>
       <div>
-        <span *ngFor="let discipline of details.skos.discipline | slice: 0:5">
+        <span *ngFor="let discipline of hit.skos.discipline | slice: 0:5">
           {{ discipline.label }}
         </span>
       </div>
     </div>
-    <div class="metadata" *ngIf="details.skos.educationalContext">
+    <div class="metadata" *ngIf="hit.skos.educationalContext">
       <label
         ><mat-icon>school</mat-icon> <ng-container i18n>Educational Context</ng-container></label
       >
       <div>
-        <span *ngFor="let context of details.skos.educationalContext">
+        <span *ngFor="let context of hit.skos.educationalContext">
           {{ context.label }}
         </span>
       </div>
     </div>
-    <div class="metadata" *ngIf="details.skos.intendedEndUserRole">
+    <div class="metadata" *ngIf="hit.skos.intendedEndUserRole">
       <label
         ><mat-icon>group</mat-icon> <ng-container i18n>Intended End User Role</ng-container></label
       >
       <div>
-        <span *ngFor="let intendedEndUserRole of details.skos.intendedEndUserRole">
+        <span *ngFor="let intendedEndUserRole of hit.skos.intendedEndUserRole">
           {{ intendedEndUserRole.label }}
         </span>
       </div>
     </div>
-    <div class="metadata" *ngIf="details.skos.learningResourceType">
+    <div class="metadata" *ngIf="hit.skos.learningResourceType">
       <label
         ><mat-icon>photo_library</mat-icon>
         <ng-container i18n>Learning Resource Type</ng-container></label
       >
       <div>
-        <span *ngFor="let lrt of details.skos.learningResourceType">
+        <span *ngFor="let lrt of hit.skos.learningResourceType">
           {{ lrt.label }}
         </span>
       </div>
     </div>
 
-    <div class="metadata" *ngIf="details.lom.general.keyword">
+    <div class="metadata" *ngIf="hit.lom.general.keyword">
       <label><mat-icon>list</mat-icon> <ng-container i18n>Keywords</ng-container></label>
       <div>
-        <span *ngFor="let keyword of details.lom.general.keyword | slice: 0:5">
+        <span *ngFor="let keyword of hit.lom.general.keyword | slice: 0:5">
           {{ keyword }}
         </span>
       </div>
@@ -108,7 +108,7 @@
         target="_blank"
         class="report-button"
         href="https://wirlernenonline.de/problem-melden/?id={{ id }}&title={{
-          details.lom.general.title | encodeUriComponent
+          hit.lom.general.title | encodeUriComponent
         }}"
         ><mat-icon>report_problem</mat-icon> <span i18n>Report a problem</span></a
       >

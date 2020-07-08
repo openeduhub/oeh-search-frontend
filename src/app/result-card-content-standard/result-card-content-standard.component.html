@@ -1,13 +1,13 @@
-<a class="details-link" [routerLink]="['/details', result.id]">
+<a class="details-link" [routerLink]="['/details', hit.id]">
   <div class="image-container" mat-card-image>
-    <img class="img-bg" [appPreviewImage]="result.previewImage" />
-    <img class="img-main" [appPreviewImage]="result.previewImage" [loadHighResImage]="true" />
+    <img class="img-bg" [appPreviewImage]="hit.previewImage" />
+    <img class="img-main" [appPreviewImage]="hit.previewImage" [loadHighResImage]="true" />
   </div>
-  <mat-card-title class="title">{{ result.lom.general.title | truncate: 52 }}</mat-card-title>
+  <mat-card-title class="title">{{ hit.lom.general.title | truncate: 52 }}</mat-card-title>
 </a>
 <div class="badges">
   <div
-    *ngIf="(result | isInCollection: 'EDITORIAL') || (result | isInCollection: 'FEATURED')"
+    *ngIf="(hit | isInCollection: 'EDITORIAL') || (hit | isInCollection: 'FEATURED')"
     i18n-matTooltip
     matTooltipPosition="left"
     matTooltip="Recommended by editorial team"
@@ -15,7 +15,7 @@
     <div class="icon editorial-icon"></div>
   </div>
   <!-- <div
-    *ngIf="result.license?.oer === 'ALL'"
+    *ngIf="hit.license?.oer === 'ALL'"
     i18n-matTooltip
     matTooltipPosition="left"
     matTooltip="Open Educational Resources"
@@ -24,13 +24,13 @@
   </div> -->
 </div>
 <mat-card-content>
-  <p class="description" *ngIf="result.lom.general.description">
-    {{ result.lom.general.description | trim | truncate: 120 }}
+  <p class="description" *ngIf="hit.lom.general.description">
+    {{ hit.lom.general.description | trim | truncate: 120 }}
   </p>
-  <div class="metadata" *ngIf="result.skos.discipline">
+  <div class="metadata" *ngIf="hit.skos.discipline">
     <label i18n-matTooltip matTooltip="Discipline"><mat-icon>book_icon</mat-icon></label>
     <div>
-      <span *ngFor="let discipline of result.skos.discipline | slice: 0:5">
+      <span *ngFor="let discipline of hit.skos.discipline | slice: 0:5">
         <a
           routerLink="/search"
           [queryParams]="discipline | generateFilters: 'skos.discipline':filters"
@@ -40,10 +40,10 @@
       </span>
     </div>
   </div>
-  <div class="metadata" *ngIf="result.skos.educationalContext">
+  <div class="metadata" *ngIf="hit.skos.educationalContext">
     <label i18n-matTooltip matTooltip="Educational context"><mat-icon>school</mat-icon></label>
     <div>
-      <span *ngFor="let context of result.skos.educationalContext">
+      <span *ngFor="let context of hit.skos.educationalContext">
         <a
           routerLink="/search"
           [queryParams]="context | generateFilters: 'skos.educationalContext':filters"
@@ -53,12 +53,12 @@
       </span>
     </div>
   </div>
-  <div class="metadata" *ngIf="result.skos.learningResourceType">
+  <div class="metadata" *ngIf="hit.skos.learningResourceType">
     <label i18n-matTooltip matTooltip="Learning resource type">
       <mat-icon>photo_library</mat-icon>
     </label>
     <div>
-      <span *ngFor="let lrt of result.skos.learningResourceType">
+      <span *ngFor="let lrt of hit.skos.learningResourceType">
         <a
           routerLink="/search"
           [queryParams]="lrt | generateFilters: 'skos.learningResourceType':filters"
@@ -70,12 +70,12 @@
   </div>
   <mat-chip-list
     class="metadata"
-    *ngIf="result.lom.general.keyword"
+    *ngIf="hit.lom.general.keyword"
     i18n-aria-label
     aria-label="keywords"
   >
     <mat-chip
-      *ngFor="let keyword of result.lom.general.keyword | slice: 0:5"
+      *ngFor="let keyword of hit.lom.general.keyword | slice: 0:5"
       routerLink="/search"
       [queryParams]="keyword | generateFilters: 'lom.general.keyword':filters"
       queryParamsHandling="merge"
@@ -84,7 +84,7 @@
   </mat-chip-list>
 </mat-card-content>
 <!-- <a
-  [ngSwitch]="result.type"
+  [ngSwitch]="hit.type"
 >
   <ng-container i18n *ngSwitchCase="'MATERIAL'">Go To Content</ng-container>
   <ng-container i18n *ngSwitchCase="'TOOL'">Go To Tool</ng-container>
@@ -95,10 +95,10 @@
   mat-flat-button
   color="primary"
   target="_blank"
-  [href]="result.lom.technical.location"
+  [href]="hit.lom.technical.location"
 >
   <ng-container i18n>Go To Content</ng-container>
 </a>
-<a class="source" [href]="result.source.url" target="_blank">
-  <ng-container i18n>Source</ng-container>: {{ result.source.name }}</a
+<a class="source" [href]="hit.source.url" target="_blank">
+  <ng-container i18n>Source</ng-container>: {{ hit.source.name }}</a
 >

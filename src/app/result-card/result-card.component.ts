@@ -12,7 +12,7 @@ import { Hit } from '../search-results/search-results.component';
     styleUrls: ['./result-card.component.scss'],
 })
 export class ResultCardComponent implements OnInit, OnDestroy {
-    @Input() result: Hit;
+    @Input() hit: Hit;
     @Input() filters: Filters;
     @HostBinding('attr.style') style: ResultCardStyle;
 

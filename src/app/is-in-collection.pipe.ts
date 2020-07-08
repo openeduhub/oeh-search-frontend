@@ -1,5 +1,4 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Details } from './search.service';
 import { Hit } from './search-results/search-results.component';
 
 /**
@@ -11,7 +10,7 @@ import { Hit } from './search-results/search-results.component';
     name: 'isInCollection',
 })
 export class IsInCollectionPipe implements PipeTransform {
-    transform(value: Hit | Details, uuid: string): boolean {
+    transform(value: Hit, uuid: string): boolean {
         // return value.collection?.some((c) => c.uuid === uuid);
         return false;
     }

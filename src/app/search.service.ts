@@ -18,7 +18,6 @@ import { SearchParametersService } from './search-parameters.service';
 import { assertUnreachable } from './utils';
 
 // export type Details = GetDetailsQuery['get'];
-export type Details = Hit;
 // export type Facets = Omit<FacetsFragment, '__typename'>;
 
 export type Filters = {

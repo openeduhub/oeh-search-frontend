@@ -8,7 +8,7 @@ import { environment } from '../../environments/environment';
 import { AuthService } from '../auth.service';
 import { EditorService } from '../editor.service';
 import { IsInCollectionPipe } from '../is-in-collection.pipe';
-import { Details } from '../search.service';
+import { Hit } from '../../generated/graphql';
 
 @Component({
     selector: 'app-details',
@@ -17,7 +17,7 @@ import { Details } from '../search.service';
 })
 export class DetailsComponent implements OnInit {
     id: string;
-    details: Details;
+    hit: Hit;
     isRecommended: boolean;
     isDisplayed = true;
     userInfo: UserInfo;
@@ -33,9 +33,9 @@ export class DetailsComponent implements OnInit {
     ) {}
 
     ngOnInit(): void {
-        this.route.data.subscribe((data: { details: Details }) => {
-            this.details = data.details;
-            this.isRecommended = new IsInCollectionPipe().transform(this.details, 'EDITORIAL');
+        this.route.data.subscribe((data: { details: Hit }) => {
+            this.hit = data.details;
+            this.isRecommended = new IsInCollectionPipe().transform(this.hit, 'EDITORIAL');
         });
         this.route.params.subscribe((params) => (this.id = params.id));
         this.authService.getUserInfo().subscribe((userInfo) => (this.userInfo = userInfo));
