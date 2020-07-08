@@ -17,9 +17,6 @@ import { ConfigService } from './config.service';
 import { SearchParametersService } from './search-parameters.service';
 import { assertUnreachable } from './utils';
 
-// export type Details = GetDetailsQuery['get'];
-// export type Facets = Omit<FacetsFragment, '__typename'>;
-
 export type Filters = {
     [key in Facet]?: string[];
 };
@@ -69,7 +66,7 @@ export class SearchService {
                 searchString,
                 from: pageIndex * pageSize,
                 size: pageSize,
-                // filters: mapFilters(filters),
+                filters: mapFilters(filters),
                 language: this.language,
             })
             .pipe(map((response) => response.data.search));
@@ -225,14 +222,14 @@ export class SearchService {
     }
 }
 
-// export function mapFilters(filters: Filters): Filter[] {
-//     if (!filters) {
-//         return [];
-//     }
-//     return Object.entries(filters)
-//         .filter(([key, value]) => value && value.length > 0)
-//         .map(([key, value]) => ({ field: key, terms: value }));
-// }
+function mapFilters(filters: Filters): Filter[] | null {
+    if (!filters) {
+        return null;
+    }
+    return Object.entries(filters)
+        .filter(([key, value]) => value && value.length > 0)
+        .map(([key, value]) => ({ facet: key as Facet, terms: value }));
+}
 
 function mapFacets(aggregations: readonly Aggregation[]): Facets {
     return aggregations.reduce((acc, aggregation) => {
