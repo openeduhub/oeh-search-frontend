@@ -173,7 +173,7 @@ export class SearchService {
         this.facetsGQL
             .fetch({
                 searchString,
-                // filters: mapFilters(filters),
+                filters: mapFilters(filters),
                 language: this.language,
             })
             .subscribe((response) => {
@@ -196,12 +196,8 @@ export class SearchService {
                     changedFilterFacets.length === 1
                 ) {
                     const changedFilterFacet = changedFilterFacets[0];
-                    const changedFacet = Object.entries(response.data.facets).find(
-                        ([key, value]) =>
-                            typeof value === 'object' && value.facet === changedFilterFacet,
-                    )?.[0] as keyof Facets;
-                    if (changedFacet) {
-                        facets[changedFacet] = this.facets.getValue()[changedFacet];
+                    if (changedFilterFacet) {
+                        facets[changedFilterFacet] = this.facets.getValue()[changedFilterFacet];
                     }
                 }
                 this.facets.next(facets);
