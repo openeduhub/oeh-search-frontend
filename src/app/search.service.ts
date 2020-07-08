@@ -14,6 +14,7 @@ import {
     Language,
     ResultFragment,
     SearchGQL,
+    FacetGQL,
 } from '../generated/graphql';
 import { ConfigService } from './config.service';
 import { SearchParametersService } from './search-parameters.service';
@@ -38,6 +39,7 @@ export class SearchService {
         config: ConfigService,
         private autoCompleteGQL: AutoCompleteGQL,
         private didYouMeanSuggestionGQL: DidYouMeanSuggestionGQL,
+        private facetGQL: FacetGQL,
         private facetsGQL: FacetsGQL,
         private getEntryGQL: GetEntryGQL,
         // private getLargeThumbnailGQL: GetLargeThumbnailGQL,
@@ -100,61 +102,22 @@ export class SearchService {
         return this.didYouMeanSuggestion.asObservable();
     }
 
-    // loadMoreFacetBuckets(facet: keyof Facets, size: number) {
-    //     const facets = { ...this.facets.getValue() };
-    //     const { searchString, filters } = this.searchParameters.getCurrentValue();
-    //     const fetchParams = {
-    //         size,
-    //         searchString,
-    //         filters: mapFilters(filters),
-    //         language: this.config.getShortLocale() as Language,
-    //     };
-    //     switch (facet) {
-    //         case 'sources':
-    //             this.loadMoreSources.fetch(fetchParams).subscribe((response) => {
-    //                 facets.sources = response.data.facets.sources;
-    //                 this.facets.next(facets);
-    //             });
-    //             break;
-    //         case 'disciplines':
-    //             this.loadMoreDisciplines.fetch(fetchParams).subscribe((response) => {
-    //                 facets.disciplines = response.data.facets.disciplines;
-    //                 this.facets.next(facets);
-    //             });
-    //             break;
-    //         case 'keywords':
-    //             this.loadMoreKeywords.fetch(fetchParams).subscribe((response) => {
-    //                 facets.keywords = response.data.facets.keywords;
-    //                 this.facets.next(facets);
-    //             });
-    //             break;
-    //         case 'educationalContexts':
-    //             this.loadMoreEducationalContexts.fetch(fetchParams).subscribe((response) => {
-    //                 facets.educationalContexts = response.data.facets.educationalContexts;
-    //                 this.facets.next(facets);
-    //             });
-    //             break;
-    //         case 'learningResourceTypes':
-    //             this.loadMoreLearningResourceTypes.fetch(fetchParams).subscribe((response) => {
-    //                 facets.learningResourceTypes = response.data.facets.learningResourceTypes;
-    //                 this.facets.next(facets);
-    //             });
-    //             break;
-    //         case 'intendedEndUserRoles':
-    //             this.loadMoreIntendedEndUserRoles.fetch(fetchParams).subscribe((response) => {
-    //                 facets.intendedEndUserRoles = response.data.facets.intendedEndUserRoles;
-    //                 this.facets.next(facets);
-    //             });
-    //             break;
-    //         // Values for types are fixed. We don't have a load-more button here.
-    //         case 'types':
-    //             throw new Error('Cannot load more types');
-    //         // Cause a compiler error when missing cases. Please add new cases above when that
-    //         // happens.
-    //         default:
-    //             assertUnreachable(facet);
-    //     }
-    // }
+    loadMoreFacetBuckets(facet: Facet, size: number) {
+        const facets = { ...this.facets.getValue() };
+        const { searchString, filters } = this.searchParameters.getCurrentValue();
+        this.facetGQL
+            .fetch({
+                size,
+                searchString,
+                filters: mapFilters(filters),
+                language: this.language,
+                facet,
+            })
+            .subscribe((response) => {
+                facets[facet] = response.data.facet;
+                this.facets.next(facets);
+            });
+    }
 
     private updateDidYouMeanSuggestion(searchString: string, filters: Filters) {
         this.didYouMeanSuggestionGQL

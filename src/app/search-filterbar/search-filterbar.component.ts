@@ -80,9 +80,8 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
     }
 
     loadMoreFacetBuckets(facet: Facet) {
-        throw new Error('not implemented');
-        // const currentlyShownBuckets = this.facets[facet].buckets.length;
-        // this.search.loadMoreFacetBuckets(facet, currentlyShownBuckets + 20);
+        const currentlyShownBuckets = this.facets[facet].buckets.length;
+        this.search.loadMoreFacetBuckets(facet, currentlyShownBuckets + 20);
     }
 
     /**
