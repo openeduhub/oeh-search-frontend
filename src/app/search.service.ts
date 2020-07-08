@@ -12,6 +12,7 @@ import {
     FacetsGQL,
     Facet,
     Aggregation,
+    AutoCompleteGQL,
 } from '../generated/graphql';
 import { ConfigService } from './config.service';
 import { SearchParametersService } from './search-parameters.service';
@@ -35,7 +36,7 @@ export class SearchService {
 
     constructor(
         config: ConfigService,
-        // private autoCompleteGQL: AutoCompleteGQL,
+        private autoCompleteGQL: AutoCompleteGQL,
         // private didYouMeanSuggestionGQL: DidYouMeanSuggestionGQL,
         private facetsGQL: FacetsGQL,
         private getEntryGQL: GetEntryGQL,
@@ -87,14 +88,14 @@ export class SearchService {
         throw new Error('not implemented');
     }
 
-    // autoComplete(searchString: string, filters?: Filters): Observable<string[]> {
-    //     if (searchString.length === 0) {
-    //         return of(null);
-    //     }
-    //     return this.autoCompleteGQL
-    //         .fetch({ searchString, filters: mapFilters(filters) })
-    //         .pipe(map((response) => response.data.autoComplete));
-    // }
+    autoComplete(searchString: string, filters?: Filters): Observable<string[]> {
+        if (searchString.length === 0) {
+            return of(null);
+        }
+        return this.autoCompleteGQL
+            .fetch({ searchString, filters: mapFilters(filters), language: this.language })
+            .pipe(map((response) => response.data.autoComplete));
+    }
 
     getFacets(): Observable<Facets> {
         return this.facets.asObservable();

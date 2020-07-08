@@ -1,0 +1,3 @@
+query AutoComplete($searchString: String!, $filters: [Filter!], $language: Language!) {
+  autoComplete(searchString: $searchString, filters: $filters, language: $language)
+}
