@@ -15,8 +15,8 @@
       <mat-icon>close</mat-icon>
     </button>
   </div>
-  <!-- <div class="body">
-    <div class="type">
+  <div class="body">
+    <!-- <div class="type">
       <mat-label><mat-icon>apps</mat-icon> <ng-container i18n>Type</ng-container></mat-label>
       <app-multivalue-checkbox
         formControlName="type"
@@ -24,7 +24,7 @@
         [columns]="2"
         [buckets]="facets.types.buckets"
       ></app-multivalue-checkbox>
-    </div>
+    </div> -->
     <mat-accordion [multi]="true" displayMode="flat">
       <mat-expansion-panel
         *ngFor="let key of mainFilters"
@@ -32,27 +32,27 @@
         [(expanded)]="expandedFilters[key]"
       >
         <mat-expansion-panel-header [ngSwitch]="key">
-          <mat-panel-title *ngSwitchCase="'disciplines'">
+          <mat-panel-title *ngSwitchCase="'discipline'">
             <mat-icon class="icon">book_icon</mat-icon>
             <span i18n>Discipline</span>
           </mat-panel-title>
-          <mat-panel-title *ngSwitchCase="'educationalContexts'">
+          <mat-panel-title *ngSwitchCase="'educationalContext'">
             <mat-icon class="icon">school</mat-icon>
             <span i18n>Educational Context</span>
           </mat-panel-title>
-          <mat-panel-title *ngSwitchCase="'learningResourceTypes'">
+          <mat-panel-title *ngSwitchCase="'learningResourceType'">
             <mat-icon class="icon">photo_library</mat-icon>
             <span i18n>Learning Resource Type</span>
           </mat-panel-title>
-          <mat-panel-title *ngSwitchCase="'intendedEndUserRoles'">
+          <mat-panel-title *ngSwitchCase="'intendedEndUserRole'">
             <mat-icon class="icon">group</mat-icon>
             <span i18n>Intended End User Role</span>
           </mat-panel-title>
-          <mat-panel-title *ngSwitchCase="'sources'">
+          <mat-panel-title *ngSwitchCase="'source'">
             <mat-icon class="icon">cloud</mat-icon>
             <span i18n>Source</span>
           </mat-panel-title>
-          <mat-panel-title *ngSwitchCase="'keywords'">
+          <mat-panel-title *ngSwitchCase="'keyword'">
             <mat-icon class="icon">list</mat-icon>
             <span i18n>Keywords</span>
           </mat-panel-title>
@@ -61,7 +61,7 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
         <app-multivalue-checkbox
-          [formControlName]="facets[key].field"
+          [formControlName]="facets[key].facet"
           [buckets]="facets[key].buckets"
         ></app-multivalue-checkbox>
         <button
@@ -75,5 +75,5 @@
         </button>
       </mat-expansion-panel>
     </mat-accordion>
-  </div> -->
+  </div>
 </mat-card>
