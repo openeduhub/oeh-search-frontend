@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { ResultFragment } from '../../generated/graphql';
+import { DidYouMeanSuggestionFragment, ResultFragment } from '../../generated/graphql';
 import { SearchParametersService } from '../search-parameters.service';
 import { Hits, SearchData } from '../search-resolver.service';
 import { SearchService } from '../search.service';
@@ -13,7 +13,7 @@ import { ViewService } from '../view.service';
     styleUrls: ['./search.component.scss'],
 })
 export class SearchComponent implements OnInit, OnDestroy {
-    // didYouMeanSuggestion: DidYouMeanSuggestionFragment;
+    didYouMeanSuggestion: DidYouMeanSuggestionFragment;
     showFilterBar = false;
     filterCount: number;
     pageIndex: number;
@@ -31,13 +31,13 @@ export class SearchComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
-        // this.subscriptions.push(
-        //     this.search
-        //         .getDidYouMeanSuggestion()
-        //         .subscribe(
-        //             (didYouMeanSuggestion) => (this.didYouMeanSuggestion = didYouMeanSuggestion),
-        //         ),
-        // );
+        this.subscriptions.push(
+            this.search
+                .getDidYouMeanSuggestion()
+                .subscribe(
+                    (didYouMeanSuggestion) => (this.didYouMeanSuggestion = didYouMeanSuggestion),
+                ),
+        );
         this.subscriptions.push(
             this.view.getShowFilterBar().subscribe((value) => {
                 this.showFilterBar = value;

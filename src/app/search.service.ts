@@ -1,22 +1,22 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import {
+    Aggregation,
+    AutoCompleteGQL,
+    DidYouMeanSuggestionFragment,
+    DidYouMeanSuggestionGQL,
+    Facet,
+    FacetsGQL,
     Filter,
-    Hit,
+    GetEntryGQL,
+    GetEntryQuery,
     Language,
     ResultFragment,
     SearchGQL,
-    GetEntryGQL,
-    GetEntryQuery,
-    FacetsGQL,
-    Facet,
-    Aggregation,
-    AutoCompleteGQL,
 } from '../generated/graphql';
 import { ConfigService } from './config.service';
 import { SearchParametersService } from './search-parameters.service';
-import { assertUnreachable } from './utils';
 
 export type Filters = {
     [key in Facet]?: string[];
@@ -29,7 +29,7 @@ export type Facets = {
 @Injectable({ providedIn: 'root' })
 export class SearchService {
     private facets = new BehaviorSubject<Facets>(null);
-    // private didYouMeanSuggestion = new BehaviorSubject<DidYouMeanSuggestionFragment>(null);
+    private didYouMeanSuggestion = new BehaviorSubject<DidYouMeanSuggestionFragment>(null);
     private lastSearchString: string;
     private lastFilters: Filters;
     private language: Language;
@@ -37,7 +37,7 @@ export class SearchService {
     constructor(
         config: ConfigService,
         private autoCompleteGQL: AutoCompleteGQL,
-        // private didYouMeanSuggestionGQL: DidYouMeanSuggestionGQL,
+        private didYouMeanSuggestionGQL: DidYouMeanSuggestionGQL,
         private facetsGQL: FacetsGQL,
         private getEntryGQL: GetEntryGQL,
         // private getLargeThumbnailGQL: GetLargeThumbnailGQL,
@@ -60,7 +60,7 @@ export class SearchService {
             pageSize,
             filters,
         } = this.searchParameters.getCurrentValue();
-        // this.updateDidYouMeanSuggestion(searchString, filters);
+        this.updateDidYouMeanSuggestion(searchString, filters);
         this.updateFacets(searchString, filters);
         return this.searchGQL
             .fetch({
@@ -79,11 +79,6 @@ export class SearchService {
             .pipe(map((response) => response.data.get));
     }
 
-    // getLargeThumbnail(id: string): Observable<string> {
-    //     return this.getLargeThumbnailGQL
-    //         .fetch({ id })
-    //         .pipe(map((response) => response.data.get.thumbnail.large));
-    // }
     getLargeThumbnail(id: string): any {
         throw new Error('not implemented');
     }
@@ -101,9 +96,9 @@ export class SearchService {
         return this.facets.asObservable();
     }
 
-    // getDidYouMeanSuggestion(): Observable<DidYouMeanSuggestionFragment> {
-    //     return this.didYouMeanSuggestion.asObservable();
-    // }
+    getDidYouMeanSuggestion(): Observable<DidYouMeanSuggestionFragment> {
+        return this.didYouMeanSuggestion.asObservable();
+    }
 
     // loadMoreFacetBuckets(facet: keyof Facets, size: number) {
     //     const facets = { ...this.facets.getValue() };
@@ -161,13 +156,13 @@ export class SearchService {
     //     }
     // }
 
-    // private updateDidYouMeanSuggestion(searchString: string, filters: Filters) {
-    //     this.didYouMeanSuggestionGQL
-    //         .fetch({ searchString, filters: mapFilters(filters) })
-    //         .subscribe((response) =>
-    //             this.didYouMeanSuggestion.next(response.data.didYouMeanSuggestion),
-    //         );
-    // }
+    private updateDidYouMeanSuggestion(searchString: string, filters: Filters) {
+        this.didYouMeanSuggestionGQL
+            .fetch({ searchString, filters: mapFilters(filters), language: this.language })
+            .subscribe((response) =>
+                this.didYouMeanSuggestion.next(response.data.didYouMeanSuggestion),
+            );
+    }
 
     private updateFacets(searchString: string, filters: Filters) {
         const changedFilterFacets = this.getChangedFilterFacets(filters);

@@ -8,14 +8,14 @@
       <mat-icon *ngIf="!last">keyboard_arrow_right</mat-icon>
     </ng-container>
   </h1>
-  <!-- <p *ngIf="didYouMeanSuggestion" class="did-you-mean">
+  <p *ngIf="didYouMeanSuggestion" class="did-you-mean">
     <ng-container i18n>Did you mean:</ng-container>&nbsp;<a
       [innerHTML]="didYouMeanSuggestion.html"
       routerLink="/search"
       [queryParams]="{ q: didYouMeanSuggestion.plain }"
       queryParamsHandling="merge"
     ></a>
-  </p> -->
+  </p>
   <div class="summary">
     <div class="no-results" *ngIf="results.total.value === 0">
       <p i18n>No results</p>

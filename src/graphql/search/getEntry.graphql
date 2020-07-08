@@ -1,5 +1,5 @@
 query GetEntry($id: ID!, $language: Language!) {
-  get(id: $id, language: $language) {
-    ...searchHit
-  }
+    get(id: $id, language: $language) {
+        ...searchHit
+    }
 }

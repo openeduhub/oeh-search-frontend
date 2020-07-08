@@ -1,75 +1,75 @@
 query Search(
-  $searchString: String!
-  $from: Int! = 0
-  $size: Int!
-  $filters: [Filter!]
-  $language: Language
+    $searchString: String!
+    $from: Int! = 0
+    $size: Int!
+    $filters: [Filter!]
+    $language: Language
 ) {
-  search(
-    searchString: $searchString
-    from: $from
-    size: $size
-    filters: $filters
-    language: $language
-  ) {
-    ...result
-  }
+    search(
+        searchString: $searchString
+        from: $from
+        size: $size
+        filters: $filters
+        language: $language
+    ) {
+        ...result
+    }
 }
 
 fragment result on SearchResult {
-  took
-  total {
-    value
-    relation
-  }
-  hits {
-    ...searchHit
-  }
+    took
+    total {
+        value
+        relation
+    }
+    hits {
+        ...searchHit
+    }
 }
 
 fragment searchHit on Hit {
-  id
-  lom {
-    general {
-      title
-      keyword
-      description
+    id
+    lom {
+        general {
+            title
+            keyword
+            description
+        }
+        technical {
+            location
+        }
     }
-    technical {
-      location
-    }
-  }
-  source {
-    name
-    url
-  }
-  previewImage {
-    thumbnail {
-      ... on EmbeddedThumbnail {
-        mimetype
-        image
-      }
-      ... on ExternalThumbnail {
+    source {
+        name
         url
-      }
     }
-    url
-  }
+    previewImage {
+        thumbnail {
+            ... on EmbeddedThumbnail {
+                mimetype
+                image
+            }
+            ... on ExternalThumbnail {
+                url
+            }
+        }
+        url
+    }
 
-  skos {
-    discipline {
-      ...skosEntry
+    skos {
+        discipline {
+            ...skosEntry
+        }
+        educationalContext {
+            ...skosEntry
+        }
+        learningResourceType {
+            ...skosEntry
+        }
     }
-    educationalContext {
-      ...skosEntry
-    }
-    learningResourceType {
-      ...skosEntry
-    }
-  }
 }
 
 fragment skosEntry on SkosEntry {
-  id
-  label
+    id
+    label
 }
