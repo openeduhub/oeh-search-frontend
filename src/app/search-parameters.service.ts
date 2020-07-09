@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { ConfigService } from './config.service';
 import { Filters } from './search.service';
-import { Language } from '../generated/graphql';
+import { Language, Facet } from '../generated/graphql';
 
 export interface ParsedParams {
     searchString: string;
@@ -99,15 +99,11 @@ export class SearchParametersService {
         this.parsedParams = parseSearchQueryParams(queryParamMap);
         if (paramMap.has('educationalContext')) {
             const educationalContext = paramMap.get('educationalContext');
-            this.parsedParams.filters[`valuespaces.educationalContext.${this.language}.keyword`] = [
-                educationalContext,
-            ];
+            this.parsedParams.filters[Facet.EducationalContext] = [educationalContext];
         }
         if (paramMap.has('discipline')) {
             const discipline = paramMap.get('discipline');
-            this.parsedParams.filters[`valuespaces.discipline.${this.language}.keyword`] = [
-                discipline,
-            ];
+            this.parsedParams.filters[Facet.Discipline] = [discipline];
         }
         switch (this.parsedParams.oer) {
             case 'ALL':
