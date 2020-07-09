@@ -63,13 +63,11 @@
       >{{ keyword }}</mat-chip
     >
   </mat-chip-list>
-  <!-- <div class="metadata" *ngIf="isExpanded" [ngSwitch]="hit.license?.oer">
+  <div class="metadata" *ngIf="isExpanded">
     OER:
-    <span *ngSwitchCase="'ALL'" i18n>yes</span>
-    <span *ngSwitchCase="'MIXED'" i18n>mixed</span>
-    <span *ngSwitchCase="'NONE'" i18n>no</span>
-    <span *ngSwitchDefault i18n>unknown</span>
-  </div> -->
+    <span *ngIf="hit.license.oer" i18n>yes</span>
+    <span *ngIf="!hit.license.oer" i18n>no</span>
+  </div>
 </mat-card-content>
 <a
   *ngIf="isExpanded"

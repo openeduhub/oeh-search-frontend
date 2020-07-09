@@ -39,10 +39,15 @@ fragment searchHit on Hit {
             location
         }
     }
+    type
     source {
         name
         url
     }
+    license {
+        oer
+    }
+    editorialTags
     previewImage {
         thumbnail {
             ... on EmbeddedThumbnail {

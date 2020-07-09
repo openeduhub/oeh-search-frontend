@@ -33,16 +33,14 @@
         <ng-container i18n>Recommended by editorial team</ng-container></label
       >
     </div>
-    <!-- <div class="metadata" [ngSwitch]="hit.license?.oer">
+    <div class="metadata">
       <label
         ><div class="icon oer-icon"></div>
         <ng-container i18n>Open educational resources</ng-container></label
       >
-      <span *ngSwitchCase="'ALL'" i18n>yes</span>
-      <span *ngSwitchCase="'MIXED'" i18n>mixed</span>
-      <span *ngSwitchCase="'NONE'" i18n>no</span>
-      <span *ngSwitchDefault i18n>unknown</span>
-    </div> -->
+      <span *ngIf="hit.license.oer" i18n>yes</span>
+      <span *ngIf="!hit.license.oer" i18n>no</span>
+    </div>
     <div class="metadata" *ngIf="hit.skos.discipline">
       <label><mat-icon>book_icon</mat-icon> <ng-container i18n>Discipline</ng-container></label>
       <div>

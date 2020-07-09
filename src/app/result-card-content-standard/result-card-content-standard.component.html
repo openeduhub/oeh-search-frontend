@@ -14,14 +14,14 @@
   >
     <div class="icon editorial-icon"></div>
   </div>
-  <!-- <div
-    *ngIf="hit.license?.oer === 'ALL'"
+  <div
+    *ngIf="hit.license.oer"
     i18n-matTooltip
     matTooltipPosition="left"
     matTooltip="Open Educational Resources"
   >
     <div class="icon oer-icon"></div>
-  </div> -->
+  </div>
 </div>
 <mat-card-content>
   <p class="description" *ngIf="hit.lom.general.description">
