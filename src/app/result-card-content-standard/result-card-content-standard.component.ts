@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Filters, SearchService } from '../search.service';
+import { Facet } from '../../generated/graphql';
 import { Hit } from '../search-results/search-results.component';
+import { Filters } from '../search.service';
 
 @Component({
     selector: 'app-result-card-content-standard',
@@ -11,20 +12,10 @@ export class ResultCardContentStandardComponent implements OnInit {
     @Input() hit: Hit;
     @Input() filters: Filters;
 
+    readonly Facet = Facet;
     thumbnail: string;
 
-    constructor(private search: SearchService) {}
+    constructor() {}
 
-    ngOnInit(): void {
-        // this.loadLargeThumbnail();
-    }
-
-    // private loadLargeThumbnail() {
-    //     if (this.result.thumbnail) {
-    //         this.thumbnail = this.result.thumbnail.small;
-    //         this.search.getLargeThumbnail(this.result.id).subscribe((largeThumbnail) => {
-    //             this.thumbnail = largeThumbnail;
-    //         });
-    //     }
-    // }
+    ngOnInit(): void {}
 }

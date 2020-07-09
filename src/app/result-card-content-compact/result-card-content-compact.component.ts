@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Filters, SearchService } from '../search.service';
+import { Facet } from '../../generated/graphql';
 import { Hit } from '../search-results/search-results.component';
+import { Filters } from '../search.service';
 
 @Component({
     selector: 'app-result-card-content-compact',
@@ -11,9 +12,10 @@ export class ResultCardContentCompactComponent implements OnInit {
     @Input() hit: Hit;
     @Input() filters: Filters;
 
+    readonly Facet = Facet;
     isExpanded = false;
 
-    constructor(private search: SearchService) {}
+    constructor() {}
 
     ngOnInit(): void {}
 }

@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { ConfigService } from './config.service';
-import { Language, SkosEntry } from '../generated/graphql';
+import { Language, SkosEntry, Facet } from '../generated/graphql';
 
 /**
  * Extend the `filters` of the search component with another attribute.
@@ -18,16 +18,9 @@ export class GenerateFiltersPipe implements PipeTransform {
         this.language = config.getLanguage();
     }
 
-    transform(
-        value: string | SkosEntry,
-        field: string,
-        filters: object = {},
-        isTextField = true,
-    ): object {
-        let filterKey: string;
+    transform(value: string | SkosEntry, facet: Facet, filters: object = {}): object {
         let filterValue: string;
         if (typeof value === 'object' && value.__typename === 'SkosEntry') {
-            filterKey = `${field}.${this.language}.keyword`;
             filterValue = value.label;
             if (!filterValue) {
                 if (
@@ -41,7 +34,6 @@ export class GenerateFiltersPipe implements PipeTransform {
                 return null;
             }
         } else if (typeof value === 'string') {
-            filterKey = isTextField ? `${field}.keyword` : field;
             filterValue = value;
         } else {
             throw new Error(`Cannot generate filter of ${value}`);
@@ -50,7 +42,7 @@ export class GenerateFiltersPipe implements PipeTransform {
             pageIndex: 0,
             filters: JSON.stringify({
                 ...filters,
-                [filterKey]: [filterValue],
+                [facet]: [filterValue],
             }),
         };
     }

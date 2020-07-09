@@ -24,7 +24,7 @@
     <a
       *ngFor="let discipline of hit.skos.discipline"
       routerLink="/search"
-      [queryParams]="discipline | generateFilters: 'skos.discipline':filters"
+      [queryParams]="discipline | generateFilters: Facet.Discipline:filters"
       queryParamsHandling="merge"
       >{{ discipline.label }}</a
     >
@@ -34,7 +34,7 @@
     <a
       *ngFor="let educationalContext of hit.skos.educationalContext"
       routerLink="/search"
-      [queryParams]="educationalContext | generateFilters: 'skos.educationalContext':filters"
+      [queryParams]="educationalContext | generateFilters: Facet.EducationalContext:filters"
       queryParamsHandling="merge"
       >{{ educationalContext.label }}</a
     >
@@ -44,7 +44,7 @@
     <a
       *ngFor="let learningResourceType of hit.skos.learningResourceType"
       routerLink="/search"
-      [queryParams]="learningResourceType | generateFilters: 'skos.learningResourceType':filters"
+      [queryParams]="learningResourceType | generateFilters: Facet.LearningResourceType:filters"
       queryParamsHandling="merge"
       >{{ learningResourceType.label }}</a
     >
@@ -58,7 +58,7 @@
     <mat-chip
       *ngFor="let keyword of hit.lom.general.keyword"
       routerLink="/search"
-      [queryParams]="keyword | generateFilters: 'lom.general.keyword':filters"
+      [queryParams]="keyword | generateFilters: Facet.Keyword:filters"
       queryParamsHandling="merge"
       >{{ keyword }}</mat-chip
     >
