@@ -1,6 +1,7 @@
-import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import { Component, forwardRef, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
+import { Bucket, Type } from '../../generated/graphql';
 
 @Component({
     selector: 'app-multivalue-checkbox',
@@ -15,13 +16,14 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
     ],
 })
 export class MultivalueCheckboxComponent implements ControlValueAccessor {
-    // @Input() buckets: Bucket[];
-    @Input() buckets: any[];
+    @Input() buckets: Bucket[];
     @Input() showCount = true;
     @Input() columns = 1;
     values: string[] = [];
+    readonly Type = Type;
 
     constructor() {}
+
     propagateChange = (_: any) => {};
 
     registerOnChange(fn: (_: any) => {}): void {

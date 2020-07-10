@@ -16,15 +16,15 @@
     </button>
   </div>
   <div class="body">
-    <!-- <div class="type">
+    <div class="type">
       <mat-label><mat-icon>apps</mat-icon> <ng-container i18n>Type</ng-container></mat-label>
       <app-multivalue-checkbox
         formControlName="type"
         [showCount]="false"
         [columns]="2"
-        [buckets]="facets.types.buckets"
+        [buckets]="facets.type.buckets"
       ></app-multivalue-checkbox>
-    </div> -->
+    </div>
     <mat-accordion [multi]="true" displayMode="flat">
       <mat-expansion-panel
         *ngFor="let key of mainFilters"

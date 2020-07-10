@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter, first } from 'rxjs/operators';
-import { Aggregation, Facet } from '../../generated/graphql';
+import { Aggregation, Facet, Type } from '../../generated/graphql';
 import { SearchParametersService } from '../search-parameters.service';
 import { Facets, Filters, SearchService } from '../search.service';
 import { ViewService } from '../view.service';
@@ -124,12 +124,12 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
                 this.facets[key] = value;
             }
         }
-        // orderByProperty(this.facets.types.buckets, 'key', [
-        //     'MATERIAL',
-        //     'LESSONPLANNING',
-        //     'TOOL',
-        //     'SOURCE',
-        // ]);
+        orderByProperty(this.facets.type.buckets, 'key', [
+            Type.Content,
+            Type.LessonPlanning,
+            Type.Tool,
+            Type.Portal,
+        ]);
     }
 
     private expandActiveFilters() {

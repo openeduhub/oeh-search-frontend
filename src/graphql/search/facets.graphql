@@ -11,6 +11,7 @@ query Facets($searchString: String, $filters: [Filter!], $language: Language!) {
             keyword
             learningResourceType
             source
+            type
         ]
     ) {
         ...aggregation
