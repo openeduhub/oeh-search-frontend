@@ -9,11 +9,12 @@
     color="primary"
     [href]="hit.lom.technical.location"
     target="_blank"
+    [ngSwitch]="hit.type"
     ><mat-icon>open_in_new</mat-icon>
-    <!-- <ng-container i18n *ngSwitchCase="'MATERIAL'">Go To Content</ng-container>
-    <ng-container i18n *ngSwitchCase="'TOOL'">Go To Tool</ng-container>
-    <ng-container i18n *ngSwitchCase="'SOURCE'">Go To Portal</ng-container> -->
-    <ng-container i18n>Go To Content</ng-container>
+    <ng-container i18n *ngSwitchCase="Type.Content">Go To Content</ng-container>
+    <ng-container i18n *ngSwitchCase="Type.Tool">Go To Tool</ng-container>
+    <ng-container i18n *ngSwitchCase="Type.Portal">Go To Portal</ng-container>
+    <ng-container i18n *ngSwitchCase="Type.LessonPlanning">Go To Lesson Planning</ng-container>
   </a>
 </div>
 <div class="body">

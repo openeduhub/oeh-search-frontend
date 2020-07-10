@@ -4,11 +4,10 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { UserInfo } from 'angular-oauth2-oidc';
-import { environment } from '../../environments/environment';
+import { Hit, Type } from '../../generated/graphql';
 import { AuthService } from '../auth.service';
 import { EditorService } from '../editor.service';
 import { IsInCollectionPipe } from '../is-in-collection.pipe';
-import { Hit } from '../../generated/graphql';
 
 @Component({
     selector: 'app-details',
@@ -16,6 +15,7 @@ import { Hit } from '../../generated/graphql';
     styleUrls: ['./details.component.scss'],
 })
 export class DetailsComponent implements OnInit {
+    readonly Type = Type;
     id: string;
     hit: Hit;
     isRecommended: boolean;
