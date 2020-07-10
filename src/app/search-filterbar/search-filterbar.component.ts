@@ -51,7 +51,7 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
                     // If `facetFilters` are not yet initialized, this will be
                     // done on initialization.
                     this.facetFilters.reset(filters, { emitEvent: false });
-                    // this.expandActiveFilters();
+                    this.expandActiveFilters();
                 }
             }),
         );
