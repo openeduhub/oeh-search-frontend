@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, Attribute } from '@angular/core';
-import { Hits, MediaType } from '../search-resolver.service';
+import { Hits } from '../search-resolver.service';
 import { Filters } from '../search.service';
+import { Type } from '../../generated/graphql';
 
 @Component({
     selector: 'app-subjects-portal-section',
@@ -11,7 +12,7 @@ export class SubjectsPortalSectionComponent implements OnInit {
     @Input() hits: Hits;
     @Input() filters: Filters;
 
-    constructor(@Attribute('type') readonly type: MediaType) {}
+    constructor(@Attribute('type') readonly type: Type) {}
 
     ngOnInit(): void {}
 }

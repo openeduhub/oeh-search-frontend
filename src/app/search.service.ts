@@ -7,6 +7,7 @@ import {
     DidYouMeanSuggestionFragment,
     DidYouMeanSuggestionGQL,
     Facet,
+    FacetGQL,
     FacetsGQL,
     Filter,
     GetEntryGQL,
@@ -14,7 +15,6 @@ import {
     Language,
     ResultFragment,
     SearchGQL,
-    FacetGQL,
 } from '../generated/graphql';
 import { ConfigService } from './config.service';
 import { SearchParametersService } from './search-parameters.service';
@@ -42,13 +42,6 @@ export class SearchService {
         private facetGQL: FacetGQL,
         private facetsGQL: FacetsGQL,
         private getEntryGQL: GetEntryGQL,
-        // private getLargeThumbnailGQL: GetLargeThumbnailGQL,
-        // private loadMoreDisciplines: LoadMoreDisciplinesGQL,
-        // private loadMoreEducationalContexts: LoadMoreEducationalContextsGQL,
-        // private loadMoreIntendedEndUserRoles: LoadMoreIntendedEndUserRolesGQL,
-        // private loadMoreKeywords: LoadMoreKeywordsGQL,
-        // private loadMoreLearningResourceTypes: LoadMoreLearningResourceTypesGQL,
-        // private loadMoreSources: LoadMoreSourcesGQL,
         private searchGQL: SearchGQL,
         private searchParameters: SearchParametersService,
     ) {
@@ -177,7 +170,7 @@ export class SearchService {
     }
 }
 
-function mapFilters(filters: Filters): Filter[] | null {
+export function mapFilters(filters: Filters): Filter[] | null {
     if (!filters) {
         return null;
     }
