@@ -107,10 +107,10 @@ export class SearchParametersService {
         }
         switch (this.parsedParams.oer) {
             case 'ALL':
-                this.parsedParams.filters[Facet.Oer] = ['ALL'];
+                this.parsedParams.filters[Facet.Oer] = ['true'];
                 break;
             case 'MIXED':
-                this.parsedParams.filters[Facet.Oer] = ['ALL', 'MIXED'];
+                this.parsedParams.filters[Facet.Oer] = ['true'];
                 break;
             case 'NONE':
                 break; // Don't apply any filters
