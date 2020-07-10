@@ -38,7 +38,7 @@ import { EncodeUriComponentPipe } from './encode-uri-component.pipe';
 import { ErrorComponent } from './error/error.component';
 import { GenerateFiltersPipe } from './generate-filters.pipe';
 import { HeaderbarComponent } from './headerbar/headerbar.component';
-import { IsInCollectionPipe } from './is-in-collection.pipe';
+import { HasEditorialTagPipe } from './has-editorial-tag.pipe';
 import { LoginComponent } from './login/login.component';
 import { MenubarComponent } from './menubar/menubar.component';
 import { MultivalueCheckboxComponent } from './multivalue-checkbox/multivalue-checkbox.component';
@@ -109,7 +109,7 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
         HeaderbarComponent,
         SearchFieldComponent,
         TrimPipe,
-        IsInCollectionPipe,
+        HasEditorialTagPipe,
         WelcomeComponent,
         MenubarComponent,
         LoginComponent,

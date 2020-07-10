@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Facet, Type } from '../../generated/graphql';
+import { EditorialTag, Facet, Type } from '../../generated/graphql';
 import { Hit } from '../search-results/search-results.component';
 import { Filters } from '../search.service';
 
@@ -12,6 +12,7 @@ export class ResultCardContentStandardComponent implements OnInit {
     @Input() hit: Hit;
     @Input() filters: Filters;
 
+    readonly EditorialTag = EditorialTag;
     readonly Type = Type;
     readonly Facet = Facet;
     thumbnail: string;

@@ -7,7 +7,7 @@
 </a>
 <div class="badges">
   <div
-    *ngIf="(hit | isInCollection: 'EDITORIAL') || (hit | isInCollection: 'FEATURED')"
+    *ngIf="hit | hasEditorialTag: EditorialTag.Recommended"
     i18n-matTooltip
     matTooltipPosition="left"
     matTooltip="Recommended by editorial team"

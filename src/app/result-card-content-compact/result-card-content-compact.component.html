@@ -9,10 +9,7 @@
 <mat-card-content>
   <div class="main-content-row">
     <img class="thumbnail" [appPreviewImage]="hit.previewImage" align="right" />
-    <p
-      class="editorial-hint"
-      *ngIf="(hit | isInCollection: 'EDITORIAL') || (hit | isInCollection: 'FEATURED')"
-    >
+    <p class="editorial-hint" *ngIf="hit | hasEditorialTag: EditorialTag.Recommended">
       <ng-container i18n>Recommended by editorial team</ng-container>
     </p>
     <p class="description">

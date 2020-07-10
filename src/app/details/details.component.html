@@ -27,7 +27,7 @@
   <div class="column column-2">
     <div
       class="metadata metadata-editorial"
-      *ngIf="(hit | isInCollection: 'EDITORIAL') || (hit | isInCollection: 'FEATURED')"
+      *ngIf="hit | hasEditorialTag: EditorialTag.Recommended"
     >
       <label
         ><div class="icon editorial-icon"></div>

@@ -4,10 +4,10 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { UserInfo } from 'angular-oauth2-oidc';
-import { Hit, Type } from '../../generated/graphql';
+import { EditorialTag, Hit, Type } from '../../generated/graphql';
 import { AuthService } from '../auth.service';
 import { EditorService } from '../editor.service';
-import { IsInCollectionPipe } from '../is-in-collection.pipe';
+import { HasEditorialTagPipe } from '../has-editorial-tag.pipe';
 
 @Component({
     selector: 'app-details',
@@ -16,6 +16,7 @@ import { IsInCollectionPipe } from '../is-in-collection.pipe';
 })
 export class DetailsComponent implements OnInit {
     readonly Type = Type;
+    readonly EditorialTag = EditorialTag;
     id: string;
     hit: Hit;
     isRecommended: boolean;
@@ -35,7 +36,10 @@ export class DetailsComponent implements OnInit {
     ngOnInit(): void {
         this.route.data.subscribe((data: { details: Hit }) => {
             this.hit = data.details;
-            this.isRecommended = new IsInCollectionPipe().transform(this.hit, 'EDITORIAL');
+            this.isRecommended = new HasEditorialTagPipe().transform(
+                this.hit,
+                EditorialTag.Recommended,
+            );
         });
         this.route.params.subscribe((params) => (this.id = params.id));
         this.authService.getUserInfo().subscribe((userInfo) => (this.userInfo = userInfo));
