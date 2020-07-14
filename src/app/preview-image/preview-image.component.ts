@@ -16,8 +16,10 @@ export class PreviewImageComponent implements OnChanges {
     // tslint:disable-next-line:no-input-rename
     @Input('appPreviewImage') previewImage: PreviewImage;
     @Input() loadHighResImage = false;
-    @HostBinding('alt') readonly alt = '';
-    @HostBinding('src') src: SafeResourceUrl;
+    @HostBinding('alt')
+    readonly alt = '';
+    @HostBinding('src')
+    src: SafeResourceUrl;
 
     constructor(private httpClient: HttpClient, private domSanitizer: DomSanitizer) {}
 
