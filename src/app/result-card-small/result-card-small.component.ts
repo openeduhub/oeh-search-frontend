@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ResultFragment } from '../../generated/graphql';
 import { Unpacked } from '../utils';
 
-type Hits = ResultFragment['hits']['hits'];
+type Hits = ResultFragment['hits'];
 type Hit = Unpacked<Hits>;
 
 @Component({

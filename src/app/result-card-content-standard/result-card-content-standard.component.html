@@ -1,23 +1,13 @@
-<a class="details-link" [routerLink]="['/details', result.id]">
+<a class="details-link" [routerLink]="['/details', hit.id]">
   <div class="image-container" mat-card-image>
-    <img
-      alt=""
-      class="img-bg"
-      *ngIf="thumbnail"
-      [src]="thumbnail | safeBase64Data: result.thumbnail.mimetype"
-    />
-    <img
-      alt=""
-      class="img-main"
-      *ngIf="thumbnail"
-      [src]="thumbnail | safeBase64Data: result.thumbnail.mimetype"
-    />
+    <img class="img-bg" [appPreviewImage]="hit.previewImage" />
+    <img class="img-main" [appPreviewImage]="hit.previewImage" [loadHighResImage]="true" />
   </div>
-  <mat-card-title class="title">{{ result.lom.general.title | truncate: 52 }}</mat-card-title>
+  <mat-card-title class="title">{{ hit.lom.general.title | truncate: 52 }}</mat-card-title>
 </a>
 <div class="badges">
   <div
-    *ngIf="(result | isInCollection: 'EDITORIAL') || (result | isInCollection: 'FEATURED')"
+    *ngIf="hit | hasEditorialTag: EditorialTag.Recommended"
     i18n-matTooltip
     matTooltipPosition="left"
     matTooltip="Recommended by editorial team"
@@ -25,7 +15,7 @@
     <div class="icon editorial-icon"></div>
   </div>
   <div
-    *ngIf="result.license?.oer === 'ALL'"
+    *ngIf="hit.license.oer"
     i18n-matTooltip
     matTooltipPosition="left"
     matTooltip="Open Educational Resources"
@@ -34,60 +24,60 @@
   </div>
 </div>
 <mat-card-content>
-  <p class="description" *ngIf="result.lom.general?.description">
-    {{ result.lom.general.description | trim | truncate: 120 }}
+  <p class="description" *ngIf="hit.lom.general.description">
+    {{ hit.lom.general.description | trim | truncate: 120 }}
   </p>
-  <div class="metadata" *ngIf="result.valuespaces?.discipline">
+  <div class="metadata" *ngIf="hit.skos.discipline">
     <label i18n-matTooltip matTooltip="Discipline"><mat-icon>book_icon</mat-icon></label>
     <div>
-      <span *ngFor="let discipline of result.valuespaces.discipline | slice: 0:5">
+      <span *ngFor="let discipline of hit.skos.discipline | slice: 0:5">
         <a
           routerLink="/search"
-          [queryParams]="discipline | generateFilters: 'valuespaces.discipline':filters"
+          [queryParams]="discipline | generateFilters: Facet.Discipline:filters"
           queryParamsHandling="merge"
-          >{{ discipline | valuespacesI18n }}</a
+          >{{ discipline.label }}</a
         >
       </span>
     </div>
   </div>
-  <div class="metadata" *ngIf="result.valuespaces?.educationalContext">
+  <div class="metadata" *ngIf="hit.skos.educationalContext">
     <label i18n-matTooltip matTooltip="Educational context"><mat-icon>school</mat-icon></label>
     <div>
-      <span *ngFor="let context of result.valuespaces.educationalContext">
+      <span *ngFor="let context of hit.skos.educationalContext">
         <a
           routerLink="/search"
-          [queryParams]="context | generateFilters: 'valuespaces.educationalContext':filters"
+          [queryParams]="context | generateFilters: Facet.EducationalContext:filters"
           queryParamsHandling="merge"
-          >{{ context | valuespacesI18n }}</a
+          >{{ context.label }}</a
         >
       </span>
     </div>
   </div>
-  <div class="metadata" *ngIf="result.valuespaces?.learningResourceType">
+  <div class="metadata" *ngIf="hit.skos.learningResourceType">
     <label i18n-matTooltip matTooltip="Learning resource type">
       <mat-icon>photo_library</mat-icon>
     </label>
     <div>
-      <span *ngFor="let lrt of result.valuespaces.learningResourceType">
+      <span *ngFor="let lrt of hit.skos.learningResourceType">
         <a
           routerLink="/search"
-          [queryParams]="lrt | generateFilters: 'valuespaces.learningResourceType':filters"
+          [queryParams]="lrt | generateFilters: Facet.LearningResourceType:filters"
           queryParamsHandling="merge"
-          >{{ lrt | valuespacesI18n }}</a
+          >{{ lrt.label }}</a
         >
       </span>
     </div>
   </div>
   <mat-chip-list
     class="metadata"
-    *ngIf="result.lom.general.keyword"
+    *ngIf="hit.lom.general.keyword"
     i18n-aria-label
     aria-label="keywords"
   >
     <mat-chip
-      *ngFor="let keyword of result.lom.general.keyword | slice: 0:5"
+      *ngFor="let keyword of hit.lom.general.keyword | slice: 0:5"
       routerLink="/search"
-      [queryParams]="keyword | generateFilters: 'lom.general.keyword':filters"
+      [queryParams]="keyword | generateFilters: Facet.Keyword:filters"
       queryParamsHandling="merge"
       >{{ keyword }}</mat-chip
     >
@@ -98,13 +88,14 @@
   mat-flat-button
   color="primary"
   target="_blank"
-  [href]="result.lom.technical.location"
-  [ngSwitch]="result.type"
+  [href]="hit.lom.technical.location"
+  [ngSwitch]="hit.type"
 >
-  <ng-container i18n *ngSwitchCase="'MATERIAL'">Go To Content</ng-container>
-  <ng-container i18n *ngSwitchCase="'TOOL'">Go To Tool</ng-container>
-  <ng-container i18n *ngSwitchCase="'SOURCE'">Go To Portal</ng-container>
-</a>
-<a class="source" [href]="result.source.url" target="_blank">
-  <ng-container i18n>Source</ng-container>: {{ result.source.name }}</a
+  <ng-container i18n *ngSwitchCase="Type.Content">Go To Content</ng-container>
+  <ng-container i18n *ngSwitchCase="Type.Tool">Go To Tool</ng-container>
+  <ng-container i18n *ngSwitchCase="Type.Portal">Go To Portal</ng-container>
+  <ng-container i18n *ngSwitchCase="Type.LessonPlanning">Go To Lesson Planning</ng-container></a
+>
+<a class="source" [href]="hit.source.url" target="_blank">
+  <ng-container i18n>Source</ng-container>: {{ hit.source.name }}</a
 >

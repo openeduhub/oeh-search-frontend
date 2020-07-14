@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter, first } from 'rxjs/operators';
-import { Aggregation } from '../../generated/graphql';
+import { Aggregation, Facet, Type } from '../../generated/graphql';
 import { SearchParametersService } from '../search-parameters.service';
 import { Facets, Filters, SearchService } from '../search.service';
 import { ViewService } from '../view.service';
@@ -14,20 +14,20 @@ import { ViewService } from '../view.service';
     styleUrls: ['./search-filterbar.component.scss'],
 })
 export class SearchFilterbarComponent implements OnInit, OnDestroy {
-    readonly mainFilters: Array<keyof Facets> = [
-        'disciplines',
-        'educationalContexts',
-        'learningResourceTypes',
-        'intendedEndUserRoles',
-        'sources',
-        'keywords',
+    readonly mainFilters: Array<Facet> = [
+        Facet.Discipline,
+        Facet.EducationalContext,
+        Facet.LearningResourceType,
+        Facet.IntendedEndUserRole,
+        Facet.Source,
+        Facet.Keyword,
     ];
     facets: Facets;
     filters: Filters = {};
     facetFilters: FormGroup;
-    expandedFilters: { [key in keyof Facets]?: boolean } = {
-        disciplines: true,
-        educationalContexts: true,
+    expandedFilters: { [key in Facet]?: boolean } = {
+        [Facet.Discipline]: true,
+        [Facet.EducationalContext]: true,
     };
 
     private subscriptions: Subscription[] = [];
@@ -79,7 +79,7 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
         this.view.setShowFilterBar(false);
     }
 
-    loadMoreFacetBuckets(facet: keyof Facets) {
+    loadMoreFacetBuckets(facet: Facet) {
         const currentlyShownBuckets = this.facets[facet].buckets.length;
         this.search.loadMoreFacetBuckets(facet, currentlyShownBuckets + 20);
     }
@@ -95,8 +95,11 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
             // array. This will create a new form control for each facet with
             // nothing selected.
             Object.values(facets)
-                .filter((facet) => typeof facet === 'object')
-                .reduce((agg, facet: Aggregation) => ({ ...agg, [facet.field]: [] }), {}),
+                // .filter((facet) => typeof facet === 'object')
+                .reduce(
+                    (acc, aggregation: Aggregation) => ({ ...acc, [aggregation.facet]: [] }),
+                    {},
+                ),
         );
         // Apply values loaded from queryParams.
         if (this.filters) {
@@ -121,11 +124,11 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
                 this.facets[key] = value;
             }
         }
-        orderByProperty(this.facets.types.buckets, 'key', [
-            'MATERIAL',
-            'LESSONPLANNING',
-            'TOOL',
-            'SOURCE',
+        orderByProperty(this.facets.type.buckets, 'key', [
+            Type.Content,
+            Type.LessonPlanning,
+            Type.Tool,
+            Type.Portal,
         ]);
     }
 
@@ -134,7 +137,7 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
             if (typeof value !== 'object') {
                 continue;
             }
-            const filterValues = this.filters[value.field];
+            const filterValues = this.filters[value.facet];
             if (filterValues && filterValues.length > 0) {
                 this.expandedFilters[key as keyof Facets] = true;
             }

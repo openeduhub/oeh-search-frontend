@@ -1,70 +1,80 @@
-query Search($searchString: String!, $from: Int! = 0, $size: Int!, $filters: [Filter!]) {
-  search(searchString: $searchString, from: $from, size: $size, filters: $filters) {
-    ...result
-  }
+query Search(
+    $searchString: String!
+    $from: Int! = 0
+    $size: Int!
+    $filters: [Filter!]
+    $language: Language
+) {
+    search(
+        searchString: $searchString
+        from: $from
+        size: $size
+        filters: $filters
+        language: $language
+    ) {
+        ...result
+    }
 }
 
 fragment result on SearchResult {
-  took
-  hits {
+    took
     total {
-      value
-      relation
+        value
+        relation
     }
     hits {
-      ...searchHit
+        ...searchHit
     }
-  }
 }
 
 fragment searchHit on Hit {
-  id
-  type
-  lom {
-    educational {
-      description
+    id
+    lom {
+        general {
+            title
+            keyword
+            description
+        }
+        technical {
+            location
+        }
     }
-    general {
-      title
-      keyword
-      description
+    type
+    source {
+        name
+        url
     }
-    technical {
-      location
+    license {
+        oer
     }
-  }
-  source {
-    name
-    url
-  }
-  thumbnail {
-    mimetype
-    small
-  }
-  collection {
-    uuid
-    name
-    data {
-      editorial
+    editorialTags
+    previewImage {
+        thumbnail {
+            ... on EmbeddedThumbnail {
+                mimetype
+                image
+            }
+            ... on ExternalThumbnail {
+                url
+            }
+        }
+        url
     }
-  }
-  license {
-    oer
-  }
-  valuespaces {
-    discipline {
-      ...i18n
+
+    skos {
+        discipline {
+            ...skosEntry
+        }
+        educationalContext {
+            ...skosEntry
+        }
+        learningResourceType {
+            ...skosEntry
+        }
     }
-    educationalContext {
-      ...i18n
-    }
-    learningResourceType {
-      ...i18n
-    }
-  }
 }
 
-fragment i18n on InternationalString {
-  en
-  de
+fragment skosEntry on SkosEntry {
+    id
+    label
 }

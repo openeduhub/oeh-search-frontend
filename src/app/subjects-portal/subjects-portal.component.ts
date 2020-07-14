@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { Type } from '../../generated/graphql';
 import { SearchParametersService } from '../search-parameters.service';
 import { SearchData, SubjectsPortalResults } from '../search-resolver.service';
 import { Filters } from '../search.service';
@@ -11,6 +12,7 @@ import { Filters } from '../search.service';
     styleUrls: ['./subjects-portal.component.scss'],
 })
 export class SubjectsPortalComponent implements OnInit, OnDestroy {
+    // readonly Type = Type;
     results: SubjectsPortalResults;
     filters: Filters;
     isExpanded: boolean;

@@ -4,9 +4,7 @@ import { ResultFragment } from '../../generated/graphql';
 import { Filters } from '../search.service';
 import { Unpacked } from '../utils';
 import { ResultCardStyle, ViewService } from '../view.service';
-
-type Hits = ResultFragment['hits']['hits'];
-export type Hit = Unpacked<Hits>;
+import { Hit } from '../search-results/search-results.component';
 
 @Component({
     selector: 'app-result-card',
@@ -14,7 +12,7 @@ export type Hit = Unpacked<Hits>;
     styleUrls: ['./result-card.component.scss'],
 })
 export class ResultCardComponent implements OnInit, OnDestroy {
-    @Input() result: Hit;
+    @Input() hit: Hit;
     @Input() filters: Filters;
     @HostBinding('attr.style') style: ResultCardStyle;
 

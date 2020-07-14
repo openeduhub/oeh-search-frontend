@@ -1,10 +1,10 @@
-query DidYouMeanSuggestion($searchString: String!, $filters: [Filter!]) {
-  didYouMeanSuggestion(searchString: $searchString, filters: $filters) {
-    ...didYouMeanSuggestion
-  }
+query DidYouMeanSuggestion($searchString: String!, $filters: [Filter!], $language: Language!) {
+    didYouMeanSuggestion(searchString: $searchString, filters: $filters, language: $language) {
+        ...didYouMeanSuggestion
+    }
 }
 
 fragment didYouMeanSuggestion on DidYouMeanSuggestion {
-  plain
-  html
+    plain
+    html
 }
