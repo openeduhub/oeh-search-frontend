@@ -2,7 +2,8 @@ name: Docker
 
 on:
   push:
-    branches: [ develop ]
+    branches: [ develop, master ]
+    tags: [ v*.*.* ]
 
 jobs:
   build-and-publish:
@@ -15,13 +16,13 @@ jobs:
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
+    - uses: rlespinasse/github-slug-action@v2.x
     - name: Build the project
       run: |
         npm ci
         npm run clean
         npm run build
     - name: Build Docker image
-      run: docker build --tag openeduhub/frontend .
+      run: docker build --tag openeduhub/frontend:${{ env.GITHUB_REF_SLUG }} .
     - name: Publish to DockerHub
-      run: docker push openeduhub/frontend
-    
+      run: docker push openeduhub/frontend:${{ env.GITHUB_REF_SLUG }}
