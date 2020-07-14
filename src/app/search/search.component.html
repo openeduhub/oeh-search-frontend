@@ -38,13 +38,13 @@
         {{{results.total.value | number}} results}}
       </ng-container>
       <ng-container *ngIf="pageIndex === 0 && results.total.relation !== 'eq'" i18n>
-        About {{ results.total.value | number }} results
+        More than {{ results.total.value | number }} results
       </ng-container>
       <ng-container *ngIf="pageIndex > 0 && results.total.relation === 'eq'" i18n>
         Page {{ pageIndex + 1 }} of {{ results.total.value | number }} results
       </ng-container>
       <ng-container *ngIf="pageIndex > 0 && results.total.relation !== 'eq'" i18n>
-        Page {{ pageIndex + 1 }} of about {{ results.total.value | number }} results
+        Page {{ pageIndex + 1 }} of more than {{ results.total.value | number }} results
       </ng-container>
       <!-- <ng-container i18n>({{ results.took / 1000 | number }} seconds)</ng-container> -->
     </p>

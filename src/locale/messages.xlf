@@ -39,9 +39,9 @@
           <context context-type="linenumber">37</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="07e34bba6fa6b1b6cf660dc4f6a7822908829498" datatype="html">
+      <trans-unit id="60df9e0e3fde8b974cd5f94f9c09b52d57afd260" datatype="html">
         <source>
-        About <x id="INTERPOLATION" equiv-text="{{ results.total.value | number }}"/> results
+        More than <x id="INTERPOLATION" equiv-text="{{ results.total.value | number }}"/> results
       </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search/search.component.html</context>
@@ -57,9 +57,9 @@
           <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="64828025428cc39c0112dd5330fb1371bb26b495" datatype="html">
+      <trans-unit id="90d4dceb2f8c2f8659288b94f301d4446261ea9d" datatype="html">
         <source>
-        Page <x id="INTERPOLATION" equiv-text="{{ pageIndex + 1 }}"/> of about <x id="INTERPOLATION_1" equiv-text="{{ results.total.value | number }}"/> results
+        Page <x id="INTERPOLATION" equiv-text="{{ pageIndex + 1 }}"/> of more than <x id="INTERPOLATION_1" equiv-text="{{ results.total.value | number }}"/> results
       </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search/search.component.html</context>
