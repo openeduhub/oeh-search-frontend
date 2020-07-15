@@ -1,5 +1,9 @@
 # Open Edu Hub Frontend
 
+![](https://github.com/openeduhub/oeh-search-frontend/workflows/Publish/badge.svg)
+![](https://github.com/openeduhub/oeh-search-frontend/workflows/Lint/badge.svg)
+![](https://github.com/openeduhub/oeh-search-frontend/workflows/Cypress/badge.svg)
+
 ## Build
 
 To build the project and serve it via a docker container on http://localhost:8080, run:
