@@ -1,7 +1,11 @@
 {
   "projectId": "wirlernenonline",
   "testFiles": "**/*.feature",
-  "baseUrl": "http://localhost:8080",
+  "baseUrl": "http://localhost:4200",
   "video": false,
-  "screenshotOnRunFailure": true
+  "screenshotOnRunFailure": true,
+  "env": {
+    "relayUrl": "/relay",
+    "languagePrefix": "/de"
+  }
 }

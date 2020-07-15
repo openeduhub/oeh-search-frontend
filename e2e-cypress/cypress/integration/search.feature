@@ -3,7 +3,7 @@ Feature: Search
   I want to search for "Mathematik"
 
   Scenario: Open the german home page and search for "Mathematik"
-    Given I open the german version of the home page
+    Given I open the home page
     And I search for "Mathematik"
     Then I see search results
     And I see the paginator

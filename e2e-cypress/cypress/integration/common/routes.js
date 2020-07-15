@@ -1,4 +1,4 @@
 beforeEach(() => {
     cy.server();
-    cy.route('POST', '/relay/graphql').as('getRelayData');
+    cy.route('POST', `${Cypress.env('relayUrl')}/graphql`).as('getRelayData');
 });
