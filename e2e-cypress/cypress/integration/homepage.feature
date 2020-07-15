@@ -1,8 +1,8 @@
-Feature: HomePageGerman
+Feature: HomePage
 
   I want to see all necessary content on the home page
 
-  Scenario: Open the german home page
+  Scenario: Open the home page
     Given I open the home page
     Then I see "WirLernenOnline" in the title
     And I see the search bar input field
