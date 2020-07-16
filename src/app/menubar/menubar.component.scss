@@ -26,12 +26,9 @@ header {
     .title-bar {
         display: flex !important;
     }
-    .top-bar {
-        /*display: none !important;*/
-    }
 }
 .grid-container {
-    max-width: 70rem !important;
+    max-width: 58em !important;
 }
 
 /*! CSS Used from: https://wirlernenonline.de/wp-content/themes/wir-lernen-online/dist/assets/scss/app.css?ver=5.4 ; media=all */
@@ -134,7 +131,7 @@ header {
         border: 0;
     }
     ul {
-        margin-bottom: 1rem;
+        margin-bottom: 1em;
         list-style-position: outside;
         line-height: 1.4;
     }
@@ -142,11 +139,11 @@ header {
         font-size: inherit;
     }
     ul {
-        margin-left: 1.25rem;
+        margin-left: 1.25em;
         list-style-type: disc;
     }
     ul ul {
-        margin-left: 1.25rem;
+        margin-left: 1.25em;
         margin-bottom: 0;
     }
     @media print {
@@ -176,16 +173,16 @@ header {
         }
     }
     .grid-container {
-        padding-right: 0.75rem;
-        padding-left: 0.75rem;
-        max-width: 60rem;
+        padding-right: 0.75em;
+        padding-left: 0.75em;
+        // max-width: 60em;
         margin-left: auto;
         margin-right: auto;
     }
     @media print, screen and (min-width: 40em) {
         .grid-container {
-            padding-right: 1rem;
-            padding-left: 1rem;
+            padding-right: 1em;
+            padding-left: 1em;
         }
     }
     .grid-x {
@@ -231,39 +228,39 @@ header {
         }
     }
     .grid-margin-x {
-        margin-left: -0.75rem;
-        margin-right: -0.75rem;
+        margin-left: -0.75em;
+        margin-right: -0.75em;
     }
     @media print, screen and (min-width: 40em) {
         .grid-margin-x {
-            margin-left: -1rem;
-            margin-right: -1rem;
+            margin-left: -1em;
+            margin-right: -1em;
         }
     }
     .grid-margin-x > .cell {
-        width: calc(100% - 1.5rem);
-        margin-left: 0.75rem;
-        margin-right: 0.75rem;
+        width: calc(100% - 1.5em);
+        margin-left: 0.75em;
+        margin-right: 0.75em;
     }
     @media print, screen and (min-width: 40em) {
         .grid-margin-x > .cell {
-            width: calc(100% - 2rem);
-            margin-left: 1rem;
-            margin-right: 1rem;
+            width: calc(100% - 2em);
+            margin-left: 1em;
+            margin-right: 1em;
         }
     }
     .grid-margin-x > .auto {
         width: auto;
     }
     .grid-margin-x > .small-12 {
-        width: calc(100% - 1.5rem);
+        width: calc(100% - 1.5em);
     }
     @media print, screen and (min-width: 40em) {
         .grid-margin-x > .auto {
             width: auto;
         }
         .grid-margin-x > .small-12 {
-            width: calc(100% - 2rem);
+            width: calc(100% - 2em);
         }
     }
     @media print, screen and (min-width: 64em) {
@@ -293,7 +290,7 @@ header {
         line-height: 1;
         text-decoration: none;
         display: block;
-        padding: 0.7rem 1rem;
+        padding: 0.7em 1em;
     }
     .menu a {
         margin-bottom: 0;
@@ -346,7 +343,7 @@ header {
     }
     .dropdown.menu > li.is-dropdown-submenu-parent > a {
         position: relative;
-        padding-right: 1.5rem;
+        padding-right: 1.5em;
     }
     .dropdown.menu > li.is-dropdown-submenu-parent > a::after {
         display: block;
@@ -362,7 +359,7 @@ header {
         margin-top: -3px;
     }
     .dropdown.menu > li > a {
-        padding: 0.7rem 1rem;
+        padding: 0.7em 1em;
     }
     .dropdown.menu.vertical > li .is-dropdown-submenu {
         top: 0;
@@ -395,7 +392,7 @@ header {
         }
         .dropdown.menu.large-horizontal > li.is-dropdown-submenu-parent > a {
             position: relative;
-            padding-right: 1.5rem;
+            padding-right: 1.5em;
         }
         .dropdown.menu.large-horizontal > li.is-dropdown-submenu-parent > a::after {
             display: block;
@@ -439,13 +436,13 @@ header {
         // background: #fefefe;
     }
     .dropdown .is-dropdown-submenu a {
-        padding: 0.7rem 1rem;
+        padding: 0.7em 1em;
     }
     .is-dropdown-submenu > li {
         width: 100%;
     }
     .title-bar {
-        padding: 1rem;
+        padding: 1em;
         // background: #fefefe;
         // color: #003e82;
         display: flex;
@@ -453,8 +450,8 @@ header {
         align-items: center;
     }
     .title-bar .menu-icon {
-        margin-left: 0.25rem;
-        margin-right: 0.25rem;
+        margin-left: 0.25em;
+        margin-right: 0.25em;
     }
     .top-bar {
         display: flex;
