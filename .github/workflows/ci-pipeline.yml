@@ -7,7 +7,17 @@ on:
     branches: [develop, master]
 
 jobs:
+  lint:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+
   build-and-publish-ci:
+    needs: [lint]
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
@@ -28,8 +38,8 @@ jobs:
         run: docker push ${{ github.repository }}:ci_${{ github.sha }}
 
   e2e-cypress-service-test:
+    needs: [lint,build-and-publish-ci]
     name: Setup staging frontend and test end to end
-    needs: [build-and-publish-ci]
     runs-on: ubuntu-16.04
     services:
       frontend-service:
@@ -48,3 +58,26 @@ jobs:
           CYPRESS_baseUrl: http://localhost:8080
         with:
           working-directory: e2e-cypress
+
+  build-and-publish:
+    if: github.event_name != 'pull_request'
+    needs: [lint,build-and-publish-ci,e2e-cypress-service-test]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - uses: azure/docker-login@v1
+        with:
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      - uses: rlespinasse/github-slug-action@v2.x
+      - name: Build the project
+        run: |
+          npm ci
+          npm run clean
+          npm run build
+      - name: Build Docker image
+        run: docker build --tag ${{ github.repository }}:${{ env.GITHUB_REF_SLUG }} .
+      - name: Publish to DockerHub
+        run: docker push ${{ github.repository }}:${{ env.GITHUB_REF_SLUG }}
