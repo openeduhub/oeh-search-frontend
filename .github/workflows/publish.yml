@@ -2,8 +2,11 @@ name: Publish
 
 on:
   push:
-    branches: [ develop, master ]
-    tags: [ v*.*.* ]
+    branches: 
+      - develop
+      - master
+    tags: 
+      - v[0-9]+.[0-9]+.[0-9]+
 
 jobs:
   build-and-publish:
