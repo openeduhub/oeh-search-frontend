@@ -1,4 +1,4 @@
-name: Cypress
+name: CI/CD Pipeline Lint, Tests, E2E Tests
 
 on:
   push:
