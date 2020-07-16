@@ -21,7 +21,7 @@
     "extract-i18n": "ng xi18n open-edu-hub-frontend --output-path src/locale && ng run open-edu-hub-frontend:xliffmerge",
     "start-de": "ng serve --configuration=de",
     "generate": "graphql-codegen",
-    "postinstall": "patch-package && ngcc"
+    "postinstall": "ngcc"
   },
   "private": true,
   "dependencies": {
@@ -75,7 +75,6 @@
     "karma-jasmine": "~3.3.0",
     "karma-jasmine-html-reporter": "^1.5.0",
     "lint-staged": "^10.2.11",
-    "patch-package": "^6.2.2",
     "prettier": "^2.0.2",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
