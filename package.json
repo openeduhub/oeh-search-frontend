@@ -21,7 +21,7 @@
     "extract-i18n": "ng xi18n open-edu-hub-frontend --output-path src/locale && ng run open-edu-hub-frontend:xliffmerge",
     "start-de": "ng serve --configuration=de",
     "generate": "graphql-codegen",
-    "postinstall": "ngcc"
+    "postinstall": "ngcc --tsconfig ./tsconfig.app.json"
   },
   "private": true,
   "dependencies": {
