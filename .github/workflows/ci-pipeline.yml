@@ -15,6 +15,10 @@ jobs:
         run: npm ci
       - name: Lint
         run: npm run lint
+      - name: Test angular action
+        uses: demyanets/angular-coverage-badges-action@v1
+        with:
+          coverage-summary-path: coverage/stslib/coverage-summary.json
 
   build-and-publish-ci:
     needs: [lint]
