@@ -60,13 +60,13 @@ $ npm run build:stage
 Build Docker image:
 
 ```bash
-$ docker build . --tag open-edu-hub-frontend
+$ docker build . --tag openeduhub/oeh-search-frontend:local
 ```
 
 Run container from image:
 
 ```bash
-$ docker run --name open-edu-hub-frontend --rm -ti -p 8080:80 open-edu-hub-frontend
+$ docker run --name oeh-search-frontend --rm -ti -p 8080:80 openeduhub/oeh-search-frontend:local
 ```
 
 ## Environments
