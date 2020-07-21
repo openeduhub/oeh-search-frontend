@@ -58,9 +58,6 @@ app-subjects-portal {
     max-width: 1400px;
     justify-self: center;
     overflow: hidden;
-    app-work-in-progress-message {
-        margin-bottom: 20px;
-    }
     .did-you-mean > a {
         &:not(:hover) {
             text-decoration: none;

@@ -58,7 +58,6 @@ import { SubjectsPortalComponent } from './subjects-portal/subjects-portal.compo
 import { TrimPipe } from './trim.pipe';
 import { TruncatePipe } from './truncate.pipe';
 import { WelcomeComponent } from './welcome/welcome.component';
-import { WorkInProgressMessageComponent } from './work-in-progress-message/work-in-progress-message.component';
 import introspectionQueryResultData from '../generated/fragmentTypes.json';
 import { PreviewImageComponent } from './preview-image/preview-image.component';
 
@@ -115,7 +114,6 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
         LoginComponent,
         SearchFilterbarComponent,
         MultivalueCheckboxComponent,
-        WorkInProgressMessageComponent,
         EncodeUriComponentPipe,
         ResultCardComponent,
         PaginatorComponent,
