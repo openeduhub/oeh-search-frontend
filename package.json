@@ -1,5 +1,5 @@
 {
-  "name": "open-edu-hub-frontend",
+  "name": "oeh-search-frontend",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -17,8 +17,8 @@
     "cypress:local:open": "cd e2e-cypress & npm run cypress:local:open",
     "format": "prettier --write src",
     "docker-build": "docker build . --tag openeduhub/oeh-search-frontend:local",
-    "docker-run": "docker run --name open-edu-hub-frontend --rm -ti -p 8080:80 open-edu-hub-frontend",
-    "extract-i18n": "ng xi18n open-edu-hub-frontend --output-path src/locale && ng run open-edu-hub-frontend:xliffmerge",
+    "docker-run": "docker run --name oeh-search-frontend --rm -ti -p 8080:80 openeduhub/oeh-search-frontend:local",
+    "extract-i18n": "ng xi18n oeh-search-frontend --output-path src/locale && ng run oeh-search-frontend:xliffmerge",
     "start-de": "ng serve --configuration=de",
     "generate": "graphql-codegen",
     "postinstall": "ngcc --tsconfig ./tsconfig.app.json"

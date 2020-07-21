@@ -1,4 +1,4 @@
-# Open Edu Hub Frontend
+# Open Edu Hub Search Frontend
 
 ![](https://github.com/openeduhub/oeh-search-frontend/workflows/Publish/badge.svg)
 ![](https://github.com/openeduhub/oeh-search-frontend/workflows/Lint/badge.svg)
