@@ -45,7 +45,7 @@
     <div class="metadata" *ngIf="hit.skos.discipline">
       <label><mat-icon>book_icon</mat-icon> <ng-container i18n>Discipline</ng-container></label>
       <div>
-        <span *ngFor="let discipline of hit.skos.discipline | slice: 0:5">
+        <span *ngFor="let discipline of hit.skos.discipline">
           {{ discipline.label }}
         </span>
       </div>
@@ -85,7 +85,7 @@
     <div class="metadata" *ngIf="hit.lom.general.keyword">
       <label><mat-icon>list</mat-icon> <ng-container i18n>Keywords</ng-container></label>
       <div>
-        <span *ngFor="let keyword of hit.lom.general.keyword | slice: 0:5">
+        <span *ngFor="let keyword of hit.lom.general.keyword">
           {{ keyword }}
         </span>
       </div>
