@@ -14,7 +14,7 @@ jobs:
         submodules: true
     - uses: azure/docker-login@v1
       with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        username: ${{ github.repository_owner }}
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
     - uses: rlespinasse/github-slug-action@v2.x
     - name: Build the project
@@ -23,6 +23,6 @@ jobs:
         npm run clean
         npm run build
     - name: Build Docker image
-      run: docker build --tag openeduhub/frontend:${{ env.GITHUB_REF_SLUG }} .
+      run: docker build --tag ${{ github.repository }}:${{ env.GITHUB_REF_SLUG }} .
     - name: Publish to DockerHub
-      run: docker push openeduhub/frontend:${{ env.GITHUB_REF_SLUG }}
+      run: docker push ${{ github.repository }}:${{ env.GITHUB_REF_SLUG }}
