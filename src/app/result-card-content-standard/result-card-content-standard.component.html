@@ -23,7 +23,7 @@
     <div class="icon oer-icon"></div>
   </div>
 </div>
-<mat-card-content>
+<div class="body">
   <p class="description" *ngIf="hit.lom.general.description">
     {{ hit.lom.general.description | trim | truncate: 120 }}
   </p>
@@ -82,7 +82,7 @@
       >{{ keyword }}</mat-chip
     >
   </mat-chip-list>
-</mat-card-content>
+</div>
 <a
   class="content-link"
   mat-flat-button
