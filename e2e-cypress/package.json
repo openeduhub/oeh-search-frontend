@@ -5,18 +5,18 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "cypress:local:open": "cypress open",
-    "cypress:local:run": "cypress run",
+    "cypress:local:open": "cypress open --env relayUrl='http://localhost:3000',languagePrefix=''",
+    "cypress:local:run": "cypress run --env relayUrl='http://localhost:3000',languagePrefix=''",
     "cypress:stage:open": "CYPRESS_baseUrl=http://staging.wirlernenonline.de cypress open",
     "cypress:stage:run": "CYPRESS_baseUrl=http://staging.wirlernenonline.de cypress run",
-    "cypress:prod:open": "CYPRESS_baseUrl=https://suche.wirlernenonline.de/ cypress open",
-    "cypress:prod:run": "CYPRESS_baseUrl=https://suche.wirlernenonline.de/ cypress run"
+    "cypress:prod:open": "CYPRESS_baseUrl=https://suche.wirlernenonline.de cypress open",
+    "cypress:prod:run": "CYPRESS_baseUrl=https://suche.wirlernenonline.de cypress run"
   },
   "author": "wirlernenonline.de",
   "license": "ISC",
   "devDependencies": {
-    "cypress": "^4.8.0",
-    "cypress-cucumber-preprocessor": "^2.3.1"
+    "cypress": "^4.10.0",
+    "cypress-cucumber-preprocessor": "^2.5.3"
   },
   "cypress-cucumber-preprocessor": {
     "nonGlobalStepDefinitions": true

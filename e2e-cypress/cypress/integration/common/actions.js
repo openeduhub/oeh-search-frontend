@@ -1,12 +1,7 @@
 import { Given } from 'cypress-cucumber-preprocessor/steps';
 
 Given('I open the home page', () => {
-    cy.visit('/');
-    cy.wait('@getRelayData.all');
-});
-
-Given('I open the german version of the home page', () => {
-    cy.visit('/de/search');
+    cy.visit(`${Cypress.env('languagePrefix')}/search`);
     cy.wait('@getRelayData.all');
 });
 
