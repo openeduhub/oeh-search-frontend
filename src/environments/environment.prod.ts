@@ -1,6 +1,16 @@
+interface Env {
+    RELAY_URL?: string;
+}
+
+interface ExtendedWindow extends Window {
+    __env: Env;
+}
+
+declare var window: ExtendedWindow;
+
 export const environment = {
     production: true,
-    relayUrl: window.location.origin + '/relay',
+    relayUrl: window.__env.RELAY_URL ?? window.location.origin + '/relay',
     editorBackendUrl: window.location.origin + '/editor',
     openId: {
         issuer: 'https://idm.wirlernenonline.de/auth/realms/master',
