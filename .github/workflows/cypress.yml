@@ -1,4 +1,4 @@
-name: CI
+name: Cypress
 
 on:
   push:
@@ -7,21 +7,7 @@ on:
     branches: [develop, master]
 
 jobs:
-  lint:
-    runs-on: ubuntu-20.04
-    steps:
-      - uses: actions/checkout@v2
-      - name: Use node.js 12.16
-        uses: actions/setup-node@v1
-        with:
-          node-version: 12.16
-      - name: Install dependencies
-        run: npm install
-      - name: Lint
-        run: npm run lint
-
   build-and-publish-ci:
-    needs: [lint]
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v2
@@ -29,7 +15,7 @@ jobs:
           submodules: true
       - uses: azure/docker-login@v1
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          username: ${{ github.repository_owner }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
       - name: Build the project
         run: |
@@ -37,23 +23,21 @@ jobs:
           npm run clean
           npm run build:stage
       - name: Build Docker image
-        run: docker build --tag openeduhub/frontend:ci_${GITHUB_SHA} .
+        run: docker build --tag ${{ github.repository }}:ci_${{ github.sha }} .
       - name: Publish to DockerHub
-        run: docker push openeduhub/frontend:ci_${GITHUB_SHA}
+        run: docker push ${{ github.repository }}:ci_${{ github.sha }}
 
   e2e-cypress-service-test:
-    needs: [lint, build-and-publish-ci]
+    name: Setup staging frontend and test end to end
+    needs: [build-and-publish-ci]
     runs-on: ubuntu-16.04
     services:
       frontend-service:
-        image: openeduhub/frontend:ci_${{ github.sha }}
+        image: ${{ github.repository }}:ci_${{ github.sha }}
         ports:
           - 8080:80
-    name: setup staging frontend and test end to end
     steps:
       - uses: actions/checkout@v2
-        with:
-          submodules: true
       - name: Use node.js 12.16
         uses: actions/setup-node@v1
         with:
