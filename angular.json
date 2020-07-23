@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "open-edu-hub-frontend": {
+    "oeh-search-frontend": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -22,7 +22,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/open-edu-hub-frontend",
+            "outputPath": "dist/oeh-search-frontend",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -104,24 +104,24 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "open-edu-hub-frontend:build"
+            "browserTarget": "oeh-search-frontend:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "open-edu-hub-frontend:build:production"
+              "browserTarget": "oeh-search-frontend:build:production"
             },
             "stage": {
-              "browserTarget": "open-edu-hub-frontend:build:stage"
+              "browserTarget": "oeh-search-frontend:build:stage"
             },
             "de": {
-              "browserTarget": "open-edu-hub-frontend:build:de"
+              "browserTarget": "oeh-search-frontend:build:de"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "open-edu-hub-frontend:build"
+            "browserTarget": "oeh-search-frontend:build"
           }
         },
         "test": {
@@ -172,7 +172,7 @@
       }
     }
   },
-  "defaultProject": "open-edu-hub-frontend",
+  "defaultProject": "oeh-search-frontend",
   "cli": {
     "analytics": false
   }

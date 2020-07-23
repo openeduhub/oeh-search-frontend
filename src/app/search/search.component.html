@@ -1,7 +1,6 @@
 <app-search-filterbar *ngIf="showFilterBar"></app-search-filterbar>
 
 <div class="results">
-  <app-work-in-progress-message></app-work-in-progress-message>
   <h1 class="breadcrumbs" *ngIf="breadcrumbs">
     <ng-container *ngFor="let breadcrumb of breadcrumbs; let last = last">
       <span>{{ breadcrumb }}</span>

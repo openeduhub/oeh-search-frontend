@@ -3,7 +3,9 @@
     <img class="img-bg" [appPreviewImage]="hit.previewImage" />
     <img class="img-main" [appPreviewImage]="hit.previewImage" [loadHighResImage]="true" />
   </div>
-  <mat-card-title class="title">{{ hit.lom.general.title | truncate: 52 }}</mat-card-title>
+  <mat-card-title class="title" [id]="hit.id + '-title'">{{
+    hit.lom.general.title | truncate: 52
+  }}</mat-card-title>
 </a>
 <div class="badges">
   <div
@@ -84,12 +86,14 @@
   </mat-chip-list>
 </div>
 <a
+  [id]="hit.id + '-open-link'"
   class="content-link"
   mat-flat-button
   color="primary"
   target="_blank"
   [href]="hit.lom.technical.location"
   [ngSwitch]="hit.type"
+  [attr.aria-labelledby]="hit.id + '-open-link ' + hit.id + '-title'"
 >
   <ng-container i18n *ngSwitchCase="Type.Content">Go To Content</ng-container>
   <ng-container i18n *ngSwitchCase="Type.Tool">Go To Tool</ng-container>
