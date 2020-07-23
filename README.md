@@ -9,19 +9,17 @@ https://github.com/openeduhub/oeh-search-elasticsearch-relay.
 
 ## Build
 
-Init git submodules
+Setup
 
 ```bash
 $ git submodule update --init
-```
-
-Install node modules
-
-```bash
 $ npm install
 ```
 
 ### Dev Server
+
+The dev server will serve the application on http://localhost:4200/ and reload automatically if you
+change any of the source files.
 
 Either
 
@@ -36,37 +34,16 @@ Either
     $ npm run start-de
     ```
 
-Navigate to http://localhost:4200/. The app will automatically
-reload if you change any of the source files.
-
 ### Docker Image
 
-Build the project and serve it via a docker container on http://localhost:8080.
+For deployment, the application is packaged as Docker image.
 
-Build either production or development or staging sources:
+To locally build the image and serve it on http://localhost:8080, run:
 
 ```bash
 $ npm run build
-```
-
-```bash
-$ npm run build:dev
-```
-
-```bash
-$ npm run build:stage
-```
-
-Build Docker image:
-
-```bash
-$ docker build . --tag openeduhub/oeh-search-frontend:local
-```
-
-Run container from image:
-
-```bash
-$ docker run --name oeh-search-frontend --rm -ti -p 8080:80 openeduhub/oeh-search-frontend:local
+$ npm run docker-build
+$ npm run docker-run
 ```
 
 ## Configuration
@@ -81,6 +58,13 @@ accepts the following environment variables to override the default configuratio
 | Variable  | Description                                   | Default value                       |
 | --------- | --------------------------------------------- | ----------------------------------- |
 | RELAY_URL | URL of the ElasticSearch Relay to connect to. | `window.location.origin + '/relay'` |
+
+For example, to run your locally built Docker image against the staging environment of
+WirLernenOnline, run
+
+```bash
+docker run --name oeh-search-frontend --rm -ti -p 8080:80 -e RELAY_URL=https://staging.wirlernenonline.de/relay openeduhub/oeh-search-frontend:local
+```
 
 ## Tests
 
