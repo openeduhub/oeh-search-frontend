@@ -69,27 +69,18 @@ Run container from image:
 $ docker run --name oeh-search-frontend --rm -ti -p 8080:80 openeduhub/oeh-search-frontend:local
 ```
 
-## Environments
+## Configuration
 
-### Production
+Refer to the respective files in `src/environments` for available configurations.
 
-The production environment — used when building the project as described above — expects the
-Elasticsearch relay to be served at the same host/port as the frontend.
+`environment.ts` is the dev environment active when serving the application via `npm start`.
 
-An Apache configuration could look like this:
+`environment.prod.ts` is used for production builds packaged to Docker images. The Docker container
+accepts the following environment variables to override the default configuration:
 
-```apacheconf
-<VirtualHost *:80>
-        # ...
-        ProxyPass "/graphql" "http://localhost:3000/graphql"
-        ProxyPass "/" "http://localhost:8080/"
-</VirtualHost>
-```
-
-### Development
-
-The development environment — used when serving the frontend via `ng serve` — expects the
-Elasticsearch relay to be served on http://localhost:3000/.
+| Variable  | Description                                   | Default value                       |
+| --------- | --------------------------------------------- | ----------------------------------- |
+| RELAY_URL | URL of the ElasticSearch Relay to connect to. | `window.location.origin + '/relay'` |
 
 ## Tests
 
