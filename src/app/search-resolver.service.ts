@@ -61,7 +61,10 @@ export class SearchResolverService implements Resolve<SearchData> {
     }
 
     private shouldLoadSubjectsPortal(paramMap: ParamMap): boolean {
-        return paramMap.has('educationalContext') && paramMap.has('discipline');
+        // return paramMap.has('educationalContext') && paramMap.has('discipline');
+
+        // Disable subjects portals completely for now.
+        return false;
     }
 
     private resolveSubjectsPortalResults(): Observable<SubjectsPortalResults> {
