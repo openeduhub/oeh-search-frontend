@@ -97,7 +97,7 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
             Object.values(facets)
                 // .filter((facet) => typeof facet === 'object')
                 .reduce(
-                    (acc, aggregation: Aggregation) => ({ ...acc, [aggregation.facet]: [] }),
+                    (acc, aggregation: Aggregation) => ({ ...acc, [aggregation?.facet]: [] }),
                     {},
                 ),
         );
