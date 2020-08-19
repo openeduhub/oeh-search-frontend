@@ -271,9 +271,9 @@
         </context-group>
       </trans-unit><trans-unit id="cafa0fa1a3da51d030553ba79897d1068a9131fc" datatype="html">
         <source>show more</source><target state="final">show more</target>
-        
+
       <context-group purpose="location"><context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context><context context-type="linenumber">74</context></context-group></trans-unit><trans-unit id="032e4a4ff2de53b4a9a1184ecc935aeee512e529" datatype="html">
-        <source>everything</source><target state="final">everything</target>
+        <source>everything</source><target state="final">all Licenses</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/oer-slider/oer-slider.component.html</context>
           <context context-type="linenumber">18</context>
