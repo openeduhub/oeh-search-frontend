@@ -83,12 +83,15 @@ $material-icons-font-path: '~material-icons/iconfont/';
 $app-theme-light: mat-light-theme($app-primary, $app-accent, $app-warn);
 $app-theme-dark: mat-dark-theme($app-primary, $app-accent, $app-warn);
 
+/*
 @media not all and (prefers-color-scheme: dark) {
     @include apply-theme($app-theme-light);
 }
 @media all and (prefers-color-scheme: dark) {
     @include apply-theme($app-theme-dark);
 }
+*/
+@include apply-theme($app-theme-light);
 
 // Typography
 //
