@@ -5,7 +5,12 @@
       {{ hit.lom.general.title | truncate: (isExpanded ? -1 : 52) }}
     </mat-card-title>
   </a>
-  <a class="source" [href]="hit.source.url" target="_blank">{{ hit.source.name }}</a>
+  <a class="source"
+     [href]="hit.source.url"
+     *ngIf="hit.source.url"
+     target="_blank">
+    {{ hit.source.name }}
+  </a>
 </div>
 <mat-card-content>
   <div class="main-content-row">

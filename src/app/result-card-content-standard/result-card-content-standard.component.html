@@ -102,5 +102,10 @@
   <ng-container i18n *ngSwitchCase="Type.LessonPlanning">Go To Lesson Planning</ng-container></a
 >
 <a class="source" [href]="hit.source.url" target="_blank">
-  <ng-container i18n>Source</ng-container>: {{ hit.source.name }}</a
->
+  <ng-container *ngIf="hit.source.url">
+    <ng-container i18n>Source</ng-container>: {{ hit.source.name }}
+  </ng-container>
+  <ng-container *ngIf="!hit.source.url">
+    &nbsp;
+  </ng-container>
+</a>
