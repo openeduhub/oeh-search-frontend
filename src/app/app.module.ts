@@ -60,6 +60,7 @@ import { TruncatePipe } from './truncate.pipe';
 import { WelcomeComponent } from './welcome/welcome.component';
 import introspectionQueryResultData from '../generated/fragmentTypes.json';
 import { PreviewImageComponent } from './preview-image/preview-image.component';
+import { FooterbarComponent } from './footerbar/footerbar.component';
 
 const appRoutes: Routes = [
     {
@@ -106,6 +107,7 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
         SearchResultsComponent,
         ErrorComponent,
         HeaderbarComponent,
+        FooterbarComponent,
         SearchFieldComponent,
         TrimPipe,
         HasEditorialTagPipe,
