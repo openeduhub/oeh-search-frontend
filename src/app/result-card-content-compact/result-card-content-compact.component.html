@@ -1,5 +1,6 @@
 <div class="header">
-  <a class="details-link" [routerLink]="['/details', hit.id]">
+  <!--<a class="details-link" [routerLink]="['/details', hit.id]">-->
+  <a class="details-link" [href]="hit.lom.technical.location">
     <mat-card-title class="title">
       {{ hit.lom.general.title | truncate: (isExpanded ? -1 : 52) }}
     </mat-card-title>

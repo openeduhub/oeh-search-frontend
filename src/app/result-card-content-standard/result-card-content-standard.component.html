@@ -1,4 +1,5 @@
-<a class="details-link" [routerLink]="['/details', hit.id]">
+<!--<a class="details-link" [routerLink]="['/details', hit.id]">-->
+<a class="details-link" [href]="hit.lom.technical.location">
   <div class="image-container" mat-card-image>
     <img class="img-bg" [appPreviewImage]="hit.previewImage" />
     <img class="img-main" [appPreviewImage]="hit.previewImage" [loadHighResImage]="true" />
