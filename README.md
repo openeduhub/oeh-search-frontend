@@ -1,81 +1,137 @@
-# Open Edu Hub Frontend
+# Open Edu Hub Search Frontend
 
 ![](https://github.com/openeduhub/oeh-search-frontend/workflows/Publish/badge.svg)
 ![](https://github.com/openeduhub/oeh-search-frontend/workflows/Lint/badge.svg)
 ![](https://github.com/openeduhub/oeh-search-frontend/workflows/Cypress/badge.svg)
 
+You need at least a running elasticsearch-relay to use the frontend. See
+https://github.com/openeduhub/oeh-search-elasticsearch-relay.
+
 ## Build
 
-To build the project and serve it via a docker container on http://localhost:8080, run:
-
--   init git submodules
+Setup
 
 ```bash
 $ git submodule update --init
+$ npm install
 ```
 
--   install node modules
+### Dev Server
+
+The dev server will serve the application on http://localhost:4200/ and reload automatically if you
+change any of the source files.
+
+Either
+
+-   start the dev server:
+
+    ```bash
+    $ npm start
+    ```
+
+-   or start the dev server with German translations:
+    ```bash
+    $ npm run start-de
+    ```
+
+### Docker Image
+
+For deployment, the application is packaged as Docker image.
+
+To locally build the image and serve it on http://localhost:8080, run:
+
+```bash
+$ npm run build
+$ npm run docker-build
+$ npm run docker-run
+```
+
+## Configuration
+
+Refer to the respective files in `src/environments` for available configurations.
+
+`environment.ts` is the dev environment active when serving the application via `npm start`.
+
+`environment.prod.ts` is used for production builds packaged to Docker images. The Docker container
+accepts the following environment variables to override the default configuration:
+
+| Variable  | Description                                   | Default value                       |
+| --------- | --------------------------------------------- | ----------------------------------- |
+| RELAY_URL | URL of the ElasticSearch Relay to connect to. | `window.location.origin + '/relay'` |
+
+For example, to run your locally built Docker image against the staging environment of
+WirLernenOnline, run
+
+```bash
+docker run --name oeh-search-frontend --rm -ti -p 8080:80 -e RELAY_URL=https://staging.wirlernenonline.de/relay openeduhub/oeh-search-frontend:local
+```
+
+## Tests
+
+### Unit Tests
+
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+
+### E2E Tests with Cypress
+
+See https://docs.cypress.io/guides/overview/why-cypress.html.
+
+All of the following commands must be run from `e2e-cypress` as working directory:
+
+```bash
+$ cd e2e-cypress
+```
+
+Install dependencies using
 
 ```bash
 $ npm install
 ```
 
--   build either production or development or staging sources
+#### Test Local Dev Environment
+
+-   Install dependencies and submodules and run the dev server using `npm run start-de` (see section
+    [Build](##Build)).
+-   Start the elasticsearch-relay on port 3000 (see
+    https://github.com/openeduhub/oeh-search-elasticsearch-relay).
+
+Single run:
 
 ```bash
-$ npm run build
+$ npm run cypress:local:open
 ```
+
+Open GUI:
 
 ```bash
-$ npm run build:dev
+$ npm run cypress:local:run
 ```
+
+#### Test an Online Environment
+
+Test https://staging.wirlernenonline.de, single run:
 
 ```bash
-$ npm run build:stage
+$ npm run cypress:stage:run
 ```
 
--   build docker image
+Test https://staging.wirlernenonline.de, open GUI:
 
 ```bash
-$ docker build . --tag open-edu-hub-frontend
+$ npm run cypress:stage:open
 ```
 
--   build and run container from image
+Test https://suche.wirlernenonline.de, single run:
 
 ```bash
-$ docker run --name open-edu-hub-frontend --rm -ti -p 8080:80 open-edu-hub-frontend
+$ npm run cypress:prod:run
 ```
 
-Run `ng serve` for a dev server. Navigate to http://localhost:4200/. The app will automatically
-reload if you change any of the source files.
+Test https://suche.wirlernenonline.de, open GUI:
 
-## Environments
-
-### Production
-
-The production environment — used when building the project as described above — expects the
-Elasticsearch relay to be served at the same host/port as the frontend.
-
-An Apache configuration could look like this:
-
-```apacheconf
-<VirtualHost *:80>
-        # ...
-        ProxyPass "/graphql" "http://localhost:3000/graphql"
-        ProxyPass "/" "http://localhost:8080/"
-</VirtualHost>
+```bash
+$ npm run cypress:prod:open
 ```
-
-### Development
-
-The development environment — used when serving the frontend via `ng serve` — expects the
-Elasticsearch relay to be served on http://localhost:3000/.
-
-## Tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
 ## Code Quality
 
@@ -133,43 +189,4 @@ features for GraphQL queries in VSCode.
 
 ```
 ext install apollographql.vscode-apollo
-```
-
-## E2E Tests with Cypress
-
--   https://docs.cypress.io/guides/overview/why-cypress.html
-
-### Test Local, Staging Backend
-
--   build staging frontend image and start container, see section [Build](##Build)
-
--   start cypress tests, `npm install` on first run
-
-```bash
-$ cd e2e-cypress
-$ npm run cypress:local:open
-```
-
-```bash
-$ npm run cypress:local:run
-```
-
-### Staging Test
-
-```bash
-$ npm run cypress:stage:run
-```
-
-```bash
-$ npm run cypress:stage:open
-```
-
-### Production Test
-
-```bash
-$ npm run cypress:prod:run
-```
-
-```bash
-$ npm run cypress:prod:open
 ```

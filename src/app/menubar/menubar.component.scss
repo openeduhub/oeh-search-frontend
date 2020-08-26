@@ -12,9 +12,11 @@ header {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center center;
+    /*
     @media (prefers-color-scheme: dark) {
         background-image: url('../../assets/images/wlo-logo-dark.png');
     }
+    */
 }
 
 @media screen and (min-width: 1024px) {

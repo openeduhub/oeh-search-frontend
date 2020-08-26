@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { InternationalString } from '../generated/graphql';
-import { ConfigService, ShortLocale } from './config.service';
+import { ConfigService } from './config.service';
+import { Language, SkosEntry, Facet } from '../generated/graphql';
 
 /**
  * Extend the `filters` of the search component with another attribute.
@@ -11,24 +11,17 @@ import { ConfigService, ShortLocale } from './config.service';
     name: 'generateFilters',
 })
 export class GenerateFiltersPipe implements PipeTransform {
-    private static knownMissingTranslations: InternationalString[] = [];
-    private readonly shortLocale: ShortLocale;
+    private static knownMissingTranslations: SkosEntry[] = [];
+    private readonly language: Language;
 
     constructor(config: ConfigService) {
-        this.shortLocale = config.getShortLocale();
+        this.language = config.getLanguage();
     }
 
-    transform(
-        value: string | InternationalString,
-        field: string,
-        filters: object = {},
-        isTextField = true,
-    ): object {
-        let filterKey: string;
+    transform(value: string | SkosEntry, facet: Facet, filters: object = {}): object {
         let filterValue: string;
-        if (typeof value === 'object' && value.__typename === 'InternationalString') {
-            filterKey = `${field}.${this.shortLocale}.keyword`;
-            filterValue = value[this.shortLocale];
+        if (typeof value === 'object' && value.__typename === 'SkosEntry') {
+            filterValue = value.label;
             if (!filterValue) {
                 if (
                     !GenerateFiltersPipe.knownMissingTranslations.some((entry) =>
@@ -41,7 +34,6 @@ export class GenerateFiltersPipe implements PipeTransform {
                 return null;
             }
         } else if (typeof value === 'string') {
-            filterKey = isTextField ? `${field}.keyword` : field;
             filterValue = value;
         } else {
             throw new Error(`Cannot generate filter of ${value}`);
@@ -50,12 +42,12 @@ export class GenerateFiltersPipe implements PipeTransform {
             pageIndex: 0,
             filters: JSON.stringify({
                 ...filters,
-                [filterKey]: [filterValue],
+                [facet]: [filterValue],
             }),
         };
     }
 }
 
-function isEqual(lhs: InternationalString, rhs: InternationalString) {
+function isEqual(lhs: SkosEntry, rhs: SkosEntry) {
     return JSON.stringify(lhs) === JSON.stringify(rhs);
 }

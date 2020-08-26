@@ -1,12 +1,12 @@
 <mat-card [ngSwitch]="style">
   <app-result-card-content-standard
     *ngSwitchCase="'standard'"
-    [result]="result"
+    [hit]="hit"
     [filters]="filters"
   ></app-result-card-content-standard>
   <app-result-card-content-compact
     *ngSwitchCase="'compact'"
-    [result]="result"
+    [hit]="hit"
     [filters]="filters"
   ></app-result-card-content-compact>
 </mat-card>

@@ -27,7 +27,7 @@ import { OAuthModule } from 'angular-oauth2-oidc';
 import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
 import { HttpLinkModule } from 'apollo-angular-link-http';
 import { HttpBatchLink, HttpBatchLinkModule } from 'apollo-angular-link-http-batch';
-import { InMemoryCache } from 'apollo-cache-inmemory';
+import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
 import { environment } from '../environments/environment';
 import { AddContentFabComponent } from './add-content-fab/add-content-fab.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -38,7 +38,7 @@ import { EncodeUriComponentPipe } from './encode-uri-component.pipe';
 import { ErrorComponent } from './error/error.component';
 import { GenerateFiltersPipe } from './generate-filters.pipe';
 import { HeaderbarComponent } from './headerbar/headerbar.component';
-import { IsInCollectionPipe } from './is-in-collection.pipe';
+import { HasEditorialTagPipe } from './has-editorial-tag.pipe';
 import { LoginComponent } from './login/login.component';
 import { MenubarComponent } from './menubar/menubar.component';
 import { MultivalueCheckboxComponent } from './multivalue-checkbox/multivalue-checkbox.component';
@@ -48,7 +48,6 @@ import { ResultCardContentCompactComponent } from './result-card-content-compact
 import { ResultCardContentStandardComponent } from './result-card-content-standard/result-card-content-standard.component';
 import { ResultCardSmallComponent } from './result-card-small/result-card-small.component';
 import { ResultCardComponent } from './result-card/result-card.component';
-import { SafeBase64DataPipe } from './safe-base64-data.pipe';
 import { SearchFieldComponent } from './search-field/search-field.component';
 import { SearchFilterbarComponent } from './search-filterbar/search-filterbar.component';
 import { SearchResolverService } from './search-resolver.service';
@@ -58,9 +57,10 @@ import { SubjectsPortalSectionComponent } from './subjects-portal-section/subjec
 import { SubjectsPortalComponent } from './subjects-portal/subjects-portal.component';
 import { TrimPipe } from './trim.pipe';
 import { TruncatePipe } from './truncate.pipe';
-import { ValuespacesI18nPipe } from './valuespaces-i18n.pipe';
 import { WelcomeComponent } from './welcome/welcome.component';
-import { WorkInProgressMessageComponent } from './work-in-progress-message/work-in-progress-message.component';
+import introspectionQueryResultData from '../generated/fragmentTypes.json';
+import { PreviewImageComponent } from './preview-image/preview-image.component';
+import { FooterbarComponent } from './footerbar/footerbar.component';
 
 const appRoutes: Routes = [
     {
@@ -93,6 +93,10 @@ const appRoutes: Routes = [
     { path: 'error', component: ErrorComponent },
 ];
 
+const fragmentMatcher = new IntrospectionFragmentMatcher({
+    introspectionQueryResultData,
+});
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -101,29 +105,28 @@ const appRoutes: Routes = [
         GenerateFiltersPipe,
         DetailsComponent,
         SearchResultsComponent,
-        SafeBase64DataPipe,
         ErrorComponent,
         HeaderbarComponent,
+        FooterbarComponent,
         SearchFieldComponent,
         TrimPipe,
-        IsInCollectionPipe,
+        HasEditorialTagPipe,
         WelcomeComponent,
         MenubarComponent,
         LoginComponent,
         SearchFilterbarComponent,
         MultivalueCheckboxComponent,
-        WorkInProgressMessageComponent,
         EncodeUriComponentPipe,
         ResultCardComponent,
         PaginatorComponent,
         SubjectsPortalComponent,
         ResultCardSmallComponent,
         SubjectsPortalSectionComponent,
-        ValuespacesI18nPipe,
         OerSliderComponent,
         AddContentFabComponent,
         ResultCardContentStandardComponent,
         ResultCardContentCompactComponent,
+        PreviewImageComponent,
     ],
     imports: [
         ApolloModule,
@@ -167,7 +170,7 @@ const appRoutes: Routes = [
             provide: APOLLO_OPTIONS,
             useFactory: (httpLink: HttpBatchLink) => {
                 return {
-                    cache: new InMemoryCache(),
+                    cache: new InMemoryCache({ fragmentMatcher }),
                     link: httpLink.create({
                         uri: environment.relayUrl + '/graphql',
                     }),

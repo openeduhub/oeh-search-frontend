@@ -1,37 +1,31 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import {
+    Aggregation,
     AutoCompleteGQL,
     DidYouMeanSuggestionFragment,
     DidYouMeanSuggestionGQL,
-    FacetsFragment,
+    Facet,
+    FacetGQL,
     FacetsGQL,
     Filter,
-    GetDetailsGQL,
-    GetDetailsQuery,
-    GetLargeThumbnailGQL,
-    Hit,
+    GetEntryGQL,
+    GetEntryQuery,
     Language,
-    LoadMoreDisciplinesGQL,
-    LoadMoreEducationalContextsGQL,
-    LoadMoreIntendedEndUserRolesGQL,
-    LoadMoreKeywordsGQL,
-    LoadMoreLearningResourceTypesGQL,
-    LoadMoreSourcesGQL,
     ResultFragment,
     SearchGQL,
 } from '../generated/graphql';
 import { ConfigService } from './config.service';
 import { SearchParametersService } from './search-parameters.service';
-import { assertUnreachable } from './utils';
 
-export type Details = GetDetailsQuery['get'];
-export type Facets = Omit<FacetsFragment, '__typename'>;
+export type Filters = {
+    [key in Facet]?: string[];
+};
 
-export interface Filters {
-    [key: string]: string[];
-}
+export type Facets = {
+    [key in Facet]: Aggregation;
+};
 
 @Injectable({ providedIn: 'root' })
 export class SearchService {
@@ -39,23 +33,20 @@ export class SearchService {
     private didYouMeanSuggestion = new BehaviorSubject<DidYouMeanSuggestionFragment>(null);
     private lastSearchString: string;
     private lastFilters: Filters;
+    private language: Language;
 
     constructor(
+        config: ConfigService,
         private autoCompleteGQL: AutoCompleteGQL,
-        private config: ConfigService,
         private didYouMeanSuggestionGQL: DidYouMeanSuggestionGQL,
+        private facetGQL: FacetGQL,
         private facetsGQL: FacetsGQL,
-        private getDetailsGQL: GetDetailsGQL,
-        private getLargeThumbnailGQL: GetLargeThumbnailGQL,
-        private loadMoreDisciplines: LoadMoreDisciplinesGQL,
-        private loadMoreEducationalContexts: LoadMoreEducationalContextsGQL,
-        private loadMoreIntendedEndUserRoles: LoadMoreIntendedEndUserRolesGQL,
-        private loadMoreKeywords: LoadMoreKeywordsGQL,
-        private loadMoreLearningResourceTypes: LoadMoreLearningResourceTypesGQL,
-        private loadMoreSources: LoadMoreSourcesGQL,
+        private getEntryGQL: GetEntryGQL,
         private searchGQL: SearchGQL,
         private searchParameters: SearchParametersService,
-    ) {}
+    ) {
+        this.language = config.getLanguage();
+    }
 
     search(): Observable<ResultFragment> {
         const {
@@ -72,24 +63,19 @@ export class SearchService {
                 from: pageIndex * pageSize,
                 size: pageSize,
                 filters: mapFilters(filters),
+                language: this.language,
             })
-            .pipe(
-                map((response) => response.data.search),
-                tap((searchResult) => this.prepareSearchResult(searchResult)),
-            );
+            .pipe(map((response) => response.data.search));
     }
 
-    getDetails(id: string): Observable<GetDetailsQuery['get']> {
-        return this.getDetailsGQL.fetch({ id }).pipe(
-            map((response) => response.data.get),
-            tap((hit) => this.prepareHit(hit as Hit)),
-        );
+    getEntry(id: string): Observable<GetEntryQuery['get']> {
+        return this.getEntryGQL
+            .fetch({ id, language: this.language })
+            .pipe(map((response) => response.data.get));
     }
 
-    getLargeThumbnail(id: string): Observable<string> {
-        return this.getLargeThumbnailGQL
-            .fetch({ id })
-            .pipe(map((response) => response.data.get.thumbnail.large));
+    getLargeThumbnail(id: string): any {
+        throw new Error('not implemented');
     }
 
     autoComplete(searchString: string, filters?: Filters): Observable<string[]> {
@@ -97,7 +83,7 @@ export class SearchService {
             return of(null);
         }
         return this.autoCompleteGQL
-            .fetch({ searchString, filters: mapFilters(filters) })
+            .fetch({ searchString, filters: mapFilters(filters), language: this.language })
             .pipe(map((response) => response.data.autoComplete));
     }
 
@@ -109,83 +95,46 @@ export class SearchService {
         return this.didYouMeanSuggestion.asObservable();
     }
 
-    loadMoreFacetBuckets(facet: keyof Facets, size: number) {
+    loadMoreFacetBuckets(facet: Facet, size: number) {
         const facets = { ...this.facets.getValue() };
         const { searchString, filters } = this.searchParameters.getCurrentValue();
-        const fetchParams = {
-            size,
-            searchString,
-            filters: mapFilters(filters),
-            language: this.config.getShortLocale() as Language,
-        };
-        switch (facet) {
-            case 'sources':
-                this.loadMoreSources.fetch(fetchParams).subscribe((response) => {
-                    facets.sources = response.data.facets.sources;
-                    this.facets.next(facets);
-                });
-                break;
-            case 'disciplines':
-                this.loadMoreDisciplines.fetch(fetchParams).subscribe((response) => {
-                    facets.disciplines = response.data.facets.disciplines;
-                    this.facets.next(facets);
-                });
-                break;
-            case 'keywords':
-                this.loadMoreKeywords.fetch(fetchParams).subscribe((response) => {
-                    facets.keywords = response.data.facets.keywords;
-                    this.facets.next(facets);
-                });
-                break;
-            case 'educationalContexts':
-                this.loadMoreEducationalContexts.fetch(fetchParams).subscribe((response) => {
-                    facets.educationalContexts = response.data.facets.educationalContexts;
-                    this.facets.next(facets);
-                });
-                break;
-            case 'learningResourceTypes':
-                this.loadMoreLearningResourceTypes.fetch(fetchParams).subscribe((response) => {
-                    facets.learningResourceTypes = response.data.facets.learningResourceTypes;
-                    this.facets.next(facets);
-                });
-                break;
-            case 'intendedEndUserRoles':
-                this.loadMoreIntendedEndUserRoles.fetch(fetchParams).subscribe((response) => {
-                    facets.intendedEndUserRoles = response.data.facets.intendedEndUserRoles;
-                    this.facets.next(facets);
-                });
-                break;
-            // Values for types are fixed. We don't have a load-more button here.
-            case 'types':
-                throw new Error('Cannot load more types');
-            // Cause a compiler error when missing cases. Please add new cases above when that
-            // happens.
-            default:
-                assertUnreachable(facet);
-        }
+        this.facetGQL
+            .fetch({
+                size,
+                searchString,
+                filters: mapFilters(filters),
+                language: this.language,
+                facet,
+            })
+            .subscribe((response) => {
+                facets[facet] = response.data.facet;
+                this.facets.next(facets);
+            });
     }
 
     private updateDidYouMeanSuggestion(searchString: string, filters: Filters) {
         this.didYouMeanSuggestionGQL
-            .fetch({ searchString, filters: mapFilters(filters) })
+            .fetch({ searchString, filters: mapFilters(filters), language: this.language })
             .subscribe((response) =>
                 this.didYouMeanSuggestion.next(response.data.didYouMeanSuggestion),
             );
     }
 
     private updateFacets(searchString: string, filters: Filters) {
-        const changedFilterFields = this.getChangedFilterFields(filters);
+        const changedFilterFacets = this.getChangedFilterFacets(filters);
         this.facetsGQL
             .fetch({
                 searchString,
                 filters: mapFilters(filters),
-                language: this.config.getShortLocale() as Language,
+                language: this.language,
             })
             .subscribe((response) => {
+                const facets = mapFacets(response.data.facets);
                 // If the only thing that changed since the last search is the terms list of a
                 // single filter field, keep the facets of that field.
                 //
-                // These facets will not change when the above condition holds, but the user might
+                // These facets will not change when the above condition holds, but the user
+                // might
                 // have clicked the 'show more' button on the filter bar. In that case, we don't
                 // want to reduce the number of options again while the user is interacting with
                 // that filter.
@@ -196,21 +145,14 @@ export class SearchService {
                     // searchString).
                     searchString === this.lastSearchString &&
                     // Only a single filter must have changed.
-                    changedFilterFields.length === 1
+                    changedFilterFacets.length === 1
                 ) {
-                    const changedFilterField = changedFilterFields[0];
-                    const changedFacet = Object.entries(response.data.facets).find(
-                        ([key, value]) =>
-                            typeof value === 'object' && value.field === changedFilterField,
-                    )?.[0] as keyof Facets;
-                    const facets = { ...response.data.facets };
-                    if (changedFacet) {
-                        facets[changedFacet] = this.facets.getValue()[changedFacet];
+                    const changedFilterFacet = changedFilterFacets[0];
+                    if (changedFilterFacet) {
+                        facets[changedFilterFacet] = this.facets.getValue()[changedFilterFacet];
                     }
-                    this.facets.next(facets);
-                } else {
-                    this.facets.next(response.data.facets);
                 }
+                this.facets.next(facets);
             });
         this.lastSearchString = searchString;
         this.lastFilters = filters;
@@ -221,38 +163,27 @@ export class SearchService {
      *
      * @param filters updated filters
      */
-    private getChangedFilterFields(filters: Filters): string[] {
+    private getChangedFilterFacets(filters: Filters): Facet[] {
         return Object.keys({ ...filters, ...this.lastFilters }).filter(
-            (key) => !arraysAreEqual(filters?.[key], this.lastFilters?.[key]),
+            (key): key is Facet => !arraysAreEqual(filters?.[key], this.lastFilters?.[key]),
         );
-    }
-
-    /**
-     * Temporary mapping until everything is updated.
-     */
-    private prepareSearchResult(searchResult: ResultFragment) {
-        for (const hit of searchResult.hits.hits) {
-            this.prepareHit(hit as Hit);
-        }
-    }
-
-    /**
-     * Temporary mapping until everything is updated.
-     */
-    private prepareHit(hit: Hit) {
-        if (!hit.lom.general.description && hit.lom.educational?.description) {
-            hit.lom.general.description = hit.lom.educational.description;
-        }
     }
 }
 
-export function mapFilters(filters: Filters): Filter[] {
+export function mapFilters(filters: Filters): Filter[] | null {
     if (!filters) {
-        return [];
+        return null;
     }
     return Object.entries(filters)
         .filter(([key, value]) => value && value.length > 0)
-        .map(([key, value]) => ({ field: key, terms: value }));
+        .map(([key, value]) => ({ facet: key as Facet, terms: value }));
+}
+
+function mapFacets(aggregations: readonly Aggregation[]): Facets {
+    return aggregations.reduce((acc, aggregation) => {
+        acc[aggregation.facet] = aggregation;
+        return acc;
+    }, {} as Facets);
 }
 
 function arraysAreEqual<T>(lhs: T[], rhs: T[]): boolean {

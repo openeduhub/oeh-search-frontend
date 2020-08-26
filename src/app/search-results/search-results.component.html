@@ -27,9 +27,9 @@
 </div>
 <div class="results">
   <app-result-card
-    *ngFor="let result of hits.hits"
-    [result]="result"
+    *ngFor="let hit of results.hits"
+    [hit]="hit"
     [filters]="filters"
   ></app-result-card>
 </div>
-<app-paginator [length]="hits.total.value"> </app-paginator>
+<app-paginator [length]="results.total.value"> </app-paginator>

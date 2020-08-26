@@ -64,7 +64,7 @@ export class SearchComponent implements OnInit, OnDestroy {
             this.showSubjectsPortal =
                 data.searchData.subjectsPortalResults &&
                 Object.values(data.searchData.subjectsPortalResults).some(
-                    (hits: Hits) => hits.total.value > 0,
+                    (hits: Hits) => hits.length > 0,
                 );
         });
     }

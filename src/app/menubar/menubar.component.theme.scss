@@ -10,9 +10,11 @@
         header {
             background-color: mat-color($background, dialog);
             border-bottom-color: mat-color($foreground, divider);
+            /*
             @media (prefers-color-scheme: dark) {
                 background-color: mat-color($background, app-bar);
             }
+            */
         }
         a {
             color: $primary-foreground-color;

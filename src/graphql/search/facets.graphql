@@ -1,38 +1,28 @@
-query Facets($searchString: String!, $filters: [Filter!], $language: Language!) {
-  facets(searchString: $searchString, size: 20, filters: $filters, language: $language) {
-    ...facets
-  }
-}
-
-fragment facets on Facets {
-  sources {
-    ...aggregation
-  }
-  keywords {
-    ...aggregation
-  }
-  disciplines {
-    ...aggregation
-  }
-  educationalContexts {
-    ...aggregation
-  }
-  learningResourceTypes {
-    ...aggregation
-  }
-  types {
-    ...aggregation
-  }
-  intendedEndUserRoles {
-    ...aggregation
-  }
+query Facets($searchString: String, $filters: [Filter!], $language: Language!) {
+    facets(
+        searchString: $searchString
+        size: 20
+        filters: $filters
+        language: $language
+        facets: [
+            discipline
+            educationalContext
+            intendedEndUserRole
+            keyword
+            learningResourceType
+            source
+            type
+        ]
+    ) {
+        ...aggregation
+    }
 }
 
 fragment aggregation on Aggregation {
-  buckets {
-    doc_count
-    key
-  }
-  field
-  total_buckets
+    buckets {
+        doc_count
+        key
+    }
+    facet
+    total_buckets
 }
