@@ -155,23 +155,17 @@
         
       <context-group purpose="location"><context context-type="sourcefile">src/app/search-results/search-results.component.html</context><context context-type="linenumber">2</context></context-group></trans-unit><trans-unit id="92cfea1361d316d47e0992c3fffff7836c60a960" datatype="html">
         <source>Standard view</source><target state="final">Standard-Ansicht</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
-          <context context-type="linenumber">11</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
-          <context context-type="linenumber">13</context>
-        </context-group>
-      </trans-unit><trans-unit id="f14c4dc56d41f201599324a8b9c297812798b734" datatype="html">
+        
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/search-results/search-results.component.html</context><context context-type="linenumber">13</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/search-results/search-results.component.html</context><context context-type="linenumber">15</context></context-group></trans-unit><trans-unit id="f14c4dc56d41f201599324a8b9c297812798b734" datatype="html">
         <source>Compact view</source><target state="final">Kompakte Ansicht</target>
+        
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/search-results/search-results.component.html</context><context context-type="linenumber">22</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/search-results/search-results.component.html</context><context context-type="linenumber">24</context></context-group></trans-unit><trans-unit id="949ba3965c4478f3c3caf1aef6158706c769ef65" datatype="html">
+        <source>Result view</source><target state="final">Ergebnis-Ansicht</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
-          <context context-type="linenumber">20</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
-          <context context-type="linenumber">22</context>
+          <context context-type="linenumber">7</context>
         </context-group>
       </trans-unit><trans-unit id="058e8e2e266ee6c4c4c574ed2508b99d00a2d170" datatype="html">
         <source>Recommended by editorial team</source><target state="final">Empfehlung der Redaktion</target>
@@ -254,38 +248,20 @@
           <context context-type="sourcefile">src/app/oer-slider/oer-slider.component.html</context>
           <context context-type="linenumber">17</context>
         </context-group>
-      </trans-unit><trans-unit id="73bdeaf3c7d8b0387556bdd074874ebda700479a" datatype="html">
-        <source>mixed</source><target state="final">teils OER</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/oer-slider/oer-slider.component.html</context><context context-type="linenumber">26</context></context-group></trans-unit><trans-unit id="77eb570afe0abf56760d10dff29769a4935d0039" datatype="html">
-        <source>Show OER and partial OER content</source><target state="final">Zeige OER- und Teils-OER-Inhalte</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/oer-slider/oer-slider.component.html</context>
-          <context context-type="linenumber">25</context>
-        </context-group>
       </trans-unit><trans-unit id="3b99ed91e3cd96b551b759ecc0d4f8d158f2114f" datatype="html">
         <source>only OER</source><target state="final">nur OER</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/oer-slider/oer-slider.component.html</context>
-          <context context-type="linenumber">34</context>
-        </context-group>
-      </trans-unit><trans-unit id="54ff13ed3d31ebf7b6261936cb764505d2e1ef9f" datatype="html">
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/oer-slider/oer-slider.component.html</context><context context-type="linenumber">26</context></context-group></trans-unit><trans-unit id="54ff13ed3d31ebf7b6261936cb764505d2e1ef9f" datatype="html">
         <source>Show only OER content</source><target state="final">Zeige nur OER-Inhalte</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/oer-slider/oer-slider.component.html</context>
-          <context context-type="linenumber">33</context>
-        </context-group>
-      </trans-unit><trans-unit id="5ecc2b6454b68f6583f0b53c82d88c45edcaa041" datatype="html">
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/oer-slider/oer-slider.component.html</context><context context-type="linenumber">25</context></context-group></trans-unit><trans-unit id="5ecc2b6454b68f6583f0b53c82d88c45edcaa041" datatype="html">
         <source>help</source><target state="final">Hilfe</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/oer-slider/oer-slider.component.html</context>
-          <context context-type="linenumber">42</context>
-        </context-group>
-      </trans-unit><trans-unit id="d3097ac79cbba7a043e624f7c69ad2d77ef2c267" datatype="html">
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/oer-slider/oer-slider.component.html</context><context context-type="linenumber">34</context></context-group></trans-unit><trans-unit id="d3097ac79cbba7a043e624f7c69ad2d77ef2c267" datatype="html">
         <source>What is OER?</source><target state="final">Was ist OER?</target>
         
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/oer-slider/oer-slider.component.html</context><context context-type="linenumber">45</context></context-group></trans-unit><trans-unit id="5caadefa4143cf6766a621b0f54f91f373a1f164" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/oer-slider/oer-slider.component.html</context><context context-type="linenumber">37</context></context-group></trans-unit><trans-unit id="5caadefa4143cf6766a621b0f54f91f373a1f164" datatype="html">
         <source>Add content</source><target state="final">Material aufnehmen</target>
         
       <context-group purpose="location"><context context-type="sourcefile">src/app/add-content-fab/add-content-fab.component.html</context><context context-type="linenumber">7</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/add-content-fab/add-content-fab.component.html</context><context context-type="linenumber">9</context></context-group></trans-unit><trans-unit id="77308e0b0ec483739e6cd964d7faeba68d34e949" datatype="html">
