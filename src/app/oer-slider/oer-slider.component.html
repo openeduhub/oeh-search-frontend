@@ -3,7 +3,7 @@
     <mat-slider
       [displayWith]="formatLabel"
       min="0"
-      max="2"
+      max="1"
       [(ngModel)]="value"
       (ngModelChange)="onValueChange($event)"
       aria-labelledby="oer-slider-labels"
@@ -20,14 +20,6 @@
       <label
         [attr.selected]="value === 1 ? '' : undefined"
         (click)="setValue(1)"
-        i18n
-        i18n-matTooltip
-        matTooltip="Show OER and partial OER content"
-        >mixed</label
-      >
-      <label
-        [attr.selected]="value === 2 ? '' : undefined"
-        (click)="setValue(2)"
         i18n
         i18n-matTooltip
         matTooltip="Show only OER content"

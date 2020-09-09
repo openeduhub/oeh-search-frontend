@@ -7,8 +7,8 @@
 
 :host {
     display: grid;
-    // Don't use horizontal gap, elements that are not always visible don't add awkward margins on
-    // mobile.
+    // Don't use horizontal gap, so elements that are not always visible don't add awkward margins
+    // on mobile.
     gap: 12px 0;
     padding: 20px;
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
@@ -22,16 +22,16 @@
         'filter-button search-field'
         'oer-slider oer-slider';
     justify-content: center;
-    @media screen and (min-width: 1000px) {
+    @media screen and (min-width: 850px) {
         padding-top: 30px;
         padding-bottom: 50px;
         gap: 20px 0;
-        grid-template-columns: 150px minmax(0, 700px) max-content;
+        grid-template-columns: 150px minmax(0, 900px) min-content;
         grid-template-areas:
             '. tagline tagline'
             'filter-button search-field oer-slider';
         app-search-field {
-            margin-right: 30px;
+            margin-right: 50px;
         }
     }
     .tagline {

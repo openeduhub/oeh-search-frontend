@@ -1,13 +1,12 @@
 :host ::ng-deep mat-slider {
     height: 34px;
-    min-width: 200px;
     width: 100%;
     .mat-slider-wrapper {
         height: 6px;
         top: 14px;
         .mat-slider-thumb-container {
-            width: 66.67%;
-            left: 16.67%;
+            width: 50%;
+            left: 25%;
             .mat-slider-focus-ring {
                 width: 40px;
                 height: 40px;
@@ -55,7 +54,7 @@
     label {
         flex-basis: 0;
         flex-grow: 1;
-        width: 5.5em;
+        width: 7em;
         padding: 0 10px;
         text-align: center;
         cursor: pointer;
