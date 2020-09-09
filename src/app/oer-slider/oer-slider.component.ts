@@ -5,7 +5,6 @@ import { SearchParametersService } from '../search-parameters.service';
 
 enum OerLevel {
     NONE,
-    MIXED,
     ALL,
 }
 

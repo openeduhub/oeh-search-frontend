@@ -16,7 +16,12 @@
     </button>
   </div>
   <div class="body">
-    <div class="type">
+    <div *ngIf="!hasFacets" class="no-filters-notice">
+      <p i18n>
+        Currently, there are no applicable filters. Try another search string for more results.
+      </p>
+    </div>
+    <div class="type" *ngIf="facets.type.buckets.length > 0">
       <mat-label><mat-icon>apps</mat-icon> <ng-container i18n>Type</ng-container></mat-label>
       <app-multivalue-checkbox
         formControlName="type"

@@ -4,6 +4,8 @@
     class="style-toggle"
     [value]="resultCardStyle"
     (change)="setResultCardStyle($event.value)"
+    aria-label="Result view"
+    i18n-aria-label
   >
     <mat-button-toggle
       value="standard"

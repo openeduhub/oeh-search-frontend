@@ -23,6 +23,7 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
         Facet.Keyword,
     ];
     facets: Facets;
+    hasFacets: boolean;
     filters: Filters = {};
     facetFilters: FormGroup;
     expandedFilters: { [key in Facet]?: boolean } = {
@@ -130,6 +131,7 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
             Type.Tool,
             Type.Portal,
         ]);
+        this.hasFacets = Object.values(facets).some((facet) => facet.buckets.length > 0);
     }
 
     private expandActiveFilters() {

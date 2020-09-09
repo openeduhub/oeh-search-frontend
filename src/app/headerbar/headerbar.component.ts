@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
-import { parseSearchQueryParams, SearchParametersService } from '../search-parameters.service';
-import { filter, find, first, skip } from 'rxjs/operators';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
+import { SearchParametersService } from '../search-parameters.service';
 import { ViewService } from '../view.service';
 
 @Component({
@@ -9,40 +10,45 @@ import { ViewService } from '../view.service';
     templateUrl: './headerbar.component.html',
     styleUrls: ['./headerbar.component.scss'],
 })
-export class HeaderbarComponent implements OnInit {
+export class HeaderbarComponent implements OnInit, OnDestroy {
     filterCount = 0;
     showFiltersButton: boolean;
 
-    constructor(private route: ActivatedRoute, private router: Router,
-                private searchParameters: SearchParametersService,
-                private view: ViewService) {}
+    private subscriptions: Subscription[] = [];
+
+    constructor(
+        private router: Router,
+        private searchParameters: SearchParametersService,
+        private view: ViewService,
+    ) {}
 
     ngOnInit() {
-        this.router.events
-            .pipe(filter((event) => event instanceof NavigationEnd))
-            .subscribe((event: NavigationEnd) => {
-                this.showFiltersButton = this.router.url.startsWith('/search');
-            });
-        // DEPRECATED:
-        /*
-        this.route.queryParamMap.subscribe((queryParamMap) => {
-            const { filters } = parseSearchQueryParams(queryParamMap);
-            // Explicitly use filters given in the query parameters directly (without going through
-            // search-parameters service) to omit a counter on pages of the form
-            // 'search/:educationalContext/:discipline', where filters are already shown with
-            // breadcrumbs.
-            // this.filterCount = Object.keys(filters).filter((k) => filters[k]?.length).length;
-        });
-        */
+        this.subscriptions.push(
+            this.router.events
+                .pipe(filter((event) => event instanceof NavigationEnd))
+                .subscribe((event: NavigationEnd) => {
+                    this.showFiltersButton = this.router.url.startsWith('/search');
+                }),
+        );
 
-        this.searchParameters.get()
-            .subscribe((params) => {
+        this.subscriptions.push(
+            this.searchParameters.get().subscribe((params) => {
                 if (params) {
-                    const filters = params?.filters;
-                    this.filterCount =
-                        Object.keys(filters).filter((k) => filters[k]?.length).length;
+                    const filters = params.filters;
+                    this.filterCount = Object.keys(filters)
+                        // Ignore the OER filter for the button-badge count since the OER filter is
+                        // not handled by the filter sidebar toggled by the button.
+                        .filter((k) => k !== 'oer')
+                        .filter((k) => filters[k]?.length).length;
                 }
-            });
+            }),
+        );
+    }
+
+    ngOnDestroy(): void {
+        for (const subscription of this.subscriptions) {
+            subscription.unsubscribe();
+        }
     }
 
     toggleFilterBar() {

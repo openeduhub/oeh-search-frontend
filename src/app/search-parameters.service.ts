@@ -11,7 +11,7 @@ export interface ParsedParams {
     pageIndex: number;
     pageSize: number;
     filters: Filters;
-    oer: 'ALL' | 'MIXED' | 'NONE';
+    oer: 'ALL' | 'NONE';
 }
 
 /**
@@ -42,7 +42,6 @@ export function parseSearchQueryParams(queryParamMap: ParamMap): ParsedParams {
         const oer = queryParamMap.get('oer');
         switch (oer) {
             case 'ALL':
-            case 'MIXED':
             case 'NONE':
                 result.oer = oer;
                 break;
@@ -107,9 +106,6 @@ export class SearchParametersService {
         }
         switch (this.parsedParams.oer) {
             case 'ALL':
-                this.parsedParams.filters[Facet.Oer] = ['true'];
-                break;
-            case 'MIXED':
                 this.parsedParams.filters[Facet.Oer] = ['true'];
                 break;
             case 'NONE':

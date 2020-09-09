@@ -1,9 +1,15 @@
-:host {
-    position: fixed;
-    right: 20px;
-    bottom: 20px;
+.container {
+    &.floating {
+        right: 20px;
+        bottom: 20px;
+        position: fixed;
+    }
+    &:not(.floating) {
+        float: right;
+        margin-right: 20px;
+    }
 }
 
 ::ng-deep .fab-menu {
-    margin-bottom: 20px;
+    margin: 20px;
 }

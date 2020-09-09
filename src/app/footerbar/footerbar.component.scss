@@ -1,100 +1,335 @@
-.grid-container{
+.grid-container {
     font-size: 20px;
+    box-sizing: border-box;
 }
 
 /*! CSS Used from: https://pre.wirlernenonline.de/wp-content/themes/wir-lernen-online/dist/assets/scss/app.css?ver=20200430 ; media=all */
-@media all{
-    a{background-color:transparent;}
-    img{border-style:none;}
-    button{font-family:inherit;font-size:100%;line-height:1.15;margin:0;}
-    button{overflow:visible;}
-    button{text-transform:none;}
-    button{-webkit-appearance:button;}
-    button::-moz-focus-inner{border-style:none;padding:0;}
-    button:-moz-focusring{outline:1px dotted ButtonText;}
-    *,*::before,*::after{box-sizing:inherit;}
-    img{display:inline-block;vertical-align:middle;max-width:100%;height:auto;-ms-interpolation-mode:bicubic;}
-    button{padding:0;-webkit-appearance:none;-moz-appearance:none;appearance:none;border:0;border-radius:5px;background:transparent;line-height:1;cursor:auto;}
-    button{font-family:inherit;}
-    ::-moz-placeholder{color:#313131;}
-    :-ms-input-placeholder{color:#313131;}
-    ::-ms-input-placeholder{color:#313131;}
-    ::placeholder{color:#313131;}
-    div,ul,li,p{margin:0;padding:0;}
-    p{margin-bottom:1rem;font-size:inherit;line-height:1.4;text-rendering:optimizeLegibility;}
-    a{line-height:inherit;color:#003E82;text-decoration:none;cursor:pointer;}
-    a:hover,a:focus{color:#003570;}
-    a img{border:0;}
-    ul{margin-bottom:1rem;list-style-position:outside;line-height:1.4;}
-    li{font-size:inherit;}
-    ul{margin-left:1.25rem;list-style-type:disc;}
-    @media print{
-        *{background:transparent!important;color:black!important;-webkit-print-color-adjust:economy;color-adjust:economy;box-shadow:none!important;text-shadow:none!important;}
-        a,a:visited{text-decoration:underline;}
-        a[href]:after{content:" (" attr(href) ")";}
-        img{page-break-inside:avoid;}
-        img{max-width:100%!important;}
-        p{orphans:3;widows:3;}
+// Replaced 'rem' with 'em'.
+@media all {
+    a {
+        background-color: transparent;
     }
-    .grid-container{padding-right:0.75rem;padding-left:0.75rem;max-width:60rem;margin-left:auto;margin-right:auto;}
-    @media print, screen and (min-width: 40em){
-        .grid-container{padding-right:1rem;padding-left:1rem;}
+    img {
+        border-style: none;
     }
-    .grid-x{display:flex;flex-flow:row wrap;}
-    .cell{flex:0 0 auto;min-height:0px;min-width:0px;width:100%;}
-    .cell.shrink{flex:0 0 auto;}
-    .grid-x > .shrink{width:auto;}
-    @media print, screen and (min-width: 40em){
-        .grid-x > .medium-auto{flex:1 1 0px;width:auto;}
+    button {
+        font-family: inherit;
+        font-size: 100%;
+        line-height: 1.15;
+        margin: 0;
     }
-    .grid-margin-x{margin-left:-0.75rem;margin-right:-0.75rem;}
-    @media print, screen and (min-width: 40em){
-        .grid-margin-x{margin-left:-1rem;margin-right:-1rem;}
+    button {
+        overflow: visible;
     }
-    .grid-margin-x > .cell{width:calc(100% - 1.5rem);margin-left:0.75rem;margin-right:0.75rem;}
-    @media print, screen and (min-width: 40em){
-        .grid-margin-x > .cell{width:calc(100% - 2rem);margin-left:1rem;margin-right:1rem;}
+    button {
+        text-transform: none;
     }
-    .grid-margin-x > .shrink{width:auto;}
-    @media print, screen and (min-width: 40em){
-        .grid-margin-x > .shrink{width:auto;}
-        .grid-margin-x > .medium-auto{width:auto;}
+    button {
+        -webkit-appearance: button;
     }
-    .shrink{flex:0 0 auto;max-width:100%;}
-    .button{display:inline-block;vertical-align:middle;margin:0 0 1rem 0;padding:0.85em 1em;border:1px solid transparent;border-radius:5px;transition:background-color 0.25s ease-out, color 0.25s ease-out;font-family:"Montserrat-Bold", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;font-size:0.9rem;-webkit-appearance:none;line-height:1;text-align:center;cursor:pointer;}
-    .button.small{font-size:0.75rem;}
-    .button{background-color:#003E82;color:#fefefe;}
-    .button:hover,.button:focus{background-color:#00356f;color:#fefefe;}
-    .menu{padding:0;margin:0;list-style:none;position:relative;display:flex;flex-wrap:wrap;}
-    .menu a{line-height:1;text-decoration:none;display:block;padding:0.7rem 1rem;}
-    .menu a{margin-bottom:0;}
-    .menu{flex-wrap:wrap;flex-direction:row;}
-    .dropdown.menu > li > a{padding:0.7rem 1rem;}
-    .align-middle{align-items:center;}
-    .menu li a{font-family:"Montserrat-Bold", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;}
-    .button{font-family:"Montserrat-Bold", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;text-transform:uppercase;}
-    .small{font-size:80%;}
-    .small{font-size:80%;}
-    @media print, screen and (min-width: 40em){
-        .small{font-size:80%;}
+    button::-moz-focus-inner {
+        border-style: none;
+        padding: 0;
     }
-    a:active,a:focus,button::-moz-focus-inner{border:0;outline:0;outline:none;}
-    .no-space{margin:0;}
-    *:focus{outline:1px dotted #003E82;}
-    .site-footer{overflow:hidden;background-color:#ECECEC;}
-    .site-footer .grid-x{min-height:160px;}
-    @media screen and (min-width: 40em){
-        .site-footer .grid-x{min-height:100px;}
+    button:-moz-focusring {
+        outline: 1px dotted ButtonText;
+    }
+    *,
+    *::before,
+    *::after {
+        box-sizing: inherit;
+    }
+    img {
+        display: inline-block;
+        vertical-align: middle;
+        max-width: 100%;
+        height: auto;
+        -ms-interpolation-mode: bicubic;
+    }
+    button {
+        padding: 0;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        border: 0;
+        border-radius: 5px;
+        background: transparent;
+        line-height: 1;
+        cursor: auto;
+    }
+    button {
+        font-family: inherit;
+    }
+    ::-moz-placeholder {
+        color: #313131;
+    }
+    :-ms-input-placeholder {
+        color: #313131;
+    }
+    ::-ms-input-placeholder {
+        color: #313131;
+    }
+    ::placeholder {
+        color: #313131;
+    }
+    div,
+    ul,
+    li,
+    p {
+        margin: 0;
+        padding: 0;
+    }
+    p {
+        margin-bottom: 1em;
+        font-size: inherit;
+        line-height: 1.4;
+        text-rendering: optimizeLegibility;
+    }
+    a {
+        line-height: inherit;
+        color: #003e82;
+        text-decoration: none;
+        cursor: pointer;
+    }
+    a:hover,
+    a:focus {
+        color: #003570;
+    }
+    a img {
+        border: 0;
+    }
+    ul {
+        margin-bottom: 1em;
+        list-style-position: outside;
+        line-height: 1.4;
+    }
+    li {
+        font-size: inherit;
+    }
+    ul {
+        margin-left: 1.25em;
+        list-style-type: disc;
+    }
+    @media print {
+        * {
+            background: transparent !important;
+            color: black !important;
+            -webkit-print-color-adjust: economy;
+            color-adjust: economy;
+            box-shadow: none !important;
+            text-shadow: none !important;
+        }
+        a,
+        a:visited {
+            text-decoration: underline;
+        }
+        a[href]:after {
+            content: ' (' attr(href) ')';
+        }
+        img {
+            page-break-inside: avoid;
+        }
+        img {
+            max-width: 100% !important;
+        }
+        p {
+            orphans: 3;
+            widows: 3;
+        }
+    }
+    .grid-container {
+        padding-right: 0.75em;
+        padding-left: 0.75em;
+        max-width: 60em;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    @media print, screen and (min-width: 40em) {
+        .grid-container {
+            padding-right: 1em;
+            padding-left: 1em;
+        }
+    }
+    .grid-x {
+        display: flex;
+        flex-flow: row wrap;
+    }
+    .cell {
+        flex: 0 0 auto;
+        min-height: 0px;
+        min-width: 0px;
+        width: 100%;
+    }
+    .cell.shrink {
+        flex: 0 0 auto;
+    }
+    .grid-x > .shrink {
+        width: auto;
+    }
+    @media print, screen and (min-width: 40em) {
+        .grid-x > .medium-auto {
+            flex: 1 1 0px;
+            width: auto;
+        }
+    }
+    .grid-margin-x {
+        margin-left: -0.75em;
+        margin-right: -0.75em;
+    }
+    @media print, screen and (min-width: 40em) {
+        .grid-margin-x {
+            margin-left: -1em;
+            margin-right: -1em;
+        }
+    }
+    .grid-margin-x > .cell {
+        width: calc(100% - 1.5em);
+        margin-left: 0.75em;
+        margin-right: 0.75em;
+    }
+    @media print, screen and (min-width: 40em) {
+        .grid-margin-x > .cell {
+            width: calc(100% - 2em);
+            margin-left: 1em;
+            margin-right: 1em;
+        }
+    }
+    .grid-margin-x > .shrink {
+        width: auto;
+    }
+    @media print, screen and (min-width: 40em) {
+        .grid-margin-x > .shrink {
+            width: auto;
+        }
+        .grid-margin-x > .medium-auto {
+            width: auto;
+        }
+    }
+    .shrink {
+        flex: 0 0 auto;
+        max-width: 100%;
+    }
+    .button {
+        display: inline-block;
+        vertical-align: middle;
+        margin: 0 0 1em 0;
+        padding: 0.85em 1em;
+        border: 1px solid transparent;
+        border-radius: 5px;
+        transition: background-color 0.25s ease-out, color 0.25s ease-out;
+        font-family: 'Montserrat-Bold', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
+        font-size: 0.9em;
+        -webkit-appearance: none;
+        line-height: 1;
+        text-align: center;
+        cursor: pointer;
+    }
+    .button.small {
+        font-size: 0.75em;
+    }
+    .button {
+        background-color: #003e82;
+        color: #fefefe;
+    }
+    .button:hover,
+    .button:focus {
+        background-color: #00356f;
+        color: #fefefe;
+    }
+    .menu {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        position: relative;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .menu a {
+        line-height: 1;
+        text-decoration: none;
+        display: block;
+        padding: 0.7em 1em;
+    }
+    .menu a {
+        margin-bottom: 0;
+    }
+    .menu {
+        flex-wrap: wrap;
+        flex-direction: row;
+    }
+    .dropdown.menu > li > a {
+        padding: 0.7em 1em;
+    }
+    .align-middle {
+        align-items: center;
+    }
+    .menu li a {
+        font-family: 'Montserrat-Bold', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
+    }
+    .button {
+        font-family: 'Montserrat-Bold', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
+        text-transform: uppercase;
+    }
+    .small {
+        font-size: 80%;
+    }
+    .small {
+        font-size: 80%;
+    }
+    @media print, screen and (min-width: 40em) {
+        .small {
+            font-size: 80%;
+        }
+    }
+    a:active,
+    a:focus,
+    button::-moz-focus-inner {
+        border: 0;
+        outline: 0;
+        outline: none;
+    }
+    .no-space {
+        margin: 0;
+    }
+    *:focus {
+        outline: 1px dotted #003e82;
+    }
+    .site-footer {
+        overflow: hidden;
+        background-color: #ececec;
+    }
+    .site-footer .grid-x {
+        min-height: 160px;
+    }
+    @media screen and (min-width: 40em) {
+        .site-footer .grid-x {
+            min-height: 100px;
+        }
     }
 }
 /*! CSS Used from: https://pre.wirlernenonline.de/wp-content/themes/wir-lernen-online/style.css?ver=20200430 ; media=all */
-@media all{
-    .footer-license p{text-align:center;font-size:0.8rem;}
-    .footer-menu{align-items:flex-start;}
-    @media screen and (max-width: 1024px){
-        .site-footer .grid-x{justify-content:center;}
-        .footer-menu{justify-content:space-between;margin:1.5rem 0;}
+@media all {
+    .footer-license p {
+        text-align: center;
+        font-size: 0.8em;
+    }
+    .footer-menu {
+        align-items: flex-start;
+    }
+    @media screen and (max-width: 1024px) {
+        .site-footer .grid-x {
+            justify-content: center;
+        }
+        .footer-menu {
+            justify-content: space-between;
+            margin: 1.5em 0;
+        }
     }
 }
 /*! CSS Used fontfaces */
-@font-face{font-family:'Montserrat-Bold';src:url("~src/assets/fonts/Montserrat-Bold.ttf") format("truetype");font-weight:bold;font-style:normal;}
+@font-face {
+    font-family: 'Montserrat-Bold';
+    src: url('~src/assets/fonts/Montserrat-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
