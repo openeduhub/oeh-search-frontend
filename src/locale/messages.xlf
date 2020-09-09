@@ -221,7 +221,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context>
-          <context context-type="linenumber">37</context>
+          <context context-type="linenumber">42</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context>
@@ -240,7 +240,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context>
-          <context context-type="linenumber">41</context>
+          <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8e421eff4d46c3686b8937e7b8a709bbe9dfe8bd" datatype="html">
@@ -251,7 +251,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context>
-          <context context-type="linenumber">49</context>
+          <context context-type="linenumber">54</context>
         </context-group>
       </trans-unit>
       <trans-unit id="a17b0f722230835c2d4e3aaedeb56fb057fd035a" datatype="html">
@@ -262,7 +262,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context>
-          <context context-type="linenumber">45</context>
+          <context context-type="linenumber">50</context>
         </context-group>
       </trans-unit>
       <trans-unit id="1f335b381271e2cc422d3b9e3c40ba794d19da4e" datatype="html">
@@ -273,7 +273,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context>
-          <context context-type="linenumber">57</context>
+          <context context-type="linenumber">62</context>
         </context-group>
       </trans-unit>
       <trans-unit id="c99ae2085cf40f231a666438ded948057481db37" datatype="html">
@@ -354,18 +354,18 @@
         <source>Clear input</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-field/search-field.component.html</context>
-          <context context-type="linenumber">18</context>
+          <context context-type="linenumber">19</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-field/search-field.component.html</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="linenumber">21</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7b6494fa44035831e1215cd4a0284aec00f8cbbd" datatype="html">
         <source>SEARCH</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-field/search-field.component.html</context>
-          <context context-type="linenumber">27</context>
+          <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
       <trans-unit id="deec646fc99f3d44b7a7e66bbf8fe6c04be90e52" datatype="html">
@@ -449,18 +449,27 @@
           <context context-type="linenumber">14</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="dc89c7f605918004cf9af6de5d0e52b74abc7e02" datatype="html">
+        <source>
+        Currently, there are no applicable filters. Try another search string for more results.
+      </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="f61c6867295f3b53d23557021f2f4e0aa1d0b8fc" datatype="html">
         <source>Type</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context>
-          <context context-type="linenumber">20</context>
+          <context context-type="linenumber">25</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6834fa6b43d1ecbdf147c48dd9c4d72f1484571d" datatype="html">
         <source>Source</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context>
-          <context context-type="linenumber">53</context>
+          <context context-type="linenumber">58</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context>
@@ -471,7 +480,7 @@
         <source>show more</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context>
-          <context context-type="linenumber">74</context>
+          <context context-type="linenumber">79</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4ab4cb601522b9194922554d934c4c30bd93567d" datatype="html">

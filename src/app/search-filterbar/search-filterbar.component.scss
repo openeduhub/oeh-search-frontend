@@ -25,6 +25,9 @@ mat-card {
     > .body {
         overflow: auto;
         overscroll-behavior: contain;
+        > .no-filters-notice {
+            padding: 10px;
+        }
         > .type {
             border-bottom-width: 1px;
             border-bottom-style: solid;
