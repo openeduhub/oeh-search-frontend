@@ -1,9 +1,5 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, HostBinding, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Thumbnail, PreviewImage } from '../../generated/graphql';
+import { Component, ElementRef, Input, OnInit } from '@angular/core';
+import { PreviewImage, Thumbnail } from '../../generated/graphql';
 
 @Component({
     // Augment the built-in <img> element.
@@ -11,43 +7,32 @@ import { Thumbnail, PreviewImage } from '../../generated/graphql';
     selector: '[appPreviewImage]',
     template: '',
 })
-export class PreviewImageComponent implements OnChanges {
+export class PreviewImageComponent implements OnInit {
     // Use an alias for a property input that is equal to the component selector.
     // tslint:disable-next-line:no-input-rename
     @Input('appPreviewImage') previewImage: PreviewImage;
     @Input() loadHighResImage = false;
-    @HostBinding('alt')
-    readonly alt = '';
-    @HostBinding('src')
-    src: SafeResourceUrl;
 
-    constructor(private httpClient: HttpClient, private domSanitizer: DomSanitizer) {}
+    constructor(private elementRef: ElementRef<HTMLImageElement>) {}
 
-    ngOnChanges(changes: SimpleChanges): void {
-        if (changes.previewImage) {
-            this.src = this.getThumbnail(changes.previewImage.currentValue.thumbnail);
-        }
-        if ((changes.previewImage || changes.loadHighResImage) && this.loadHighResImage) {
-            this.loadImage(this.previewImage.url).subscribe((objectUrl) => (this.src = objectUrl));
+    ngOnInit(): void {
+        this.elementRef.nativeElement.alt = '';
+        this.elementRef.nativeElement.src = this.getThumbnail(this.previewImage.thumbnail);
+        if (this.loadHighResImage) {
+            // Wait a tick, so the browser will load and display the lower-res thumbnail instead of
+            // waiting for the high-res image before displaying anything.
+            setTimeout(() => {
+                this.elementRef.nativeElement.src = this.previewImage.url;
+            });
         }
     }
 
-    private getThumbnail(thumbnail: Thumbnail): SafeResourceUrl {
+    private getThumbnail(thumbnail: Thumbnail): string {
         switch (thumbnail.__typename) {
             case 'EmbeddedThumbnail':
-                return this.domSanitizer.bypassSecurityTrustResourceUrl(
-                    `data:${thumbnail.mimetype};base64,${thumbnail.image}`,
-                );
+                return `data:${thumbnail.mimetype};base64,${thumbnail.image}`;
             case 'ExternalThumbnail':
                 return thumbnail.url;
         }
-    }
-
-    private loadImage(url: string): Observable<SafeResourceUrl> {
-        return this.httpClient
-            .get(url, { responseType: 'blob' })
-            .pipe(
-                map((blob) => this.domSanitizer.bypassSecurityTrustUrl(URL.createObjectURL(blob))),
-            );
     }
 }
