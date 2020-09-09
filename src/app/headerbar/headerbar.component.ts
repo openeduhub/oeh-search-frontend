@@ -35,9 +35,11 @@ export class HeaderbarComponent implements OnInit, OnDestroy {
             this.searchParameters.get().subscribe((params) => {
                 if (params) {
                     const filters = params.filters;
-                    this.filterCount = Object.keys(filters).filter(
-                        (k) => filters[k]?.length,
-                    ).length;
+                    this.filterCount = Object.keys(filters)
+                        // Ignore the OER filter for the button-badge count since the OER filter is
+                        // not handled by the filter sidebar toggled by the button.
+                        .filter((k) => k !== 'oer')
+                        .filter((k) => filters[k]?.length).length;
                 }
             }),
         );
