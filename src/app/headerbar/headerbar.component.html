@@ -11,7 +11,7 @@
 >
   <mat-icon>tune</mat-icon><span i18n>Filters</span>
 </button>
-<app-search-field *ngIf="!(shouldUseNewSearchBar$ | async)"></app-search-field>
+<app-search-field *ngIf="(shouldUseNewSearchBar$ | async) === false"></app-search-field>
 <app-new-search-field *ngIf="shouldUseNewSearchBar$ | async"></app-new-search-field>
 <app-oer-slider></app-oer-slider>
 <span class="experiments"
