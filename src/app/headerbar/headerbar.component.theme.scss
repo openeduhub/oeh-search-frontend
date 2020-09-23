@@ -12,6 +12,12 @@
         .filter-button {
             color: $primary-foreground-color;
         }
+        .experiments {
+            &,
+            > a {
+                color: mat-color($primary, default-contrast);
+            }
+        }
     }
 }
 

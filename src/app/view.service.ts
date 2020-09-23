@@ -3,12 +3,19 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 export type ResultCardStyle = 'standard' | 'compact';
 
+class AvailableExperiments {
+    newSearchField = false;
+}
+
+export type Experiments = Partial<AvailableExperiments>;
+
 @Injectable({
     providedIn: 'root',
 })
 export class ViewService {
     private showFilterBarSubject: BehaviorSubject<boolean>;
     private resultCardStyleSubject: BehaviorSubject<ResultCardStyle>;
+    private experimentsSubject: BehaviorSubject<Experiments>;
 
     constructor() {
         const isMobile = screen.width < 600 || screen.height < 600;
@@ -21,6 +28,12 @@ export class ViewService {
             (localStorage.getItem('resultCardStyle') as ResultCardStyle) ||
                 (isMobile ? 'compact' : 'standard'),
         );
+        this.experimentsSubject = new BehaviorSubject({
+            ...new AvailableExperiments(),
+            ...((localStorage.getItem('experiments') &&
+                (JSON.parse(localStorage.getItem('experiments')) as Experiments)) ||
+                {}),
+        });
     }
 
     getShowFilterBar(): Observable<boolean> {
@@ -43,5 +56,22 @@ export class ViewService {
     setResultCardStyle(value: ResultCardStyle) {
         this.resultCardStyleSubject.next(value);
         localStorage.setItem('resultCardStyle', value);
+    }
+
+    // getExperiment(
+    //     key: keyof AvailableExperiments,
+    // ): Observable<AvailableExperiments[typeof key] | undefined> {
+    //     return this.experimentsSubject.pipe(map((experiments) => experiments[key]));
+    // }
+
+    getExperiments(): Observable<Experiments> {
+        return this.experimentsSubject.asObservable();
+    }
+
+    setExperiment(key: keyof AvailableExperiments, value: AvailableExperiments[typeof key]): void {
+        const experiments = this.experimentsSubject.value;
+        experiments[key] = value;
+        this.experimentsSubject.next(experiments);
+        localStorage.setItem('experiments', JSON.stringify(experiments));
     }
 }

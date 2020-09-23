@@ -1,0 +1,27 @@
+<h1 i18n>Experiments</h1>
+
+<ul>
+  <li *ngFor="let item of experiments$ | async | keyvalue">
+    <ng-container [ngSwitch]="item.key">
+      <div class="label-and-description">
+        <label id="experiment-label-{{ item.key }}">
+          <ng-container i18n *ngSwitchCase="'newSearchField'">New search field</ng-container>
+          <ng-container *ngSwitchDefault>{{ item.key }}</ng-container>
+        </label>
+        <p id="experiment-description-{{ item.key }}">
+          <ng-container *ngSwitchCase="'newSearchField'" i18n
+            >A redesign of the search field which displays filters inside the field as colored
+            chips.</ng-container
+          >
+        </p>
+      </div>
+      <mat-slide-toggle
+        *ngIf="getType(item.value) === 'boolean'"
+        aria-labelledby="experiment-label-{{ item.key }}"
+        attr.aria-describedby="experiment-description-{{ item.key }}"
+        [ngModel]="item.value"
+        (ngModelChange)="setValue(item.key, $event)"
+      ></mat-slide-toggle>
+    </ng-container>
+  </li>
+</ul>

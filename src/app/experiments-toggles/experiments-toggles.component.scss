@@ -1,0 +1,21 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    max-width: 800px;
+    margin: auto;
+}
+
+ul {
+    padding: 0;
+    li {
+        display: flex;
+        .label-and-description {
+            margin-right: 10px;
+            flex-grow: 1;
+            label {
+                font-weight: bold;
+            }
+        }
+    }
+}
