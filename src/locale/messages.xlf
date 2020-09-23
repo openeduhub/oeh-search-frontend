@@ -231,6 +231,10 @@
           <context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context>
           <context context-type="linenumber">28</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/new-search-field/new-search-field.component.html</context>
+          <context context-type="linenumber">62</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="4dbd5d5aa9de5f2246e18532f80745b43ebb05f2" datatype="html">
         <source>Educational Context</source>
@@ -336,11 +340,29 @@
           <context context-type="linenumber">4</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="f3f580bb4bc67fe77cb36e1732e6eae8bb6e70e5" datatype="html">
+        <source>Try our </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/headerbar/headerbar.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="63db723495e95615935c05a72582d0ef0fdcd597" datatype="html">
+        <source>experimental features</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/headerbar/headerbar.component.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="7e892ba15f2c6c17e83510e273b3e10fc32ea016" datatype="html">
         <source>Search</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-field/search-field.component.html</context>
           <context context-type="linenumber">10</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/new-search-field/new-search-field.component.html</context>
+          <context context-type="linenumber">25</context>
         </context-group>
       </trans-unit>
       <trans-unit id="b4506f4293568f9789c037b601cf38ce768ccbf6" datatype="html">
@@ -366,6 +388,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-field/search-field.component.html</context>
           <context context-type="linenumber">28</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/new-search-field/new-search-field.component.html</context>
+          <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
       <trans-unit id="deec646fc99f3d44b7a7e66bbf8fe6c04be90e52" datatype="html">
@@ -666,6 +692,10 @@
           <context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context>
           <context context-type="linenumber">38</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/new-search-field/new-search-field.component.html</context>
+          <context context-type="linenumber">61</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="cca976af7ffcd3a3e8a2ca220d478c2b3f11fe09" datatype="html">
         <source>Learning resource type</source>
@@ -701,6 +731,56 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context>
           <context context-type="linenumber">105</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5f27726154e0e74a500ccd7a71df6e212dd6ce11" datatype="html">
+        <source>Experiments</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/experiments-toggles/experiments-toggles.component.html</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2c1508f93958472446469db4a62c41a3d9d24888" datatype="html">
+        <source>New search field</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/experiments-toggles/experiments-toggles.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="13fd704fb2dc82bc4c1e4e9b86a84afd5ce97caf" datatype="html">
+        <source>A redesign of the search field which displays filters inside the field as colored
+            chips.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/experiments-toggles/experiments-toggles.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="99ee4faa69cd2ea8e3678c1f557c0ff1f05aae46" datatype="html">
+        <source>Clear</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/new-search-field/new-search-field.component.html</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7d0d02e1cef1d11f0ce543255792e01c6c626d4d" datatype="html">
+        <source>Free content</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/new-search-field/new-search-field.component.html</context>
+          <context context-type="linenumber">60</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="856d4f9f808e2d113350ef83739857221c63adaf" datatype="html">
+        <source>Keyword</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/new-search-field/new-search-field.component.html</context>
+          <context context-type="linenumber">63</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="cdda6f219c6104e6bf223c1e165dce5e5977ce03" datatype="html">
+        <source>What&apos;s that?</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/new-search-field/new-search-field.component.html</context>
+          <context context-type="linenumber">69</context>
         </context-group>
       </trans-unit>
     </body>

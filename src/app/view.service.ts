@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 export type ResultCardStyle = 'standard' | 'compact';
 
@@ -58,11 +59,11 @@ export class ViewService {
         localStorage.setItem('resultCardStyle', value);
     }
 
-    // getExperiment(
-    //     key: keyof AvailableExperiments,
-    // ): Observable<AvailableExperiments[typeof key] | undefined> {
-    //     return this.experimentsSubject.pipe(map((experiments) => experiments[key]));
-    // }
+    getExperiment(
+        key: keyof AvailableExperiments,
+    ): Observable<AvailableExperiments[typeof key] | undefined> {
+        return this.experimentsSubject.pipe(map((experiments) => experiments[key]));
+    }
 
     getExperiments(): Observable<Experiments> {
         return this.experimentsSubject.asObservable();

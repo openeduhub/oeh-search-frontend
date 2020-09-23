@@ -1,4 +1,5 @@
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { OverlayModule } from '@angular/cdk/overlay';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -46,6 +47,7 @@ import { HeaderbarComponent } from './headerbar/headerbar.component';
 import { LoginComponent } from './login/login.component';
 import { MenubarComponent } from './menubar/menubar.component';
 import { MultivalueCheckboxComponent } from './multivalue-checkbox/multivalue-checkbox.component';
+import { NewSearchFieldComponent } from './new-search-field/new-search-field.component';
 import { OerSliderComponent } from './oer-slider/oer-slider.component';
 import { PaginatorComponent } from './paginator/paginator.component';
 import { PreviewImageComponent } from './preview-image/preview-image.component';
@@ -131,6 +133,7 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
         ResultCardContentCompactComponent,
         PreviewImageComponent,
         ExperimentsTogglesComponent,
+        NewSearchFieldComponent,
     ],
     imports: [
         ApolloModule,
@@ -167,6 +170,7 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
                 sendAccessToken: true,
             },
         }),
+        OverlayModule,
         ReactiveFormsModule,
         RouterModule.forRoot(appRoutes),
     ],

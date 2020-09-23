@@ -1,0 +1,85 @@
+<form (ngSubmit)="onSubmit()">
+  <div class="search-field-input-wrapper" cdkOverlayOrigin #trigger="cdkOverlayOrigin">
+    <mat-form-field class="search-field" floatLabel="always">
+      <mat-label i18n></mat-label>
+      <mat-chip-list #chipList>
+        <ng-container *ngFor="let category of categories">
+          <div *ngIf="filters[category]?.length > 0" class="chip-group-{{ category }}">
+            <mat-chip
+              *ngFor="let filter of filters[category]"
+              [removable]="true"
+              (removed)="removeFilter(category, filter)"
+            >
+              {{ filter }}
+              <mat-icon matChipRemove>cancel</mat-icon>
+            </mat-chip>
+          </div>
+        </ng-container>
+        <input
+          #searchInput
+          matInput
+          type="text"
+          [formControl]="searchField"
+          [matChipInputFor]="chipList"
+          i18n-placeholder
+          placeholder="Search"
+          (focus)="showOverlay = true"
+          autocomplete="off"
+          (keydown.enter)="onSubmit()"
+        />
+        <button
+          mat-button
+          matSuffix
+          mat-icon-button
+          i18n-aria-label
+          aria-label="Clear"
+          (click)="clear()"
+          type="button"
+        >
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-chip-list>
+    </mat-form-field>
+  </div>
+  <button mat-flat-button class="submit-button" type="submit" i18n>SEARCH</button>
+</form>
+
+<ng-template
+  cdkConnectedOverlay
+  [cdkConnectedOverlayOrigin]="trigger"
+  [cdkConnectedOverlayOpen]="showOverlay && hasSuggestions"
+  [cdkConnectedOverlayPositions]="overlayPositions"
+  [cdkConnectedOverlayWidth]="trigger.elementRef.nativeElement.getBoundingClientRect().width"
+  (overlayOutsideClick)="onOutsideClick($event)"
+>
+  <div class="suggestion-card" *ngIf="suggestions">
+    <ng-container *ngFor="let category of categories">
+      <div class="suggestion-group" *ngIf="suggestions[category]?.length > 0">
+        <div class="label-container">
+          <label class="category-label" [ngSwitch]="category">
+            <ng-container *ngSwitchCase="'oer'" i18n>Free content</ng-container>
+            <ng-container *ngSwitchCase="'educationalContext'" i18n
+              >Educational context</ng-container
+            >
+            <ng-container *ngSwitchCase="'discipline'" i18n>Discipline</ng-container>
+            <ng-container *ngSwitchCase="'keyword'" i18n>Keyword</ng-container>
+            <!-- <ng-container *ngSwitchCase="'oer'" i18n>Freie Inhalte</ng-container>
+            <ng-container *ngSwitchCase="'educationalContext'" i18n>Bildungsumfeld</ng-container>
+            <ng-container *ngSwitchCase="'discipline'" i18n>Fach</ng-container>
+            <ng-container *ngSwitchCase="'keyword'" i18n>Schlagwort</ng-container> -->
+          </label>
+          <span *ngIf="category === 'oer'" class="what-is-oer-link" i18n>What's that?</span>
+          <!-- <span *ngIf="category === 'oer'" class="what-is-oer-link" i18n>Was ist das?</span> -->
+        </div>
+        <mat-chip-list class="chip-group-{{ category }}">
+          <mat-chip
+            *ngFor="let suggestion of suggestions[category]"
+            (click)="addFilter(category, suggestion)"
+            [selectable]="false"
+            >{{ suggestion }}</mat-chip
+          >
+        </mat-chip-list>
+      </div>
+    </ng-container>
+  </div>
+</ng-template>

@@ -1,6 +1,6 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { SearchParametersService } from '../search-parameters.service';
 import { ViewService } from '../view.service';
@@ -13,6 +13,7 @@ import { ViewService } from '../view.service';
 export class HeaderbarComponent implements OnInit, OnDestroy {
     filterCount = 0;
     showFiltersButton: boolean;
+    shouldUseNewSearchBar$: Observable<boolean>;
 
     private subscriptions: Subscription[] = [];
 
@@ -43,6 +44,8 @@ export class HeaderbarComponent implements OnInit, OnDestroy {
                 }
             }),
         );
+
+        this.shouldUseNewSearchBar$ = this.view.getExperiment('newSearchField');
     }
 
     ngOnDestroy(): void {
