@@ -2,9 +2,13 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
+import { ExtendedWindow } from './env';
+
+declare var window: ExtendedWindow;
+
 export const environment = {
     production: false,
-    relayUrl: 'http://localhost:3000',
+    relayUrl: window.__env?.RELAY_URL ?? 'http://localhost:3000',
     editorBackendUrl: 'http://localhost:3001',
     openId: {
         issuer: 'https://idm.wirlernenonline.de/auth/realms/master',
