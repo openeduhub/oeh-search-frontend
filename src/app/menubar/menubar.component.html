@@ -3,9 +3,14 @@
     class="title-bar"
     data-responsive-toggle="main-menu"
     data-hide-for="large"
-    style="display: none;"
+    style="display: none"
   >
-    <button class="menu-icon" type="button" (click)="mobileOpen = !mobileOpen"></button>
+    <button
+      class="menu-icon"
+      type="button"
+      (click)="mobileOpen = !mobileOpen"
+      aria-label="Hauptmenü"
+    ></button>
     <a
       class="mobile-logo-container logo-container"
       href="https://wirlernenonline.de"
