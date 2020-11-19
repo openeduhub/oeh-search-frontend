@@ -172,7 +172,7 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
         }),
         OverlayModule,
         ReactiveFormsModule,
-        RouterModule.forRoot(appRoutes),
+        RouterModule.forRoot(appRoutes, { relativeLinkResolution: 'legacy' }),
     ],
     providers: [
         {
