@@ -9,6 +9,7 @@ declare var window: ExtendedWindow;
 export const environment = {
     production: false,
     relayUrl: window.__env?.RELAY_URL ?? 'http://localhost:3000',
+    showExperiments: window.__env?.SHOW_EXPERIMENTS ?? true,
     editorBackendUrl: 'http://localhost:3001',
     openId: {
         issuer: 'https://idm.wirlernenonline.de/auth/realms/master',

@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
 import { SearchParametersService } from '../search-parameters.service';
 import { ViewService } from '../view.service';
 
@@ -11,6 +12,7 @@ import { ViewService } from '../view.service';
     styleUrls: ['./headerbar.component.scss'],
 })
 export class HeaderbarComponent implements OnInit, OnDestroy {
+    readonly showExperiments = environment.showExperiments;
     filterCount = 0;
     showFiltersButton: boolean;
     shouldUseNewSearchBar$: Observable<boolean>;
