@@ -24,7 +24,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterModule, Routes } from '@angular/router';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
 import { HttpLinkModule } from 'apollo-angular-link-http';
@@ -35,7 +34,6 @@ import introspectionQueryResultData from '../generated/fragmentTypes.json';
 import { AddContentFabComponent } from './add-content-fab/add-content-fab.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { DetailsResolverService } from './details-resolver.service';
 import { DetailsComponent } from './details/details.component';
 import { EncodeUriComponentPipe } from './encode-uri-component.pipe';
 import { ErrorComponent } from './error/error.component';
@@ -57,7 +55,6 @@ import { ResultCardSmallComponent } from './result-card-small/result-card-small.
 import { ResultCardComponent } from './result-card/result-card.component';
 import { SearchFieldComponent } from './search-field/search-field.component';
 import { SearchFilterbarComponent } from './search-filterbar/search-filterbar.component';
-import { SearchResolverService } from './search-resolver.service';
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { SearchComponent } from './search/search.component';
 import { SubjectsPortalSectionComponent } from './subjects-portal-section/subjects-portal-section.component';
@@ -65,38 +62,6 @@ import { SubjectsPortalComponent } from './subjects-portal/subjects-portal.compo
 import { TrimPipe } from './trim.pipe';
 import { TruncatePipe } from './truncate.pipe';
 import { WelcomeComponent } from './welcome/welcome.component';
-
-const appRoutes: Routes = [
-    {
-        path: 'welcome',
-        component: WelcomeComponent,
-    },
-    { path: 'login', component: LoginComponent },
-    {
-        path: 'search/:educationalContext/:discipline',
-        component: SearchComponent,
-        runGuardsAndResolvers: 'paramsOrQueryParamsChange',
-        resolve: {
-            searchData: SearchResolverService,
-        },
-    },
-    {
-        path: 'search',
-        component: SearchComponent,
-        runGuardsAndResolvers: 'paramsOrQueryParamsChange',
-        resolve: {
-            searchData: SearchResolverService,
-        },
-    },
-    {
-        path: 'details/:id',
-        component: DetailsComponent,
-        resolve: { details: DetailsResolverService },
-    },
-    { path: 'experiments', component: ExperimentsTogglesComponent },
-    { path: '', redirectTo: 'search', pathMatch: 'full' },
-    { path: 'error', component: ErrorComponent },
-];
 
 const fragmentMatcher = new IntrospectionFragmentMatcher({
     introspectionQueryResultData,
@@ -172,7 +137,6 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
         }),
         OverlayModule,
         ReactiveFormsModule,
-        RouterModule.forRoot(appRoutes, { relativeLinkResolution: 'legacy' }),
     ],
     providers: [
         {
