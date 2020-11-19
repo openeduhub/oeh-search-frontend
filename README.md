@@ -54,10 +54,11 @@ When started as Docker container, the file `src/env.js` will be populated with t
 
 The following variables are available:
 
-| Variable         | Description                                                     | Default value (dev)     | Default value (prod)                |
-| ---------------- | --------------------------------------------------------------- | ----------------------- | ----------------------------------- |
-| RELAY_URL        | URL of the ElasticSearch Relay to connect to.                   | `http://localhost:3000` | `window.location.origin + '/relay'` |
-| SHOW_EXPERIMENTS | Display a link to experimental-feature toggles in the frontend. | `true`                  | `false`                             |
+| Variable         | Description                                                     | Default value (dev)              | Default value (prod)                |
+| ---------------- | --------------------------------------------------------------- | -------------------------------- | ----------------------------------- |
+| RELAY_URL        | URL of the ElasticSearch Relay to connect to.                   | `http://localhost:3000`          | `window.location.origin + '/relay'` |
+| WORDPRESS_URL    | Base URL of the corresponding WLO Wordpress page.               | `https://dev.wirlernenonline.de` | `https://wirlernenonline.de`        |
+| SHOW_EXPERIMENTS | Display a link to experimental-feature toggles in the frontend. | `true`                           | `false`                             |
 
 For example, to run your locally built Docker image against the staging environment of
 WirLernenOnline, run

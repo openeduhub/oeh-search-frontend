@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { environment } from '../../environments/environment';
 import { SearchParametersService } from '../search-parameters.service';
 
 enum OerLevel {
@@ -14,6 +15,7 @@ enum OerLevel {
     styleUrls: ['./oer-slider.component.scss'],
 })
 export class OerSliderComponent implements OnInit, OnDestroy {
+    readonly wordpressUrl = environment.wordpressUrl;
     show: boolean;
     value: OerLevel;
 

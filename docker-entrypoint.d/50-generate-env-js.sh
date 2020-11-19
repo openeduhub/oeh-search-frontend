@@ -7,6 +7,7 @@ function generateEnvJs {
     echo "    window.__env = window.__env || {};"
     if [[ -v RELAY_URL ]]; then
         echo "    window.__env.RELAY_URL = '$RELAY_URL';"
+        echo "    window.__env.WORDPRESS_URL = '$WORDPRESS_URL';"
         echo "    window.__env.SHOW_EXPERIMENTS = '$SHOW_EXPERIMENTS';"
     fi
     echo "})(this);"

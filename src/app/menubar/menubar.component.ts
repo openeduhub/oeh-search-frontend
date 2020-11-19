@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from '../../environments/environment';
 
 @Component({
     selector: 'app-menubar',
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./menubar.component.scss'],
 })
 export class MenubarComponent implements OnInit {
+    readonly wordpressUrl = environment.wordpressUrl;
     mobileOpen: boolean;
 
     constructor() {}

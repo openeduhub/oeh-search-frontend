@@ -4,6 +4,7 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { UserInfo } from 'angular-oauth2-oidc';
+import { environment } from '../../environments/environment';
 import { EditorialTag, Hit, Type } from '../../generated/graphql';
 import { AuthService } from '../auth.service';
 import { EditorService } from '../editor.service';
@@ -17,6 +18,7 @@ import { HasEditorialTagPipe } from '../has-editorial-tag.pipe';
 export class DetailsComponent implements OnInit {
     readonly Type = Type;
     readonly EditorialTag = EditorialTag;
+    readonly wordpressUrl = environment.wordpressUrl;
     id: string;
     hit: Hit;
     isRecommended: boolean;
