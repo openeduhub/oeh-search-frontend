@@ -9,7 +9,6 @@ import {
     Scroll,
 } from '@angular/router';
 import { delay, filter } from 'rxjs/operators';
-import { AuthService } from './auth.service';
 import { ErrorService } from './error.service';
 
 @Component({
@@ -30,14 +29,11 @@ export class AppComponent implements DoCheck {
         router: Router,
         viewportScroller: ViewportScroller,
         error: ErrorService,
-        auth: AuthService,
         ngZone: NgZone,
     ) {
         ngZone.runOutsideAngular(() => {
             this.checksMonitorInterval = window.setInterval(() => this.monitorChecks(), 1000);
         });
-        // Bootstrap login via OpenID.
-        // auth.bootstrap();
         // Recreate scroll restoration behavior of the scrollPositionRestoration option (see
         // https://angular.io/api/router/ExtraOptions#scrollPositionRestoration) with added delay.
         router.events

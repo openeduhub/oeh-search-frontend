@@ -24,7 +24,6 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { OAuthModule } from 'angular-oauth2-oidc';
 import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
 import { HttpLinkModule } from 'apollo-angular-link-http';
 import { HttpBatchLink, HttpBatchLinkModule } from 'apollo-angular-link-http-batch';
@@ -42,7 +41,6 @@ import { FooterbarComponent } from './footerbar/footerbar.component';
 import { GenerateFiltersPipe } from './generate-filters.pipe';
 import { HasEditorialTagPipe } from './has-editorial-tag.pipe';
 import { HeaderbarComponent } from './headerbar/headerbar.component';
-import { LoginComponent } from './login/login.component';
 import { MenubarComponent } from './menubar/menubar.component';
 import { MultivalueCheckboxComponent } from './multivalue-checkbox/multivalue-checkbox.component';
 import { NewSearchFieldComponent } from './new-search-field/new-search-field.component';
@@ -83,7 +81,6 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
         HasEditorialTagPipe,
         WelcomeComponent,
         MenubarComponent,
-        LoginComponent,
         SearchFilterbarComponent,
         MultivalueCheckboxComponent,
         EncodeUriComponentPipe,
@@ -129,12 +126,6 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
         MatSelectModule,
         MatSlideToggleModule,
         MatTooltipModule,
-        OAuthModule.forRoot({
-            resourceServer: {
-                allowedUrls: [environment.editorBackendUrl],
-                sendAccessToken: true,
-            },
-        }),
         OverlayModule,
         ReactiveFormsModule,
     ],
