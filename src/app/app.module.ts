@@ -55,11 +55,8 @@ import { SearchFieldComponent } from './search-field/search-field.component';
 import { SearchFilterbarComponent } from './search-filterbar/search-filterbar.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { SearchComponent } from './search/search.component';
-import { SubjectsPortalSectionComponent } from './subjects-portal-section/subjects-portal-section.component';
-import { SubjectsPortalComponent } from './subjects-portal/subjects-portal.component';
 import { TrimPipe } from './trim.pipe';
 import { TruncatePipe } from './truncate.pipe';
-import { WelcomeComponent } from './welcome/welcome.component';
 
 const fragmentMatcher = new IntrospectionFragmentMatcher({
     introspectionQueryResultData,
@@ -79,16 +76,13 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
         SearchFieldComponent,
         TrimPipe,
         HasEditorialTagPipe,
-        WelcomeComponent,
         MenubarComponent,
         SearchFilterbarComponent,
         MultivalueCheckboxComponent,
         EncodeUriComponentPipe,
         ResultCardComponent,
         PaginatorComponent,
-        SubjectsPortalComponent,
         ResultCardSmallComponent,
-        SubjectsPortalSectionComponent,
         OerSliderComponent,
         AddContentFabComponent,
         ResultCardContentStandardComponent,

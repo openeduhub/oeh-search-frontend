@@ -6,13 +6,8 @@ import { ErrorComponent } from './error/error.component';
 import { ExperimentsTogglesComponent } from './experiments-toggles/experiments-toggles.component';
 import { SearchResolverService } from './search-resolver.service';
 import { SearchComponent } from './search/search.component';
-import { WelcomeComponent } from './welcome/welcome.component';
 
 const routes: Routes = [
-    {
-        path: 'welcome',
-        component: WelcomeComponent,
-    },
     {
         path: 'search/:educationalContext/:discipline',
         component: SearchComponent,

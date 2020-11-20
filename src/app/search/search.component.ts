@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DidYouMeanSuggestionFragment, ResultFragment } from '../../generated/graphql';
 import { SearchParametersService } from '../search-parameters.service';
-import { Hits, SearchData } from '../search-resolver.service';
+import { SearchData } from '../search-resolver.service';
 import { SearchService } from '../search.service';
 import { ViewService } from '../view.service';
 
@@ -18,7 +18,6 @@ export class SearchComponent implements OnInit, OnDestroy {
     filterCount: number;
     pageIndex: number;
     results: ResultFragment;
-    showSubjectsPortal: boolean;
     breadcrumbs: string[];
 
     private subscriptions: Subscription[] = [];
@@ -61,11 +60,6 @@ export class SearchComponent implements OnInit, OnDestroy {
         );
         this.route.data.subscribe((data: { searchData: SearchData }) => {
             this.results = data.searchData.searchResults;
-            this.showSubjectsPortal =
-                data.searchData.subjectsPortalResults &&
-                Object.values(data.searchData.subjectsPortalResults).some(
-                    (hits: Hits) => hits.length > 0,
-                );
         });
     }
 

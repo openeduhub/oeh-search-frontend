@@ -16,25 +16,7 @@
       <context-group purpose="location"><context context-type="sourcefile">src/app/search-field/search-field.component.html</context><context context-type="linenumber">19</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/search-field/search-field.component.html</context><context context-type="linenumber">21</context></context-group></trans-unit><trans-unit id="7b6494fa44035831e1215cd4a0284aec00f8cbbd" datatype="html">
         <source>SEARCH</source><target state="final">SUCHE</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/search-field/search-field.component.html</context><context context-type="linenumber">28</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/new-search-field/new-search-field.component.html</context><context context-type="linenumber">44</context></context-group></trans-unit><trans-unit id="deec646fc99f3d44b7a7e66bbf8fe6c04be90e52" datatype="html">
-        <source>Math</source><target state="final">Mathematik</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/welcome/welcome.component.html</context><context context-type="linenumber">6</context></context-group></trans-unit><trans-unit id="106d2771f54d364752be04353f90ccb4b35ff493" datatype="html">
-        <source>Biology</source><target state="final">Biologie</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/welcome/welcome.component.html</context><context context-type="linenumber">15</context></context-group></trans-unit><trans-unit id="8eb0ff9f09e9db846b2b12d4fc63dbeda920235f" datatype="html">
-        <source>Chemistry</source><target state="final">Chemie</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/welcome/welcome.component.html</context><context context-type="linenumber">23</context></context-group></trans-unit><trans-unit id="7416b446991c5901061dd09176b34ed568cf5947" datatype="html">
-        <source>Computer Science</source><target state="final">Informatik</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/welcome/welcome.component.html</context><context context-type="linenumber">31</context></context-group></trans-unit><trans-unit id="a0843de0a64adcc7ee6a946408b6876cd8abdcae" datatype="html">
-        <source>English</source><target state="final">Englisch</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/welcome/welcome.component.html</context><context context-type="linenumber">39</context></context-group></trans-unit><trans-unit id="d60e2ecba8f7dc2ed2c59dd84972d0b41b331a6c" datatype="html">
-        <source>More...</source><target state="final">Mehr...</target>
-
-      <context-group purpose="location"><context context-type="sourcefile">src/app/welcome/welcome.component.html</context><context context-type="linenumber">48</context></context-group></trans-unit><trans-unit id="8a1153376ec62c14fd7ce441c223d7f361548a22" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/search-field/search-field.component.html</context><context context-type="linenumber">28</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/new-search-field/new-search-field.component.html</context><context context-type="linenumber">44</context></context-group></trans-unit><trans-unit id="8a1153376ec62c14fd7ce441c223d7f361548a22" datatype="html">
         <source>Go to homepage</source><target state="final">Zur Startseite</target>
         
         
@@ -127,28 +109,7 @@
         Seite <x id="INTERPOLATION" equiv-text="{{ pageIndex + 1 }}"/> von mehr als <x id="INTERPOLATION_1" equiv-text="{{ results.total.value | number }}"/> Ergebnissen
       </target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/search/search.component.html</context><context context-type="linenumber">45</context></context-group></trans-unit><trans-unit id="9a64d69b64e66b4d954a3ed4416b7535bd2f4346" datatype="html">
-        <source>Editors' Choices</source><target state="final">Empfehlungen der Redaktion</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/subjects-portal/subjects-portal.component.html</context><context context-type="linenumber">5</context></context-group></trans-unit><trans-unit id="6e998fc06a19659c22cca43efa1b35515761cbb2" datatype="html">
-        <source>hide</source><target state="final">ausblenden</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/subjects-portal/subjects-portal.component.html</context>
-          <context context-type="linenumber">6</context>
-        </context-group>
-      </trans-unit><trans-unit id="f67337c708d49ce56772539ee443bac996a24f8e" datatype="html">
-        <source>show</source><target state="final">zeigen</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/subjects-portal/subjects-portal.component.html</context>
-          <context context-type="linenumber">7</context>
-        </context-group>
-      </trans-unit><trans-unit id="99112040d70dd87f4b93a82344567814dc4e30bb" datatype="html">
-        <source>Contents</source><target state="final">Inhalte</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/subjects-portal-section/subjects-portal-section.component.html</context>
-          <context context-type="linenumber">3</context>
-        </context-group>
-      </trans-unit><trans-unit id="0286d71c09c375c44b7b4db422d0d04df4d07a99" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/search/search.component.html</context><context context-type="linenumber">45</context></context-group></trans-unit><trans-unit id="0286d71c09c375c44b7b4db422d0d04df4d07a99" datatype="html">
         <source>All Search Results</source><target state="final">Alle Suchergebnisse</target>
         
       <context-group purpose="location"><context context-type="sourcefile">src/app/search-results/search-results.component.html</context><context context-type="linenumber">2</context></context-group></trans-unit><trans-unit id="92cfea1361d316d47e0992c3fffff7836c60a960" datatype="html">
@@ -248,26 +209,10 @@
       </trans-unit><trans-unit id="ce3cefb1cd0099aa5003dda16ec9eb21fd8ba789" datatype="html">
         <source>Next page</source><target state="final">Nächste Seite</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/paginator/paginator.component.html</context><context context-type="linenumber">43</context></context-group></trans-unit><trans-unit id="2d8dd025af285b6c0e506b85b66d201bdd6d4648" datatype="html">
-        <source>Lesson Planning</source><target state="final">Unterrichtsideen</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/subjects-portal-section/subjects-portal-section.component.html</context>
-          <context context-type="linenumber">4</context>
-        </context-group>
-        <note priority="1" from="meaning">plural</note>
-      </trans-unit><trans-unit id="1fc85c00336d56c6b121ea5474c80857baa5d7e7" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/paginator/paginator.component.html</context><context context-type="linenumber">43</context></context-group></trans-unit><trans-unit id="1fc85c00336d56c6b121ea5474c80857baa5d7e7" datatype="html">
         <source>Lesson Planning</source><target state="final">Unterrichtsidee</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/multivalue-checkbox/multivalue-checkbox.component.html</context><context context-type="linenumber">10</context></context-group></trans-unit><trans-unit id="fefee13017c2b85143cd131ee253e327a14053a0" datatype="html">
-        <source>Tools</source><target state="final">Tools</target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/subjects-portal-section/subjects-portal-section.component.html</context><context context-type="linenumber">5</context></context-group></trans-unit><trans-unit id="6990ad8d6182662e864495ac31c3758cda1c7a28" datatype="html">
-        <source>Portals</source><target state="final">Portale</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/subjects-portal-section/subjects-portal-section.component.html</context>
-          <context context-type="linenumber">6</context>
-        </context-group>
-      </trans-unit><trans-unit id="cafa0fa1a3da51d030553ba79897d1068a9131fc" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/multivalue-checkbox/multivalue-checkbox.component.html</context><context context-type="linenumber">10</context></context-group></trans-unit><trans-unit id="cafa0fa1a3da51d030553ba79897d1068a9131fc" datatype="html">
         <source>show more</source><target state="final">mehr zeigen</target>
 
       <context-group purpose="location"><context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context><context context-type="linenumber">79</context></context-group></trans-unit><trans-unit id="032e4a4ff2de53b4a9a1184ecc935aeee512e529" datatype="html">
