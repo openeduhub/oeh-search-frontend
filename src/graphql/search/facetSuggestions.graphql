@@ -1,0 +1,29 @@
+query FacetSuggestions($inputString: String, $searchString: String, $filters: [Filter!], $language: Language!) {
+    facetSuggestions(
+        inputString: $inputString
+        searchString: $searchString
+        size: 5
+        filters: $filters
+        language: $language
+        facets: [
+            discipline
+            educationalContext
+            intendedEndUserRole
+            keyword
+            learningResourceType
+            source
+            type
+        ]
+    ) {
+        ...aggregation
+    }
+}
+
+fragment aggregation on Aggregation {
+    buckets {
+        doc_count
+        key
+    }
+    facet
+    total_buckets
+}

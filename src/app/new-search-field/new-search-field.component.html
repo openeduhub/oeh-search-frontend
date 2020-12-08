@@ -10,7 +10,9 @@
               [removable]="true"
               (removed)="removeFilter(category, filter)"
             >
-              {{ filter }}
+              <ng-container
+                *ngTemplateOutlet="i18nFacet; context: { $implicit: filter }"
+              ></ng-container>
               <mat-icon matChipRemove>cancel</mat-icon>
             </mat-chip>
           </div>
@@ -53,33 +55,51 @@
   (overlayOutsideClick)="onOutsideClick($event)"
 >
   <div class="suggestion-card" *ngIf="suggestions">
-    <ng-container *ngFor="let category of categories">
+    <ng-container *ngFor="let category of activeCategories">
       <div class="suggestion-group" *ngIf="suggestions[category]?.length > 0">
         <div class="label-container">
           <label class="category-label" [ngSwitch]="category">
-            <ng-container *ngSwitchCase="'oer'" i18n>Free content</ng-container>
-            <ng-container *ngSwitchCase="'educationalContext'" i18n
+            <!-- <ng-container *ngSwitchCase="'oer'" i18n>Free content</ng-container> -->
+            <!-- <span *ngIf="category === 'oer'" class="what-is-oer-link" i18n>What's that?</span> -->
+            <ng-container *ngSwitchCase="Facet.Type" i18n>Type</ng-container>
+            <ng-container *ngSwitchCase="Facet.EducationalContext" i18n
               >Educational context</ng-container
             >
-            <ng-container *ngSwitchCase="'discipline'" i18n>Discipline</ng-container>
-            <ng-container *ngSwitchCase="'keyword'" i18n>Keyword</ng-container>
-            <!-- <ng-container *ngSwitchCase="'oer'" i18n>Freie Inhalte</ng-container>
-            <ng-container *ngSwitchCase="'educationalContext'" i18n>Bildungsumfeld</ng-container>
-            <ng-container *ngSwitchCase="'discipline'" i18n>Fach</ng-container>
-            <ng-container *ngSwitchCase="'keyword'" i18n>Schlagwort</ng-container> -->
+            <ng-container *ngSwitchCase="Facet.Discipline" i18n>Discipline</ng-container>
+            <ng-container *ngSwitchCase="Facet.Keyword" i18n>Keyword</ng-container>
+            <ng-container *ngSwitchCase="Facet.IntendedEndUserRole" i18n
+              >Intended end user</ng-container
+            >
+            <ng-container *ngSwitchCase="Facet.LearningResourceType" i18n
+              >Lerning resource type</ng-container
+            >
+            <ng-container *ngSwitchCase="Facet.Source" i18n>Source</ng-container>
           </label>
-          <span *ngIf="category === 'oer'" class="what-is-oer-link" i18n>What's that?</span>
-          <!-- <span *ngIf="category === 'oer'" class="what-is-oer-link" i18n>Was ist das?</span> -->
         </div>
         <mat-chip-list class="chip-group-{{ category }}">
           <mat-chip
             *ngFor="let suggestion of suggestions[category]"
             (click)="addFilter(category, suggestion)"
             [selectable]="false"
-            >{{ suggestion }}</mat-chip
           >
+            <ng-container
+              *ngTemplateOutlet="i18nFacet; context: { $implicit: suggestion }"
+            ></ng-container>
+          </mat-chip>
         </mat-chip-list>
       </div>
     </ng-container>
   </div>
+</ng-template>
+
+<ng-template #i18nFacet let-facet>
+  <ng-container [ngSwitch]="facet">
+    <ng-container i18n *ngSwitchCase="Type.Content">Content</ng-container>
+    <ng-container i18n *ngSwitchCase="Type.Tool">Tool</ng-container>
+    <ng-container i18n *ngSwitchCase="Type.Portal">Portal</ng-container>
+    <ng-container i18n *ngSwitchCase="Type.LessonPlanning">Lesson Planning</ng-container>
+    <ng-container *ngSwitchDefault>
+      {{ facet }}
+    </ng-container>
+  </ng-container>
 </ng-template>

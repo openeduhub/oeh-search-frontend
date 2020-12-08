@@ -179,7 +179,7 @@ export function mapFilters(filters: Filters): Filter[] | null {
         .map(([key, value]) => ({ facet: key as Facet, terms: value }));
 }
 
-function mapFacets(aggregations: readonly Aggregation[]): Facets {
+export function mapFacets(aggregations: readonly Aggregation[]): Facets {
     return aggregations.reduce((acc, aggregation) => {
         acc[aggregation.facet] = aggregation;
         return acc;
