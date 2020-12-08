@@ -3,12 +3,17 @@
     class="title-bar"
     data-responsive-toggle="main-menu"
     data-hide-for="large"
-    style="display: none;"
+    style="display: none"
   >
-    <button class="menu-icon" type="button" (click)="mobileOpen = !mobileOpen"></button>
+    <button
+      class="menu-icon"
+      type="button"
+      (click)="mobileOpen = !mobileOpen"
+      aria-label="Hauptmenü"
+    ></button>
     <a
       class="mobile-logo-container logo-container"
-      href="https://wirlernenonline.de"
+      href="{{ wordpressUrl }}"
       i18n-aria-label
       aria-label="Go to homepage"
     >
@@ -26,7 +31,7 @@
         <div class="grid-x grid-margin-x align-middle">
           <div class="auto cell show-for-large">
             <a
-              href="https://wirlernenonline.de"
+              href="{{ wordpressUrl }}"
               class="logo-container"
               i18n-aria-label
               aria-label="Go to homepage"
@@ -54,7 +59,7 @@
                 class="menu-item menu-item-type-post_type menu-item-object-page"
                 role="none"
               >
-                <a href="https://wirlernenonline.de/fachportale/" role="menuitem">Fachportale</a>
+                <a href="{{ wordpressUrl }}/fachportale/" role="menuitem">Fachportale</a>
               </li>
               <li
                 id="menu-item-3030"
@@ -80,32 +85,28 @@
                     class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3031 menu-item-lehrende is-submenu-item is-dropdown-submenu-item"
                     role="none"
                   >
-                    <a href="https://wirlernenonline.de/lehrende/" role="menuitem"
-                      >Für Lehrer:innen</a
-                    >
+                    <a href="{{ wordpressUrl }}/lehrende/" role="menuitem">Für Lehrer:innen</a>
                   </li>
                   <li
                     id="menu-item-4248"
                     class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4248 menu-item-lernende is-submenu-item is-dropdown-submenu-item"
                     role="none"
                   >
-                    <a href="https://wirlernenonline.de/lernende/" role="menuitem"
-                      >Für Schüler:innen</a
-                    >
+                    <a href="{{ wordpressUrl }}/lernende/" role="menuitem">Für Schüler:innen</a>
                   </li>
                   <li
                     id="menu-item-4250"
                     class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4250 menu-item-eltern is-submenu-item is-dropdown-submenu-item"
                     role="none"
                   >
-                    <a href="https://wirlernenonline.de/eltern/" role="menuitem">Für Eltern</a>
+                    <a href="{{ wordpressUrl }}/eltern/" role="menuitem">Für Eltern</a>
                   </li>
                   <li
                     id="menu-item-3032"
                     class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3032 menu-item-schulen is-submenu-item is-dropdown-submenu-item"
                     role="none"
                   >
-                    <a href="https://wirlernenonline.de/schulen/" role="menuitem">Für Schulen</a>
+                    <a href="{{ wordpressUrl }}/schulen/" role="menuitem">Für Schulen</a>
                   </li>
                 </ul>
               </li>
@@ -114,14 +115,14 @@
                 class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2831 menu-item-neuigkeiten"
                 role="none"
               >
-                <a href="https://wirlernenonline.de/neuigkeiten/" role="menuitem">Blog</a>
+                <a href="{{ wordpressUrl }}/neuigkeiten/" role="menuitem">Blog</a>
               </li>
               <li
                 id="menu-item-17"
                 class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17 menu-item-ueber-uns"
                 role="none"
               >
-                <a href="https://wirlernenonline.de/faq/" role="menuitem">FAQ</a>
+                <a href="{{ wordpressUrl }}/faq/" role="menuitem">FAQ</a>
               </li>
             </ul>
           </div>
@@ -131,7 +132,7 @@
                 id="menu-item-2523"
                 class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2523 menu-item-mitmachen"
               >
-                <a href="https://wirlernenonline.de/mitmachen/">Mitmachen</a>
+                <a href="{{ wordpressUrl }}/mitmachen/">Mitmachen</a>
               </li>
             </ul>
           </div>

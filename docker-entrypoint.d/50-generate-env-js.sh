@@ -2,14 +2,22 @@
 
 set -e
 
-function generateEnvJs {
+variables=(
+    "RELAY_URL"
+    "WORDPRESS_URL"
+    "SHOW_EXPERIMENTS"
+)
+
+function generateEnvJs() {
     echo "(function (window) {"
     echo "    window.__env = window.__env || {};"
-    if [[ -v RELAY_URL ]]; then
-        echo "    window.__env.RELAY_URL = '$RELAY_URL';"
-    fi
+    for variable in "${variables[@]}"; do
+        if [[ -v $variable ]]; then
+            echo "    window.__env.$variable = '${!variable}';"
+        fi
+    done
     echo "})(this);"
-} > env.js
+} >env.js
 
 generateEnvJs
 

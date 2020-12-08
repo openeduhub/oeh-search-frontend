@@ -6,6 +6,7 @@
 }
 
 :host {
+    position: relative;
     display: grid;
     // Don't use horizontal gap, so elements that are not always visible don't add awkward margins
     // on mobile.
@@ -53,11 +54,20 @@
             }
         }
     }
-    app-search-field {
+    app-search-field, app-new-search-field {
         grid-area: search-field;
     }
     app-oer-slider {
         grid-area: oer-slider;
         margin: -3px 0;
+    }
+    .experiments {
+        position: absolute;
+        top: 2px;
+        right: 8px;
+        a {
+            text-decoration: none;
+            font-weight: bold;
+        }
     }
 }

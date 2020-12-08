@@ -3,10 +3,8 @@ import { Location } from '@angular/common';
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
-import { UserInfo } from 'angular-oauth2-oidc';
+import { environment } from '../../environments/environment';
 import { EditorialTag, Hit, Type } from '../../generated/graphql';
-import { AuthService } from '../auth.service';
-import { EditorService } from '../editor.service';
 import { HasEditorialTagPipe } from '../has-editorial-tag.pipe';
 
 @Component({
@@ -17,17 +15,15 @@ import { HasEditorialTagPipe } from '../has-editorial-tag.pipe';
 export class DetailsComponent implements OnInit {
     readonly Type = Type;
     readonly EditorialTag = EditorialTag;
+    readonly wordpressUrl = environment.wordpressUrl;
     id: string;
     hit: Hit;
     isRecommended: boolean;
     isDisplayed = true;
-    userInfo: UserInfo;
 
     constructor(
         private route: ActivatedRoute,
-        private authService: AuthService,
         private clipboard: Clipboard,
-        private editorService: EditorService,
         private snackBar: MatSnackBar,
         private location: Location,
         private renderer: Renderer2,
@@ -42,52 +38,9 @@ export class DetailsComponent implements OnInit {
             );
         });
         this.route.params.subscribe((params) => (this.id = params.id));
-        this.authService.getUserInfo().subscribe((userInfo) => (this.userInfo = userInfo));
         // this.renderer
         //     .listen(document, 'keydown.control.c', () => this.copyTableEntryToClipboard());
         // this.renderer.listen(document, 'keydown.meta.c', () => this.copyTableEntryToClipboard());
-    }
-
-    async markAsRecommended() {
-        try {
-            await this.editorService.markAsRecommended(this.id, !this.isRecommended);
-            this.isRecommended = !this.isRecommended;
-            if (this.isRecommended) {
-                this.snackBar.open($localize`Marked as recommended`, null, { duration: 3000 });
-            } else {
-                this.snackBar.open($localize`Removed recommendation`, null, { duration: 3000 });
-            }
-        } catch (error) {
-            this.snackBar.open($localize`Failed to edit recommendation`, null, { duration: 3000 });
-        }
-    }
-
-    async hide() {
-        try {
-            await this.editorService.setDisplayState(this.id, false);
-            const snackBarRef = this.snackBar.open(
-                $localize`The entry will no longer be displayed in results`,
-                $localize`Undo`,
-            );
-            snackBarRef.onAction().subscribe(() => {
-                this.undoHide();
-            });
-            this.isDisplayed = false;
-        } catch (error) {
-            this.snackBar.open($localize`Failed to perform action`, null, { duration: 3000 });
-        }
-    }
-
-    async undoHide() {
-        try {
-            await this.editorService.setDisplayState(this.id, true);
-            this.isDisplayed = true;
-            this.snackBar.open($localize`The entry will be displayed again`, null, {
-                duration: 3000,
-            });
-        } catch (error) {
-            this.snackBar.open($localize`Failed to perform action`, null, { duration: 3000 });
-        }
     }
 
     goBack() {

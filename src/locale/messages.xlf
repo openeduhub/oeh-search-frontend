@@ -2,104 +2,36 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="en-US" datatype="plaintext" original="ng2.template">
     <body>
-      <trans-unit id="5f63f0ac9abd7ff136ae484844ed3e8722604f22" datatype="html">
-        <source>Did you mean:</source>
+      <trans-unit id="5caadefa4143cf6766a621b0f54f91f373a1f164" datatype="html">
+        <source>Add content</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/search/search.component.html</context>
-          <context context-type="linenumber">11</context>
+          <context context-type="sourcefile">src/app/add-content-fab/add-content-fab.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/add-content-fab/add-content-fab.component.html</context>
+          <context context-type="linenumber">9</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="e4e28b371f8453e22779db590cb0fe67f2a080e8" datatype="html">
-        <source>No results</source>
+      <trans-unit id="77308e0b0ec483739e6cd964d7faeba68d34e949" datatype="html">
+        <source>Add source</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/search/search.component.html</context>
-          <context context-type="linenumber">20</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="2781a2dd466ed10e528cd886e6e51e6e8eff6c29" datatype="html">
-        <source>Search without filters</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/search/search.component.html</context>
-          <context context-type="linenumber">30</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="c9b38d5d1c3e399c29416325087cc68b6218b816" datatype="html">
-        <source>
-        <x id="ICU" equiv-text="{results.total, plural, =1 {...} other {...}}"/>
-      </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/search/search.component.html</context>
-          <context context-type="linenumber">35</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="d9a50a31aaaf8abb62d3604303b023c24ced6dae" datatype="html">
-        <source>{VAR_PLURAL, plural, =1 {1 result} other {<x id="INTERPOLATION" equiv-text="{{results.total.value | number}}"/> results} }</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/search/search.component.html</context>
-          <context context-type="linenumber">36</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="60df9e0e3fde8b974cd5f94f9c09b52d57afd260" datatype="html">
-        <source>
-        More than <x id="INTERPOLATION" equiv-text="{{ results.total.value | number }}"/> results
-      </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/search/search.component.html</context>
-          <context context-type="linenumber">39</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="d4ce904dee8c502f68267f901e9742f1ce0474cd" datatype="html">
-        <source>
-        Page <x id="INTERPOLATION" equiv-text="{{ pageIndex + 1 }}"/> of <x id="INTERPOLATION_1" equiv-text="{{ results.total.value | number }}"/> results
-      </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/search/search.component.html</context>
-          <context context-type="linenumber">42</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="90d4dceb2f8c2f8659288b94f301d4446261ea9d" datatype="html">
-        <source>
-        Page <x id="INTERPOLATION" equiv-text="{{ pageIndex + 1 }}"/> of more than <x id="INTERPOLATION_1" equiv-text="{{ results.total.value | number }}"/> results
-      </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/search/search.component.html</context>
-          <context context-type="linenumber">45</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="0286d71c09c375c44b7b4db422d0d04df4d07a99" datatype="html">
-        <source>All Search Results</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
-          <context context-type="linenumber">2</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="92cfea1361d316d47e0992c3fffff7836c60a960" datatype="html">
-        <source>Standard view</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
-          <context context-type="linenumber">13</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
-          <context context-type="linenumber">15</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="f14c4dc56d41f201599324a8b9c297812798b734" datatype="html">
-        <source>Compact view</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
-          <context context-type="linenumber">22</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
+          <context context-type="sourcefile">src/app/add-content-fab/add-content-fab.component.html</context>
           <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="949ba3965c4478f3c3caf1aef6158706c769ef65" datatype="html">
-        <source>Result view</source>
+      <trans-unit id="bca6cffc8ca51e067a7c6a6620d72d251e307804" datatype="html">
+        <source>Add tool</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
-          <context context-type="linenumber">7</context>
+          <context context-type="sourcefile">src/app/add-content-fab/add-content-fab.component.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="ef8a4f68ddba0db767069410dc62c80658e34440" datatype="html">
+        <source>Index my portal</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/add-content-fab/add-content-fab.component.html</context>
+          <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
       <trans-unit id="69e46dc0dfe176ef7f0839cde8822f76ea58cfda" datatype="html">
@@ -109,6 +41,20 @@
           <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="a5d2031ba6b575b64a0355646f8405ebc6ea06db" datatype="html">
+        <source>Open educational resources</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/details/details.component.html</context>
+          <context context-type="linenumber">40</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7ce33113d5ba83bc7653f754abca4ca49917530f" datatype="html">
+        <source>Report a problem</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/details/details.component.html</context>
+          <context context-type="linenumber">101</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="a5a1033e0eb1ca29932248fdb817e670fd3d3032" datatype="html">
         <source>Go To Content</source>
         <context-group purpose="location">
@@ -116,12 +62,12 @@
           <context context-type="linenumber">14</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context>
-          <context context-type="linenumber">101</context>
-        </context-group>
-        <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context>
           <context context-type="linenumber">86</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context>
+          <context context-type="linenumber">101</context>
         </context-group>
       </trans-unit>
       <trans-unit id="c2a67ff00c6d308bdd450e19396c4c2063819dd6" datatype="html">
@@ -131,12 +77,12 @@
           <context context-type="linenumber">15</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context>
-          <context context-type="linenumber">102</context>
-        </context-group>
-        <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context>
           <context context-type="linenumber">87</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context>
+          <context context-type="linenumber">102</context>
         </context-group>
       </trans-unit>
       <trans-unit id="33816b304feda8bccc2d25bb5354fe1368e040d3" datatype="html">
@@ -146,12 +92,12 @@
           <context context-type="linenumber">16</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context>
-          <context context-type="linenumber">103</context>
-        </context-group>
-        <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context>
           <context context-type="linenumber">88</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context>
+          <context context-type="linenumber">103</context>
         </context-group>
       </trans-unit>
       <trans-unit id="f6f4ea6f70ae34eb3caa8166d04fcc49eab7ce30" datatype="html">
@@ -161,12 +107,12 @@
           <context context-type="linenumber">17</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context>
-          <context context-type="linenumber">104</context>
-        </context-group>
-        <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context>
           <context context-type="linenumber">89</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context>
+          <context context-type="linenumber">104</context>
         </context-group>
       </trans-unit>
       <trans-unit id="058e8e2e266ee6c4c4c574ed2508b99d00a2d170" datatype="html">
@@ -176,19 +122,16 @@
           <context context-type="linenumber">34</context>
         </context-group>
         <context-group purpose="location">
+          <context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context>
           <context context-type="linenumber">18</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context>
-          <context context-type="linenumber">21</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="a5d2031ba6b575b64a0355646f8405ebc6ea06db" datatype="html">
-        <source>Open educational resources</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/details/details.component.html</context>
-          <context context-type="linenumber">40</context>
+          <context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context>
+          <context context-type="linenumber">18</context>
         </context-group>
       </trans-unit>
       <trans-unit id="0594812d4c50c2adbd1a892a3497c4e5c19e4b32" datatype="html">
@@ -220,16 +163,20 @@
           <context context-type="linenumber">46</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context>
-          <context context-type="linenumber">42</context>
+          <context context-type="sourcefile">src/app/new-search-field/new-search-field.component.html</context>
+          <context context-type="linenumber">64</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context>
+          <context context-type="linenumber">28</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context>
           <context context-type="linenumber">36</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context>
-          <context context-type="linenumber">28</context>
+          <context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context>
+          <context context-type="linenumber">42</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4dbd5d5aa9de5f2246e18532f80745b43ebb05f2" datatype="html">
@@ -276,34 +223,6 @@
           <context context-type="linenumber">62</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="c99ae2085cf40f231a666438ded948057481db37" datatype="html">
-        <source>Mark as recommended</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/details/details.component.html</context>
-          <context context-type="linenumber">97</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="01e2925f6451a812b25e351e270099fe9d91e46c" datatype="html">
-        <source>Remove recommendation</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/details/details.component.html</context>
-          <context context-type="linenumber">98</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="713bff0fa327e28366b85f729c892ec7b469b78d" datatype="html">
-        <source>Remove from search results</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/details/details.component.html</context>
-          <context context-type="linenumber">102</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="7ce33113d5ba83bc7653f754abca4ca49917530f" datatype="html">
-        <source>Report a problem</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/details/details.component.html</context>
-          <context context-type="linenumber">112</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="fe90aaa93785f07d828ad81ac0f6fbca5923693a" datatype="html">
         <source>Oops, something went wrong.</source>
         <context-group purpose="location">
@@ -316,6 +235,27 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/error/error.component.html</context>
           <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5f27726154e0e74a500ccd7a71df6e212dd6ce11" datatype="html">
+        <source>Experiments</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/experiments-toggles/experiments-toggles.component.html</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2c1508f93958472446469db4a62c41a3d9d24888" datatype="html">
+        <source>New search field</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/experiments-toggles/experiments-toggles.component.html</context>
+          <context context-type="linenumber">8</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="13fd704fb2dc82bc4c1e4e9b86a84afd5ce97caf" datatype="html">
+        <source>A redesign of the search field which displays filters inside the field as colored chips.</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/experiments-toggles/experiments-toggles.component.html</context>
+          <context context-type="linenumber">13,14</context>
         </context-group>
       </trans-unit>
       <trans-unit id="e73842b697c96ff0311cdc365e45e31149e4388d" datatype="html">
@@ -336,151 +276,29 @@
           <context context-type="linenumber">4</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="7e892ba15f2c6c17e83510e273b3e10fc32ea016" datatype="html">
-        <source>Search</source>
+      <trans-unit id="f3f580bb4bc67fe77cb36e1732e6eae8bb6e70e5" datatype="html">
+        <source>Try our </source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/search-field/search-field.component.html</context>
-          <context context-type="linenumber">10</context>
+          <context context-type="sourcefile">src/app/headerbar/headerbar.component.html</context>
+          <context context-type="linenumber">18</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="b4506f4293568f9789c037b601cf38ce768ccbf6" datatype="html">
-        <source>Topic</source>
+      <trans-unit id="63db723495e95615935c05a72582d0ef0fdcd597" datatype="html">
+        <source>experimental features</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/search-field/search-field.component.html</context>
-          <context context-type="linenumber">12</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="22d6675b47f01bfe5302373c3af9f74187c88a28" datatype="html">
-        <source>Clear input</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/search-field/search-field.component.html</context>
+          <context context-type="sourcefile">src/app/headerbar/headerbar.component.html</context>
           <context context-type="linenumber">19</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/search-field/search-field.component.html</context>
-          <context context-type="linenumber">21</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="7b6494fa44035831e1215cd4a0284aec00f8cbbd" datatype="html">
-        <source>SEARCH</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/search-field/search-field.component.html</context>
-          <context context-type="linenumber">28</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="deec646fc99f3d44b7a7e66bbf8fe6c04be90e52" datatype="html">
-        <source>Math</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/welcome/welcome.component.html</context>
-          <context context-type="linenumber">6</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="106d2771f54d364752be04353f90ccb4b35ff493" datatype="html">
-        <source>Biology</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/welcome/welcome.component.html</context>
-          <context context-type="linenumber">15</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="8eb0ff9f09e9db846b2b12d4fc63dbeda920235f" datatype="html">
-        <source>Chemistry</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/welcome/welcome.component.html</context>
-          <context context-type="linenumber">23</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="7416b446991c5901061dd09176b34ed568cf5947" datatype="html">
-        <source>Computer Science</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/welcome/welcome.component.html</context>
-          <context context-type="linenumber">31</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="a0843de0a64adcc7ee6a946408b6876cd8abdcae" datatype="html">
-        <source>English</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/welcome/welcome.component.html</context>
-          <context context-type="linenumber">39</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="d60e2ecba8f7dc2ed2c59dd84972d0b41b331a6c" datatype="html">
-        <source>More...</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/welcome/welcome.component.html</context>
-          <context context-type="linenumber">48</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8a1153376ec62c14fd7ce441c223d7f361548a22" datatype="html">
         <source>Go to homepage</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/menubar/menubar.component.html</context>
-          <context context-type="linenumber">13</context>
+          <context context-type="linenumber">18</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/menubar/menubar.component.html</context>
-          <context context-type="linenumber">32</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="6765b4c916060f6bc42d9bb69e80377dbcb5e4e9" datatype="html">
-        <source>Login</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="bb694b49d408265c91c62799c2b3a7e3151c824d" datatype="html">
-        <source>Logout</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/login/login.component.html</context>
-          <context context-type="linenumber">4</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="06c663bf1474713f57551123a46b34318543b67d" datatype="html">
-        <source>Reset</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context>
-          <context context-type="linenumber">12</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="37417ecc95ef4e330c617071e23a4e05fd2b49ad" datatype="html">
-        <source>Hide filters</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context>
-          <context context-type="linenumber">14</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="dc89c7f605918004cf9af6de5d0e52b74abc7e02" datatype="html">
-        <source>
-        Currently, there are no applicable filters. Try another search string for more results.
-      </source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context>
-          <context context-type="linenumber">20</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="f61c6867295f3b53d23557021f2f4e0aa1d0b8fc" datatype="html">
-        <source>Type</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context>
-          <context context-type="linenumber">25</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="6834fa6b43d1ecbdf147c48dd9c4d72f1484571d" datatype="html">
-        <source>Source</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context>
-          <context context-type="linenumber">58</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context>
-          <context context-type="linenumber">108</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="cafa0fa1a3da51d030553ba79897d1068a9131fc" datatype="html">
-        <source>show more</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="linenumber">37</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4ab4cb601522b9194922554d934c4c30bd93567d" datatype="html">
@@ -511,75 +329,69 @@
           <context context-type="linenumber">12</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="575e782fd27f2ee70a034a775efe9ad162472250" datatype="html">
-        <source>Previous page</source>
+      <trans-unit id="7e892ba15f2c6c17e83510e273b3e10fc32ea016" datatype="html">
+        <source>Search</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/paginator/paginator.component.html</context>
-          <context context-type="linenumber">4</context>
+          <context context-type="sourcefile">src/app/new-search-field/new-search-field.component.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search-field/search-field.component.html</context>
+          <context context-type="linenumber">10</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="ce3cefb1cd0099aa5003dda16ec9eb21fd8ba789" datatype="html">
-        <source>Next page</source>
+      <trans-unit id="99ee4faa69cd2ea8e3678c1f557c0ff1f05aae46" datatype="html">
+        <source>Clear</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/paginator/paginator.component.html</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="sourcefile">src/app/new-search-field/new-search-field.component.html</context>
+          <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="9a64d69b64e66b4d954a3ed4416b7535bd2f4346" datatype="html">
-        <source>Editors&apos; Choices</source>
+      <trans-unit id="7b6494fa44035831e1215cd4a0284aec00f8cbbd" datatype="html">
+        <source>SEARCH</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/subjects-portal/subjects-portal.component.html</context>
-          <context context-type="linenumber">5</context>
+          <context context-type="sourcefile">src/app/new-search-field/new-search-field.component.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search-field/search-field.component.html</context>
+          <context context-type="linenumber">28</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="6e998fc06a19659c22cca43efa1b35515761cbb2" datatype="html">
-        <source>hide</source>
+      <trans-unit id="7d0d02e1cef1d11f0ce543255792e01c6c626d4d" datatype="html">
+        <source>Free content</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/subjects-portal/subjects-portal.component.html</context>
-          <context context-type="linenumber">6</context>
+          <context context-type="sourcefile">src/app/new-search-field/new-search-field.component.html</context>
+          <context context-type="linenumber">60</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="f67337c708d49ce56772539ee443bac996a24f8e" datatype="html">
-        <source>show</source>
+      <trans-unit id="bbfd158191eb0f7d84f6c642350af8e7f0437dcb" datatype="html">
+        <source>Educational context</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/subjects-portal/subjects-portal.component.html</context>
-          <context context-type="linenumber">7</context>
+          <context context-type="sourcefile">src/app/new-search-field/new-search-field.component.html</context>
+          <context context-type="linenumber">62</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context>
+          <context context-type="linenumber">49</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="99112040d70dd87f4b93a82344567814dc4e30bb" datatype="html">
-        <source>Contents</source>
+      <trans-unit id="856d4f9f808e2d113350ef83739857221c63adaf" datatype="html">
+        <source>Keyword</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/subjects-portal-section/subjects-portal-section.component.html</context>
-          <context context-type="linenumber">3</context>
+          <context context-type="sourcefile">src/app/new-search-field/new-search-field.component.html</context>
+          <context context-type="linenumber">65</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="2d8dd025af285b6c0e506b85b66d201bdd6d4648" datatype="html">
-        <source>Lesson Planning</source>
+      <trans-unit id="cdda6f219c6104e6bf223c1e165dce5e5977ce03" datatype="html">
+        <source>What&apos;s that?</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/subjects-portal-section/subjects-portal-section.component.html</context>
-          <context context-type="linenumber">4</context>
-        </context-group>
-        <note priority="1" from="meaning">plural</note>
-      </trans-unit>
-      <trans-unit id="fefee13017c2b85143cd131ee253e327a14053a0" datatype="html">
-        <source>Tools</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/subjects-portal-section/subjects-portal-section.component.html</context>
-          <context context-type="linenumber">5</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="6990ad8d6182662e864495ac31c3758cda1c7a28" datatype="html">
-        <source>Portals</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/subjects-portal-section/subjects-portal-section.component.html</context>
-          <context context-type="linenumber">6</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="032e4a4ff2de53b4a9a1184ecc935aeee512e529" datatype="html">
-        <source>everything</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/oer-slider/oer-slider.component.html</context>
-          <context context-type="linenumber">18</context>
+          <context context-type="sourcefile">src/app/new-search-field/new-search-field.component.html</context>
+          <context context-type="linenumber">71</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7b7ca04c2fb68cd2f52537514d6b822e7fd09b83" datatype="html">
@@ -589,11 +401,11 @@
           <context context-type="linenumber">17</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="3b99ed91e3cd96b551b759ecc0d4f8d158f2114f" datatype="html">
-        <source>only OER</source>
+      <trans-unit id="032e4a4ff2de53b4a9a1184ecc935aeee512e529" datatype="html">
+        <source>everything</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/oer-slider/oer-slider.component.html</context>
-          <context context-type="linenumber">26</context>
+          <context context-type="linenumber">18</context>
         </context-group>
       </trans-unit>
       <trans-unit id="54ff13ed3d31ebf7b6261936cb764505d2e1ef9f" datatype="html">
@@ -601,6 +413,13 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/oer-slider/oer-slider.component.html</context>
           <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3b99ed91e3cd96b551b759ecc0d4f8d158f2114f" datatype="html">
+        <source>only OER</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/oer-slider/oer-slider.component.html</context>
+          <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5ecc2b6454b68f6583f0b53c82d88c45edcaa041" datatype="html">
@@ -617,80 +436,45 @@
           <context context-type="linenumber">37</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="5caadefa4143cf6766a621b0f54f91f373a1f164" datatype="html">
-        <source>Add content</source>
+      <trans-unit id="575e782fd27f2ee70a034a775efe9ad162472250" datatype="html">
+        <source>Previous page</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/add-content-fab/add-content-fab.component.html</context>
-          <context context-type="linenumber">7</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/add-content-fab/add-content-fab.component.html</context>
-          <context context-type="linenumber">9</context>
+          <context context-type="sourcefile">src/app/paginator/paginator.component.html</context>
+          <context context-type="linenumber">4</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="77308e0b0ec483739e6cd964d7faeba68d34e949" datatype="html">
-        <source>Add source</source>
+      <trans-unit id="ce3cefb1cd0099aa5003dda16ec9eb21fd8ba789" datatype="html">
+        <source>Next page</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/add-content-fab/add-content-fab.component.html</context>
-          <context context-type="linenumber">24</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="bca6cffc8ca51e067a7c6a6620d72d251e307804" datatype="html">
-        <source>Add tool</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/add-content-fab/add-content-fab.component.html</context>
-          <context context-type="linenumber">28</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="ef8a4f68ddba0db767069410dc62c80658e34440" datatype="html">
-        <source>Index my portal</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/add-content-fab/add-content-fab.component.html</context>
-          <context context-type="linenumber">32</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="7d02e831ce807dfe660dc187ce89f633354f33ee" datatype="html">
-        <source>Open Educational Resources</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context>
-          <context context-type="linenumber">26</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="bbfd158191eb0f7d84f6c642350af8e7f0437dcb" datatype="html">
-        <source>Educational context</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context>
-          <context context-type="linenumber">49</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context>
-          <context context-type="linenumber">38</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="cca976af7ffcd3a3e8a2ca220d478c2b3f11fe09" datatype="html">
-        <source>Learning resource type</source>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context>
-          <context context-type="linenumber">62</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context>
-          <context context-type="linenumber">48</context>
+          <context context-type="sourcefile">src/app/paginator/paginator.component.html</context>
+          <context context-type="linenumber">43</context>
         </context-group>
       </trans-unit>
       <trans-unit id="e7a192d252351f64694d9a66ffeda6a1ed5d8869" datatype="html">
         <source>keywords</source>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context>
+          <context context-type="linenumber">61</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context>
           <context context-type="linenumber">61</context>
         </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context>
+          <context context-type="linenumber">80</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context>
+          <context context-type="linenumber">80</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="e8bcb762b48cf52fbea66ce9c4f6b970b99a80fd" datatype="html">
         <source>Collapse</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context>
+          <context context-type="linenumber">96</context>
+        </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context>
           <context context-type="linenumber">96</context>
@@ -701,6 +485,198 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context>
           <context context-type="linenumber">105</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context>
+          <context context-type="linenumber">105</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="cca976af7ffcd3a3e8a2ca220d478c2b3f11fe09" datatype="html">
+        <source>Learning resource type</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context>
+          <context context-type="linenumber">62</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7d02e831ce807dfe660dc187ce89f633354f33ee" datatype="html">
+        <source>Open Educational Resources</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6834fa6b43d1ecbdf147c48dd9c4d72f1484571d" datatype="html">
+        <source>Source</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context>
+          <context context-type="linenumber">108</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context>
+          <context context-type="linenumber">58</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="b4506f4293568f9789c037b601cf38ce768ccbf6" datatype="html">
+        <source>Topic</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search-field/search-field.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="22d6675b47f01bfe5302373c3af9f74187c88a28" datatype="html">
+        <source>Clear input</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search-field/search-field.component.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search-field/search-field.component.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search-field/search-field.component.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search-field/search-field.component.html</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="06c663bf1474713f57551123a46b34318543b67d" datatype="html">
+        <source>Reset</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="37417ecc95ef4e330c617071e23a4e05fd2b49ad" datatype="html">
+        <source>Hide filters</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="dc89c7f605918004cf9af6de5d0e52b74abc7e02" datatype="html">
+        <source> Currently, there are no applicable filters. Try another search string for more results. </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context>
+          <context context-type="linenumber">21,22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="f61c6867295f3b53d23557021f2f4e0aa1d0b8fc" datatype="html">
+        <source>Type</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context>
+          <context context-type="linenumber">25</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="cafa0fa1a3da51d030553ba79897d1068a9131fc" datatype="html">
+        <source>show more</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context>
+          <context context-type="linenumber">79</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="0286d71c09c375c44b7b4db422d0d04df4d07a99" datatype="html">
+        <source>All Search Results</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="949ba3965c4478f3c3caf1aef6158706c769ef65" datatype="html">
+        <source>Result view</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="92cfea1361d316d47e0992c3fffff7836c60a960" datatype="html">
+        <source>Standard view</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="f14c4dc56d41f201599324a8b9c297812798b734" datatype="html">
+        <source>Compact view</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
+          <context context-type="linenumber">22</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search-results/search-results.component.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5f63f0ac9abd7ff136ae484844ed3e8722604f22" datatype="html">
+        <source>Did you mean:</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search/search.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="e4e28b371f8453e22779db590cb0fe67f2a080e8" datatype="html">
+        <source>No results</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search/search.component.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2781a2dd466ed10e528cd886e6e51e6e8eff6c29" datatype="html">
+        <source>Search without filters</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search/search.component.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="d9a50a31aaaf8abb62d3604303b023c24ced6dae" datatype="html">
+        <source>{VAR_PLURAL, plural, =1 {1 result} other {<x id="INTERPOLATION"/> results}}</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search/search.component.html</context>
+          <context context-type="linenumber">36,37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="c9b38d5d1c3e399c29416325087cc68b6218b816" datatype="html">
+        <source> <x id="ICU" equiv-text="{results.total, plural, =1 {1 result} other
+        {{{results.total.value | number}} results}}
+      "/> </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search/search.component.html</context>
+          <context context-type="linenumber">36,38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="60df9e0e3fde8b974cd5f94f9c09b52d57afd260" datatype="html">
+        <source> More than <x id="INTERPOLATION" equiv-text="re than {{ results.total.value | n"/> results </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search/search.component.html</context>
+          <context context-type="linenumber">39,41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="d4ce904dee8c502f68267f901e9742f1ce0474cd" datatype="html">
+        <source> Page <x id="INTERPOLATION" equiv-text="   Page {{ pageInde"/> of <x id="INTERPOLATION_1" equiv-text="1 }} of {{ results.total.value | n"/> results </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search/search.component.html</context>
+          <context context-type="linenumber">42,44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="90d4dceb2f8c2f8659288b94f301d4446261ea9d" datatype="html">
+        <source> Page <x id="INTERPOLATION" equiv-text="   Page {{ pageInde"/> of more than <x id="INTERPOLATION_1" equiv-text="re than {{ results.total.value | n"/> results </source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search/search.component.html</context>
+          <context context-type="linenumber">45,47</context>
         </context-group>
       </trans-unit>
     </body>

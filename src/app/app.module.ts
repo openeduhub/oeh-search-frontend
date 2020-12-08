@@ -1,4 +1,5 @@
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { OverlayModule } from '@angular/cdk/overlay';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -17,81 +18,45 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterModule, Routes } from '@angular/router';
-import { OAuthModule } from 'angular-oauth2-oidc';
 import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
 import { HttpLinkModule } from 'apollo-angular-link-http';
 import { HttpBatchLink, HttpBatchLinkModule } from 'apollo-angular-link-http-batch';
 import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
 import { environment } from '../environments/environment';
+import introspectionQueryResultData from '../generated/fragmentTypes.json';
 import { AddContentFabComponent } from './add-content-fab/add-content-fab.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { DetailsResolverService } from './details-resolver.service';
 import { DetailsComponent } from './details/details.component';
 import { EncodeUriComponentPipe } from './encode-uri-component.pipe';
 import { ErrorComponent } from './error/error.component';
+import { ExperimentsTogglesComponent } from './experiments-toggles/experiments-toggles.component';
+import { FooterbarComponent } from './footerbar/footerbar.component';
 import { GenerateFiltersPipe } from './generate-filters.pipe';
-import { HeaderbarComponent } from './headerbar/headerbar.component';
 import { HasEditorialTagPipe } from './has-editorial-tag.pipe';
-import { LoginComponent } from './login/login.component';
+import { HeaderbarComponent } from './headerbar/headerbar.component';
 import { MenubarComponent } from './menubar/menubar.component';
 import { MultivalueCheckboxComponent } from './multivalue-checkbox/multivalue-checkbox.component';
+import { NewSearchFieldComponent } from './new-search-field/new-search-field.component';
 import { OerSliderComponent } from './oer-slider/oer-slider.component';
 import { PaginatorComponent } from './paginator/paginator.component';
+import { PreviewImageComponent } from './preview-image/preview-image.component';
 import { ResultCardContentCompactComponent } from './result-card-content-compact/result-card-content-compact.component';
 import { ResultCardContentStandardComponent } from './result-card-content-standard/result-card-content-standard.component';
 import { ResultCardSmallComponent } from './result-card-small/result-card-small.component';
 import { ResultCardComponent } from './result-card/result-card.component';
 import { SearchFieldComponent } from './search-field/search-field.component';
 import { SearchFilterbarComponent } from './search-filterbar/search-filterbar.component';
-import { SearchResolverService } from './search-resolver.service';
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { SearchComponent } from './search/search.component';
-import { SubjectsPortalSectionComponent } from './subjects-portal-section/subjects-portal-section.component';
-import { SubjectsPortalComponent } from './subjects-portal/subjects-portal.component';
 import { TrimPipe } from './trim.pipe';
 import { TruncatePipe } from './truncate.pipe';
-import { WelcomeComponent } from './welcome/welcome.component';
-import introspectionQueryResultData from '../generated/fragmentTypes.json';
-import { PreviewImageComponent } from './preview-image/preview-image.component';
-import { FooterbarComponent } from './footerbar/footerbar.component';
-
-const appRoutes: Routes = [
-    {
-        path: 'welcome',
-        component: WelcomeComponent,
-    },
-    { path: 'login', component: LoginComponent },
-    {
-        path: 'search/:educationalContext/:discipline',
-        component: SearchComponent,
-        runGuardsAndResolvers: 'paramsOrQueryParamsChange',
-        resolve: {
-            searchData: SearchResolverService,
-        },
-    },
-    {
-        path: 'search',
-        component: SearchComponent,
-        runGuardsAndResolvers: 'paramsOrQueryParamsChange',
-        resolve: {
-            searchData: SearchResolverService,
-        },
-    },
-    {
-        path: 'details/:id',
-        component: DetailsComponent,
-        resolve: { details: DetailsResolverService },
-    },
-    { path: '', redirectTo: 'search', pathMatch: 'full' },
-    { path: 'error', component: ErrorComponent },
-];
 
 const fragmentMatcher = new IntrospectionFragmentMatcher({
     introspectionQueryResultData,
@@ -111,22 +76,20 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
         SearchFieldComponent,
         TrimPipe,
         HasEditorialTagPipe,
-        WelcomeComponent,
         MenubarComponent,
-        LoginComponent,
         SearchFilterbarComponent,
         MultivalueCheckboxComponent,
         EncodeUriComponentPipe,
         ResultCardComponent,
         PaginatorComponent,
-        SubjectsPortalComponent,
         ResultCardSmallComponent,
-        SubjectsPortalSectionComponent,
         OerSliderComponent,
         AddContentFabComponent,
         ResultCardContentStandardComponent,
         ResultCardContentCompactComponent,
         PreviewImageComponent,
+        ExperimentsTogglesComponent,
+        NewSearchFieldComponent,
     ],
     imports: [
         ApolloModule,
@@ -155,15 +118,10 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
         MatPaginatorModule,
         MatProgressSpinnerModule,
         MatSelectModule,
+        MatSlideToggleModule,
         MatTooltipModule,
-        OAuthModule.forRoot({
-            resourceServer: {
-                allowedUrls: [environment.editorBackendUrl],
-                sendAccessToken: true,
-            },
-        }),
+        OverlayModule,
         ReactiveFormsModule,
-        RouterModule.forRoot(appRoutes),
     ],
     providers: [
         {

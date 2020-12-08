@@ -48,16 +48,17 @@ $ npm run docker-run
 
 ## Configuration
 
-Refer to the respective files in `src/environments` for available configurations.
+Local dev configuration is done via the file `src/env.js`. Copy `src/env.sample.js` for an initial version.
 
-`environment.ts` is the dev environment active when serving the application via `npm start`.
+When started as Docker container, the file `src/env.js` will be populated with the respective environment variables
 
-`environment.prod.ts` is used for production builds packaged to Docker images. The Docker container
-accepts the following environment variables to override the default configuration:
+The following variables are available:
 
-| Variable  | Description                                   | Default value                       |
-| --------- | --------------------------------------------- | ----------------------------------- |
-| RELAY_URL | URL of the ElasticSearch Relay to connect to. | `window.location.origin + '/relay'` |
+| Variable         | Description                                                     | Default value (dev)              | Default value (prod)                |
+| ---------------- | --------------------------------------------------------------- | -------------------------------- | ----------------------------------- |
+| RELAY_URL        | URL of the ElasticSearch Relay to connect to.                   | `http://localhost:3000`          | `window.location.origin + '/relay'` |
+| WORDPRESS_URL    | Base URL of the corresponding WLO Wordpress page.               | `https://dev.wirlernenonline.de` | `https://wirlernenonline.de`        |
+| SHOW_EXPERIMENTS | Display a link to experimental-feature toggles in the frontend. | `true`                           | `false`                             |
 
 For example, to run your locally built Docker image against the staging environment of
 WirLernenOnline, run

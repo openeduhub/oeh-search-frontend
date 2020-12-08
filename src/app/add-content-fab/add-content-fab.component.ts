@@ -7,6 +7,7 @@ import {
     OnDestroy,
     ViewChild,
 } from '@angular/core';
+import { environment } from '../../environments/environment';
 
 type OverflowInfo = {
     top: boolean;
@@ -54,6 +55,7 @@ type OverflowInfo = {
 export class AddContentFabComponent implements AfterViewInit, OnDestroy {
     @ViewChild('container', { read: ElementRef }) containerRef: ElementRef<HTMLElement>;
 
+    readonly wordpressUrl = environment.wordpressUrl;
     shouldFloat = true;
     shouldHide = true;
 

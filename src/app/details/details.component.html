@@ -91,22 +91,11 @@
       </div>
     </div>
     <div class="actions">
-      <ng-container *ngIf="userInfo">
-        <button mat-raised-button (click)="markAsRecommended()">
-          <mat-icon>star</mat-icon>
-          <ng-container *ngIf="!isRecommended" i18n>Mark as recommended</ng-container>
-          <ng-container *ngIf="isRecommended" i18n>Remove recommendation</ng-container>
-        </button>
-        <button mat-raised-button color="warn" [disabled]="!isDisplayed" (click)="hide()">
-          <mat-icon>delete</mat-icon>
-          <ng-container i18n>Remove from search results</ng-container>
-        </button>
-      </ng-container>
       <a
         mat-button
         target="_blank"
         class="report-button"
-        href="https://wirlernenonline.de/problem-melden/?id={{ id }}&title={{
+        href="{{ wordpressUrl }}/problem-melden/?id={{ id }}&title={{
           hit.lom.general.title | encodeUriComponent
         }}"
         ><mat-icon>report_problem</mat-icon> <span i18n>Report a problem</span></a
