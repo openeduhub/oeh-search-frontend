@@ -146,6 +146,8 @@ export class NewSearchFieldComponent implements OnInit, OnDestroy {
     }
 
     clear() {
+        // Clear not yet submitted search string.
+        this.searchField.setValue('');
         this.router.navigate(['/search']);
     }
 
