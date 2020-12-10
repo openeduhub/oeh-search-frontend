@@ -99,13 +99,13 @@ $ npm install
 Single run:
 
 ```bash
-$ npm run cypress:local:open
+$ npm run cypress:local:run
 ```
 
 Open GUI:
 
 ```bash
-$ npm run cypress:local:run
+$ npm run cypress:local:open
 ```
 
 #### Test an Online Environment
