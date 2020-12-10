@@ -48,5 +48,6 @@ jobs:
         uses: cypress-io/github-action@v2
         env:
           CYPRESS_baseUrl: http://localhost:8080
+          CYPRESS_relayUrl: https://staging.wirlernenonline.de/relay
         with:
           working-directory: e2e-cypress
