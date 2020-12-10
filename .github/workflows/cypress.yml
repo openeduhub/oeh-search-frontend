@@ -50,3 +50,8 @@ jobs:
           CYPRESS_baseUrl: http://localhost:8080
         with:
           working-directory: e2e-cypress
+      - uses: actions/upload-artifact@v1
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: e2e-cypress/cypress/screenshots
