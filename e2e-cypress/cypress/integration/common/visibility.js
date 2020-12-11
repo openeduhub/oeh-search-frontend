@@ -60,17 +60,17 @@ Then('I see search results', () => {
 });
 
 Then('I see the search bar input field', () => {
-    cy.get('app-search-field')
+    cy.get('app-new-search-field')
         .find('div[class*="search-field-input-wrapper"]')
         .should('be.visible');
 });
 
 Then('I see the search button', () => {
-    cy.get('app-search-field').find('button[class*="submit-button"]').should('be.visible');
+    cy.get('app-new-search-field').find('button[class*="submit-button"]').should('be.visible');
 });
 
 Then('I see the search button label {string}', (label) => {
-    cy.get('app-search-field')
+    cy.get('app-new-search-field')
         .find('button[class*="submit-button"]')
         .find('span[class*="mat-button-wrapper"]')
         .should('have.text', label);
@@ -103,6 +103,6 @@ Then('I see the paginator', () => {
         .should('have.text', 'chevron_right');
 
     cy.get('app-paginator').find('span[class*="page-number"]').should('be.visible');
-    cy.get('app-paginator').find('span[class*="page-number"]').its('length').should('be', 0);
+    cy.get('app-paginator').find('span[class*="page-number"]').its('length').should('equal', 1);
     cy.get('app-paginator').find('a[class*="page-number"]').its('length').should('be.gt', 0);
 });

@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 export type ResultCardStyle = 'standard' | 'compact';
 
 class AvailableExperiments {
-    newSearchField = false;
+    newSearchField = true;
 }
 
 export type Experiments = Partial<AvailableExperiments>;

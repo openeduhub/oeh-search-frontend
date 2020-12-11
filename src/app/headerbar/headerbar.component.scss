@@ -20,18 +20,25 @@
     grid-template-columns: min-content 1fr;
     grid-template-areas:
         'tagline tagline'
-        'filter-button search-field'
-        'oer-slider oer-slider';
+        'search-field search-field '
+        'filter-button oer-slider';
     justify-content: center;
     @media screen and (min-width: 850px) {
+        gap: 20px 0;
+        grid-template-areas:
+            '. tagline'
+            'filter-button search-field '
+            '.oer-slider';
+    }
+    @media screen and (min-width: 1200px) {
         padding-top: 30px;
         padding-bottom: 50px;
-        gap: 20px 0;
         grid-template-columns: 150px minmax(0, 900px) min-content;
         grid-template-areas:
             '. tagline tagline'
             'filter-button search-field oer-slider';
-        app-search-field {
+        app-search-field,
+        app-new-search-field {
             margin-right: 50px;
         }
     }
@@ -41,6 +48,8 @@
     }
     .filter-button {
         grid-area: filter-button;
+        align-self: start;
+        min-height: 48px;
         justify-self: start;
         min-width: unset;
         display: flex;
@@ -54,12 +63,16 @@
             }
         }
     }
-    app-search-field, app-new-search-field {
+    app-search-field,
+    app-new-search-field {
         grid-area: search-field;
     }
     app-oer-slider {
         grid-area: oer-slider;
         margin: -3px 0;
+        @media screen and (min-width: 450px) {
+            justify-self: end;
+        }
     }
     .experiments {
         position: absolute;

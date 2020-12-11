@@ -84,9 +84,21 @@ form {
 .chip-group-oer .mat-chip {
     background-color: rgb(214, 166, 214);
 }
+.chip-group-type .mat-chip {
+    background-color: rgb(166, 192, 214);
+}
 .chip-group-discipline .mat-chip {
     background-color: rgb(166, 214, 174);
 }
 .chip-group-educationalContext .mat-chip {
     background-color: rgb(214, 166, 166);
+}
+.chip-group-intendedEndUserRole .mat-chip {
+    background-color: rgb(211, 214, 166);
+}
+.chip-group-learningResourceType .mat-chip {
+    background-color: rgb(214, 193, 166);
+}
+.chip-group-source .mat-chip {
+    background-color: rgb(208, 166, 214);
 }

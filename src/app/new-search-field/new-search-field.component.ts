@@ -3,10 +3,11 @@ import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/co
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { combineLatest, Subject } from 'rxjs';
-import { startWith, takeUntil } from 'rxjs/operators';
-import { Facet } from '../../generated/graphql';
+import { debounceTime, map, startWith, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { Facet, FacetSuggestionsGQL, Type } from '../../generated/graphql';
+import { ConfigService } from '../config.service';
 import { SearchParametersService } from '../search-parameters.service';
-import { Facets, Filters, SearchService } from '../search.service';
+import { Facets, Filters, mapFacets, mapFilters } from '../search.service';
 
 type Suggestions = { [key in Facet]?: string[] };
 
@@ -19,6 +20,8 @@ export class NewSearchFieldComponent implements OnInit, OnDestroy {
     @ViewChild(CdkConnectedOverlay) overlay: CdkConnectedOverlay;
     @ViewChild('searchInput') searchInput: ElementRef<HTMLInputElement>;
 
+    readonly Facet = Facet;
+    readonly Type = Type;
     readonly overlayPositions: ConnectedPosition[] = [
         {
             originX: 'center',
@@ -30,13 +33,22 @@ export class NewSearchFieldComponent implements OnInit, OnDestroy {
         },
     ];
 
+    /** Categories to be shown in the suggestion card when the search field is empty. */
+    readonly initialCategories: Facet[] = [Facet.Type, Facet.EducationalContext, Facet.Discipline];
+
     readonly categories: Facet[] = [
         // Facet.Oer,
+        Facet.Type,
         Facet.EducationalContext,
         Facet.Discipline,
         Facet.Keyword,
+        Facet.IntendedEndUserRole,
+        Facet.LearningResourceType,
+        Facet.Source,
     ];
 
+    /** Categories to be shown in the suggestion card. */
+    activeCategories = this.initialCategories;
     searchField = new FormControl();
     filters: Filters = {};
     suggestions: Suggestions;
@@ -46,9 +58,10 @@ export class NewSearchFieldComponent implements OnInit, OnDestroy {
     private destroyed$: Subject<void> = new Subject();
 
     constructor(
+        private config: ConfigService,
+        private facetSuggestionsGQL: FacetSuggestionsGQL,
         private router: Router,
         private searchParameters: SearchParametersService,
-        private search: SearchService,
     ) {}
 
     ngOnInit(): void {
@@ -59,15 +72,32 @@ export class NewSearchFieldComponent implements OnInit, OnDestroy {
                 const { searchString, filters } = searchParameters || {};
                 this.searchField.setValue(searchString, { emitEvent: false });
                 this.filters = filters ?? {};
-                this.suggestions = this.filters;
             });
         combineLatest([
-            this.search.getFacets().pipe(takeUntil(this.destroyed$)),
             this.searchField.valueChanges.pipe(startWith(this.searchField.value)),
-        ]).subscribe(
-            ([facets, searchString]) =>
-                (this.suggestions = this.getSuggestions(facets, searchString)),
-        );
+            this.searchParameters.get(),
+        ])
+            .pipe(
+                debounceTime(200),
+                switchMap(([inputString, searchParameters]) =>
+                    this.facetSuggestionsGQL
+                        .fetch({
+                            inputString,
+                            searchString: searchParameters?.searchString,
+                            language: this.config.getLanguage(),
+                            filters: mapFilters(searchParameters?.filters),
+                        })
+                        .pipe(
+                            map((response) => ({
+                                facets: mapFacets(response.data.facetSuggestions),
+                                inputString,
+                            })),
+                        ),
+                ),
+            )
+            .subscribe(({ facets, inputString }) => {
+                this.updateSuggestions(facets, inputString);
+            });
     }
 
     ngOnDestroy() {
@@ -116,27 +146,28 @@ export class NewSearchFieldComponent implements OnInit, OnDestroy {
     }
 
     clear() {
+        // Clear not yet submitted search string.
+        this.searchField.setValue('');
         this.router.navigate(['/search']);
     }
 
-    private getSuggestions(facets: Facets, searchString: string): Suggestions {
+    private updateSuggestions(facets: Facets, inputString: string): void {
+        if (inputString) {
+            this.activeCategories = this.categories;
+        } else {
+            this.activeCategories = this.initialCategories;
+        }
         if (!facets) {
             this.hasSuggestions = false;
-            return {};
+            this.suggestions = {};
+        } else {
+            const suggestions: Suggestions = {};
+            for (const category of this.categories) {
+                suggestions[category] = facets[category]?.buckets.map((bucket) => bucket.key);
+            }
+            this.hasSuggestions = Object.values(suggestions).some((entries) => entries.length > 0);
+            this.suggestions = suggestions;
         }
-        const suggestions: Suggestions = {};
-        for (const category of this.categories) {
-            suggestions[category] = facets[category]?.buckets
-                .map((bucket) => bucket.key)
-                .filter((bucketKey) =>
-                    searchString
-                        ? bucketKey.toLowerCase().includes(searchString.toLowerCase())
-                        : true,
-                )
-                .slice(0, 5);
-        }
-        this.hasSuggestions = Object.values(suggestions).some((entries) => entries.length > 0);
-        return suggestions;
     }
 
     private applySearch() {
