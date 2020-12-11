@@ -103,6 +103,6 @@ Then('I see the paginator', () => {
         .should('have.text', 'chevron_right');
 
     cy.get('app-paginator').find('span[class*="page-number"]').should('be.visible');
-    cy.get('app-paginator').find('span[class*="page-number"]').its('length').should('be', 0);
+    cy.get('app-paginator').find('span[class*="page-number"]').its('length').should('equal', 1);
     cy.get('app-paginator').find('a[class*="page-number"]').its('length').should('be.gt', 0);
 });
