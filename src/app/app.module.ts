@@ -57,6 +57,7 @@ import { SearchResultsComponent } from './search-results/search-results.componen
 import { SearchComponent } from './search/search.component';
 import { TrimPipe } from './trim.pipe';
 import { TruncatePipe } from './truncate.pipe';
+import { EyeCatcherComponent } from './eye-catcher/eye-catcher.component';
 
 const fragmentMatcher = new IntrospectionFragmentMatcher({
     introspectionQueryResultData,
@@ -90,6 +91,7 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
         PreviewImageComponent,
         ExperimentsTogglesComponent,
         NewSearchFieldComponent,
+        EyeCatcherComponent,
     ],
     imports: [
         ApolloModule,

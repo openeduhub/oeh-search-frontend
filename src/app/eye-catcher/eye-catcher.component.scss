@@ -1,0 +1,50 @@
+.eye-catcher {
+    position: absolute;
+    z-index: 1;
+    &:hover {
+        transform: scale(1.1);
+    }
+    &.eye-catcher-full {
+        top: 26px;
+        right: 5%;
+        -webkit-animation: 2500ms ease-in-out 500ms 1 wiggle;
+        animation: 2500ms ease-in-out 500ms 1 wiggle;
+        transition: 0.3s;
+        .wunschbox-close {
+            position: absolute;
+            right: 0;
+            cursor: pointer;
+            padding-right: 1px;
+            padding-left: 5px;
+            padding-bottom: 3px;
+            transition: 0.3s;
+            border-radius: 0 0 0 15px;
+            &:hover {
+                background: #3da6ee;
+            }
+        }
+    }
+    &.eye-catcher-minimized {
+        top: -3px;
+        right: 5%;
+        cursor: pointer;
+    }
+}
+
+@keyframes wiggle {
+    0% {
+        -webkit-transform: rotate(10deg);
+    }
+    25% {
+        -webkit-transform: rotate(-10deg);
+    }
+    50% {
+        -webkit-transform: rotate(20deg);
+    }
+    75% {
+        -webkit-transform: rotate(-5deg);
+    }
+    100% {
+        -webkit-transform: rotate(0deg);
+    }
+}
