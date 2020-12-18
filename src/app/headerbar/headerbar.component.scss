@@ -12,6 +12,7 @@
     // on mobile.
     gap: 12px 0;
     padding: 20px;
+    padding-top: 80px; // Space for eye-catcher
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
         url('../../assets/images/search-bg.png');
     background-size: cover;
@@ -23,7 +24,9 @@
         'search-field search-field '
         'filter-button oer-slider';
     justify-content: center;
+    transition: padding-top 0.2s;
     @media screen and (min-width: 850px) {
+        padding-top: 50px; // Space for eye-catcher
         gap: 20px 0;
         grid-template-areas:
             '. tagline'
@@ -40,6 +43,12 @@
         app-search-field,
         app-new-search-field {
             margin-right: 50px;
+        }
+    }
+    &.eye-catcher-full {
+        padding-top: 240px !important;
+        @media screen and (min-width: 1200px) {
+            padding-top: 190px !important;
         }
     }
     .tagline {
