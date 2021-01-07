@@ -1,10 +1,8 @@
 <!--<a class="details-link" [routerLink]="['/details', hit.id]">-->
-<a class="details-link"
-   [href]="hit.lom.technical.location"
-   target="_blank">
+<a class="details-link" [href]="hit.lom.technical.location" target="_blank">
   <div class="image-container" mat-card-image>
     <img class="img-bg" [appPreviewImage]="hit.previewImage" />
-    <img class="img-main" [appPreviewImage]="hit.previewImage" [loadHighResImage]="true" />
+    <img class="img-main" [appPreviewImage]="hit.previewImage" [loadHighResImage]="false" />
   </div>
   <mat-card-title class="title" [id]="hit.id + '-title'">{{
     hit.lom.general.title | truncate: 52
@@ -107,7 +105,5 @@
   <ng-container *ngIf="hit.source.url">
     <ng-container i18n>Source</ng-container>: {{ hit.source.name }}
   </ng-container>
-  <ng-container *ngIf="!hit.source.url">
-    &nbsp;
-  </ng-container>
+  <ng-container *ngIf="!hit.source.url"> &nbsp; </ng-container>
 </a>
