@@ -101,9 +101,9 @@
   <ng-container i18n *ngSwitchCase="Type.Portal">Go To Portal</ng-container>
   <ng-container i18n *ngSwitchCase="Type.LessonPlanning">Go To Lesson Planning</ng-container></a
 >
-<a class="source" [href]="hit.source.url" target="_blank">
-  <ng-container *ngIf="hit.source.url">
+<ng-container *ngIf="hit.source.url">
+  <a class="source" [href]="hit.source.url ? hit.source.url : null" target="_blank">
     <ng-container i18n>Source</ng-container>: {{ hit.source.name }}
-  </ng-container>
-  <ng-container *ngIf="!hit.source.url"> &nbsp; </ng-container>
-</a>
+  </a>
+</ng-container>
+<ng-container *ngIf="!hit.source.url"><a class="source">&nbsp;</a></ng-container>

@@ -103,6 +103,5 @@ a.content-link {
 }
 .source {
     padding: 8px 4px 0 4px;
-    display: flex;
-    justify-content: flex-end;
+    align-self: flex-end;
 }
