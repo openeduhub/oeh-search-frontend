@@ -101,9 +101,9 @@
   <ng-container i18n *ngSwitchCase="Type.Portal">Go To Portal</ng-container>
   <ng-container i18n *ngSwitchCase="Type.LessonPlanning">Go To Lesson Planning</ng-container></a
 >
-<ng-container *ngIf="hit.source.url">
-  <a class="source" [href]="hit.source.url ? hit.source.url : null" target="_blank">
-    <ng-container i18n>Source</ng-container>: {{ hit.source.name }}
-  </a>
-</ng-container>
-<ng-container *ngIf="!hit.source.url"><a class="source">&nbsp;</a></ng-container>
+<!-- We use [attr.href] so the href attribute will not be added at all when hit.source.url is
+undefined. Using [href] would cause an empty href attribute to be added in that case, making the
+element a link to the current page. -->
+<a class="source" [class.hidden]="!hit.source.url" [attr.href]="hit.source.url" target="_blank">
+  <ng-container i18n>Source</ng-container>: {{ hit.source.name }}
+</a>

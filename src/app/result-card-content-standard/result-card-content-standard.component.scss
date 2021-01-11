@@ -102,6 +102,10 @@ a.content-link {
     align-self: flex-end;
 }
 .source {
-    padding: 8px 4px 0 4px;
+    margin-top: 8px;
+    padding: 0 4px;
     align-self: flex-end;
+}
+.hidden {
+    visibility: hidden;
 }
