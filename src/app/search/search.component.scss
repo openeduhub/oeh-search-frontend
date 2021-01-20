@@ -19,24 +19,13 @@ app-search-filterbar {
         width: 100%;
         top: 0;
         left: 0;
-        z-index: 1;
-    }
-}
-
-.breadcrumbs {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    .mat-icon {
-        font-size: 1.25em;
-        height: 1em;
-        width: 1em;
-        margin: 0 0.2em;
+        z-index: 2;
     }
 }
 
 .summary {
-    margin-bottom: 2em;
+    display: flex;
+    flex-direction: column;
     .no-results {
         display: flex;
         flex-direction: column;
@@ -44,6 +33,19 @@ app-search-filterbar {
         a {
             margin-top: 10px;
         }
+    }
+}
+
+.style-toggle {
+    margin-left: auto;
+    flex-shrink: 0;
+    border-radius: 10px;
+    @media (min-width: 1000px) {
+        margin-bottom: -40px;
+        z-index: 2;
+    }
+    :host & ::ng-deep .mat-button-toggle-label-content {
+        line-height: 32px;
     }
 }
 

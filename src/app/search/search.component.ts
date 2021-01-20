@@ -6,7 +6,7 @@ import { DidYouMeanSuggestionFragment, ResultFragment } from '../../generated/gr
 import { SearchParametersService } from '../search-parameters.service';
 import { SearchData } from '../search-resolver.service';
 import { SearchService } from '../search.service';
-import { ViewService } from '../view.service';
+import { ResultCardStyle, ViewService } from '../view.service';
 
 @Component({
     selector: 'app-search',
@@ -20,6 +20,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     pageIndex: number;
     results: ResultFragment;
     selectedTab = new FormControl(0);
+    resultCardStyle: ResultCardStyle;
 
     private subscriptions: Subscription[] = [];
 
@@ -55,11 +56,20 @@ export class SearchComponent implements OnInit, OnDestroy {
             // filter.
             this.selectedTab.setValue(0);
         });
+        this.subscriptions.push(
+            this.view
+                .getResultCardStyle()
+                .subscribe((resultCardStyle) => (this.resultCardStyle = resultCardStyle)),
+        );
     }
 
     ngOnDestroy(): void {
         for (const subscription of this.subscriptions) {
             subscription.unsubscribe();
         }
+    }
+
+    setResultCardStyle(resultCardStyle: ResultCardStyle) {
+        this.view.setResultCardStyle(resultCardStyle);
     }
 }

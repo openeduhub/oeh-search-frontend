@@ -25,29 +25,58 @@
         >
       </div>
     </div>
-    <p *ngIf="results.total.value > 0">
-      <ng-container *ngIf="pageIndex === 0 && results.total.relation === 'eq'" i18n>
-        {results.total, plural, =1 {1 result} other
-        {{{results.total.value | number}} results}}
-      </ng-container>
-      <ng-container *ngIf="pageIndex === 0 && results.total.relation !== 'eq'" i18n>
-        More than {{ results.total.value | number }} results
-      </ng-container>
-      <ng-container *ngIf="pageIndex > 0 && results.total.relation === 'eq'" i18n>
-        Page {{ pageIndex + 1 }} of {{ results.total.value | number }} results
-      </ng-container>
-      <ng-container *ngIf="pageIndex > 0 && results.total.relation !== 'eq'" i18n>
-        Page {{ pageIndex + 1 }} of more than {{ results.total.value | number }} results
-      </ng-container>
-      <!-- <ng-container i18n>({{ results.took / 1000 | number }} seconds)</ng-container> -->
-    </p>
+    <ng-container *ngIf="results.total.value > 0">
+      <p>
+        <ng-container *ngIf="pageIndex === 0 && results.total.relation === 'eq'" i18n>
+          {results.total, plural, =1 {1 result} other
+          {{{results.total.value | number}} results}}
+        </ng-container>
+        <ng-container *ngIf="pageIndex === 0 && results.total.relation !== 'eq'" i18n>
+          More than {{ results.total.value | number }} results
+        </ng-container>
+        <ng-container *ngIf="pageIndex > 0 && results.total.relation === 'eq'" i18n>
+          Page {{ pageIndex + 1 }} of {{ results.total.value | number }} results
+        </ng-container>
+        <ng-container *ngIf="pageIndex > 0 && results.total.relation !== 'eq'" i18n>
+          Page {{ pageIndex + 1 }} of more than {{ results.total.value | number }} results
+        </ng-container>
+        <!-- <ng-container i18n>({{ results.took / 1000 | number }} seconds)</ng-container> -->
+      </p>
+      <mat-button-toggle-group
+        class="style-toggle"
+        [value]="resultCardStyle"
+        (change)="setResultCardStyle($event.value)"
+        aria-label="Result view"
+        i18n-aria-label
+      >
+        <mat-button-toggle
+          value="standard"
+          i18n-aria-label
+          aria-label="Standard view"
+          i18n-matTooltip
+          matTooltip="Standard view"
+        >
+          <mat-icon>view_column</mat-icon>
+        </mat-button-toggle>
+        <mat-button-toggle
+          value="compact"
+          i18n-aria-label
+          aria-label="Compact view"
+          i18n-matTooltip
+          matTooltip="Compact view"
+        >
+          <mat-icon>view_module</mat-icon>
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+    </ng-container>
   </div>
   <mat-tab-group
+    *ngIf="results.total.value > 0"
     [selectedIndex]="selectedTab.value"
     (selectedIndexChange)="selectedTab.setValue($event)"
   >
     <mat-tab i18n-label label="All Search Results">
-      <app-search-results *ngIf="results.total.value > 0" [results]="results"></app-search-results>
+      <app-search-results [results]="results"></app-search-results>
     </mat-tab>
     <mat-tab i18n-label label="Grouped Results">
       <app-subjects-portal></app-subjects-portal>

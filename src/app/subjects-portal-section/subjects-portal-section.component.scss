@@ -14,8 +14,10 @@
     display: flex;
     overflow-x: auto;
     align-items: stretch;
-    > app-result-card-small {
-        flex-shrink: 0;
+    padding-bottom: 5px;
+    > app-result-card {
+        min-width: 300px;
+        width: 300px;
         &:not(:last-of-type) {
             margin-right: 30px;
         }
