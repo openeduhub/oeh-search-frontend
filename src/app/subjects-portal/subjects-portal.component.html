@@ -8,6 +8,12 @@
     </mat-panel-title>
   </mat-expansion-panel-header> -->
 <app-subjects-portal-section
+  *ngIf="results.method.length > 0"
+  type="method"
+  [hits]="results.method"
+  [filters]="filters"
+></app-subjects-portal-section>
+<app-subjects-portal-section
   *ngIf="results.content.length > 0"
   type="content"
   [hits]="results.content"

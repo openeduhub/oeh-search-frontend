@@ -10,6 +10,7 @@
       <ng-container *ngSwitchCase="Type.LessonPlanning" i18n>Lesson Planning</ng-container>
       <ng-container *ngSwitchCase="Type.Tool" i18n>Tool</ng-container>
       <ng-container *ngSwitchCase="Type.Portal" i18n>Portal</ng-container>
+      <ng-container *ngSwitchCase="Type.Method" i18n>Method</ng-container>
       <ng-container *ngSwitchDefault>{{ bucket.key }}</ng-container>
     </span>
     <span class="count" *ngIf="showCount">{{ bucket.doc_count }}</span>

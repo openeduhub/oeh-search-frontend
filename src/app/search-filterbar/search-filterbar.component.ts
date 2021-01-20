@@ -130,6 +130,7 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
             Type.LessonPlanning,
             Type.Tool,
             Type.Portal,
+            Type.Method,
         ]);
         this.hasFacets = Object.values(facets).some((facet) => facet.buckets.length > 0);
     }

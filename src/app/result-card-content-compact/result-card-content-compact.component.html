@@ -1,16 +1,11 @@
 <div class="header">
   <!--<a class="details-link" [routerLink]="['/details', hit.id]">-->
-  <a class="details-link"
-     [href]="hit.lom.technical.location"
-     target="_blank">
+  <a class="details-link" [href]="hit.lom.technical.location" target="_blank">
     <mat-card-title class="title">
       {{ hit.lom.general.title | truncate: (isExpanded ? -1 : 52) }}
     </mat-card-title>
   </a>
-  <a class="source"
-     [href]="hit.source.url"
-     *ngIf="hit.source.url"
-     target="_blank">
+  <a class="source" [href]="hit.source.url" *ngIf="hit.source.url" target="_blank">
     {{ hit.source.name }}
   </a>
 </div>
@@ -87,6 +82,7 @@
   <ng-container i18n *ngSwitchCase="Type.Tool">Go To Tool</ng-container>
   <ng-container i18n *ngSwitchCase="Type.Portal">Go To Portal</ng-container>
   <ng-container i18n *ngSwitchCase="Type.LessonPlanning">Go To Lesson Planning</ng-container>
+  <ng-container i18n *ngSwitchCase="Type.Method">Go To Method</ng-container>
 </a>
 <mat-card-actions>
   <button

@@ -27,19 +27,20 @@
     </div>
     <ng-container *ngIf="results.total.value > 0">
       <p>
-        <ng-container *ngIf="pageIndex === 0 && results.total.relation === 'eq'" i18n>
-          {results.total, plural, =1 {1 result} other
-          {{{results.total.value | number}} results}}
-        </ng-container>
-        <ng-container *ngIf="pageIndex === 0 && results.total.relation !== 'eq'" i18n>
-          More than {{ results.total.value | number }} results
-        </ng-container>
-        <ng-container *ngIf="pageIndex > 0 && results.total.relation === 'eq'" i18n>
-          Page {{ pageIndex + 1 }} of {{ results.total.value | number }} results
-        </ng-container>
-        <ng-container *ngIf="pageIndex > 0 && results.total.relation !== 'eq'" i18n>
-          Page {{ pageIndex + 1 }} of more than {{ results.total.value | number }} results
-        </ng-container>
+        <ng-container *ngIf="pageIndex === 0 && results.total.relation === 'eq'" i18n
+          >{results.total, plural, =1 {1 result} other
+          {{{results.total.value | number}} results}}</ng-container
+        >
+        <ng-container *ngIf="pageIndex === 0 && results.total.relation !== 'eq'" i18n
+          >More than {{ results.total.value | number }} results</ng-container
+        >
+        <ng-container *ngIf="pageIndex > 0 && results.total.relation === 'eq'" i18n
+          >Page {{ pageIndex + 1 }} of {{ results.total.value | number }} results</ng-container
+        >
+        <ng-container *ngIf="pageIndex > 0 && results.total.relation !== 'eq'" i18n
+          >Page {{ pageIndex + 1 }} of more than
+          {{ results.total.value | number }} results</ng-container
+        >
         <!-- <ng-container i18n>({{ results.took / 1000 | number }} seconds)</ng-container> -->
       </p>
       <mat-button-toggle-group

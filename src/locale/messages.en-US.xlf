@@ -54,51 +54,51 @@
       <context-group purpose="location"><context context-type="sourcefile">src/app/new-search-field/new-search-field.component.html</context><context context-type="linenumber">66</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context><context context-type="linenumber">25</context></context-group></trans-unit><trans-unit id="8e421eff4d46c3686b8937e7b8a709bbe9dfe8bd" datatype="html">
         <source>Intended End User Role</source><target state="final">Intended End User Role</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/details/details.component.html</context><context context-type="linenumber">65</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/new-search-field/new-search-field.component.html</context><context context-type="linenumber">73</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context><context context-type="linenumber">54</context></context-group></trans-unit><trans-unit id="49ab4d6f1aeb3fc797af0dc2aa828c1557b993d3" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/details/details.component.html</context><context context-type="linenumber">66</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/new-search-field/new-search-field.component.html</context><context context-type="linenumber">73</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context><context context-type="linenumber">54</context></context-group></trans-unit><trans-unit id="49ab4d6f1aeb3fc797af0dc2aa828c1557b993d3" datatype="html">
         <source>Tool</source><target state="final">Tool</target>
         
       <context-group purpose="location"><context context-type="sourcefile">src/app/multivalue-checkbox/multivalue-checkbox.component.html</context><context context-type="linenumber">11</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/new-search-field/new-search-field.component.html</context><context context-type="linenumber">100</context></context-group></trans-unit><trans-unit id="6aac700f6329534e15ce6f9a4d526a004c1d1785" datatype="html">
         <source>Portal</source><target state="final">Portal</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/multivalue-checkbox/multivalue-checkbox.component.html</context><context context-type="linenumber">12</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/new-search-field/new-search-field.component.html</context><context context-type="linenumber">101</context></context-group></trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/multivalue-checkbox/multivalue-checkbox.component.html</context><context context-type="linenumber">12</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/new-search-field/new-search-field.component.html</context><context context-type="linenumber">101</context></context-group></trans-unit><trans-unit id="a0c7e8516852d2b5888c8a00894acd60aad61317" datatype="html">
+        <source>Method</source><target state="final">Method</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/multivalue-checkbox/multivalue-checkbox.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/new-search-field/new-search-field.component.html</context>
+          <context context-type="linenumber">103</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="e4e28b371f8453e22779db590cb0fe67f2a080e8" datatype="html">
         <source>No results</source><target state="final">No results</target>
         
       <context-group purpose="location"><context context-type="sourcefile">src/app/search/search.component.html</context><context context-type="linenumber">14</context></context-group></trans-unit><trans-unit id="2781a2dd466ed10e528cd886e6e51e6e8eff6c29" datatype="html">
         <source>Search without filters</source><target state="final">Search without filters</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/search/search.component.html</context><context context-type="linenumber">24</context></context-group></trans-unit><trans-unit id="c9b38d5d1c3e399c29416325087cc68b6218b816" datatype="html">
-        <source> <x id="ICU" equiv-text="{results.total, plural, =1 {1 result} other
-        {{{results.total.value | number}} results}}
-      "/> </source><target state="final"> <x id="ICU" equiv-text="{results.total, plural, =1 {1 result} other
-        {{{results.total.value | number}} results}}
-      "/> </target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/search/search.component.html</context><context context-type="linenumber">30</context></context-group></trans-unit><trans-unit id="d9a50a31aaaf8abb62d3604303b023c24ced6dae" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/search/search.component.html</context><context context-type="linenumber">24</context></context-group></trans-unit><trans-unit id="d9a50a31aaaf8abb62d3604303b023c24ced6dae" datatype="html">
         <source>{VAR_PLURAL, plural, =1 {1 result} other {<x id="INTERPOLATION"/> results}}</source><target state="final">{VAR_PLURAL, plural, =1 {1 result} other {<x id="INTERPOLATION"/> results}}</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/search/search.component.html</context><context context-type="linenumber">30</context></context-group></trans-unit><trans-unit id="60df9e0e3fde8b974cd5f94f9c09b52d57afd260" datatype="html">
-        <source>
-        More than <x id="INTERPOLATION" equiv-text="{{ results.total.value | number }}"/> results
-      </source><target state="final">
-        More than <x id="INTERPOLATION" equiv-text="{{ results.total.value | number }}"/> results
-      </target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/search/search.component.html</context><context context-type="linenumber">33</context></context-group></trans-unit><trans-unit id="d4ce904dee8c502f68267f901e9742f1ce0474cd" datatype="html">
-        <source>
-        Page <x id="INTERPOLATION" equiv-text="{{ pageIndex + 1 }}"/> of <x id="INTERPOLATION_1" equiv-text="{{ results.total.value | number }}"/> results
-      </source><target state="final">
-        Page <x id="INTERPOLATION" equiv-text="{{ pageIndex + 1 }}"/> of <x id="INTERPOLATION_1" equiv-text="{{ results.total.value | number }}"/> results
-      </target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/search/search.component.html</context><context context-type="linenumber">36</context></context-group></trans-unit><trans-unit id="90d4dceb2f8c2f8659288b94f301d4446261ea9d" datatype="html">
-        <source>
-        Page <x id="INTERPOLATION" equiv-text="{{ pageIndex + 1 }}"/> of more than <x id="INTERPOLATION_1" equiv-text="{{ results.total.value | number }}"/> results
-      </source><target state="final">
-        Page <x id="INTERPOLATION" equiv-text="{{ pageIndex + 1 }}"/> of more than <x id="INTERPOLATION_1" equiv-text="{{ results.total.value | number }}"/> results
-      </target>
-        
-      <context-group purpose="location"><context context-type="sourcefile">src/app/search/search.component.html</context><context context-type="linenumber">39</context></context-group></trans-unit><trans-unit id="99112040d70dd87f4b93a82344567814dc4e30bb" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/search/search.component.html</context><context context-type="linenumber">31</context></context-group></trans-unit><trans-unit id="e3fac1d8e26e9b22d6b3796391f126ea19de27d5" datatype="html">
+        <source>More than <x id="INTERPOLATION" equiv-text="{{ results.total.value | number }}"/> results</source><target state="final">More than <x id="INTERPOLATION" equiv-text="{{ results.total.value | number }}"/> results</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search/search.component.html</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+      </trans-unit><trans-unit id="3f413506780dcc59974dabe23d3d865c28f26868" datatype="html">
+        <source>Page <x id="INTERPOLATION" equiv-text="{{ pageIndex + 1 }}"/> of <x id="INTERPOLATION_1" equiv-text="{{ results.total.value | number }}"/> results</source><target state="final">Page <x id="INTERPOLATION" equiv-text="{{ pageIndex + 1 }}"/> of <x id="INTERPOLATION_1" equiv-text="{{ results.total.value | number }}"/> results</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search/search.component.html</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+      </trans-unit><trans-unit id="7dc126f80b77deacc76cc1ffee9a36edff84448a" datatype="html">
+        <source>Page <x id="INTERPOLATION" equiv-text="{{ pageIndex + 1 }}"/> of more than <x id="INTERPOLATION_1" equiv-text="          {{ results.total.value |"/> results</source><target state="final">Page <x id="INTERPOLATION" equiv-text="{{ pageIndex + 1 }}"/> of more than <x id="INTERPOLATION_1" equiv-text="          {{ results.total.value |"/> results</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/search/search.component.html</context>
+          <context context-type="linenumber">41,42</context>
+        </context-group>
+      </trans-unit><trans-unit id="99112040d70dd87f4b93a82344567814dc4e30bb" datatype="html">
         <source>Contents</source><target state="final">Contents</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/subjects-portal-section/subjects-portal-section.component.html</context>
@@ -107,27 +107,24 @@
       </trans-unit><trans-unit id="0286d71c09c375c44b7b4db422d0d04df4d07a99" datatype="html">
         <source>All Search Results</source><target state="final">All Search Results</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/search/search.component.html</context><context context-type="linenumber">49</context></context-group></trans-unit><trans-unit id="fafd2a13ad18027abb3bcaf854723833c9c23bc3" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/search/search.component.html</context><context context-type="linenumber">79</context></context-group></trans-unit><trans-unit id="fafd2a13ad18027abb3bcaf854723833c9c23bc3" datatype="html">
         <source>Grouped Results</source><target state="final">Grouped Results</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/search/search.component.html</context>
-          <context context-type="linenumber">52</context>
-        </context-group>
-      </trans-unit><trans-unit id="92cfea1361d316d47e0992c3fffff7836c60a960" datatype="html">
+        
+      <context-group purpose="location"><context context-type="sourcefile">src/app/search/search.component.html</context><context context-type="linenumber">82</context></context-group></trans-unit><trans-unit id="92cfea1361d316d47e0992c3fffff7836c60a960" datatype="html">
         <source>Standard view</source><target state="final">Standard view</target>
         
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/search-results/search-results.component.html</context><context context-type="linenumber">12</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/search-results/search-results.component.html</context><context context-type="linenumber">14</context></context-group></trans-unit><trans-unit id="f14c4dc56d41f201599324a8b9c297812798b734" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/search/search.component.html</context><context context-type="linenumber">56</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/search/search.component.html</context><context context-type="linenumber">58</context></context-group></trans-unit><trans-unit id="f14c4dc56d41f201599324a8b9c297812798b734" datatype="html">
         <source>Compact view</source><target state="final">Compact view</target>
         
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/search-results/search-results.component.html</context><context context-type="linenumber">21</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/search-results/search-results.component.html</context><context context-type="linenumber">23</context></context-group></trans-unit><trans-unit id="949ba3965c4478f3c3caf1aef6158706c769ef65" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/search/search.component.html</context><context context-type="linenumber">65</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/search/search.component.html</context><context context-type="linenumber">67</context></context-group></trans-unit><trans-unit id="949ba3965c4478f3c3caf1aef6158706c769ef65" datatype="html">
         <source>Result view</source><target state="final">Result view</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/search-results/search-results.component.html</context><context context-type="linenumber">6</context></context-group></trans-unit><trans-unit id="058e8e2e266ee6c4c4c574ed2508b99d00a2d170" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/search/search.component.html</context><context context-type="linenumber">50</context></context-group></trans-unit><trans-unit id="058e8e2e266ee6c4c4c574ed2508b99d00a2d170" datatype="html">
         <source>Recommended by editorial team</source><target state="final">Recommended by editorial team</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/details/details.component.html</context><context context-type="linenumber">34</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context><context context-type="linenumber">21</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context><context context-type="linenumber">16</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context><context context-type="linenumber">16</context></context-group></trans-unit><trans-unit id="7d02e831ce807dfe660dc187ce89f633354f33ee" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/details/details.component.html</context><context context-type="linenumber">35</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context><context context-type="linenumber">21</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context><context context-type="linenumber">16</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context><context context-type="linenumber">16</context></context-group></trans-unit><trans-unit id="7d02e831ce807dfe660dc187ce89f633354f33ee" datatype="html">
         <source>Open Educational Resources</source><target state="final">Open Educational Resources</target>
         
       <context-group purpose="location"><context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context><context context-type="linenumber">24</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context><context context-type="linenumber">24</context></context-group></trans-unit><trans-unit id="bbfd158191eb0f7d84f6c642350af8e7f0437dcb" datatype="html">
@@ -139,32 +136,32 @@
       <context-group purpose="location"><context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context><context context-type="linenumber">61</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context><context context-type="linenumber">61</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context><context context-type="linenumber">78</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context><context context-type="linenumber">78</context></context-group></trans-unit><trans-unit id="e2f5ddbb1c62ee08bb0cc5a18ecba95e1e621760" datatype="html">
         <source>Discipline</source><target state="final">Discipline</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/details/details.component.html</context><context context-type="linenumber">46</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/new-search-field/new-search-field.component.html</context><context context-type="linenumber">70</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context><context context-type="linenumber">28</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context><context context-type="linenumber">34</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context><context context-type="linenumber">42</context></context-group></trans-unit><trans-unit id="4dbd5d5aa9de5f2246e18532f80745b43ebb05f2" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/details/details.component.html</context><context context-type="linenumber">47</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/new-search-field/new-search-field.component.html</context><context context-type="linenumber">70</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context><context context-type="linenumber">28</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context><context context-type="linenumber">34</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context><context context-type="linenumber">42</context></context-group></trans-unit><trans-unit id="4dbd5d5aa9de5f2246e18532f80745b43ebb05f2" datatype="html">
         <source>Educational Context</source><target state="final">Educational Context</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/details/details.component.html</context><context context-type="linenumber">55</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context><context context-type="linenumber">46</context></context-group></trans-unit><trans-unit id="a17b0f722230835c2d4e3aaedeb56fb057fd035a" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/details/details.component.html</context><context context-type="linenumber">56</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context><context context-type="linenumber">46</context></context-group></trans-unit><trans-unit id="a17b0f722230835c2d4e3aaedeb56fb057fd035a" datatype="html">
         <source>Learning Resource Type</source><target state="final">Learning Resource Type</target>
         
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/details/details.component.html</context><context context-type="linenumber">76</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/new-search-field/new-search-field.component.html</context><context context-type="linenumber">76</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context><context context-type="linenumber">50</context></context-group></trans-unit><trans-unit id="1f335b381271e2cc422d3b9e3c40ba794d19da4e" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/details/details.component.html</context><context context-type="linenumber">77</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/new-search-field/new-search-field.component.html</context><context context-type="linenumber">76</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context><context context-type="linenumber">50</context></context-group></trans-unit><trans-unit id="1f335b381271e2cc422d3b9e3c40ba794d19da4e" datatype="html">
         <source>Keywords</source><target state="final">Keywords</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/details/details.component.html</context><context context-type="linenumber">86</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context><context context-type="linenumber">62</context></context-group></trans-unit><trans-unit id="cca976af7ffcd3a3e8a2ca220d478c2b3f11fe09" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/details/details.component.html</context><context context-type="linenumber">87</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context><context context-type="linenumber">62</context></context-group></trans-unit><trans-unit id="cca976af7ffcd3a3e8a2ca220d478c2b3f11fe09" datatype="html">
         <source>Learning resource type</source><target state="final">Learning resource type</target>
         
       <context-group purpose="location"><context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context><context context-type="linenumber">48</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context><context context-type="linenumber">60</context></context-group></trans-unit><trans-unit id="0594812d4c50c2adbd1a892a3497c4e5c19e4b32" datatype="html">
         <source>yes</source><target state="final">yes</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/details/details.component.html</context><context context-type="linenumber">42</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context><context context-type="linenumber">73</context></context-group></trans-unit><trans-unit id="6320692861e01fa9c9d4e692d0d27b6c12b21c3b" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/details/details.component.html</context><context context-type="linenumber">43</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context><context context-type="linenumber">73</context></context-group></trans-unit><trans-unit id="6320692861e01fa9c9d4e692d0d27b6c12b21c3b" datatype="html">
         <source>no</source><target state="final">no</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/details/details.component.html</context><context context-type="linenumber">43</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context><context context-type="linenumber">74</context></context-group></trans-unit><trans-unit id="e8bcb762b48cf52fbea66ce9c4f6b970b99a80fd" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/details/details.component.html</context><context context-type="linenumber">44</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context><context context-type="linenumber">74</context></context-group></trans-unit><trans-unit id="e8bcb762b48cf52fbea66ce9c4f6b970b99a80fd" datatype="html">
         <source>Collapse</source><target state="final">Collapse</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context><context context-type="linenumber">96</context></context-group></trans-unit><trans-unit id="1f332ec66f3bc8d943c248091be7f92772ba280f" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context><context context-type="linenumber">97</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context><context context-type="linenumber">97</context></context-group></trans-unit><trans-unit id="1f332ec66f3bc8d943c248091be7f92772ba280f" datatype="html">
         <source>Expand</source><target state="final">Expand</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context><context context-type="linenumber">105</context></context-group></trans-unit><trans-unit id="5f27726154e0e74a500ccd7a71df6e212dd6ce11" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context><context context-type="linenumber">106</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context><context context-type="linenumber">106</context></context-group></trans-unit><trans-unit id="5f27726154e0e74a500ccd7a71df6e212dd6ce11" datatype="html">
         <source>Experiments</source><target state="final">Experiments</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/experiments-toggles/experiments-toggles.component.html</context>
@@ -216,13 +213,19 @@
           <context context-type="sourcefile">src/app/subjects-portal-section/subjects-portal-section.component.html</context>
           <context context-type="linenumber">6</context>
         </context-group>
+      </trans-unit><trans-unit id="e46cc0aacb1981a95c1729e942b4c9ac060ebe41" datatype="html">
+        <source>Methods</source><target state="final">Methods</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/subjects-portal-section/subjects-portal-section.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
       </trans-unit><trans-unit id="1fc85c00336d56c6b121ea5474c80857baa5d7e7" datatype="html">
         <source>Lesson Planning</source><target state="final">Lesson Planning</target>
         
       <context-group purpose="location"><context context-type="sourcefile">src/app/multivalue-checkbox/multivalue-checkbox.component.html</context><context context-type="linenumber">10</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/new-search-field/new-search-field.component.html</context><context context-type="linenumber">102</context></context-group></trans-unit><trans-unit id="cafa0fa1a3da51d030553ba79897d1068a9131fc" datatype="html">
         <source>show more</source><target state="final">show more</target>
 
-      <context-group purpose="location"><context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context><context context-type="linenumber">79</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/subjects-portal-section/subjects-portal-section.component.html</context><context context-type="linenumber">15</context></context-group></trans-unit><trans-unit id="032e4a4ff2de53b4a9a1184ecc935aeee512e529" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context><context context-type="linenumber">79</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/subjects-portal-section/subjects-portal-section.component.html</context><context context-type="linenumber">16</context></context-group></trans-unit><trans-unit id="032e4a4ff2de53b4a9a1184ecc935aeee512e529" datatype="html">
         <source>everything</source><target state="final">all Licenses</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/oer-slider/oer-slider.component.html</context>
@@ -275,17 +278,31 @@
         
         
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/details/details.component.html</context><context context-type="linenumber">17</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context><context context-type="linenumber">89</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context><context context-type="linenumber">102</context></context-group></trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/details/details.component.html</context><context context-type="linenumber">17</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context><context context-type="linenumber">89</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context><context context-type="linenumber">102</context></context-group></trans-unit><trans-unit id="00191700e70c03363ff9b64b37027758bb5ed9f3" datatype="html">
+        <source>Go To Method</source><target state="final">Go To Method</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/details/details.component.html</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/result-card-content-compact/result-card-content-compact.component.html</context>
+          <context context-type="linenumber">90</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context>
+          <context context-type="linenumber">103</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="69e46dc0dfe176ef7f0839cde8822f76ea58cfda" datatype="html">
         <source>Back to overview</source><target state="final">Back to overview</target>
         
       <context-group purpose="location"><context context-type="sourcefile">src/app/details/details.component.html</context><context context-type="linenumber">2</context></context-group></trans-unit><trans-unit id="7ce33113d5ba83bc7653f754abca4ca49917530f" datatype="html">
         <source>Report a problem</source><target state="final">Report a problem</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/details/details.component.html</context><context context-type="linenumber">101</context></context-group></trans-unit><trans-unit id="a5d2031ba6b575b64a0355646f8405ebc6ea06db" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/details/details.component.html</context><context context-type="linenumber">102</context></context-group></trans-unit><trans-unit id="a5d2031ba6b575b64a0355646f8405ebc6ea06db" datatype="html">
         <source>Open educational resources</source><target state="final">Open educational resources</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/details/details.component.html</context><context context-type="linenumber">40</context></context-group></trans-unit>
+      <context-group purpose="location"><context context-type="sourcefile">src/app/details/details.component.html</context><context context-type="linenumber">41</context></context-group></trans-unit>
       <trans-unit id="5f63f0ac9abd7ff136ae484844ed3e8722604f22" datatype="html">
         <source>Did you mean:</source>
         <target state="final">Did you mean:</target>
@@ -293,7 +310,7 @@
       <context-group purpose="location"><context context-type="sourcefile">src/app/search/search.component.html</context><context context-type="linenumber">5</context></context-group></trans-unit><trans-unit id="6834fa6b43d1ecbdf147c48dd9c4d72f1484571d" datatype="html">
         <source>Source</source><target state="final">Source</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/new-search-field/new-search-field.component.html</context><context context-type="linenumber">78</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context><context context-type="linenumber">108</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context><context context-type="linenumber">58</context></context-group></trans-unit><trans-unit id="4ab4cb601522b9194922554d934c4c30bd93567d" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/new-search-field/new-search-field.component.html</context><context context-type="linenumber">78</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context><context context-type="linenumber">109</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context><context context-type="linenumber">58</context></context-group></trans-unit><trans-unit id="4ab4cb601522b9194922554d934c4c30bd93567d" datatype="html">
         <source>Content</source><target state="final">Content</target>
         
       <context-group purpose="location"><context context-type="sourcefile">src/app/multivalue-checkbox/multivalue-checkbox.component.html</context><context context-type="linenumber">9</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/new-search-field/new-search-field.component.html</context><context context-type="linenumber">99</context></context-group></trans-unit>

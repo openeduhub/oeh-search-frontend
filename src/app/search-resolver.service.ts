@@ -23,6 +23,7 @@ export interface SearchData {
 export type Hits = SearchQuery['search']['hits'];
 
 export interface SubjectsPortalResults {
+    method: Hits;
     lessonPlanning: Hits;
     content: Hits;
     portal: Hits;
@@ -67,6 +68,7 @@ export class SearchResolverService implements Resolve<SearchData> {
 
     private resolveSubjectsPortalResults(): Observable<SubjectsPortalResults> {
         return forkJoin({
+            method: this.getHitsForType(Type.Method),
             lessonPlanning: this.getHitsForType(Type.LessonPlanning),
             content: this.getHitsForType(Type.Content),
             portal: this.getHitsForType(Type.Portal),
