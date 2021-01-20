@@ -33,7 +33,7 @@ export interface SubjectsPortalResults {
     providedIn: 'root',
 })
 export class SearchResolverService implements Resolve<SearchData> {
-    private readonly subjectsPortalNumberOfResults = 5;
+    private readonly subjectsPortalNumberOfResults = 10;
     private language: Language;
 
     constructor(
@@ -61,10 +61,8 @@ export class SearchResolverService implements Resolve<SearchData> {
     }
 
     private shouldLoadSubjectsPortal(paramMap: ParamMap): boolean {
-        // return paramMap.has('educationalContext') && paramMap.has('discipline');
-
-        // Disable subjects portals completely for now.
-        return false;
+        // TODO: load the results dynamically when opened by the user.
+        return true;
     }
 
     private resolveSubjectsPortalResults(): Observable<SubjectsPortalResults> {
@@ -80,7 +78,7 @@ export class SearchResolverService implements Resolve<SearchData> {
         const { searchString, filters } = this.searchParameters.getCurrentValue();
         const filtersCopy: Filters = { ...filters };
         filtersCopy[Facet.Type] = [type];
-        filtersCopy[Facet.EditorialTag] = [EditorialTag.Recommended];
+        // filtersCopy[Facet.EditorialTag] = [EditorialTag.Recommended];
         return this.searchGQL
             .fetch({
                 searchString,

@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DidYouMeanSuggestionFragment, ResultFragment } from '../../generated/graphql';
@@ -18,7 +19,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     filterCount: number;
     pageIndex: number;
     results: ResultFragment;
-    breadcrumbs: string[];
+    selectedTab = new FormControl(0);
 
     private subscriptions: Subscription[] = [];
 
@@ -48,18 +49,11 @@ export class SearchComponent implements OnInit, OnDestroy {
                 this.filterCount = Object.keys(filters).filter((k) => filters[k]?.length).length;
             }),
         );
-        this.subscriptions.push(
-            this.route.paramMap.subscribe((paramMap) => {
-                if (paramMap.has('educationalContext') && paramMap.has('discipline')) {
-                    this.breadcrumbs = [
-                        paramMap.get('educationalContext'),
-                        paramMap.get('discipline'),
-                    ];
-                }
-            }),
-        );
         this.route.data.subscribe((data: { searchData: SearchData }) => {
             this.results = data.searchData.searchResults;
+            // TODO: switch to tab 0 even if the user clicks on "show more" on the currently active
+            // filter.
+            this.selectedTab.setValue(0);
         });
     }
 

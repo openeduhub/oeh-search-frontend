@@ -55,9 +55,12 @@ import { SearchFieldComponent } from './search-field/search-field.component';
 import { SearchFilterbarComponent } from './search-filterbar/search-filterbar.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { SearchComponent } from './search/search.component';
+import { SubjectsPortalSectionComponent } from './subjects-portal-section/subjects-portal-section.component';
+import { SubjectsPortalComponent } from './subjects-portal/subjects-portal.component';
 import { TrimPipe } from './trim.pipe';
 import { TruncatePipe } from './truncate.pipe';
 import { EyeCatcherComponent } from './eye-catcher/eye-catcher.component';
+import { MatTabsModule } from '@angular/material/tabs';
 
 const fragmentMatcher = new IntrospectionFragmentMatcher({
     introspectionQueryResultData,
@@ -83,7 +86,9 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
         EncodeUriComponentPipe,
         ResultCardComponent,
         PaginatorComponent,
+        SubjectsPortalComponent,
         ResultCardSmallComponent,
+        SubjectsPortalSectionComponent,
         OerSliderComponent,
         AddContentFabComponent,
         ResultCardContentStandardComponent,
@@ -124,6 +129,7 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
         MatTooltipModule,
         OverlayModule,
         ReactiveFormsModule,
+        MatTabsModule,
     ],
     providers: [
         {

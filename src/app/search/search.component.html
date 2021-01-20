@@ -1,12 +1,6 @@
 <app-search-filterbar *ngIf="showFilterBar"></app-search-filterbar>
 
 <div class="results">
-  <h1 class="breadcrumbs" *ngIf="breadcrumbs">
-    <ng-container *ngFor="let breadcrumb of breadcrumbs; let last = last">
-      <span>{{ breadcrumb }}</span>
-      <mat-icon *ngIf="!last">keyboard_arrow_right</mat-icon>
-    </ng-container>
-  </h1>
   <p *ngIf="didYouMeanSuggestion" class="did-you-mean">
     <ng-container i18n>Did you mean:</ng-container>&nbsp;<a
       [innerHTML]="didYouMeanSuggestion.html"
@@ -48,5 +42,15 @@
       <!-- <ng-container i18n>({{ results.took / 1000 | number }} seconds)</ng-container> -->
     </p>
   </div>
-  <app-search-results *ngIf="results.total.value > 0" [results]="results"></app-search-results>
+  <mat-tab-group
+    [selectedIndex]="selectedTab.value"
+    (selectedIndexChange)="selectedTab.setValue($event)"
+  >
+    <mat-tab i18n-label label="All Search Results">
+      <app-search-results *ngIf="results.total.value > 0" [results]="results"></app-search-results>
+    </mat-tab>
+    <mat-tab i18n-label label="Grouped Results">
+      <app-subjects-portal></app-subjects-portal>
+    </mat-tab>
+  </mat-tab-group>
 </div>

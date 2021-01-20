@@ -1,0 +1,21 @@
+<div class="header">
+  <h3 class="title" [ngSwitch]="type">
+    <ng-container *ngSwitchCase="Type.Content" i18n>Contents</ng-container>
+    <ng-container *ngSwitchCase="Type.LessonPlanning" i18n="plural|">Lesson Planning</ng-container>
+    <ng-container *ngSwitchCase="Type.Tool" i18n>Tools</ng-container>
+    <ng-container *ngSwitchCase="Type.Portal" i18n>Portals</ng-container>
+  </h3>
+  <a
+    class="show-more-button"
+    mat-button
+    routerLink="/search"
+    [queryParams]="type | generateFilters: Facet.Type:filters"
+    queryParamsHandling="merge"
+  >
+    <ng-container i18n>show more</ng-container>
+    <mat-icon>keyboard_arrow_right</mat-icon>
+  </a>
+</div>
+<div class="results">
+  <app-result-card-small *ngFor="let hit of hits" [hit]="hit"></app-result-card-small>
+</div>
