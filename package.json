@@ -50,7 +50,7 @@
     "@graphql-codegen/cli": "^1.19.2",
     "@graphql-codegen/fragment-matcher": "^2.0.1",
     "@graphql-codegen/typescript": "^1.17.11",
-    "@graphql-codegen/typescript-apollo-angular": "^1.17.7",
+    "@graphql-codegen/typescript-apollo-angular": "^2.3.0",
     "@graphql-codegen/typescript-operations": "^1.17.10",
     "@ngx-i18nsupport/ngx-i18nsupport": "^1.1.6",
     "@types/jasmine": "^3.6.2",
