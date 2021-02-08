@@ -3,17 +3,16 @@ import { ActivatedRouteSnapshot, ParamMap, Resolve } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
-    EditorialTag,
     Facet,
+    Language,
     ResultFragment,
     SearchGQL,
     SearchQuery,
     Type,
-    Language,
 } from '../generated/graphql';
+import { ConfigService } from './config.service';
 import { SearchParametersService } from './search-parameters.service';
 import { Filters, mapFilters, SearchService } from './search.service';
-import { ConfigService } from './config.service';
 
 export interface SearchData {
     searchResults: ResultFragment;
@@ -77,15 +76,14 @@ export class SearchResolverService implements Resolve<SearchData> {
     }
 
     private getHitsForType(type: Type): Observable<Hits> {
-        const { searchString, filters } = this.searchParameters.getCurrentValue();
+        const { searchString, filters, oer } = this.searchParameters.getCurrentValue();
         const filtersCopy: Filters = { ...filters };
         filtersCopy[Facet.Type] = [type];
-        // filtersCopy[Facet.EditorialTag] = [EditorialTag.Recommended];
         return this.searchGQL
             .fetch({
                 searchString,
                 size: this.subjectsPortalNumberOfResults,
-                filters: mapFilters(filtersCopy),
+                filters: mapFilters(filtersCopy, oer),
                 language: this.language,
             })
             .pipe(map((response) => response.data.search.hits));

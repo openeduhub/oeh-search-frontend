@@ -3,11 +3,10 @@ import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/co
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { combineLatest, Subject } from 'rxjs';
-import { debounceTime, map, startWith, switchMap, takeUntil, tap } from 'rxjs/operators';
-import { Facet, FacetSuggestionsGQL, Type } from '../../generated/graphql';
-import { ConfigService } from '../config.service';
+import { debounceTime, map, startWith, switchMap, takeUntil } from 'rxjs/operators';
+import { Facet, Type } from '../../generated/graphql';
 import { SearchParametersService } from '../search-parameters.service';
-import { Facets, Filters, mapFacets, mapFilters } from '../search.service';
+import { Facets, Filters, SearchService } from '../search.service';
 
 type Suggestions = { [key in Facet]?: string[] };
 
@@ -58,9 +57,8 @@ export class NewSearchFieldComponent implements OnInit, OnDestroy {
     private destroyed$: Subject<void> = new Subject();
 
     constructor(
-        private config: ConfigService,
-        private facetSuggestionsGQL: FacetSuggestionsGQL,
         private router: Router,
+        private search: SearchService,
         private searchParameters: SearchParametersService,
     ) {}
 
@@ -79,20 +77,10 @@ export class NewSearchFieldComponent implements OnInit, OnDestroy {
         ])
             .pipe(
                 debounceTime(200),
-                switchMap(([inputString, searchParameters]) =>
-                    this.facetSuggestionsGQL
-                        .fetch({
-                            inputString,
-                            searchString: searchParameters?.searchString,
-                            language: this.config.getLanguage(),
-                            filters: mapFilters(searchParameters?.filters),
-                        })
-                        .pipe(
-                            map((response) => ({
-                                facets: mapFacets(response.data.facetSuggestions),
-                                inputString,
-                            })),
-                        ),
+                switchMap(([inputString]) =>
+                    this.search
+                        .getFacetSuggestions(inputString)
+                        .pipe(map((facets) => ({ facets, inputString }))),
                 ),
             )
             .subscribe(({ facets, inputString }) => {

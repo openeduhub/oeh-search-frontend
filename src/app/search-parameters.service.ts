@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { NavigationEnd, ParamMap, Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
+import { Language } from '../generated/graphql';
 import { ConfigService } from './config.service';
 import { Filters } from './search.service';
-import { Language, Facet } from '../generated/graphql';
 
 export interface ParsedParams {
     searchString: string;
@@ -96,21 +96,6 @@ export class SearchParametersService {
      */
     update(paramMap: ParamMap, queryParamMap: ParamMap) {
         this.parsedParams = parseSearchQueryParams(queryParamMap);
-        if (paramMap.has('educationalContext')) {
-            const educationalContext = paramMap.get('educationalContext');
-            this.parsedParams.filters[Facet.EducationalContext] = [educationalContext];
-        }
-        if (paramMap.has('discipline')) {
-            const discipline = paramMap.get('discipline');
-            this.parsedParams.filters[Facet.Discipline] = [discipline];
-        }
-        switch (this.parsedParams.oer) {
-            case 'ALL':
-                this.parsedParams.filters[Facet.Oer] = ['true'];
-                break;
-            case 'NONE':
-                break; // Don't apply any filters
-        }
         this.parsedParamsSubject.next(this.parsedParams);
     }
 }

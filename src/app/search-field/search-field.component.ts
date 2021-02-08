@@ -4,11 +4,11 @@ import {
     MatAutocompleteSelectedEvent,
     MatAutocompleteTrigger,
 } from '@angular/material/autocomplete';
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
+import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged, tap, filter } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { SearchParametersService } from '../search-parameters.service';
-import { Filters, SearchService } from '../search.service';
+import { SearchService } from '../search.service';
 
 @Component({
     selector: 'app-search-field',
@@ -21,11 +21,9 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
     searchField = new FormControl();
     autoCompleteSuggestions$: Observable<string[]>;
     private searchString: string;
-    private filters: Filters;
     private subscriptions: Subscription[] = [];
 
     constructor(
-        private route: ActivatedRoute,
         private router: Router,
         private search: SearchService,
         private searchParameters: SearchParametersService,
@@ -34,10 +32,9 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.subscriptions.push(
             this.searchParameters.get().subscribe((searchParameters) => {
-                const { searchString, filters } = searchParameters || {};
+                const { searchString } = searchParameters || {};
                 this.searchString = searchString;
                 this.searchField.setValue(this.searchString, { emitEvent: false });
-                this.filters = filters;
             }),
         );
         this.searchField.valueChanges
@@ -83,7 +80,7 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
 
     private onSearchStringChanges(searchString: string) {
         if (typeof searchString === 'string') {
-            this.autoCompleteSuggestions$ = this.search.autoComplete(searchString, this.filters);
+            this.autoCompleteSuggestions$ = this.search.autoComplete(searchString);
         }
     }
 }
