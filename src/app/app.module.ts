@@ -21,15 +21,15 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
-import { HttpLinkModule } from 'apollo-angular-link-http';
-import { HttpBatchLink, HttpBatchLinkModule } from 'apollo-angular-link-http-batch';
-import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
+import { InMemoryCache } from '@apollo/client/core';
+import { APOLLO_OPTIONS } from 'apollo-angular';
+import { HttpBatchLink } from 'apollo-angular/http';
 import { environment } from '../environments/environment';
-import introspectionQueryResultData from '../generated/fragmentTypes.json';
+import generatedIntrospection from '../generated/fragmentTypes.json';
 import { AddContentFabComponent } from './add-content-fab/add-content-fab.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -37,6 +37,7 @@ import { DetailsComponent } from './details/details.component';
 import { EncodeUriComponentPipe } from './encode-uri-component.pipe';
 import { ErrorComponent } from './error/error.component';
 import { ExperimentsTogglesComponent } from './experiments-toggles/experiments-toggles.component';
+import { EyeCatcherComponent } from './eye-catcher/eye-catcher.component';
 import { FooterbarComponent } from './footerbar/footerbar.component';
 import { GenerateFiltersPipe } from './generate-filters.pipe';
 import { HasEditorialTagPipe } from './has-editorial-tag.pipe';
@@ -59,12 +60,6 @@ import { SubjectsPortalSectionComponent } from './subjects-portal-section/subjec
 import { SubjectsPortalComponent } from './subjects-portal/subjects-portal.component';
 import { TrimPipe } from './trim.pipe';
 import { TruncatePipe } from './truncate.pipe';
-import { EyeCatcherComponent } from './eye-catcher/eye-catcher.component';
-import { MatTabsModule } from '@angular/material/tabs';
-
-const fragmentMatcher = new IntrospectionFragmentMatcher({
-    introspectionQueryResultData,
-});
 
 @NgModule({
     declarations: [
@@ -99,15 +94,12 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
         EyeCatcherComponent,
     ],
     imports: [
-        ApolloModule,
         AppRoutingModule,
         BrowserAnimationsModule,
         BrowserModule,
         ClipboardModule,
         FormsModule,
         HttpClientModule,
-        HttpLinkModule,
-        HttpBatchLinkModule,
         MatAutocompleteModule,
         MatBadgeModule,
         MatButtonModule,
@@ -136,7 +128,9 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
             provide: APOLLO_OPTIONS,
             useFactory: (httpLink: HttpBatchLink) => {
                 return {
-                    cache: new InMemoryCache({ fragmentMatcher }),
+                    cache: new InMemoryCache({
+                        possibleTypes: generatedIntrospection.possibleTypes,
+                    }),
                     link: httpLink.create({
                         uri: environment.relayUrl + '/graphql',
                     }),
