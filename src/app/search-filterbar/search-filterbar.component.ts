@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter, first } from 'rxjs/operators';
-import { Aggregation, Facet, Type } from '../../generated/graphql';
+import { Aggregation, Bucket, Facet, Type } from '../../generated/graphql';
 import { SearchParametersService } from '../search-parameters.service';
 import { Facets, Filters, SearchService } from '../search.service';
 import { ViewService } from '../view.service';
@@ -24,6 +24,7 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
     ];
     facets: Facets;
     hasFacets: boolean;
+    orderedTypeBuckets: Bucket[] | null;
     filters: Filters = {};
     facetFilters: FormGroup;
     expandedFilters: { [key in Facet]?: boolean } = {
@@ -125,7 +126,7 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
                 this.facets[key] = value;
             }
         }
-        orderByProperty(this.facets.type.buckets, 'key', [
+        this.orderedTypeBuckets = orderByProperty(this.facets.type.buckets, 'key', [
             Type.Content,
             Type.LessonPlanning,
             Type.Tool,
@@ -164,10 +165,12 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
     }
 }
 
-function orderByProperty<K extends string, V>(
-    array: Array<{ [k in K]: V }>,
+function orderByProperty<T, K extends keyof T>(
+    array: readonly T[],
     key: K,
-    ordering: V[],
-) {
-    array.sort((a, b) => (ordering.indexOf(a[key]) < ordering.indexOf(b[key]) ? -1 : 1));
+    ordering: Array<T[K]>,
+): T[] {
+    return [...array].sort((a, b) =>
+        ordering.indexOf(a[key]) < ordering.indexOf(b[key]) ? -1 : 1,
+    );
 }

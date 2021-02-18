@@ -76,10 +76,10 @@
     [selectedIndex]="selectedTab.value"
     (selectedIndexChange)="selectedTab.setValue($event)"
   >
-    <mat-tab i18n-label label="All Search Results">
+    <mat-tab i18n-label label="All search results">
       <app-search-results [results]="results"></app-search-results>
     </mat-tab>
-    <mat-tab i18n-label label="Grouped Results">
+    <mat-tab i18n-label label="Search results by categories">
       <app-subjects-portal></app-subjects-portal>
     </mat-tab>
   </mat-tab-group>
