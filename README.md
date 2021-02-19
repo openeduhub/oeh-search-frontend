@@ -142,7 +142,7 @@ before commits.
 
 Run `npm run format` to format all source files via [Prettier](https://prettier.io/).
 
-Run `ng lint` to check all source files via [TSLint](https://palantir.github.io/tslint/).
+Run `ng lint` to check all source files via [ESLint](https://eslint.org/).
 
 ## Internationalization
 
