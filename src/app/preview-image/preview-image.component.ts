@@ -3,13 +3,13 @@ import { PreviewImage, Thumbnail } from '../../generated/graphql';
 
 @Component({
     // Augment the built-in <img> element.
-    // tslint:disable-next-line:component-selector
+    // eslint-disable-next-line @angular-eslint/component-selector
     selector: '[appPreviewImage]',
     template: '',
 })
 export class PreviewImageComponent implements OnInit {
     // Use an alias for a property input that is equal to the component selector.
-    // tslint:disable-next-line:no-input-rename
+    // eslint-disable-next-line @angular-eslint/no-input-rename
     @Input('appPreviewImage') previewImage: PreviewImage;
     @Input() loadHighResImage = false;
 

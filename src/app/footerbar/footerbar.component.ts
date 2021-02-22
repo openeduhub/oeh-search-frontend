@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { environment } from '../../environments/environment';
 
 @Component({
@@ -6,10 +6,8 @@ import { environment } from '../../environments/environment';
     templateUrl: './footerbar.component.html',
     styleUrls: ['./footerbar.component.scss'],
 })
-export class FooterbarComponent implements OnInit {
+export class FooterbarComponent {
     readonly wordpressUrl = environment.wordpressUrl;
 
     constructor() {}
-
-    ngOnInit(): void {}
 }

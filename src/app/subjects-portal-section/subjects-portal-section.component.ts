@@ -1,14 +1,14 @@
-import { Component, Input, OnInit, Attribute } from '@angular/core';
+import { Attribute, Component, Input } from '@angular/core';
+import { Facet, Type } from '../../generated/graphql';
 import { Hits } from '../search-resolver.service';
 import { Filters } from '../search.service';
-import { Facet, Type } from '../../generated/graphql';
 
 @Component({
     selector: 'app-subjects-portal-section',
     templateUrl: './subjects-portal-section.component.html',
     styleUrls: ['./subjects-portal-section.component.scss'],
 })
-export class SubjectsPortalSectionComponent implements OnInit {
+export class SubjectsPortalSectionComponent {
     readonly Type = Type;
     readonly Facet = Facet;
 
@@ -16,6 +16,4 @@ export class SubjectsPortalSectionComponent implements OnInit {
     @Input() filters: Filters;
 
     constructor(@Attribute('type') readonly type: Type) {}
-
-    ngOnInit(): void {}
 }

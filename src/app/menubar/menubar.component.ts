@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { environment } from '../../environments/environment';
 
 @Component({
@@ -6,11 +6,9 @@ import { environment } from '../../environments/environment';
     templateUrl: './menubar.component.html',
     styleUrls: ['./menubar.component.scss'],
 })
-export class MenubarComponent implements OnInit {
+export class MenubarComponent {
     readonly wordpressUrl = environment.wordpressUrl;
     mobileOpen: boolean;
 
     constructor() {}
-
-    ngOnInit(): void {}
 }

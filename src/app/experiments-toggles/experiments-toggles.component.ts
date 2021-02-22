@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Experiments, ViewService } from '../view.service';
 
@@ -7,14 +7,12 @@ import { Experiments, ViewService } from '../view.service';
     templateUrl: './experiments-toggles.component.html',
     styleUrls: ['./experiments-toggles.component.scss'],
 })
-export class ExperimentsTogglesComponent implements OnInit {
+export class ExperimentsTogglesComponent {
     experiments$: Observable<Experiments>;
 
     constructor(private view: ViewService) {
         this.experiments$ = view.getExperiments();
     }
-
-    ngOnInit(): void {}
 
     getType(value: any): string {
         return typeof value;

@@ -191,3 +191,9 @@ features for GraphQL queries in VSCode.
 ```
 ext install apollographql.vscode-apollo
 ```
+
+## TODO
+
+-   Enable strict type checking
+-   Use `enableI18nLegacyMessageIdFormat`
+-   Enable stricter budgets

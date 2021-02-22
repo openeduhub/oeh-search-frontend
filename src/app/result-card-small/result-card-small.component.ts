@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ResultFragment } from '../../generated/graphql';
 import { Unpacked } from '../utils';
 
@@ -10,10 +10,8 @@ type Hit = Unpacked<Hits>;
     templateUrl: './result-card-small.component.html',
     styleUrls: ['./result-card-small.component.scss'],
 })
-export class ResultCardSmallComponent implements OnInit {
+export class ResultCardSmallComponent {
     @Input() hit: Hit;
 
     constructor() {}
-
-    ngOnInit(): void {}
 }
