@@ -195,5 +195,4 @@ ext install apollographql.vscode-apollo
 ## TODO
 
 -   Enable strict type checking
--   Use `enableI18nLegacyMessageIdFormat`
 -   Enable stricter budgets
