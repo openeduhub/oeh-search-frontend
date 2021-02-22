@@ -17,7 +17,8 @@
     "extract-i18n": "ng  extract-i18n oeh-search-frontend --output-path src/locale && ng run oeh-search-frontend:xliffmerge",
     "start-de": "ng serve --configuration=de",
     "generate": "graphql-codegen",
-    "postinstall": "ngcc --tsconfig ./tsconfig.app.json"
+    "postinstall": "ngcc --tsconfig ./tsconfig.app.json",
+    "analyze-bundle": "ng build --stats-json && webpack-bundle-analyzer ./dist/oeh-search-frontend/stats.json"
   },
   "private": true,
   "dependencies": {
@@ -79,7 +80,8 @@
     "lint-staged": "^10.5.1",
     "prettier": "^2.2.0",
     "ts-node": "^8.10.2",
-    "typescript": "^4.0.5"
+    "typescript": "^4.0.5",
+    "webpack-bundle-analyzer": "^4.4.0"
   },
   "husky": {
     "hooks": {

@@ -195,4 +195,18 @@ ext install apollographql.vscode-apollo
 ## TODO
 
 -   Enable strict type checking
--   Enable stricter budgets
+-   Enable stricter budgets:
+    ```json
+    "budgets": [
+        {
+            "type": "initial",
+            "maximumWarning": "500kb",
+            "maximumError": "1mb"
+        },
+        {
+            "type": "anyComponentStyle",
+            "maximumWarning": "2kb",
+            "maximumError": "4kb"
+        }
+    ]
+    ```

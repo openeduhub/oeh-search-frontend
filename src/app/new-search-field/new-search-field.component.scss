@@ -1,5 +1,3 @@
-@import '~@angular/material/theming';
-
 $app-search-field-border-radius: 8px;
 
 :host {
@@ -52,7 +50,6 @@ form {
 .suggestion-card {
     // box-sizing: border-box;
     width: 100%;
-    @include mat-elevation(2);
     background-color: white;
     border-radius: $app-search-field-border-radius;
     // border-bottom-left-radius: 4px;
