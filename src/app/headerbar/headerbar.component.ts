@@ -1,4 +1,4 @@
-import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -16,7 +16,6 @@ export class HeaderbarComponent implements OnInit, OnDestroy {
     filterCount = 0;
     showFiltersButton: boolean;
     shouldUseNewSearchBar$: Observable<boolean>;
-    @HostBinding('class.eye-catcher-full') eyeCatcherFull: boolean;
 
     private subscriptions: Subscription[] = [];
 
@@ -49,11 +48,6 @@ export class HeaderbarComponent implements OnInit, OnDestroy {
         );
 
         this.shouldUseNewSearchBar$ = this.view.getExperiment('newSearchField');
-        this.subscriptions.push(
-            this.view
-                .getEyeCatcherMode()
-                .subscribe((mode) => (this.eyeCatcherFull = mode === 'full')),
-        );
     }
 
     ngOnDestroy(): void {

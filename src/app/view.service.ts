@@ -3,7 +3,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 export type ResultCardStyle = 'standard' | 'compact';
-export type EyeCatcherMode = 'minimized' | 'full';
 
 class AvailableExperiments {
     newSearchField = true;
@@ -18,7 +17,6 @@ export class ViewService {
     private showFilterBarSubject: BehaviorSubject<boolean>;
     private resultCardStyleSubject: BehaviorSubject<ResultCardStyle>;
     private experimentsSubject: BehaviorSubject<Experiments>;
-    private eyeCatcherMode: BehaviorSubject<EyeCatcherMode>;
 
     constructor() {
         const isMobile = screen.width < 600 || screen.height < 600;
@@ -37,9 +35,6 @@ export class ViewService {
                 (JSON.parse(localStorage.getItem('experiments')) as Experiments)) ||
                 {}),
         });
-        this.eyeCatcherMode = new BehaviorSubject(
-            (localStorage.getItem('eyeCatcherMode') as EyeCatcherMode) || 'full',
-        );
     }
 
     getShowFilterBar(): Observable<boolean> {
@@ -79,14 +74,5 @@ export class ViewService {
         experiments[key] = value;
         this.experimentsSubject.next(experiments);
         localStorage.setItem('experiments', JSON.stringify(experiments));
-    }
-
-    getEyeCatcherMode(): Observable<EyeCatcherMode> {
-        return this.eyeCatcherMode.asObservable();
-    }
-
-    setEyeCatcherMode(value: EyeCatcherMode): void {
-        this.eyeCatcherMode.next(value);
-        localStorage.setItem('eyeCatcherMode', value);
     }
 }

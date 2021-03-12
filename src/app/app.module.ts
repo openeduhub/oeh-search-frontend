@@ -37,7 +37,6 @@ import { DetailsComponent } from './details/details.component';
 import { EncodeUriComponentPipe } from './encode-uri-component.pipe';
 import { ErrorComponent } from './error/error.component';
 import { ExperimentsTogglesComponent } from './experiments-toggles/experiments-toggles.component';
-import { EyeCatcherComponent } from './eye-catcher/eye-catcher.component';
 import { FooterbarComponent } from './footerbar/footerbar.component';
 import { GenerateFiltersPipe } from './generate-filters.pipe';
 import { HasEditorialTagPipe } from './has-editorial-tag.pipe';
@@ -91,7 +90,6 @@ import { TruncatePipe } from './truncate.pipe';
         PreviewImageComponent,
         ExperimentsTogglesComponent,
         NewSearchFieldComponent,
-        EyeCatcherComponent,
     ],
     imports: [
         AppRoutingModule,
