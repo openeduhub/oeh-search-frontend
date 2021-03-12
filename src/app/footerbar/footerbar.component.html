@@ -1,90 +1,133 @@
-<div class="grid-container">
-  <div class="grid-x grid-margin-x align-middle">
-    <div class="cell medium-auto">
+<!-- Extracted using https://www.snipcss.com/
+
+  Modifications:
+  - Replace static URLs with {{ wordpressUrl }}
+-->
+
+<footer
+  id="colophon"
+  class="site-footer XXsnipcss_extracted_selector_selectionXX"
+  role="contentinfo"
+>
+  <div class="footer-wrapper">
+    <div class="footer-main">
+      <div class="footer-buttons">
+        <a class="footer-btn" href="{{ wordpressUrl }}/login/"> Anmelden </a>
+        <a
+          href="https://facebook.com/wirlernenonline.oer"
+          target="_blank"
+          aria-label="Link zu Facebook"
+        >
+          <img
+            src="{{ wordpressUrl }}/wp-content/themes/wir-lernen-online/src/assets/img/facebook.svg"
+            alt="Icon: Facebook"
+          />
+        </a>
+        <a href="https://twitter.com/wirlernenonline" target="_blank" aria-label="Link zu Twitter">
+          <img
+            src="{{
+              wordpressUrl
+            }}/wp-content/themes/wir-lernen-online/src/assets/img/twitter_alt.svg"
+            alt="Icon: Twitter"
+          />
+        </a>
+        <a
+          href="https://www.youtube.com/channel/UCPs3ndK7W1JDMHz02_AwdBg"
+          target="_blank"
+          aria-label="Link zu youtube"
+        >
+          <img
+            src="{{
+              wordpressUrl
+            }}/wp-content/themes/wir-lernen-online/src/assets/img/icon_youtube.svg"
+            alt="Icon: youtube"
+          />
+        </a>
+      </div>
       <ul
         class="dropdown menu footer-menu"
-        data-dropdown-menu="9rdojp-dropdown-menu"
+        data-dropdown-menu="ktr146-dropdown-menu"
         role="menubar"
       >
+        <li
+          id="menu-item-26153"
+          class="menu-item menu-item-type-post_type menu-item-object-page menu-item-26153 menu-item-jobs-ausschreibungen"
+          role="none"
+        >
+          <a href="{{ wordpressUrl }}/jobs-ausschreibungen/" role="menuitem"> Jobs </a>
+        </li>
         <li
           id="menu-item-5269"
           class="menu-item menu-item-type-post_type menu-item-object-page menu-item-5269 menu-item-kooperationen"
           role="none"
         >
-          <a href="{{ wordpressUrl }}/kooperationen/" role="menuitem">Kooperationen</a>
+          <a href="{{ wordpressUrl }}/kooperationen/" role="menuitem"> Partner </a>
         </li>
         <li
-          id="menu-item-4256"
-          class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4256 menu-item-quellen"
+          id="menu-item-29007"
+          class="menu-item menu-item-type-post_type menu-item-object-page menu-item-29007 menu-item-faq"
           role="none"
         >
-          <a href="{{ wordpressUrl }}/quellen/" role="menuitem">Quellen</a>
+          <a href="{{ wordpressUrl }}/faq/" role="menuitem"> FAQ </a>
         </li>
         <li
-          id="menu-item-5289"
-          class="menu-item menu-item-type-post_type menu-item-object-page menu-item-5289 menu-item-ausschreibungen"
+          id="menu-item-37148"
+          class="menu-item menu-item-type-post_type menu-item-object-page menu-item-37148 menu-item-quellenerschliessung-uebersicht"
           role="none"
         >
-          <a href="{{ wordpressUrl }}/ausschreibungen/" role="menuitem">Ausschreibungen</a>
+          <a href="{{ wordpressUrl }}/quellenerschliessung-uebersicht/" role="menuitem">
+            Quellen
+          </a>
         </li>
         <li
-          id="menu-item-4968"
-          class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4968 menu-item-presse"
+          id="menu-item-37162"
+          class="menu-item menu-item-type-post_type menu-item-object-page menu-item-37162 menu-item-qualitaetssicherung"
           role="none"
         >
-          <a href="{{ wordpressUrl }}/presse/" role="menuitem">Presse</a>
+          <a href="{{ wordpressUrl }}/qualitaetssicherung/" role="menuitem"> Qualitätssicherung </a>
         </li>
         <li
           id="menu-item-2139"
           class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2139 menu-item-kontakt"
           role="none"
         >
-          <a href="{{ wordpressUrl }}/kontakt/" role="menuitem">Kontakt</a>
-        </li>
-        <li class="menu-item menu-item-type-post_type menu-item-object-page" role="none">
-          <a href="{{ wordpressUrl }}/login/" role="menuitem">Anmelden</a>
-        </li>
-        <li
-          id="menu-item-2735"
-          class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2735 menu-item-datenschutz"
-          role="none"
-        >
-          <a href="{{ wordpressUrl }}/datenschutz/" role="menuitem">Datenschutz</a>
+          <a href="{{ wordpressUrl }}/kontakt/" role="menuitem"> Kontakt </a>
         </li>
         <li
           id="menu-item-2718"
           class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2718 menu-item-impressum"
           role="none"
         >
-          <a href="{{ wordpressUrl }}/impressum/" role="menuitem">Impressum</a>
+          <a href="{{ wordpressUrl }}/impressum/" role="menuitem"> Impressum </a>
+        </li>
+        <li
+          id="menu-item-2735"
+          class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2735 menu-item-datenschutz"
+          role="none"
+        >
+          <a href="{{ wordpressUrl }}/datenschutz/" role="menuitem"> Datenschutz </a>
         </li>
       </ul>
     </div>
-    <div class="cell shrink">
-      <button
-        class="button small no-space"
-        data-open="newsletterModal"
-        aria-controls="newsletterModal"
-        aria-haspopup="true"
-        tabindex="0"
-      >
-        Newsletter
-      </button>
-    </div>
-    <div class="cell shrink">
-      <a href="{{ wordpressUrl }}/faq/"
-        ><img
-          src="{{ wordpressUrl }}/wp-content/themes/wir-lernen-online/src/assets/img/BMBF.png"
-          width="175"
-          alt="Gefördert vom Bundesministerium für Bildung und Forschung"
-      /></a>
+    <div class="footer-right">
+      <div class="footer-bmbf">
+        <a href="{{ wordpressUrl }}/faq/">
+          <img
+            src="{{ wordpressUrl }}/wp-content/themes/wir-lernen-online/src/assets/img/BMBF.png"
+            alt="Gefördert vom Bundesministerium für Bildung und Forschung"
+          />
+        </a>
+      </div>
+      <div class="footer-license">
+        <p>
+          Unsere Inhalte stehen unter der Lizenz
+          <a href="{{ wordpressUrl }}/impressum//#license"> CC BY 4.0 </a>
+          .
+          <br />
+          Für Inhalte von Partnern achten Sie bitte auf die Lizenzbedingungen der verlinkten
+          Webseiten.
+        </p>
+      </div>
     </div>
   </div>
-  <div class="footer-license">
-    <p>
-      Unsere Inhalte stehen unter der Lizenz
-      <a href="{{ wordpressUrl }}/impressum//#license">CC BY 4.0</a>. Für Inhalte von Partnern
-      achten Sie bitte auf die Lizenzbedingungen der verlinkten Webseiten.
-    </p>
-  </div>
-</div>
+</footer>

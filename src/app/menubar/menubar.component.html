@@ -1,4 +1,24 @@
-<header id="site-header" class="site-header" role="banner">
+<!-- Extracted using https://www.snipcss.com/
+
+  Modifications:
+    - Remove `role="banner"` from `header` element
+    - Rename `header` element to `nav`
+    - Replace static URLs with {{ wordpressUrl }}
+    - Replace link to suche.wirlernenonline.de with `<a routerLink="/" role="menuitem">Suche</a>`
+    - Add `[class.hide-on-mobile]="!mobileMenuOpen"` to `#main-menu`
+    - Add `(click)="mobileMenuOpen = !mobileMenuOpen"` to `button.menu-icon`
+    - Add `(click)="newsSubMenuOpen = !newsSubMenuOpen"` to "News" `a`
+    - Add to "News" sub menu `li`:
+      ```
+        (mouseenter)="onMouseEnterNews()"
+        (mouseleave)="onMouseLeaveNews()"
+      ```
+    - Add `(click)="onNewsLinkClicked($event)` to "News" sub menu `a`
+    - Add `[style.display]="(newsSubMenuOpen | async) ? 'flex' : 'none'"` to "News" sub menu `ul`
+-->
+
+<nav id="site-header" class="site-header XXsnipcss_extracted_selector_selectionXX">
+  <a class="skip-link" href="#main-content" aria-label="skip-link"> Zum Inhalt springen </a>
   <div
     class="title-bar"
     data-responsive-toggle="main-menu"
@@ -8,35 +28,36 @@
     <button
       class="menu-icon"
       type="button"
-      (click)="mobileOpen = !mobileOpen"
+      data-toggle=""
       aria-label="Hauptmenü"
+      (click)="mobileMenuOpen = !mobileMenuOpen"
     ></button>
-    <a
-      class="mobile-logo-container logo-container"
-      href="{{ wordpressUrl }}"
-      i18n-aria-label
-      aria-label="Go to homepage"
-    >
-      <div class="logo" alt="Logo"></div>
+    <a class="mobile-logo-container" href="{{ wordpressUrl }}" aria-label="Link zur Startseite">
+      <img
+        class="logo"
+        src="{{ wordpressUrl }}/wp-content/themes/wir-lernen-online/src/assets/img/wlo-logo.svg"
+        alt="Logo WLO"
+      />
     </a>
   </div>
   <div
     class="top-bar"
     id="main-menu"
     data-animate="fade-in fade-out"
-    [style.display]="mobileOpen ? 'flex' : 'none'"
+    [class.hide-on-mobile]="!mobileMenuOpen"
   >
     <div class="top-bar-left position-relative">
       <div class="grid-container">
         <div class="grid-x grid-margin-x align-middle">
           <div class="auto cell show-for-large">
-            <a
-              href="{{ wordpressUrl }}"
-              class="logo-container"
-              i18n-aria-label
-              aria-label="Go to homepage"
-            >
-              <div class="logo" alt="Logo"></div>
+            <a href="{{ wordpressUrl }}">
+              <img
+                class="logo"
+                src="{{
+                  wordpressUrl
+                }}/wp-content/themes/wir-lernen-online/src/assets/img/wlo-logo.svg"
+                alt="Logo WLO"
+              />
             </a>
           </div>
           <div class="large-shrink small-12 cell">
@@ -44,85 +65,81 @@
               class="vertical large-horizontal menu top-menu dropdown"
               data-responsive-menu="drilldown large-dropdown"
               role="menubar"
-              data-dropdown-menu="w99lo7-dropdown-menu"
-              data-mutate="nt2xlt-responsive-menu"
+              data-dropdown-menu="hwxpmn-dropdown-menu"
+              data-mutate="vup6k2-responsive-menu"
             >
               <li
-                id="menu-item-57"
-                class="menu-item current-menu-item menu-item-type-post_type menu-item-object-page menu-item-57 menu-item-suche"
+                id="menu-item-11613"
+                class="menu-item menu-item-type-custom menu-item-object-custom menu-item-11613 menu-item-suche"
                 role="none"
               >
                 <a routerLink="/" role="menuitem">Suche</a>
               </li>
               <li
-                id="menu-item-4273"
-                class="menu-item menu-item-type-post_type menu-item-object-page"
+                id="menu-item-9932"
+                class="menu-item menu-item-type-post_type menu-item-object-page menu-item-9932 menu-item-fachportale"
                 role="none"
               >
-                <a href="{{ wordpressUrl }}/fachportale/" role="menuitem">Fachportale</a>
+                <a href="{{ wordpressUrl }}/fachportale/" role="menuitem"> Fachportale </a>
               </li>
               <li
-                id="menu-item-3030"
-                class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-3030 menu-item-tipps is-dropdown-submenu-parent opens-right"
+                id="menu-item-31152"
+                class="menu-item menu-item-type-post_type menu-item-object-page menu-item-31152 menu-item-wirlernenonline"
+                role="none"
+              >
+                <a href="{{ wordpressUrl }}/wirlernenonline/" role="menuitem"> WirLernenOnline </a>
+              </li>
+              <li
+                id="menu-item-31066"
+                class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-31066 menu-item-news is-dropdown-submenu-parent opens-right"
                 role="none"
                 aria-haspopup="true"
-                aria-label="Tipps"
+                aria-label="News"
+                (mouseenter)="onMouseEnterNews()"
+                (mouseleave)="onMouseLeaveNews()"
               >
                 <a
-                  href="javascript:"
-                  (click)="tipps.style.display = tipps.style.display == 'flex' ? 'none' : 'flex'"
+                  href="{{ wordpressUrl }}/news/"
                   role="menuitem"
-                  >Tipps</a
+                  (click)="onNewsLinkClicked($event)"
                 >
+                  News
+                </a>
                 <ul
                   class="vertical menu submenu is-dropdown-submenu first-sub"
                   data-submenu=""
                   role="menubar"
-                  #tipps
+                  [style.display]="(newsSubMenuOpen | async) ? 'flex' : 'none'"
                 >
                   <li
-                    id="menu-item-3031"
-                    class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3031 menu-item-lehrende is-submenu-item is-dropdown-submenu-item"
+                    id="menu-item-34288"
+                    class="menu-item menu-item-type-post_type menu-item-object-page menu-item-34288 menu-item-neuigkeiten is-submenu-item is-dropdown-submenu-item"
                     role="none"
                   >
-                    <a href="{{ wordpressUrl }}/lehrende/" role="menuitem">Für Lehrer:innen</a>
+                    <a href="{{ wordpressUrl }}/neuigkeiten/" role="menuitem"> Blog </a>
                   </li>
                   <li
-                    id="menu-item-4248"
-                    class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4248 menu-item-lernende is-submenu-item is-dropdown-submenu-item"
+                    id="menu-item-34287"
+                    class="menu-item menu-item-type-post_type menu-item-object-page menu-item-34287 menu-item-presse-2 is-submenu-item is-dropdown-submenu-item"
                     role="none"
                   >
-                    <a href="{{ wordpressUrl }}/lernende/" role="menuitem">Für Schüler:innen</a>
+                    <a href="{{ wordpressUrl }}/presse-2/" role="menuitem"> Presse </a>
                   </li>
                   <li
-                    id="menu-item-4250"
-                    class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4250 menu-item-eltern is-submenu-item is-dropdown-submenu-item"
+                    id="menu-item-34289"
+                    class="menu-item menu-item-type-post_type menu-item-object-page menu-item-34289 menu-item-newsletter is-submenu-item is-dropdown-submenu-item"
                     role="none"
                   >
-                    <a href="{{ wordpressUrl }}/eltern/" role="menuitem">Für Eltern</a>
-                  </li>
-                  <li
-                    id="menu-item-3032"
-                    class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3032 menu-item-schulen is-submenu-item is-dropdown-submenu-item"
-                    role="none"
-                  >
-                    <a href="{{ wordpressUrl }}/schulen/" role="menuitem">Für Schulen</a>
+                    <a href="{{ wordpressUrl }}/newsletter/" role="menuitem"> Newsletter </a>
                   </li>
                 </ul>
               </li>
               <li
-                id="menu-item-2831"
-                class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2831 menu-item-neuigkeiten"
+                id="menu-item-33801"
+                class="menu-item menu-item-type-post_type menu-item-object-page menu-item-33801 menu-item-?page_id=33004"
                 role="none"
               >
-                <a href="{{ wordpressUrl }}/neuigkeiten/" role="menuitem">Blog</a>
-              </li>
-              <li
-                id="menu-item-17"
-                class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17 menu-item-ueber-uns"
-                role="none"
-              >
-                <a href="{{ wordpressUrl }}/faq/" role="menuitem">FAQ</a>
+                <a href="{{ wordpressUrl }}/?page_id=33004" role="menuitem"> OER </a>
               </li>
             </ul>
           </div>
@@ -132,7 +149,7 @@
                 id="menu-item-2523"
                 class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2523 menu-item-mitmachen"
               >
-                <a href="{{ wordpressUrl }}/mitmachen/">Mitmachen</a>
+                <a href="{{ wordpressUrl }}/mitmachen/"> Mitmachen </a>
               </li>
             </ul>
           </div>
@@ -140,4 +157,4 @@
       </div>
     </div>
   </div>
-</header>
+</nav>
