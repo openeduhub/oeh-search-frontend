@@ -2,10 +2,10 @@
   <app-menubar></app-menubar>
   <app-headerbar></app-headerbar>
 </header>
-<div class="main">
+<main appSkipTarget="MAIN_CONTENT" class="main">
   <router-outlet></router-outlet>
   <app-add-content-fab></app-add-content-fab>
-</div>
+</main>
 <app-footerbar></app-footerbar>
 <div class="loading-spinner" *ngIf="loading">
   <mat-spinner></mat-spinner>

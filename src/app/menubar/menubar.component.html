@@ -13,11 +13,25 @@
         (mouseleave)="onMouseLeaveNews()"
       ```
     - Add `(click)="onNewsLinkClicked($event)` to "News" sub menu `a`
-    - Add `[style.display]="(newsSubMenuOpen | async) ? 'flex' : 'none'"` to "News" sub menu `ul`
+    - Add `[style.display]="(newsSubMenuOpen | async) ? 'flex' : 'none'"` to "News" sub menu `ul`\
+    - Replace `href="#main-content"` on `a.skip-link` with:
+      ```
+        href
+        onclick="return false;"
+        (click)="skipTo('MAIN_CONTENT')"
+      ```
 -->
 
 <nav id="site-header" class="site-header">
-  <a class="skip-link" href="#main-content" aria-label="skip-link"> Zum Inhalt springen </a>
+  <a
+    class="skip-link"
+    href
+    onclick="return false;"
+    (click)="skipTo('MAIN_CONTENT')"
+    aria-label="skip-link"
+  >
+    Zum Inhalt springen
+  </a>
   <div
     class="title-bar"
     data-responsive-toggle="main-menu"

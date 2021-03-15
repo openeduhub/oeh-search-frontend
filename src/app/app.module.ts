@@ -55,6 +55,7 @@ import { SearchFieldComponent } from './search-field/search-field.component';
 import { SearchFilterbarComponent } from './search-filterbar/search-filterbar.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { SearchComponent } from './search/search.component';
+import { SkipTargetDirective } from './skip-nav/skip-target.directive';
 import { SubjectsPortalSectionComponent } from './subjects-portal-section/subjects-portal-section.component';
 import { SubjectsPortalComponent } from './subjects-portal/subjects-portal.component';
 import { TrimPipe } from './trim.pipe';
@@ -62,34 +63,35 @@ import { TruncatePipe } from './truncate.pipe';
 
 @NgModule({
     declarations: [
-        AppComponent,
-        SearchComponent,
-        TruncatePipe,
-        GenerateFiltersPipe,
-        DetailsComponent,
-        SearchResultsComponent,
-        ErrorComponent,
-        HeaderbarComponent,
-        FooterbarComponent,
-        SearchFieldComponent,
-        TrimPipe,
-        HasEditorialTagPipe,
-        MenubarComponent,
-        SearchFilterbarComponent,
-        MultivalueCheckboxComponent,
-        EncodeUriComponentPipe,
-        ResultCardComponent,
-        PaginatorComponent,
-        SubjectsPortalComponent,
-        ResultCardSmallComponent,
-        SubjectsPortalSectionComponent,
-        OerSliderComponent,
         AddContentFabComponent,
-        ResultCardContentStandardComponent,
-        ResultCardContentCompactComponent,
-        PreviewImageComponent,
+        AppComponent,
+        DetailsComponent,
+        EncodeUriComponentPipe,
+        ErrorComponent,
         ExperimentsTogglesComponent,
+        FooterbarComponent,
+        GenerateFiltersPipe,
+        HasEditorialTagPipe,
+        HeaderbarComponent,
+        MenubarComponent,
+        MultivalueCheckboxComponent,
         NewSearchFieldComponent,
+        OerSliderComponent,
+        PaginatorComponent,
+        PreviewImageComponent,
+        ResultCardComponent,
+        ResultCardContentCompactComponent,
+        ResultCardContentStandardComponent,
+        ResultCardSmallComponent,
+        SearchComponent,
+        SearchFieldComponent,
+        SearchFilterbarComponent,
+        SearchResultsComponent,
+        SkipTargetDirective,
+        SubjectsPortalComponent,
+        SubjectsPortalSectionComponent,
+        TrimPipe,
+        TruncatePipe,
     ],
     imports: [
         AppRoutingModule,

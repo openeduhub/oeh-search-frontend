@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { BehaviorSubject, EMPTY, timer } from 'rxjs';
 import { debounce } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
+import { SkipNavService, SkipTarget } from '../skip-nav/skip-nav.service';
 
 @Component({
     selector: 'app-menubar',
@@ -17,7 +18,7 @@ export class MenubarComponent {
     private mouseOverNewsLink = new BehaviorSubject(false);
     private isTouchDevice: boolean;
 
-    constructor() {
+    constructor(private readonly skipNav: SkipNavService) {
         this.isTouchDevice =
             // From https://stackoverflow.com/a/4819886
             'ontouchstart' in window ||
@@ -43,5 +44,9 @@ export class MenubarComponent {
             this.newsSubMenuOpen.next(!this.newsSubMenuOpen.value);
             event.preventDefault();
         }
+    }
+
+    skipTo(target: SkipTarget): void {
+        this.skipNav.skipTo(target);
     }
 }
