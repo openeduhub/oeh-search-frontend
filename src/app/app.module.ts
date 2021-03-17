@@ -43,7 +43,6 @@ import { HasEditorialTagPipe } from './has-editorial-tag.pipe';
 import { HeaderbarComponent } from './headerbar/headerbar.component';
 import { MenubarComponent } from './menubar/menubar.component';
 import { MultivalueCheckboxComponent } from './multivalue-checkbox/multivalue-checkbox.component';
-import { NewSearchFieldComponent } from './new-search-field/new-search-field.component';
 import { OerSliderComponent } from './oer-slider/oer-slider.component';
 import { PaginatorComponent } from './paginator/paginator.component';
 import { PreviewImageComponent } from './preview-image/preview-image.component';
@@ -75,7 +74,6 @@ import { TruncatePipe } from './truncate.pipe';
         HeaderbarComponent,
         MenubarComponent,
         MultivalueCheckboxComponent,
-        NewSearchFieldComponent,
         OerSliderComponent,
         PaginatorComponent,
         PreviewImageComponent,
