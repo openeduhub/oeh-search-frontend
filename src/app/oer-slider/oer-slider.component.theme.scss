@@ -7,39 +7,24 @@
     $primary: map-get($theme, primary);
 
     app-oer-slider {
-        mat-slider {
-            .mat-slider-wrapper {
-                .mat-slider-thumb-container {
-                    .mat-slider-focus-ring {
-                        background-color: mat-color($custom-accent, accent1, 0.4) !important;
-                    }
-                    .mat-slider-thumb {
-                        background-color: mat-color($custom-accent, accent1) !important;
-                    }
-                }
-                .mat-slider-track-fill,
-                .mat-slider-track-background {
-                    background-color: mat-color($primary, default-contrast) !important;
-                }
-            }
-        }
-        .labels {
-            label {
-                color: mat-color($primary, default-contrast);
-            }
-            label[selected] {
-                color: mat-color($custom-accent, accent1) !important;
-            }
+        .mat-slide-toggle-content {
+            color: mat-color($primary, default-contrast);
         }
         .help-button mat-icon {
             color: mat-color($primary, default-contrast);
+        }
+        .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+            background-color: mat-color($primary, default-contrast);
+        }
+        .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+            background-color: mat-color($custom-accent, accent2);
         }
     }
 }
 
 @mixin oer-slider-typography($typography) {
     app-oer-slider {
-        .labels > label {
+        .mat-slide-toggle-content {
             @include mat-typography-level-to-styles($typography, button);
         }
     }

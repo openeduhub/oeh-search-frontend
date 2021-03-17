@@ -5,7 +5,9 @@ mat-card {
     display: flex;
     flex-direction: column;
     padding: 0;
+    border-radius: 20px 20px 0 0;
     > .header {
+        border-radius: 20px 20px 0 0;
         height: 40px;
         padding: 10px $sidePadding 10px $sidePadding;
         display: flex;

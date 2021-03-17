@@ -1,5 +1,3 @@
-@import '~@angular/material/theming';
-
 a:not(:hover) {
     text-decoration: none;
 }
@@ -39,7 +37,6 @@ a.details-link {
     display: flex;
     flex-direction: column;
     > div {
-        @include mat-elevation(1);
         border-radius: 5px;
         display: flex;
         margin: 5px 0;
@@ -102,7 +99,10 @@ a.content-link {
     align-self: flex-end;
 }
 .source {
-    padding: 8px 4px 0 4px;
-    display: flex;
-    justify-content: flex-end;
+    margin-top: 8px;
+    padding: 0 4px;
+    align-self: flex-end;
+}
+.hidden {
+    visibility: hidden;
 }

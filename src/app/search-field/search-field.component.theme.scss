@@ -6,28 +6,23 @@
     $primary: map-get($theme, primary);
     $custom: map-get($theme, custom-accent);
 
-    form {
-        .search-field-input-wrapper {
-            background-color: mat-color($background, dialog);
-            border-color: mat-color($foreground, divider);
-            input {
-                color: mat-color($foreground, text);
+    app-search-field {
+        form {
+            .search-field-wrapper {
+                background-color: mat-color($background, dialog);
+                .search-field-input-wrapper {
+                    background-color: mat-color($primary, 50);
+                    input {
+                        color: mat-color($primary, text);
+                    }
+                }
+                mat-icon {
+                    color: mat-color($foreground, icon);
+                }
             }
-            mat-icon {
-                color: mat-color($foreground, icon);
-            }
-        }
-        .submit-button {
-            background-color: mat-color($custom, accent1);
-            color: mat-color($primary);
         }
     }
 }
 
 @mixin search-field-typography($typography) {
-    app-search-field {
-        input {
-            @include mat-typography-level-to-styles($typography, input);
-        }
-    }
 }

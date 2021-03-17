@@ -3,21 +3,6 @@
     flex-direction: column;
 }
 
-.header {
-    display: flex;
-    align-items: flex-start;
-    .title {
-        flex-grow: 1;
-    }
-    .style-toggle {
-        flex-shrink: 0;
-        border-radius: 10px;
-        :host & ::ng-deep .mat-button-toggle-label-content {
-            line-height: 32px;
-        }
-    }
-}
-
 .results {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));

@@ -21,15 +21,15 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
-import { HttpLinkModule } from 'apollo-angular-link-http';
-import { HttpBatchLink, HttpBatchLinkModule } from 'apollo-angular-link-http-batch';
-import { InMemoryCache, IntrospectionFragmentMatcher } from 'apollo-cache-inmemory';
+import { InMemoryCache } from '@apollo/client/core';
+import { APOLLO_OPTIONS } from 'apollo-angular';
+import { HttpBatchLink } from 'apollo-angular/http';
 import { environment } from '../environments/environment';
-import introspectionQueryResultData from '../generated/fragmentTypes.json';
+import generatedIntrospection from '../generated/fragmentTypes.json';
 import { AddContentFabComponent } from './add-content-fab/add-content-fab.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -43,7 +43,6 @@ import { HasEditorialTagPipe } from './has-editorial-tag.pipe';
 import { HeaderbarComponent } from './headerbar/headerbar.component';
 import { MenubarComponent } from './menubar/menubar.component';
 import { MultivalueCheckboxComponent } from './multivalue-checkbox/multivalue-checkbox.component';
-import { NewSearchFieldComponent } from './new-search-field/new-search-field.component';
 import { OerSliderComponent } from './oer-slider/oer-slider.component';
 import { PaginatorComponent } from './paginator/paginator.component';
 import { PreviewImageComponent } from './preview-image/preview-image.component';
@@ -55,54 +54,50 @@ import { SearchFieldComponent } from './search-field/search-field.component';
 import { SearchFilterbarComponent } from './search-filterbar/search-filterbar.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { SearchComponent } from './search/search.component';
+import { SkipTargetDirective } from './skip-nav/skip-target.directive';
+import { SubjectsPortalSectionComponent } from './subjects-portal-section/subjects-portal-section.component';
+import { SubjectsPortalComponent } from './subjects-portal/subjects-portal.component';
 import { TrimPipe } from './trim.pipe';
 import { TruncatePipe } from './truncate.pipe';
-import { EyeCatcherComponent } from './eye-catcher/eye-catcher.component';
-
-const fragmentMatcher = new IntrospectionFragmentMatcher({
-    introspectionQueryResultData,
-});
 
 @NgModule({
     declarations: [
-        AppComponent,
-        SearchComponent,
-        TruncatePipe,
-        GenerateFiltersPipe,
-        DetailsComponent,
-        SearchResultsComponent,
-        ErrorComponent,
-        HeaderbarComponent,
-        FooterbarComponent,
-        SearchFieldComponent,
-        TrimPipe,
-        HasEditorialTagPipe,
-        MenubarComponent,
-        SearchFilterbarComponent,
-        MultivalueCheckboxComponent,
-        EncodeUriComponentPipe,
-        ResultCardComponent,
-        PaginatorComponent,
-        ResultCardSmallComponent,
-        OerSliderComponent,
         AddContentFabComponent,
-        ResultCardContentStandardComponent,
-        ResultCardContentCompactComponent,
-        PreviewImageComponent,
+        AppComponent,
+        DetailsComponent,
+        EncodeUriComponentPipe,
+        ErrorComponent,
         ExperimentsTogglesComponent,
-        NewSearchFieldComponent,
-        EyeCatcherComponent,
+        FooterbarComponent,
+        GenerateFiltersPipe,
+        HasEditorialTagPipe,
+        HeaderbarComponent,
+        MenubarComponent,
+        MultivalueCheckboxComponent,
+        OerSliderComponent,
+        PaginatorComponent,
+        PreviewImageComponent,
+        ResultCardComponent,
+        ResultCardContentCompactComponent,
+        ResultCardContentStandardComponent,
+        ResultCardSmallComponent,
+        SearchComponent,
+        SearchFieldComponent,
+        SearchFilterbarComponent,
+        SearchResultsComponent,
+        SkipTargetDirective,
+        SubjectsPortalComponent,
+        SubjectsPortalSectionComponent,
+        TrimPipe,
+        TruncatePipe,
     ],
     imports: [
-        ApolloModule,
         AppRoutingModule,
         BrowserAnimationsModule,
         BrowserModule,
         ClipboardModule,
         FormsModule,
         HttpClientModule,
-        HttpLinkModule,
-        HttpBatchLinkModule,
         MatAutocompleteModule,
         MatBadgeModule,
         MatButtonModule,
@@ -124,13 +119,16 @@ const fragmentMatcher = new IntrospectionFragmentMatcher({
         MatTooltipModule,
         OverlayModule,
         ReactiveFormsModule,
+        MatTabsModule,
     ],
     providers: [
         {
             provide: APOLLO_OPTIONS,
             useFactory: (httpLink: HttpBatchLink) => {
                 return {
-                    cache: new InMemoryCache({ fragmentMatcher }),
+                    cache: new InMemoryCache({
+                        possibleTypes: generatedIntrospection.possibleTypes,
+                    }),
                     link: httpLink.create({
                         uri: environment.relayUrl + '/graphql',
                     }),

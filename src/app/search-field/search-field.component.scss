@@ -1,47 +1,119 @@
-$app-search-field-border-radius: 8px;
-
 :host {
     display: flex;
+    position: relative;
 }
+
 form {
     display: flex;
     width: 100%;
-    .search-field-input-wrapper {
-        flex-grow: 1;
+    .search-field-wrapper {
         display: flex;
+        flex-grow: 1;
+        border-radius: 27px;
         align-items: center;
-        border-style: solid;
-        border-width: 1px;
-        border-top-left-radius: $app-search-field-border-radius;
-        border-bottom-left-radius: $app-search-field-border-radius;
-        padding: 3px 7px;
+        align-items: center;
+        padding: 5px 7px;
         min-height: 40px;
-        > input {
-            width: 0;
-            padding: 0.5em;
-            background: none;
-            border: none;
+        &.multi-line {
+            border-radius: 20px;
+        }
+        .search-field-input-wrapper {
+            display: flex;
             flex-grow: 1;
-            &:focus {
-                outline: none;
+            border-radius: 22px;
+            align-items: center;
+            height: 43px;
+            margin: 4px;
+            .search-icon {
+                width: 22px;
+                height: 22px;
+                margin-left: 16px;
             }
-        }
-        > button {
-            width: 2.5em;
-            height: 2.5em;
-            mat-icon {
-                margin: auto;
-                display: block;
-                font-size: 150%;
-                height: 1.125em;
-                line-height: 1.125;
+            input {
+                height: 43px;
+                margin: 0;
+                margin-left: 8px;
+            }
+            .submit-button {
+                display: flex;
+                align-items: center;
+                height: 30px;
+                border-radius: 15px;
+                margin: 6px;
             }
         }
     }
-    > button {
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-        border-top-right-radius: $app-search-field-border-radius;
-        border-bottom-right-radius: $app-search-field-border-radius;
+}
+
+:host mat-form-field.search-field ::ng-deep {
+    .mat-form-field-wrapper {
+        padding-bottom: 0;
     }
+    .mat-form-field-underline {
+        display: none;
+    }
+    .mat-form-field-infix {
+        padding: 0;
+        border: none;
+    }
+}
+
+:host mat-chip-list ::ng-deep {
+    .mat-chip-list-wrapper .mat-standard-chip {
+        min-height: 30px;
+    }
+}
+
+.search-field {
+    width: 100%;
+}
+
+.suggestion-card {
+    width: 100%;
+    background-color: white;
+    border-radius: 20px;
+    padding: 10px;
+    .suggestion-group {
+        &:not(:last-of-type) {
+            padding-bottom: 20px;
+        }
+        .label-container {
+            display: flex;
+        }
+        .what-is-oer-link {
+            padding-left: 10px;
+            font-size: 90%;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        .category-label {
+            display: block;
+            text-transform: uppercase;
+            font-weight: 500;
+            font-size: 90%;
+            color: #666;
+            padding-bottom: 6px;
+        }
+    }
+}
+.mat-chip.chip-group-oer {
+    background-color: rgb(214, 166, 214);
+}
+.mat-chip.chip-group-type {
+    background-color: rgb(166, 192, 214);
+}
+.mat-chip.chip-group-discipline {
+    background-color: rgb(166, 214, 174);
+}
+.mat-chip.chip-group-educationalContext {
+    background-color: rgb(214, 166, 166);
+}
+.mat-chip.chip-group-intendedEndUserRole {
+    background-color: rgb(211, 214, 166);
+}
+.mat-chip.chip-group-learningResourceType {
+    background-color: rgb(214, 193, 166);
+}
+.mat-chip.chip-group-source {
+    background-color: rgb(208, 166, 214);
 }

@@ -2,7 +2,7 @@
 
 <ul>
   <li *ngFor="let item of experiments$ | async | keyvalue">
-    <ng-container [ngSwitch]="item.key">
+    <!-- <ng-container [ngSwitch]="item.key">
       <div class="label-and-description">
         <label id="experiment-label-{{ item.key }}">
           <ng-container i18n *ngSwitchCase="'newSearchField'">New search field</ng-container>
@@ -22,6 +22,6 @@
         [ngModel]="item.value"
         (ngModelChange)="setValue(item.key, $event)"
       ></mat-slide-toggle>
-    </ng-container>
+    </ng-container> -->
   </li>
 </ul>

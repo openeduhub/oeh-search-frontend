@@ -1,39 +1,52 @@
-header {
-    font-size: 20px;
-    border-bottom-width: 1px;
-    border-bottom-style: solid;
-}
-.logo-container {
-    display: block;
-}
-.logo {
-    width: 218px;
-    background-image: url('../../assets/images/wlo-logo.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center center;
-    /*
-    @media (prefers-color-scheme: dark) {
-        background-image: url('../../assets/images/wlo-logo-dark.png');
-    }
-    */
+$rem: 20px;
+
+:host {
+    box-sizing: border-box;
+    font-size: $rem;
 }
 
-@media screen and (min-width: 1024px) {
-    .top-bar {
-        display: flex !important;
-    }
+.site-header {
+    position: relative !important;
+    z-index: unset !important;
 }
+
+#main-menu {
+    z-index: 1;
+}
+
+.menu-item-suche {
+    text-decoration: underline;
+}
+
 @media screen and (max-width: 1023px) {
     .title-bar {
         display: flex !important;
     }
-}
-.grid-container {
-    max-width: 58em !important;
+    .show-for-large {
+        display: none !important;
+    }
+    .hide-on-mobile {
+        display: none !important;
+    }
+    .top-bar {
+        position: absolute;
+        padding-bottom: 30px !important;
+        background-color: #ececec !important;
+        width: 100%;
+        box-shadow: 0 8px 12px -2px rgb(0 0 0 / 40%);
+    }
 }
 
-/*! CSS Used from: https://wirlernenonline.de/wp-content/themes/wir-lernen-online/dist/assets/scss/app.css?ver=5.4 ; media=all */
+// Extracted using https://chrome.google.com/webstore/detail/css-used/cdopjfddjlonogibjahpnmjpoangjfff
+//
+// Modifications:
+// - Download fonts into `assets/fonts`
+// - Replace all
+//   `https://pre.wirlernenonline.de/wp-content/themes/wir-lernen-online/dist/assets/fonts/\w+/`
+//   with `~src/assets/fonts/`
+// - Replace all `((-?[\d\.])+)rem` with `#{$1 * $rem}`
+
+/*! CSS Used from: https://dev.wirlernenonline.de/wp-content/themes/wir-lernen-online/dist/assets/scss/app.css?ver=20200821 ; media=all */
 @media all {
     a {
         background-color: transparent;
@@ -98,9 +111,6 @@ header {
         appearance: none;
         border-radius: 5px;
     }
-    ::-webkit-input-placeholder {
-        color: #313131;
-    }
     ::-moz-placeholder {
         color: #313131;
     }
@@ -121,19 +131,19 @@ header {
     }
     a {
         line-height: inherit;
-        // color: #003e82;
+        color: #003e82;
         text-decoration: none;
         cursor: pointer;
     }
-    // a:hover,
-    // a:focus {
-    //     color: #003570;
-    // }
+    a:hover,
+    a:focus {
+        color: #003570;
+    }
     a img {
         border: 0;
     }
     ul {
-        margin-bottom: 1em;
+        margin-bottom: #{1 * $rem};
         list-style-position: outside;
         line-height: 1.4;
     }
@@ -141,11 +151,11 @@ header {
         font-size: inherit;
     }
     ul {
-        margin-left: 1.25em;
+        margin-left: #{1.25 * $rem};
         list-style-type: disc;
     }
     ul ul {
-        margin-left: 1.25em;
+        margin-left: #{1.25 * $rem};
         margin-bottom: 0;
     }
     @media print {
@@ -175,16 +185,16 @@ header {
         }
     }
     .grid-container {
-        padding-right: 0.75em;
-        padding-left: 0.75em;
-        // max-width: 60em;
+        padding-right: #{0.75 * $rem};
+        padding-left: #{0.75 * $rem};
+        max-width: #{60 * $rem};
         margin-left: auto;
         margin-right: auto;
     }
     @media print, screen and (min-width: 40em) {
         .grid-container {
-            padding-right: 1em;
-            padding-left: 1em;
+            padding-right: #{1 * $rem};
+            padding-left: #{1 * $rem};
         }
     }
     .grid-x {
@@ -230,39 +240,39 @@ header {
         }
     }
     .grid-margin-x {
-        margin-left: -0.75em;
-        margin-right: -0.75em;
+        margin-left: #{-0.75 * $rem};
+        margin-right: #{-0.75 * $rem};
     }
     @media print, screen and (min-width: 40em) {
         .grid-margin-x {
-            margin-left: -1em;
-            margin-right: -1em;
+            margin-left: #{-1 * $rem};
+            margin-right: #{-1 * $rem};
         }
     }
     .grid-margin-x > .cell {
-        width: calc(100% - 1.5em);
-        margin-left: 0.75em;
-        margin-right: 0.75em;
+        width: calc(100% - #{1.5 * $rem});
+        margin-left: #{0.75 * $rem};
+        margin-right: #{0.75 * $rem};
     }
     @media print, screen and (min-width: 40em) {
         .grid-margin-x > .cell {
-            width: calc(100% - 2em);
-            margin-left: 1em;
-            margin-right: 1em;
+            width: calc(100% - #{2 * $rem});
+            margin-left: #{1 * $rem};
+            margin-right: #{1 * $rem};
         }
     }
     .grid-margin-x > .auto {
         width: auto;
     }
     .grid-margin-x > .small-12 {
-        width: calc(100% - 1.5em);
+        width: calc(100% - #{1.5 * $rem});
     }
     @media print, screen and (min-width: 40em) {
         .grid-margin-x > .auto {
             width: auto;
         }
         .grid-margin-x > .small-12 {
-            width: calc(100% - 2em);
+            width: calc(100% - #{2 * $rem});
         }
     }
     @media print, screen and (min-width: 64em) {
@@ -292,7 +302,7 @@ header {
         line-height: 1;
         text-decoration: none;
         display: block;
-        padding: 0.7em 1em;
+        padding: #{0.7 * $rem} #{1 * $rem};
     }
     .menu a {
         margin-bottom: 0;
@@ -330,14 +340,14 @@ header {
         display: block;
         width: 100%;
         height: 2px;
-        // background: #003e82;
-        // box-shadow: 0 7px 0 #003e82, 0 14px 0 #003e82;
+        background: #003e82;
+        box-shadow: 0 7px 0 #003e82, 0 14px 0 #003e82;
         content: '';
     }
-    // .menu-icon:hover::after {
-    //     background: #003e82;
-    //     box-shadow: 0 7px 0 #003e82, 0 14px 0 #003e82;
-    // }
+    .menu-icon:hover::after {
+        background: #003e82;
+        box-shadow: 0 7px 0 #003e82, 0 14px 0 #003e82;
+    }
     .dropdown.menu > li.opens-right > .is-dropdown-submenu {
         top: 100%;
         right: auto;
@@ -345,7 +355,7 @@ header {
     }
     .dropdown.menu > li.is-dropdown-submenu-parent > a {
         position: relative;
-        padding-right: 1.5em;
+        padding-right: #{1.5 * $rem};
     }
     .dropdown.menu > li.is-dropdown-submenu-parent > a::after {
         display: block;
@@ -361,7 +371,7 @@ header {
         margin-top: -3px;
     }
     .dropdown.menu > li > a {
-        padding: 0.7em 1em;
+        padding: #{0.7 * $rem} #{1 * $rem};
     }
     .dropdown.menu.vertical > li .is-dropdown-submenu {
         top: 0;
@@ -381,10 +391,7 @@ header {
         content: '';
         border-right-width: 0;
         border-left-style: solid;
-        border-top-color: transparent;
-        border-bottom-color: transparent;
-        border-right-color: transparent;
-        // border-color: transparent transparent transparent #003e82;
+        border-color: transparent transparent transparent #003e82;
     }
     @media print, screen and (min-width: 64em) {
         .dropdown.menu.large-horizontal > li.opens-right > .is-dropdown-submenu {
@@ -394,7 +401,7 @@ header {
         }
         .dropdown.menu.large-horizontal > li.is-dropdown-submenu-parent > a {
             position: relative;
-            padding-right: 1.5em;
+            padding-right: #{1.5 * $rem};
         }
         .dropdown.menu.large-horizontal > li.is-dropdown-submenu-parent > a::after {
             display: block;
@@ -404,9 +411,7 @@ header {
             content: '';
             border-bottom-width: 0;
             border-top-style: solid;
-            border-bottom-color: transparent;
-            border-right-color: transparent;
-            border-left-color: transparent;
+            border-color: #003e82 transparent transparent;
             right: 5px;
             left: auto;
             margin-top: -3px;
@@ -433,27 +438,26 @@ header {
         z-index: 1;
         display: none;
         min-width: 200px;
-        border-width: 1px;
-        border-style: solid;
-        // background: #fefefe;
+        border: 1px solid #d8d8d8;
+        background: #fefefe;
     }
     .dropdown .is-dropdown-submenu a {
-        padding: 0.7em 1em;
+        padding: #{0.7 * $rem} #{1 * $rem};
     }
     .is-dropdown-submenu > li {
         width: 100%;
     }
     .title-bar {
-        padding: 1em;
-        // background: #fefefe;
-        // color: #003e82;
+        padding: #{1 * $rem};
+        background: #fefefe;
+        color: #003e82;
         display: flex;
         justify-content: flex-start;
         align-items: center;
     }
     .title-bar .menu-icon {
-        margin-left: 0.25em;
-        margin-right: 0.25em;
+        margin-left: #{0.25 * $rem};
+        margin-right: #{0.25 * $rem};
     }
     .top-bar {
         display: flex;
@@ -463,10 +467,10 @@ header {
         padding: 0;
         flex-wrap: wrap;
     }
-    // .top-bar,
-    // .top-bar ul {
-    //     background-color: transparent;
-    // }
+    .top-bar,
+    .top-bar ul {
+        background-color: transparent;
+    }
     .top-bar .top-bar-left {
         flex: 0 0 100%;
         max-width: 100%;
@@ -497,32 +501,28 @@ header {
     .position-relative {
         position: relative !important;
     }
-    .menu li.current-menu-item > a {
-        text-decoration: underline;
-    }
     .menu li a {
-        font-family: 'Montserrat', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
-        font-weight: bold;
+        font-family: 'Montserrat-Bold', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
     }
     a:active,
     a:focus,
     button::-moz-focus-inner {
         border: 0;
-        // outline: 0;
-        // outline: none;
+        outline: 0;
+        outline: none;
     }
     .position-relative {
         position: relative;
     }
     *:focus {
-        outline-width: 1px;
-        outline-style: dotted;
+        outline: 1px dotted #003e82;
     }
     .site-header {
-        // z-index: 999;
+        z-index: 999;
         min-height: 63px;
-        // background-color: #fefefe;
-        // border-bottom: 1px solid #ececec;
+        background-color: #fefefe;
+        border-bottom: 1px solid #ececec;
+        position: fixed;
         top: 0;
         left: 0;
         width: 100%;
@@ -530,7 +530,7 @@ header {
     }
     @media print, screen and (max-width: 39.99875em) {
         .site-header .top-bar {
-            // background-color: #ececec;
+            background-color: #ececec;
             padding-bottom: calc(2 * 15px);
         }
         .site-header .top-bar .menu {
@@ -539,7 +539,7 @@ header {
     }
     @media print, screen and (min-width: 40em) and (max-width: 63.99875em) {
         .site-header .top-bar {
-            // background-color: #ececec;
+            background-color: #ececec;
             padding-bottom: calc(2 * 15px);
         }
         .site-header .top-bar .menu {
@@ -555,26 +555,86 @@ header {
         }
     }
     .site-header a.mobile-logo-container {
-        margin-left: auto;
-    }
-    .site-header .logo {
-        height: calc(1 * 33px);
-    }
-    .is-dropdown-submenu {
-        // background-color: #fefefe !important;
-        border-radius: 5px;
-        text-align: center;
-        right: 0 !important;
-        left: 0 !important;
-        min-width: 300px;
-    }
-    .is-dropdown-submenu-item:hover {
-        // background-color: #ececec;
-        cursor: pointer;
+        margin: 0.5em 0 0 auto;
+        max-width: 250px;
     }
     .top-call-to-action-menu li a {
-        background-color: #e3f702;
-        border-radius: 5px;
-        color: #313131;
+        display: flex;
+        align-items: center;
+        background-color: #e4f700;
+        color: #032850;
+        height: 30px;
+        font-family: 'Montserrat-Bold', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
+        font-size: 16px !important;
+        border-radius: 60px;
+        transition: 0.3s;
+    }
+    .top-call-to-action-menu li a:hover {
+        color: #003b7c;
+        background: #b4da1c;
+    }
+    .menu li a {
+        font-family: 'Montserrat-Bold', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
+        font-size: 20px;
+    }
+    .is-dropdown-submenu {
+        background-color: #fefefe !important;
+        border-radius: 24px;
+        border: none;
+        text-align: left;
+        right: 0 !important;
+        left: 0 !important;
+        width: -webkit-fit-content;
+        width: -moz-fit-content;
+        width: fit-content;
+    }
+    .is-dropdown-submenu li a {
+        font-family: 'Montserrat-Medium', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
+        font-size: 20px;
+    }
+    .is-dropdown-submenu-item {
+        transition: 0.2s;
+    }
+    .is-dropdown-submenu-item:last-child {
+        border-radius: 0 0 24px 24px;
+    }
+    .is-dropdown-submenu-item:hover {
+        background-color: #d9e2eb;
+        cursor: pointer;
+    }
+}
+/*! CSS Used from: https://dev.wirlernenonline.de/wp-content/themes/wir-lernen-online/dist/assets/scss/wlo.css?ver=20200821 ; media=all */
+@media all {
+    .skip-link {
+        position: absolute;
+        top: -100px;
+        background-color: #f1f1f1;
+        box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.6);
+        color: #21759b;
+        display: block;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 14px;
+        font-weight: 700;
+        height: auto;
+        left: 6px;
+        line-height: normal;
+        padding: 15px 23px 14px;
+        text-decoration: none;
+        width: auto;
+        z-index: 100000;
+        transition: top 0.75s ease-out;
+    }
+    .skip-link:focus {
+        color: #21759b;
+        top: 7px;
+        transition: top 0s;
+    }
+}
+/*! CSS Used from: https://dev.wirlernenonline.de/wp-content/themes/wir-lernen-online/style.css?ver=20200821 ; media=all */
+@media all {
+    @media screen and (max-width: 1024px) {
+        #main-menu {
+            box-shadow: 0 8px 12px -2px rgba(0, 0, 0, 0.4);
+        }
     }
 }

@@ -14,10 +14,11 @@
     "format": "prettier --write src",
     "docker-build": "docker build . --tag openeduhub/oeh-search-frontend:local",
     "docker-run": "docker run --name oeh-search-frontend --rm -ti -p 8080:80 -e RELAY_URL=http://localhost:3000 openeduhub/oeh-search-frontend:local",
-    "extract-i18n": "ng  extract-i18n oeh-search-frontend --output-path src/locale && ng run oeh-search-frontend:xliffmerge",
+    "extract-i18n": "ng extract-i18n oeh-search-frontend --output-path src/locale && ng run oeh-search-frontend:xliffmerge",
     "start-de": "ng serve --configuration=de",
     "generate": "graphql-codegen",
-    "postinstall": "ngcc --tsconfig ./tsconfig.app.json"
+    "postinstall": "ngcc --tsconfig ./tsconfig.app.json",
+    "analyze-bundle": "ng build --stats-json && webpack-bundle-analyzer ./dist/oeh-search-frontend/stats.json"
   },
   "private": true,
   "dependencies": {
@@ -32,15 +33,10 @@
     "@angular/platform-browser": "^11.0.2",
     "@angular/platform-browser-dynamic": "^11.0.2",
     "@angular/router": "^11.0.2",
+    "@apollo/client": "^3.3.11",
     "@ngx-i18nsupport/tooling": "^8.0.3",
-    "@openfonts/montserrat_all": "^1.44.2",
-    "apollo-angular": "^1.10.0",
-    "apollo-angular-link-http": "^1.11.0",
-    "apollo-angular-link-http-batch": "^1.9.0",
-    "apollo-cache-inmemory": "^1.6.5",
-    "apollo-client": "^2.6.8",
-    "graphql": "^15.4.0",
-    "graphql-tag": "^2.11.0",
+    "apollo-angular": "^2.2.0",
+    "graphql": "^15.0.0",
     "material-icons": "^0.3.1",
     "rxjs": "^6.6.3",
     "tslib": "^2.0.0",
@@ -48,19 +44,30 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.1100.2",
-    "@angular/cli": "^11.0.2",
+    "@angular-eslint/builder": "1.2.0",
+    "@angular-eslint/eslint-plugin": "1.2.0",
+    "@angular-eslint/eslint-plugin-template": "1.2.0",
+    "@angular-eslint/schematics": "1.2.0",
+    "@angular-eslint/template-parser": "1.2.0",
+    "@angular/cli": "^11.1.4",
     "@angular/compiler-cli": "^11.0.2",
     "@angular/language-service": "^11.0.2",
     "@graphql-codegen/cli": "^1.19.2",
-    "@graphql-codegen/fragment-matcher": "^1.17.8",
+    "@graphql-codegen/fragment-matcher": "^2.0.1",
     "@graphql-codegen/typescript": "^1.17.11",
-    "@graphql-codegen/typescript-apollo-angular": "^1.17.7",
+    "@graphql-codegen/typescript-apollo-angular": "^2.3.0",
     "@graphql-codegen/typescript-operations": "^1.17.10",
     "@ngx-i18nsupport/ngx-i18nsupport": "^1.1.6",
     "@types/jasmine": "^3.6.2",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "^14.14.9",
+    "@typescript-eslint/eslint-plugin": "4.3.0",
+    "@typescript-eslint/parser": "4.3.0",
     "codelyzer": "^6.0.0",
+    "eslint": "^7.6.0",
+    "eslint-plugin-import": "2.22.1",
+    "eslint-plugin-jsdoc": "30.7.6",
+    "eslint-plugin-prefer-arrow": "1.2.2",
     "husky": "^4.3.0",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",
@@ -72,8 +79,8 @@
     "lint-staged": "^10.5.1",
     "prettier": "^2.2.0",
     "ts-node": "^8.10.2",
-    "tslint": "^6.1.3",
-    "typescript": "^4.0.5"
+    "typescript": "^4.0.5",
+    "webpack-bundle-analyzer": "^4.4.0"
   },
   "husky": {
     "hooks": {
@@ -82,6 +89,6 @@
   },
   "lint-staged": {
     "*.{js,ts,md,html,css,scss}": "prettier --write",
-    "*.ts": "tslint --fix"
+    "*.ts": "eslint --fix"
   }
 }

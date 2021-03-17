@@ -3,17 +3,16 @@ import { ActivatedRouteSnapshot, ParamMap, Resolve } from '@angular/router';
 import { forkJoin, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {
-    EditorialTag,
     Facet,
+    Language,
     ResultFragment,
     SearchGQL,
     SearchQuery,
     Type,
-    Language,
 } from '../generated/graphql';
+import { ConfigService } from './config.service';
 import { SearchParametersService } from './search-parameters.service';
 import { Filters, mapFilters, SearchService } from './search.service';
-import { ConfigService } from './config.service';
 
 export interface SearchData {
     searchResults: ResultFragment;
@@ -23,6 +22,7 @@ export interface SearchData {
 export type Hits = SearchQuery['search']['hits'];
 
 export interface SubjectsPortalResults {
+    method: Hits;
     lessonPlanning: Hits;
     content: Hits;
     portal: Hits;
@@ -33,7 +33,7 @@ export interface SubjectsPortalResults {
     providedIn: 'root',
 })
 export class SearchResolverService implements Resolve<SearchData> {
-    private readonly subjectsPortalNumberOfResults = 5;
+    private readonly subjectsPortalNumberOfResults = 10;
     private language: Language;
 
     constructor(
@@ -61,14 +61,13 @@ export class SearchResolverService implements Resolve<SearchData> {
     }
 
     private shouldLoadSubjectsPortal(paramMap: ParamMap): boolean {
-        // return paramMap.has('educationalContext') && paramMap.has('discipline');
-
-        // Disable subjects portals completely for now.
-        return false;
+        // TODO: load the results dynamically when opened by the user.
+        return true;
     }
 
     private resolveSubjectsPortalResults(): Observable<SubjectsPortalResults> {
         return forkJoin({
+            method: this.getHitsForType(Type.Method),
             lessonPlanning: this.getHitsForType(Type.LessonPlanning),
             content: this.getHitsForType(Type.Content),
             portal: this.getHitsForType(Type.Portal),
@@ -77,15 +76,14 @@ export class SearchResolverService implements Resolve<SearchData> {
     }
 
     private getHitsForType(type: Type): Observable<Hits> {
-        const { searchString, filters } = this.searchParameters.getCurrentValue();
+        const { searchString, filters, oer } = this.searchParameters.getCurrentValue();
         const filtersCopy: Filters = { ...filters };
         filtersCopy[Facet.Type] = [type];
-        filtersCopy[Facet.EditorialTag] = [EditorialTag.Recommended];
         return this.searchGQL
             .fetch({
                 searchString,
                 size: this.subjectsPortalNumberOfResults,
-                filters: mapFilters(filtersCopy),
+                filters: mapFilters(filtersCopy, oer),
                 language: this.language,
             })
             .pipe(map((response) => response.data.search.hits));

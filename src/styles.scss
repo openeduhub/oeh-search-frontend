@@ -1,5 +1,4 @@
-// Load self-hosted fonts and icons
-@import '~@openfonts/montserrat_all/index.css';
+@import './fonts.scss';
 $material-icons-font-path: '~material-icons/iconfont/';
 @import '~material-icons/iconfont/material-icons.scss';
 
@@ -21,6 +20,7 @@ $material-icons-font-path: '~material-icons/iconfont/';
 @import 'app/search/search.component.theme.scss';
 @import 'app/search-field/search-field.component.theme.scss';
 @import 'app/search-filterbar/search-filterbar.component.theme.scss';
+@import 'app/subjects-portal/subjects-portal.component.theme.scss';
 
 // Overrides
 //
@@ -51,6 +51,7 @@ $material-icons-font-path: '~material-icons/iconfont/';
     @include search-theme($theme);
     @include search-field-theme($theme);
     @include search-filterbar-theme($theme);
+    @include subjects-portal-theme($theme);
 }
 
 @mixin apply-theme($theme) {
@@ -95,7 +96,7 @@ $app-theme-dark: mat-dark-theme($app-primary, $app-accent, $app-warn);
 //
 // See @angular/material/core/typography/_typography.scss for defaults.
 $app-typography: mat-typography-config(
-    $font-family: 'Montserrat',
+    $font-family: 'Source-Sans-Pro-Regular',
     $headline: mat-typography-level(24px, 32px, 700),
     $title: mat-typography-level(20px, 32px, 700),
     $subheading-2: mat-typography-level(18px, 28px, 700),
@@ -104,7 +105,7 @@ $app-typography: mat-typography-config(
     $body-1: mat-typography-level(14px, 22px, 400),
     $caption: mat-typography-level(12.5px, 18px, 400),
     $button: mat-typography-level(14px, 20px, 700),
-    $input: mat-typography-level(inherit, 1.125, 700),
+    $input: mat-typography-level(inherit, 1.125, 400),
 );
 // Custom fields
 $app-typography: map_merge(

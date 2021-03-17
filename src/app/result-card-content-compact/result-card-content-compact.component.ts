@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { EditorialTag, Facet, Type } from '../../generated/graphql';
 import { Hit } from '../search-results/search-results.component';
 import { Filters } from '../search.service';
@@ -8,7 +8,7 @@ import { Filters } from '../search.service';
     templateUrl: './result-card-content-compact.component.html',
     styleUrls: ['./result-card-content-compact.component.scss'],
 })
-export class ResultCardContentCompactComponent implements OnInit {
+export class ResultCardContentCompactComponent {
     @Input() hit: Hit;
     @Input() filters: Filters;
 
@@ -18,6 +18,4 @@ export class ResultCardContentCompactComponent implements OnInit {
     isExpanded = false;
 
     constructor() {}
-
-    ngOnInit(): void {}
 }

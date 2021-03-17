@@ -1,32 +1,3 @@
-<div class="header">
-  <h2 i18n class="title">All Search Results</h2>
-  <mat-button-toggle-group
-    class="style-toggle"
-    [value]="resultCardStyle"
-    (change)="setResultCardStyle($event.value)"
-    aria-label="Result view"
-    i18n-aria-label
-  >
-    <mat-button-toggle
-      value="standard"
-      i18n-aria-label
-      aria-label="Standard view"
-      i18n-matTooltip
-      matTooltip="Standard view"
-    >
-      <mat-icon>view_column</mat-icon>
-    </mat-button-toggle>
-    <mat-button-toggle
-      value="compact"
-      i18n-aria-label
-      aria-label="Compact view"
-      i18n-matTooltip
-      matTooltip="Compact view"
-    >
-      <mat-icon>view_module</mat-icon>
-    </mat-button-toggle>
-  </mat-button-toggle-group>
-</div>
 <div class="results">
   <app-result-card
     *ngFor="let hit of results.hits"

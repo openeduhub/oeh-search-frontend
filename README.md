@@ -142,7 +142,7 @@ before commits.
 
 Run `npm run format` to format all source files via [Prettier](https://prettier.io/).
 
-Run `ng lint` to check all source files via [TSLint](https://palantir.github.io/tslint/).
+Run `ng lint` to check all source files via [ESLint](https://eslint.org/).
 
 ## Internationalization
 
@@ -191,3 +191,22 @@ features for GraphQL queries in VSCode.
 ```
 ext install apollographql.vscode-apollo
 ```
+
+## TODO
+
+-   Enable strict type checking
+-   Enable stricter budgets:
+    ```json
+    "budgets": [
+        {
+            "type": "initial",
+            "maximumWarning": "500kb",
+            "maximumError": "1mb"
+        },
+        {
+            "type": "anyComponentStyle",
+            "maximumWarning": "2kb",
+            "maximumError": "4kb"
+        }
+    ]
+    ```

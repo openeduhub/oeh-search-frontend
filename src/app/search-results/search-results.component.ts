@@ -15,7 +15,6 @@ export type Hit = SearchHitFragment;
 export class SearchResultsComponent implements OnInit, OnDestroy {
     @Input() results: ResultFragment;
     filters: Filters;
-    resultCardStyle: ResultCardStyle;
 
     private subscriptions: Subscription[] = [];
 
@@ -27,20 +26,11 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
                 this.filters = filters;
             }),
         );
-        this.subscriptions.push(
-            this.view
-                .getResultCardStyle()
-                .subscribe((resultCardStyle) => (this.resultCardStyle = resultCardStyle)),
-        );
     }
 
     ngOnDestroy(): void {
         for (const subscription of this.subscriptions) {
             subscription.unsubscribe();
         }
-    }
-
-    setResultCardStyle(resultCardStyle: ResultCardStyle) {
-        this.view.setResultCardStyle(resultCardStyle);
     }
 }

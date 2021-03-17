@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DidYouMeanSuggestionFragment, ResultFragment } from '../../generated/graphql';
 import { SearchParametersService } from '../search-parameters.service';
 import { SearchData } from '../search-resolver.service';
 import { SearchService } from '../search.service';
-import { ViewService } from '../view.service';
+import { ResultCardStyle, ViewService } from '../view.service';
 
 @Component({
     selector: 'app-search',
@@ -18,7 +19,8 @@ export class SearchComponent implements OnInit, OnDestroy {
     filterCount: number;
     pageIndex: number;
     results: ResultFragment;
-    breadcrumbs: string[];
+    selectedTab = new FormControl(0);
+    resultCardStyle: ResultCardStyle;
 
     private subscriptions: Subscription[] = [];
 
@@ -48,24 +50,26 @@ export class SearchComponent implements OnInit, OnDestroy {
                 this.filterCount = Object.keys(filters).filter((k) => filters[k]?.length).length;
             }),
         );
-        this.subscriptions.push(
-            this.route.paramMap.subscribe((paramMap) => {
-                if (paramMap.has('educationalContext') && paramMap.has('discipline')) {
-                    this.breadcrumbs = [
-                        paramMap.get('educationalContext'),
-                        paramMap.get('discipline'),
-                    ];
-                }
-            }),
-        );
         this.route.data.subscribe((data: { searchData: SearchData }) => {
             this.results = data.searchData.searchResults;
+            // TODO: switch to tab 0 even if the user clicks on "show more" on the currently active
+            // filter.
+            this.selectedTab.setValue(0);
         });
+        this.subscriptions.push(
+            this.view
+                .getResultCardStyle()
+                .subscribe((resultCardStyle) => (this.resultCardStyle = resultCardStyle)),
+        );
     }
 
     ngOnDestroy(): void {
         for (const subscription of this.subscriptions) {
             subscription.unsubscribe();
         }
+    }
+
+    setResultCardStyle(resultCardStyle: ResultCardStyle) {
+        this.view.setResultCardStyle(resultCardStyle);
     }
 }

@@ -10,6 +10,8 @@
 
 .loading-spinner {
     position: fixed;
+    // Draw above result cards, which get `z-index: 1` through `.mat-body-active`.
+    z-index: 1;
     top: 0;
     left: 0;
     width: 100vw;

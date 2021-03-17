@@ -11,6 +11,7 @@
 <div class="badges">
   <div
     *ngIf="hit | hasEditorialTag: EditorialTag.Recommended"
+    class="mat-elevation-z1"
     i18n-matTooltip
     matTooltipPosition="left"
     matTooltip="Recommended by editorial team"
@@ -19,6 +20,7 @@
   </div>
   <div
     *ngIf="hit.license.oer"
+    class="mat-elevation-z1"
     i18n-matTooltip
     matTooltipPosition="left"
     matTooltip="Open Educational Resources"
@@ -98,12 +100,13 @@
 >
   <ng-container i18n *ngSwitchCase="Type.Content">Go To Content</ng-container>
   <ng-container i18n *ngSwitchCase="Type.Tool">Go To Tool</ng-container>
-  <ng-container i18n *ngSwitchCase="Type.Portal">Go To Portal</ng-container>
-  <ng-container i18n *ngSwitchCase="Type.LessonPlanning">Go To Lesson Planning</ng-container></a
->
-<a class="source" [href]="hit.source.url" target="_blank">
-  <ng-container *ngIf="hit.source.url">
-    <ng-container i18n>Source</ng-container>: {{ hit.source.name }}
-  </ng-container>
-  <ng-container *ngIf="!hit.source.url"> &nbsp; </ng-container>
+  <ng-container i18n *ngSwitchCase="Type.Portal">Go To Source</ng-container>
+  <ng-container i18n *ngSwitchCase="Type.LessonPlanning">Go To Lesson Planning</ng-container>
+  <ng-container i18n *ngSwitchCase="Type.Method">Go To Method</ng-container>
+</a>
+<!-- We use [attr.href] so the href attribute will not be added at all when hit.source.url is
+undefined. Using [href] would cause an empty href attribute to be added in that case, making the
+element a link to the current page. -->
+<a class="source" [class.hidden]="!hit.source.url" [attr.href]="hit.source.url" target="_blank">
+  <ng-container i18n>Source</ng-container>: {{ hit.source.name }}
 </a>

@@ -1,0 +1,40 @@
+<!-- <mat-expansion-panel [(expanded)]="isExpanded">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <div class="icon"></div>
+      <h2 class="title" i18n>Editors' Choices</h2>
+      <mat-panel-description expanded i18n>hide</mat-panel-description>
+      <mat-panel-description collapsed i18n>show</mat-panel-description>
+    </mat-panel-title>
+  </mat-expansion-panel-header> -->
+<app-subjects-portal-section
+  *ngIf="results.method.length > 0"
+  type="method"
+  [hits]="results.method"
+  [filters]="filters"
+></app-subjects-portal-section>
+<app-subjects-portal-section
+  *ngIf="results.content.length > 0"
+  type="content"
+  [hits]="results.content"
+  [filters]="filters"
+></app-subjects-portal-section>
+<app-subjects-portal-section
+  *ngIf="results.lessonPlanning.length > 0"
+  type="lessonPlanning"
+  [hits]="results.lessonPlanning"
+  [filters]="filters"
+></app-subjects-portal-section>
+<app-subjects-portal-section
+  *ngIf="results.tool.length > 0"
+  type="tool"
+  [hits]="results.tool"
+  [filters]="filters"
+></app-subjects-portal-section>
+<app-subjects-portal-section
+  *ngIf="results.portal.length > 0"
+  type="portal"
+  [hits]="results.portal"
+  [filters]="filters"
+></app-subjects-portal-section>
+<!-- </mat-expansion-panel> -->
