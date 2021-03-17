@@ -1,39 +1,21 @@
-:host ::ng-deep mat-slider {
-    height: 34px;
-    width: 100%;
-    .mat-slider-wrapper {
-        height: 6px;
-        top: 14px;
-        .mat-slider-thumb-container {
-            width: 50%;
-            left: 25%;
-            .mat-slider-focus-ring {
-                width: 40px;
-                height: 40px;
-                top: -21px;
-                right: -19px;
-            }
-            .mat-slider-thumb {
-                width: 30px;
-                height: 30px;
-                border-radius: 10px;
-                bottom: -15px;
-                transform: scale(0.9);
-                border: none;
-                right: -14px;
-            }
-        }
-        .mat-slider-track-wrapper {
-            height: 6px;
-            border-radius: 3px;
-            .mat-slider-track-background {
-                height: 6px;
-                transform: unset !important;
-            }
-            .mat-slider-track-fill {
-                display: none;
-            }
-        }
+:host ::ng-deep mat-slide-toggle {
+    .mat-slide-toggle-bar {
+        width: 46px;
+        height: 17px;
+        margin-right: 15px;
+    }
+    &.mat-slide-toggle.mat-checked .mat-slide-toggle-thumb-container {
+        transform: translate3d(26px, 0, 0);
+    }
+    .mat-slide-toggle-thumb-container {
+        top: -7px;
+        left: -5px;
+        height: 30px;
+        width: 30px;
+    }
+    .mat-slide-toggle-thumb {
+        height: 30px;
+        width: 30px;
     }
 }
 
@@ -45,22 +27,19 @@
 .slider-container {
     flex-grow: 1;
     min-width: 0;
+    display: flex;
+    align-items: center;
 }
 
-.labels {
-    display: flex;
-    justify-content: space-between;
-    padding: 0 8px;
-    label {
-        flex-basis: 0;
-        flex-grow: 1;
-        width: 7em;
-        padding: 0 10px;
-        text-align: center;
-        cursor: pointer;
-    }
-}
+$help-button-size: 18px;
 
 .help-button {
-    margin-top: -3px;
+    margin: -5px;
+    margin-top: -7px;
+    mat-icon {
+        width: $help-button-size;
+        height: $help-button-size;
+        line-height: $help-button-size;
+        font-size: $help-button-size;
+    }
 }

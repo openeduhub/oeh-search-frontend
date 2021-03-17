@@ -1,51 +1,61 @@
 <form (ngSubmit)="onSubmit()">
-  <div class="search-field-input-wrapper" cdkOverlayOrigin #trigger="cdkOverlayOrigin">
+  <div
+    #searchFieldWrapper
+    class="search-field-wrapper"
+    [class.multi-line]="searchFieldWrapper.offsetHeight > 53"
+    cdkOverlayOrigin
+    #trigger="cdkOverlayOrigin"
+  >
     <mat-form-field class="search-field" floatLabel="always">
       <mat-label i18n></mat-label>
       <mat-chip-list #chipList>
         <ng-container *ngFor="let category of categories">
-          <div *ngIf="filters[category]?.length > 0" class="chip-group-{{ category }}">
-            <mat-chip
-              *ngFor="let filter of filters[category]"
-              [removable]="true"
-              (removed)="removeFilter(category, filter)"
-            >
-              <ng-container
-                *ngTemplateOutlet="i18nFacet; context: { $implicit: filter }"
-              ></ng-container>
-              <mat-icon matChipRemove>cancel</mat-icon>
-            </mat-chip>
-          </div>
+          <mat-chip
+            *ngFor="let filter of filters[category]"
+            class="chip-group-{{ category }}"
+            [removable]="true"
+            (removed)="removeFilter(category, filter)"
+          >
+            <ng-container
+              *ngTemplateOutlet="i18nFacet; context: { $implicit: filter }"
+            ></ng-container>
+            <mat-icon matChipRemove>cancel</mat-icon>
+          </mat-chip>
         </ng-container>
-        <input
-          #searchInput
-          matInput
-          type="text"
-          [formControl]="searchField"
-          [matChipInputFor]="chipList"
-          i18n-placeholder
-          placeholder="Search"
-          (focus)="showOverlay = true"
-          autocomplete="off"
-          (keydown.enter)="onSubmit()"
-        />
-        <button
-          mat-button
-          matSuffix
-          mat-icon-button
-          i18n-aria-label
-          aria-label="Clear"
-          i18n-matTooltip
-          matTooltip="Clear"
-          (click)="clear()"
-          type="button"
-        >
-          <mat-icon>close</mat-icon>
-        </button>
+        <div class="search-field-input-wrapper">
+          <img class="search-icon" src="../../assets/icons/icon_search.svg" alt="" />
+          <input
+            #searchInput
+            matInput
+            type="text"
+            [formControl]="searchField"
+            [matChipInputFor]="chipList"
+            i18n-placeholder
+            placeholder="Find suitable content, tools, and sources for teaching..."
+            (focus)="showOverlay = true"
+            autocomplete="off"
+            (keydown.enter)="onSubmit()"
+          />
+          <button
+            *ngIf="searchField.value"
+            mat-button
+            mat-icon-button
+            i18n-aria-label
+            aria-label="Clear"
+            i18n-matTooltip
+            matTooltip="Clear"
+            (click)="clear()"
+            type="button"
+          >
+            <mat-icon>close</mat-icon>
+          </button>
+          <button mat-flat-button color="primary" class="submit-button" type="submit" i18n>
+            Search
+          </button>
+        </div>
       </mat-chip-list>
     </mat-form-field>
   </div>
-  <button mat-flat-button class="submit-button" type="submit" i18n>SEARCH</button>
 </form>
 
 <ng-template
@@ -78,9 +88,10 @@
             <ng-container *ngSwitchCase="Facet.Source" i18n>Source</ng-container>
           </label>
         </div>
-        <mat-chip-list class="chip-group-{{ category }}">
+        <mat-chip-list>
           <mat-chip
             *ngFor="let suggestion of suggestions[category]"
+            class="chip-group-{{ category }}"
             (click)="addFilter(category, suggestion)"
             [selectable]="false"
           >

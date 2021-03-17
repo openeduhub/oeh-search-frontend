@@ -12,7 +12,7 @@
         > mat-card {
             > .header {
                 color: mat-color($primary);
-                background-color: mat-color($customAccent, accent1);
+                background-color: mat-color($primary, 50);
                 border-color: mat-color($foreground, divider);
             }
             > .body {

@@ -2,7 +2,7 @@ import { Given, Then } from 'cypress-cucumber-preprocessor/steps';
 
 Given('I search for {string}', (searchString) => {
     cy.get('app-new-search-field')
-        .find('div[class*="search-field-input-wrapper"]')
+        .find('div[class*="search-field-wrapper"]')
         .find('input[type="text"]')
         .type(searchString);
 

@@ -60,9 +60,7 @@ Then('I see search results', () => {
 });
 
 Then('I see the search bar input field', () => {
-    cy.get('app-new-search-field')
-        .find('div[class*="search-field-input-wrapper"]')
-        .should('be.visible');
+    cy.get('app-new-search-field').find('div[class*="search-field-wrapper"]').should('be.visible');
 });
 
 Then('I see the search button', () => {

@@ -1,19 +1,19 @@
-<p class="tagline" i18n>Find content, techniques, and tools for teaching:</p>
-<button
-  *ngIf="showFiltersButton"
-  mat-flat-button
-  class="filter-button"
-  [class.has-badge]="filterCount > 0"
-  (click)="toggleFilterBar()"
-  [matBadge]="filterCount.toString()"
-  [matBadgeHidden]="filterCount === 0"
-  matBadgeColor="warn"
->
-  <mat-icon>tune</mat-icon><span i18n>Filters</span>
-</button>
-<app-search-field></app-search-field>
-<app-oer-slider></app-oer-slider>
-<span class="experiments" *ngIf="showExperiments"
-  ><ng-container i18n>Try our </ng-container
-  ><a routerLink="/experiments" i18n>experimental features</a>!</span
->
+<div class="content">
+  <div class="filter-row">
+    <button
+      *ngIf="showFiltersButton"
+      mat-flat-button
+      class="filter-button"
+      (click)="toggleFilterBar()"
+    >
+      <span i18n>Filters</span>
+      <mat-icon>tune</mat-icon>
+    </button>
+    <app-oer-slider></app-oer-slider>
+  </div>
+  <app-search-field></app-search-field>
+  <span class="experiments" *ngIf="showExperiments"
+    ><ng-container i18n>Try our </ng-container
+    ><a routerLink="/experiments" i18n>experimental features</a>!</span
+  >
+</div>

@@ -1,42 +1,19 @@
 <ng-container *ngIf="show">
   <div class="slider-container">
-    <mat-slider
-      [displayWith]="formatLabel"
-      min="0"
-      max="1"
-      [(ngModel)]="value"
-      (ngModelChange)="onValueChange($event)"
-      aria-labelledby="oer-slider-labels"
-    ></mat-slider>
-    <div id="oer-slider-labels" class="labels">
-      <label
-        [attr.selected]="value === 0 ? '' : undefined"
-        (click)="setValue(0)"
-        i18n
-        i18n-matTooltip
-        matTooltip="Show all content, OER or not"
-        >everything</label
-      >
-      <label
-        [attr.selected]="value === 1 ? '' : undefined"
-        (click)="setValue(1)"
-        i18n
-        i18n-matTooltip
-        matTooltip="Show only OER content"
-        >only OER</label
-      >
-    </div>
+    <mat-slide-toggle i18n [(ngModel)]="value" (ngModelChange)="onValueChange($event)"
+      >show me only OER</mat-slide-toggle
+    >
+    <a
+      href="{{ wordpressUrl }}/oerverstehen/"
+      target="_blank"
+      mat-icon-button
+      aria-label="help"
+      i18n-aria-label
+      class="help-button"
+      matTooltip="What is OER?"
+      i18n-matTooltip
+    >
+      <mat-icon>help</mat-icon>
+    </a>
   </div>
-  <a
-    href="{{ wordpressUrl }}/faq-wie-funktioniert-oer/"
-    target="_blank"
-    mat-icon-button
-    aria-label="help"
-    i18n-aria-label
-    class="help-button"
-    matTooltip="What is OER?"
-    i18n-matTooltip
-  >
-    <mat-icon>help</mat-icon>
-  </a>
 </ng-container>

@@ -7,6 +7,11 @@ $rem: 20px;
 
 .site-header {
     position: relative !important;
+    z-index: unset !important;
+}
+
+#main-menu {
+    z-index: 1;
 }
 
 .menu-item-suche {
@@ -41,7 +46,7 @@ $rem: 20px;
 //   with `~src/assets/fonts/`
 // - Replace all `((-?[\d\.])+)rem` with `#{$1 * $rem}`
 
-/*! CSS Used from: https://pre.wirlernenonline.de/wp-content/themes/wir-lernen-online/dist/assets/scss/app.css?ver=20200821 ; media=all */
+/*! CSS Used from: https://dev.wirlernenonline.de/wp-content/themes/wir-lernen-online/dist/assets/scss/app.css?ver=20200821 ; media=all */
 @media all {
     a {
         background-color: transparent;
@@ -560,13 +565,17 @@ $rem: 20px;
         color: #032850;
         height: 30px;
         font-family: 'Montserrat-Bold', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
-        font-size: 16px;
+        font-size: 16px !important;
         border-radius: 60px;
         transition: 0.3s;
     }
     .top-call-to-action-menu li a:hover {
         color: #003b7c;
         background: #b4da1c;
+    }
+    .menu li a {
+        font-family: 'Montserrat-Bold', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
+        font-size: 20px;
     }
     .is-dropdown-submenu {
         background-color: #fefefe !important;
@@ -581,6 +590,7 @@ $rem: 20px;
     }
     .is-dropdown-submenu li a {
         font-family: 'Montserrat-Medium', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
+        font-size: 20px;
     }
     .is-dropdown-submenu-item {
         transition: 0.2s;
@@ -589,11 +599,11 @@ $rem: 20px;
         border-radius: 0 0 24px 24px;
     }
     .is-dropdown-submenu-item:hover {
-        background-color: #c3cfdc;
+        background-color: #d9e2eb;
         cursor: pointer;
     }
 }
-/*! CSS Used from: https://pre.wirlernenonline.de/wp-content/themes/wir-lernen-online/dist/assets/scss/wlo.css?ver=20200821 ; media=all */
+/*! CSS Used from: https://dev.wirlernenonline.de/wp-content/themes/wir-lernen-online/dist/assets/scss/wlo.css?ver=20200821 ; media=all */
 @media all {
     .skip-link {
         position: absolute;
@@ -620,72 +630,11 @@ $rem: 20px;
         transition: top 0s;
     }
 }
-/*! CSS Used from: https://pre.wirlernenonline.de/wp-content/themes/wir-lernen-online/style.css?ver=20200821 ; media=all */
+/*! CSS Used from: https://dev.wirlernenonline.de/wp-content/themes/wir-lernen-online/style.css?ver=20200821 ; media=all */
 @media all {
     @media screen and (max-width: 1024px) {
         #main-menu {
             box-shadow: 0 8px 12px -2px rgba(0, 0, 0, 0.4);
         }
     }
-}
-/*! CSS Used fontfaces */
-@font-face {
-    font-family: 'Montserrat-Bold';
-    src: url('~src/assets/fonts/Montserrat-Bold.ttf') format('truetype');
-    font-weight: bold;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'Montserrat-Bold';
-    src: url('~src/assets/fonts/Montserrat-Bold.ttf') format('truetype');
-    font-weight: bold;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'Montserrat-Bold';
-    src: url('~src/assets/fonts/Montserrat-Bold.ttf') format('truetype');
-    font-weight: bold;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'Montserrat-Bold';
-    src: url('~src/assets/fonts/Montserrat-Bold.ttf') format('truetype');
-    font-weight: bold;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'Montserrat-Bold';
-    src: url('~src/assets/fonts/Montserrat-Bold.ttf') format('truetype');
-    font-weight: bold;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'Montserrat-Medium';
-    src: url('~src/assets/fonts/Montserrat-Medium.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'Montserrat-Medium';
-    src: url('~src/assets/fonts/Montserrat-Medium.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'Montserrat-Medium';
-    src: url('~src/assets/fonts/Montserrat-Medium.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'Montserrat-Medium';
-    src: url('~src/assets/fonts/Montserrat-Medium.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'Montserrat-Medium';
-    src: url('~src/assets/fonts/Montserrat-Medium.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
 }

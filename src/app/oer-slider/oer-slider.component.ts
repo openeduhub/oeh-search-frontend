@@ -4,11 +4,6 @@ import { Subscription } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { SearchParametersService } from '../search-parameters.service';
 
-enum OerLevel {
-    NONE,
-    ALL,
-}
-
 @Component({
     selector: 'app-oer-slider',
     templateUrl: './oer-slider.component.html',
@@ -17,7 +12,7 @@ enum OerLevel {
 export class OerSliderComponent implements OnInit, OnDestroy {
     readonly wordpressUrl = environment.wordpressUrl;
     show: boolean;
-    value: OerLevel;
+    value: boolean;
 
     private subscriptions: Subscription[] = [];
 
@@ -28,7 +23,7 @@ export class OerSliderComponent implements OnInit, OnDestroy {
             this.searchParameters.get().subscribe((searchParameters) => {
                 if (searchParameters) {
                     this.show = true;
-                    this.value = OerLevel[searchParameters.oer];
+                    this.value = searchParameters.oer === 'ALL';
                 } else {
                     this.show = false;
                 }
@@ -42,18 +37,14 @@ export class OerSliderComponent implements OnInit, OnDestroy {
         }
     }
 
-    formatLabel(value: number) {
-        return OerLevel[value];
-    }
-
-    setValue(value: number) {
+    setValue(value: boolean) {
         this.value = value;
         this.onValueChange(value);
     }
 
-    onValueChange(value: number) {
+    onValueChange(value: boolean) {
         this.router.navigate(this.router.url.startsWith('/search') ? [] : ['/search'], {
-            queryParams: { oer: OerLevel[value], pageIndex: 0 },
+            queryParams: { oer: value ? 'ALL' : null, pageIndex: 0 },
             queryParamsHandling: 'merge',
         });
     }

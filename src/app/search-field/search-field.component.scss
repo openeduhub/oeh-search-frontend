@@ -1,5 +1,3 @@
-$app-search-field-border-radius: 8px;
-
 :host {
     display: flex;
     position: relative;
@@ -8,25 +6,42 @@ $app-search-field-border-radius: 8px;
 form {
     display: flex;
     width: 100%;
-    .search-field-input-wrapper {
-        flex-grow: 1;
+    .search-field-wrapper {
         display: flex;
+        flex-grow: 1;
+        border-radius: 27px;
         align-items: center;
-        border-style: solid;
-        border-width: 1px;
-        border-top-left-radius: $app-search-field-border-radius;
-        border-bottom-left-radius: $app-search-field-border-radius;
-        padding: 3px 7px;
+        align-items: center;
+        padding: 5px 7px;
         min-height: 40px;
-        input {
-            padding: 0.5em;
+        &.multi-line {
+            border-radius: 20px;
         }
-    }
-    > button {
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-        border-top-right-radius: $app-search-field-border-radius;
-        border-bottom-right-radius: $app-search-field-border-radius;
+        .search-field-input-wrapper {
+            display: flex;
+            flex-grow: 1;
+            border-radius: 22px;
+            align-items: center;
+            height: 43px;
+            margin: 4px;
+            .search-icon {
+                width: 22px;
+                height: 22px;
+                margin-left: 16px;
+            }
+            input {
+                height: 43px;
+                margin: 0;
+                margin-left: 8px;
+            }
+            .submit-button {
+                display: flex;
+                align-items: center;
+                height: 30px;
+                border-radius: 15px;
+                margin: 6px;
+            }
+        }
     }
 }
 
@@ -43,17 +58,20 @@ form {
     }
 }
 
+:host mat-chip-list ::ng-deep {
+    .mat-chip-list-wrapper .mat-standard-chip {
+        min-height: 30px;
+    }
+}
+
 .search-field {
     width: 100%;
 }
 
 .suggestion-card {
-    // box-sizing: border-box;
     width: 100%;
     background-color: white;
-    border-radius: $app-search-field-border-radius;
-    // border-bottom-left-radius: 4px;
-    // border-bottom-right-radius: 4px;
+    border-radius: 20px;
     padding: 10px;
     .suggestion-group {
         &:not(:last-of-type) {
@@ -78,24 +96,24 @@ form {
         }
     }
 }
-.chip-group-oer .mat-chip {
+.mat-chip.chip-group-oer {
     background-color: rgb(214, 166, 214);
 }
-.chip-group-type .mat-chip {
+.mat-chip.chip-group-type {
     background-color: rgb(166, 192, 214);
 }
-.chip-group-discipline .mat-chip {
+.mat-chip.chip-group-discipline {
     background-color: rgb(166, 214, 174);
 }
-.chip-group-educationalContext .mat-chip {
+.mat-chip.chip-group-educationalContext {
     background-color: rgb(214, 166, 166);
 }
-.chip-group-intendedEndUserRole .mat-chip {
+.mat-chip.chip-group-intendedEndUserRole {
     background-color: rgb(211, 214, 166);
 }
-.chip-group-learningResourceType .mat-chip {
+.mat-chip.chip-group-learningResourceType {
     background-color: rgb(214, 193, 166);
 }
-.chip-group-source .mat-chip {
+.mat-chip.chip-group-source {
     background-color: rgb(208, 166, 214);
 }

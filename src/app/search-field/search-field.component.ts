@@ -134,9 +134,8 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
     }
 
     clear() {
-        // Clear not yet submitted search string.
         this.searchField.setValue('');
-        this.router.navigate(['/search']);
+        this.onSubmit();
     }
 
     private updateSuggestions(facets: Facets, inputString: string): void {

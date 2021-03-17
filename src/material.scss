@@ -2,10 +2,11 @@
 // For more information: https://material.angular.io/guide/theming
 @import '~@angular/material/theming';
 
-$primary: #1b4280;
+$primary: #032850;
 
 $primary-palette: (
-    50: lighten($primary, 50%),
+    // 50: lighten($primary, 50%),
+    50: #d9e2eb,
     100: lighten($primary, 40%),
     200: lighten($primary, 30%),
     300: lighten($primary, 20%),
@@ -34,12 +35,12 @@ $primary-palette: (
         A200: $dark-primary-text,
         A400: $light-primary-text,
         A700: $light-primary-text,
-    ),
+    )
 );
 
 $custom-accent: (
     accent1: #e3f702,
-    accent2: #ff799a,
+    accent2: #ec4a70,
     contrast: (
         accent1: $dark-primary-text,
         accent2: $light-primary-text,

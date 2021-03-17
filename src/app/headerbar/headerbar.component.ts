@@ -3,7 +3,6 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
-import { SearchParametersService } from '../search-parameters.service';
 import { ViewService } from '../view.service';
 
 @Component({
@@ -13,16 +12,11 @@ import { ViewService } from '../view.service';
 })
 export class HeaderbarComponent implements OnInit, OnDestroy {
     readonly showExperiments = environment.showExperiments;
-    filterCount = 0;
     showFiltersButton: boolean;
 
     private subscriptions: Subscription[] = [];
 
-    constructor(
-        private router: Router,
-        private searchParameters: SearchParametersService,
-        private view: ViewService,
-    ) {}
+    constructor(private router: Router, private view: ViewService) {}
 
     ngOnInit() {
         this.subscriptions.push(
@@ -31,19 +25,6 @@ export class HeaderbarComponent implements OnInit, OnDestroy {
                 .subscribe((event: NavigationEnd) => {
                     this.showFiltersButton = this.router.url.startsWith('/search');
                 }),
-        );
-
-        this.subscriptions.push(
-            this.searchParameters.get().subscribe((params) => {
-                if (params) {
-                    const filters = params.filters;
-                    this.filterCount = Object.keys(filters)
-                        // Ignore the OER filter for the button-badge count since the OER filter is
-                        // not handled by the filter sidebar toggled by the button.
-                        .filter((k) => k !== 'oer')
-                        .filter((k) => filters[k]?.length).length;
-                }
-            }),
         );
     }
 

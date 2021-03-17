@@ -5,80 +5,50 @@
 
 :host {
     position: relative;
-    display: grid;
-    // Don't use horizontal gap, so elements that are not always visible don't add awkward margins
-    // on mobile.
-    gap: 12px 0;
-    padding: 20px;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-        url('../../assets/images/search-bg.png');
-    background-size: cover;
-    background-position: 50%;
+    display: flex;
+    background-image: url('../../assets/images/header-bg.svg');
+    background-position: center;
     margin-bottom: 20px;
-    grid-template-columns: min-content 1fr;
-    grid-template-areas:
-        'tagline tagline'
-        'search-field search-field '
-        'filter-button oer-slider';
     justify-content: center;
-    @media screen and (min-width: 850px) {
-        gap: 20px 0;
-        grid-template-areas:
-            '. tagline'
-            'filter-button search-field '
-            '.oer-slider';
-    }
-    @media screen and (min-width: 1200px) {
-        padding-top: 30px;
-        padding-bottom: 50px;
-        grid-template-columns: 150px minmax(0, 900px) min-content;
-        grid-template-areas:
-            '. tagline tagline'
-            'filter-button search-field oer-slider';
-        app-search-field,
-        app-new-search-field {
-            margin-right: 50px;
+    align-items: center;
+    min-height: 300px;
+}
+
+.content {
+    width: 100%;
+    flex-direction: column;
+    display: flex;
+    margin: 20px;
+    max-width: 1060px;
+}
+
+.filter-row {
+    display: flex;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.filter-button {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 15px;
+    margin-right: 30px;
+    span {
+        margin-right: 0.8em;
+        @media screen and (max-width: 450px) {
+            display: none;
         }
     }
-    .tagline {
-        grid-area: tagline;
-        margin: 0;
-    }
-    .filter-button {
-        grid-area: filter-button;
-        align-self: start;
-        min-height: 48px;
-        justify-self: start;
-        min-width: unset;
-        display: flex;
-        align-items: center;
-        border-radius: 8px;
-        margin-right: 20px;
-        span {
-            margin-left: 0.3em;
-            @media screen and (max-width: 450px) {
-                display: none;
-            }
-        }
-    }
-    app-search-field,
-    app-new-search-field {
-        grid-area: search-field;
-    }
-    app-oer-slider {
-        grid-area: oer-slider;
-        margin: -3px 0;
-        @media screen and (min-width: 450px) {
-            justify-self: end;
-        }
-    }
-    .experiments {
-        position: absolute;
-        top: 2px;
-        right: 8px;
-        a {
-            text-decoration: none;
-            font-weight: bold;
-        }
+}
+
+.experiments {
+    position: absolute;
+    top: 2px;
+    right: 8px;
+    a {
+        text-decoration: none;
+        font-weight: bold;
     }
 }
