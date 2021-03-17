@@ -60,15 +60,15 @@ Then('I see search results', () => {
 });
 
 Then('I see the search bar input field', () => {
-    cy.get('app-new-search-field').find('div[class*="search-field-wrapper"]').should('be.visible');
+    cy.get('app-search-field').find('div[class*="search-field-wrapper"]').should('be.visible');
 });
 
 Then('I see the search button', () => {
-    cy.get('app-new-search-field').find('button[class*="submit-button"]').should('be.visible');
+    cy.get('app-search-field').find('button[class*="submit-button"]').should('be.visible');
 });
 
 Then('I see the search button label {string}', (label) => {
-    cy.get('app-new-search-field')
+    cy.get('app-search-field')
         .find('button[class*="submit-button"]')
         .find('span[class*="mat-button-wrapper"]')
         .should('have.text', label);
