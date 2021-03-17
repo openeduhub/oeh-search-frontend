@@ -20,6 +20,7 @@
         onclick="return false;"
         (click)="skipTo('MAIN_CONTENT')"
       ```
+    - Replace logo src with `./assets/images/wlo-logo.svg`
 -->
 
 <nav id="site-header" class="site-header">
@@ -45,11 +46,7 @@
       (click)="mobileMenuOpen = !mobileMenuOpen"
     ></button>
     <a class="mobile-logo-container" href="{{ wordpressUrl }}" aria-label="Link zur Startseite">
-      <img
-        class="logo"
-        src="{{ wordpressUrl }}/wp-content/themes/wir-lernen-online/src/assets/img/wlo-logo.svg"
-        alt="Logo WLO"
-      />
+      <img class="logo" src="./assets/images/wlo-logo.svg" alt="Logo WLO" />
     </a>
   </div>
   <div
@@ -63,13 +60,7 @@
         <div class="grid-x grid-margin-x align-middle">
           <div class="auto cell show-for-large">
             <a href="{{ wordpressUrl }}">
-              <img
-                class="logo"
-                src="{{
-                  wordpressUrl
-                }}/wp-content/themes/wir-lernen-online/src/assets/img/wlo-logo.svg"
-                alt="Logo WLO"
-              />
+              <img class="logo" src="./assets/images/wlo-logo.svg" alt="Logo WLO" />
             </a>
           </div>
           <div class="large-shrink small-12 cell">

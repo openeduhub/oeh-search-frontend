@@ -14,7 +14,7 @@
     "format": "prettier --write src",
     "docker-build": "docker build . --tag openeduhub/oeh-search-frontend:local",
     "docker-run": "docker run --name oeh-search-frontend --rm -ti -p 8080:80 -e RELAY_URL=http://localhost:3000 openeduhub/oeh-search-frontend:local",
-    "extract-i18n": "ng  extract-i18n oeh-search-frontend --output-path src/locale && ng run oeh-search-frontend:xliffmerge",
+    "extract-i18n": "ng extract-i18n oeh-search-frontend --output-path src/locale && ng run oeh-search-frontend:xliffmerge",
     "start-de": "ng serve --configuration=de",
     "generate": "graphql-codegen",
     "postinstall": "ngcc --tsconfig ./tsconfig.app.json",
