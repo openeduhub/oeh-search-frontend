@@ -18,7 +18,7 @@
                     background-color: mat-color($foreground, secondary-text);
                 }
                 > .editorial-icon {
-                    background-color: mat-color($custom-accent, accent2);
+                    background-color: #106029;
                 }
             }
         }
@@ -36,7 +36,7 @@
     }
     app-result-card-content-compact {
         .editorial-hint {
-            color: mat-color($custom-accent, accent2);
+            color: #106029;
         }
         .metadata {
             a {
