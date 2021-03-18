@@ -7,7 +7,7 @@ Feature: HomePage
     Then I see "WirLernenOnline" in the title
     And I see the search bar input field
     And I see the search button
-    And I see the search button label " Suchen "
+    And I see the search button label " Suche "
     And I see the filter button
     And I see the filter button label "Filter"
     And I see search results
