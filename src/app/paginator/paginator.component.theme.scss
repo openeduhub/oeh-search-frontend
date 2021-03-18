@@ -3,13 +3,13 @@
 
 @mixin paginator-theme($theme) {
     $primary-foreground-color: primary-foreground-color($theme);
-    $custom-accent: map-get($theme, custom-accent);
+    $primary: map-get($theme, primary);
 
     app-paginator {
         .page-number {
             &.active {
-                background-color: mat-color($custom-accent, accent1);
-                color: mat-color($custom-accent, accent1-contrast);
+                background-color: mat-color($primary);
+                color: mat-color($primary, default-contrast);
             }
             &:not(.active) {
                 color: $primary-foreground-color;
