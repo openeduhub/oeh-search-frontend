@@ -4,6 +4,8 @@
 }
 
 :host {
+    border-top-width: 45px;
+    border-top-style: solid;
     position: relative;
     display: flex;
     background-image: url('../../assets/images/header-bg.svg');
@@ -11,7 +13,7 @@
     margin-bottom: 20px;
     justify-content: center;
     align-items: center;
-    min-height: 300px;
+    min-height: 325px;
 }
 
 .content {
