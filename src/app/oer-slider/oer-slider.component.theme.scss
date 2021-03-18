@@ -13,6 +13,9 @@
         .help-button mat-icon {
             color: mat-color($primary, default-contrast);
         }
+        .mat-slide-toggle-bar {
+            background-color: mat-color($primary, default-contrast, 0.38);
+        }
         .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
             background-color: mat-color($primary, default-contrast);
         }
