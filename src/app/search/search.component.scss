@@ -19,7 +19,24 @@ app-search-filterbar {
         width: 100%;
         top: 0;
         left: 0;
-        z-index: 2;
+        z-index: 1;
+    }
+}
+
+.results {
+    // Contain z-index of underlying .style-toggle
+    position: relative;
+    z-index: 0;
+    flex-basis: 350px; // Shrink to equal parts with filter bar
+    flex-grow: 1;
+    padding: 0 20px;
+    max-width: 1400px;
+    justify-self: center;
+    overflow: hidden;
+    .did-you-mean > a {
+        &:not(:hover) {
+            text-decoration: none;
+        }
     }
 }
 
@@ -51,18 +68,4 @@ app-search-filterbar {
 
 app-subjects-portal {
     margin-bottom: 40px;
-}
-
-.results {
-    flex-basis: 350px; // Shrink to equal parts with filter bar
-    flex-grow: 1;
-    padding: 0 20px;
-    max-width: 1400px;
-    justify-self: center;
-    overflow: hidden;
-    .did-you-mean > a {
-        &:not(:hover) {
-            text-decoration: none;
-        }
-    }
 }
