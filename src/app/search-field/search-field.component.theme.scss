@@ -25,12 +25,10 @@
 }
 
 @mixin search-field-typography($typography) {
-    // We could give to search input a bigger font size, but we should be consistent, at least for
-    // the header bar.
-
-    // app-search-field {
-    //     .mat-form-field {
-    //             font-size: mat-font-size($typography, subheading-1);
-    //     }
-    // }
+    app-search-field {
+        .submit-button,
+        .mat-form-field {
+            font-size: mat-font-size($typography, subheading-1);
+        }
+    }
 }

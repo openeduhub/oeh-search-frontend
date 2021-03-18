@@ -10,4 +10,7 @@
     .mat-tooltip-handset {
         @include mat-typography-level-to-styles($typography, tooltip);
     }
+    .mat-chip {
+        @include mat-typography-level-to-styles($typography, body-2);
+    }
 }
