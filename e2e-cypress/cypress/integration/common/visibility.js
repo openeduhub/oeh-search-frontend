@@ -82,6 +82,7 @@ Then('I see the filter button label {string}', (filter) => {
     cy.get('app-headerbar')
         .find('button[class*="filter-button"]')
         .find('span[class*="mat-button-wrapper"]')
+        .find('span[class*="button-wrapper"]')
         .find('span')
         .should('have.text', filter);
 });
