@@ -5,13 +5,15 @@ $rem: 20px;
     font-size: $rem;
 }
 
-// Extracted using https://chrome.google.com/webstore/detail/css-used/cdopjfddjlonogibjahpnmjpoangjfff
+// Extracted using
+// https://chrome.google.com/webstore/detail/css-used/cdopjfddjlonogibjahpnmjpoangjfff
 //
 // Modifications:
-// - Download fonts into `assets/fonts`
-// - Replace all
+// - Download missing fonts into `assets/fonts`
+// - Add missing `@font-face` statements to `src/fonts.scss`, replacing all
 //   `https://pre.wirlernenonline.de/wp-content/themes/wir-lernen-online/dist/assets/fonts/\w+/`
 //   with `~src/assets/fonts/`
+// - Remove `@font-face` statements here
 // - Replace all `((-?[\d\.])+)rem` with `#{$1 * $rem}`
 /*! CSS Used from: https://pre.wirlernenonline.de/wp-content/themes/wir-lernen-online/dist/assets/scss/app.css?ver=20200821 ; media=all */
 @media all {

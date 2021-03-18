@@ -97,21 +97,21 @@ $app-theme-dark: mat-dark-theme($app-primary, $app-accent, $app-warn);
 // See @angular/material/core/typography/_typography.scss for defaults.
 $app-typography: mat-typography-config(
     $font-family: 'Source-Sans-Pro-Regular',
-    $headline: mat-typography-level(24px, 32px, 700),
-    $title: mat-typography-level(20px, 32px, 700),
-    $subheading-2: mat-typography-level(18px, 28px, 700),
-    $subheading-1: mat-typography-level(16px, 24px, 700),
-    $body-2: mat-typography-level(14px, 24px, 700),
+    $headline: mat-typography-level(24px, 32px, 700, 'Montserrat-Bold'),
+    $title: mat-typography-level(20px, 32px, 700, 'Montserrat-Bold'),
+    $subheading-2: mat-typography-level(18px, 28px, 700, 'Montserrat-Bold'),
+    $subheading-1: mat-typography-level(16px, 24px, 700, 'Montserrat-Bold'),
+    $body-2: mat-typography-level(14px, 24px, 700, 'Montserrat-Bold'),
     $body-1: mat-typography-level(14px, 22px, 400),
-    $caption: mat-typography-level(12.5px, 18px, 400),
-    $button: mat-typography-level(14px, 20px, 700),
+    $caption: mat-typography-level(12.5px, 18px, 400, 'Montserrat-Medium'),
+    $button: mat-typography-level(14px, 20px, 700, 'Montserrat-Bold'),
     $input: mat-typography-level(inherit, 1.125, 400),
 );
 // Custom fields
 $app-typography: map_merge(
     $app-typography,
     (
-        tooltip: mat-typography-level(13px, 20px, 500),
+        tooltip: mat-typography-level(14px, 20px, 500),
     )
 );
 @include angular-material-typography($app-typography);
