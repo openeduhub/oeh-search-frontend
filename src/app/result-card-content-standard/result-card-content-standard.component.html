@@ -1,5 +1,5 @@
 <!--<a class="details-link" [routerLink]="['/details', hit.id]">-->
-<a class="details-link" [href]="hit.lom.technical.location" target="_blank">
+<a class="details-link" [href]="hit.lom.technical.location" target="_blank" [appReportClick]="hit">
   <div class="image-container" mat-card-image>
     <img class="img-bg" [appPreviewImage]="hit.previewImage" />
     <img class="img-main" [appPreviewImage]="hit.previewImage" [loadHighResImage]="false" />
@@ -97,6 +97,7 @@
   [href]="hit.lom.technical.location"
   [ngSwitch]="hit.type"
   [attr.aria-labelledby]="hit.id + '-open-link ' + hit.id + '-title'"
+  [appReportClick]="hit"
 >
   <ng-container i18n *ngSwitchCase="Type.Content">Go To Content</ng-container>
   <ng-container i18n *ngSwitchCase="Type.Tool">Go To Tool</ng-container>

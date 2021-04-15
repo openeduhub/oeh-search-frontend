@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { filter, map, tap } from 'rxjs/operators';
 import {
     Aggregation,
     AutoCompleteGQL,
@@ -14,6 +14,7 @@ import {
     GetEntryGQL,
     GetEntryQuery,
     Language,
+    ReportSearchRequestGQL,
     ResultFragment,
     SearchGQL,
     SimpleFilter,

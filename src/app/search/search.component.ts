@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DidYouMeanSuggestionFragment, ResultFragment } from '../../generated/graphql';
+import { AnalyticsService } from '../analytics.service';
 import { SearchParametersService } from '../search-parameters.service';
 import { SearchData } from '../search-resolver.service';
 import { SearchService } from '../search.service';
@@ -25,6 +26,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     private subscriptions: Subscription[] = [];
 
     constructor(
+        private analyticsService: AnalyticsService,
         private route: ActivatedRoute,
         private search: SearchService,
         private searchParameters: SearchParametersService,
@@ -52,6 +54,9 @@ export class SearchComponent implements OnInit, OnDestroy {
         );
         this.route.data.subscribe((data: { searchData: SearchData }) => {
             this.results = data.searchData.searchResults;
+            this.analyticsService.reportSearchRequest({
+                numberResults: this.results.total.value,
+            });
             // TODO: switch to tab 0 even if the user clicks on "show more" on the currently active
             // filter.
             this.selectedTab.setValue(0);

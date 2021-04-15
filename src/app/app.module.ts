@@ -26,8 +26,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InMemoryCache } from '@apollo/client/core';
-import { APOLLO_OPTIONS } from 'apollo-angular';
-import { HttpBatchLink } from 'apollo-angular/http';
+import { APOLLO_NAMED_OPTIONS, APOLLO_OPTIONS } from 'apollo-angular';
+import { HttpBatchLink, HttpLink } from 'apollo-angular/http';
 import { environment } from '../environments/environment';
 import generatedIntrospection from '../generated/fragmentTypes.json';
 import { AddContentFabComponent } from './add-content-fab/add-content-fab.component';
@@ -59,6 +59,7 @@ import { SubjectsPortalSectionComponent } from './subjects-portal-section/subjec
 import { SubjectsPortalComponent } from './subjects-portal/subjects-portal.component';
 import { TrimPipe } from './trim.pipe';
 import { TruncatePipe } from './truncate.pipe';
+import { ReportClickDirective } from './report-click.directive';
 
 @NgModule({
     declarations: [
@@ -90,6 +91,7 @@ import { TruncatePipe } from './truncate.pipe';
         SubjectsPortalSectionComponent,
         TrimPipe,
         TruncatePipe,
+        ReportClickDirective,
     ],
     imports: [
         AppRoutingModule,
@@ -136,6 +138,17 @@ import { TruncatePipe } from './truncate.pipe';
                 };
             },
             deps: [HttpBatchLink],
+        },
+        {
+            provide: APOLLO_NAMED_OPTIONS,
+            deps: [HttpLink],
+            useFactory: (httpLink: HttpLink) => ({
+                analytics: {
+                    name: 'analytics',
+                    link: httpLink.create({ uri: environment.analyticsUrl + '/graphql' }),
+                    cache: new InMemoryCache(),
+                },
+            }),
         },
     ],
     bootstrap: [AppComponent],

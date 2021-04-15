@@ -2,6 +2,7 @@ export interface Env {
     RELAY_URL?: string;
     WORDPRESS_URL?: string;
     SHOW_EXPERIMENTS?: string;
+    ANALYTICS_URL?: string;
 }
 
 export interface ExtendedWindow extends Window {

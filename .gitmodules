@@ -1,3 +1,6 @@
 [submodule "elasticsearch-relay"]
 	path = elasticsearch-relay
 	url = https://github.com/openeduhub/oeh-search-elasticsearch-relay.git
+[submodule "oeh-search-analytics"]
+	path = oeh-search-analytics
+	url = https://github.com/openeduhub/oeh-search-analytics.git

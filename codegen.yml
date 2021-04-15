@@ -1,5 +1,7 @@
 overwrite: true
-schema: "elasticsearch-relay/src/schema.graphql"
+schema:
+  - "elasticsearch-relay/src/schema.graphql"
+  - "oeh-search-analytics/src/schema.gql"
 documents: "src/graphql/**/*.graphql"
 generates:
   src/generated/graphql.ts:

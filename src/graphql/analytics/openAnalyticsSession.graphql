@@ -1,0 +1,3 @@
+mutation openAnalyticsSession($screenWidth: Int!, $screenHeight: Int!) {
+    openSession(screenWidth: $screenWidth, screenHeight: $screenHeight)
+}

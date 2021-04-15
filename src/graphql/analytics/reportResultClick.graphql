@@ -1,0 +1,25 @@
+mutation reportResultClick(
+    $screenWidth: Int!
+    $screenHeight: Int!
+    $sessionId: String!
+    $searchString: String!
+    $page: Int!
+    $filters: String!
+    $filtersSidebarIsVisible: Boolean!
+    $language: Language!
+    $clickedResultId: String!
+    $clickKind: ClickKind!
+) {
+    resultClick(
+        screenWidth: $screenWidth
+        screenHeight: $screenHeight
+        sessionId: $sessionId
+        searchString: $searchString
+        page: $page
+        filters: $filters
+        filtersSidebarIsVisible: $filtersSidebarIsVisible
+        language: $language
+        clickedResultId: $clickedResultId
+        clickKind: $clickKind
+    )
+}

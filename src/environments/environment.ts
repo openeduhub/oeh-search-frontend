@@ -11,6 +11,7 @@ export const environment = {
     relayUrl: window.__env?.RELAY_URL ?? 'http://localhost:3000',
     wordpressUrl: window.__env?.WORDPRESS_URL ?? 'https://dev.wirlernenonline.de',
     showExperiments: readBoolean(window.__env?.SHOW_EXPERIMENTS, true),
+    analyticsUrl: window.__env?.ANALYTICS_URL,
 };
 
 /*

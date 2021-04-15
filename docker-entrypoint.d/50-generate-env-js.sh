@@ -6,6 +6,7 @@ variables=(
     "RELAY_URL"
     "WORDPRESS_URL"
     "SHOW_EXPERIMENTS"
+    "ANALYTICS_URL"
 )
 
 function generateEnvJs() {
