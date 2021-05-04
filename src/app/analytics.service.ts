@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { map, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import {
+    LifecycleEvent,
     OpenAnalyticsSessionGQL,
+    ReportLifecycleEventGQL,
     ReportResultClickGQL,
     ReportSearchRequestGQL,
+    SearchHitFragment,
 } from 'src/generated/graphql';
 import { ClickKind } from '../generated/graphql';
 import { ConfigService } from './config.service';
@@ -39,12 +42,14 @@ export class AnalyticsService {
     constructor(
         private config: ConfigService,
         private openAnalyticsSessionGQL: OpenAnalyticsSessionGQL,
+        private reportLifecycleEventGQL: ReportLifecycleEventGQL,
         private reportResultClickGQL: ReportResultClickGQL,
         private reportSearchRequestGQL: ReportSearchRequestGQL,
         private searchParameters: SearchParametersService,
         private view: ViewService,
     ) {
         openAnalyticsSessionGQL.client = 'analytics';
+        reportLifecycleEventGQL.client = 'analytics';
         reportResultClickGQL.client = 'analytics';
         reportSearchRequestGQL.client = 'analytics';
         this.sessionId = this.getSessionId().pipe(shareReplay());
@@ -60,6 +65,7 @@ export class AnalyticsService {
                 filters: JSON.stringify(filters),
             };
         });
+        this.registerLifecycleEventListeners();
     }
 
     reportSearchRequest(args: { numberResults: number }): void {
@@ -70,9 +76,7 @@ export class AnalyticsService {
                         this.reportSearchRequestGQL.mutate({
                             ...this.searchRequestArgs,
                             sessionId,
-                            screenWidth: screen.width,
-                            screenHeight: screen.height,
-                            language: this.config.getLanguage(),
+                            ...this.getClientInformation(),
                             numberResults: args.numberResults,
                         }),
                     ),
@@ -83,18 +87,22 @@ export class AnalyticsService {
         }
     }
 
-    reportResultClick(args: { clickedResultId: string; clickKind: ClickKind }): void {
+    reportResultClick(args: { clickedResult: SearchHitFragment; clickKind: ClickKind }): void {
         if (environment.analyticsUrl) {
+            const filteredClickedResult = omitDeep(args.clickedResult, [
+                '__typename',
+                'previewImage',
+                'description',
+            ]);
             this.sessionId
                 .pipe(
                     switchMap((sessionId) =>
                         this.reportResultClickGQL.mutate({
                             ...this.searchRequestArgs,
                             ...args,
+                            ...this.getClientInformation(),
                             sessionId,
-                            screenWidth: screen.width,
-                            screenHeight: screen.height,
-                            language: this.config.getLanguage(),
+                            clickedResult: JSON.stringify(filteredClickedResult),
                         }),
                     ),
                 )
@@ -114,8 +122,7 @@ export class AnalyticsService {
         } else {
             return this.openAnalyticsSessionGQL
                 .mutate({
-                    screenWidth: screen.width,
-                    screenHeight: screen.height,
+                    ...this.getClientInformation(),
                 })
                 .pipe(
                     map((response) => response.data.openSession),
@@ -126,7 +133,83 @@ export class AnalyticsService {
         }
     }
 
+    private registerLifecycleEventListeners(): void {
+        const event$ = new Subject<{ event: LifecycleEvent; state: string }>();
+        this.sessionId
+            .pipe(
+                switchMap((sessionId) =>
+                    event$.pipe(
+                        switchMap((lifecycleEvent) =>
+                            this.reportLifecycleEventGQL.mutate({
+                                ...lifecycleEvent,
+                                sessionId,
+                                ...this.getClientInformation(),
+                            }),
+                        ),
+                    ),
+                ),
+            )
+            .subscribe({
+                error: (err) => this.printError(err),
+            });
+
+        const reportLifecycleEvent = (lifecycleEvent: { event: LifecycleEvent; state: string }) => {
+            event$.next(lifecycleEvent);
+        };
+
+        window.addEventListener(
+            'pagehide',
+            (event) =>
+                reportLifecycleEvent({
+                    event: LifecycleEvent.Pagehide,
+                    state: event.persisted ? 'frozen' : 'terminated',
+                }),
+            {
+                capture: true,
+            },
+        );
+        window.addEventListener(
+            'visibilitychange',
+            () =>
+                reportLifecycleEvent({
+                    event: LifecycleEvent.Visibilitychange,
+                    state: document.visibilityState,
+                }),
+            {
+                capture: true,
+            },
+        );
+    }
+
+    private getClientInformation() {
+        return {
+            userAgent: window.navigator.userAgent,
+            screenWidth: screen.width,
+            screenHeight: screen.height,
+            language: this.config.getLanguage(),
+        };
+    }
+
     private printError(err: any): void {
         console.warn('Failed to report analytics data', err);
+    }
+}
+
+/**
+ * Makes a deep copy of `obj`, excluding all properties given in `excludedKeys` from `obj` and its
+ * descendants.
+ */
+function omitDeep(obj: any, excludeKeys: string[]) {
+    if (Array.isArray(obj)) {
+        return obj.map((el) => omitDeep(el, excludeKeys));
+    } else if (typeof obj === 'object' && obj !== null) {
+        return Object.entries(obj).reduce((acc, [key, value]) => {
+            if (!excludeKeys.includes(key)) {
+                acc[key] = omitDeep(value, excludeKeys);
+            }
+            return acc;
+        }, {} as any);
+    } else {
+        return obj;
     }
 }

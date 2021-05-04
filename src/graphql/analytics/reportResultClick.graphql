@@ -1,4 +1,5 @@
 mutation reportResultClick(
+    $userAgent: String!
     $screenWidth: Int!
     $screenHeight: Int!
     $sessionId: String!
@@ -7,10 +8,11 @@ mutation reportResultClick(
     $filters: String!
     $filtersSidebarIsVisible: Boolean!
     $language: Language!
-    $clickedResultId: String!
+    $clickedResult: String!
     $clickKind: ClickKind!
 ) {
     resultClick(
+        userAgent: $userAgent
         screenWidth: $screenWidth
         screenHeight: $screenHeight
         sessionId: $sessionId
@@ -19,7 +21,7 @@ mutation reportResultClick(
         filters: $filters
         filtersSidebarIsVisible: $filtersSidebarIsVisible
         language: $language
-        clickedResultId: $clickedResultId
+        clickedResult: $clickedResult
         clickKind: $clickKind
     )
 }

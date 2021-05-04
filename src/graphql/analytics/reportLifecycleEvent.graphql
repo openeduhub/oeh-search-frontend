@@ -1,13 +1,19 @@
-mutation openAnalyticsSession(
+mutation reportLifecycleEvent(
     $userAgent: String!
     $screenWidth: Int!
     $screenHeight: Int!
+    $sessionId: String!
+    $event: LifecycleEvent!
+    $state: String!
     $language: Language!
 ) {
-    openSession(
+    lifecycleEvent(
         userAgent: $userAgent
         screenWidth: $screenWidth
         screenHeight: $screenHeight
+        sessionId: $sessionId
         language: $language
+        event: $event
+        state: $state
     )
 }

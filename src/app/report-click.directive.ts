@@ -14,7 +14,7 @@ export class ReportClickDirective {
     @HostListener('click')
     onClick() {
         this.analytics.reportResultClick({
-            clickedResultId: this.hit.id,
+            clickedResult: this.hit,
             clickKind: ClickKind.Click,
         });
     }
@@ -23,7 +23,7 @@ export class ReportClickDirective {
     onMouseUp(event: MouseEvent) {
         if (event.button === 1) {
             this.analytics.reportResultClick({
-                clickedResultId: this.hit.id,
+                clickedResult: this.hit,
                 clickKind: ClickKind.MiddleClick,
             });
         }
@@ -32,7 +32,7 @@ export class ReportClickDirective {
     @HostListener('contextmenu')
     onContextmenu() {
         this.analytics.reportResultClick({
-            clickedResultId: this.hit.id,
+            clickedResult: this.hit,
             clickKind: ClickKind.Contextmenu,
         });
     }
