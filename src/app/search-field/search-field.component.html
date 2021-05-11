@@ -67,7 +67,7 @@
   (overlayOutsideClick)="onOutsideClick($event)"
 >
   <div class="suggestion-card mat-elevation-z2" *ngIf="suggestions">
-    <ng-container *ngFor="let category of activeCategories">
+    <ng-container *ngFor="let category of categories">
       <div class="suggestion-group" *ngIf="suggestions[category]?.length > 0">
         <div class="label-container">
           <label class="category-label" [ngSwitch]="category">

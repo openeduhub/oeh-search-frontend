@@ -3,7 +3,7 @@ import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/co
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { combineLatest, Subject } from 'rxjs';
-import { debounceTime, map, startWith, switchMap, takeUntil } from 'rxjs/operators';
+import { debounceTime, filter, startWith, switchMap, takeUntil } from 'rxjs/operators';
 import { Facet, Type } from '../../generated/graphql';
 import { SearchParametersService } from '../search-parameters.service';
 import { Facets, Filters, SearchService } from '../search.service';
@@ -32,9 +32,6 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
         },
     ];
 
-    /** Categories to be shown in the suggestion card when the search field is empty. */
-    readonly initialCategories: Facet[] = [Facet.Type, Facet.EducationalContext, Facet.Discipline];
-
     readonly categories: Facet[] = [
         // Facet.Oer,
         Facet.Type,
@@ -46,8 +43,6 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
         Facet.Source,
     ];
 
-    /** Categories to be shown in the suggestion card. */
-    activeCategories = this.initialCategories;
     searchField = new FormControl();
     filters: Filters = {};
     suggestions: Suggestions;
@@ -77,14 +72,18 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
         ])
             .pipe(
                 debounceTime(200),
-                switchMap(([inputString]) =>
-                    this.search
-                        .getFacetSuggestions(inputString)
-                        .pipe(map((facets) => ({ facets, inputString }))),
-                ),
+                filter(([inputString]) => {
+                    if (!inputString || inputString.length < 3) {
+                        this.updateSuggestions(null);
+                        return false;
+                    } else {
+                        return true;
+                    }
+                }),
+                switchMap(([inputString]) => this.search.getFacetSuggestions(inputString)),
             )
-            .subscribe(({ facets, inputString }) => {
-                this.updateSuggestions(facets, inputString);
+            .subscribe((facets) => {
+                this.updateSuggestions(facets);
             });
     }
 
@@ -138,12 +137,7 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
         this.onSubmit();
     }
 
-    private updateSuggestions(facets: Facets, inputString: string): void {
-        if (inputString) {
-            this.activeCategories = this.categories;
-        } else {
-            this.activeCategories = this.initialCategories;
-        }
+    private updateSuggestions(facets: Facets): void {
         if (!facets) {
             this.hasSuggestions = false;
             this.suggestions = {};
