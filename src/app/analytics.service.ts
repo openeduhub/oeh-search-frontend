@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, Subject } from 'rxjs';
+import { empty, Observable, of, Subject } from 'rxjs';
 import { map, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import {
@@ -48,10 +48,11 @@ export class AnalyticsService {
         private searchParameters: SearchParametersService,
         private view: ViewService,
     ) {
+        // Use the beacon API where possible, but we need the response for openAnalyticsSession.
         openAnalyticsSessionGQL.client = 'analytics';
-        reportLifecycleEventGQL.client = 'analytics';
-        reportResultClickGQL.client = 'analytics';
-        reportSearchRequestGQL.client = 'analytics';
+        reportLifecycleEventGQL.client = 'analyticsBeacon';
+        reportResultClickGQL.client = 'analyticsBeacon';
+        reportSearchRequestGQL.client = 'analyticsBeacon';
         if (environment.analyticsUrl) {
             this.sessionId = this.getSessionId().pipe(shareReplay());
             this.sessionId.subscribe();
@@ -68,9 +69,7 @@ export class AnalyticsService {
             });
             this.registerLifecycleEventListeners();
         } else {
-            const dummySubject = new Subject<string>();
-            dummySubject.complete();
-            this.sessionId = dummySubject;
+            this.sessionId = empty();
         }
     }
 

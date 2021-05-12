@@ -1,6 +1,13 @@
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { OverlayModule } from '@angular/cdk/overlay';
-import { HttpClientModule } from '@angular/common/http';
+import {
+    HttpClient,
+    HttpClientModule,
+    HttpEvent,
+    HttpEventType,
+    HttpHandler,
+    HttpRequest,
+} from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -28,6 +35,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InMemoryCache } from '@apollo/client/core';
 import { APOLLO_NAMED_OPTIONS, APOLLO_OPTIONS } from 'apollo-angular';
 import { HttpBatchLink, HttpLink } from 'apollo-angular/http';
+import { empty, Observable, of, throwError } from 'rxjs';
 import { environment } from '../environments/environment';
 import generatedIntrospection from '../generated/fragmentTypes.json';
 import { AddContentFabComponent } from './add-content-fab/add-content-fab.component';
@@ -46,6 +54,7 @@ import { MultivalueCheckboxComponent } from './multivalue-checkbox/multivalue-ch
 import { OerSliderComponent } from './oer-slider/oer-slider.component';
 import { PaginatorComponent } from './paginator/paginator.component';
 import { PreviewImageComponent } from './preview-image/preview-image.component';
+import { ReportClickDirective } from './report-click.directive';
 import { ResultCardContentCompactComponent } from './result-card-content-compact/result-card-content-compact.component';
 import { ResultCardContentStandardComponent } from './result-card-content-standard/result-card-content-standard.component';
 import { ResultCardSmallComponent } from './result-card-small/result-card-small.component';
@@ -59,7 +68,25 @@ import { SubjectsPortalSectionComponent } from './subjects-portal-section/subjec
 import { SubjectsPortalComponent } from './subjects-portal/subjects-portal.component';
 import { TrimPipe } from './trim.pipe';
 import { TruncatePipe } from './truncate.pipe';
-import { ReportClickDirective } from './report-click.directive';
+
+const httpLinkBeacon = (() => {
+    class BeaconHttpHandler implements HttpHandler {
+        handle(req: HttpRequest<any>): Observable<HttpEvent<any>> {
+            const headers = {
+                type: 'application/json',
+            };
+            const blob = new Blob([JSON.stringify(req.body)], headers);
+            const success = navigator.sendBeacon(req.url, blob);
+            if (success) {
+                return of({ type: HttpEventType.Sent });
+            } else {
+                return throwError({ message: 'Failed to queue request' });
+            }
+        }
+    }
+    const httpClient = new HttpClient(new BeaconHttpHandler());
+    return new HttpLink(httpClient);
+})();
 
 @NgModule({
     declarations: [
@@ -144,8 +171,15 @@ import { ReportClickDirective } from './report-click.directive';
             deps: [HttpLink],
             useFactory: (httpLink: HttpLink) => ({
                 analytics: {
-                    name: 'analytics',
-                    link: httpLink.create({ uri: environment.analyticsUrl + '/graphql' }),
+                    link: httpLink.create({
+                        uri: environment.analyticsUrl + '/graphql',
+                    }),
+                    cache: new InMemoryCache(),
+                },
+                analyticsBeacon: {
+                    link: httpLinkBeacon.create({
+                        uri: environment.analyticsUrl + '/graphql',
+                    }),
                     cache: new InMemoryCache(),
                 },
             }),
