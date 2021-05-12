@@ -52,20 +52,26 @@ export class AnalyticsService {
         reportLifecycleEventGQL.client = 'analytics';
         reportResultClickGQL.client = 'analytics';
         reportSearchRequestGQL.client = 'analytics';
-        this.sessionId = this.getSessionId().pipe(shareReplay());
-        this.sessionId.subscribe();
-        this.view.getShowFilterBar().subscribe((value) => {
-            this.searchRequestArgs.filtersSidebarIsVisible = value;
-        });
-        this.searchParameters.get().subscribe(({ searchString, pageIndex: page, filters }) => {
-            this.searchRequestArgs = {
-                ...this.searchRequestArgs,
-                searchString,
-                page,
-                filters: JSON.stringify(filters),
-            };
-        });
-        this.registerLifecycleEventListeners();
+        if (environment.analyticsUrl) {
+            this.sessionId = this.getSessionId().pipe(shareReplay());
+            this.sessionId.subscribe();
+            this.view.getShowFilterBar().subscribe((value) => {
+                this.searchRequestArgs.filtersSidebarIsVisible = value;
+            });
+            this.searchParameters.get().subscribe(({ searchString, pageIndex: page, filters }) => {
+                this.searchRequestArgs = {
+                    ...this.searchRequestArgs,
+                    searchString,
+                    page,
+                    filters: JSON.stringify(filters),
+                };
+            });
+            this.registerLifecycleEventListeners();
+        } else {
+            const dummySubject = new Subject<string>();
+            dummySubject.complete();
+            this.sessionId = dummySubject;
+        }
     }
 
     reportSearchRequest(args: { numberResults: number }): void {
