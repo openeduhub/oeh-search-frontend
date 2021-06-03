@@ -189,7 +189,7 @@ $rem: 20px;
         font-family: 'Montserrat-Medium', Helvetica, Roboto, Arial, sans-serif;
         font-size: 16px;
         padding-left: 0;
-        padding-right: 1.5em;
+        padding-right: 1.15em;
         transition: 0.3s;
     }
     .site-footer .footer-wrapper .footer-main .footer-menu a:hover {
@@ -220,6 +220,7 @@ $rem: 20px;
         color: white;
         font-family: 'Source-Sans-Pro-Bold', sans-serif;
         transition: 0.3s;
+        text-decoration: underline;
     }
     .site-footer .footer-wrapper .footer-right .footer-license a:hover {
         color: #e4f700;
