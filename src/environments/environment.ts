@@ -8,7 +8,7 @@ declare var window: ExtendedWindow;
 
 export const environment = {
     production: false,
-    relayUrl: window.__env?.RELAY_URL ?? 'http://localhost:3000',
+    relayUrl: window.__env?.RELAY_URL ?? '/relay',
     wordpressUrl: window.__env?.WORDPRESS_URL ?? 'https://dev.wirlernenonline.de',
     showExperiments: readBoolean(window.__env?.SHOW_EXPERIMENTS, true),
     analyticsUrl: window.__env?.ANALYTICS_URL,

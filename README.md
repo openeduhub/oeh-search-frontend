@@ -54,12 +54,12 @@ When started as Docker container, the file `src/env.js` will be populated with t
 
 The following variables are available:
 
-| Variable         | Description                                                     | Default value (dev)              | Default value (prod)                    |
-| ---------------- | --------------------------------------------------------------- | -------------------------------- | --------------------------------------- |
-| RELAY_URL        | URL of the ElasticSearch Relay to connect to.                   | `http://localhost:3000`          | `window.location.origin + '/relay'`     |
-| WORDPRESS_URL    | Base URL of the corresponding WLO Wordpress page.               | `https://dev.wirlernenonline.de` | `https://wirlernenonline.de`            |
-| SHOW_EXPERIMENTS | Display a link to experimental-feature toggles in the frontend. | `true`                           | `false`                                 |
-| ANALYTICS_URL    | URL of the analytics backend to connect to.                     | (`undefined`)                    | `window.location.origin + '/analytics'` |
+| Variable         | Description                                                     | Default value (dev)              | Default value (prod)         |
+| ---------------- | --------------------------------------------------------------- | -------------------------------- | ---------------------------- |
+| RELAY_URL        | URL of the ElasticSearch Relay to connect to.                   | `/relay'`                        | `/relay'`                    |
+| WORDPRESS_URL    | Base URL of the corresponding WLO Wordpress page.               | `https://dev.wirlernenonline.de` | `https://wirlernenonline.de` |
+| SHOW_EXPERIMENTS | Display a link to experimental-feature toggles in the frontend. | `true`                           | `false`                      |
+| ANALYTICS_URL    | URL of the analytics backend to connect to.                     | (`undefined`)                    | `/analytics'`                |
 
 For example, to run your locally built Docker image against the staging environment of
 WirLernenOnline, run
@@ -67,6 +67,12 @@ WirLernenOnline, run
 ```bash
 docker run --name oeh-search-frontend --rm -ti -p 8080:80 -e RELAY_URL=https://staging.wirlernenonline.de/relay openeduhub/oeh-search-frontend:local
 ```
+
+### Proxy
+
+Pointing the browser to a different backend as described above might fail due to missing CORS
+headers. In order to point a dev environment to a production backend, copy `.env.sample` to `.env`
+and set the URL there.
 
 ## Tests
 
