@@ -80,7 +80,11 @@
       <app-search-results [results]="results"></app-search-results>
     </mat-tab>
     <mat-tab i18n-label label="Search results by categories">
-      <app-subjects-portal></app-subjects-portal>
+      <ng-template matTabContent>
+        <app-subjects-portal></app-subjects-portal>
+      </ng-template>
     </mat-tab>
   </mat-tab-group>
 </div>
+
+<app-preview-panel></app-preview-panel>

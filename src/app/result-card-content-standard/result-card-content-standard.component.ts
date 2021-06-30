@@ -1,7 +1,7 @@
-import { Component, Input } from '@angular/core';
-import { EditorialTag, Facet, Type } from '../../generated/graphql';
-import { Hit } from '../search-results/search-results.component';
+import { Component, Input, ViewChild } from '@angular/core';
+import { Facet, Type } from '../../generated/graphql';
 import { Filters } from '../search.service';
+import { Hit, ViewService } from '../view.service';
 
 @Component({
     selector: 'app-result-card-content-standard',
@@ -11,11 +11,15 @@ import { Filters } from '../search.service';
 export class ResultCardContentStandardComponent {
     @Input() hit: Hit;
     @Input() filters: Filters;
+    @ViewChild('cardButton') cardButton: HTMLButtonElement;
 
-    readonly EditorialTag = EditorialTag;
     readonly Type = Type;
     readonly Facet = Facet;
     thumbnail: string;
 
-    constructor() {}
+    constructor(private view: ViewService) {}
+
+    onClick(): void {
+        this.view.selectItem(this.hit);
+    }
 }

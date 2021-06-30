@@ -34,9 +34,18 @@ fragment searchHit on Hit {
             title
             keyword
             description
+            language
         }
         technical {
             location
+            duration
+            format
+        }
+        lifecycle {
+            contribute {
+                role
+                entity
+            }
         }
     }
     type
@@ -46,6 +55,7 @@ fragment searchHit on Hit {
     }
     license {
         oer
+        displayName
     }
     editorialTags
     previewImage {
@@ -60,7 +70,6 @@ fragment searchHit on Hit {
         }
         url
     }
-
     skos {
         discipline {
             ...skosEntry
@@ -71,6 +80,21 @@ fragment searchHit on Hit {
         learningResourceType {
             ...skosEntry
         }
+        conditionsOfAccess {
+            ...skosEntry
+        }
+        price {
+            ...skosEntry
+        }
+        widgets {
+            ...skosEntry
+        }
+        containsAdvertisement {
+            ...skosEntry
+        }
+    }
+    misc {
+        author
     }
 }
 

@@ -1,0 +1,57 @@
+@import '~@angular/material/theming';
+@import '../functions';
+
+@mixin preview-panel-theme($theme) {
+    $foreground: map-get($theme, foreground);
+    $background: map-get($theme, background);
+    $primary: map-get($theme, primary);
+    $is-dark-theme: map-get($theme, is-dark);
+    $custom-accent: map-get($theme, custom-accent);
+    $primary-foreground-color: primary-foreground-color($theme);
+
+    $body-background-dark: lighten(mat-color($background, background), 10%);
+    $body-background-light: darken(mat-color($background, background), 5%);
+    $body-background: if($is-dark-theme, $body-background-dark, $body-background-light);
+
+    .app-preview-panel-close-button {
+        background-color: mat-color($background, background, 0.75);
+    }
+    .app-preview-panel-info-bar {
+        background-color: mat-color($primary, 50);
+    }
+    .app-preview-panel-body {
+        background-color: $body-background;
+    }
+    .app-preview-panel-source {
+        color: mat-color($foreground, secondary-text);
+    }
+    .app-preview-related-items {
+        background-color: mat-color($primary, 50);
+    }
+    .app-preview-slick-next,
+    .app-preview-slick-prev {
+        background-color: $body-background;
+        color: $primary-foreground-color;
+    }
+}
+
+@mixin preview-panel-typography($typography) {
+    .app-preview-panel-sidebar,
+    .app-preview-panel-dialog-container {
+        font-size: mat-font-size($typography, subheading-1);
+        line-height: mat-line-height($typography, subheading-1);
+        .app-preview-panel-title {
+            @include mat-typography-level-to-styles($typography, 'display-1');
+        }
+        .app-preview-panel-expand-description-button {
+            font-weight: mat-font-weight($typography, button);
+        }
+        .app-preview-panel-info-bar-item,
+        .app-preview-panel-metadata {
+            line-height: mat-line-height($typography, body-1);
+        }
+        .app-preview-related-items-heading {
+            @include mat-typography-level-to-styles($typography, 'title');
+        }
+    }
+}

@@ -1,5 +1,7 @@
 import { ViewportScroller } from '@angular/common';
-import { Component, DoCheck, NgZone } from '@angular/core';
+import { Component, DoCheck, NgZone, OnInit } from '@angular/core';
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 import {
     NavigationCancel,
     NavigationEnd,
@@ -16,7 +18,7 @@ import { ErrorService } from './error.service';
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements DoCheck {
+export class AppComponent implements DoCheck, OnInit {
     private static readonly CHECKS_PER_SECOND_WARNING_THRESHOLD = 0;
     private static readonly CONSECUTIVE_TRANSGRESSION_THRESHOLD = 10;
 
@@ -30,6 +32,8 @@ export class AppComponent implements DoCheck {
         viewportScroller: ViewportScroller,
         error: ErrorService,
         ngZone: NgZone,
+        private matIconRegistry: MatIconRegistry,
+        private domSanitizer: DomSanitizer,
     ) {
         ngZone.runOutsideAngular(() => {
             this.checksMonitorInterval = window.setInterval(() => this.monitorChecks(), 1000);
@@ -76,6 +80,10 @@ export class AppComponent implements DoCheck {
         this.numberOfChecks++;
     }
 
+    ngOnInit(): void {
+        this.registerCustomIcons();
+    }
+
     private monitorChecks(): void {
         // console.log('Change detections run in the past second:', this.numberOfChecks);
         if (this.numberOfChecks > AppComponent.CHECKS_PER_SECOND_WARNING_THRESHOLD) {
@@ -95,5 +103,23 @@ export class AppComponent implements DoCheck {
             this.consecutiveTransgression = 0;
         }
         this.numberOfChecks = 0;
+    }
+
+    private registerCustomIcons(): void {
+        for (const icon of [
+            'advertisement_green',
+            'advertisement_red',
+            'login_green',
+            'login_orange',
+            'login_red',
+            'price_green',
+            'price_orange',
+            'price_red',
+        ]) {
+            this.matIconRegistry.addSvgIcon(
+                icon,
+                this.domSanitizer.bypassSecurityTrustResourceUrl(`../assets/icons/${icon}.svg`),
+            );
+        }
     }
 }

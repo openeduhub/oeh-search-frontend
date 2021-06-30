@@ -1,4 +1,5 @@
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { LayoutModule } from '@angular/cdk/layout';
 import { OverlayModule } from '@angular/cdk/overlay';
 import {
     HttpClient,
@@ -17,6 +18,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatRippleModule } from '@angular/material/core';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -35,12 +38,17 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InMemoryCache } from '@apollo/client/core';
 import { APOLLO_NAMED_OPTIONS, APOLLO_OPTIONS } from 'apollo-angular';
 import { HttpBatchLink, HttpLink } from 'apollo-angular/http';
-import { empty, Observable, of, throwError } from 'rxjs';
+import { SlickCarouselModule } from 'ngx-slick-carousel';
+import { Observable, of, throwError } from 'rxjs';
 import { environment } from '../environments/environment';
 import generatedIntrospection from '../generated/fragmentTypes.json';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { BadgesComponent } from './badges/badges.component';
+import { CapitalizeFirstLetterPipe } from './capitalize-first-letter.pipe';
+import { CollectionCardComponent } from './collection-card/collection-card.component';
 import { DetailsComponent } from './details/details.component';
+import { DurationPipe } from './duration.pipe';
 import { EncodeUriComponentPipe } from './encode-uri-component.pipe';
 import { ErrorComponent } from './error/error.component';
 import { ExperimentsTogglesComponent } from './experiments-toggles/experiments-toggles.component';
@@ -48,11 +56,13 @@ import { FooterbarComponent } from './footerbar/footerbar.component';
 import { GenerateFiltersPipe } from './generate-filters.pipe';
 import { HasEditorialTagPipe } from './has-editorial-tag.pipe';
 import { HeaderbarComponent } from './headerbar/headerbar.component';
+import { LanguagePipe } from './language.pipe';
 import { MenubarComponent } from './menubar/menubar.component';
 import { MultivalueCheckboxComponent } from './multivalue-checkbox/multivalue-checkbox.component';
 import { OerSliderComponent } from './oer-slider/oer-slider.component';
 import { PaginatorComponent } from './paginator/paginator.component';
 import { PreviewImageComponent } from './preview-image/preview-image.component';
+import { PreviewPanelComponent } from './preview-panel/preview-panel.component';
 import { ReportClickDirective } from './report-click.directive';
 import { ResultCardContentCompactComponent } from './result-card-content-compact/result-card-content-compact.component';
 import { ResultCardContentStandardComponent } from './result-card-content-standard/result-card-content-standard.component';
@@ -67,6 +77,7 @@ import { SubjectsPortalSectionComponent } from './subjects-portal-section/subjec
 import { SubjectsPortalComponent } from './subjects-portal/subjects-portal.component';
 import { TrimPipe } from './trim.pipe';
 import { TruncatePipe } from './truncate.pipe';
+import { WrapObservablePipe } from './wrap-observable.pipe';
 
 const httpLinkBeacon = (() => {
     class BeaconHttpHandler implements HttpHandler {
@@ -117,6 +128,13 @@ const httpLinkBeacon = (() => {
         TrimPipe,
         TruncatePipe,
         ReportClickDirective,
+        PreviewPanelComponent,
+        DurationPipe,
+        LanguagePipe,
+        BadgesComponent,
+        CapitalizeFirstLetterPipe,
+        CollectionCardComponent,
+        WrapObservablePipe,
     ],
     imports: [
         AppRoutingModule,
@@ -125,28 +143,32 @@ const httpLinkBeacon = (() => {
         ClipboardModule,
         FormsModule,
         HttpClientModule,
+        LayoutModule,
         MatAutocompleteModule,
         MatBadgeModule,
         MatButtonModule,
         MatButtonToggleModule,
         MatCardModule,
+        MatCheckboxModule,
         MatChipsModule,
+        MatDialogModule,
         MatExpansionModule,
         MatFormFieldModule,
-        MatMenuModule,
-        MatSliderModule,
-        MatSnackBarModule,
-        MatCheckboxModule,
         MatIconModule,
         MatInputModule,
+        MatMenuModule,
         MatPaginatorModule,
         MatProgressSpinnerModule,
+        MatRippleModule,
         MatSelectModule,
+        MatSliderModule,
         MatSlideToggleModule,
+        MatSnackBarModule,
+        MatTabsModule,
         MatTooltipModule,
         OverlayModule,
         ReactiveFormsModule,
-        MatTabsModule,
+        SlickCarouselModule,
     ],
     providers: [
         {

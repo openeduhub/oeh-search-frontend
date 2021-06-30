@@ -1,11 +1,10 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { ResultFragment, SearchHitFragment } from '../../generated/graphql';
+import { ReplaySubject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { ResultFragment } from '../../generated/graphql';
 import { SearchParametersService } from '../search-parameters.service';
 import { Filters } from '../search.service';
 import { ResultCardStyle, ViewService } from '../view.service';
-
-export type Hit = SearchHitFragment;
 
 @Component({
     selector: 'app-search-results',
@@ -15,22 +14,27 @@ export type Hit = SearchHitFragment;
 export class SearchResultsComponent implements OnInit, OnDestroy {
     @Input() results: ResultFragment;
     filters: Filters;
+    style: ResultCardStyle;
 
-    private subscriptions: Subscription[] = [];
+    private destroyed$ = new ReplaySubject<void>(1);
 
     constructor(private searchParameters: SearchParametersService, private view: ViewService) {}
 
     ngOnInit(): void {
-        this.subscriptions.push(
-            this.searchParameters.get().subscribe(({ filters }) => {
+        this.searchParameters
+            .get()
+            .pipe(takeUntil(this.destroyed$))
+            .subscribe(({ filters }) => {
                 this.filters = filters;
-            }),
-        );
+            });
+        this.view
+            .getResultCardStyle()
+            .pipe(takeUntil(this.destroyed$))
+            .subscribe((resultCardStyle) => (this.style = resultCardStyle));
     }
 
     ngOnDestroy(): void {
-        for (const subscription of this.subscriptions) {
-            subscription.unsubscribe();
-        }
+        this.destroyed$.next();
+        this.destroyed$.complete();
     }
 }

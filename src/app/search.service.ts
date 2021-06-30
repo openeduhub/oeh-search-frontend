@@ -22,6 +22,8 @@ import {
 import { ConfigService } from './config.service';
 import { ParsedParams, SearchParametersService } from './search-parameters.service';
 
+type extractArray<Type> = Type extends Array<infer X> ? X : never;
+
 export type Filters = {
     [key in Facet]?: string[];
 };
@@ -29,6 +31,9 @@ export type Filters = {
 export type Facets = {
     [key in Facet]: Aggregation;
 };
+
+export type Entry = GetEntryQuery['get'];
+export type Collection = extractArray<Entry['collections']>;
 
 @Injectable({ providedIn: 'root' })
 export class SearchService {
@@ -79,7 +84,7 @@ export class SearchService {
             .pipe(map((response) => response.data.search));
     }
 
-    getEntry(id: string): Observable<GetEntryQuery['get']> {
+    getEntry(id: string): Observable<Entry> {
         return this.getEntryGQL
             .fetch({ id, language: this.language })
             .pipe(map((response) => response.data.get));

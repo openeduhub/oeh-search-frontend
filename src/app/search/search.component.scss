@@ -1,6 +1,20 @@
 :host {
     display: flex;
     justify-content: center;
+    position: relative;
+}
+
+:host ::ng-deep {
+    .mat-tab-body-wrapper,
+    .mat-tab-body.mat-tab-body-active,
+    .mat-tab-body-content {
+        // FIXME: this does something to the tab-switch animation, but we need it to avoid cut-off
+        // shadows.
+        overflow: visible;
+    }
+    .mat-tab-body.mat-tab-body-active {
+        width: 100%;
+    }
 }
 
 $filterBarSpanScreenThreshold: 650px;
@@ -15,7 +29,6 @@ app-search-filterbar {
     }
     @media screen and (max-width: $filterBarSpanScreenThreshold) {
         position: fixed;
-        height: 100%;
         width: 100%;
         top: 0;
         left: 0;
@@ -29,7 +42,7 @@ app-search-filterbar {
     z-index: 0;
     flex-basis: 350px; // Shrink to equal parts with filter bar
     flex-grow: 1;
-    padding: 0 20px;
+    padding: 0 50px;
     max-width: 1400px;
     justify-self: center;
     overflow: hidden;
@@ -64,6 +77,10 @@ app-search-filterbar {
     :host & ::ng-deep .mat-button-toggle-label-content {
         line-height: 32px;
     }
+}
+
+app-search-results {
+    margin-top: 20px;
 }
 
 app-subjects-portal {

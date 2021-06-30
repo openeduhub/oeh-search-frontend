@@ -1,0 +1,262 @@
+<div
+  *ngIf="showSidebar$ | async"
+  class="app-preview-panel-sidebar"
+  role="region"
+  i18n-aria-label
+  aria-label="Preview"
+>
+  <ng-container *ngTemplateOutlet="content"></ng-container>
+</div>
+
+<ng-template #content>
+  <button
+    class="app-preview-panel-close-button"
+    mat-icon-button
+    (click)="close()"
+    i18n-aria-label
+    aria-label="Hide preview panel"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+  <div
+    *ngIf="hit$ | async as hit"
+    class="app-preview-panel-content-wrapper"
+    [attr.data-mode]="mode$ | async"
+  >
+    <img
+      class="app-preview-panel-image"
+      [appPreviewImage]="hit.previewImage"
+      [loadHighResImage]="true"
+    />
+
+    <div class="app-preview-panel-info-bar">
+      <span
+        class="app-preview-panel-info-bar-item"
+        *ngIf="hit.skos.learningResourceType; else widgetType"
+      >
+        <mat-icon>photo_library</mat-icon>
+        <span>
+          <ng-container *ngFor="let lrt of hit.skos.learningResourceType; let last = last">
+            {{ lrt.label }}<ng-container *ngIf="!last">,</ng-container>
+          </ng-container>
+        </span>
+      </span>
+      <ng-template #widgetType>
+        <span class="app-preview-panel-info-bar-item" *ngIf="hit.skos.widgets; else mimeType">
+          <mat-icon>photo_library</mat-icon>
+          <span>
+            <ng-container *ngFor="let widget of hit.skos.widgets; let last = last">
+              {{ widget.label }}<ng-container *ngIf="!last">,</ng-container>
+            </ng-container>
+          </span>
+        </span>
+      </ng-template>
+      <ng-template #mimeType>
+        <span class="app-preview-panel-info-bar-item" *ngIf="hit.lom.technical.format">
+          <mat-icon>photo_library</mat-icon>
+          <span>
+            {{ hit.lom.technical.format }}
+          </span>
+        </span>
+      </ng-template>
+      <span class="app-preview-panel-info-bar-item" *ngIf="hit.lom.technical.duration">
+        <mat-icon>alarm</mat-icon>
+        <span>{{ hit.lom.technical.duration | duration }}</span>
+      </span>
+      <span class="app-preview-panel-info-bar-item" *ngIf="hit.lom.general.language">
+        <mat-icon>question_answer</mat-icon>
+        <span>
+          <ng-container *ngFor="let language of hit.lom.general.language; let last = last">
+            {{ language | language }}<ng-container *ngIf="!last">,</ng-container>
+          </ng-container>
+        </span>
+      </span>
+    </div>
+    <div class="app-preview-panel-body">
+      <app-badges class="badges" [hit]="hit" orientation="horizontal"></app-badges>
+      <div class="app-preview-panel-source-container">
+        <a
+          *ngIf="hit.source.url"
+          class="app-preview-panel-source"
+          [href]="hit.source.url"
+          target="_blank"
+          >{{ hit.source.name }}</a
+        >
+      </div>
+      <h2 class="app-preview-panel-title">{{ hit.lom.general.title }}</h2>
+      <p class="app-preview-panel-description" *ngIf="hit.lom.general.description">
+        <ng-container *ngIf="!descriptionExpanded">
+          {{ hit.lom.general.description | trim | truncate: 250 }}
+        </ng-container>
+        <ng-container *ngIf="descriptionExpanded">
+          {{ hit.lom.general.description | trim }}
+        </ng-container>
+        <button
+          class="app-preview-panel-expand-description-button"
+          *ngIf="hit.lom.general.description.trim().length > 250"
+          (click)="descriptionExpanded = !descriptionExpanded"
+        >
+          <ng-container *ngIf="!descriptionExpanded">
+            <span i18n>more</span>
+            <mat-icon>keyboard_arrow_down</mat-icon>
+          </ng-container>
+          <ng-container *ngIf="descriptionExpanded">
+            <span i18n>less</span>
+            <mat-icon>keyboard_arrow_up</mat-icon>
+          </ng-container>
+        </button>
+      </p>
+      <div class="app-preview-panel-buttons">
+        <a
+          mat-flat-button
+          color="primary"
+          class="app-preview-panel-button"
+          [href]="hit.lom.technical.location"
+          target="_blank"
+        >
+          <div class="app-preview-panel-button-wrapper">
+            <ng-container i18n>Go to original page</ng-container>
+            <mat-icon>arrow_forward</mat-icon>
+          </div>
+        </a>
+      </div>
+      <div
+        class="app-preview-panel-metadata app-preview-panel-metadata-icon"
+        *ngIf="hit.skos.discipline"
+      >
+        <mat-icon i18n-matTooltip matTooltip="Discipline">book_icon</mat-icon>
+        <span class="cdk-visually-hidden" i18n>Discipline</span>
+        <div>
+          <span *ngFor="let discipline of hit.skos.discipline | slice: 0:5">
+            {{ discipline.label }}
+          </span>
+        </div>
+      </div>
+      <div
+        class="app-preview-panel-metadata app-preview-panel-metadata-icon"
+        *ngIf="hit.skos.educationalContext"
+      >
+        <mat-icon i18n-matTooltip matTooltip="Educational context">school</mat-icon>
+        <span class="cdk-visually-hidden" i18n>Educational context</span>
+        <div>
+          <span *ngFor="let context of hit.skos.educationalContext">
+            {{ context.label }}
+          </span>
+        </div>
+      </div>
+      <div
+        class="app-preview-panel-metadata app-preview-panel-metadata-icon"
+        *ngIf="hit.license.displayName"
+      >
+        <mat-icon i18n-matTooltip matTooltip="License">lock</mat-icon>
+        <span class="cdk-visually-hidden" i18n>License</span>
+        <div>
+          <span>
+            {{ hit.license.displayName }}
+          </span>
+        </div>
+      </div>
+      <div
+        class="app-preview-panel-metadata app-preview-panel-metadata-icon"
+        *ngIf="hit.skos.conditionsOfAccess && hit.skos.conditionsOfAccess[0]"
+        [ngSwitch]="hit.skos.conditionsOfAccess[0].id"
+      >
+        <mat-icon
+          *ngSwitchCase="'http://w3id.org/openeduhub/vocabs/conditionsOfAccess/no_login'"
+          svgIcon="login_green"
+        ></mat-icon>
+        <mat-icon
+          *ngSwitchCase="
+            'http://w3id.org/openeduhub/vocabs/conditionsOfAccess/login_for_additional_features'
+          "
+          svgIcon="login_orange"
+        ></mat-icon>
+        <mat-icon
+          *ngSwitchCase="'http://w3id.org/openeduhub/vocabs/conditionsOfAccess/login'"
+          svgIcon="login_red"
+        ></mat-icon>
+        <mat-icon *ngSwitchDefault svgIcon="login_green" class="filter-grayscale"></mat-icon>
+        <ng-container></ng-container>
+        <span *ngFor="let conditionOfAccess of hit.skos.conditionsOfAccess">
+          {{ conditionOfAccess.label | capitalizeFirstLetter }}
+        </span>
+      </div>
+      <div
+        class="app-preview-panel-metadata app-preview-panel-metadata-icon"
+        *ngIf="hit.skos.price && hit.skos.price[0]"
+        [ngSwitch]="hit.skos.price[0].id"
+      >
+        <ng-container *ngSwitchCase="'http://w3id.org/openeduhub/vocabs/price/no'">
+          <mat-icon svgIcon="price_green"></mat-icon>
+          <span i18n>Free of charge</span>
+        </ng-container>
+        <ng-container *ngSwitchCase="'http://w3id.org/openeduhub/vocabs/price/yes'">
+          <mat-icon svgIcon="price_red"></mat-icon>
+          <span i18n>Paid content</span>
+        </ng-container>
+        <ng-container *ngSwitchCase="'http://w3id.org/openeduhub/vocabs/price/yes_for_additional'">
+          <mat-icon svgIcon="price_orange"></mat-icon>
+          <span>{{ hit.skos.price[0].label }}</span>
+        </ng-container>
+        <ng-container *ngSwitchDefault>
+          <mat-icon svgIcon="price_green" class="filter-grayscale"></mat-icon>
+          <span><ng-container i18n>Price</ng-container>: {{ hit.skos.price[0].label }}</span>
+        </ng-container>
+      </div>
+      <div
+        class="app-preview-panel-metadata app-preview-panel-metadata-icon"
+        *ngIf="hit.skos.containsAdvertisement && hit.skos.containsAdvertisement[0]"
+        [ngSwitch]="hit.skos.containsAdvertisement[0].id"
+      >
+        <ng-container *ngSwitchCase="'http://w3id.org/openeduhub/vocabs/containsAdvertisement/no'">
+          <mat-icon svgIcon="advertisement_green"></mat-icon>
+          <span i18n>No advertisement</span>
+        </ng-container>
+        <ng-container *ngSwitchCase="'http://w3id.org/openeduhub/vocabs/containsAdvertisement/yes'">
+          <mat-icon svgIcon="advertisement_red"></mat-icon>
+          <span i18n>Contains advertisement</span>
+        </ng-container>
+        <ng-container *ngSwitchDefault>
+          <mat-icon svgIcon="advertisement_green" class="filter-grayscale"></mat-icon>
+          <span>
+            <ng-container i18n>Contains advertisement</ng-container>:
+            {{ hit.skos.containsAdvertisement[0].label }}
+          </span>
+        </ng-container>
+      </div>
+      <div class="app-preview-panel-metadata" *ngIf="author$ | async as author">
+        <span><ng-container i18n>Author</ng-container>: {{ author }}</span>
+      </div>
+      <ng-container *ngIf="fullEntry$ | wrapObservable | async as fullEntry">
+        <mat-spinner diameter="20" *ngIf="fullEntry.state === 'loading'"></mat-spinner>
+      </ng-container>
+    </div>
+    <div class="app-preview-related-items" *ngIf="(fullEntry$ | async)?.collections as collections">
+      <h3 class="app-preview-related-items-heading" i18n>In Collections</h3>
+      <div class="app-preview-related-items-carousel-container">
+        <button
+          class="app-slick-button app-preview-slick-prev"
+          i18n-aria-label
+          aria-label="previous"
+        >
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <ngx-slick-carousel
+          #slickModal="slick-carousel"
+          class="app-preview-related-items-carousel"
+          [config]="slickConfig"
+        >
+          <app-collection-card
+            ngxSlickItem
+            class="app-preview-related-items-card"
+            *ngFor="let collection of collections"
+            [collection]="collection"
+          ></app-collection-card>
+        </ngx-slick-carousel>
+        <button class="app-slick-button app-preview-slick-next" i18n-aria-label aria-label="next">
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</ng-template>

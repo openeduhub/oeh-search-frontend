@@ -1,4 +1,4 @@
-<div class="results">
+<div class="results" [attr.data-style]="style">
   <app-result-card
     *ngFor="let hit of results.hits"
     [hit]="hit"

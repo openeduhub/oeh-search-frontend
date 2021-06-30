@@ -1,113 +1,47 @@
-<!--<a class="details-link" [routerLink]="['/details', hit.id]">-->
-<a class="details-link" [href]="hit.lom.technical.location" target="_blank" [appReportClick]="hit">
-  <div class="image-container" mat-card-image>
-    <img class="img-bg" [appPreviewImage]="hit.previewImage" />
-    <img class="img-main" [appPreviewImage]="hit.previewImage" [loadHighResImage]="false" />
-  </div>
-  <mat-card-title class="title" [id]="hit.id + '-title'">{{
-    hit.lom.general.title | truncate: 52
-  }}</mat-card-title>
-</a>
-<div class="badges">
-  <div
-    *ngIf="hit | hasEditorialTag: EditorialTag.Recommended"
-    class="mat-elevation-z1"
-    i18n-matTooltip
-    matTooltipPosition="left"
-    matTooltip="Recommended by editorial team"
-  >
-    <div class="icon editorial-icon"></div>
-  </div>
-  <div
-    *ngIf="hit.license.oer"
-    class="mat-elevation-z1"
-    i18n-matTooltip
-    matTooltipPosition="left"
-    matTooltip="Open Educational Resources"
-  >
-    <div class="icon oer-icon"></div>
-  </div>
+<div class="image-container" mat-card-image>
+  <img class="img-bg" [appPreviewImage]="hit.previewImage" />
+  <img class="img-main" [appPreviewImage]="hit.previewImage" [loadHighResImage]="false" />
 </div>
+<div class="pre-heading">
+  <span class="source">
+    <ng-container *ngIf="hit.source.url">
+      {{ hit.source.name }}
+    </ng-container>
+  </span>
+  <app-badges class="badges" [hit]="hit" orientation="horizontal"></app-badges>
+</div>
+<h2 class="app-result-card-title">
+  <button (click)="onClick()" #cardButton>
+    {{ hit.lom.general.title | truncate: 42 }}
+  </button>
+</h2>
 <div class="body">
   <p class="description" *ngIf="hit.lom.general.description">
-    {{ hit.lom.general.description | trim | truncate: 120 }}
+    {{ hit.lom.general.description | trim | truncate: 65 }}
   </p>
+  <div class="metadata" *ngIf="hit.skos.learningResourceType">
+    <mat-icon i18n-matTooltip matTooltip="Learning resource type">photo_library</mat-icon>
+    <span class="cdk-visually-hidden" i18n>Learning resource type</span>
+    <div>
+      <span *ngFor="let lrt of hit.skos.learningResourceType">{{ lrt.label }}</span>
+    </div>
+  </div>
   <div class="metadata" *ngIf="hit.skos.discipline">
-    <label i18n-matTooltip matTooltip="Discipline"><mat-icon>book_icon</mat-icon></label>
+    <mat-icon i18n-matTooltip matTooltip="Discipline">book_icon</mat-icon>
+    <span class="cdk-visually-hidden" i18n>Discipline</span>
     <div>
       <span *ngFor="let discipline of hit.skos.discipline | slice: 0:5">
-        <a
-          routerLink="/search"
-          [queryParams]="discipline | generateFilters: Facet.Discipline:filters"
-          queryParamsHandling="merge"
-          >{{ discipline.label }}</a
-        >
+        {{ discipline.label }}
       </span>
     </div>
   </div>
   <div class="metadata" *ngIf="hit.skos.educationalContext">
-    <label i18n-matTooltip matTooltip="Educational context"><mat-icon>school</mat-icon></label>
+    <mat-icon i18n-matTooltip matTooltip="Educational context">school</mat-icon>
+    <span class="cdk-visually-hidden" i18n>Educational context</span>
     <div>
       <span *ngFor="let context of hit.skos.educationalContext">
-        <a
-          routerLink="/search"
-          [queryParams]="context | generateFilters: Facet.EducationalContext:filters"
-          queryParamsHandling="merge"
-          >{{ context.label }}</a
-        >
+        {{ context.label }}
       </span>
     </div>
   </div>
-  <div class="metadata" *ngIf="hit.skos.learningResourceType">
-    <label i18n-matTooltip matTooltip="Learning resource type">
-      <mat-icon>photo_library</mat-icon>
-    </label>
-    <div>
-      <span *ngFor="let lrt of hit.skos.learningResourceType">
-        <a
-          routerLink="/search"
-          [queryParams]="lrt | generateFilters: Facet.LearningResourceType:filters"
-          queryParamsHandling="merge"
-          >{{ lrt.label }}</a
-        >
-      </span>
-    </div>
-  </div>
-  <mat-chip-list
-    class="metadata"
-    *ngIf="hit.lom.general.keyword"
-    i18n-aria-label
-    aria-label="keywords"
-  >
-    <mat-chip
-      *ngFor="let keyword of hit.lom.general.keyword | slice: 0:5"
-      routerLink="/search"
-      [queryParams]="keyword | generateFilters: Facet.Keyword:filters"
-      queryParamsHandling="merge"
-      >{{ keyword }}</mat-chip
-    >
-  </mat-chip-list>
 </div>
-<a
-  [id]="hit.id + '-open-link'"
-  class="content-link"
-  mat-flat-button
-  color="primary"
-  target="_blank"
-  [href]="hit.lom.technical.location"
-  [ngSwitch]="hit.type"
-  [attr.aria-labelledby]="hit.id + '-open-link ' + hit.id + '-title'"
-  [appReportClick]="hit"
->
-  <ng-container i18n *ngSwitchCase="Type.Content">Go To Content</ng-container>
-  <ng-container i18n *ngSwitchCase="Type.Tool">Go To Tool</ng-container>
-  <ng-container i18n *ngSwitchCase="Type.Portal">Go To Source</ng-container>
-  <ng-container i18n *ngSwitchCase="Type.LessonPlanning">Go To Lesson Planning</ng-container>
-  <ng-container i18n *ngSwitchCase="Type.Method">Go To Method</ng-container>
-</a>
-<!-- We use [attr.href] so the href attribute will not be added at all when hit.source.url is
-undefined. Using [href] would cause an empty href attribute to be added in that case, making the
-element a link to the current page. -->
-<a class="source" [class.hidden]="!hit.source.url" [attr.href]="hit.source.url" target="_blank">
-  <ng-container i18n>Source</ng-container>: {{ hit.source.name }}
-</a>

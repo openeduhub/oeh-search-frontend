@@ -2,10 +2,18 @@
     width: 200px;
 }
 
-a.details-link {
+.details-link {
     display: flex;
     flex-direction: column;
     height: 100%;
+    border: unset;
+    background: unset;
+    text-align: unset;
+    cursor: pointer;
+    padding: unset;
+    &:hover {
+        text-decoration: underline;
+    }
     &:not(:hover) {
         text-decoration: unset;
     }

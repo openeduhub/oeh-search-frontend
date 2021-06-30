@@ -1,11 +1,18 @@
-<mat-card [ngSwitch]="style">
+<mat-card
+  [ngSwitch]="style"
+  [class.app-result-card-selected]="(selectedItem$ | async) === hit"
+  matRipple
+  [matRippleTrigger]="cardContent?.cardButton"
+>
   <app-result-card-content-standard
     *ngSwitchCase="'standard'"
+    #cardContent
     [hit]="hit"
     [filters]="filters"
   ></app-result-card-content-standard>
   <app-result-card-content-compact
     *ngSwitchCase="'compact'"
+    #cardContent
     [hit]="hit"
     [filters]="filters"
   ></app-result-card-content-compact>

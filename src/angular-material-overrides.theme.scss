@@ -1,10 +1,22 @@
 @mixin angular-material-theme-overrides($theme) {
     $background: map-get($theme, background);
+    $foreground: map-get($theme, foreground);
+    $primary: map-get($theme, primary);
 
     .mat-tooltip {
         background: mat-color($background, tooltip);
     }
+
+    .slick-prev::before,
+    .slick-next::before {
+        color: mat-color($foreground, text);
+    }
+
+    .app-backdrop {
+        background: mat-color($background, background, 0.9);
+    }
 }
+
 @mixin angular-material-typography-overrides($typography) {
     .mat-tooltip,
     .mat-tooltip-handset {

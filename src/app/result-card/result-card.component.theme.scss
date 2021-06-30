@@ -4,55 +4,37 @@
 @mixin result-card-theme($theme) {
     $foreground: map-get($theme, foreground);
     $background: map-get($theme, background);
+    $primary: map-get($theme, primary);
     $custom-accent: map-get($theme, custom-accent);
     $primary-foreground-color: primary-foreground-color($theme);
 
     app-result-card {
-        a.details-link {
-            color: $primary-foreground-color;
-        }
-        .badges {
-            > div {
-                background-color: mat-color($background, card);
-                > .icon {
-                    background-color: mat-color($foreground, secondary-text);
-                }
-                > .editorial-icon {
-                    background-color: #106029;
-                }
-            }
+        .app-result-card-selected::after {
+            border-color: mat-color($primary, 400);
         }
         .body {
             mat-icon {
-                color: mat-color($foreground, icon);
+                color: mat-color($foreground, secondary-text);
             }
         }
-        a.source {
+        .metadata,
+        .source {
             color: mat-color($foreground, secondary-text);
-        }
-        .mat-chip.mat-standard-chip {
-            background-color: mat-color($background, unselected-chip, 0.3);
         }
     }
     app-result-card-content-compact {
         .editorial-hint {
             color: #106029;
         }
-        .metadata {
-            a {
-                color: mat-color($foreground, secondary-text);
-            }
-        }
     }
 }
 
 @mixin result-card-typography($typography) {
     app-result-card {
-        .title {
+        .app-result-card-title {
             @include mat-typography-level-to-styles($typography, subheading-2);
         }
         .metadata,
-        .metadata .mat-chip,
         .source {
             @include mat-typography-level-to-styles($typography, caption);
         }

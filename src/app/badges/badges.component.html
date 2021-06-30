@@ -1,0 +1,20 @@
+<div class="app-badges-container app-badges-container-{{ orientation }}">
+  <div
+    *ngIf="hit | hasEditorialTag: EditorialTag.Recommended"
+    class="app-badges-badge mat-elevation-z1"
+    i18n-matTooltip
+    [matTooltipPosition]="orientation === 'vertical' ? 'left' : 'above'"
+    matTooltip="Recommended by editorial team"
+  >
+    <div class="icon editorial-icon"></div>
+  </div>
+  <div
+    *ngIf="hit.license.oer"
+    class="app-badges-badge mat-elevation-z1"
+    i18n-matTooltip
+    [matTooltipPosition]="orientation === 'vertical' ? 'left' : 'above'"
+    matTooltip="Open Educational Resources"
+  >
+    <div class="icon oer-icon"></div>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+<div
+  class="app-collection-card-container app-collection-card-container-background-{{
+    backgroundType
+  }}"
+  matRipple
+  [matRippleTrigger]="link"
+  [matTooltip]="collection.name"
+  [style.background-color]="backgroundColor"
+>
+  <!-- Background image, not compatible with background colors. -->
+  <!-- <div
+    class="app-collection-card-background-image"
+    style.background-image="url(data:{{ collection.thumbnail.mimetype }};base64,{{
+      collection.thumbnail.image
+    }})"
+  ></div> -->
+
+  <div class="app-collection-card-icon-container">
+    <div class="editorial-icon"></div>
+  </div>
+
+  <h4 class="app-collection-card-title">
+    <a #link [href]="collection.url" target="_blank">{{ collection.name }}</a>
+  </h4>
+
+  <div class="app-collection-card-metadata-row">
+    <span class="app-collection-card-metadata-item">
+      <mat-icon>photo_library</mat-icon>
+      <span class="cdk-visually-hidden">
+        <ng-container i18n>Number of elements</ng-container>:
+      </span>
+      {{ collection.numberElements }}
+    </span>
+  </div>
+</div>

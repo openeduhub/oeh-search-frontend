@@ -1,7 +1,7 @@
 import { Directive, HostListener, Input } from '@angular/core';
 import { ClickKind } from 'src/generated/graphql';
 import { AnalyticsService } from './analytics.service';
-import { Hit } from './search-results/search-results.component';
+import { Hit } from './view.service';
 
 @Directive({
     selector: '[appReportClick]',

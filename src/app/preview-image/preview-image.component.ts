@@ -10,19 +10,30 @@ import { PreviewImage, Thumbnail } from '../../generated/graphql';
 export class PreviewImageComponent implements OnInit {
     // Use an alias for a property input that is equal to the component selector.
     // eslint-disable-next-line @angular-eslint/no-input-rename
-    @Input('appPreviewImage') previewImage: PreviewImage;
+    @Input('appPreviewImage')
+    set previewImage(value: PreviewImage) {
+        this.previewImage_ = value;
+        this.setPreviewImage(value);
+    }
+    get previewImage() {
+        return this.previewImage_;
+    }
+    private previewImage_: PreviewImage;
     @Input() loadHighResImage = false;
 
     constructor(private elementRef: ElementRef<HTMLImageElement>) {}
 
     ngOnInit(): void {
         this.elementRef.nativeElement.alt = '';
-        this.elementRef.nativeElement.src = this.getThumbnail(this.previewImage.thumbnail);
+    }
+
+    private setPreviewImage(value: PreviewImage) {
+        this.elementRef.nativeElement.src = this.getThumbnail(value.thumbnail);
         if (this.loadHighResImage) {
             // Wait a tick, so the browser will load and display the lower-res thumbnail instead of
             // waiting for the high-res image before displaying anything.
             setTimeout(() => {
-                this.elementRef.nativeElement.src = this.previewImage.url;
+                this.elementRef.nativeElement.src = value.url;
             });
         }
     }

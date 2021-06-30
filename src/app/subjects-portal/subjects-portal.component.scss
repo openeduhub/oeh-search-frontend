@@ -1,54 +1,10 @@
 :host {
     display: block;
 }
-// .mat-expansion-panel {
-//     border-radius: 10px;
-//     .mat-expansion-panel-header {
-//         .mat-expansion-panel-header-title {
-//             align-items: center;
-//             overflow: hidden;
-//             > .icon {
-//                 flex-shrink: 0;
-//                 height: 20px;
-//                 width: 15px;
-//                 mask: url(../../assets/images/editorial.svg) no-repeat left;
-//             }
-//             > .title {
-//                 margin: 0 14px;
-//                 white-space: nowrap;
-//                 overflow: hidden;
-//                 text-overflow: ellipsis;
-//             }
-//         }
-//         &.mat-expanded .mat-expansion-panel-header-description[collapsed] {
-//             display: none;
-//         }
-//         &:not(.mat-expanded) .mat-expansion-panel-header-description[expanded] {
-//             display: none;
-//         }
-//         .mat-expansion-panel-header-description {
-//             justify-content: flex-end;
-//             align-items: center;
-//             margin-right: 0;
-//             @media (max-width: 600px) {
-//                 display: none;
-//             }
-//         }
-//         :host & ::ng-deep .mat-expansion-indicator {
-//             line-height: 0;
-//         }
-//         :host &.mat-expanded ::ng-deep .mat-expansion-indicator {
-//             margin-top: 2px;
-//         }
-//     }
-// }
 
 app-subjects-portal-section:first-of-type {
     margin-top: 16px;
 }
 app-subjects-portal-section {
     margin-bottom: 3em;
-    &:last-of-type {
-        margin-bottom: 5px;
-    }
 }

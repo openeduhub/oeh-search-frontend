@@ -17,6 +17,8 @@
     <mat-icon>keyboard_arrow_right</mat-icon>
   </a>
 </div>
-<div class="results">
-  <app-result-card *ngFor="let hit of hits" [hit]="hit"></app-result-card>
-</div>
+<ngx-slick-carousel #slickModal="slick-carousel" class="carousel" [config]="slickConfig">
+  <div class="card-container" ngxSlickItem *ngFor="let hit of hits">
+    <app-result-card [hit]="hit" class="slide"></app-result-card>
+  </div>
+</ngx-slick-carousel>

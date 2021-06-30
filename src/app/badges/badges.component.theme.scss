@@ -1,0 +1,19 @@
+@import '~@angular/material/theming';
+@import '../functions';
+
+@mixin badges-theme($theme) {
+    $foreground: map-get($theme, foreground);
+    $background: map-get($theme, background);
+    // $custom-accent: map-get($theme, custom-accent);
+    app-badges {
+        .app-badges-badge {
+            background-color: mat-color($background, card);
+            > .icon {
+                background-color: mat-color($foreground, secondary-text);
+            }
+            > .editorial-icon {
+                background-color: #106029;
+            }
+        }
+    }
+}

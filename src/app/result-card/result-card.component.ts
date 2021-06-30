@@ -1,10 +1,9 @@
-import { Component, HostBinding, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostBinding, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ResultFragment } from '../../generated/graphql';
+import { ResultCardContentCompactComponent } from '../result-card-content-compact/result-card-content-compact.component';
+import { ResultCardContentStandardComponent } from '../result-card-content-standard/result-card-content-standard.component';
 import { Filters } from '../search.service';
-import { Unpacked } from '../utils';
-import { ResultCardStyle, ViewService } from '../view.service';
-import { Hit } from '../search-results/search-results.component';
+import { Hit, ResultCardStyle, ViewService } from '../view.service';
 
 @Component({
     selector: 'app-result-card',
@@ -14,7 +13,13 @@ import { Hit } from '../search-results/search-results.component';
 export class ResultCardComponent implements OnInit, OnDestroy {
     @Input() hit: Hit;
     @Input() filters: Filters;
-    @HostBinding('attr.style') style: ResultCardStyle;
+    @HostBinding('attr.data-style') style: ResultCardStyle;
+
+    @ViewChild('cardContent', { static: true }) cardContent:
+        | ResultCardContentStandardComponent
+        | ResultCardContentCompactComponent;
+
+    readonly selectedItem$ = this.view.getSelectedItem();
 
     private subscriptions: Subscription[] = [];
 

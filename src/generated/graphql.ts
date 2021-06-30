@@ -164,18 +164,27 @@ export type Hit = {
     editorialTags: Array<EditorialTag>;
     /** A preview image in different resolutions */
     previewImage: PreviewImage;
+    /** Miscellaneous and custom fields */
+    misc: Misc;
+    /** Collections that the entry belongs to */
+    collections?: Maybe<Array<Collection>>;
 };
 
 export type Lom = {
     __typename?: 'Lom';
     technical: LomTechnical;
     general: LomGeneral;
+    lifecycle: LomLifecycle;
 };
 
 export type LomTechnical = {
     __typename?: 'LomTechnical';
     /** Content URL */
     location: Scalars['String'];
+    /** Media playtime */
+    duration?: Maybe<Scalars['Int']>;
+    /** Mimetype */
+    format?: Maybe<Scalars['String']>;
 };
 
 export type LomGeneral = {
@@ -183,6 +192,20 @@ export type LomGeneral = {
     title: Scalars['String'];
     keyword?: Maybe<Array<Scalars['String']>>;
     description?: Maybe<Scalars['String']>;
+    language?: Maybe<Array<Scalars['String']>>;
+};
+
+export type LomLifecycle = {
+    __typename?: 'LomLifecycle';
+    contribute?: Maybe<Array<LomContribute>>;
+};
+
+export type LomContribute = {
+    __typename?: 'LomContribute';
+    /** E.g., "creator", "author", "graphical_designer" */
+    role: Scalars['String'];
+    /** VCard */
+    entity: Scalars['String'];
 };
 
 export type Skos = {
@@ -191,6 +214,10 @@ export type Skos = {
     educationalContext?: Maybe<Array<SkosEntry>>;
     learningResourceType?: Maybe<Array<SkosEntry>>;
     intendedEndUserRole?: Maybe<Array<SkosEntry>>;
+    conditionsOfAccess?: Maybe<Array<SkosEntry>>;
+    price?: Maybe<Array<SkosEntry>>;
+    widgets?: Maybe<Array<SkosEntry>>;
+    containsAdvertisement?: Maybe<Array<SkosEntry>>;
 };
 
 export type SkosEntry = {
@@ -220,6 +247,7 @@ export type Source = {
 export type License = {
     __typename?: 'License';
     oer: Scalars['Boolean'];
+    displayName?: Maybe<Scalars['String']>;
 };
 
 export enum EditorialTag {
@@ -246,6 +274,22 @@ export type EmbeddedThumbnail = {
 export type ExternalThumbnail = {
     __typename?: 'ExternalThumbnail';
     url: Scalars['String'];
+};
+
+export type Misc = {
+    __typename?: 'Misc';
+    /** An informal declaration of the item's author(s) */
+    author?: Maybe<Scalars['String']>;
+};
+
+export type Collection = {
+    __typename?: 'Collection';
+    id: Scalars['String'];
+    name: Scalars['String'];
+    numberElements: Scalars['Int'];
+    url: Scalars['String'];
+    thumbnail?: Maybe<EmbeddedThumbnail>;
+    color: Scalars['String'];
 };
 
 export type Aggregation = {
@@ -482,7 +526,13 @@ export type GetEntryQueryVariables = Exact<{
 }>;
 
 export type GetEntryQuery = { __typename?: 'Query' } & {
-    get: { __typename?: 'Hit' } & SearchHitFragment;
+    get: { __typename?: 'Hit' } & {
+        collections?: Maybe<
+            Array<
+                { __typename?: 'Collection' } & Pick<Collection, 'name' | 'url' | 'numberElements'>
+            >
+        >;
+    } & SearchHitFragment;
 };
 
 export type SearchQueryVariables = Exact<{
@@ -509,12 +559,20 @@ export type SearchHitFragment = { __typename?: 'Hit' } & Pick<
         lom: { __typename?: 'Lom' } & {
             general: { __typename?: 'LomGeneral' } & Pick<
                 LomGeneral,
-                'title' | 'keyword' | 'description'
+                'title' | 'keyword' | 'description' | 'language'
             >;
-            technical: { __typename?: 'LomTechnical' } & Pick<LomTechnical, 'location'>;
+            technical: { __typename?: 'LomTechnical' } & Pick<
+                LomTechnical,
+                'location' | 'duration' | 'format'
+            >;
+            lifecycle: { __typename?: 'LomLifecycle' } & {
+                contribute?: Maybe<
+                    Array<{ __typename?: 'LomContribute' } & Pick<LomContribute, 'role' | 'entity'>>
+                >;
+            };
         };
         source: { __typename?: 'Source' } & Pick<Source, 'name' | 'url'>;
-        license: { __typename?: 'License' } & Pick<License, 'oer'>;
+        license: { __typename?: 'License' } & Pick<License, 'oer' | 'displayName'>;
         previewImage: { __typename?: 'PreviewImage' } & Pick<PreviewImage, 'url'> & {
                 thumbnail:
                     | ({ __typename?: 'EmbeddedThumbnail' } & Pick<
@@ -527,7 +585,12 @@ export type SearchHitFragment = { __typename?: 'Hit' } & Pick<
             discipline?: Maybe<Array<{ __typename?: 'SkosEntry' } & SkosEntryFragment>>;
             educationalContext?: Maybe<Array<{ __typename?: 'SkosEntry' } & SkosEntryFragment>>;
             learningResourceType?: Maybe<Array<{ __typename?: 'SkosEntry' } & SkosEntryFragment>>;
+            conditionsOfAccess?: Maybe<Array<{ __typename?: 'SkosEntry' } & SkosEntryFragment>>;
+            price?: Maybe<Array<{ __typename?: 'SkosEntry' } & SkosEntryFragment>>;
+            widgets?: Maybe<Array<{ __typename?: 'SkosEntry' } & SkosEntryFragment>>;
+            containsAdvertisement?: Maybe<Array<{ __typename?: 'SkosEntry' } & SkosEntryFragment>>;
         };
+        misc: { __typename?: 'Misc' } & Pick<Misc, 'author'>;
     };
 
 export type SkosEntryFragment = { __typename?: 'SkosEntry' } & Pick<SkosEntry, 'id' | 'label'>;
@@ -562,9 +625,18 @@ export const SearchHitFragmentDoc = gql`
                 title
                 keyword
                 description
+                language
             }
             technical {
                 location
+                duration
+                format
+            }
+            lifecycle {
+                contribute {
+                    role
+                    entity
+                }
             }
         }
         type
@@ -574,6 +646,7 @@ export const SearchHitFragmentDoc = gql`
         }
         license {
             oer
+            displayName
         }
         editorialTags
         previewImage {
@@ -598,6 +671,21 @@ export const SearchHitFragmentDoc = gql`
             learningResourceType {
                 ...skosEntry
             }
+            conditionsOfAccess {
+                ...skosEntry
+            }
+            price {
+                ...skosEntry
+            }
+            widgets {
+                ...skosEntry
+            }
+            containsAdvertisement {
+                ...skosEntry
+            }
+        }
+        misc {
+            author
         }
     }
     ${SkosEntryFragmentDoc}
@@ -911,6 +999,11 @@ export const GetEntryDocument = gql`
     query GetEntry($id: ID!, $language: Language!) {
         get(id: $id, language: $language) {
             ...searchHit
+            collections {
+                name
+                url
+                numberElements
+            }
         }
     }
     ${SearchHitFragmentDoc}

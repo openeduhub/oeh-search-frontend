@@ -1,5 +1,15 @@
 query GetEntry($id: ID!, $language: Language!) {
     get(id: $id, language: $language) {
         ...searchHit
+        collections {
+            name
+            url
+            numberElements
+            # thumbnail {
+            #     mimetype
+            #     image
+            # }
+            # color
+        }
     }
 }

@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Hit } from './search-results/search-results.component';
 import { EditorialTag } from '../generated/graphql';
+import { Hit } from './view.service';
 
 /**
  * Extend the `filters` of the search component with another attribute.
