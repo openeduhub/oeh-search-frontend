@@ -3,10 +3,6 @@
 # local config
 src/env.js
 
-# generated
-graphql.schema.json
-src/generated
-
 # compiled output
 /dist
 /tmp
