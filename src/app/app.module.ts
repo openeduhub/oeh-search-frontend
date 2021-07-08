@@ -38,7 +38,6 @@ import { HttpBatchLink, HttpLink } from 'apollo-angular/http';
 import { empty, Observable, of, throwError } from 'rxjs';
 import { environment } from '../environments/environment';
 import generatedIntrospection from '../generated/fragmentTypes.json';
-import { AddContentFabComponent } from './add-content-fab/add-content-fab.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DetailsComponent } from './details/details.component';
@@ -90,7 +89,6 @@ const httpLinkBeacon = (() => {
 
 @NgModule({
     declarations: [
-        AddContentFabComponent,
         AppComponent,
         DetailsComponent,
         EncodeUriComponentPipe,
