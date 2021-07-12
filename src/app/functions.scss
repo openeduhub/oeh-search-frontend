@@ -1,11 +1,11 @@
-@import '~@angular/material/theming';
+@use '~@angular/material' as mat;
 
 // For using the primary color on theme background
 @function primary-foreground-color($theme) {
     $primary: map-get($theme, primary);
     @if map-get($theme, is-dark) {
-        @return mat-color($primary, A100);
+        @return mat.get-color-from-palette($primary, A100);
     } @else {
-        @return mat-color($primary);
+        @return mat.get-color-from-palette($primary);
     }
 }

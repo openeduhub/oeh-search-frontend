@@ -1,4 +1,4 @@
-@import '~@angular/material/theming';
+@use '~@angular/material' as mat;
 @import './functions';
 
 @mixin app-theme($theme) {
@@ -7,7 +7,7 @@
 
     app-root {
         > .loading-spinner {
-            background-color: mat-color($background, dialog, 0.5);
+            background-color: mat.get-color-from-palette($background, dialog, 0.5);
             .mat-spinner circle {
                 stroke: $primary-foreground-color;
             }

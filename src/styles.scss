@@ -1,3 +1,4 @@
+@use '~@angular/material' as mat;
 @import './fonts.scss';
 $material-icons-font-path: '~material-icons/iconfont/';
 @import '~material-icons/iconfont/material-icons.scss';
@@ -28,14 +29,14 @@ $material-icons-font-path: '~material-icons/iconfont/';
 // Overrides
 //
 // Redefine or introduce new properties here.
-// $mat-light-theme-background: map_merge(
-//     $mat-light-theme-background,
+// mat.$light-theme-background-palette: map_merge(
+//     mat.$light-theme-background-palette,
 //     (
-//         // tooltip: map_get($mat-grey, 100),
+//         // tooltip: map_get(mat.$grey-palette, 100),
 //     )
 // );
-// $mat-light-theme-foreground: map_merge(
-//     $mat-light-theme-foreground,
+// mat.$light-theme-foreground-palette: map_merge(
+//     mat.$light-theme-foreground-palette,
 //     (
 //         // tooltip: $dark-secondary-text,
 //     )
@@ -71,23 +72,23 @@ $material-icons-font-path: '~material-icons/iconfont/';
     // Include theme styles for core and each component used in your app.
     // Alternatively, you can import and @include the theme mixins for each component
     // that you are using.
-    @include angular-material-theme($theme);
+    @include mat.all-component-themes($theme);
     @include angular-material-theme-overrides($theme);
     @include custom-components-theme($theme);
     body {
-        color: mat-color(map-get($theme, foreground), text);
-        background-color: mat-color(map-get($theme, background), background);
+        color: mat.get-color-from-palette(map-get($theme, foreground), text);
+        background-color: mat.get-color-from-palette(map-get($theme, background), background);
     }
 }
 
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
-@include mat-core();
+@include mat.core();
 
 // Create the theme object (a Sass map containing all of the palettes).
-$app-theme-light: mat-light-theme($app-primary, $app-accent, $app-warn);
-$app-theme-dark: mat-dark-theme($app-primary, $app-accent, $app-warn);
+$app-theme-light: mat.define-light-theme($app-primary, $app-accent, $app-warn);
+$app-theme-dark: mat.define-dark-theme($app-primary, $app-accent, $app-warn);
 
 /*
 @media not all and (prefers-color-scheme: dark) {
@@ -102,27 +103,27 @@ $app-theme-dark: mat-dark-theme($app-primary, $app-accent, $app-warn);
 // Typography
 //
 // See @angular/material/core/typography/_typography.scss for defaults.
-$app-typography: mat-typography-config(
+$app-typography: mat.define-typography-config(
     $font-family: 'Source-Sans-Pro-Regular',
-    $display-1: mat-typography-level(32px, 40px, 500, 'Montserrat-Medium'),
-    $headline: mat-typography-level(24px, 32px, 700, 'Montserrat-Bold'),
-    $title: mat-typography-level(20px, 30px, 600, 'Montserrat-SemiBold'),
-    $subheading-2: mat-typography-level(18px, 27px, 600, 'Montserrat-SemiBold'),
-    $subheading-1: mat-typography-level(16px, 24px, 600, 'Montserrat-SemiBold'),
-    $body-2: mat-typography-level(14px, 24px, 700, 'Montserrat-Bold'),
-    $body-1: mat-typography-level(14px, 21px, 400),
-    $caption: mat-typography-level(11px, 15px, 500, 'Montserrat-Medium'),
-    $button: mat-typography-level(14px, 20px, 500, 'Montserrat-Medium'),
-    $input: mat-typography-level(inherit, 1.125, 400),
+    $display-1: mat.define-typography-level(32px, 40px, 500, 'Montserrat-Medium'),
+    $headline: mat.define-typography-level(24px, 32px, 700, 'Montserrat-Bold'),
+    $title: mat.define-typography-level(20px, 30px, 600, 'Montserrat-SemiBold'),
+    $subheading-2: mat.define-typography-level(18px, 27px, 600, 'Montserrat-SemiBold'),
+    $subheading-1: mat.define-typography-level(16px, 24px, 600, 'Montserrat-SemiBold'),
+    $body-2: mat.define-typography-level(14px, 24px, 700, 'Montserrat-Bold'),
+    $body-1: mat.define-typography-level(14px, 21px, 400),
+    $caption: mat.define-typography-level(11px, 15px, 500, 'Montserrat-Medium'),
+    $button: mat.define-typography-level(14px, 20px, 500, 'Montserrat-Medium'),
+    $input: mat.define-typography-level(inherit, 1.125, 400),
 );
 // Custom fields
 $app-typography: map_merge(
     $app-typography,
     (
-        tooltip: mat-typography-level(14px, 20px, 500),
+        tooltip: mat.define-typography-level(14px, 20px, 500),
     )
 );
-@include angular-material-typography($app-typography);
+@include mat.all-component-typographies($app-typography);
 @include angular-material-typography-overrides($app-typography);
 
 @include collection-card-typography($app-typography);
@@ -144,7 +145,7 @@ body {
 }
 body {
     margin: 0;
-    font-family: mat-font-family($app-typography);
-    font-size: mat-font-size($app-typography, body-1);
-    line-height: mat-line-height($app-typography, body-1);
+    font-family: mat.font-family($app-typography);
+    font-size: mat.font-size($app-typography, body-1);
+    line-height: mat.line-height($app-typography, body-1);
 }

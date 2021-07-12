@@ -1,4 +1,4 @@
-@import '~@angular/material/theming';
+@use '~@angular/material' as mat;
 @import '../functions';
 
 @mixin collection-card-theme($theme) {
@@ -6,18 +6,18 @@
 
     app-collection-card {
         .app-collection-card-container {
-            background-color: mat-color($primary, 400);
-            color: mat-contrast($primary, 400);
+            background-color: mat.get-color-from-palette($primary, 400);
+            color: mat.get-contrast-color-from-palette($primary, 400);
             .editorial-icon {
-                background-color: mat-contrast($primary, 400);
+                background-color: mat.get-contrast-color-from-palette($primary, 400);
             }
             // Background image, not compatible with background colors.
             //
             // &.app-collection-card-container-background-light {
-            //     color: mat-color($app-light-theme-foreground, text);
+            //     color: mat.get-color-from-palette($app-light-theme-foreground, text);
             // }
             // &.app-collection-card-container-background-dark {
-            //     color: mat-color($app-dark-theme-foreground, text);
+            //     color: mat.get-color-from-palette($app-dark-theme-foreground, text);
             // }
         }
     }
@@ -26,10 +26,10 @@
 @mixin collection-card-typography($typography) {
     app-collection-card {
         .app-collection-card-title {
-            @include mat-typography-level-to-styles($typography, subheading-1);
+            @include mat.typography-level($typography, subheading-1);
         }
         .app-collection-card-metadata-item {
-            @include mat-typography-level-to-styles($typography, caption);
+            @include mat.typography-level($typography, caption);
         }
     }
 }

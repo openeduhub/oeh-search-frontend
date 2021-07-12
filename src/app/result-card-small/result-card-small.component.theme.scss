@@ -1,4 +1,4 @@
-@import '~@angular/material/theming';
+@use '~@angular/material' as mat;
 @import '../functions';
 
 @mixin result-card-small-theme($theme) {
@@ -6,7 +6,7 @@
 
     app-result-card-small {
         .details-link {
-            color: mat-color($foreground, secondary-text);
+            color: mat.get-color-from-palette($foreground, secondary-text);
         }
     }
 }
@@ -14,7 +14,7 @@
 @mixin result-card-small-typography($typography) {
     app-result-card-small {
         .details-link {
-            @include mat-typography-level-to-styles($typography, caption);
+            @include mat.typography-level($typography, caption);
         }
     }
 }

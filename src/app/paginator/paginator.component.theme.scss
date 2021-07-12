@@ -1,4 +1,4 @@
-@import '~@angular/material/theming';
+@use '~@angular/material' as mat;
 @import '../functions';
 
 @mixin paginator-theme($theme) {
@@ -8,8 +8,8 @@
     app-paginator {
         .page-number {
             &.active {
-                background-color: mat-color($primary);
-                color: mat-color($primary, default-contrast);
+                background-color: mat.get-color-from-palette($primary);
+                color: mat.get-color-from-palette($primary, default-contrast);
             }
             &:not(.active) {
                 color: $primary-foreground-color;
@@ -21,7 +21,7 @@
 @mixin paginator-typography($typography) {
     app-paginator {
         .page-number {
-            @include mat-typography-level-to-styles($typography, button);
+            @include mat.typography-level($typography, button);
         }
     }
 }

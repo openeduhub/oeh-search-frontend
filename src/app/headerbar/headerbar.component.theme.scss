@@ -1,4 +1,4 @@
-@import '~@angular/material/theming';
+@use '~@angular/material' as mat;
 @import '../functions';
 
 @mixin headerbar-theme($theme) {
@@ -6,14 +6,14 @@
     $primary-foreground-color: primary-foreground-color($theme);
 
     app-headerbar {
-        border-color: mat-color($primary);
+        border-color: mat.get-color-from-palette($primary);
         .filter-button {
             color: $primary-foreground-color;
         }
         .experiments {
             &,
             > a {
-                color: mat-color($primary, default-contrast);
+                color: mat.get-color-from-palette($primary, default-contrast);
             }
         }
     }

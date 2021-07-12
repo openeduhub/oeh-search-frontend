@@ -1,4 +1,4 @@
-@import '~@angular/material/theming';
+@use '~@angular/material' as mat;
 @import '../functions';
 
 @mixin preview-panel-theme($theme) {
@@ -9,24 +9,24 @@
     $custom-accent: map-get($theme, custom-accent);
     $primary-foreground-color: primary-foreground-color($theme);
 
-    $body-background-dark: lighten(mat-color($background, background), 10%);
-    $body-background-light: darken(mat-color($background, background), 5%);
+    $body-background-dark: lighten(mat.get-color-from-palette($background, background), 10%);
+    $body-background-light: darken(mat.get-color-from-palette($background, background), 5%);
     $body-background: if($is-dark-theme, $body-background-dark, $body-background-light);
 
     .app-preview-panel-close-button {
-        background-color: mat-color($background, background, 0.75);
+        background-color: mat.get-color-from-palette($background, background, 0.75);
     }
     .app-preview-panel-info-bar {
-        background-color: mat-color($primary, 50);
+        background-color: mat.get-color-from-palette($primary, 50);
     }
     .app-preview-panel-body {
         background-color: $body-background;
     }
     .app-preview-panel-source {
-        color: mat-color($foreground, secondary-text);
+        color: mat.get-color-from-palette($foreground, secondary-text);
     }
     .app-preview-related-items {
-        background-color: mat-color($primary, 50);
+        background-color: mat.get-color-from-palette($primary, 50);
     }
     .app-preview-slick-next,
     .app-preview-slick-prev {
@@ -38,20 +38,20 @@
 @mixin preview-panel-typography($typography) {
     .app-preview-panel-sidebar,
     .app-preview-panel-dialog-container {
-        font-size: mat-font-size($typography, subheading-1);
-        line-height: mat-line-height($typography, subheading-1);
+        font-size: mat.font-size($typography, subheading-1);
+        line-height: mat.line-height($typography, subheading-1);
         .app-preview-panel-title {
-            @include mat-typography-level-to-styles($typography, 'display-1');
+            @include mat.typography-level($typography, 'display-1');
         }
         .app-preview-panel-expand-description-button {
-            font-weight: mat-font-weight($typography, button);
+            font-weight: mat.font-weight($typography, button);
         }
         .app-preview-panel-info-bar-item,
         .app-preview-panel-metadata {
-            line-height: mat-line-height($typography, body-1);
+            line-height: mat.line-height($typography, body-1);
         }
         .app-preview-related-items-heading {
-            @include mat-typography-level-to-styles($typography, 'title');
+            @include mat.typography-level($typography, 'title');
         }
     }
 }

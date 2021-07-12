@@ -1,4 +1,4 @@
-@import '~@angular/material/theming';
+@use '~@angular/material' as mat;
 
 @mixin search-field-theme($theme) {
     $foreground: map-get($theme, foreground);
@@ -9,15 +9,15 @@
     app-search-field {
         form {
             .search-field-wrapper {
-                background-color: mat-color($background, dialog);
+                background-color: mat.get-color-from-palette($background, dialog);
                 .search-field-input-wrapper {
-                    background-color: mat-color($primary, 50);
+                    background-color: mat.get-color-from-palette($primary, 50);
                     input {
-                        color: mat-color($primary, text);
+                        color: mat.get-color-from-palette($primary, text);
                     }
                 }
                 mat-icon {
-                    color: mat-color($foreground, icon);
+                    color: mat.get-color-from-palette($foreground, icon);
                 }
             }
         }
@@ -28,7 +28,7 @@
     app-search-field {
         .submit-button,
         .mat-form-field {
-            font-size: mat-font-size($typography, subheading-1);
+            font-size: mat.font-size($typography, subheading-1);
         }
     }
 }

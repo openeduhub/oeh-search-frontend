@@ -1,4 +1,4 @@
-@import '~@angular/material/theming';
+@use '~@angular/material' as mat;
 @import '../functions';
 
 @mixin search-theme($theme) {
@@ -9,14 +9,14 @@
         .breadcrumbs {
             color: $primary-foreground-color;
             mat-icon {
-                color: mat-color($foreground, secondary-text, 0.25);
+                color: mat.get-color-from-palette($foreground, secondary-text, 0.25);
             }
         }
         .did-you-mean a {
             color: $primary-foreground-color;
         }
         .results > .summary {
-            color: mat-color($foreground, secondary-text);
+            color: mat.get-color-from-palette($foreground, secondary-text);
         }
     }
 }
@@ -24,10 +24,10 @@
 @mixin search-typography($typography) {
     app-search {
         .did-you-mean em {
-            font-weight: mat-font-weight($typography, body-2);
+            font-weight: mat.font-weight($typography, body-2);
         }
         .summary {
-            font-size: mat-font-size($typography, subheading-1);
+            font-size: mat.font-size($typography, subheading-1);
         }
     }
 }

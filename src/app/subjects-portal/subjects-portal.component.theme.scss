@@ -1,4 +1,4 @@
-@import '~@angular/material/theming';
+@use '~@angular/material' as mat;
 @import '../functions';
 
 @mixin subjects-portal-theme($theme) {
@@ -9,7 +9,7 @@
 
     // app-subjects-portal {
     //     > .mat-expansion-panel {
-    //         background-color: mix(mat-color($background, card), mat-color($primary), 90%);
+    //         background-color: mix(mat.get-color-from-palette($background, card), mat.get-color-from-palette($primary), 90%);
     //         &,
     //         & .mat-expansion-panel-header-title,
     //         & .mat-expansion-panel-header-description,
@@ -17,7 +17,7 @@
     //             color: $primary-foreground-color;
     //         }
     //         > .mat-expansion-panel-header .mat-expansion-panel-header-title > .icon {
-    //             background-color: mat-color($custom-accent, accent2);
+    //             background-color: mat.get-color-from-palette($custom-accent, accent2);
     //         }
     //     }
     // }

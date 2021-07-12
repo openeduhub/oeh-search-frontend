@@ -1,4 +1,4 @@
-@import '~@angular/material/theming';
+@use '~@angular/material' as mat;
 @import '../functions';
 
 @mixin oer-slider-theme($theme) {
@@ -8,19 +8,19 @@
 
     app-oer-slider {
         .mat-slide-toggle-content {
-            color: mat-color($primary, default-contrast);
+            color: mat.get-color-from-palette($primary, default-contrast);
         }
         .help-button mat-icon {
-            color: mat-color($primary, default-contrast);
+            color: mat.get-color-from-palette($primary, default-contrast);
         }
         .mat-slide-toggle-bar {
-            background-color: mat-color($primary, default-contrast, 0.38);
+            background-color: mat.get-color-from-palette($primary, default-contrast, 0.38);
         }
         .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
-            background-color: mat-color($primary, default-contrast);
+            background-color: mat.get-color-from-palette($primary, default-contrast);
         }
         .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
-            background-color: mat-color($custom-accent, accent2);
+            background-color: mat.get-color-from-palette($custom-accent, accent2);
         }
     }
 }
@@ -28,7 +28,7 @@
 @mixin oer-slider-typography($typography) {
     app-oer-slider {
         .mat-slide-toggle-content {
-            @include mat-typography-level-to-styles($typography, button);
+            @include mat.typography-level($typography, button);
         }
     }
 }
