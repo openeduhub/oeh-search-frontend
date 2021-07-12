@@ -118,7 +118,7 @@ export class AppComponent implements DoCheck, OnInit {
         ]) {
             this.matIconRegistry.addSvgIcon(
                 icon,
-                this.domSanitizer.bypassSecurityTrustResourceUrl(`../assets/icons/${icon}.svg`),
+                this.domSanitizer.bypassSecurityTrustResourceUrl(`./assets/icons/${icon}.svg`),
             );
         }
     }
