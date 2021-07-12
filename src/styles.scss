@@ -151,3 +151,9 @@ body {
     font-size: mat.font-size($app-typography, body-1);
     line-height: mat.line-height($app-typography, body-1);
 }
+:focus-visible {
+    outline-style: solid;
+    outline-offset: 2px;
+    outline-width: 3px;
+    outline-color: currentcolor;
+}
