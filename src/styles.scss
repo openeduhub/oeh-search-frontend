@@ -73,6 +73,7 @@ $material-icons-font-path: '~material-icons/iconfont/';
     // Alternatively, you can import and @include the theme mixins for each component
     // that you are using.
     @include mat.all-component-themes($theme);
+    @include mat.strong-focus-indicators-theme($theme);
     @include angular-material-theme-overrides($theme);
     @include custom-components-theme($theme);
     body {
@@ -85,6 +86,7 @@ $material-icons-font-path: '~material-icons/iconfont/';
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
 @include mat.core();
+@include mat.strong-focus-indicators();
 
 // Create the theme object (a Sass map containing all of the palettes).
 $app-theme-light: mat.define-light-theme($app-primary, $app-accent, $app-warn);
