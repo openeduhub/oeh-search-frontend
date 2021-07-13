@@ -1,3 +1,4 @@
+import { A11yModule } from '@angular/cdk/a11y';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { LayoutModule } from '@angular/cdk/layout';
 import { OverlayModule } from '@angular/cdk/overlay';
@@ -137,6 +138,7 @@ const httpLinkBeacon = (() => {
         WrapObservablePipe,
     ],
     imports: [
+        A11yModule,
         AppRoutingModule,
         BrowserAnimationsModule,
         BrowserModule,

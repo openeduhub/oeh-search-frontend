@@ -15,6 +15,7 @@
             class="chip-group-{{ category }}"
             [removable]="true"
             (removed)="removeFilter(category, filter)"
+            cdkMonitorElementFocus
           >
             <ng-container
               *ngTemplateOutlet="i18nFacet; context: { $implicit: filter }"
