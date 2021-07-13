@@ -124,7 +124,7 @@ export class PreviewPanelComponent implements OnDestroy {
         return vcard
             .split('\n')
             .find((line) => line.startsWith(attribute + ':'))
-            .slice(attribute.length + 1)
-            .trim();
+            ?.slice(attribute.length + 1)
+            ?.trim();
     }
 }
