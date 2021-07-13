@@ -42,13 +42,19 @@
         </span>
       </span>
       <ng-template #widgetType>
-        <span class="app-preview-panel-info-bar-item" *ngIf="hit.skos.widgets; else mimeType">
+        <span class="app-preview-panel-info-bar-item" *ngIf="hit.skos.widgets; else externalType">
           <mat-icon>photo_library</mat-icon>
           <span>
             <ng-container *ngFor="let widget of hit.skos.widgets; let last = last">
               {{ widget.label }}<ng-container *ngIf="!last">,</ng-container>
             </ng-container>
           </span>
+        </span>
+      </ng-template>
+      <ng-template #externalType>
+        <span class="app-preview-panel-info-bar-item" *ngIf="hit.misc.isExternal; else mimeType">
+          <mat-icon>photo_library</mat-icon>
+          <span i18n>Website</span>
         </span>
       </ng-template>
       <ng-template #mimeType>

@@ -2,35 +2,7 @@
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="en-US" datatype="plaintext" original="ng2.template" target-language="de">
     <body>
-      <trans-unit id="1960502745199085600" datatype="html">
-        <source>Add content</source><target state="final">Material aufnehmen</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/add-content-fab/add-content-fab.component.html</context>
-          <context context-type="linenumber">7</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/add-content-fab/add-content-fab.component.html</context>
-          <context context-type="linenumber">9</context>
-        </context-group>
-      </trans-unit><trans-unit id="4004949605722853827" datatype="html">
-        <source>Add source</source><target state="final">Quelle hinzufügen</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/add-content-fab/add-content-fab.component.html</context>
-          <context context-type="linenumber">24</context>
-        </context-group>
-      </trans-unit><trans-unit id="5365885795713880633" datatype="html">
-        <source>Add tool</source><target state="final">Tool hinzufügen</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/add-content-fab/add-content-fab.component.html</context>
-          <context context-type="linenumber">28</context>
-        </context-group>
-      </trans-unit><trans-unit id="6564135213607862495" datatype="html">
-        <source>Index my portal</source><target state="final">Meine Seite erschließen</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/add-content-fab/add-content-fab.component.html</context>
-          <context context-type="linenumber">32</context>
-        </context-group>
-      </trans-unit><trans-unit id="7949529201488904319" datatype="html">
+      <trans-unit id="7949529201488904319" datatype="html">
         <source>Back to overview</source><target state="final">Zurück zur Übersicht</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/details/details.component.html</context>
@@ -106,7 +78,7 @@
         
         
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/details/details.component.html</context><context context-type="linenumber">47</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/preview-panel/preview-panel.component.html</context><context context-type="linenumber">117</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/preview-panel/preview-panel.component.html</context><context context-type="linenumber">118</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context><context context-type="linenumber">30</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context><context context-type="linenumber">31</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/search-field/search-field.component.html</context><context context-type="linenumber">80</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context><context context-type="linenumber">42</context></context-group></trans-unit><trans-unit id="245718001035169979" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/details/details.component.html</context><context context-type="linenumber">47</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/preview-panel/preview-panel.component.html</context><context context-type="linenumber">133</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/preview-panel/preview-panel.component.html</context><context context-type="linenumber">134</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context><context context-type="linenumber">30</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context><context context-type="linenumber">31</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/search-field/search-field.component.html</context><context context-type="linenumber">80</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context><context context-type="linenumber">42</context></context-group></trans-unit><trans-unit id="245718001035169979" datatype="html">
         <source>Educational Context</source><target state="final">Bildungsumfeld</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/details/details.component.html</context>
@@ -228,39 +200,39 @@
         
         
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/preview-panel/preview-panel.component.html</context><context context-type="linenumber">129</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/preview-panel/preview-panel.component.html</context><context context-type="linenumber">130</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context><context context-type="linenumber">39</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context><context context-type="linenumber">40</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/search-field/search-field.component.html</context><context context-type="linenumber">78</context></context-group></trans-unit><trans-unit id="6877113876835666202" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/preview-panel/preview-panel.component.html</context><context context-type="linenumber">145</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/preview-panel/preview-panel.component.html</context><context context-type="linenumber">146</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context><context context-type="linenumber">39</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/result-card-content-standard/result-card-content-standard.component.html</context><context context-type="linenumber">40</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/search-field/search-field.component.html</context><context context-type="linenumber">78</context></context-group></trans-unit><trans-unit id="6877113876835666202" datatype="html">
         <source>License</source><target state="final">Lizenz</target>
         
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/preview-panel/preview-panel.component.html</context><context context-type="linenumber">141</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/preview-panel/preview-panel.component.html</context><context context-type="linenumber">142</context></context-group></trans-unit><trans-unit id="5900917461189959721" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/preview-panel/preview-panel.component.html</context><context context-type="linenumber">157</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/preview-panel/preview-panel.component.html</context><context context-type="linenumber">158</context></context-group></trans-unit><trans-unit id="5900917461189959721" datatype="html">
         <source>Free of charge</source><target state="final">Kostenlos verfügbar</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/preview-panel/preview-panel.component.html</context><context context-type="linenumber">159</context></context-group></trans-unit><trans-unit id="2867378116323222782" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/preview-panel/preview-panel.component.html</context><context context-type="linenumber">197</context></context-group></trans-unit><trans-unit id="2867378116323222782" datatype="html">
         <source>Paid content</source><target state="final">Kostenpflichtig</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/preview-panel/preview-panel.component.html</context><context context-type="linenumber">160</context></context-group></trans-unit><trans-unit id="8894377483833272091" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/preview-panel/preview-panel.component.html</context><context context-type="linenumber">201</context></context-group></trans-unit><trans-unit id="8894377483833272091" datatype="html">
         <source>Price</source><target state="final">Preis</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/preview-panel/preview-panel.component.html</context><context context-type="linenumber">162</context></context-group></trans-unit><trans-unit id="7872707632667569994" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/preview-panel/preview-panel.component.html</context><context context-type="linenumber">209</context></context-group></trans-unit><trans-unit id="7872707632667569994" datatype="html">
         <source>No advertisement</source><target state="final">Werbefrei</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/preview-panel/preview-panel.component.html</context><context context-type="linenumber">171</context></context-group></trans-unit><trans-unit id="3305536323100138359" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/preview-panel/preview-panel.component.html</context><context context-type="linenumber">219</context></context-group></trans-unit><trans-unit id="3305536323100138359" datatype="html">
         <source>Contains advertisement</source><target state="final">Enthält Werbung</target>
         
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/preview-panel/preview-panel.component.html</context><context context-type="linenumber">174</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/preview-panel/preview-panel.component.html</context><context context-type="linenumber">177</context></context-group></trans-unit><trans-unit id="7071470734400948493" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/preview-panel/preview-panel.component.html</context><context context-type="linenumber">223</context></context-group><context-group purpose="location"><context context-type="sourcefile">src/app/preview-panel/preview-panel.component.html</context><context context-type="linenumber">228</context></context-group></trans-unit><trans-unit id="7071470734400948493" datatype="html">
         <source>Author</source><target state="final">Autor</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/preview-panel/preview-panel.component.html</context><context context-type="linenumber">182</context></context-group></trans-unit><trans-unit id="5295198085825830571" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/preview-panel/preview-panel.component.html</context><context context-type="linenumber">234</context></context-group></trans-unit><trans-unit id="5295198085825830571" datatype="html">
         <source>In Collections</source><target state="final">In Sammlungen</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/preview-panel/preview-panel.component.html</context><context context-type="linenumber">188</context></context-group></trans-unit><trans-unit id="6095534740119293938" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/preview-panel/preview-panel.component.html</context><context context-type="linenumber">241</context></context-group></trans-unit><trans-unit id="6095534740119293938" datatype="html">
         <source>previous</source><target state="final">zurück</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/preview-panel/preview-panel.component.html</context><context context-type="linenumber">190</context></context-group></trans-unit><trans-unit id="5736512712252459867" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/preview-panel/preview-panel.component.html</context><context context-type="linenumber">246</context></context-group></trans-unit><trans-unit id="5736512712252459867" datatype="html">
         <source>next</source><target state="final">vor</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/preview-panel/preview-panel.component.html</context><context context-type="linenumber">205</context></context-group></trans-unit><trans-unit id="5206272431542421762" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/preview-panel/preview-panel.component.html</context><context context-type="linenumber">262</context></context-group></trans-unit><trans-unit id="5206272431542421762" datatype="html">
         <source>Keyword</source><target state="final">Schlagwort</target>
         
       <context-group purpose="location"><context context-type="sourcefile">src/app/search-field/search-field.component.html</context><context context-type="linenumber">81</context></context-group></trans-unit><trans-unit id="3504101142377977466" datatype="html">
@@ -284,16 +256,22 @@
       </trans-unit><trans-unit id="3041226815123232447" datatype="html">
         <source>Hide preview panel</source><target state="final">Vorschauleiste ausblenden</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/preview-panel/preview-panel.component.html</context><context context-type="linenumber">18</context></context-group></trans-unit><trans-unit id="7011425206383801543" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/preview-panel/preview-panel.component.html</context><context context-type="linenumber">17</context></context-group></trans-unit><trans-unit id="5481284030283031915" datatype="html">
+        <source>Website</source><target state="final">Webseite</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/preview-panel/preview-panel.component.html</context>
+          <context context-type="linenumber">57</context>
+        </context-group>
+      </trans-unit><trans-unit id="7011425206383801543" datatype="html">
         <source>more</source><target state="final">mehr</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/preview-panel/preview-panel.component.html</context><context context-type="linenumber">90</context></context-group></trans-unit><trans-unit id="998897361974558493" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/preview-panel/preview-panel.component.html</context><context context-type="linenumber">106</context></context-group></trans-unit><trans-unit id="998897361974558493" datatype="html">
         <source>less</source><target state="final">weniger</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/preview-panel/preview-panel.component.html</context><context context-type="linenumber">94</context></context-group></trans-unit><trans-unit id="4243968081572863947" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/preview-panel/preview-panel.component.html</context><context context-type="linenumber">110</context></context-group></trans-unit><trans-unit id="4243968081572863947" datatype="html">
         <source>Go to original page</source><target state="final">Zur Originalseite</target>
         
-      <context-group purpose="location"><context context-type="sourcefile">src/app/preview-panel/preview-panel.component.html</context><context context-type="linenumber">108</context></context-group></trans-unit><trans-unit id="7068413777951670430" datatype="html">
+      <context-group purpose="location"><context context-type="sourcefile">src/app/preview-panel/preview-panel.component.html</context><context context-type="linenumber">124</context></context-group></trans-unit><trans-unit id="7068413777951670430" datatype="html">
         <source>Learning resource type</source><target state="final">Medienart</target>
         
         

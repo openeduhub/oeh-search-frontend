@@ -280,6 +280,8 @@ export type Misc = {
     __typename?: 'Misc';
     /** An informal declaration of the item's author(s) */
     author?: Maybe<Scalars['String']>;
+    /** Whether the material is provided via a link to a third party service */
+    isExternal?: Maybe<Scalars['Boolean']>;
 };
 
 export type Collection = {
@@ -590,7 +592,7 @@ export type SearchHitFragment = { __typename?: 'Hit' } & Pick<
             widgets?: Maybe<Array<{ __typename?: 'SkosEntry' } & SkosEntryFragment>>;
             containsAdvertisement?: Maybe<Array<{ __typename?: 'SkosEntry' } & SkosEntryFragment>>;
         };
-        misc: { __typename?: 'Misc' } & Pick<Misc, 'author'>;
+        misc: { __typename?: 'Misc' } & Pick<Misc, 'author' | 'isExternal'>;
     };
 
 export type SkosEntryFragment = { __typename?: 'SkosEntry' } & Pick<SkosEntry, 'id' | 'label'>;
@@ -686,6 +688,7 @@ export const SearchHitFragmentDoc = gql`
         }
         misc {
             author
+            isExternal
         }
     }
     ${SkosEntryFragmentDoc}
