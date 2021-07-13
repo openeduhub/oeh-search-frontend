@@ -19,20 +19,26 @@ export type Experiments = Partial<AvailableExperiments>;
     providedIn: 'root',
 })
 export class ViewService {
-    private showFilterBarSubject: BehaviorSubject<boolean>;
-    private resultCardStyleSubject: BehaviorSubject<ResultCardStyle>;
-    private experimentsSubject: BehaviorSubject<Experiments>;
-    private selectedItemSubject = new BehaviorSubject<Hit | null>(null);
-    private showPreviewPanel$ = this.selectedItemSubject.pipe(
-        map((item) => !!item),
-        distinctUntilChanged(),
-    );
     readonly previewPanelMode$: Observable<'dialog' | 'sidebar'> = this.breakpointObserver
         .observe('(min-width: 1210px)') // Smallest width still supporting two card columns
         .pipe(
             map((result) => (result.matches ? 'sidebar' : 'dialog')),
             shareReplay<'dialog' | 'sidebar'>(),
         );
+    readonly searchTabSubject = new BehaviorSubject<number>(0);
+
+    private showFilterBarSubject: BehaviorSubject<boolean>;
+    private resultCardStyleSubject: BehaviorSubject<ResultCardStyle>;
+    private experimentsSubject: BehaviorSubject<Experiments>;
+    /**
+     * When an item is selected, it is highlighted and depending on the screen size, previewed in a
+     * sidebar or a dialog. Unselecting the item means closing the preview.
+     */
+    private selectedItemSubject = new BehaviorSubject<Hit | null>(null);
+    private showPreviewPanel$ = this.selectedItemSubject.pipe(
+        map((item) => !!item),
+        distinctUntilChanged(),
+    );
 
     constructor(private breakpointObserver: BreakpointObserver, private router: Router) {
         this.registerStoredItems();
@@ -73,9 +79,10 @@ export class ViewService {
             .subscribe(() => this.showFilterBarSubject.next(false));
 
         // Close preview panel on page navigation.
-        this.router.events
-            .pipe(filter((event) => event instanceof NavigationStart))
-            .subscribe(() => this.selectItem(null));
+        rxjs.merge(
+            this.router.events.pipe(filter((event) => event instanceof NavigationStart)),
+            this.searchTabSubject.pipe(skip(1)),
+        ).subscribe(() => this.selectItem(null));
     }
 
     getShowFilterBar(): Observable<boolean> {

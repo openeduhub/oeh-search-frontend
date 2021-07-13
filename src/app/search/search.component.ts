@@ -59,12 +59,17 @@ export class SearchComponent implements OnInit, OnDestroy {
             });
             // TODO: switch to tab 0 even if the user clicks on "show more" on the currently active
             // filter.
-            this.selectedTab.setValue(0);
+            this.view.searchTabSubject.next(0);
         });
         this.subscriptions.push(
             this.view
                 .getResultCardStyle()
                 .subscribe((resultCardStyle) => (this.resultCardStyle = resultCardStyle)),
+        );
+        this.subscriptions.push(
+            this.view.searchTabSubject.subscribe((searchTab) =>
+                this.selectedTab.setValue(searchTab),
+            ),
         );
     }
 
@@ -76,5 +81,9 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     setResultCardStyle(resultCardStyle: ResultCardStyle) {
         this.view.setResultCardStyle(resultCardStyle);
+    }
+
+    onSelectedIndexChange(selectedTabIndex: number): void {
+        this.view.searchTabSubject.next(selectedTabIndex);
     }
 }

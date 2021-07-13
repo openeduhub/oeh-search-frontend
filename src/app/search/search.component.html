@@ -74,7 +74,7 @@
   <mat-tab-group
     *ngIf="results.total.value > 0"
     [selectedIndex]="selectedTab.value"
-    (selectedIndexChange)="selectedTab.setValue($event)"
+    (selectedIndexChange)="onSelectedIndexChange($event)"
   >
     <mat-tab i18n-label label="All search results">
       <app-search-results [results]="results"></app-search-results>
