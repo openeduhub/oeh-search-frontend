@@ -22,6 +22,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     results: ResultFragment;
     selectedTab = new FormControl(0);
     resultCardStyle: ResultCardStyle;
+    resultPageNumbers: { from: number; to: number };
 
     private subscriptions: Subscription[] = [];
 
@@ -50,10 +51,14 @@ export class SearchComponent implements OnInit, OnDestroy {
             this.searchParameters.get().subscribe(({ pageIndex, filters }) => {
                 this.pageIndex = pageIndex;
                 this.filterCount = Object.keys(filters).filter((k) => filters[k]?.length).length;
+                if (this.results) {
+                    this.resultPageNumbers = this.getResultPageNumbers();
+                }
             }),
         );
         this.route.data.subscribe((data: { searchData: SearchData }) => {
             this.results = data.searchData.searchResults;
+            this.resultPageNumbers = this.getResultPageNumbers();
             this.analyticsService.reportSearchRequest({
                 numberResults: this.results.total.value,
             });
@@ -85,5 +90,12 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     onSelectedIndexChange(selectedTabIndex: number): void {
         this.view.searchTabSubject.next(selectedTabIndex);
+    }
+
+    private getResultPageNumbers(): { from: number; to: number } {
+        return {
+            from: this.pageIndex * 12 + 1,
+            to: this.pageIndex * 12 + this.results.hits.length,
+        };
     }
 }

@@ -118,7 +118,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-field/search-field.component.html</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">81</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context>
@@ -144,7 +144,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-field/search-field.component.html</context>
-          <context context-type="linenumber">83</context>
+          <context context-type="linenumber">84</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context>
@@ -159,7 +159,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-field/search-field.component.html</context>
-          <context context-type="linenumber">86</context>
+          <context context-type="linenumber">87</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-filterbar/search-filterbar.component.html</context>
@@ -273,7 +273,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-field/search-field.component.html</context>
-          <context context-type="linenumber">110</context>
+          <context context-type="linenumber">111</context>
         </context-group>
       </trans-unit>
       <trans-unit id="815584431126577417" datatype="html">
@@ -284,7 +284,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-field/search-field.component.html</context>
-          <context context-type="linenumber">113</context>
+          <context context-type="linenumber">114</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2932360890997178383" datatype="html">
@@ -295,7 +295,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-field/search-field.component.html</context>
-          <context context-type="linenumber">111</context>
+          <context context-type="linenumber">112</context>
         </context-group>
       </trans-unit>
       <trans-unit id="9155608366859514313" datatype="html">
@@ -306,11 +306,11 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-field/search-field.component.html</context>
-          <context context-type="linenumber">88</context>
+          <context context-type="linenumber">89</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-field/search-field.component.html</context>
-          <context context-type="linenumber">112</context>
+          <context context-type="linenumber">113</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8864288285279476751" datatype="html">
@@ -321,7 +321,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-field/search-field.component.html</context>
-          <context context-type="linenumber">114</context>
+          <context context-type="linenumber">115</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5795316453144024552" datatype="html">
@@ -421,7 +421,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-field/search-field.component.html</context>
-          <context context-type="linenumber">78</context>
+          <context context-type="linenumber">79</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6877113876835666202" datatype="html">
@@ -481,8 +481,8 @@
           <context context-type="linenumber">234</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="5295198085825830571" datatype="html">
-        <source>In Collections</source>
+      <trans-unit id="5155181152441963456" datatype="html">
+        <source>Related Topics</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/preview-panel/preview-panel.component.html</context>
           <context context-type="linenumber">241</context>
@@ -517,39 +517,39 @@
         <source>Find suitable content, tools, and sources for teaching...</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-field/search-field.component.html</context>
-          <context context-type="linenumber">34</context>
+          <context context-type="linenumber">35</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8700121026680200191" datatype="html">
         <source>Clear</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-field/search-field.component.html</context>
-          <context context-type="linenumber">44</context>
+          <context context-type="linenumber">45</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-field/search-field.component.html</context>
-          <context context-type="linenumber">46</context>
+          <context context-type="linenumber">47</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2212695292809375179" datatype="html">
         <source> Search </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-field/search-field.component.html</context>
-          <context context-type="linenumber">53,54</context>
+          <context context-type="linenumber">54,55</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8650499415827640724" datatype="html">
         <source>Type</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-field/search-field.component.html</context>
-          <context context-type="linenumber">76</context>
+          <context context-type="linenumber">77</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5206272431542421762" datatype="html">
         <source>Keyword</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search-field/search-field.component.html</context>
-          <context context-type="linenumber">81</context>
+          <context context-type="linenumber">82</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7808756054397155068" datatype="html">
@@ -619,75 +619,75 @@
           <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="3306100694975146929" datatype="html">
-        <source>{VAR_PLURAL, plural, =1 {1 result} other {<x id="INTERPOLATION"/> results}}</source>
+      <trans-unit id="2525230676386818985" datatype="html">
+        <source>Result</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search/search.component.html</context>
-          <context context-type="linenumber">31,32</context>
+          <context context-type="linenumber">30</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="1675474917699311868" datatype="html">
-        <source>More than <x id="INTERPOLATION" equiv-text="{{ results.total.value | number }}"/> results</source>
+      <trans-unit id="2210257279822054660" datatype="html">
+        <source>to <x id="INTERPOLATION" equiv-text="{{ resultPageNumbers.to | number }}"/> </source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search/search.component.html</context>
-          <context context-type="linenumber">35</context>
+          <context context-type="linenumber">34,35</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="6343006661898262168" datatype="html">
-        <source>Page <x id="INTERPOLATION" equiv-text="{{ pageIndex + 1 }}"/> of <x id="INTERPOLATION_1" equiv-text="{{ results.total.value | number }}"/> results</source>
+      <trans-unit id="5881876145178332550" datatype="html">
+        <source>of</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search/search.component.html</context>
           <context context-type="linenumber">38</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="3313035751187182120" datatype="html">
-        <source>Page <x id="INTERPOLATION" equiv-text="{{ pageIndex + 1 }}"/> of more than <x id="INTERPOLATION_1" equiv-text="{{ results.total.value | number }}"/> results</source>
+      <trans-unit id="9192665888076629730" datatype="html">
+        <source>of more than</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search/search.component.html</context>
-          <context context-type="linenumber">41,42</context>
+          <context context-type="linenumber">39</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6885816366638230628" datatype="html">
         <source>Result view</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search/search.component.html</context>
-          <context context-type="linenumber">50</context>
+          <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5184988665709497539" datatype="html">
         <source>Standard view</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search/search.component.html</context>
-          <context context-type="linenumber">56</context>
+          <context context-type="linenumber">52</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search/search.component.html</context>
-          <context context-type="linenumber">58</context>
+          <context context-type="linenumber">54</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8114384947932245028" datatype="html">
         <source>Compact view</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search/search.component.html</context>
-          <context context-type="linenumber">65</context>
+          <context context-type="linenumber">61</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search/search.component.html</context>
-          <context context-type="linenumber">67</context>
+          <context context-type="linenumber">63</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7031141507741382342" datatype="html">
         <source>All search results</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search/search.component.html</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="linenumber">75</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4437454696973204170" datatype="html">
         <source>Search results by categories</source>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/search/search.component.html</context>
-          <context context-type="linenumber">82</context>
+          <context context-type="linenumber">78</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3871356154402153903" datatype="html">

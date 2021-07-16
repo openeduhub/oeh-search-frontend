@@ -56,6 +56,9 @@ app-search-filterbar {
 .summary {
     display: flex;
     flex-direction: column;
+    em {
+        font-style: normal;
+    }
     .no-results {
         display: flex;
         flex-direction: column;

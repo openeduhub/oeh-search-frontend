@@ -15,15 +15,13 @@
         .did-you-mean a {
             color: $primary-foreground-color;
         }
-        .results > .summary {
-            color: mat.get-color-from-palette($foreground, secondary-text);
-        }
     }
 }
 
 @mixin search-typography($typography) {
     app-search {
-        .did-you-mean em {
+        .did-you-mean em,
+        .summary em {
             font-weight: mat.font-weight($typography, body-2);
         }
         .summary {
