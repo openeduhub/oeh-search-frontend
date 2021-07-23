@@ -1,4 +1,5 @@
 <a
+  class="arrow"
   mat-icon-button
   color="primary"
   i18n-aria-label
@@ -8,13 +9,13 @@
   queryParamsHandling="merge"
   [disabled]="pageIndex === 0"
 >
-  <mat-icon>chevron_left</mat-icon>
+  <mat-icon>arrow_back</mat-icon>
 </a>
 <ng-container *ngIf="beforePages.length > 0 && beforePages[0] > 0">
   <a class="page-number" routerLink="." [queryParams]="{ pageIndex: 0 }" queryParamsHandling="merge"
     >1</a
   >
-  <span *ngIf="beforePages[0] > 1" class="mat-body-2">...</span>
+  <span *ngIf="beforePages[0] > 1" class="ellipsis">...</span>
 </ng-container>
 <a
   class="page-number"
@@ -35,10 +36,11 @@
 >
 <span
   *ngIf="afterPages.length > 0 && afterPages[afterPages.length - 1] < totalPages - 1"
-  class="mat-body-2"
+  class="ellipsis"
   >...</span
 >
 <a
+  class="arrow"
   mat-icon-button
   color="primary"
   i18n-aria-label
@@ -48,5 +50,5 @@
   queryParamsHandling="merge"
   [disabled]="pageIndex === totalPages - 1"
 >
-  <mat-icon>chevron_right</mat-icon>
+  <mat-icon>arrow_forward</mat-icon>
 </a>

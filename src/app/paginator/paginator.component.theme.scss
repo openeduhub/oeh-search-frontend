@@ -6,13 +6,13 @@
     $primary: map-get($theme, primary);
 
     app-paginator {
+        .ellipsis {
+            color: mat.get-color-from-palette($primary);
+        }
         .page-number {
+            color: mat.get-color-from-palette($primary);
             &.active {
-                background-color: mat.get-color-from-palette($primary);
-                color: mat.get-color-from-palette($primary, default-contrast);
-            }
-            &:not(.active) {
-                color: $primary-foreground-color;
+                background-color: mat.get-color-from-palette($primary, 70);
             }
         }
     }
@@ -20,7 +20,8 @@
 
 @mixin paginator-typography($typography) {
     app-paginator {
-        .page-number {
+        .page-number,
+        .ellipsis {
             @include mat.typography-level($typography, button);
         }
     }
