@@ -93,13 +93,13 @@ Then('I see the paginator', () => {
     cy.get('app-paginator')
         .find('a[aria-label="Vorherige Seite"]')
         .find('mat-icon[class*="mat-icon"]')
-        .should('have.text', 'chevron_left');
+        .should('have.text', 'arrow_back');
 
     cy.get('app-paginator').find('a[aria-label="Nächste Seite"]').should('be.visible');
     cy.get('app-paginator')
         .find('a[aria-label="Nächste Seite"]')
         .find('mat-icon[class*="mat-icon"]')
-        .should('have.text', 'chevron_right');
+        .should('have.text', 'arrow_forward');
 
     cy.get('app-paginator').find('span[class*="page-number"]').should('be.visible');
     cy.get('app-paginator').find('span[class*="page-number"]').its('length').should('equal', 1);
