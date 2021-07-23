@@ -97,9 +97,6 @@
             "production": {
               "browserTarget": "oeh-search-frontend:build:production"
             },
-            "stage": {
-              "browserTarget": "oeh-search-frontend:build:stage"
-            },
             "de": {
               "browserTarget": "oeh-search-frontend:build:de"
             }
