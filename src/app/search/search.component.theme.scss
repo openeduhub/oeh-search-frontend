@@ -4,6 +4,7 @@
 @mixin search-theme($theme) {
     $foreground: map-get($theme, foreground);
     $primary-foreground-color: primary-foreground-color($theme);
+    $customAccent: map-get($theme, custom-accent);
 
     app-search {
         .breadcrumbs {
@@ -14,6 +15,10 @@
         }
         .did-you-mean a {
             color: $primary-foreground-color;
+        }
+        .participate-button {
+            color: $primary-foreground-color;
+            background-color: mat.get-color-from-palette($customAccent, accent1);
         }
     }
 }

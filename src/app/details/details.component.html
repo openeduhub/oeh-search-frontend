@@ -106,10 +106,10 @@
         [href]="hit.lom.technical.location"
         target="_blank"
       >
-        <div class="app-preview-panel-button-wrapper">
-          <ng-container i18n>Go to original page</ng-container>
+        <span class="app-preview-panel-button-wrapper">
+          <span i18n>Go to original page</span>
           <mat-icon>arrow_forward</mat-icon>
-        </div>
+        </span>
       </a>
       <!-- <a
         mat-flat-button
@@ -119,6 +119,15 @@
         i18n
         >Details page</a
       > -->
+      <button
+        *ngIf="showEmbedButton$ | async"
+        mat-flat-button
+        color="primary"
+        class="app-preview-panel-button"
+        (click)="embed()"
+      >
+        <ng-container i18n>Embed element</ng-container>
+      </button>
     </div>
     <div
       class="app-preview-panel-metadata app-preview-panel-metadata-icon"

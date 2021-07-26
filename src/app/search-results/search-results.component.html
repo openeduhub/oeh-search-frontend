@@ -1,4 +1,8 @@
-<div class="results" [attr.data-style]="style">
+<div
+  class="results"
+  [attr.data-result-card-style]="resultCardStyle$ | async"
+  [attr.data-search-results-style]="searchResultsStyle$ | async"
+>
   <app-result-card
     *ngFor="let hit of results.hits"
     [hit]="hit"

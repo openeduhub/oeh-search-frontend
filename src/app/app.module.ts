@@ -21,6 +21,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatRippleModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -48,6 +49,7 @@ import { AppComponent } from './app.component';
 import { BadgesComponent } from './badges/badges.component';
 import { CapitalizeFirstLetterPipe } from './capitalize-first-letter.pipe';
 import { CollectionCardComponent } from './collection-card/collection-card.component';
+import { DetailsPageComponent } from './details-page/details-page.component';
 import { DetailsComponent } from './details/details.component';
 import { DurationPipe } from './duration.pipe';
 import { EncodeUriComponentPipe } from './encode-uri-component.pipe';
@@ -79,7 +81,6 @@ import { SubjectsPortalComponent } from './subjects-portal/subjects-portal.compo
 import { TrimPipe } from './trim.pipe';
 import { TruncatePipe } from './truncate.pipe';
 import { WrapObservablePipe } from './wrap-observable.pipe';
-import { DetailsPageComponent } from './details-page/details-page.component';
 
 const httpLinkBeacon = (() => {
     class BeaconHttpHandler implements HttpHandler {
@@ -156,6 +157,7 @@ const httpLinkBeacon = (() => {
         MatCheckboxModule,
         MatChipsModule,
         MatDialogModule,
+        MatDividerModule,
         MatExpansionModule,
         MatFormFieldModule,
         MatIconModule,

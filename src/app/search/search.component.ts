@@ -2,12 +2,14 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { DidYouMeanSuggestionFragment, ResultFragment } from '../../generated/graphql';
 import { AnalyticsService } from '../analytics.service';
+import { PageModeService } from '../page-mode.service';
 import { SearchParametersService } from '../search-parameters.service';
+import { SearchResultsService } from '../search-results/search-results.service';
 import { SearchService } from '../search.service';
 import { ResultCardStyle, ViewService } from '../view.service';
-import { SearchResultsService } from '../search-results/search-results.service';
 
 @Component({
     selector: 'app-search',
@@ -23,11 +25,14 @@ export class SearchComponent implements OnInit, OnDestroy {
     selectedTab = new FormControl(0);
     resultCardStyle: ResultCardStyle;
     resultPageNumbers: { from: number; to: number };
+    readonly searchResultsStyle$ = this.pageMode.getPageConfig('searchResultsStyle');
+    readonly wordpressUrl = environment.wordpressUrl;
 
     private subscriptions: Subscription[] = [];
 
     constructor(
         private analyticsService: AnalyticsService,
+        private pageMode: PageModeService,
         private route: ActivatedRoute,
         private search: SearchService,
         private searchParameters: SearchParametersService,

@@ -31,11 +31,22 @@
     align-items: center;
 }
 
+@media screen and (max-width: 449.98px) {
+    .label-full {
+        display: none;
+    }
+}
+@media screen and (min-width: 450px) {
+    .label-compact {
+        display: none;
+    }
+}
+
 $help-button-size: 18px;
 
 .help-button {
     margin: -5px;
-    margin-top: -7px;
+    margin-top: -9px;
     mat-icon {
         width: $help-button-size;
         height: $help-button-size;

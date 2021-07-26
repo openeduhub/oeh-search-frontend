@@ -97,13 +97,18 @@
 }
 
 .app-preview-panel-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 15px;
     margin: 30px 0;
     .app-preview-panel-button {
+        height: 30px;
         line-height: 30px;
         border-radius: 15px;
         .app-preview-panel-button-wrapper {
-            display: inline-flex;
+            display: flex;
             align-items: center;
+            justify-content: center;
         }
         mat-icon {
             margin-left: 10px;

@@ -12,6 +12,7 @@ import {
 } from '@angular/router';
 import { delay, filter } from 'rxjs/operators';
 import { ErrorService } from './error.service';
+import { PageModeService } from './page-mode.service';
 
 @Component({
     selector: 'app-root',
@@ -23,17 +24,19 @@ export class AppComponent implements DoCheck, OnInit {
     private static readonly CONSECUTIVE_TRANSGRESSION_THRESHOLD = 10;
 
     loading = false;
+    headerStyle$ = this.pageMode.getPageConfig('headerStyle');
     private numberOfChecks = 0;
     private consecutiveTransgression = 0;
     private checksMonitorInterval: number;
 
     constructor(
-        router: Router,
+        private router: Router,
         viewportScroller: ViewportScroller,
         error: ErrorService,
         ngZone: NgZone,
         private matIconRegistry: MatIconRegistry,
         private domSanitizer: DomSanitizer,
+        private pageMode: PageModeService,
     ) {
         ngZone.runOutsideAngular(() => {
             this.checksMonitorInterval = window.setInterval(() => this.monitorChecks(), 1000);
@@ -82,6 +85,7 @@ export class AppComponent implements DoCheck, OnInit {
 
     ngOnInit(): void {
         this.registerCustomIcons();
+        this.registerMessageHandler();
     }
 
     private monitorChecks(): void {
@@ -122,4 +126,27 @@ export class AppComponent implements DoCheck, OnInit {
             );
         }
     }
+
+    private registerMessageHandler(): void {
+        window.addEventListener('message', (event) => {
+            const message: Message = event.data;
+            if (message.scope !== 'OEH') {
+                return;
+            }
+            switch (message.type) {
+                case 'navigate':
+                    this.router.navigateByUrl(message.data.url);
+                    break;
+                default:
+                    console.error(`Unknown message type: ${message.type}`, event);
+            }
+        });
+    }
 }
+
+type Message = { scope: 'OEH' } & {
+    type: 'navigate';
+    data: {
+        url: string;
+    };
+};

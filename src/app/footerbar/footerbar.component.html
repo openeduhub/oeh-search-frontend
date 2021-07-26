@@ -1,12 +1,18 @@
 <!-- 
   Modifications:
   - Replace static URLs with {{ wordpressUrl }}
+  - Include `footerStyle` conditions
 -->
 
-<footer id="colophon" class="site-footer" role="contentinfo">
+<footer
+  id="colophon"
+  class="site-footer"
+  role="contentinfo"
+  [attr.data-style]="footerStyle$ | async"
+>
   <div class="footer-wrapper">
     <div class="footer-main">
-      <div class="footer-buttons">
+      <div class="footer-buttons" *ngIf="(footerStyle$ | async) === 'standard'">
         <a class="footer-btn" href="{{ wordpressUrl }}/login/"> Anmelden </a>
         <a
           href="https://facebook.com/wirlernenonline.oer"
@@ -45,6 +51,7 @@
         role="menubar"
       >
         <li
+          *ngIf="(footerStyle$ | async) === 'standard'"
           id="menu-item-26153"
           class="menu-item menu-item-type-post_type menu-item-object-page menu-item-26153 menu-item-jobs-ausschreibungen"
           role="none"
@@ -52,6 +59,7 @@
           <a href="{{ wordpressUrl }}/jobs-ausschreibungen/" role="menuitem"> Jobs </a>
         </li>
         <li
+          *ngIf="(footerStyle$ | async) === 'standard'"
           id="menu-item-5269"
           class="menu-item menu-item-type-post_type menu-item-object-page menu-item-5269 menu-item-kooperationen"
           role="none"
@@ -59,6 +67,7 @@
           <a href="{{ wordpressUrl }}/kooperationen/" role="menuitem"> Partner </a>
         </li>
         <li
+          *ngIf="(footerStyle$ | async) === 'standard'"
           id="menu-item-29007"
           class="menu-item menu-item-type-post_type menu-item-object-page menu-item-29007 menu-item-faq"
           role="none"
@@ -66,6 +75,7 @@
           <a href="{{ wordpressUrl }}/faq/" role="menuitem"> FAQ </a>
         </li>
         <li
+          *ngIf="(footerStyle$ | async) === 'standard'"
           id="menu-item-37148"
           class="menu-item menu-item-type-post_type menu-item-object-page menu-item-37148 menu-item-quellenerschliessung-uebersicht"
           role="none"
@@ -75,6 +85,7 @@
           </a>
         </li>
         <li
+          *ngIf="(footerStyle$ | async) === 'standard'"
           id="menu-item-37162"
           class="menu-item menu-item-type-post_type menu-item-object-page menu-item-37162 menu-item-qualitaetssicherung"
           role="none"
@@ -103,6 +114,7 @@
           <a href="{{ wordpressUrl }}/datenschutz/" role="menuitem"> Datenschutz </a>
         </li>
         <li
+          *ngIf="(footerStyle$ | async) === 'standard'"
           id="menu-item-48991"
           class="menu-item menu-item-type-post_type menu-item-object-page menu-item-48991 menu-item-plugins"
           role="none"

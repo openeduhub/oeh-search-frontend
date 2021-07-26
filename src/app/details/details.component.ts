@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { BehaviorSubject, ReplaySubject } from 'rxjs';
 import { filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { PageModeService } from '../page-mode.service';
 import { Entry, SearchService } from '../search.service';
 import { Hit } from '../view.service';
 
@@ -21,9 +22,6 @@ export class DetailsComponent implements OnDestroy {
     @Input() mode: 'dialog' | 'sidebar' | 'page';
     @Output() closeButtonClicked = new EventEmitter<void>();
 
-    descriptionExpanded = false;
-    author$ = this.hit$.pipe(map((entry) => this.getAuthor(entry)));
-    fullEntry$ = new BehaviorSubject<Entry | null>(null);
     readonly slickConfig = {
         dots: false,
         infinite: false,
@@ -32,9 +30,14 @@ export class DetailsComponent implements OnDestroy {
         prevArrow: '.app-preview-slick-prev',
         nextArrow: '.app-preview-slick-next',
     };
+    descriptionExpanded = false;
+    author$ = this.hit$.pipe(map((entry) => this.getAuthor(entry)));
+    fullEntry$ = new BehaviorSubject<Entry | null>(null);
+    showEmbedButton$ = this.pageMode.getPageConfig('showEmbedButton');
+
     private destroyed$ = new ReplaySubject<void>(1);
 
-    constructor(private search: SearchService) {
+    constructor(private search: SearchService, private pageMode: PageModeService) {
         this.hit$.pipe(takeUntil(this.destroyed$)).subscribe(() => this.reset());
         this.hit$
             .pipe(
@@ -49,6 +52,10 @@ export class DetailsComponent implements OnDestroy {
     ngOnDestroy(): void {
         this.destroyed$.next();
         this.destroyed$.complete();
+    }
+
+    embed(): void {
+        window.parent.postMessage({ type: 'embed', data: { id: this.hit.id }, scope: 'OEH' }, '*');
     }
 
     private reset(): void {

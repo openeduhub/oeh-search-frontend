@@ -4,16 +4,18 @@
 }
 
 :host {
-    border-top-width: 45px;
-    border-top-style: solid;
     position: relative;
     display: flex;
-    background-image: url('../../assets/images/header-bg.svg');
     background-position: center;
     margin-bottom: 20px;
     justify-content: center;
     align-items: center;
-    min-height: 325px;
+    &[data-style='standard'] {
+        background-image: url('../../assets/images/header-bg.svg');
+        min-height: 325px;
+        border-top-width: 45px;
+        border-top-style: solid;
+    }
 }
 
 .content {
@@ -24,10 +26,20 @@
     max-width: 1060px;
 }
 
+.logo {
+    align-self: flex-start;
+    margin-bottom: 16px;
+    margin-top: 2px;
+    height: 35px;
+}
+
 .filter-row {
     display: flex;
-    margin-bottom: 20px;
+    margin-top: 20px;
     align-items: center;
+    @media screen and (max-width: 450px) {
+        justify-content: space-between;
+    }
 }
 
 .filter-button {

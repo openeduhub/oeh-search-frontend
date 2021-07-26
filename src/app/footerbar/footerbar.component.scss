@@ -5,6 +5,16 @@ $rem: 20px;
     font-size: $rem;
 }
 
+.site-footer[data-style='compact'] .footer-wrapper {
+    padding-bottom: 1em;
+    .footer-main {
+        margin-top: unset;
+    }
+    .footer-right {
+        margin-top: 1em;
+    }
+}
+
 // Extracted using
 // https://chrome.google.com/webstore/detail/css-used/cdopjfddjlonogibjahpnmjpoangjfff
 //

@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ResultFragment } from '../../generated/graphql';
+import { PageModeService } from '../page-mode.service';
 import { SearchParametersService } from '../search-parameters.service';
 import { Filters } from '../search.service';
 import { ResultCardStyle, ViewService } from '../view.service';
@@ -15,14 +16,16 @@ import { SearchResultsService } from './search-results.service';
 export class SearchResultsComponent implements OnInit, OnDestroy {
     results: ResultFragment;
     filters: Filters;
-    style: ResultCardStyle;
+    readonly resultCardStyle$ = this.view.getResultCardStyle();
+    readonly searchResultsStyle$ = this.pageMode.getPageConfig('searchResultsStyle');
 
     private destroyed$ = new ReplaySubject<void>(1);
 
     constructor(
+        private pageMode: PageModeService,
         private searchParameters: SearchParametersService,
-        private view: ViewService,
         private searchResults: SearchResultsService,
+        private view: ViewService,
     ) {}
 
     ngOnInit(): void {
@@ -35,10 +38,6 @@ export class SearchResultsComponent implements OnInit, OnDestroy {
             .subscribe(({ filters }) => {
                 this.filters = filters;
             });
-        this.view
-            .getResultCardStyle()
-            .pipe(takeUntil(this.destroyed$))
-            .subscribe((resultCardStyle) => (this.style = resultCardStyle));
     }
 
     ngOnDestroy(): void {

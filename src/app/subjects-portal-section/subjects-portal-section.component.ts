@@ -86,7 +86,12 @@ export class SubjectsPortalSectionComponent implements OnDestroy, AfterViewInit 
     }
 
     private updateSlickOptions(slidesToShow: number): void {
-        this.slickCarousel.$instance.slick('slickSetOption', 'slidesToScroll', slidesToShow, false);
-        this.slickCarousel.$instance.slick('slickSetOption', 'slidesToShow', slidesToShow, true);
+        this.slickCarousel.$instance?.slick(
+            'slickSetOption',
+            'slidesToScroll',
+            slidesToShow,
+            false,
+        );
+        this.slickCarousel.$instance?.slick('slickSetOption', 'slidesToShow', slidesToShow, true);
     }
 }

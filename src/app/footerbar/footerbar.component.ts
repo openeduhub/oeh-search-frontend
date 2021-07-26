@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { environment } from '../../environments/environment';
+import { PageModeService } from '../page-mode.service';
 
 @Component({
     selector: 'app-footerbar',
@@ -8,6 +9,7 @@ import { environment } from '../../environments/environment';
 })
 export class FooterbarComponent {
     readonly wordpressUrl = environment.wordpressUrl;
+    readonly footerStyle$ = this.pageMode.getPageConfig('footerStyle');
 
-    constructor() {}
+    constructor(private pageMode: PageModeService) {}
 }

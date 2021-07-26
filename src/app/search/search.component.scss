@@ -29,10 +29,15 @@ app-search-filterbar {
     z-index: 0;
     flex-basis: 350px; // Shrink to equal parts with filter bar
     flex-grow: 1;
-    padding: 0 50px;
     max-width: 1400px;
     justify-self: center;
     overflow: hidden;
+    &[data-style='standard'] {
+        padding: 0 50px;
+    }
+    &[data-style='compact'] {
+        padding: 0 10px;
+    }
     .did-you-mean > a {
         &:not(:hover) {
             text-decoration: none;
@@ -54,6 +59,28 @@ app-search-filterbar {
             margin-top: 10px;
         }
     }
+}
+
+.summary-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    p {
+        margin: 0;
+    }
+}
+
+.participate-button {
+    display: flex;
+    align-items: center;
+    height: 30px;
+    border-radius: 15px;
+    padding: 0 20px;
+}
+
+.summary-divider {
+    margin-bottom: 35px;
 }
 
 .style-toggle {

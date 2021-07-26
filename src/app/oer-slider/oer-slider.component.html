@@ -1,8 +1,9 @@
 <ng-container *ngIf="show">
   <div class="slider-container">
-    <mat-slide-toggle i18n [(ngModel)]="value" (ngModelChange)="onValueChange($event)"
-      >show me only OER</mat-slide-toggle
-    >
+    <mat-slide-toggle [(ngModel)]="value" (ngModelChange)="onValueChange($event)">
+      <span class="label-full" i18n>show me only OER</span>
+      <span class="label-compact" i18n>only OER</span>
+    </mat-slide-toggle>
     <a
       href="{{ wordpressUrl }}/oerverstehen/"
       target="_blank"

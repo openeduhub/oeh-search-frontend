@@ -1,4 +1,11 @@
 <div class="content">
+  <img
+    *ngIf="headerStyle === 'compact'"
+    class="logo"
+    src="./assets/images/wlo-logo-acronym-negative.svg"
+    alt="WLO"
+  />
+  <app-search-field></app-search-field>
   <div class="filter-row">
     <button
       *ngIf="showFiltersButton"
@@ -13,7 +20,6 @@
     </button>
     <app-oer-slider></app-oer-slider>
   </div>
-  <app-search-field></app-search-field>
   <span class="experiments" *ngIf="showExperiments"
     ><ng-container i18n>Try our </ng-container
     ><a routerLink="/experiments" i18n>experimental features</a>!</span

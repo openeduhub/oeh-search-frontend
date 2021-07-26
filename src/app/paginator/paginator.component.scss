@@ -1,6 +1,10 @@
 :host {
     display: flex;
     align-items: center;
+    max-width: 100%;
+    > * {
+        min-width: 0;
+    }
 }
 
 .arrow {
@@ -8,7 +12,9 @@
 }
 
 .page-number {
-    padding: 11px 14px;
+    width: 36px;
+    line-height: 43px;
+    text-align: center;
     margin: 0 2px;
     border-radius: 5px;
     &:not(:hover) {

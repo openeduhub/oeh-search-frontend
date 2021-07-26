@@ -1,7 +1,9 @@
+import { ViewportScroller } from '@angular/common';
 import { Component, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { NavigationStart, Router } from '@angular/router';
 import { combineLatest, ReplaySubject } from 'rxjs';
-import { distinctUntilChanged, filter, map, takeUntil } from 'rxjs/operators';
+import { distinctUntilChanged, filter, first, map, takeUntil } from 'rxjs/operators';
 import { DetailsComponent } from '../details/details.component';
 import { ViewService } from '../view.service';
 
@@ -23,7 +25,12 @@ export class PreviewPanelComponent implements OnDestroy {
     private dialogRef: MatDialogRef<PreviewPanelComponent>;
     private destroyed$ = new ReplaySubject<void>(1);
 
-    constructor(private dialog: MatDialog, private view: ViewService) {
+    constructor(
+        private dialog: MatDialog,
+        private view: ViewService,
+        private router: Router,
+        private viewportScroller: ViewportScroller,
+    ) {
         this.registerDialog();
     }
 
@@ -62,9 +69,10 @@ export class PreviewPanelComponent implements OnDestroy {
             panelClass: 'app-preview-panel-dialog-container',
             backdropClass: 'app-backdrop',
             maxWidth: '',
-            closeOnNavigation: false,
+            // closeOnNavigation: false,
         });
-        this.registerCloseOnBackNav();
+        // this.registerCloseOnBackNav();
+        this.registerCloseOnNavigation();
         this.dialogRef.beforeClosed().subscribe((dialogResult) => {
             if (dialogResult !== 'mode-change') {
                 this.view.selectItem(null);
@@ -76,8 +84,35 @@ export class PreviewPanelComponent implements OnDestroy {
     }
 
     /**
+     * Close the dialog on navigation via the angular router.
+     *
+     * This is different to the option `closeOnNavigation` of `MatDialogConfig` as the latter only
+     * affects forward/backwards navigation in history.
+     */
+    private registerCloseOnNavigation(): void {
+        this.router.events
+            .pipe(
+                takeUntil(this.dialogRef.beforeClosed()),
+                first((e): e is NavigationStart => e instanceof NavigationStart),
+            )
+            .subscribe(() => {
+                // The router fails to reset the scroll position here, since the dialog still blocks
+                // scrolling.
+                this.dialogRef
+                    .afterClosed()
+                    .subscribe(() => this.viewportScroller.scrollToPosition([0, 0]));
+                this.closeDialog();
+            });
+    }
+
+    /**
      * On back navigation while the dialog is open, close the dialog instead of navigating back.
      */
+    // We cannot use this when there is a possibility, that the user navigates to a new location
+    // (within the app) while the dialog is open. We have no way of removing our dummy state in this
+    // situation before the new location is pushed to the history stack. Ideally, we would represent
+    // an open dialog with a query parameter, but then we would have to handle implicit navigation
+    // when the window is resized and the preview switches from overlay to sidebar.
     private registerCloseOnBackNav(): void {
         // Push a dummy state on history to catch the popstate event without triggering navigation.
         history.pushState(null, null, window.location.href);

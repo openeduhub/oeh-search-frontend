@@ -1,5 +1,5 @@
 <header>
-  <app-menubar></app-menubar>
+  <app-menubar *ngIf="(headerStyle$ | async) === 'standard'"></app-menubar>
   <app-headerbar></app-headerbar>
 </header>
 <main appSkipTarget="MAIN_CONTENT" class="main">

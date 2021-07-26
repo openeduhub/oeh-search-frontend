@@ -7,6 +7,9 @@
 
     app-headerbar {
         border-color: mat.get-color-from-palette($primary);
+        &[data-style='compact'] {
+            background-color: mat.get-color-from-palette($primary, 400);
+        }
         .filter-button {
             color: $primary-foreground-color;
         }

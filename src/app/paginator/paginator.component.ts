@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { parseSearchQueryParams } from '../search-parameters.service';
+import { SearchParametersService } from '../search-parameters.service';
 
 @Component({
     selector: 'app-paginator',
@@ -17,11 +17,13 @@ export class PaginatorComponent implements OnInit, OnChanges {
     afterPages: number[];
     showGoToFirst: boolean;
 
-    constructor(private route: ActivatedRoute) {}
+    constructor(private route: ActivatedRoute, private searchParameters: SearchParametersService) {}
 
     ngOnInit(): void {
         this.route.queryParamMap.subscribe((queryParamMap) => {
-            const { pageIndex, pageSize } = parseSearchQueryParams(queryParamMap);
+            const { pageIndex, pageSize } = this.searchParameters.parseSearchQueryParams(
+                queryParamMap,
+            );
             this.pageIndex = pageIndex;
             this.pageSize = pageSize;
             this.update();

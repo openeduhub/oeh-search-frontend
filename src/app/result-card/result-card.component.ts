@@ -1,5 +1,7 @@
 import { Component, HostBinding, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { PageModeService } from '../page-mode.service';
 import { ResultCardContentCompactComponent } from '../result-card-content-compact/result-card-content-compact.component';
 import { ResultCardContentStandardComponent } from '../result-card-content-standard/result-card-content-standard.component';
 import { Filters } from '../search.service';
@@ -21,21 +23,23 @@ export class ResultCardComponent implements OnInit, OnDestroy {
 
     readonly selectedItem$ = this.view.getSelectedItem();
 
-    private subscriptions: Subscription[] = [];
+    private readonly destroyed$ = new ReplaySubject<void>(1);
 
-    constructor(private view: ViewService) {}
+    constructor(
+        private view: ViewService,
+
+        private pageMode: PageModeService,
+    ) {}
 
     ngOnInit(): void {
-        this.subscriptions.push(
-            this.view
-                .getResultCardStyle()
-                .subscribe((resultCardStyle) => (this.style = resultCardStyle)),
-        );
+        this.view
+            .getResultCardStyle()
+            .pipe(takeUntil(this.destroyed$))
+            .subscribe((resultCardStyle) => (this.style = resultCardStyle));
     }
 
     ngOnDestroy(): void {
-        for (const subscription of this.subscriptions) {
-            subscription.unsubscribe();
-        }
+        this.destroyed$.next();
+        this.destroyed$.complete();
     }
 }

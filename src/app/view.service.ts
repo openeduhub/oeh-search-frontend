@@ -5,6 +5,7 @@ import * as rxjs from 'rxjs';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { distinctUntilChanged, filter, map, shareReplay, skip } from 'rxjs/operators';
 import { SearchHitFragment } from 'src/generated/graphql';
+import { PageModeService } from './page-mode.service';
 
 export type ResultCardStyle = 'standard' | 'compact';
 export type Hit = SearchHitFragment;
@@ -40,7 +41,11 @@ export class ViewService {
         distinctUntilChanged(),
     );
 
-    constructor(private breakpointObserver: BreakpointObserver, private router: Router) {
+    constructor(
+        private breakpointObserver: BreakpointObserver,
+        private router: Router,
+        private pageMode: PageModeService,
+    ) {
         this.registerStoredItems();
         this.registerBehaviorHooks();
     }
@@ -99,7 +104,17 @@ export class ViewService {
     }
 
     getResultCardStyle(): Observable<ResultCardStyle> {
-        return this.resultCardStyleSubject.asObservable();
+        return rxjs
+            .combineLatest([
+                this.resultCardStyleSubject,
+                this.pageMode.getPageConfig('forceResultCardStyle'),
+            ])
+            .pipe(
+                map(
+                    ([resultCardStyle, forceResultCardStyle]) =>
+                        forceResultCardStyle ?? resultCardStyle,
+                ),
+            );
     }
 
     setResultCardStyle(value: ResultCardStyle) {
