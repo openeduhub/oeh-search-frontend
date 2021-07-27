@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DetailsResolverService } from './details-resolver.service';
-import { DetailsComponent } from './details/details.component';
+import { DetailsPageResolverService } from './details-page/details-page-resolver.service';
+import { DetailsPageComponent } from './details-page/details-page.component';
 import { ErrorComponent } from './error/error.component';
 import { ExperimentsTogglesComponent } from './experiments-toggles/experiments-toggles.component';
 import { SearchResolverService } from './search-resolver.service';
@@ -35,8 +35,8 @@ const routes: Routes = [
     },
     {
         path: 'details/:id',
-        component: DetailsComponent,
-        resolve: { details: DetailsResolverService },
+        component: DetailsPageComponent,
+        resolve: { entry: DetailsPageResolverService },
     },
     { path: 'experiments', component: ExperimentsTogglesComponent },
     { path: '', redirectTo: 'search', pathMatch: 'full' },

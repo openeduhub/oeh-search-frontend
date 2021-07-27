@@ -113,7 +113,7 @@ export class SearchService {
     }
 
     getFacetSuggestions(inputString: string): Observable<Facets> {
-        const { searchString } = this.searchParameters.getCurrentValue();
+        const { searchString } = this.searchParameters.getCurrentValue() ?? { searchString: '' };
         return this.facetSuggestionsGQL
             .fetch({
                 inputString,

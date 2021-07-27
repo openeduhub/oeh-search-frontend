@@ -1,79 +1,76 @@
-import { Clipboard } from '@angular/cdk/clipboard';
-import { Location } from '@angular/common';
-import { Component, OnInit, Renderer2 } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute } from '@angular/router';
-import { environment } from '../../environments/environment';
-import { EditorialTag, Hit, Type } from '../../generated/graphql';
-import { HasEditorialTagPipe } from '../has-editorial-tag.pipe';
+import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
+import { BehaviorSubject, ReplaySubject } from 'rxjs';
+import { filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { Entry, SearchService } from '../search.service';
+import { Hit } from '../view.service';
 
 @Component({
     selector: 'app-details',
     templateUrl: './details.component.html',
     styleUrls: ['./details.component.scss'],
 })
-export class DetailsComponent implements OnInit {
-    readonly Type = Type;
-    readonly EditorialTag = EditorialTag;
-    readonly wordpressUrl = environment.wordpressUrl;
-    id: string;
-    hit: Hit;
-    isRecommended: boolean;
-    isDisplayed = true;
+export class DetailsComponent implements OnDestroy {
+    private hit$ = new BehaviorSubject<Hit>(null);
+    @Input()
+    public get hit(): Hit {
+        return this.hit$.value;
+    }
+    public set hit(value: Hit) {
+        this.hit$.next(value);
+    }
+    @Input() mode: 'dialog' | 'sidebar' | 'page';
+    @Output() closeButtonClicked = new EventEmitter<void>();
 
-    constructor(
-        private route: ActivatedRoute,
-        private clipboard: Clipboard,
-        private snackBar: MatSnackBar,
-        private location: Location,
-        private renderer: Renderer2,
-    ) {}
+    descriptionExpanded = false;
+    author$ = this.hit$.pipe(map((entry) => this.getAuthor(entry)));
+    fullEntry$ = new BehaviorSubject<Entry | null>(null);
+    readonly slickConfig = {
+        dots: false,
+        infinite: false,
+        slidesToShow: 2,
+        slidesToScroll: 2,
+        prevArrow: '.app-preview-slick-prev',
+        nextArrow: '.app-preview-slick-next',
+    };
+    private destroyed$ = new ReplaySubject<void>(1);
 
-    ngOnInit(): void {
-        this.route.data.subscribe((data: { details: Hit }) => {
-            this.hit = data.details;
-            this.isRecommended = new HasEditorialTagPipe().transform(
-                this.hit,
-                EditorialTag.Recommended,
-            );
-        });
-        this.route.params.subscribe((params) => (this.id = params.id));
-        // this.renderer
-        //     .listen(document, 'keydown.control.c', () => this.copyTableEntryToClipboard());
-        // this.renderer.listen(document, 'keydown.meta.c', () => this.copyTableEntryToClipboard());
+    constructor(private search: SearchService) {
+        this.hit$.pipe(takeUntil(this.destroyed$)).subscribe(() => this.reset());
+        this.hit$
+            .pipe(
+                takeUntil(this.destroyed$),
+                tap(() => this.fullEntry$.next(null)),
+                filter((hit) => !!hit),
+                switchMap((hit) => this.search.getEntry(hit.id)),
+            )
+            .subscribe((entry) => this.fullEntry$.next(entry));
     }
 
-    goBack() {
-        this.location.back();
+    ngOnDestroy(): void {
+        this.destroyed$.next();
+        this.destroyed$.complete();
     }
 
-    // private copyTableEntryToClipboard() {
-    //     if (window.getSelection().toString() === '') {
-    //         this.clipboard.copy(this.getTableEntry());
-    //         this.snackBar.open($localize`Copied table entry to clipboard`, null, {
-    //             duration: 3000,
-    //         });
-    //     }
-    // }
+    private reset(): void {
+        this.descriptionExpanded = false;
+    }
 
-    // private getTableEntry() {
-    //     return [
-    //         this.details.lom.general.title,
-    //         this.id,
-    //         this.details.collection?.map((collection) => collection.uuid).join(';'),
-    //         this.details.type,
-    //         this.details.lom.general.description,
-    //         this.details.lom.technical.location,
-    //         `${environment.relayUrl}/rest/entry/${this.id}/thumbnail`,
-    //         this.details.valuespaces.learningResourceType?.map((value) => value.de).join(';'),
-    //         this.details.valuespaces.discipline?.map((value) => value.de).join(';'),
-    //         this.details.valuespaces.educationalContext?.map((value) => value.de).join(';'),
-    //         this.details.license?.url,
-    //         this.details.valuespaces.intendedEndUserRole?.map((value) => value.de).join(';'),
-    //         '', // typical age range from
-    //         '', // typical age range to
-    //         '', // material language
-    //         this.details.lom.general.keyword?.join(';'),
-    //     ].join('\t');
-    // }
+    private getAuthor(hit?: Hit): string {
+        if (hit?.misc.author) {
+            return hit.misc.author;
+        } else {
+            return hit?.lom.lifecycle.contribute
+                ?.filter((contributor) => contributor.role === 'author')
+                .map((author) => this.parseVcard(author.entity, 'FN'))
+                .join(', ');
+        }
+    }
+
+    private parseVcard(vcard: string, attribute: string): string {
+        return vcard
+            .split('\n')
+            .find((line) => line.startsWith(attribute + ':'))
+            ?.slice(attribute.length + 1)
+            ?.trim();
+    }
 }

@@ -79,6 +79,7 @@ import { SubjectsPortalComponent } from './subjects-portal/subjects-portal.compo
 import { TrimPipe } from './trim.pipe';
 import { TruncatePipe } from './truncate.pipe';
 import { WrapObservablePipe } from './wrap-observable.pipe';
+import { DetailsPageComponent } from './details-page/details-page.component';
 
 const httpLinkBeacon = (() => {
     class BeaconHttpHandler implements HttpHandler {
@@ -136,6 +137,7 @@ const httpLinkBeacon = (() => {
         CapitalizeFirstLetterPipe,
         CollectionCardComponent,
         WrapObservablePipe,
+        DetailsPageComponent,
     ],
     imports: [
         A11yModule,

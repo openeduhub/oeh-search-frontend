@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { Observable } from 'rxjs';
-import { SearchHitFragment } from '../generated/graphql';
-import { SearchService } from './search.service';
+import { Entry, SearchService } from '../search.service';
 
 @Injectable({
     providedIn: 'root',
 })
-export class DetailsResolverService implements Resolve<SearchHitFragment> {
+export class DetailsPageResolverService implements Resolve<Entry> {
     constructor(private search: SearchService) {}
 
-    resolve(route: ActivatedRouteSnapshot): Observable<SearchHitFragment> {
+    resolve(route: ActivatedRouteSnapshot): Observable<Entry> {
         const id = route.paramMap.get('id');
         return this.search.getEntry(id);
     }
