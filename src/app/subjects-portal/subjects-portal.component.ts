@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { SearchParametersService } from '../search-parameters.service';
-import { SearchData, SubjectsPortalResults } from '../search-resolver.service';
+import { SubjectsPortalResults } from '../search-resolver.service';
 import { Filters } from '../search.service';
 
 @Component({
@@ -17,11 +17,11 @@ export class SubjectsPortalComponent implements OnInit, OnDestroy {
 
     private subscriptions: Subscription[] = [];
 
-    constructor(private route: ActivatedRoute, private searchParameters: SearchParametersService) {}
+    constructor(private searchParameters: SearchParametersService, private route: ActivatedRoute) {}
 
     ngOnInit(): void {
-        this.route.data.subscribe((data: { searchData: SearchData }) => {
-            this.results = data.searchData.subjectsPortalResults;
+        this.route.data.subscribe((data: { results: SubjectsPortalResults }) => {
+            this.results = data.results;
         });
         this.subscriptions.push(
             this.searchParameters.get().subscribe(({ filters, pageIndex }) => {

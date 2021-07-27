@@ -67,20 +67,30 @@
       </mat-button-toggle-group>
     </ng-container>
   </div>
-  <mat-tab-group
-    *ngIf="results.total.value > 0"
-    [selectedIndex]="selectedTab.value"
-    (selectedIndexChange)="onSelectedIndexChange($event)"
-  >
-    <mat-tab i18n-label label="All search results">
-      <app-search-results [results]="results"></app-search-results>
-    </mat-tab>
-    <mat-tab i18n-label label="Search results by categories">
-      <ng-template matTabContent>
-        <app-subjects-portal></app-subjects-portal>
-      </ng-template>
-    </mat-tab>
-  </mat-tab-group>
+  <nav mat-tab-nav-bar *ngIf="results.total.value > 0">
+    <a
+      mat-tab-link
+      i18n
+      routerLink="/search"
+      queryParamsHandling="merge"
+      routerLinkActive
+      [routerLinkActiveOptions]="{ exact: true }"
+      #linkAllResults="routerLinkActive"
+      [active]="linkAllResults.isActive"
+      >All search results</a
+    >
+    <a
+      mat-tab-link
+      i18n
+      routerLink="/search/categories"
+      queryParamsHandling="merge"
+      routerLinkActive
+      #linkCategories="routerLinkActive"
+      [active]="linkCategories.isActive"
+      >Search results by categories</a
+    >
+  </nav>
+  <router-outlet></router-outlet>
 </div>
 
 <app-preview-panel></app-preview-panel>

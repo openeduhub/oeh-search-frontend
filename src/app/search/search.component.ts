@@ -5,9 +5,9 @@ import { Subscription } from 'rxjs';
 import { DidYouMeanSuggestionFragment, ResultFragment } from '../../generated/graphql';
 import { AnalyticsService } from '../analytics.service';
 import { SearchParametersService } from '../search-parameters.service';
-import { SearchData } from '../search-resolver.service';
 import { SearchService } from '../search.service';
 import { ResultCardStyle, ViewService } from '../view.service';
+import { SearchResultsService } from '../search-results/search-results.service';
 
 @Component({
     selector: 'app-search',
@@ -31,6 +31,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private search: SearchService,
         private searchParameters: SearchParametersService,
+        private searchResults: SearchResultsService,
         private view: ViewService,
     ) {}
 
@@ -56,8 +57,9 @@ export class SearchComponent implements OnInit, OnDestroy {
                 }
             }),
         );
-        this.route.data.subscribe((data: { searchData: SearchData }) => {
-            this.results = data.searchData.searchResults;
+        this.route.data.subscribe((data: { searchData: ResultFragment }) => {
+            this.results = data.searchData;
+            this.searchResults.results.next(this.results);
             this.resultPageNumbers = this.getResultPageNumbers();
             this.analyticsService.reportSearchRequest({
                 numberResults: this.results.total.value,

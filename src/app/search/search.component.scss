@@ -4,19 +4,6 @@
     position: relative;
 }
 
-:host ::ng-deep {
-    .mat-tab-body-wrapper,
-    .mat-tab-body.mat-tab-body-active,
-    .mat-tab-body-content {
-        // FIXME: this does something to the tab-switch animation, but we need it to avoid cut-off
-        // shadows.
-        overflow: visible;
-    }
-    .mat-tab-body.mat-tab-body-active {
-        width: 100%;
-    }
-}
-
 $filterBarSpanScreenThreshold: 650px;
 
 app-search-filterbar {
@@ -80,12 +67,4 @@ app-search-filterbar {
     :host & ::ng-deep .mat-button-toggle-label-content {
         line-height: 32px;
     }
-}
-
-app-search-results {
-    margin-top: 20px;
-}
-
-app-subjects-portal {
-    margin-bottom: 40px;
 }
