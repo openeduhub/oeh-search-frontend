@@ -1,5 +1,5 @@
 import { ViewportScroller } from '@angular/common';
-import { Component, DoCheck, NgZone, OnInit } from '@angular/core';
+import { Component, DoCheck, NgZone, OnInit, Renderer2 } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import {
@@ -37,6 +37,7 @@ export class AppComponent implements DoCheck, OnInit {
         private matIconRegistry: MatIconRegistry,
         private domSanitizer: DomSanitizer,
         private pageMode: PageModeService,
+        private renderer: Renderer2,
     ) {
         ngZone.runOutsideAngular(() => {
             this.checksMonitorInterval = window.setInterval(() => this.monitorChecks(), 1000);
@@ -86,6 +87,7 @@ export class AppComponent implements DoCheck, OnInit {
     ngOnInit(): void {
         this.registerCustomIcons();
         this.registerMessageHandler();
+        this.registerTransparentBackground();
     }
 
     private monitorChecks(): void {
@@ -139,6 +141,16 @@ export class AppComponent implements DoCheck, OnInit {
                     break;
                 default:
                     console.error(`Unknown message type: ${message.type}`, event);
+            }
+        });
+    }
+
+    private registerTransparentBackground(): void {
+        this.pageMode.getPageConfig('transparentBackground').subscribe((transparentBackground) => {
+            if (transparentBackground) {
+                this.renderer.setStyle(document.body, 'background-color', 'transparent');
+            } else {
+                this.renderer.removeStyle(document.body, 'background-color');
             }
         });
     }

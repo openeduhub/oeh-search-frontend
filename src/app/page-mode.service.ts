@@ -18,6 +18,8 @@ export class PageConfig {
     forceResultCardStyle?: ResultCardStyle;
     /** The compact style removes most links. */
     footerStyle: 'standard' | 'compact' = 'standard';
+    /** Page body background becomes transparent. */
+    transparentBackground = false;
     /** Number of search results per page. */
     numberOfResults = 12;
     /** An additional button in the details view to trigger an iFrame message. */
@@ -36,6 +38,7 @@ const pageModes: { [mode in PageMode]: Partial<PageConfig> } = {
         searchResultsStyle: 'compact',
         forceResultCardStyle: 'standard',
         footerStyle: 'compact',
+        transparentBackground: true,
         numberOfResults: 4,
         showEmbedButton: true,
     },
