@@ -8,6 +8,7 @@
   id="colophon"
   class="site-footer"
   role="contentinfo"
+  *ngIf="(footerStyle$ | async) !== 'none'"
   [attr.data-style]="footerStyle$ | async"
 >
   <div class="footer-wrapper">
@@ -53,7 +54,11 @@
         <li
           *ngIf="(footerStyle$ | async) === 'standard'"
           id="menu-item-26153"
-          class="menu-item menu-item-type-post_type menu-item-object-page menu-item-26153 menu-item-jobs-ausschreibungen"
+          class="
+            menu-item
+            menu-item-type-post_type
+            menu-item-object-page menu-item-26153 menu-item-jobs-ausschreibungen
+          "
           role="none"
         >
           <a href="{{ wordpressUrl }}/jobs-ausschreibungen/" role="menuitem"> Jobs </a>
@@ -61,7 +66,11 @@
         <li
           *ngIf="(footerStyle$ | async) === 'standard'"
           id="menu-item-5269"
-          class="menu-item menu-item-type-post_type menu-item-object-page menu-item-5269 menu-item-kooperationen"
+          class="
+            menu-item
+            menu-item-type-post_type
+            menu-item-object-page menu-item-5269 menu-item-kooperationen
+          "
           role="none"
         >
           <a href="{{ wordpressUrl }}/kooperationen/" role="menuitem"> Partner </a>
@@ -69,7 +78,11 @@
         <li
           *ngIf="(footerStyle$ | async) === 'standard'"
           id="menu-item-29007"
-          class="menu-item menu-item-type-post_type menu-item-object-page menu-item-29007 menu-item-faq"
+          class="
+            menu-item
+            menu-item-type-post_type
+            menu-item-object-page menu-item-29007 menu-item-faq
+          "
           role="none"
         >
           <a href="{{ wordpressUrl }}/faq/" role="menuitem"> FAQ </a>
@@ -77,7 +90,11 @@
         <li
           *ngIf="(footerStyle$ | async) === 'standard'"
           id="menu-item-37148"
-          class="menu-item menu-item-type-post_type menu-item-object-page menu-item-37148 menu-item-quellenerschliessung-uebersicht"
+          class="
+            menu-item
+            menu-item-type-post_type
+            menu-item-object-page menu-item-37148 menu-item-quellenerschliessung-uebersicht
+          "
           role="none"
         >
           <a href="{{ wordpressUrl }}/quellenerschliessung-uebersicht/" role="menuitem">
@@ -87,28 +104,44 @@
         <li
           *ngIf="(footerStyle$ | async) === 'standard'"
           id="menu-item-37162"
-          class="menu-item menu-item-type-post_type menu-item-object-page menu-item-37162 menu-item-qualitaetssicherung"
+          class="
+            menu-item
+            menu-item-type-post_type
+            menu-item-object-page menu-item-37162 menu-item-qualitaetssicherung
+          "
           role="none"
         >
           <a href="{{ wordpressUrl }}/qualitaetssicherung/" role="menuitem"> Qualitätssicherung </a>
         </li>
         <li
           id="menu-item-2139"
-          class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2139 menu-item-kontakt"
+          class="
+            menu-item
+            menu-item-type-post_type
+            menu-item-object-page menu-item-2139 menu-item-kontakt
+          "
           role="none"
         >
           <a href="{{ wordpressUrl }}/kontakt/" role="menuitem"> Kontakt </a>
         </li>
         <li
           id="menu-item-2718"
-          class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2718 menu-item-impressum"
+          class="
+            menu-item
+            menu-item-type-post_type
+            menu-item-object-page menu-item-2718 menu-item-impressum
+          "
           role="none"
         >
           <a href="{{ wordpressUrl }}/impressum/" role="menuitem"> Impressum </a>
         </li>
         <li
           id="menu-item-2735"
-          class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2735 menu-item-datenschutz"
+          class="
+            menu-item
+            menu-item-type-post_type
+            menu-item-object-page menu-item-2735 menu-item-datenschutz
+          "
           role="none"
         >
           <a href="{{ wordpressUrl }}/datenschutz/" role="menuitem"> Datenschutz </a>
@@ -116,7 +149,11 @@
         <li
           *ngIf="(footerStyle$ | async) === 'standard'"
           id="menu-item-48991"
-          class="menu-item menu-item-type-post_type menu-item-object-page menu-item-48991 menu-item-plugins"
+          class="
+            menu-item
+            menu-item-type-post_type
+            menu-item-object-page menu-item-48991 menu-item-plugins
+          "
           role="none"
         >
           <a href="{{ wordpressUrl }}/plugins/" role="menuitem">Plug-in</a>

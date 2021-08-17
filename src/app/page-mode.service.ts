@@ -17,7 +17,7 @@ export class PageConfig {
     /** Override the user-selectable style for result cards. */
     forceResultCardStyle?: ResultCardStyle;
     /** The compact style removes most links. */
-    footerStyle: 'standard' | 'compact' = 'standard';
+    footerStyle: 'standard' | 'compact' | 'none' = 'standard';
     /** Page body background becomes transparent. */
     transparentBackground = false;
     /** Number of search results per page. */
