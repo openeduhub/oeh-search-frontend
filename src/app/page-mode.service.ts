@@ -37,7 +37,7 @@ const pageModes: { [mode in PageMode]: Partial<PageConfig> } = {
         headerStyle: 'compact',
         searchResultsStyle: 'compact',
         forceResultCardStyle: 'standard',
-        footerStyle: 'compact',
+        footerStyle: 'none',
         transparentBackground: true,
         numberOfResults: 4,
         showEmbedButton: true,
