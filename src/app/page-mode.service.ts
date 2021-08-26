@@ -16,7 +16,7 @@ export class PageConfig {
     searchResultsStyle: 'standard' | 'compact' = 'standard';
     /** Override the user-selectable style for result cards. */
     forceResultCardStyle?: ResultCardStyle;
-    /** The compact style removes most links. */
+    /** The compact style removes most links, 'none' removes the entire footer. */
     footerStyle: 'standard' | 'compact' | 'none' = 'standard';
     /** Page body background becomes transparent. */
     transparentBackground = false;
@@ -40,7 +40,6 @@ const pageModes: { [mode in PageMode]: Partial<PageConfig> } = {
         footerStyle: 'none',
         transparentBackground: true,
         numberOfResults: 4,
-        showEmbedButton: true,
     },
 };
 
