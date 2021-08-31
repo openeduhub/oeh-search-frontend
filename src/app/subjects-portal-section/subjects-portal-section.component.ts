@@ -11,9 +11,7 @@ import {
 import { SlickCarouselComponent } from 'ngx-slick-carousel';
 import { ReplaySubject } from 'rxjs';
 import { delay, distinctUntilChanged, map, takeUntil } from 'rxjs/operators';
-import { Facet, Type } from '../../generated/graphql';
-import { Hits } from '../search-resolver.service';
-import { Filters } from '../search.service';
+import { Filters, ResultNode } from '../edu-sharing/edu-sharing.service';
 import { ViewService } from '../view.service';
 
 @Component({
@@ -22,9 +20,6 @@ import { ViewService } from '../view.service';
     styleUrls: ['./subjects-portal-section.component.scss'],
 })
 export class SubjectsPortalSectionComponent implements OnDestroy, AfterViewInit {
-    readonly Type = Type;
-    readonly Facet = Facet;
-
     readonly slickConfig = {
         dots: true,
         infinite: false,
@@ -32,7 +27,7 @@ export class SubjectsPortalSectionComponent implements OnDestroy, AfterViewInit 
         slidesToScroll: 4,
     };
 
-    @Input() hits: Hits;
+    @Input() hits: ResultNode[];
     @Input() filters: Filters;
 
     @ViewChild(SlickCarouselComponent) slickCarousel: SlickCarouselComponent;
@@ -41,7 +36,7 @@ export class SubjectsPortalSectionComponent implements OnDestroy, AfterViewInit 
     private slickConfigUpdateTrigger = new ReplaySubject<void>(1);
 
     constructor(
-        @Attribute('type') readonly type: Type,
+        @Attribute('type') readonly type: string,
         private elementRef: ElementRef<HTMLElement>,
         view: ViewService,
     ) {

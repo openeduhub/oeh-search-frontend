@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { EditorialTag } from '../../generated/graphql';
-import { Hit } from '../view.service';
+import { ResultNode } from '../edu-sharing/edu-sharing.service';
 
 @Component({
     selector: 'app-badges',
@@ -8,10 +7,8 @@ import { Hit } from '../view.service';
     styleUrls: ['./badges.component.scss'],
 })
 export class BadgesComponent {
-    @Input() hit: Hit;
+    @Input() hit: ResultNode;
     @Input() orientation: 'horizontal' | 'vertical';
-
-    readonly EditorialTag = EditorialTag;
 
     constructor() {}
 }

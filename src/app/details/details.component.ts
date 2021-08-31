@@ -1,9 +1,7 @@
 import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { BehaviorSubject, ReplaySubject } from 'rxjs';
-import { filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { ResultNode } from '../edu-sharing/edu-sharing.service';
 import { PageModeService } from '../page-mode.service';
-import { Entry, SearchService } from '../search.service';
-import { Hit } from '../view.service';
 
 @Component({
     selector: 'app-details',
@@ -11,12 +9,12 @@ import { Hit } from '../view.service';
     styleUrls: ['./details.component.scss'],
 })
 export class DetailsComponent implements OnDestroy {
-    private hit$ = new BehaviorSubject<Hit>(null);
+    private hit$ = new BehaviorSubject<ResultNode>(null);
     @Input()
-    public get hit(): Hit {
+    public get hit(): ResultNode {
         return this.hit$.value;
     }
-    public set hit(value: Hit) {
+    public set hit(value: ResultNode) {
         this.hit$.next(value);
     }
     @Input() mode: 'dialog' | 'sidebar' | 'page';
@@ -31,22 +29,21 @@ export class DetailsComponent implements OnDestroy {
         nextArrow: '.app-preview-slick-next',
     };
     descriptionExpanded = false;
-    author$ = this.hit$.pipe(map((entry) => this.getAuthor(entry)));
-    fullEntry$ = new BehaviorSubject<Entry | null>(null);
+    // fullEntry$ = new BehaviorSubject<Entry | null>(null);
     showEmbedButton$ = this.pageMode.getPageConfig('showEmbedButton');
 
     private destroyed$ = new ReplaySubject<void>(1);
 
-    constructor(private search: SearchService, private pageMode: PageModeService) {
-        this.hit$.pipe(takeUntil(this.destroyed$)).subscribe(() => this.reset());
-        this.hit$
-            .pipe(
-                takeUntil(this.destroyed$),
-                tap(() => this.fullEntry$.next(null)),
-                filter((hit) => !!hit),
-                switchMap((hit) => this.search.getEntry(hit.id)),
-            )
-            .subscribe((entry) => this.fullEntry$.next(entry));
+    constructor(private pageMode: PageModeService) {
+        this.hit$.subscribe(() => this.reset());
+        // this.hit$
+        //     .pipe(
+        //         takeUntil(this.destroyed$),
+        //         tap(() => this.fullEntry$.next(null)),
+        //         filter((hit) => !!hit),
+        //         switchMap((hit) => this.search.getEntry(hit.id)),
+        //     )
+        //     .subscribe((entry) => this.fullEntry$.next(entry));
     }
 
     ngOnDestroy(): void {
@@ -55,29 +52,13 @@ export class DetailsComponent implements OnDestroy {
     }
 
     embed(): void {
-        window.parent.postMessage({ type: 'embed', data: { id: this.hit.id }, scope: 'OEH' }, '*');
+        window.parent.postMessage(
+            { type: 'embed', data: { id: this.hit.ref.id }, scope: 'OEH' },
+            '*',
+        );
     }
 
     private reset(): void {
         this.descriptionExpanded = false;
-    }
-
-    private getAuthor(hit?: Hit): string {
-        if (hit?.misc.author) {
-            return hit.misc.author;
-        } else {
-            return hit?.lom.lifecycle.contribute
-                ?.filter((contributor) => contributor.role === 'author')
-                .map((author) => this.parseVcard(author.entity, 'FN'))
-                .join(', ');
-        }
-    }
-
-    private parseVcard(vcard: string, attribute: string): string {
-        return vcard
-            .split('\n')
-            .find((line) => line.startsWith(attribute + ':'))
-            ?.slice(attribute.length + 1)
-            ?.trim();
     }
 }

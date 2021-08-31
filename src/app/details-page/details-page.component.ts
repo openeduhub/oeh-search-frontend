@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Entry } from '../search.service';
+import { ResultNode } from '../edu-sharing/edu-sharing.service';
 
 @Component({
     selector: 'app-details-page',
@@ -8,12 +8,12 @@ import { Entry } from '../search.service';
     styleUrls: ['./details-page.component.scss'],
 })
 export class DetailsPageComponent implements OnInit {
-    entry: Entry;
+    entry: ResultNode;
 
     constructor(private route: ActivatedRoute) {}
 
     ngOnInit(): void {
-        this.route.data.subscribe((data: { entry: Entry }) => {
+        this.route.data.subscribe((data: { entry: ResultNode }) => {
             this.entry = data.entry;
         });
     }

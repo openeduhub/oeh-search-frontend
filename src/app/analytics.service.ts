@@ -8,10 +8,10 @@ import {
     ReportLifecycleEventGQL,
     ReportResultClickGQL,
     ReportSearchRequestGQL,
-    SearchHitFragment,
 } from 'src/generated/graphql';
 import { ClickKind } from '../generated/graphql';
 import { ConfigService } from './config.service';
+import { ResultNode } from './edu-sharing/edu-sharing.service';
 import { SearchParametersService } from './search-parameters.service';
 import { ViewService } from './view.service';
 
@@ -92,7 +92,7 @@ export class AnalyticsService {
         }
     }
 
-    reportResultClick(args: { clickedResult: SearchHitFragment; clickKind: ClickKind }): void {
+    reportResultClick(args: { clickedResult: ResultNode; clickKind: ClickKind }): void {
         if (environment.analyticsUrl) {
             const filteredClickedResult = omitDeep(args.clickedResult, [
                 '__typename',

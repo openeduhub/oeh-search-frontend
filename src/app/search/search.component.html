@@ -10,7 +10,7 @@
     ></a>
   </p>
   <div class="summary">
-    <div class="no-results" *ngIf="results.total.value === 0">
+    <div class="no-results" *ngIf="results.pagination.total === 0">
       <p i18n>No results</p>
       <div>
         <a
@@ -25,7 +25,7 @@
         >
       </div>
     </div>
-    <ng-container *ngIf="results.total.value > 0 && resultPageNumbers">
+    <ng-container *ngIf="results.pagination.total > 0 && resultPageNumbers">
       <ng-container *ngIf="(searchResultsStyle$ | async) === 'standard'">
         <p>
           <ng-container i18n>Result</ng-container>
@@ -36,9 +36,8 @@
             </ng-container>
           </em>
           &#32;
-          <ng-container i18n *ngIf="results.total.relation === 'eq'">of</ng-container>
-          <ng-container i18n *ngIf="results.total.relation !== 'eq'">of more than</ng-container>
-          <em> {{ results.total.value | number }}</em>
+          <ng-container i18n>of</ng-container>
+          <em> {{ results.pagination.total | number }}</em>
         </p>
         <mat-button-toggle-group
           class="style-toggle"
@@ -70,9 +69,9 @@
       <ng-container *ngIf="(searchResultsStyle$ | async) === 'compact'">
         <div class="summary-row">
           <p>
-            <em>{{ results.total.value | number }} </em>
+            <em>{{ results.pagination.total | number }} </em>
             <ng-container i18n
-              >{results.total.value, plural, =1 {result} other {results}}</ng-container
+              >{results.pagination.total, plural, =1 {result} other {results}}</ng-container
             >
           </p>
           <a
@@ -90,7 +89,7 @@
   </div>
   <nav
     mat-tab-nav-bar
-    *ngIf="results.total.value > 0 && (searchResultsStyle$ | async) === 'standard'"
+    *ngIf="results.pagination.total > 0 && (searchResultsStyle$ | async) === 'standard'"
   >
     <a
       mat-tab-link

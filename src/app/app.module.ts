@@ -38,12 +38,11 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InMemoryCache } from '@apollo/client/core';
-import { APOLLO_NAMED_OPTIONS, APOLLO_OPTIONS } from 'apollo-angular';
-import { HttpBatchLink, HttpLink } from 'apollo-angular/http';
+import { APOLLO_NAMED_OPTIONS } from 'apollo-angular';
+import { HttpLink } from 'apollo-angular/http';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { Observable, of, throwError } from 'rxjs';
 import { environment } from '../environments/environment';
-import generatedIntrospection from '../generated/fragmentTypes.json';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BadgesComponent } from './badges/badges.component';
@@ -52,12 +51,11 @@ import { CollectionCardComponent } from './collection-card/collection-card.compo
 import { DetailsPageComponent } from './details-page/details-page.component';
 import { DetailsComponent } from './details/details.component';
 import { DurationPipe } from './duration.pipe';
-import { EncodeUriComponentPipe } from './encode-uri-component.pipe';
+import { EduSharingModule } from './edu-sharing/edu-sharing.module';
 import { ErrorComponent } from './error/error.component';
 import { ExperimentsTogglesComponent } from './experiments-toggles/experiments-toggles.component';
 import { FooterbarComponent } from './footerbar/footerbar.component';
 import { GenerateFiltersPipe } from './generate-filters.pipe';
-import { HasEditorialTagPipe } from './has-editorial-tag.pipe';
 import { HeaderbarComponent } from './headerbar/headerbar.component';
 import { LanguagePipe } from './language.pipe';
 import { MenubarComponent } from './menubar/menubar.component';
@@ -69,12 +67,12 @@ import { PreviewPanelComponent } from './preview-panel/preview-panel.component';
 import { ReportClickDirective } from './report-click.directive';
 import { ResultCardContentCompactComponent } from './result-card-content-compact/result-card-content-compact.component';
 import { ResultCardContentStandardComponent } from './result-card-content-standard/result-card-content-standard.component';
-import { ResultCardSmallComponent } from './result-card-small/result-card-small.component';
 import { ResultCardComponent } from './result-card/result-card.component';
 import { SearchFieldComponent } from './search-field/search-field.component';
 import { SearchFilterbarComponent } from './search-filterbar/search-filterbar.component';
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { SearchComponent } from './search/search.component';
+import { SharedModule } from './shared/shared.module';
 import { SkipTargetDirective } from './skip-nav/skip-target.directive';
 import { SubjectsPortalSectionComponent } from './subjects-portal-section/subjects-portal-section.component';
 import { SubjectsPortalComponent } from './subjects-portal/subjects-portal.component';
@@ -105,12 +103,10 @@ const httpLinkBeacon = (() => {
     declarations: [
         AppComponent,
         DetailsComponent,
-        EncodeUriComponentPipe,
         ErrorComponent,
         ExperimentsTogglesComponent,
         FooterbarComponent,
         GenerateFiltersPipe,
-        HasEditorialTagPipe,
         HeaderbarComponent,
         MenubarComponent,
         MultivalueCheckboxComponent,
@@ -120,7 +116,6 @@ const httpLinkBeacon = (() => {
         ResultCardComponent,
         ResultCardContentCompactComponent,
         ResultCardContentStandardComponent,
-        ResultCardSmallComponent,
         SearchComponent,
         SearchFieldComponent,
         SearchFilterbarComponent,
@@ -141,6 +136,8 @@ const httpLinkBeacon = (() => {
         DetailsPageComponent,
     ],
     imports: [
+        EduSharingModule,
+        SharedModule,
         A11yModule,
         AppRoutingModule,
         BrowserAnimationsModule,
@@ -177,21 +174,6 @@ const httpLinkBeacon = (() => {
         SlickCarouselModule,
     ],
     providers: [
-        {
-            provide: APOLLO_OPTIONS,
-            useFactory: (httpLink: HttpBatchLink) => {
-                return {
-                    cache: new InMemoryCache({
-                        possibleTypes: generatedIntrospection.possibleTypes,
-                    }),
-                    link: httpLink.create({
-                        uri: environment.relayUrl + '/graphql',
-                    }),
-                    shouldBatch: true,
-                };
-            },
-            deps: [HttpBatchLink],
-        },
         {
             provide: APOLLO_NAMED_OPTIONS,
             deps: [HttpLink],

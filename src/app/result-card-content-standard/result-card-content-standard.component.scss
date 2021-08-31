@@ -41,6 +41,9 @@ a:not(:hover) {
 
 .app-result-card-title {
     margin: 0 0 8px;
+    button {
+        padding: unset;
+    }
 }
 
 .app-result-card-title button {

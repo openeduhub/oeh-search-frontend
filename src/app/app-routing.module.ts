@@ -4,7 +4,7 @@ import { DetailsPageResolverService } from './details-page/details-page-resolver
 import { DetailsPageComponent } from './details-page/details-page.component';
 import { ErrorComponent } from './error/error.component';
 import { ExperimentsTogglesComponent } from './experiments-toggles/experiments-toggles.component';
-import { SearchResolverService } from './search-resolver.service';
+import { SearchResolverService } from './search/search-resolver.service';
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { SearchComponent } from './search/search.component';
 import { SubjectsPortalResolverService } from './subjects-portal/subjects-portal-resolver.service';

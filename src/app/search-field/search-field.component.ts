@@ -4,9 +4,8 @@ import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { combineLatest, Subject } from 'rxjs';
 import { debounceTime, filter, startWith, switchMap, takeUntil } from 'rxjs/operators';
-import { Facet, Type } from '../../generated/graphql';
+import { EduSharingService, Facet, Facets, Filters } from '../edu-sharing/edu-sharing.service';
 import { SearchParametersService } from '../search-parameters.service';
-import { Facets, Filters, SearchService } from '../search.service';
 
 type Suggestions = { [key in Facet]?: string[] };
 
@@ -19,8 +18,6 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
     @ViewChild(CdkConnectedOverlay) overlay: CdkConnectedOverlay;
     @ViewChild('searchInput') searchInput: ElementRef<HTMLInputElement>;
 
-    readonly Facet = Facet;
-    readonly Type = Type;
     readonly overlayPositions: ConnectedPosition[] = [
         {
             originX: 'center',
@@ -33,14 +30,13 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
     ];
 
     readonly categories: Facet[] = [
-        // Facet.Oer,
-        Facet.Type,
-        Facet.EducationalContext,
-        Facet.Discipline,
-        Facet.Keyword,
-        Facet.IntendedEndUserRole,
-        Facet.LearningResourceType,
-        Facet.Source,
+        'type',
+        'educationalContext',
+        'discipline',
+        'keyword',
+        'intendedEndUserRole',
+        'learningResourceType',
+        'source',
     ];
 
     searchField = new FormControl();
@@ -53,7 +49,7 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
 
     constructor(
         private router: Router,
-        private search: SearchService,
+        private eduSharing: EduSharingService,
         private searchParameters: SearchParametersService,
     ) {}
 
@@ -80,7 +76,7 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
                         return true;
                     }
                 }),
-                switchMap(([inputString]) => this.search.getFacetSuggestions(inputString)),
+                switchMap(([inputString]) => this.eduSharing.getFacetSuggestions(inputString)),
             )
             .subscribe((facets) => {
                 this.updateSuggestions(facets);
@@ -144,7 +140,7 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
         } else {
             const suggestions: Suggestions = {};
             for (const category of this.categories) {
-                suggestions[category] = facets[category]?.buckets.map((bucket) => bucket.key);
+                suggestions[category] = facets[category]?.values.map((bucket) => bucket.id);
             }
             this.hasSuggestions = Object.values(suggestions).some((entries) => entries.length > 0);
             this.suggestions = suggestions;

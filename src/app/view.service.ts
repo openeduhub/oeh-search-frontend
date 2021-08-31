@@ -4,11 +4,10 @@ import { NavigationStart, Router } from '@angular/router';
 import * as rxjs from 'rxjs';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { distinctUntilChanged, filter, map, shareReplay, skip } from 'rxjs/operators';
-import { SearchHitFragment } from 'src/generated/graphql';
+import { ResultNode } from './edu-sharing/edu-sharing.service';
 import { PageModeService } from './page-mode.service';
 
 export type ResultCardStyle = 'standard' | 'compact';
-export type Hit = SearchHitFragment;
 
 class AvailableExperiments {
     // newSearchField = true;
@@ -35,7 +34,7 @@ export class ViewService {
      * When an item is selected, it is highlighted and depending on the screen size, previewed in a
      * sidebar or a dialog. Unselecting the item means closing the preview.
      */
-    private selectedItemSubject = new BehaviorSubject<Hit | null>(null);
+    private selectedItemSubject = new BehaviorSubject<ResultNode | null>(null);
     private showPreviewPanel$ = this.selectedItemSubject.pipe(
         map((item) => !!item),
         distinctUntilChanged(),
@@ -139,7 +138,7 @@ export class ViewService {
         localStorage.setItem('experiments', JSON.stringify(experiments));
     }
 
-    selectItem(item: Hit): void {
+    selectItem(item: ResultNode): void {
         this.selectedItemSubject.next(item);
     }
 
@@ -147,7 +146,7 @@ export class ViewService {
         this.selectedItemSubject.next(null);
     }
 
-    getSelectedItem(): Observable<Hit | null> {
+    getSelectedItem(): Observable<ResultNode | null> {
         return this.selectedItemSubject.asObservable();
     }
 

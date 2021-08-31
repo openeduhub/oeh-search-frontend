@@ -4,7 +4,7 @@
   }}"
   matRipple
   [matRippleTrigger]="link"
-  [matTooltip]="collection.name"
+  [matTooltip]="collection | collectionProperty: 'title'"
   [style.background-color]="backgroundColor"
 >
   <!-- Background image, not compatible with background colors. -->
@@ -20,7 +20,9 @@
   </div>
 
   <h4 class="app-collection-card-title">
-    <a #link [href]="collection.url" target="_blank">{{ collection.name }}</a>
+    <a #link [href]="collection | collectionProperty: 'url'" target="_blank">{{
+      collection | collectionProperty: 'title'
+    }}</a>
   </h4>
 
   <div class="app-collection-card-metadata-row">
@@ -29,7 +31,7 @@
       <span class="cdk-visually-hidden">
         <ng-container i18n>Number of elements</ng-container>:
       </span>
-      {{ collection.numberElements }}
+      {{ collection | collectionProperty: 'childReferencesCount' }}
     </span>
   </div>
 </div>

@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { NavigationEnd, ParamMap, Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
+import { Filters } from './edu-sharing/edu-sharing.service';
 import { PageModeService } from './page-mode.service';
-import { Filters } from './search.service';
 
 export interface ParsedParams {
     searchString: string;

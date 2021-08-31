@@ -1,11 +1,10 @@
 import { Component, HostBinding, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { PageModeService } from '../page-mode.service';
+import { Filters, ResultNode } from '../edu-sharing/edu-sharing.service';
 import { ResultCardContentCompactComponent } from '../result-card-content-compact/result-card-content-compact.component';
 import { ResultCardContentStandardComponent } from '../result-card-content-standard/result-card-content-standard.component';
-import { Filters } from '../search.service';
-import { Hit, ResultCardStyle, ViewService } from '../view.service';
+import { ResultCardStyle, ViewService } from '../view.service';
 
 @Component({
     selector: 'app-result-card',
@@ -13,7 +12,7 @@ import { Hit, ResultCardStyle, ViewService } from '../view.service';
     styleUrls: ['./result-card.component.scss'],
 })
 export class ResultCardComponent implements OnInit, OnDestroy {
-    @Input() hit: Hit;
+    @Input() hit: ResultNode;
     @Input() filters: Filters;
     @HostBinding('attr.data-style') style: ResultCardStyle;
 
@@ -25,11 +24,7 @@ export class ResultCardComponent implements OnInit, OnDestroy {
 
     private readonly destroyed$ = new ReplaySubject<void>(1);
 
-    constructor(
-        private view: ViewService,
-
-        private pageMode: PageModeService,
-    ) {}
+    constructor(private view: ViewService) {}
 
     ngOnInit(): void {
         this.view

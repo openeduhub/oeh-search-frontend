@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { ConfigService } from './config.service';
-import { Language, SkosEntry, Facet } from '../generated/graphql';
+import { Facet } from './edu-sharing/edu-sharing.service';
+import { IdentifiedValue } from './shared/nodeProperty.pipe';
 
 /**
  * Extend the `filters` of the search component with another attribute.
@@ -11,17 +11,14 @@ import { Language, SkosEntry, Facet } from '../generated/graphql';
     name: 'generateFilters',
 })
 export class GenerateFiltersPipe implements PipeTransform {
-    private static knownMissingTranslations: SkosEntry[] = [];
-    private readonly language: Language;
+    private static knownMissingTranslations: IdentifiedValue[] = [];
 
-    constructor(config: ConfigService) {
-        this.language = config.getLanguage();
-    }
+    constructor() {}
 
-    transform(value: string | SkosEntry, facet: Facet, filters: object = {}): object {
+    transform(value: string | IdentifiedValue, facet: Facet, filters: object = {}): object {
         let filterValue: string;
-        if (typeof value === 'object' && value.__typename === 'SkosEntry') {
-            filterValue = value.label;
+        if (typeof value === 'object' && value.id) {
+            filterValue = value.displayName;
             if (!filterValue) {
                 if (
                     !GenerateFiltersPipe.knownMissingTranslations.some((entry) =>
@@ -48,6 +45,6 @@ export class GenerateFiltersPipe implements PipeTransform {
     }
 }
 
-function isEqual(lhs: SkosEntry, rhs: SkosEntry) {
+function isEqual(lhs: IdentifiedValue, rhs: IdentifiedValue) {
     return JSON.stringify(lhs) === JSON.stringify(rhs);
 }

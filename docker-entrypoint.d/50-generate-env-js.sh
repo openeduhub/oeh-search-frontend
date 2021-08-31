@@ -3,7 +3,7 @@
 set -e
 
 variables=(
-    "RELAY_URL"
+    "EDU_SHARING_API_URL"
     "WORDPRESS_URL"
     "SHOW_EXPERIMENTS"
     "ANALYTICS_URL"

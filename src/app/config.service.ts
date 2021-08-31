@@ -1,5 +1,9 @@
 import { Inject, Injectable, LOCALE_ID } from '@angular/core';
-import { Language } from '../generated/graphql';
+
+export enum Language {
+    De = 'de',
+    En = 'en',
+}
 
 @Injectable({
     providedIn: 'root',

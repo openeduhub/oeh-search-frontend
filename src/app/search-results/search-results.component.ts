@@ -1,11 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { ResultFragment } from '../../generated/graphql';
+import { Filters, SearchResults } from '../edu-sharing/edu-sharing.service';
 import { PageModeService } from '../page-mode.service';
 import { SearchParametersService } from '../search-parameters.service';
-import { Filters } from '../search.service';
-import { ResultCardStyle, ViewService } from '../view.service';
+import { ViewService } from '../view.service';
 import { SearchResultsService } from './search-results.service';
 
 @Component({
@@ -14,7 +13,7 @@ import { SearchResultsService } from './search-results.service';
     styleUrls: ['./search-results.component.scss'],
 })
 export class SearchResultsComponent implements OnInit, OnDestroy {
-    results: ResultFragment;
+    results: SearchResults;
     filters: Filters;
     readonly resultCardStyle$ = this.view.getResultCardStyle();
     readonly searchResultsStyle$ = this.pageMode.getPageConfig('searchResultsStyle');

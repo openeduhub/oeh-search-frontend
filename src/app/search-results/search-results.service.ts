@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { ResultFragment } from 'src/generated/graphql';
+import { SearchResults } from '../edu-sharing/edu-sharing.service';
 
 @Injectable({
     providedIn: 'root',
 })
 export class SearchResultsService {
-    results = new BehaviorSubject<ResultFragment>(null);
+    results = new BehaviorSubject<SearchResults>(null);
 }

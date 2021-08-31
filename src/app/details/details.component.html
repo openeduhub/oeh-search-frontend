@@ -9,56 +9,67 @@
   <mat-icon>close</mat-icon>
 </button>
 <div class="app-preview-panel-content-wrapper" [attr.data-mode]="mode">
-  <img
-    class="app-preview-panel-image"
-    [appPreviewImage]="hit.previewImage"
-    [loadHighResImage]="true"
-  />
+  <img class="app-preview-panel-image" [appPreviewImage]="hit.preview" [loadHighResImage]="true" />
 
   <div class="app-preview-panel-info-bar">
     <span
       class="app-preview-panel-info-bar-item"
-      *ngIf="hit.skos.learningResourceType; else widgetType"
+      *ngIf="hit | nodeProperty: 'learningResourceType' as lrts; else widgetType"
     >
       <mat-icon>photo_library</mat-icon>
       <span>
-        <ng-container *ngFor="let lrt of hit.skos.learningResourceType; let last = last">
-          {{ lrt.label }}<ng-container *ngIf="!last">,</ng-container>
+        <ng-container *ngFor="let lrt of lrts; let last = last">
+          {{ lrt.displayName }}<ng-container *ngIf="!last">,</ng-container>
         </ng-container>
       </span>
     </span>
     <ng-template #widgetType>
-      <span class="app-preview-panel-info-bar-item" *ngIf="hit.skos.widgets; else externalType">
+      <span
+        class="app-preview-panel-info-bar-item"
+        *ngIf="hit | nodeProperty: 'widget' as widgets; else externalType"
+      >
         <mat-icon>photo_library</mat-icon>
         <span>
-          <ng-container *ngFor="let widget of hit.skos.widgets; let last = last">
-            {{ widget.label }}<ng-container *ngIf="!last">,</ng-container>
+          <ng-container *ngFor="let widget of widgets; let last = last">
+            {{ widget.displayName }}<ng-container *ngIf="!last">,</ng-container>
           </ng-container>
         </span>
       </span>
     </ng-template>
     <ng-template #externalType>
-      <span class="app-preview-panel-info-bar-item" *ngIf="hit.misc.isExternal; else mimeType">
+      <span
+        class="app-preview-panel-info-bar-item"
+        *ngIf="hit | nodeProperty: 'isExternal'; else mimeType"
+      >
         <mat-icon>photo_library</mat-icon>
         <span i18n>Website</span>
       </span>
     </ng-template>
     <ng-template #mimeType>
-      <span class="app-preview-panel-info-bar-item" *ngIf="hit.lom.technical.format">
+      <span
+        class="app-preview-panel-info-bar-item"
+        *ngIf="hit | nodeProperty: 'mimeType' as mimeType"
+      >
         <mat-icon>photo_library</mat-icon>
         <span>
-          {{ hit.lom.technical.format }}
+          {{ mimeType }}
         </span>
       </span>
     </ng-template>
-    <span class="app-preview-panel-info-bar-item" *ngIf="hit.lom.technical.duration">
+    <span
+      class="app-preview-panel-info-bar-item"
+      *ngIf="hit | nodeProperty: 'duration' as duration"
+    >
       <mat-icon>alarm</mat-icon>
-      <span>{{ hit.lom.technical.duration | duration }}</span>
+      <span>{{ duration | duration }}</span>
     </span>
-    <span class="app-preview-panel-info-bar-item" *ngIf="hit.lom.general.language">
+    <span
+      class="app-preview-panel-info-bar-item"
+      *ngIf="hit | nodeProperty: 'language' as languages"
+    >
       <mat-icon>question_answer</mat-icon>
       <span>
-        <ng-container *ngFor="let language of hit.lom.general.language; let last = last">
+        <ng-container *ngFor="let language of languages; let last = last">
           {{ language | language }}<ng-container *ngIf="!last">,</ng-container>
         </ng-container>
       </span>
@@ -68,24 +79,27 @@
     <app-badges class="badges" [hit]="hit" orientation="horizontal"></app-badges>
     <div class="app-preview-panel-source-container">
       <a
-        *ngIf="hit.source.url"
+        *ngIf="hit | nodeProperty: 'sourceUrl'"
         class="app-preview-panel-source"
-        [href]="hit.source.url"
+        [href]="hit | nodeProperty: 'sourceUrl'"
         target="_blank"
-        >{{ hit.source.name }}</a
+        >{{ (hit | nodeProperty: 'source')?.displayName }}</a
       >
     </div>
-    <h2 class="app-preview-panel-title">{{ hit.lom.general.title }}</h2>
-    <p class="app-preview-panel-description" *ngIf="hit.lom.general.description">
+    <h2 class="app-preview-panel-title">{{ hit | nodeProperty: 'title' }}</h2>
+    <p
+      class="app-preview-panel-description"
+      *ngIf="hit | nodeProperty: 'description' as description"
+    >
       <ng-container *ngIf="!descriptionExpanded">
-        {{ hit.lom.general.description | trim | truncate: 250 }}
+        {{ description | trim | truncate: 250 }}
       </ng-container>
       <ng-container *ngIf="descriptionExpanded">
-        {{ hit.lom.general.description | trim }}
+        {{ description | trim }}
       </ng-container>
       <button
         class="app-preview-panel-expand-description-button"
-        *ngIf="hit.lom.general.description.trim().length > 250"
+        *ngIf="description.trim().length > 250"
         (click)="descriptionExpanded = !descriptionExpanded"
       >
         <ng-container *ngIf="!descriptionExpanded">
@@ -103,7 +117,7 @@
         mat-flat-button
         color="primary"
         class="app-preview-panel-button"
-        [href]="hit.lom.technical.location"
+        [href]="hit | nodeProperty: 'url'"
         target="_blank"
       >
         <span class="app-preview-panel-button-wrapper">
@@ -131,44 +145,44 @@
     </div>
     <div
       class="app-preview-panel-metadata app-preview-panel-metadata-icon"
-      *ngIf="hit.skos.discipline"
+      *ngIf="hit | nodeProperty: 'discipline' as disciplines"
     >
       <mat-icon i18n-matTooltip matTooltip="Discipline">book_icon</mat-icon>
       <span class="cdk-visually-hidden" i18n>Discipline</span>
       <div>
-        <span *ngFor="let discipline of hit.skos.discipline | slice: 0:5">
-          {{ discipline.label }}
+        <span *ngFor="let discipline of disciplines | slice: 0:5">
+          {{ discipline.displayName }}
         </span>
       </div>
     </div>
     <div
       class="app-preview-panel-metadata app-preview-panel-metadata-icon"
-      *ngIf="hit.skos.educationalContext"
+      *ngIf="hit | nodeProperty: 'educationalContext' as educationalContexts"
     >
       <mat-icon i18n-matTooltip matTooltip="Educational context">school</mat-icon>
       <span class="cdk-visually-hidden" i18n>Educational context</span>
       <div>
-        <span *ngFor="let context of hit.skos.educationalContext">
-          {{ context.label }}
+        <span *ngFor="let context of educationalContexts">
+          {{ context.displayName }}
         </span>
       </div>
     </div>
     <div
       class="app-preview-panel-metadata app-preview-panel-metadata-icon"
-      *ngIf="hit.license.displayName"
+      *ngIf="hit | nodeProperty: 'license' as license"
     >
       <mat-icon i18n-matTooltip matTooltip="License">lock</mat-icon>
       <span class="cdk-visually-hidden" i18n>License</span>
       <div>
         <span>
-          {{ hit.license.displayName }}
+          {{ license.displayName }}
         </span>
       </div>
     </div>
     <div
       class="app-preview-panel-metadata app-preview-panel-metadata-icon"
-      *ngIf="hit.skos.conditionsOfAccess && hit.skos.conditionsOfAccess[0]"
-      [ngSwitch]="hit.skos.conditionsOfAccess[0].id"
+      *ngIf="hit | nodeProperty: 'conditionsOfAccess' as conditionsOfAccess"
+      [ngSwitch]="conditionsOfAccess.id"
     >
       <mat-icon
         *ngSwitchCase="'http://w3id.org/openeduhub/vocabs/conditionsOfAccess/no_login'"
@@ -185,15 +199,12 @@
         svgIcon="login_red"
       ></mat-icon>
       <mat-icon *ngSwitchDefault svgIcon="login_green" class="filter-grayscale"></mat-icon>
-      <ng-container></ng-container>
-      <span *ngFor="let conditionOfAccess of hit.skos.conditionsOfAccess">
-        {{ conditionOfAccess.label | capitalizeFirstLetter }}
-      </span>
+      <span>{{ conditionsOfAccess.displayName | capitalizeFirstLetter }}</span>
     </div>
     <div
       class="app-preview-panel-metadata app-preview-panel-metadata-icon"
-      *ngIf="hit.skos.price && hit.skos.price[0]"
-      [ngSwitch]="hit.skos.price[0].id"
+      *ngIf="hit | nodeProperty: 'price' as price"
+      [ngSwitch]="price.id"
     >
       <ng-container *ngSwitchCase="'http://w3id.org/openeduhub/vocabs/price/no'">
         <mat-icon svgIcon="price_green"></mat-icon>
@@ -205,17 +216,17 @@
       </ng-container>
       <ng-container *ngSwitchCase="'http://w3id.org/openeduhub/vocabs/price/yes_for_additional'">
         <mat-icon svgIcon="price_orange"></mat-icon>
-        <span>{{ hit.skos.price[0].label }}</span>
+        <span>{{ price.displayName }}</span>
       </ng-container>
       <ng-container *ngSwitchDefault>
         <mat-icon svgIcon="price_green" class="filter-grayscale"></mat-icon>
-        <span><ng-container i18n>Price</ng-container>: {{ hit.skos.price[0].label }}</span>
+        <span><ng-container i18n>Price</ng-container>: {{ price.displayName }}</span>
       </ng-container>
     </div>
     <div
       class="app-preview-panel-metadata app-preview-panel-metadata-icon"
-      *ngIf="hit.skos.containsAdvertisement && hit.skos.containsAdvertisement[0]"
-      [ngSwitch]="hit.skos.containsAdvertisement[0].id"
+      *ngIf="hit | nodeProperty: 'containsAdvertisement' as containsAdvertisement"
+      [ngSwitch]="containsAdvertisement.id"
     >
       <ng-container *ngSwitchCase="'http://w3id.org/openeduhub/vocabs/containsAdvertisement/no'">
         <mat-icon svgIcon="advertisement_green"></mat-icon>
@@ -229,18 +240,15 @@
         <mat-icon svgIcon="advertisement_green" class="filter-grayscale"></mat-icon>
         <span>
           <ng-container i18n>Contains advertisement</ng-container>:
-          {{ hit.skos.containsAdvertisement[0].label }}
+          {{ containsAdvertisement.displayName }}
         </span>
       </ng-container>
     </div>
-    <div class="app-preview-panel-metadata" *ngIf="author$ | async as author">
-      <span><ng-container i18n>Author</ng-container>: {{ author }}</span>
+    <div class="app-preview-panel-metadata" *ngIf="hit | nodeProperty: 'author'">
+      <span><ng-container i18n>Author</ng-container>: {{ hit | nodeProperty: 'author' }}</span>
     </div>
-    <ng-container *ngIf="fullEntry$ | wrapObservable | async as fullEntry">
-      <mat-spinner diameter="20" *ngIf="fullEntry.state === 'loading'"></mat-spinner>
-    </ng-container>
   </div>
-  <div class="app-preview-related-items" *ngIf="(fullEntry$ | async)?.collections as collections">
+  <div class="app-preview-related-items" *ngIf="hit.usedInCollections.length > 0">
     <h3 class="app-preview-related-items-heading" i18n>Related Topics</h3>
     <div class="app-preview-related-items-carousel-container">
       <button class="app-slick-button app-preview-slick-prev" i18n-aria-label aria-label="previous">
@@ -251,12 +259,14 @@
         class="app-preview-related-items-carousel"
         [config]="slickConfig"
       >
-        <app-collection-card
-          ngxSlickItem
-          class="app-preview-related-items-card"
-          *ngFor="let collection of collections"
-          [collection]="collection"
-        ></app-collection-card>
+        <ng-container *ngFor="let collection of hit.usedInCollections">
+          <app-collection-card
+            *ngIf="collection | collectionProperty: 'url'"
+            ngxSlickItem
+            class="app-preview-related-items-card"
+            [collection]="collection"
+          ></app-collection-card>
+        </ng-container>
       </ngx-slick-carousel>
       <button class="app-slick-button app-preview-slick-next" i18n-aria-label aria-label="next">
         <mat-icon>arrow_forward</mat-icon>

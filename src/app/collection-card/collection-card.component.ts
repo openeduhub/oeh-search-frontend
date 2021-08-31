@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Collection } from '../search.service';
+import { Collection } from '../edu-sharing/edu-sharing.service';
 
 @Component({
     selector: 'app-collection-card',

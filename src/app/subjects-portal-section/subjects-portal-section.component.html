@@ -1,16 +1,16 @@
 <div class="header">
   <h3 class="title" [ngSwitch]="type">
-    <ng-container *ngSwitchCase="Type.Content" i18n>Contents</ng-container>
-    <ng-container *ngSwitchCase="Type.LessonPlanning" i18n="plural|">Lesson Planning</ng-container>
-    <ng-container *ngSwitchCase="Type.Tool" i18n>Tools</ng-container>
-    <ng-container *ngSwitchCase="Type.Portal" i18n>Sources</ng-container>
-    <ng-container *ngSwitchCase="Type.Method" i18n>Methods</ng-container>
+    <ng-container *ngSwitchCase="'MATERIAL'" i18n>Contents</ng-container>
+    <ng-container *ngSwitchCase="'LESSONPLANNING'" i18n="plural|">Lesson Planning</ng-container>
+    <ng-container *ngSwitchCase="'TOOL'" i18n>Tools</ng-container>
+    <ng-container *ngSwitchCase="'SOURCE'" i18n>Sources</ng-container>
+    <ng-container *ngSwitchCase="'METHOD'" i18n>Methods</ng-container>
   </h3>
   <a
     class="show-more-button"
     mat-button
     routerLink="/search"
-    [queryParams]="type | generateFilters: Facet.Type:filters"
+    [queryParams]="type | generateFilters: 'type':filters"
     queryParamsHandling="merge"
   >
     <ng-container i18n>show more</ng-container>

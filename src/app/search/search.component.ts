@@ -3,12 +3,15 @@ import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { DidYouMeanSuggestionFragment, ResultFragment } from '../../generated/graphql';
 import { AnalyticsService } from '../analytics.service';
+import {
+    DidYouMeanSuggestion,
+    EduSharingService,
+    SearchResults,
+} from '../edu-sharing/edu-sharing.service';
 import { PageModeService } from '../page-mode.service';
 import { SearchParametersService } from '../search-parameters.service';
 import { SearchResultsService } from '../search-results/search-results.service';
-import { SearchService } from '../search.service';
 import { ResultCardStyle, ViewService } from '../view.service';
 
 @Component({
@@ -17,11 +20,11 @@ import { ResultCardStyle, ViewService } from '../view.service';
     styleUrls: ['./search.component.scss'],
 })
 export class SearchComponent implements OnInit, OnDestroy {
-    didYouMeanSuggestion: DidYouMeanSuggestionFragment;
+    didYouMeanSuggestion: DidYouMeanSuggestion;
     showFilterBar = false;
     filterCount: number;
     pageIndex: number;
-    results: ResultFragment;
+    results: SearchResults;
     selectedTab = new FormControl(0);
     resultCardStyle: ResultCardStyle;
     resultPageNumbers: { from: number; to: number };
@@ -34,7 +37,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         private analyticsService: AnalyticsService,
         private pageMode: PageModeService,
         private route: ActivatedRoute,
-        private search: SearchService,
+        private eduSharing: EduSharingService,
         private searchParameters: SearchParametersService,
         private searchResults: SearchResultsService,
         private view: ViewService,
@@ -42,7 +45,7 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.subscriptions.push(
-            this.search
+            this.eduSharing
                 .getDidYouMeanSuggestion()
                 .subscribe(
                     (didYouMeanSuggestion) => (this.didYouMeanSuggestion = didYouMeanSuggestion),
@@ -62,12 +65,12 @@ export class SearchComponent implements OnInit, OnDestroy {
                 }
             }),
         );
-        this.route.data.subscribe((data: { searchData: ResultFragment }) => {
+        this.route.data.subscribe((data: { searchData: SearchResults }) => {
             this.results = data.searchData;
             this.searchResults.results.next(this.results);
             this.resultPageNumbers = this.getResultPageNumbers();
             this.analyticsService.reportSearchRequest({
-                numberResults: this.results.total.value,
+                numberResults: this.results.pagination.total,
             });
             // TODO: switch to tab 0 even if the user clicks on "show more" on the currently active
             // filter.
@@ -102,7 +105,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     private getResultPageNumbers(): { from: number; to: number } {
         return {
             from: this.pageIndex * 12 + 1,
-            to: this.pageIndex * 12 + this.results.hits.length,
+            to: this.pageIndex * 12 + this.results.nodes.length,
         };
     }
 }

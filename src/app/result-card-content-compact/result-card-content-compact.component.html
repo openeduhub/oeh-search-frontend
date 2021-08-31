@@ -1,21 +1,21 @@
 <div class="header">
   <h2 class="app-result-card-title">
     <button (click)="onClick()" #cardButton>
-      {{ hit.lom.general.title | truncate: 52 }}
+      {{ hit | nodeProperty: 'title' | truncate: 52 }}
     </button>
   </h2>
-  <p class="source" *ngIf="hit.source.url">
-    {{ hit.source.name }}
+  <p class="source" *ngIf="hit | nodeProperty: 'source' as source">
+    {{ source.displayName }}
   </p>
 </div>
 <mat-card-content>
   <div class="main-content-row">
-    <img class="thumbnail" [appPreviewImage]="hit.previewImage" align="right" />
-    <p class="editorial-hint" *ngIf="hit | hasEditorialTag: EditorialTag.Recommended">
+    <img class="thumbnail" [appPreviewImage]="hit.preview" align="right" />
+    <p class="editorial-hint" *ngIf="hit | inCollectionWithType: 'EDITORIAL'">
       <ng-container i18n>Recommended by editorial team</ng-container>
     </p>
     <p class="description">
-      {{ hit.lom.general.description | trim | truncate: 100 }}
+      {{ hit | nodeProperty: 'description' | trim | truncate: 100 }}
     </p>
   </div>
 </mat-card-content>

@@ -1,5 +1,7 @@
 import { Component, ElementRef, Input, OnInit } from '@angular/core';
-import { PreviewImage, Thumbnail } from '../../generated/graphql';
+import { ResultNode } from '../edu-sharing/edu-sharing.service';
+
+type PreviewImage = ResultNode['preview'];
 
 @Component({
     // Augment the built-in <img> element.
@@ -38,7 +40,7 @@ export class PreviewImageComponent implements OnInit {
     }
 
     private setPreviewImage() {
-        this.elementRef.nativeElement.src = this.getThumbnail(this.previewImage.thumbnail);
+        this.elementRef.nativeElement.src = this.getThumbnail(this.previewImage);
     }
 
     private loadHighResImageIfWanted(): void {
@@ -51,12 +53,11 @@ export class PreviewImageComponent implements OnInit {
         }
     }
 
-    private getThumbnail(thumbnail: Thumbnail): string {
-        switch (thumbnail.__typename) {
-            case 'EmbeddedThumbnail':
-                return `data:${thumbnail.mimetype};base64,${thumbnail.image}`;
-            case 'ExternalThumbnail':
-                return thumbnail.url;
+    private getThumbnail(previewImage: PreviewImage): string {
+        if (previewImage.data) {
+            return `data:${previewImage.mimetype || 'image/*'};base64,${previewImage.data}`;
+        } else {
+            return previewImage.url;
         }
     }
 }

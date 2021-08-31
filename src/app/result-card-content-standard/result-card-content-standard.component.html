@@ -1,46 +1,44 @@
 <div class="image-container" mat-card-image>
-  <img class="img-bg" [appPreviewImage]="hit.previewImage" />
-  <img class="img-main" [appPreviewImage]="hit.previewImage" [loadHighResImage]="false" />
+  <img class="img-bg" [appPreviewImage]="hit.preview" />
+  <img class="img-main" [appPreviewImage]="hit.preview" [loadHighResImage]="false" />
 </div>
 <div class="pre-heading">
   <span class="source">
-    <ng-container *ngIf="hit.source.url">
-      {{ hit.source.name }}
+    <ng-container *ngIf="hit | nodeProperty: 'source' as source">
+      {{ source.displayName }}
     </ng-container>
   </span>
   <app-badges class="badges" [hit]="hit" orientation="horizontal"></app-badges>
 </div>
 <h2 class="app-result-card-title">
-  <button (click)="onClick()" #cardButton>
-    {{ hit.lom.general.title | truncate: 42 }}
-  </button>
+  <button (click)="onClick()" #cardButton>{{ hit | nodeProperty: 'title' | truncate: 42 }}</button>
 </h2>
 <div class="body">
-  <p class="description" *ngIf="hit.lom.general.description">
-    {{ hit.lom.general.description | trim | truncate: 65 }}
+  <p class="description" *ngIf="hit | nodeProperty: 'description' as description">
+    {{ description | trim | truncate: 65 }}
   </p>
-  <div class="metadata" *ngIf="hit.skos.learningResourceType">
+  <div class="metadata" *ngIf="hit | nodeProperty: 'learningResourceType' as lrts">
     <mat-icon i18n-matTooltip matTooltip="Learning resource type">photo_library</mat-icon>
     <span class="cdk-visually-hidden" i18n>Learning resource type</span>
     <div>
-      <span *ngFor="let lrt of hit.skos.learningResourceType">{{ lrt.label }}</span>
+      <span *ngFor="let lrt of lrts">{{ lrt.displayName }}</span>
     </div>
   </div>
-  <div class="metadata" *ngIf="hit.skos.discipline">
+  <div class="metadata" *ngIf="hit | nodeProperty: 'discipline' as disciplines">
     <mat-icon i18n-matTooltip matTooltip="Discipline">book_icon</mat-icon>
     <span class="cdk-visually-hidden" i18n>Discipline</span>
     <div>
-      <span *ngFor="let discipline of hit.skos.discipline | slice: 0:5">
-        {{ discipline.label }}
+      <span *ngFor="let discipline of disciplines | slice: 0:5">
+        {{ discipline.displayName }}
       </span>
     </div>
   </div>
-  <div class="metadata" *ngIf="hit.skos.educationalContext">
+  <div class="metadata" *ngIf="hit | nodeProperty: 'educationalContext' as educationalContexts">
     <mat-icon i18n-matTooltip matTooltip="Educational context">school</mat-icon>
     <span class="cdk-visually-hidden" i18n>Educational context</span>
     <div>
-      <span *ngFor="let context of hit.skos.educationalContext">
-        {{ context.label }}
+      <span *ngFor="let context of educationalContexts">
+        {{ context.displayName }}
       </span>
     </div>
   </div>

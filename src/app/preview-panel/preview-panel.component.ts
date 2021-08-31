@@ -3,7 +3,7 @@ import { Component, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { NavigationStart, Router } from '@angular/router';
 import { combineLatest, ReplaySubject } from 'rxjs';
-import { distinctUntilChanged, filter, first, map, takeUntil } from 'rxjs/operators';
+import { distinctUntilChanged, filter, first, map, take, takeUntil } from 'rxjs/operators';
 import { DetailsComponent } from '../details/details.component';
 import { ViewService } from '../view.service';
 
@@ -93,7 +93,8 @@ export class PreviewPanelComponent implements OnDestroy {
         this.router.events
             .pipe(
                 takeUntil(this.dialogRef.beforeClosed()),
-                first((e): e is NavigationStart => e instanceof NavigationStart),
+                filter((e): e is NavigationStart => e instanceof NavigationStart),
+                take(1),
             )
             .subscribe(() => {
                 // The router fails to reset the scroll position here, since the dialog still blocks

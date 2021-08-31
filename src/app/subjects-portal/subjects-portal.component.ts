@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { Filters } from '../edu-sharing/edu-sharing.service';
 import { SearchParametersService } from '../search-parameters.service';
-import { SubjectsPortalResults } from '../search-resolver.service';
-import { Filters } from '../search.service';
+import { SubjectsPortalResults } from './subjects-portal-resolver.service';
 
 @Component({
     selector: 'app-subjects-portal',

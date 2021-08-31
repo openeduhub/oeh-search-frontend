@@ -17,9 +17,7 @@
             (removed)="removeFilter(category, filter)"
             cdkMonitorElementFocus
           >
-            <ng-container
-              *ngTemplateOutlet="i18nFacet; context: { $implicit: filter }"
-            ></ng-container>
+            {{ filter | displayName: category }}
             <mat-icon matChipRemove>cancel</mat-icon>
           </mat-chip>
         </ng-container>
@@ -74,19 +72,19 @@
           <label class="category-label" [ngSwitch]="category">
             <!-- <ng-container *ngSwitchCase="'oer'" i18n>Free content</ng-container> -->
             <!-- <span *ngIf="category === 'oer'" class="what-is-oer-link" i18n>What's that?</span> -->
-            <ng-container *ngSwitchCase="Facet.Type" i18n>Type</ng-container>
-            <ng-container *ngSwitchCase="Facet.EducationalContext" i18n
+            <ng-container *ngSwitchCase="'type'" i18n>Type</ng-container>
+            <ng-container *ngSwitchCase="'educationalContext'" i18n
               >Educational context</ng-container
             >
-            <ng-container *ngSwitchCase="Facet.Discipline" i18n>Discipline</ng-container>
-            <ng-container *ngSwitchCase="Facet.Keyword" i18n>Keyword</ng-container>
-            <ng-container *ngSwitchCase="Facet.IntendedEndUserRole" i18n
+            <ng-container *ngSwitchCase="'discipline'" i18n>Discipline</ng-container>
+            <ng-container *ngSwitchCase="'keyword'" i18n>Keyword</ng-container>
+            <ng-container *ngSwitchCase="'intendedEndUserRole'" i18n
               >Intended End User Role</ng-container
             >
-            <ng-container *ngSwitchCase="Facet.LearningResourceType" i18n
+            <ng-container *ngSwitchCase="'learningResourceType'" i18n
               >Learning Resource Type</ng-container
             >
-            <ng-container *ngSwitchCase="Facet.Source" i18n>Source</ng-container>
+            <ng-container *ngSwitchCase="'source'" i18n>Source</ng-container>
           </label>
         </div>
         <mat-chip-list>
@@ -96,25 +94,10 @@
             (click)="addFilter(category, suggestion)"
             [selectable]="false"
           >
-            <ng-container
-              *ngTemplateOutlet="i18nFacet; context: { $implicit: suggestion }"
-            ></ng-container>
+            {{ suggestion | displayName: category }}
           </mat-chip>
         </mat-chip-list>
       </div>
     </ng-container>
   </div>
-</ng-template>
-
-<ng-template #i18nFacet let-facet>
-  <ng-container [ngSwitch]="facet">
-    <ng-container i18n *ngSwitchCase="Type.Content">Content</ng-container>
-    <ng-container i18n *ngSwitchCase="Type.Tool">Tool</ng-container>
-    <ng-container i18n *ngSwitchCase="Type.Portal">Source</ng-container>
-    <ng-container i18n *ngSwitchCase="Type.LessonPlanning">Lesson Planning</ng-container>
-    <ng-container i18n *ngSwitchCase="Type.Method">Method</ng-container>
-    <ng-container *ngSwitchDefault>
-      {{ facet }}
-    </ng-container>
-  </ng-container>
 </ng-template>

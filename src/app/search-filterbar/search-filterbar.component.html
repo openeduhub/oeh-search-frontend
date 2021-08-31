@@ -1,4 +1,4 @@
-<mat-card [formGroup]="facetFilters">
+<mat-card *ngIf="facetFilters" [formGroup]="facetFilters">
   <div class="header">
     <mat-icon>tune</mat-icon>
     <h2 i18n>Filters</h2>
@@ -21,7 +21,7 @@
         Currently, there are no applicable filters. Try another search string for more results.
       </p>
     </div>
-    <div class="type" *ngIf="orderedTypeBuckets.length > 0">
+    <div class="type" *ngIf="orderedTypeBuckets?.length > 0">
       <mat-label><mat-icon>apps</mat-icon> <ng-container i18n>Category</ng-container></mat-label>
       <app-multivalue-checkbox
         formControlName="type"
@@ -33,7 +33,7 @@
     <mat-accordion [multi]="true" displayMode="flat">
       <mat-expansion-panel
         *ngFor="let key of mainFilters"
-        [hidden]="!facets[key]?.buckets.length"
+        [hidden]="!facets[key]?.values.length"
         [(expanded)]="expandedFilters[key]"
       >
         <mat-expansion-panel-header [ngSwitch]="key">
@@ -66,18 +66,18 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
         <app-multivalue-checkbox
-          [formControlName]="facets[key].facet"
-          [buckets]="facets[key].buckets"
+          [formControlName]="key"
+          [buckets]="facets[key].values"
         ></app-multivalue-checkbox>
-        <button
+        <!-- <button
           mat-button
           color="primary"
           class="show-more-button"
-          *ngIf="facets[key].buckets.length < facets[key].total_buckets"
+          *ngIf="facets[key].values.length < facets[key].total_buckets"
           (click)="loadMoreFacetBuckets(key)"
         >
           <ng-container i18n>show more</ng-container><mat-icon>keyboard_arrow_down</mat-icon>
-        </button>
+        </button> -->
       </mat-expansion-panel>
     </mat-accordion>
   </div>

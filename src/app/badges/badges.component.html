@@ -1,6 +1,6 @@
 <div class="app-badges-container app-badges-container-{{ orientation }}">
   <div
-    *ngIf="hit | hasEditorialTag: EditorialTag.Recommended"
+    *ngIf="hit | inCollectionWithType: 'EDITORIAL'"
     class="app-badges-badge mat-elevation-z1"
     i18n-matTooltip
     [matTooltipPosition]="orientation === 'vertical' ? 'left' : 'above'"
@@ -9,7 +9,7 @@
     <div class="icon editorial-icon"></div>
   </div>
   <div
-    *ngIf="hit.license.oer"
+    *ngIf="hit | isOer"
     class="app-badges-badge mat-elevation-z1"
     i18n-matTooltip
     [matTooltipPosition]="orientation === 'vertical' ? 'left' : 'above'"

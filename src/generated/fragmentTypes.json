@@ -1,8 +1,0 @@
-{
-  "possibleTypes": {
-    "Thumbnail": [
-      "EmbeddedThumbnail",
-      "ExternalThumbnail"
-    ]
-  }
-}
