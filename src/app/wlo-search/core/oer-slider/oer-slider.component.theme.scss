@@ -1,0 +1,34 @@
+@use '~@angular/material' as mat;
+@import '../../functions';
+
+@mixin oer-slider-theme($theme) {
+    $custom-accent: map-get($theme, custom-accent);
+    $background: map-get($theme, background);
+    $primary: map-get($theme, primary);
+
+    app-oer-slider {
+        .mat-slide-toggle-content {
+            color: mat.get-color-from-palette($primary, default-contrast);
+        }
+        .help-button mat-icon {
+            color: mat.get-color-from-palette($primary, default-contrast);
+        }
+        .mat-slide-toggle-bar {
+            background-color: mat.get-color-from-palette($primary, default-contrast, 0.38);
+        }
+        .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
+            background-color: mat.get-color-from-palette($primary, default-contrast);
+        }
+        .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
+            background-color: mat.get-color-from-palette($custom-accent, accent2);
+        }
+    }
+}
+
+@mixin oer-slider-typography($typography) {
+    app-oer-slider {
+        .mat-slide-toggle-content {
+            @include mat.typography-level($typography, button);
+        }
+    }
+}

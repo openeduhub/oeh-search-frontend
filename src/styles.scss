@@ -1,4 +1,5 @@
 @use '~@angular/material' as mat;
+@use 'app/wlo-search';
 @import './fonts.scss';
 $material-icons-font-path: '~material-icons/iconfont/';
 @import '~material-icons/iconfont/material-icons.scss';
@@ -8,22 +9,6 @@ $material-icons-font-path: '~material-icons/iconfont/';
 
 // Plus imports for other components in your app.
 @import 'angular-material-overrides.theme.scss';
-
-@import 'app/app.component.theme.scss';
-@import 'app/badges/badges.component.theme.scss';
-@import 'app/collection-card/collection-card.component.theme.scss';
-@import 'app/details/details.component.theme.scss';
-@import 'app/headerbar/headerbar.component.theme.scss';
-@import 'app/menubar/menubar.component.theme.scss';
-@import 'app/multivalue-checkbox/multivalue-checkbox.component.theme.scss';
-@import 'app/oer-slider/oer-slider.component.theme.scss';
-@import 'app/paginator/paginator.component.theme.scss';
-@import 'app/preview-panel/preview-panel.component.theme.scss';
-@import 'app/result-card/result-card.component.theme.scss';
-@import 'app/search-field/search-field.component.theme.scss';
-@import 'app/search-filterbar/search-filterbar.component.theme.scss';
-@import 'app/search/search.component.theme.scss';
-@import 'app/subjects-portal/subjects-portal.component.theme.scss';
 
 // Overrides
 //
@@ -41,24 +26,6 @@ $material-icons-font-path: '~material-icons/iconfont/';
 //     )
 // );
 
-@mixin custom-components-theme($theme) {
-    @include app-theme($theme);
-    @include badges-theme($theme);
-    @include collection-card-theme($theme);
-    @include details-theme($theme);
-    @include headerbar-theme($theme);
-    @include menubar-theme($theme);
-    @include multivalue-checkbox-theme($theme);
-    @include oer-slider-theme($theme);
-    @include paginator-theme($theme);
-    @include preview-panel-theme($theme);
-    @include result-card-theme($theme);
-    @include search-field-theme($theme);
-    @include search-filterbar-theme($theme);
-    @include search-theme($theme);
-    @include subjects-portal-theme($theme);
-}
-
 @mixin apply-theme($theme, $foreground-theme) {
     $theme: map_merge(
         $theme,
@@ -73,7 +40,7 @@ $material-icons-font-path: '~material-icons/iconfont/';
     @include mat.all-component-themes($theme);
     @include mat.strong-focus-indicators-theme($theme);
     @include angular-material-theme-overrides($theme);
-    @include custom-components-theme($theme);
+    @include wlo-search.components-themes($theme);
     body {
         color: mat.get-color-from-palette(map-get($theme, foreground), text);
         background-color: mat.get-color-from-palette(map-get($theme, background), background);
@@ -125,18 +92,7 @@ $app-typography: map_merge(
 );
 @include mat.all-component-typographies($app-typography);
 @include angular-material-typography-overrides($app-typography);
-
-@include collection-card-typography($app-typography);
-@include details-typography($app-typography);
-@include headerbar-typography($app-typography);
-@include multivalue-checkbox-typography($app-typography);
-@include oer-slider-typography($app-typography);
-@include paginator-typography($app-typography);
-@include preview-panel-typography($app-typography);
-@include result-card-typography($app-typography);
-@include search-field-typography($app-typography);
-@include search-filterbar-typography($app-typography);
-@include search-typography($app-typography);
+@include wlo-search.components-typographies($app-typography);
 
 html,
 body {

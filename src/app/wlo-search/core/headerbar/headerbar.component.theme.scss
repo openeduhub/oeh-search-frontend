@@ -1,0 +1,30 @@
+@use '~@angular/material' as mat;
+@import '../../functions';
+
+@mixin headerbar-theme($theme) {
+    $primary: map-get($theme, primary);
+    $primary-foreground-color: primary-foreground-color($theme);
+    $customAccent: map-get($theme, custom-accent);
+
+    app-headerbar {
+        border-color: mat.get-color-from-palette($primary);
+        &[data-style='compact'] {
+            background-color: mat.get-color-from-palette($primary, 400);
+        }
+        .filter-button {
+            color: $primary-foreground-color;
+            .mat-badge-content {
+                background-color: mat.get-color-from-palette($customAccent, accent2);
+            }
+        }
+        .experiments {
+            &,
+            > a {
+                color: mat.get-color-from-palette($primary, default-contrast);
+            }
+        }
+    }
+}
+
+@mixin headerbar-typography($typography) {
+}

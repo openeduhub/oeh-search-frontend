@@ -1,46 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DetailsPageResolverService } from './details-page/details-page-resolver.service';
-import { DetailsPageComponent } from './details-page/details-page.component';
-import { ErrorComponent } from './error/error.component';
-import { ExperimentsTogglesComponent } from './experiments-toggles/experiments-toggles.component';
-import { SearchResolverService } from './search/search-resolver.service';
-import { SearchResultsComponent } from './search-results/search-results.component';
-import { SearchComponent } from './search/search.component';
-import { SubjectsPortalResolverService } from './subjects-portal/subjects-portal-resolver.service';
-import { SubjectsPortalComponent } from './subjects-portal/subjects-portal.component';
+import { DummyComponent } from './dummy/dummy.component';
+
+export const ROOT_PATH = '/';
+export const WLO_SEARCH_PATH_COMPONENT = 'wlo-search';
 
 const routes: Routes = [
     {
-        path: 'search',
-        component: SearchComponent,
-        runGuardsAndResolvers: 'paramsOrQueryParamsChange',
-        resolve: {
-            searchData: SearchResolverService,
-        },
-        children: [
-            {
-                path: '',
-                component: SearchResultsComponent,
-            },
-            {
-                path: 'categories',
-                component: SubjectsPortalComponent,
-                runGuardsAndResolvers: 'paramsOrQueryParamsChange',
-                resolve: {
-                    results: SubjectsPortalResolverService,
-                },
-            },
-        ],
+        path: 'dummy',
+        component: DummyComponent,
     },
     {
-        path: 'details/:id',
-        component: DetailsPageComponent,
-        resolve: { entry: DetailsPageResolverService },
+        path: WLO_SEARCH_PATH_COMPONENT,
+        loadChildren: () => import('./wlo-search/wlo-search.module').then((m) => m.WloSearchModule),
     },
-    { path: 'experiments', component: ExperimentsTogglesComponent },
-    { path: '', redirectTo: 'search', pathMatch: 'full' },
-    { path: 'error', component: ErrorComponent },
+    { path: '', redirectTo: WLO_SEARCH_PATH_COMPONENT, pathMatch: 'full' },
 ];
 @NgModule({
     imports: [RouterModule.forRoot(routes)],

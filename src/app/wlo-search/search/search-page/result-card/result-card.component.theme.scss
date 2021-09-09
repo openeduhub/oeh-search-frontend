@@ -1,0 +1,47 @@
+@use '~@angular/material' as mat;
+@import '../../../functions';
+
+@mixin result-card-theme($theme) {
+    $foreground: map-get($theme, foreground);
+    $background: map-get($theme, background);
+    $primary: map-get($theme, primary);
+    $custom-accent: map-get($theme, custom-accent);
+    $primary-foreground-color: primary-foreground-color($theme);
+
+    app-result-card {
+        .app-result-card-selected::after {
+            border-color: mat.get-color-from-palette($primary, 400);
+        }
+        .body {
+            mat-icon {
+                color: mat.get-color-from-palette($foreground, secondary-text);
+            }
+        }
+        .metadata,
+        .source {
+            color: mat.get-color-from-palette($foreground, secondary-text);
+        }
+    }
+    app-result-card-content-compact {
+        .editorial-hint {
+            color: #106029;
+        }
+    }
+}
+
+@mixin result-card-typography($typography) {
+    app-result-card {
+        .app-result-card-title {
+            @include mat.typography-level($typography, subheading-2);
+        }
+        .metadata,
+        .source {
+            @include mat.typography-level($typography, caption);
+        }
+    }
+    app-result-card-content-compact {
+        .mat-card-content {
+            @include mat.typography-level($typography, caption);
+        }
+    }
+}

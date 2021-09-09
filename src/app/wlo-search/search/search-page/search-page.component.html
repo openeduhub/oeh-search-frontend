@@ -1,0 +1,119 @@
+<app-search-filterbar *ngIf="showFilterBar"></app-search-filterbar>
+
+<div class="results" [attr.data-style]="searchResultsStyle$ | async">
+  <p *ngIf="didYouMeanSuggestion" class="did-you-mean">
+    <ng-container i18n>Did you mean:</ng-container>&nbsp;<a
+      [innerHTML]="didYouMeanSuggestion.html"
+      routerLink="{{ routerPath }}/search"
+      [queryParams]="{ q: didYouMeanSuggestion.plain }"
+      queryParamsHandling="merge"
+    ></a>
+  </p>
+  <div *ngIf="results" class="summary">
+    <div class="no-results" *ngIf="results.pagination.total === 0">
+      <p i18n>No results</p>
+      <div>
+        <a
+          *ngIf="filterCount > 0"
+          mat-flat-button
+          color="primary"
+          routerLink="{{ routerPath }}/search"
+          [queryParams]="{ filters: null, oer: 'NONE' }"
+          queryParamsHandling="merge"
+          i18n
+          >Search without filters</a
+        >
+      </div>
+    </div>
+    <ng-container *ngIf="results?.pagination.total > 0 && resultPageNumbers">
+      <ng-container *ngIf="(searchResultsStyle$ | async) === 'standard'">
+        <p>
+          <ng-container i18n>Result</ng-container>
+          <em>
+            {{ resultPageNumbers.from | number }}
+            <ng-container *ngIf="resultPageNumbers.from !== resultPageNumbers.to" i18n
+              >to {{ resultPageNumbers.to | number }}
+            </ng-container>
+          </em>
+          &#32;
+          <ng-container i18n>of</ng-container>
+          <em> {{ results.pagination.total | number }}</em>
+        </p>
+        <mat-button-toggle-group
+          class="style-toggle"
+          [value]="resultCardStyle"
+          (change)="setResultCardStyle($event.value)"
+          aria-label="Result view"
+          i18n-aria-label
+        >
+          <mat-button-toggle
+            value="standard"
+            i18n-aria-label
+            aria-label="Standard view"
+            i18n-matTooltip
+            matTooltip="Standard view"
+          >
+            <mat-icon>view_column</mat-icon>
+          </mat-button-toggle>
+          <mat-button-toggle
+            value="compact"
+            i18n-aria-label
+            aria-label="Compact view"
+            i18n-matTooltip
+            matTooltip="Compact view"
+          >
+            <mat-icon>view_module</mat-icon>
+          </mat-button-toggle>
+        </mat-button-toggle-group>
+      </ng-container>
+      <ng-container *ngIf="(searchResultsStyle$ | async) === 'compact'">
+        <div class="summary-row">
+          <p>
+            <em>{{ results.pagination.total | number }} </em>
+            <ng-container i18n
+              >{results.pagination.total, plural, =1 {result} other {results}}</ng-container
+            >
+          </p>
+          <a
+            mat-flat-button
+            class="participate-button"
+            href="{{ wordpressUrl }}/mitmachen/"
+            target="_blank"
+            i18n
+            >Participate</a
+          >
+        </div>
+        <mat-divider class="summary-divider"></mat-divider>
+      </ng-container>
+    </ng-container>
+  </div>
+  <nav
+    mat-tab-nav-bar
+    *ngIf="results?.pagination.total > 0 && (searchResultsStyle$ | async) === 'standard'"
+  >
+    <a
+      mat-tab-link
+      i18n
+      routerLink="{{ routerPath }}/search"
+      queryParamsHandling="merge"
+      routerLinkActive
+      [routerLinkActiveOptions]="{ exact: true }"
+      #linkAllResults="routerLinkActive"
+      [active]="linkAllResults.isActive"
+      >All search results</a
+    >
+    <a
+      mat-tab-link
+      i18n
+      routerLink="{{ routerPath }}/search/categories"
+      queryParamsHandling="merge"
+      routerLinkActive
+      #linkCategories="routerLinkActive"
+      [active]="linkCategories.isActive"
+      >Search results by categories</a
+    >
+  </nav>
+  <router-outlet></router-outlet>
+</div>
+
+<app-preview-panel></app-preview-panel>

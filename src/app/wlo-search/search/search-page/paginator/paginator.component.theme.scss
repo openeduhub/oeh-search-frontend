@@ -1,0 +1,28 @@
+@use '~@angular/material' as mat;
+@import '../../../functions';
+
+@mixin paginator-theme($theme) {
+    $primary-foreground-color: primary-foreground-color($theme);
+    $primary: map-get($theme, primary);
+
+    app-paginator {
+        .ellipsis {
+            color: mat.get-color-from-palette($primary);
+        }
+        .page-number {
+            color: mat.get-color-from-palette($primary);
+            &.active {
+                background-color: mat.get-color-from-palette($primary, 70);
+            }
+        }
+    }
+}
+
+@mixin paginator-typography($typography) {
+    app-paginator {
+        .page-number,
+        .ellipsis {
+            @include mat.typography-level($typography, button);
+        }
+    }
+}

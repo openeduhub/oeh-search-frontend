@@ -1,0 +1,32 @@
+.app-badges-container {
+    display: flex;
+    &.app-badges-container-vertical {
+        flex-direction: column;
+    }
+}
+
+.app-badges-badge {
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &:not(:last-child) {
+        .app-badges-container-vertical & {
+            margin-bottom: 10px;
+        }
+        .app-badges-container-horizontal & {
+            margin-right: 10px;
+        }
+    }
+    .editorial-icon {
+        mask: url('../../../../../assets/wlo-search/images/editorial.svg') no-repeat center;
+    }
+    .oer-icon {
+        mask: url('../../../../../assets/wlo-search/images/oer.svg') no-repeat center;
+    }
+    > div {
+        width: 20px;
+        height: 20px;
+        padding: 2px 4px;
+    }
+}

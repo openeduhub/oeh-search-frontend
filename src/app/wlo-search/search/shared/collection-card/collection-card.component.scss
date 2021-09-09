@@ -1,0 +1,80 @@
+.app-collection-card-container {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    height: 70px;
+    border-radius: 10px;
+    transition: box-shadow 0.3s, transform 0.3s;
+    &:hover {
+        transform: translate(0, -4px);
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25);
+    }
+}
+
+// Background image, not compatible with background colors.
+//
+// .app-collection-card-container {
+//     position: relative;
+//     color: white;
+//     text-shadow: 0 0 5px black;
+// }
+// .app-collection-card-background-image {
+//     position: absolute;
+//     left: 0;
+//     right: 0;
+//     top: 0;
+//     bottom: 0;
+//     background-size: cover;
+//     background-position: center;
+//     filter: brightness(50%);
+//     z-index: -1;
+// }
+
+.app-collection-card-icon-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 5px;
+}
+
+.editorial-icon {
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-image: url('../../../../../assets/wlo-search/images/editorial.svg');
+}
+
+.app-collection-card-title {
+    width: 100%;
+    margin-bottom: 5px;
+}
+.app-collection-card-title a {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: unset;
+    text-decoration: unset;
+    &::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+    }
+}
+
+.app-collection-card-metadata-item {
+    line-height: 12px;
+    display: inline-flex;
+    mat-icon {
+        height: 12px;
+        width: 12px;
+        font-size: 12px;
+        margin-right: 5px;
+    }
+}

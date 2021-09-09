@@ -1,11 +1,1 @@
-<header>
-  <app-menubar *ngIf="(headerStyle$ | async) === 'standard'"></app-menubar>
-  <app-headerbar></app-headerbar>
-</header>
-<main appSkipTarget="MAIN_CONTENT" class="main">
-  <router-outlet></router-outlet>
-</main>
-<app-footerbar></app-footerbar>
-<div class="loading-spinner" *ngIf="loading">
-  <mat-spinner></mat-spinner>
-</div>
+<router-outlet></router-outlet>

@@ -1,0 +1,16 @@
+@use '~@angular/material' as mat;
+@import './functions';
+
+@mixin wlo-search-theme($theme) {
+    $background: map-get($theme, background);
+    $primary-foreground-color: primary-foreground-color($theme);
+
+    app-wlo-search {
+        > .loading-spinner {
+            background-color: mat.get-color-from-palette($background, dialog, 0.5);
+            .mat-spinner circle {
+                stroke: $primary-foreground-color;
+            }
+        }
+    }
+}

@@ -1,0 +1,54 @@
+@use '~@angular/material' as mat;
+@import '../../../functions';
+
+@mixin multivalue-checkbox-theme($theme) {
+    $foreground: map-get($theme, foreground);
+    $background: map-get($theme, background);
+    $customAccent: map-get($theme, custom-accent);
+    $primary-foreground-color: primary-foreground-color($theme);
+
+    app-multivalue-checkbox {
+        mat-checkbox {
+            .mat-checkbox-frame {
+                border-color: mat.get-color-from-palette($foreground, disabled);
+            }
+            &:not(.checked) {
+                span.label {
+                    color: mat.get-color-from-palette($foreground, secondary-text);
+                }
+                span.count {
+                    background-color: mat.get-color-from-palette($background, unselected-chip);
+                    color: mat.get-color-from-palette($foreground, secondary-text);
+                }
+                .mat-checkbox-inner-container {
+                    background-color: mat.get-color-from-palette($background, card);
+                }
+            }
+            &.checked {
+                span.label {
+                    color: mat.get-color-from-palette($foreground, text);
+                }
+                span.count {
+                    background-color: mat.get-color-from-palette($customAccent, accent2);
+                    color: mat.get-color-from-palette($customAccent, accent2-contrast);
+                }
+                &.mat-accent .mat-checkbox-background {
+                    background-color: $primary-foreground-color;
+                }
+            }
+        }
+    }
+}
+
+@mixin multivalue-checkbox-typography($typography) {
+    app-multivalue-checkbox {
+        mat-checkbox {
+            .label {
+                @include mat.typography-level($typography, body-1);
+            }
+            .count {
+                @include mat.typography-level($typography, body-2);
+            }
+        }
+    }
+}

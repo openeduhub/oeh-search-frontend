@@ -1,0 +1,39 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+}
+
+// We try to contain as many top-level elements in stacking contexts as possible, so z-index values
+// of underlying elements don't pollute outside elements. We have to allow the `main` container to
+// draw above other elements for the filter overlay on mobile, however.
+//
+// Stacking order is mostly controlled by position in the DOM. A z-index of 1 will already draw
+// above everything else.
+
+app-menubar {
+    position: relative;
+    display: block;
+    z-index: 1;
+}
+
+app-headerbar {
+    position: relative;
+    z-index: 0;
+}
+
+.main {
+    flex-grow: 1;
+}
+
+.loading-spinner {
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

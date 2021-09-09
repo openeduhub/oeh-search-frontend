@@ -1,7 +1,3 @@
-import { A11yModule } from '@angular/cdk/a11y';
-import { ClipboardModule } from '@angular/cdk/clipboard';
-import { LayoutModule } from '@angular/cdk/layout';
-import { OverlayModule } from '@angular/cdk/overlay';
 import {
     HttpClient,
     HttpClientModule,
@@ -9,76 +5,75 @@ import {
     HttpEventType,
     HttpHandler,
     HttpRequest,
+    HTTP_INTERCEPTORS,
 } from '@angular/common/http';
-import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatBadgeModule } from '@angular/material/badge';
-import { MatButtonModule } from '@angular/material/button';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { MatCardModule } from '@angular/material/card';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatRippleModule } from '@angular/material/core';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSelectModule } from '@angular/material/select';
-import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { MatSliderModule } from '@angular/material/slider';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { inject, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InMemoryCache } from '@apollo/client/core';
 import { APOLLO_NAMED_OPTIONS } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
-import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { Observable, of, throwError } from 'rxjs';
-import { environment } from '../environments/environment';
-import { AppRoutingModule } from './app-routing.module';
+import { environment } from 'src/environments/environment';
+import {
+    OpenAnalyticsSessionGQL,
+    ReportLifecycleEventGQL,
+    ReportResultClickGQL,
+    ReportSearchRequestGQL,
+} from 'src/generated/graphql';
+import { ApiModule } from './api/api.module';
+import { AppRoutingModule, ROOT_PATH, WLO_SEARCH_PATH_COMPONENT } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BadgesComponent } from './badges/badges.component';
-import { CapitalizeFirstLetterPipe } from './capitalize-first-letter.pipe';
-import { CollectionCardComponent } from './collection-card/collection-card.component';
-import { DetailsPageComponent } from './details-page/details-page.component';
-import { DetailsComponent } from './details/details.component';
-import { DurationPipe } from './duration.pipe';
-import { EduSharingModule } from './edu-sharing/edu-sharing.module';
-import { ErrorComponent } from './error/error.component';
-import { ExperimentsTogglesComponent } from './experiments-toggles/experiments-toggles.component';
-import { FooterbarComponent } from './footerbar/footerbar.component';
-import { GenerateFiltersPipe } from './generate-filters.pipe';
-import { HeaderbarComponent } from './headerbar/headerbar.component';
-import { LanguagePipe } from './language.pipe';
-import { MenubarComponent } from './menubar/menubar.component';
-import { MultivalueCheckboxComponent } from './multivalue-checkbox/multivalue-checkbox.component';
-import { OerSliderComponent } from './oer-slider/oer-slider.component';
-import { PaginatorComponent } from './paginator/paginator.component';
-import { PreviewImageComponent } from './preview-image/preview-image.component';
-import { PreviewPanelComponent } from './preview-panel/preview-panel.component';
-import { ReportClickDirective } from './report-click.directive';
-import { ResultCardContentCompactComponent } from './result-card-content-compact/result-card-content-compact.component';
-import { ResultCardContentStandardComponent } from './result-card-content-standard/result-card-content-standard.component';
-import { ResultCardComponent } from './result-card/result-card.component';
-import { SearchFieldComponent } from './search-field/search-field.component';
-import { SearchFilterbarComponent } from './search-filterbar/search-filterbar.component';
-import { SearchResultsComponent } from './search-results/search-results.component';
-import { SearchComponent } from './search/search.component';
-import { SharedModule } from './shared/shared.module';
-import { SkipTargetDirective } from './skip-nav/skip-target.directive';
-import { SubjectsPortalSectionComponent } from './subjects-portal-section/subjects-portal-section.component';
-import { SubjectsPortalComponent } from './subjects-portal/subjects-portal.component';
-import { TrimPipe } from './trim.pipe';
-import { TruncatePipe } from './truncate.pipe';
-import { WrapObservablePipe } from './wrap-observable.pipe';
+import { CachingInterceptor } from './caching.interceptor';
+import { DummyComponent } from './dummy/dummy.component';
+import { LanguageHeaderInterceptor } from './language-header.interceptor';
+import { TelemetryApiWrapper } from './telemetry-api-wrapper';
+import { TELEMETRY_API } from './wlo-search/telemetry-api';
+import { WloSearchConfig, WLO_SEARCH_CONFIG } from './wlo-search/wlo-search-config';
+
+const wloSearchConfig: WloSearchConfig = {
+    routerPath: ROOT_PATH + WLO_SEARCH_PATH_COMPONENT,
+    showExperiments: environment.showExperiments,
+    wordpressUrl: environment.wordpressUrl,
+};
+
+const httpInterceptorProviders = [
+    { provide: HTTP_INTERCEPTORS, useClass: LanguageHeaderInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: CachingInterceptor, multi: true },
+];
+
+const telemetryProviders = environment.analyticsUrl
+    ? [
+          {
+              provide: TELEMETRY_API,
+              useFactory: () =>
+                  new TelemetryApiWrapper(
+                      inject(OpenAnalyticsSessionGQL),
+                      inject(ReportLifecycleEventGQL),
+                      inject(ReportResultClickGQL),
+                      inject(ReportSearchRequestGQL),
+                  ),
+          },
+          {
+              provide: APOLLO_NAMED_OPTIONS,
+              deps: [HttpLink],
+              useFactory: (httpLink: HttpLink) => ({
+                  analytics: {
+                      link: httpLink.create({
+                          uri: environment.analyticsUrl + '/graphql',
+                      }),
+                      cache: new InMemoryCache(),
+                  },
+                  analyticsBeacon: {
+                      link: httpLinkBeacon.create({
+                          uri: environment.analyticsUrl + '/graphql',
+                      }),
+                      cache: new InMemoryCache(),
+                  },
+              }),
+          },
+      ]
+    : [];
 
 const httpLinkBeacon = (() => {
     class BeaconHttpHandler implements HttpHandler {
@@ -100,98 +95,21 @@ const httpLinkBeacon = (() => {
 })();
 
 @NgModule({
-    declarations: [
-        AppComponent,
-        DetailsComponent,
-        ErrorComponent,
-        ExperimentsTogglesComponent,
-        FooterbarComponent,
-        GenerateFiltersPipe,
-        HeaderbarComponent,
-        MenubarComponent,
-        MultivalueCheckboxComponent,
-        OerSliderComponent,
-        PaginatorComponent,
-        PreviewImageComponent,
-        ResultCardComponent,
-        ResultCardContentCompactComponent,
-        ResultCardContentStandardComponent,
-        SearchComponent,
-        SearchFieldComponent,
-        SearchFilterbarComponent,
-        SearchResultsComponent,
-        SkipTargetDirective,
-        SubjectsPortalComponent,
-        SubjectsPortalSectionComponent,
-        TrimPipe,
-        TruncatePipe,
-        ReportClickDirective,
-        PreviewPanelComponent,
-        DurationPipe,
-        LanguagePipe,
-        BadgesComponent,
-        CapitalizeFirstLetterPipe,
-        CollectionCardComponent,
-        WrapObservablePipe,
-        DetailsPageComponent,
-    ],
+    declarations: [AppComponent, DummyComponent],
     imports: [
-        EduSharingModule,
-        SharedModule,
-        A11yModule,
         AppRoutingModule,
         BrowserAnimationsModule,
         BrowserModule,
-        ClipboardModule,
-        FormsModule,
         HttpClientModule,
-        LayoutModule,
-        MatAutocompleteModule,
-        MatBadgeModule,
-        MatButtonModule,
-        MatButtonToggleModule,
-        MatCardModule,
-        MatCheckboxModule,
-        MatChipsModule,
-        MatDialogModule,
-        MatDividerModule,
-        MatExpansionModule,
-        MatFormFieldModule,
-        MatIconModule,
-        MatInputModule,
-        MatMenuModule,
-        MatPaginatorModule,
-        MatProgressSpinnerModule,
-        MatRippleModule,
-        MatSelectModule,
-        MatSliderModule,
-        MatSlideToggleModule,
-        MatSnackBarModule,
-        MatTabsModule,
-        MatTooltipModule,
-        OverlayModule,
-        ReactiveFormsModule,
-        SlickCarouselModule,
+        ApiModule.forRoot({ rootUrl: environment.eduSharingApiUrl }),
     ],
     providers: [
+        httpInterceptorProviders,
         {
-            provide: APOLLO_NAMED_OPTIONS,
-            deps: [HttpLink],
-            useFactory: (httpLink: HttpLink) => ({
-                analytics: {
-                    link: httpLink.create({
-                        uri: environment.analyticsUrl + '/graphql',
-                    }),
-                    cache: new InMemoryCache(),
-                },
-                analyticsBeacon: {
-                    link: httpLinkBeacon.create({
-                        uri: environment.analyticsUrl + '/graphql',
-                    }),
-                    cache: new InMemoryCache(),
-                },
-            }),
+            provide: WLO_SEARCH_CONFIG,
+            useValue: wloSearchConfig,
         },
+        ...telemetryProviders,
     ],
     bootstrap: [AppComponent],
 })

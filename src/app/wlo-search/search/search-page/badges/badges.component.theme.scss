@@ -1,0 +1,19 @@
+@use '~@angular/material' as mat;
+@import '../../../functions';
+
+@mixin badges-theme($theme) {
+    $foreground: map-get($theme, foreground);
+    $background: map-get($theme, background);
+    // $custom-accent: map-get($theme, custom-accent);
+    app-badges {
+        .app-badges-badge {
+            background-color: mat.get-color-from-palette($background, card);
+            > .icon {
+                background-color: mat.get-color-from-palette($foreground, secondary-text);
+            }
+            > .editorial-icon {
+                background-color: #106029;
+            }
+        }
+    }
+}

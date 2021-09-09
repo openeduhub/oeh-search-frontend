@@ -7,6 +7,63 @@
 You need at least a running elasticsearch-relay to use the frontend. See
 https://github.com/openeduhub/oeh-search-elasticsearch-relay.
 
+## Structure
+
+-   app
+    -   api
+    -   wlo-search
+        -   edu-sharing
+        -   core
+            -   components
+                -   footerbar
+                -   headerbar
+                -   menubar
+                -   oer-slider
+                -   search-field
+                -   skip-nav
+                -   error
+            -   services
+                -   config
+                -   error
+                -   page-mode
+                -   search-parameters
+                -   view
+        -   shared
+            -   components
+                -   collection-card
+                -   details
+                -   preview-image
+            -   pipes
+                -   capitalize-first-letter
+                -   duration
+                -   language
+                -   trim
+                -   truncate
+                -   wrap-observable
+        -   pages
+            -   search
+                -   components
+                    -   multivalue-checkbox
+                    -   paginator
+                    -   preview-panel
+                    -   result-card
+                    -   result-card-content-compact
+                    -   result-card-content-standard
+                    -   search-filterbar
+                    -   search-results
+                    -   subjects-portal
+                    -   subjects-portal-section
+                -   services
+                    -   analytics
+                -   pipes
+                    -   generate-filter
+                -   directives
+                    -   report-click
+            -   details
+            -   experiments
+                -   components
+                    -   experiments-toggles
+
 ## Build
 
 Setup
