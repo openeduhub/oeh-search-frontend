@@ -25,7 +25,6 @@ import { ApiModule } from './api/api.module';
 import { AppRoutingModule, ROOT_PATH, WLO_SEARCH_PATH_COMPONENT } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CachingInterceptor } from './caching.interceptor';
-import { DummyComponent } from './dummy/dummy.component';
 import { LanguageHeaderInterceptor } from './language-header.interceptor';
 import { TelemetryApiWrapper } from './telemetry-api-wrapper';
 import { TELEMETRY_API } from './wlo-search/telemetry-api';
@@ -95,7 +94,7 @@ const httpLinkBeacon = (() => {
 })();
 
 @NgModule({
-    declarations: [AppComponent, DummyComponent],
+    declarations: [AppComponent],
     imports: [
         AppRoutingModule,
         BrowserAnimationsModule,

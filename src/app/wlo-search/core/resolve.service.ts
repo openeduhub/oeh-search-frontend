@@ -28,7 +28,7 @@ export class ResolveService {
                     ) as Observable<T>,
             ),
             catchError((err) => {
-                this.view.unsetIsLoading();
+                Promise.resolve().then(() => this.view.unsetIsLoading());
                 this.error.goToErrorPage(err);
                 return throwError(err);
             }),
