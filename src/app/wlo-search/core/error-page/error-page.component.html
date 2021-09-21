@@ -1,8 +1,8 @@
-<h2 i18n>Oops, something went wrong.</h2>
+<h2>{{ 'WLO_SEARCH.ERROR_PAGE.HEADLINE' | translate }}</h2>
 
 <mat-expansion-panel *ngIf="error">
   <mat-expansion-panel-header>
-    <mat-panel-title i18n>Details</mat-panel-title>
+    <mat-panel-title>{{ 'WLO_SEARCH.ERROR_PAGE.DETAILS' | translate }}</mat-panel-title>
   </mat-expansion-panel-header>
   <pre>{{ json }}</pre>
 </mat-expansion-panel>

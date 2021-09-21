@@ -27,6 +27,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { DisplayNamePipe } from './display-name.pipe';
 import { ReportClickDirective } from './report-click.directive';
@@ -98,6 +99,7 @@ import { ReportClickDirective } from './report-click.directive';
         MatTooltipModule,
         SlickCarouselModule,
         ReportClickDirective,
+        TranslateModule,
     ],
 })
 export class SharedModule {}

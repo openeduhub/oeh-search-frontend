@@ -7,7 +7,7 @@
     #trigger="cdkOverlayOrigin"
   >
     <mat-form-field class="search-field" floatLabel="always">
-      <mat-label i18n></mat-label>
+      <mat-label></mat-label>
       <mat-chip-list #chipList>
         <ng-container *ngFor="let category of categories">
           <mat-chip
@@ -29,8 +29,7 @@
             type="text"
             [formControl]="searchField"
             [matChipInputFor]="chipList"
-            i18n-placeholder
-            placeholder="Find suitable content, tools, and sources for teaching..."
+            [placeholder]="'WLO_SEARCH.SEARCH_FIELD.PLACEHOLDER' | translate"
             (focus)="showOverlay = true"
             autocomplete="off"
             (keydown.enter)="onSubmit()"
@@ -39,17 +38,15 @@
             *ngIf="searchField.value"
             mat-button
             mat-icon-button
-            i18n-aria-label
-            aria-label="Clear"
-            i18n-matTooltip
-            matTooltip="Clear"
+            [attr.aria-label]="'WLO_SEARCH.SEARCH_FIELD.CLEAR' | translate"
+            [matTooltip]="'WLO_SEARCH.SEARCH_FIELD.CLEAR' | translate"
             (click)="clear()"
             type="button"
           >
             <mat-icon>close</mat-icon>
           </button>
-          <button mat-flat-button color="primary" class="submit-button" type="submit" i18n>
-            Search
+          <button mat-flat-button color="primary" class="submit-button" type="submit">
+            {{ 'WLO_SEARCH.SEARCH_FIELD.SEARCH' | translate }}
           </button>
         </div>
       </mat-chip-list>
@@ -69,22 +66,8 @@
     <ng-container *ngFor="let category of categories">
       <div class="suggestion-group" *ngIf="suggestions[category]?.length > 0">
         <div class="label-container">
-          <label class="category-label" [ngSwitch]="category">
-            <!-- <ng-container *ngSwitchCase="'oer'" i18n>Free content</ng-container> -->
-            <!-- <span *ngIf="category === 'oer'" class="what-is-oer-link" i18n>What's that?</span> -->
-            <ng-container *ngSwitchCase="'type'" i18n>Type</ng-container>
-            <ng-container *ngSwitchCase="'educationalContext'" i18n
-              >Educational context</ng-container
-            >
-            <ng-container *ngSwitchCase="'discipline'" i18n>Discipline</ng-container>
-            <ng-container *ngSwitchCase="'keyword'" i18n>Keyword</ng-container>
-            <ng-container *ngSwitchCase="'intendedEndUserRole'" i18n
-              >Intended End User Role</ng-container
-            >
-            <ng-container *ngSwitchCase="'learningResourceType'" i18n
-              >Learning Resource Type</ng-container
-            >
-            <ng-container *ngSwitchCase="'source'" i18n>Source</ng-container>
+          <label class="category-label">
+            {{ 'WLO_SEARCH.SEARCH_FIELD.CATEGORY_LABEL.' + category | translate }}
           </label>
         </div>
         <mat-chip-list>

@@ -2,7 +2,8 @@
 
 <div class="results" [attr.data-style]="searchResultsStyle$ | async">
   <p *ngIf="didYouMeanSuggestion" class="did-you-mean">
-    <ng-container i18n>Did you mean:</ng-container>&nbsp;<a
+    {{ 'WLO_SEARCH.SEARCH_PAGE.DID_YOU_MEAN' | translate }}
+    <a
       [innerHTML]="didYouMeanSuggestion.html"
       routerLink="{{ routerPath }}/search"
       [queryParams]="{ q: didYouMeanSuggestion.plain }"
@@ -11,7 +12,7 @@
   </p>
   <div *ngIf="results" class="summary">
     <div class="no-results" *ngIf="results.pagination.total === 0">
-      <p i18n>No results</p>
+      <p>{{ 'WLO_SEARCH.SEARCH_PAGE.NO_RESULTS' | translate }}</p>
       <div>
         <a
           *ngIf="filterCount > 0"
@@ -21,7 +22,7 @@
           [queryParams]="{ filters: null, oer: 'NONE' }"
           queryParamsHandling="merge"
           i18n
-          >Search without filters</a
+          >{{ 'WLO_SEARCH.SEARCH_PAGE.SEARCH_WITHOUT_FILTERS' | translate }}</a
         >
       </div>
     </div>

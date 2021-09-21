@@ -1,0 +1,41 @@
+{
+    "WLO_SEARCH": {
+        "ERROR_PAGE": {
+            "HEADLINE": "Oops, something went wrong.",
+            "DETAILS": "Details"
+        },
+        "HEADERBAR": {
+            "FILTERS": "Filters",
+            "EXPERIMENTAL_FEATURES_PREFIX_TEXT": "Try our",
+            "EXPERIMENTAL_FEATURES_LINK_TEXT": "experimental features"
+        },
+        "SEARCH_FIELD": {
+            "PLACEHOLDER": "Find suitable content, tools, and sources for teaching...",
+            "CLEAR": "Clear",
+            "SEARCH": "Search",
+            "CATEGORY_LABEL": {
+                "type": "Type",
+                "educationalContext": "Educational context",
+                "discipline": "Discipline",
+                "keyword": "Keyword",
+                "intendedEndUserRole": "Intended End User Role",
+                "learningResourceType": "Learning Resource Type",
+                "source": "Source"
+            }
+        },
+        "OER_SLIDER": {
+            "LABEL_FULL": "show me only OER",
+            "LABEL_COMPACT": "only OER",
+            "HELP": "help",
+            "HELP_TOOLTIP": "What is OER?"
+        },
+        "EXPERIMENTS_TOGGLES": {
+            "HEADLINE": "Experiments"
+        },
+        "SEARCH_PAGE": {
+            "DID_YOU_MEAN": "Did you mean:",
+            "NO_RESULTS": "No results",
+            "SEARCH_WITHOUT_FILTERS": "Search without filters"
+        }
+    }
+}

@@ -1,18 +1,16 @@
 <ng-container *ngIf="show">
   <div class="slider-container">
     <mat-slide-toggle [(ngModel)]="value" (ngModelChange)="onValueChange($event)">
-      <span class="label-full" i18n>show me only OER</span>
-      <span class="label-compact" i18n>only OER</span>
+      <span class="label-full">{{ 'WLO_SEARCH.OER_SLIDER.LABEL_FULL' | translate }}</span>
+      <span class="label-compact">{{ 'WLO_SEARCH.OER_SLIDER.LABEL_COMPACT' | translate }}</span>
     </mat-slide-toggle>
     <a
       href="{{ wordpressUrl }}/oerverstehen/"
       target="_blank"
       mat-icon-button
-      aria-label="help"
-      i18n-aria-label
+      [attr.aria-label]="'WLO_SEARCH.OER_SLIDER.HELP' | translate"
       class="help-button"
-      matTooltip="What is OER?"
-      i18n-matTooltip
+      [matTooltip]="'WLO_SEARCH.OER_SLIDER.HELP_TOOLTIP' | translate"
     >
       <mat-icon>help</mat-icon>
     </a>

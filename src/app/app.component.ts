@@ -1,4 +1,5 @@
 import { Component, DoCheck, NgZone } from '@angular/core';
+import { LocalizationService } from './localization.service';
 
 @Component({
     selector: 'app-root',
@@ -13,7 +14,10 @@ export class AppComponent implements DoCheck {
     private consecutiveTransgression = 0;
     private checksMonitorInterval: number;
 
-    constructor(ngZone: NgZone) {
+    constructor(
+        ngZone: NgZone,
+        // localization: LocalizationService
+    ) {
         ngZone.runOutsideAngular(() => {
             this.checksMonitorInterval = window.setInterval(() => this.monitorChecks(), 1000);
         });

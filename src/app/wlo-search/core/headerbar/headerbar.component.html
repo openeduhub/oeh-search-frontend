@@ -16,14 +16,17 @@
       [matBadgeHidden]="filterCount === 0"
     >
       <span class="button-wrapper">
-        <span i18n>Filters</span>
+        <span>{{ 'WLO_SEARCH.HEADERBAR.FILTERS' | translate }}</span>
         <mat-icon>tune</mat-icon>
       </span>
     </button>
     <app-oer-slider></app-oer-slider>
   </div>
   <span class="experiments" *ngIf="showExperiments"
-    ><ng-container i18n>Try our </ng-container
-    ><a routerLink="{{ routerPath }}/experiments" i18n>experimental features</a>!</span
+    >{{ 'WLO_SEARCH.HEADERBAR.EXPERIMENTAL_FEATURES_PREFIX_TEXT' | translate }}
+    <a routerLink="{{ routerPath }}/experiments">{{
+      'WLO_SEARCH.HEADERBAR.EXPERIMENTAL_FEATURES_LINK_TEXT' | translate
+    }}</a
+    >!</span
   >
 </div>

@@ -1,0 +1,36 @@
+{
+    "WLO_SEARCH": {
+        "ERROR_PAGE": {
+            "HEADLINE": "Da ist etwas schiefgelaufen.",
+            "DETAILS": "Details"
+        },
+        "HEADERBAR": {
+            "FILTERS": "Filter",
+            "EXPERIMENTAL_FEATURES_PREFIX_TEXT": "Teste unsere",
+            "EXPERIMENTAL_FEATURES_LINK_TEXT": "experimentellen Funktionen"
+        },
+        "SEARCH_FIELD": {
+            "PLACEHOLDER": "Finde die passenden Inhalte, Tools und Quellen für deinen Unterricht...",
+            "CLEAR": "Zurücksetzen",
+            "SEARCH": "Suche",
+            "CATEGORY_LABEL": {
+                "type": "Typ",
+                "educationalContext": "Bildungsumfeld",
+                "discipline": "Fachgebiet",
+                "keyword": "Schlagwort",
+                "intendedEndUserRole": "Zielgruppe",
+                "learningResourceType": "Medienart",
+                "source": "Quelle"
+            }
+        },
+        "OER_SLIDER": {
+            "LABEL_FULL": "zeige mir nur OER",
+            "LABEL_COMPACT": "nur OER",
+            "HELP": "Hilfe",
+            "HELP_TOOLTIP": "Was ist OER?"
+        },
+        "EXPERIMENTS_TOGGLES": {
+            "HEADLINE": "Experimente"
+        }
+    }
+}

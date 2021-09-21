@@ -11,6 +11,8 @@ import { inject, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InMemoryCache } from '@apollo/client/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { APOLLO_NAMED_OPTIONS } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { Observable, of, throwError } from 'rxjs';
@@ -94,6 +96,10 @@ const httpLinkBeacon = (() => {
     return new HttpLink(httpClient);
 })();
 
+export function createTranslateLoader(http: HttpClient) {
+    return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+
 @NgModule({
     declarations: [AppComponent, DummyComponent],
     imports: [
@@ -102,6 +108,14 @@ const httpLinkBeacon = (() => {
         BrowserModule,
         HttpClientModule,
         ApiModule.forRoot({ rootUrl: environment.eduSharingApiUrl }),
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: createTranslateLoader,
+                deps: [HttpClient],
+            },
+            defaultLanguage: 'en',
+        }),
     ],
     providers: [
         httpInterceptorProviders,
