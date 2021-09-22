@@ -4,65 +4,24 @@
 ![](https://github.com/openeduhub/oeh-search-frontend/workflows/Lint/badge.svg)
 ![](https://github.com/openeduhub/oeh-search-frontend/workflows/Cypress/badge.svg)
 
-You need at least a running elasticsearch-relay to use the frontend. See
-https://github.com/openeduhub/oeh-search-elasticsearch-relay.
+You need at least a running Edu-Sharing instance to use the frontend. See
+https://github.com/edu-sharing/Edu-Sharing/.
 
 ## Structure
 
--   app
-    -   api
-    -   wlo-search
-        -   edu-sharing
-        -   core
-            -   components
-                -   footerbar
-                -   headerbar
-                -   menubar
-                -   oer-slider
-                -   search-field
-                -   skip-nav
-                -   error
-            -   services
-                -   config
-                -   error
-                -   page-mode
-                -   search-parameters
-                -   view
-        -   shared
-            -   components
-                -   collection-card
-                -   details
-                -   preview-image
-            -   pipes
-                -   capitalize-first-letter
-                -   duration
-                -   language
-                -   trim
-                -   truncate
-                -   wrap-observable
-        -   pages
-            -   search
-                -   components
-                    -   multivalue-checkbox
-                    -   paginator
-                    -   preview-panel
-                    -   result-card
-                    -   result-card-content-compact
-                    -   result-card-content-standard
-                    -   search-filterbar
-                    -   search-results
-                    -   subjects-portal
-                    -   subjects-portal-section
-                -   services
-                    -   analytics
-                -   pipes
-                    -   generate-filter
-                -   directives
-                    -   report-click
-            -   details
-            -   experiments
-                -   components
-                    -   experiments-toggles
+-   **`app`**
+    -   **`api`**: Auto-generated API service for REST communication to Edu-Sharing.
+    -   **`wlo-search`**: Basically the complete application. Everything that does not necessarily have
+        to go to the actual root component. This was meant for including the application as
+        lazy-loaded route into another app, but we don't do that at the moment.
+        -   **`core`**: The parts of the application that stay alive throughout the application
+            lifetime, including header- and footer components and services.
+        -   **`preferences`**: User-preferences pages, barely used at the moment.
+        -   **`search`**: Search- and details pages, the heart of the application.
+            -   `details-page`
+            -   `search-page`
+            -   `shared`: Shared components of search- and details page.
+        -   shared: Modules, pipes, and directives that are used application-wide.
 
 ## Build
 
@@ -122,7 +81,7 @@ For example, to run your locally built Docker image against the staging environm
 WirLernenOnline, run
 
 ```bash
-docker run --name oeh-search-frontend --rm -ti -p 8080:80 -e RELAY_URL=https://staging.wirlernenonline.de/relay openeduhub/oeh-search-frontend:local
+docker run --name oeh-search-frontend --rm -ti -p 8080:80 -e EDU_SHARING_API_URL=https://redaktion-staging.openeduhub.net/edu-sharing/rest openeduhub/oeh-search-frontend:local
 ```
 
 ### Proxy
