@@ -248,7 +248,7 @@
       <span><ng-container i18n>Author</ng-container>: {{ hit | nodeProperty: 'author' }}</span>
     </div>
   </div>
-  <div class="app-preview-related-items" *ngIf="hit.usedInCollections.length > 0">
+  <div class="app-preview-related-items" *ngIf="usedInCollections$ | async as usedInCollections">
     <h3 class="app-preview-related-items-heading" i18n>Related Topics</h3>
     <div class="app-preview-related-items-carousel-container">
       <button class="app-slick-button app-preview-slick-prev" i18n-aria-label aria-label="previous">
@@ -259,9 +259,8 @@
         class="app-preview-related-items-carousel"
         [config]="slickConfig"
       >
-        <ng-container *ngFor="let collection of hit.usedInCollections">
+        <ng-container *ngFor="let collection of usedInCollections">
           <app-collection-card
-            *ngIf="collection | collectionProperty: 'url'"
             ngxSlickItem
             class="app-preview-related-items-card"
             [collection]="collection"

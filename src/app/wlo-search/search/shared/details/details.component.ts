@@ -1,8 +1,10 @@
 import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { BehaviorSubject, ReplaySubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { ConfigService } from '../../../core/config.service';
 import { ResultNode } from '../../../core/edu-sharing.service';
 import { PageModeService } from '../../../core/page-mode.service';
+import { getCollectionProperty } from '../collection-property.pipe';
 
 @Component({
     selector: 'app-details',
@@ -11,7 +13,7 @@ import { PageModeService } from '../../../core/page-mode.service';
 })
 export class DetailsComponent implements OnDestroy {
     readonly routerPath = this.config.get().routerPath;
-    private hit$ = new BehaviorSubject<ResultNode>(null);
+    private readonly hit$ = new BehaviorSubject<ResultNode>(null);
     @Input()
     public get hit(): ResultNode {
         return this.hit$.value;
@@ -21,6 +23,13 @@ export class DetailsComponent implements OnDestroy {
     }
     @Input() mode: 'dialog' | 'sidebar' | 'page';
     @Output() closeButtonClicked = new EventEmitter<void>();
+
+    readonly usedInCollections$ = this.hit$.pipe(
+        map((hit) =>
+            hit.usedInCollections?.filter((collection) => getCollectionProperty(collection, 'url')),
+        ),
+        map((collections) => (collections?.length === 0 ? null : collections)),
+    );
 
     readonly slickConfig = {
         dots: false,
