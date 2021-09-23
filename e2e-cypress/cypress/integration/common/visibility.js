@@ -53,7 +53,7 @@ Then('I see all recommendations of the editorial department', () => {
 Then('I see search results', () => {
     cy.get('app-search-results').should('be.visible');
     cy.get('app-search-results')
-        .find('div[class="results"]')
+        .find('div[class*="results"]')
         .children('app-result-card')
         .its('length')
         .should('be.gt', 0);

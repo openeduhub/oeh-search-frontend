@@ -5,7 +5,7 @@
   "video": false,
   "screenshotOnRunFailure": true,
   "env": {
-    "relayUrl": "/relay",
+    "apiUrl": "/edu-sharing/rest",
     "languagePrefix": "/de"
   }
 }

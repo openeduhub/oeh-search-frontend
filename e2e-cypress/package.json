@@ -4,9 +4,8 @@
   "description": "e2e frontend tests for wirlernenonline.de",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "cypress:local:open": "cypress open --env languagePrefix=''",
-    "cypress:local:run": "cypress run --env languagePrefix=''",
+    "cypress:local:open": "cypress open --env languagePrefix='',apiUrl=/edu-sharing-api",
+    "cypress:local:run": "cypress run --env languagePrefix='',apiUrl=/edu-sharing-api",
     "cypress:stage:open": "CYPRESS_baseUrl=http://staging.wirlernenonline.de cypress open",
     "cypress:stage:run": "CYPRESS_baseUrl=http://staging.wirlernenonline.de cypress run",
     "cypress:prod:open": "CYPRESS_baseUrl=https://suche.wirlernenonline.de cypress open",
