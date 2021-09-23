@@ -23,7 +23,7 @@ jobs:
         with:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-      - uses: rlespinasse/github-slug-action@v2.x
+      - uses: rlespinasse/github-slug-action@v3.x
       - name: Build the project
         run: |
           npm ci
