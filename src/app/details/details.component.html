@@ -128,6 +128,33 @@
       >
         <ng-container i18n>Embed element</ng-container>
       </button>
+      <button
+        mat-button
+        class="app-preview-panel-button app-preview-panel-report-problem-button"
+        (click)="reportProblem()"
+      >
+        <span class="app-preview-panel-button-wrapper">
+          <ng-container i18n>Report problem</ng-container>
+          <mat-icon>flag</mat-icon>
+        </span>
+      </button>
+    </div>
+    <div
+      *ngIf="reportProblemResult$ | async as result"
+      class="app-details-report-problem-state app-details-report-problem-state-{{ result.state }}"
+    >
+      <mat-progress-spinner
+        [color]="result.state === 'error' ? 'warn' : 'primary'"
+        [mode]="result.state === 'loading' ? 'indeterminate' : 'determinate'"
+        value="100"
+        diameter="30"
+      ></mat-progress-spinner>
+      <span *ngIf="result.state === 'success'" i18n
+        >We received your report. Thank you for your help!</span
+      >
+      <span *ngIf="result.state === 'error'" i18n
+        >Sorry, we couldn't send your report: {{ result.error.message }}</span
+      >
     </div>
     <div
       class="app-preview-panel-metadata app-preview-panel-metadata-icon"

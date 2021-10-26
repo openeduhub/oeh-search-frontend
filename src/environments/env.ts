@@ -1,4 +1,5 @@
 export interface Env {
+    EDU_SHARING_API_URL?: string;
     RELAY_URL?: string;
     WORDPRESS_URL?: string;
     SHOW_EXPERIMENTS?: string;

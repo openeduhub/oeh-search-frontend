@@ -7,7 +7,7 @@ export type WrappedResponse<T> =
     | { state: 'success'; data: T }
     | { state: 'error'; error: any };
 
-function wrapResponse<T>(): UnaryFunction<Observable<T>, Observable<WrappedResponse<T>>> {
+export function wrapResponse<T>(): UnaryFunction<Observable<T>, Observable<WrappedResponse<T>>> {
     return pipe(
         map((data) => ({ state: 'success', data } as WrappedResponse<T>)),
         catchError((error) => of({ state: 'error', error } as WrappedResponse<T>)),

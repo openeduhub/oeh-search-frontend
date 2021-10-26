@@ -1,9 +1,11 @@
 import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
-import { BehaviorSubject, ReplaySubject } from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
 import { filter, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { PageModeService } from '../page-mode.service';
+import { ReportProblemService } from '../report-problem/report-problem.service';
 import { Entry, SearchService } from '../search.service';
 import { Hit } from '../view.service';
+import { WrappedResponse } from '../wrap-observable.pipe';
 
 @Component({
     selector: 'app-details',
@@ -34,10 +36,15 @@ export class DetailsComponent implements OnDestroy {
     author$ = this.hit$.pipe(map((entry) => this.getAuthor(entry)));
     fullEntry$ = new BehaviorSubject<Entry | null>(null);
     showEmbedButton$ = this.pageMode.getPageConfig('showEmbedButton');
+    reportProblemResult$: Observable<WrappedResponse<void>>;
 
     private destroyed$ = new ReplaySubject<void>(1);
 
-    constructor(private search: SearchService, private pageMode: PageModeService) {
+    constructor(
+        private search: SearchService,
+        private pageMode: PageModeService,
+        private reportProblemService: ReportProblemService,
+    ) {
         this.hit$.pipe(takeUntil(this.destroyed$)).subscribe(() => this.reset());
         this.hit$
             .pipe(
@@ -56,6 +63,10 @@ export class DetailsComponent implements OnDestroy {
 
     embed(): void {
         window.parent.postMessage({ type: 'embed', data: { id: this.hit.id }, scope: 'OEH' }, '*');
+    }
+
+    reportProblem(): void {
+        this.reportProblemResult$ = this.reportProblemService.openDialog(this.hit);
     }
 
     private reset(): void {

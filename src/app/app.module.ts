@@ -29,6 +29,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSliderModule } from '@angular/material/slider';
@@ -67,6 +68,7 @@ import { PaginatorComponent } from './paginator/paginator.component';
 import { PreviewImageComponent } from './preview-image/preview-image.component';
 import { PreviewPanelComponent } from './preview-panel/preview-panel.component';
 import { ReportClickDirective } from './report-click.directive';
+import { ReportProblemComponent } from './report-problem/report-problem.component';
 import { ResultCardContentCompactComponent } from './result-card-content-compact/result-card-content-compact.component';
 import { ResultCardContentStandardComponent } from './result-card-content-standard/result-card-content-standard.component';
 import { ResultCardSmallComponent } from './result-card-small/result-card-small.component';
@@ -139,6 +141,7 @@ const httpLinkBeacon = (() => {
         CollectionCardComponent,
         WrapObservablePipe,
         DetailsPageComponent,
+        ReportProblemComponent,
     ],
     imports: [
         A11yModule,
@@ -165,6 +168,7 @@ const httpLinkBeacon = (() => {
         MatMenuModule,
         MatPaginatorModule,
         MatProgressSpinnerModule,
+        MatRadioModule,
         MatRippleModule,
         MatSelectModule,
         MatSliderModule,

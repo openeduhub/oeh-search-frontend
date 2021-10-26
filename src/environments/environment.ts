@@ -8,6 +8,7 @@ declare var window: ExtendedWindow;
 
 export const environment = {
     production: false,
+    eduSharingApiUrl: window.__env?.EDU_SHARING_API_URL ?? '/edu-sharing-api',
     relayUrl: window.__env?.RELAY_URL ?? '/relay',
     wordpressUrl: window.__env?.WORDPRESS_URL ?? 'https://dev.wirlernenonline.de',
     showExperiments: readBoolean(window.__env?.SHOW_EXPERIMENTS, true),
