@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ResultNode } from '../../../core/edu-sharing.service';
+import { Node } from 'ngx-edu-sharing-api';
 
 @Component({
     selector: 'app-badges',
@@ -7,7 +7,7 @@ import { ResultNode } from '../../../core/edu-sharing.service';
     styleUrls: ['./badges.component.scss'],
 })
 export class BadgesComponent {
-    @Input() hit: ResultNode;
+    @Input() hit: Node;
     @Input() orientation: 'horizontal' | 'vertical';
 
     constructor() {}

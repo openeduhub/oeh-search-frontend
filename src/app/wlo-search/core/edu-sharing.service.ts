@@ -1,36 +1,25 @@
 import { Injectable } from '@angular/core';
-import * as rxjs from 'rxjs';
+import {
+    FacetsDict,
+    MdsIdentifier,
+    MdsLabelService,
+    Node,
+    NodeService,
+    SearchRequestParams,
+    SearchResults,
+    SearchService,
+} from 'ngx-edu-sharing-api';
 import { Observable, ReplaySubject } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
-import * as apiModels from '../../api/models';
-import { NodeV1Service, SearchV1Service } from '../../api/services';
+import { shareReplay } from 'rxjs/operators';
 import { facetProperties } from './facet-properties';
 import { ParsedParams, SearchParametersService } from './search-parameters.service';
-import { ValueMappingService } from './value-mapping.service';
 
-export type SearchResults = Pick<apiModels.SearchResultNode, 'nodes' | 'pagination'>;
-export type ResultNode = apiModels.Node;
-export type Collection = ArrayElement<ResultNode['usedInCollections']>;
+export type Collection = ArrayElement<Node['usedInCollections']>;
 
 type ArrayElement<ArrayType extends readonly unknown[]> =
     ArrayType extends readonly (infer ElementType)[] ? ElementType : never;
 
 export type Facet = keyof typeof facetProperties;
-
-export interface FacetValue {
-    count: number;
-    id: string;
-    displayName: string;
-}
-
-interface FacetAggregation {
-    // TODO: pagination information
-    values: FacetValue[];
-}
-
-export type Facets = {
-    [facet in Facet]: FacetAggregation;
-};
 
 export type Filters = {
     [key in Facet]?: string[];
@@ -49,39 +38,75 @@ export class EduSharingService {
     static readonly metadataSet = 'mds_oeh';
     private static readonly searchQuery = 'ngsearch';
 
-    private readonly searchResponse$ = new ReplaySubject<apiModels.SearchResultNode>(1);
-    private readonly facets$ = new ReplaySubject<Facets>(1);
+    private readonly facets$ = this.searchService
+        .getFacets(Object.values(facetProperties), { includeActiveFilters: true })
+        .pipe(shareReplay(1));
     private didYouMeanSuggestion$ = new ReplaySubject<DidYouMeanSuggestion>(1);
 
     constructor(
         private searchParameters: SearchParametersService,
-        private searchV1: SearchV1Service,
-        private nodeV1: NodeV1Service,
-        private valueMapping: ValueMappingService,
+        private searchService: SearchService,
+        private nodeService: NodeService,
+        private mdsLabelService: MdsLabelService,
     ) {
-        this.searchResponse$
-            .pipe(switchMap(({ facettes }) => this.mapFacets(facettes)))
-            .subscribe((facets) => this.facets$.next(facets));
-        this.searchResponse$
-            .pipe(map((response) => this.mapDidYouMeanSuggestion(response)))
-            .subscribe((didYouMeanSuggestion) =>
-                this.didYouMeanSuggestion$.next(didYouMeanSuggestion),
-            );
+        // Subscribe to facets early, so required facets will be fetched with the search request.
+        this.facets$.subscribe();
     }
 
+    /**
+     * Sends a search request with current params and updates facets.
+     */
     search(): Observable<SearchResults> {
-        return this.searchByParams(this.searchParameters.getCurrentValue()).pipe(
-            tap((response) => this.searchResponse$.next(response)),
-            map(({ nodes, pagination }) => ({ nodes, pagination })),
+        const requestParams = this.getSearchRequestParams(this.searchParameters.getCurrentValue());
+        return this.searchService.search(requestParams);
+    }
+
+    /**
+     * Sends a search request with custom params without updating facets.
+     */
+    requestSearch(params: ParsedParams): Observable<SearchResults> {
+        const requestParams = this.getSearchRequestParams(params);
+        return this.searchService.requestSearch(requestParams);
+    }
+
+    getNode(id: string): Observable<Node> {
+        return this.nodeService.getNode(EduSharingService.repository, id);
+    }
+
+    getFacets(): Observable<FacetsDict> {
+        return this.facets$;
+    }
+
+    loadMoreFacetValues(facet: Facet, size: number): void {
+        this.searchService.loadMoreFacets(facetProperties[facet], size);
+    }
+
+    getFacetSuggestions(inputString: string): Observable<FacetsDict> {
+        return this.searchService.getAsYouTypeFacetSuggestions(
+            inputString,
+            Object.values(facetProperties),
+            5,
         );
     }
 
-    searchByParams(
-        params: ParsedParams,
-        { fetchFacets = true } = {},
-    ): Observable<apiModels.SearchResultNode> {
+    getDidYouMeanSuggestion(): Observable<DidYouMeanSuggestion> {
+        return this.didYouMeanSuggestion$.asObservable();
+    }
+
+    getDisplayName(property: string, key: string): Observable<string> {
+        return this.mdsLabelService.getLabel(this.getMdsIdentifier(), property, key);
+    }
+
+    private getMdsIdentifier(): MdsIdentifier {
+        return {
+            repository: EduSharingService.repository,
+            metadataSet: EduSharingService.metadataSet,
+        };
+    }
+
+    private getSearchRequestParams(params: ParsedParams): SearchRequestParams {
         const { searchString, pageIndex, pageSize, filters, oer } = params;
-        return this.searchV1.searchV2({
+        return {
             repository: EduSharingService.repository,
             metadataset: EduSharingService.metadataSet,
             query: EduSharingService.searchQuery,
@@ -93,48 +118,19 @@ export class EduSharingService {
             propertyFilter: ['-all-'],
             body: {
                 criterias: this.getSearchCriteria(searchString, filters, oer),
-                facettes: fetchFacets ? Object.values(facetProperties) : [],
+                facettes: [],
                 resolveCollections: true,
+                facetLimit: 20,
+                facetMinCount: 1,
             },
-        });
-    }
-
-    getNode(id: string): Observable<ResultNode> {
-        return this.nodeV1
-            .getMetadata({
-                repository: EduSharingService.repository,
-                node: id,
-                propertyFilter: ['-all-'],
-            })
-            .pipe(map((nodeEntry) => nodeEntry.node));
-    }
-
-    getFacets(): Observable<Facets> {
-        return this.facets$.asObservable();
-    }
-
-    getFacetSuggestions(inputString: string): Observable<Facets> {
-        // This is a placeholder implementation with non-final results.
-        const params = {
-            ...this.searchParameters.getCurrentValue(),
-            pageSize: 0,
-            pageIndex: 0,
-            searchString: inputString,
         };
-        return this.searchByParams(params).pipe(
-            switchMap((result) => this.mapFacets(result.facettes)),
-        );
-    }
-
-    getDidYouMeanSuggestion(): Observable<DidYouMeanSuggestion> {
-        return this.didYouMeanSuggestion$.asObservable();
     }
 
     private getSearchCriteria(
         searchString: string,
         filters: Filters,
         oer: ParsedParams['oer'],
-    ): apiModels.SearchParameters['criterias'] {
+    ): SearchRequestParams['body']['criterias'] {
         return [
             ...this.mapSearchString(searchString),
             ...this.mapFilters(filters),
@@ -142,36 +138,12 @@ export class EduSharingService {
         ];
     }
 
-    private mapFacets(
-        searchResultFacets: apiModels.SearchResultNode['facettes'],
-    ): Observable<Facets> {
-        return rxjs.forkJoin(
-            mapObjectValues(facetProperties, (property) =>
-                this.mapFacet(searchResultFacets.find((f) => f.property === property)),
-            ),
-        );
-    }
-
-    private mapFacet(searchResultFacet: apiModels.Facette): Observable<FacetAggregation> {
-        if (searchResultFacet.values.length === 0) {
-            return rxjs.of({ values: [] });
-        }
-        const values$ = rxjs.forkJoin(
-            searchResultFacet.values.map(({ count, value: id }) =>
-                this.valueMapping
-                    .getDisplayName(searchResultFacet.property, id)
-                    .pipe(map((displayName) => ({ count, id, displayName }))),
-            ),
-        );
-        return values$.pipe(map((values) => ({ values })));
-    }
-
-    private mapDidYouMeanSuggestion(response: apiModels.SearchResultNode): DidYouMeanSuggestion {
+    private mapDidYouMeanSuggestion(response: SearchResults): DidYouMeanSuggestion {
         // return { plain: 'Foo bar', html: '<em>Foo</em> bar' };
         return null;
     }
 
-    private mapSearchString(searchString: string): apiModels.SearchParameters['criterias'] {
+    private mapSearchString(searchString: string): SearchRequestParams['body']['criterias'] {
         if (searchString) {
             return [{ property: 'ngsearchword', values: [searchString] }];
         } else {
@@ -179,14 +151,14 @@ export class EduSharingService {
         }
     }
 
-    private mapFilters(filters: Filters): apiModels.SearchParameters['criterias'] {
+    private mapFilters(filters: Filters): SearchRequestParams['body']['criterias'] {
         return Object.entries(filters).map(([facet, values]) => ({
             property: facetProperties[facet as Facet],
             values,
         }));
     }
 
-    private mapOer(oer: ParsedParams['oer']): apiModels.SearchParameters['criterias'] {
+    private mapOer(oer: ParsedParams['oer']): SearchRequestParams['body']['criterias'] {
         switch (oer) {
             case 'ALL':
                 return [{ property: 'license', values: ['OPEN', 'CC_BY_OPEN'] }];
@@ -194,14 +166,4 @@ export class EduSharingService {
                 return [];
         }
     }
-}
-
-function mapObjectValues<T, R>(
-    obj: { [key: string]: T },
-    mapFn: (value: T) => R,
-): { [key: string]: R } {
-    return Object.entries(obj).reduce((result, [key, value]) => {
-        result[key] = mapFn(value);
-        return result;
-    }, {} as { [key: string]: R });
 }

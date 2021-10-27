@@ -1,11 +1,11 @@
 <div [style.grid-template-columns]="'repeat(' + columns + ', auto)'">
   <mat-checkbox
     *ngFor="let bucket of buckets"
-    (change)="toggleValue(bucket.id, $event)"
-    [checked]="values.indexOf(bucket.id) != -1"
-    [class.checked]="values.indexOf(bucket.id) != -1"
+    (change)="toggleValue(bucket.value, $event)"
+    [checked]="values.indexOf(bucket.value) != -1"
+    [class.checked]="values.indexOf(bucket.value) != -1"
   >
-    <span class="label">{{ bucket.displayName }}</span>
+    <span class="label">{{ bucket.label }}</span>
     <span class="count" *ngIf="showCount">{{ bucket.count }}</span>
   </mat-checkbox>
 </div>

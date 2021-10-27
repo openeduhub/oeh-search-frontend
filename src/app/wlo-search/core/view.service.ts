@@ -1,10 +1,10 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Injectable } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
+import { Node } from 'ngx-edu-sharing-api';
 import * as rxjs from 'rxjs';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { distinctUntilChanged, filter, map, shareReplay, skip } from 'rxjs/operators';
-import { ResultNode } from './edu-sharing.service';
 import { PageModeService } from './page-mode.service';
 
 export type ResultCardStyle = 'standard' | 'compact';
@@ -35,7 +35,7 @@ export class ViewService {
      * When an item is selected, it is highlighted and depending on the screen size, previewed in a
      * sidebar or a dialog. Unselecting the item means closing the preview.
      */
-    private selectedItemSubject = new BehaviorSubject<ResultNode | null>(null);
+    private selectedItemSubject = new BehaviorSubject<Node | null>(null);
     private showPreviewPanel$ = this.selectedItemSubject.pipe(
         map((item) => !!item),
         distinctUntilChanged(),
@@ -139,7 +139,7 @@ export class ViewService {
         localStorage.setItem('experiments', JSON.stringify(experiments));
     }
 
-    selectItem(item: ResultNode): void {
+    selectItem(item: Node): void {
         this.selectedItemSubject.next(item);
     }
 
@@ -147,7 +147,7 @@ export class ViewService {
         this.selectedItemSubject.next(null);
     }
 
-    getSelectedItem(): Observable<ResultNode | null> {
+    getSelectedItem(): Observable<Node | null> {
         return this.selectedItemSubject.asObservable();
     }
 

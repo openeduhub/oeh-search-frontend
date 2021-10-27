@@ -215,16 +215,6 @@ features for GraphQL queries in VSCode.
 ext install apollographql.vscode-apollo
 ```
 
-## Rest
-
-### Update And Generate Edu-Sharing API Code
-
-```sh
-SWAGGER_URL=<swagger_json_url> npm run generate-api
-# For example
-SWAGGER_URL=https://redaktion-staging.openeduhub.net/edu-sharing/rest/swagger.json npm run generate-api
-```
-
 ## TODO
 
 -   Enable strict type checking

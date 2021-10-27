@@ -1,9 +1,9 @@
 import { Inject, Injectable, Optional } from '@angular/core';
-import { empty, Observable, of, Subject } from 'rxjs';
+import { Node } from 'ngx-edu-sharing-api';
+import { EMPTY, Observable, of, Subject } from 'rxjs';
 import { filter, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { ClickKind, LifecycleEvent, TelemetryApi, TELEMETRY_API } from '../telemetry-api';
 import { ConfigService } from './config.service';
-import { ResultNode } from './edu-sharing.service';
 import { SearchParametersService } from './search-parameters.service';
 import { ViewService } from './view.service';
 
@@ -56,7 +56,7 @@ export class AnalyticsService {
                 });
             this.registerLifecycleEventListeners();
         } else {
-            this.sessionId = empty();
+            this.sessionId = EMPTY;
         }
     }
 
@@ -79,7 +79,7 @@ export class AnalyticsService {
         }
     }
 
-    reportResultClick(args: { clickedResult: ResultNode; clickKind: ClickKind }): void {
+    reportResultClick(args: { clickedResult: Node; clickKind: ClickKind }): void {
         if (this.telemetryApi) {
             const filteredClickedResult = omitDeep(args.clickedResult, [
                 '__typename',

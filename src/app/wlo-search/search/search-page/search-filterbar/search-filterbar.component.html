@@ -67,17 +67,17 @@
         </mat-expansion-panel-header>
         <app-multivalue-checkbox
           [formControlName]="key"
-          [buckets]="facets[key].values"
+          [buckets]="facets[key]?.values"
         ></app-multivalue-checkbox>
-        <!-- <button
+        <button
           mat-button
           color="primary"
           class="show-more-button"
-          *ngIf="facets[key].values.length < facets[key].total_buckets"
+          *ngIf="facets[key].hasMore"
           (click)="loadMoreFacetBuckets(key)"
         >
           <ng-container i18n>show more</ng-container><mat-icon>keyboard_arrow_down</mat-icon>
-        </button> -->
+        </button>
       </mat-expansion-panel>
     </mat-accordion>
   </div>

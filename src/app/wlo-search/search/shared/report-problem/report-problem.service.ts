@@ -1,15 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Node } from 'ngx-edu-sharing-api';
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { environment } from '../../../../../environments/environment';
-import { ResultNode } from '../../../core/edu-sharing.service';
 import { WrappedResponse, wrapResponse } from '../wrap-observable.pipe';
 import { ReportProblemComponent } from './report-problem.component';
 
 export interface DialogData {
-    element: ResultNode;
+    element: Node;
 }
 
 export const problemKinds = {
@@ -33,7 +33,7 @@ const eduSharingRepository = 'local';
 export class ReportProblemService {
     constructor(private dialog: MatDialog, private httpClient: HttpClient) {}
 
-    openDialog(element: ResultNode): Observable<WrappedResponse<void> | null> {
+    openDialog(element: Node): Observable<WrappedResponse<void> | null> {
         const dialogRef = this.dialog.open(ReportProblemComponent, {
             width: '600px',
             maxHeight: '100vh',
@@ -53,7 +53,7 @@ export class ReportProblemService {
         );
     }
 
-    private sendReport(element: ResultNode, data: ResultData): Observable<void> {
+    private sendReport(element: Node, data: ResultData): Observable<void> {
         return this.apiSendReport(eduSharingRepository, element.ref.id, {
             reason: `${problemKinds[data.problemKind]} (${data.problemKind})`,
             userComment: data.message,

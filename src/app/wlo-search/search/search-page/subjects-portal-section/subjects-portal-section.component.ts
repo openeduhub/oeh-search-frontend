@@ -8,11 +8,12 @@ import {
     OnDestroy,
     ViewChild,
 } from '@angular/core';
+import { Node } from 'ngx-edu-sharing-api';
 import { SlickCarouselComponent } from 'ngx-slick-carousel';
 import { ReplaySubject } from 'rxjs';
 import { delay, distinctUntilChanged, map, takeUntil } from 'rxjs/operators';
 import { ConfigService } from '../../../core/config.service';
-import { Filters, ResultNode } from '../../../core/edu-sharing.service';
+import { Filters } from '../../../core/edu-sharing.service';
 import { ViewService } from '../../../core/view.service';
 
 @Component({
@@ -29,7 +30,7 @@ export class SubjectsPortalSectionComponent implements OnDestroy, AfterViewInit 
         slidesToScroll: 4,
     };
 
-    @Input() hits: ResultNode[];
+    @Input() hits: Node[];
     @Input() filters: Filters;
 
     @ViewChild(SlickCarouselComponent) slickCarousel: SlickCarouselComponent;

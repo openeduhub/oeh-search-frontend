@@ -1,6 +1,7 @@
 import { Component, Input, ViewChild } from '@angular/core';
+import { Node } from 'ngx-edu-sharing-api';
+import { Filters } from '../../../core/edu-sharing.service';
 import { ViewService } from '../../../core/view.service';
-import { Filters, ResultNode } from '../../../core/edu-sharing.service';
 
 @Component({
     selector: 'app-result-card-content-compact',
@@ -8,7 +9,7 @@ import { Filters, ResultNode } from '../../../core/edu-sharing.service';
     styleUrls: ['./result-card-content-compact.component.scss'],
 })
 export class ResultCardContentCompactComponent {
-    @Input() hit: ResultNode;
+    @Input() hit: Node;
     @Input() filters: Filters;
     @ViewChild('cardButton') cardButton: HTMLButtonElement;
 

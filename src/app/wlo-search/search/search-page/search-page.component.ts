@@ -1,20 +1,16 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Subject, Subscription } from 'rxjs';
+import { SearchResults } from 'ngx-edu-sharing-api';
+import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
+import { AnalyticsService } from '../../core/analytics.service';
 import { ConfigService } from '../../core/config.service';
-import {
-    DidYouMeanSuggestion,
-    EduSharingService,
-    Facet,
-    SearchResults,
-} from '../../core/edu-sharing.service';
+import { DidYouMeanSuggestion, EduSharingService, Facet } from '../../core/edu-sharing.service';
 import { PageModeService } from '../../core/page-mode.service';
 import { ResolveService } from '../../core/resolve.service';
 import { SearchParametersService } from '../../core/search-parameters.service';
 import { ResultCardStyle, ViewService } from '../../core/view.service';
-import { AnalyticsService } from '../../core/analytics.service';
 import { SearchPageResolverService } from './search-page-resolver.service';
 import { SearchResultsService } from './search-results/search-results.service';
 
@@ -37,7 +33,6 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     readonly searchResultsStyle$ = this.pageMode.getPageConfig('searchResultsStyle');
     readonly wordpressUrl = this.config.get().wordpressUrl;
 
-    private subscriptions: Subscription[] = [];
     private readonly destroyed$ = new Subject<void>();
 
     constructor(
@@ -54,18 +49,18 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
-        this.subscriptions.push(
-            this.eduSharing
-                .getDidYouMeanSuggestion()
-                .subscribe(
-                    (didYouMeanSuggestion) => (this.didYouMeanSuggestion = didYouMeanSuggestion),
-                ),
-        );
-        this.subscriptions.push(
-            this.view.getShowFilterBar().subscribe((value) => {
+        this.eduSharing
+            .getDidYouMeanSuggestion()
+            .pipe(takeUntil(this.destroyed$))
+            .subscribe(
+                (didYouMeanSuggestion) => (this.didYouMeanSuggestion = didYouMeanSuggestion),
+            );
+        this.view
+            .getShowFilterBar()
+            .pipe(takeUntil(this.destroyed$))
+            .subscribe((value) => {
                 this.showFilterBar = value;
-            }),
-        );
+            });
         this.searchParameters
             .get()
             .pipe(
@@ -80,39 +75,33 @@ export class SearchPageComponent implements OnInit, OnDestroy {
                 if (this.results) {
                     this.resultPageNumbers = this.getResultPageNumbers();
                 }
-            }),
-            // this.route.data.subscribe((data: { searchData: SearchResults }) => {
-            //     this.results = data.searchData;
-            this.resolve
-                .resolve(this.resolver, this.route)
-                .pipe(takeUntil(this.destroyed$))
-                .subscribe((results) => {
-                    this.results = results;
-                    this.searchResults.results.next(this.results);
-                    this.resultPageNumbers = this.getResultPageNumbers();
-                    this.analyticsService.reportSearchRequest({
-                        numberResults: this.results.pagination.total,
-                    });
-                    // TODO: switch to tab 0 even if the user clicks on "show more" on the currently active
-                    // filter.
-                    this.view.searchTabSubject.next(0);
+            });
+        // this.route.data.subscribe((data: { searchData: SearchResults }) => {
+        //     this.results = data.searchData;
+        this.resolve
+            .resolve(this.resolver, this.route)
+            .pipe(takeUntil(this.destroyed$))
+            .subscribe((results) => {
+                this.results = results;
+                this.searchResults.results.next(this.results);
+                this.resultPageNumbers = this.getResultPageNumbers();
+                this.analyticsService.reportSearchRequest({
+                    numberResults: this.results.pagination.total,
                 });
-        this.subscriptions.push(
-            this.view
-                .getResultCardStyle()
-                .subscribe((resultCardStyle) => (this.resultCardStyle = resultCardStyle)),
-        );
-        this.subscriptions.push(
-            this.view.searchTabSubject.subscribe((searchTab) =>
-                this.selectedTab.setValue(searchTab),
-            ),
-        );
+                // TODO: switch to tab 0 even if the user clicks on "show more" on the currently active
+                // filter.
+                this.view.searchTabSubject.next(0);
+            });
+        this.view
+            .getResultCardStyle()
+            .pipe(takeUntil(this.destroyed$))
+            .subscribe((resultCardStyle) => (this.resultCardStyle = resultCardStyle));
+        this.view.searchTabSubject
+            .pipe(takeUntil(this.destroyed$))
+            .subscribe((searchTab) => this.selectedTab.setValue(searchTab));
     }
 
     ngOnDestroy(): void {
-        for (const subscription of this.subscriptions) {
-            subscription.unsubscribe();
-        }
         this.destroyed$.next();
         this.destroyed$.complete();
     }

@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core
 import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ConfigService } from '../../../core/config.service';
-import { ResultNode } from '../../../core/edu-sharing.service';
+import { Node } from 'ngx-edu-sharing-api';
 import { PageModeService } from '../../../core/page-mode.service';
 import { getCollectionProperty } from '../collection-property.pipe';
 import { ReportProblemService } from '../report-problem/report-problem.service';
@@ -15,12 +15,12 @@ import { WrappedResponse } from '../wrap-observable.pipe';
 })
 export class DetailsComponent implements OnDestroy {
     readonly routerPath = this.config.get().routerPath;
-    private readonly hit$ = new BehaviorSubject<ResultNode>(null);
+    private readonly hit$ = new BehaviorSubject<Node>(null);
     @Input()
-    public get hit(): ResultNode {
+    public get hit(): Node {
         return this.hit$.value;
     }
-    public set hit(value: ResultNode) {
+    public set hit(value: Node) {
         this.hit$.next(value);
     }
     @Input() mode: 'dialog' | 'sidebar' | 'page';

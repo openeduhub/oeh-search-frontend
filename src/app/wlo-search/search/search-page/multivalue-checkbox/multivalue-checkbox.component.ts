@@ -1,7 +1,7 @@
 import { Component, forwardRef, Input } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { MatCheckboxChange } from '@angular/material/checkbox';
-import { FacetValue } from '../../../core/edu-sharing.service';
+import { FacetValue } from 'ngx-edu-sharing-api';
 
 @Component({
     selector: 'app-multivalue-checkbox',

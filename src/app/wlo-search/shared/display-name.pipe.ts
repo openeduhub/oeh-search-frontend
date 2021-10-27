@@ -1,9 +1,8 @@
 import { ChangeDetectorRef, Pipe, PipeTransform } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { filter, switchMap } from 'rxjs/operators';
-import { Facet } from '../core/edu-sharing.service';
+import { EduSharingService, Facet } from '../core/edu-sharing.service';
 import { facetProperties } from '../core/facet-properties';
-import { ValueMappingService } from '../core/value-mapping.service';
 
 @Pipe({
     name: 'displayName',
@@ -17,7 +16,7 @@ export class DisplayNamePipe implements PipeTransform {
     private displayName: string;
     private readonly inputSubject = new BehaviorSubject<{ facet: Facet; value: string }>(null);
 
-    constructor(private ref: ChangeDetectorRef, private valueMapping: ValueMappingService) {
+    constructor(private ref: ChangeDetectorRef, private eduSharing: EduSharingService) {
         this.registerInputSubject();
     }
 
@@ -33,7 +32,7 @@ export class DisplayNamePipe implements PipeTransform {
             .pipe(
                 filter((input) => input !== null),
                 switchMap(({ facet, value }) =>
-                    this.valueMapping.getDisplayName(facetProperties[facet], value),
+                    this.eduSharing.getDisplayName(facetProperties[facet], value),
                 ),
             )
             .subscribe((displayName) => {

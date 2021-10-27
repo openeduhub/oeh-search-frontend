@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
+import { SearchResults } from 'ngx-edu-sharing-api';
 import { Observable } from 'rxjs';
+import { EduSharingService } from '../../core/edu-sharing.service';
 import { SearchParametersService } from '../../core/search-parameters.service';
-import { EduSharingService, SearchResults } from '../../core/edu-sharing.service';
-import { SearchModule } from '../search.module';
 
 @Injectable()
 export class SearchPageResolverService implements Resolve<SearchResults> {

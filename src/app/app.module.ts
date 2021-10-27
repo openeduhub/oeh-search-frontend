@@ -21,7 +21,6 @@ import {
     ReportResultClickGQL,
     ReportSearchRequestGQL,
 } from 'src/generated/graphql';
-import { ApiModule } from './api/api.module';
 import { AppRoutingModule, ROOT_PATH, WLO_SEARCH_PATH_COMPONENT } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CachingInterceptor } from './caching.interceptor';
@@ -29,6 +28,7 @@ import { LanguageHeaderInterceptor } from './language-header.interceptor';
 import { TelemetryApiWrapper } from './telemetry-api-wrapper';
 import { TELEMETRY_API } from './wlo-search/telemetry-api';
 import { WloSearchConfig, WLO_SEARCH_CONFIG } from './wlo-search/wlo-search-config';
+import { EduSharingApiModule } from 'ngx-edu-sharing-api';
 
 const wloSearchConfig: WloSearchConfig = {
     routerPath: ROOT_PATH + WLO_SEARCH_PATH_COMPONENT,
@@ -100,7 +100,7 @@ const httpLinkBeacon = (() => {
         BrowserAnimationsModule,
         BrowserModule,
         HttpClientModule,
-        ApiModule.forRoot({ rootUrl: environment.eduSharingApiUrl }),
+        EduSharingApiModule.forRoot({ rootUrl: environment.eduSharingApiUrl }),
     ],
     providers: [
         httpInterceptorProviders,

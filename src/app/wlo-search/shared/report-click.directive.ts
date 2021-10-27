@@ -1,13 +1,13 @@
 import { Directive, HostListener, Input } from '@angular/core';
 import { AnalyticsService } from '../core/analytics.service';
-import { ResultNode } from '../core/edu-sharing.service';
+import { Node } from 'ngx-edu-sharing-api';
 import { ClickKind } from '../telemetry-api';
 
 @Directive({
     selector: '[appReportClick]',
 })
 export class ReportClickDirective {
-    @Input('appReportClick') hit: ResultNode;
+    @Input('appReportClick') hit: Node;
 
     constructor(private analytics: AnalyticsService) {}
 

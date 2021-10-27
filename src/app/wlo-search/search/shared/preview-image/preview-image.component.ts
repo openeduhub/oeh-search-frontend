@@ -1,7 +1,7 @@
 import { Component, ElementRef, Input, OnInit } from '@angular/core';
-import { ResultNode } from '../../../core/edu-sharing.service';
+import { Node } from 'ngx-edu-sharing-api';
 
-type PreviewImage = ResultNode['preview'];
+type PreviewImage = Node['preview'];
 
 @Component({
     // Augment the built-in <img> element.

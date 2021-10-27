@@ -1,5 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Collection, ResultNode } from '../../core/edu-sharing.service';
+import { Node } from 'ngx-edu-sharing-api';
+import { Collection } from '../../core/edu-sharing.service';
 
 export type CollectionType = 'EDITORIAL';
 
@@ -11,7 +12,7 @@ export function collectionHasType(collection: Collection, type: CollectionType):
     name: 'inCollectionWithType',
 })
 export class InCollectionWithTypePipe implements PipeTransform {
-    transform(value: ResultNode, type: CollectionType): boolean {
+    transform(value: Node, type: CollectionType): boolean {
         return value.usedInCollections.some((collection) => collectionHasType(collection, type));
     }
 }

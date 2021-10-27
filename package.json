@@ -17,10 +17,6 @@
     "extract-i18n": "ng extract-i18n oeh-search-frontend --output-path src/locale && ng run oeh-search-frontend:xliffmerge",
     "start-de": "ng serve --configuration=de",
     "generate": "graphql-codegen",
-    "generate-api:update-openapi-yaml": "cd build/api-gen && ./generate.sh",
-    "generate-api:generate-code": "ng-openapi-gen --input build/api-gen/openapi.yaml",
-    "generate-api:format": "prettier -w src/app/api",
-    "generate-api": "npm run generate-api:update-openapi-yaml && npm run generate-api:generate-code && npm run generate-api:format",
     "postinstall": "ngcc --tsconfig ./tsconfig.app.json",
     "analyze-bundle": "ng build --stats-json && webpack-bundle-analyzer ./dist/oeh-search-frontend/stats.json"
   },

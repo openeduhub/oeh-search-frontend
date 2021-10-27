@@ -2,10 +2,12 @@ import { CdkConnectedOverlay, ConnectedPosition } from '@angular/cdk/overlay';
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { FacetsDict } from 'ngx-edu-sharing-api';
 import { combineLatest, Subject } from 'rxjs';
 import { debounceTime, filter, startWith, switchMap, takeUntil } from 'rxjs/operators';
-import { EduSharingService, Facet, Facets, Filters } from '../edu-sharing.service';
 import { ConfigService } from '../config.service';
+import { EduSharingService, Facet, Filters } from '../edu-sharing.service';
+import { facetProperties } from '../facet-properties';
 import { SearchParametersService } from '../search-parameters.service';
 
 type Suggestions = { [key in Facet]?: string[] };
@@ -140,14 +142,15 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
         this.onSubmit();
     }
 
-    private updateSuggestions(facets: Facets): void {
+    private updateSuggestions(facets: FacetsDict): void {
         if (!facets) {
             this.hasSuggestions = false;
             this.suggestions = {};
         } else {
             const suggestions: Suggestions = {};
             for (const category of this.categories) {
-                suggestions[category] = facets[category]?.values.map((bucket) => bucket.id);
+                const property = facetProperties[category];
+                suggestions[category] = facets[property]?.values.map((bucket) => bucket.value);
             }
             this.hasSuggestions = Object.values(suggestions).some((entries) => entries.length > 0);
             this.suggestions = suggestions;

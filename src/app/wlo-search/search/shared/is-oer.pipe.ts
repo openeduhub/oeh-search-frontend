@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { ResultNode } from '../../core/edu-sharing.service';
+import { Node } from 'ngx-edu-sharing-api';
 
 enum CommonLicenseKey {
     CC_BY = 'CC_BY',
@@ -29,7 +29,7 @@ export class IsOerPipe implements PipeTransform {
         },
     ];
 
-    transform(node: ResultNode): unknown {
+    transform(node: Node): unknown {
         return this.sufficientValues.some((sufficientValue) =>
             node.properties[sufficientValue.property]?.some((term) =>
                 sufficientValue.terms.includes(term),

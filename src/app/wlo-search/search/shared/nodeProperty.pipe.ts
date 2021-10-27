@@ -1,6 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { Node } from 'ngx-edu-sharing-api';
 import { ConfigService } from '../../core/config.service';
-import { Collection, ResultNode } from '../../core/edu-sharing.service';
+import { Collection } from '../../core/edu-sharing.service';
 import { collectionHasType } from './in-collection-with-type.pipe';
 
 export interface IdentifiedValue {
@@ -13,28 +14,27 @@ export interface IdentifiedValue {
 })
 export class NodePropertyPipe implements PipeTransform {
     private readonly propertyMappings = {
-        title: (node: ResultNode) =>
+        title: (node: Node) =>
             node.properties['cclom:title']?.[0] || node.properties['cm:name']?.[0],
-        description: (node: ResultNode) => node.properties['cclom:general_description']?.[0],
-        author: (node: ResultNode) => this.getAuthor(node),
-        url: (node: ResultNode) => node.properties['ccm:wwwurl']?.[0] ?? node.content.url,
-        source: (node: ResultNode) => this.zipDisplayNames(node, 'ccm:replicationsource')?.[0],
-        sourceUrl: (node: ResultNode) => 'http://example.org/TODO',
-        license: (node: ResultNode) => this.getLicense(node),
-        mimeType: (node: ResultNode) => node.mediatype,
-        isExternal: (node: ResultNode) => !!node.properties['ccm:wwwurl'],
-        duration: (node: ResultNode) => this.parseInt(node.properties['cclom:duration']?.[0]),
-        language: (node: ResultNode) => node.properties['cclom:general_language'],
-        learningResourceType: (node: ResultNode) =>
+        description: (node: Node) => node.properties['cclom:general_description']?.[0],
+        author: (node: Node) => this.getAuthor(node),
+        url: (node: Node) => node.properties['ccm:wwwurl']?.[0] ?? node.content.url,
+        source: (node: Node) => this.zipDisplayNames(node, 'ccm:replicationsource')?.[0],
+        sourceUrl: (node: Node) => 'http://example.org/TODO',
+        license: (node: Node) => this.getLicense(node),
+        mimeType: (node: Node) => node.mediatype,
+        isExternal: (node: Node) => !!node.properties['ccm:wwwurl'],
+        duration: (node: Node) => this.parseInt(node.properties['cclom:duration']?.[0]),
+        language: (node: Node) => node.properties['cclom:general_language'],
+        learningResourceType: (node: Node) =>
             this.aggregateProperty(node, 'ccm:educationallearningresourcetype'),
-        discipline: (node: ResultNode) => this.aggregateProperty(node, 'ccm:taxonid'),
-        educationalContext: (node: ResultNode) =>
-            this.aggregateProperty(node, 'ccm:educationalcontext'),
-        widget: (node: ResultNode) => this.aggregateProperty(node, 'ccm:oeh_widgets'),
-        conditionsOfAccess: (node: ResultNode) =>
+        discipline: (node: Node) => this.aggregateProperty(node, 'ccm:taxonid'),
+        educationalContext: (node: Node) => this.aggregateProperty(node, 'ccm:educationalcontext'),
+        widget: (node: Node) => this.aggregateProperty(node, 'ccm:oeh_widgets'),
+        conditionsOfAccess: (node: Node) =>
             this.aggregateProperty(node, 'ccm:conditionsOfAccess')?.[0],
-        price: (node: ResultNode) => this.aggregateProperty(node, 'ccm:price')?.[0],
-        containsAdvertisement: (node: ResultNode) =>
+        price: (node: Node) => this.aggregateProperty(node, 'ccm:price')?.[0],
+        containsAdvertisement: (node: Node) =>
             this.aggregateProperty(node, 'ccm:containsAdvertisement')?.[0],
     };
 
@@ -78,7 +78,7 @@ export class NodePropertyPipe implements PipeTransform {
     constructor(private config: ConfigService) {}
 
     transform<P extends keyof NodePropertyPipe['propertyMappings']>(
-        node: ResultNode,
+        node: Node,
         property: P,
     ): ReturnType<NodePropertyPipe['propertyMappings'][P]> {
         return this.propertyMappings[property](node) as ReturnType<
@@ -86,7 +86,7 @@ export class NodePropertyPipe implements PipeTransform {
         >;
     }
 
-    private zipDisplayNames(node: ResultNode | Collection, property: string): IdentifiedValue[] {
+    private zipDisplayNames(node: Node | Collection, property: string): IdentifiedValue[] {
         return node.properties[property]?.map((id, index) => ({
             id,
             displayName: node.properties[property + '_DISPLAYNAME'][index],
@@ -94,7 +94,7 @@ export class NodePropertyPipe implements PipeTransform {
     }
 
     private aggregateProperty(
-        node: ResultNode,
+        node: Node,
         property: string,
         zipDisplayNames = this.zipDisplayNames,
     ): IdentifiedValue[] | null {
@@ -111,7 +111,7 @@ export class NodePropertyPipe implements PipeTransform {
         }
     }
 
-    private getAuthor(node: ResultNode): string {
+    private getAuthor(node: Node): string {
         const freetextAuthor = node.properties['ccm:author_freetext']?.[0];
         if (freetextAuthor) {
             return freetextAuthor;
@@ -122,7 +122,7 @@ export class NodePropertyPipe implements PipeTransform {
         }
     }
 
-    private getLicense(node: ResultNode): IdentifiedValue {
+    private getLicense(node: Node): IdentifiedValue {
         return this.aggregateProperty(
             node,
             'ccm:commonlicense_key',
@@ -130,17 +130,14 @@ export class NodePropertyPipe implements PipeTransform {
         )?.[0];
     }
 
-    private zipLicenseDisplayNames(
-        node: ResultNode | Collection,
-        property: string,
-    ): IdentifiedValue[] {
+    private zipLicenseDisplayNames(node: Node | Collection, property: string): IdentifiedValue[] {
         return node.properties[property]?.map((licenseKey) => ({
             id: licenseKey,
             displayName: this.getLicenseDisplayName(node, licenseKey),
         }));
     }
 
-    private getLicenseDisplayName(node: ResultNode, licenseKey: string): string {
+    private getLicenseDisplayName(node: Node, licenseKey: string): string {
         const customLicenseString = node.properties['cclom:rights_description']?.[0];
         if (!licenseKey) {
             return undefined;

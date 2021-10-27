@@ -1,8 +1,9 @@
 import { Component, HostBinding, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Node } from 'ngx-edu-sharing-api';
 import { ReplaySubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { Filters } from '../../../core/edu-sharing.service';
 import { ResultCardStyle, ViewService } from '../../../core/view.service';
-import { Filters, ResultNode } from '../../../core/edu-sharing.service';
 import { ResultCardContentCompactComponent } from '../result-card-content-compact/result-card-content-compact.component';
 import { ResultCardContentStandardComponent } from '../result-card-content-standard/result-card-content-standard.component';
 
@@ -12,7 +13,7 @@ import { ResultCardContentStandardComponent } from '../result-card-content-stand
     styleUrls: ['./result-card.component.scss'],
 })
 export class ResultCardComponent implements OnInit, OnDestroy {
-    @Input() hit: ResultNode;
+    @Input() hit: Node;
     @Input() filters: Filters;
     @HostBinding('attr.data-style') style: ResultCardStyle;
 

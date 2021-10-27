@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
+import { SearchResults } from 'ngx-edu-sharing-api';
 import { BehaviorSubject } from 'rxjs';
-import { SearchResults } from '../../../core/edu-sharing.service';
-import { SearchModule } from '../../search.module';
 
 @Injectable({
     providedIn: null,

@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { Filters } from '../../../core/edu-sharing.service';
 import { PageModeService } from '../../../core/page-mode.service';
 import { SearchParametersService } from '../../../core/search-parameters.service';
 import { ViewService } from '../../../core/view.service';
-import { Filters, SearchResults } from '../../../core/edu-sharing.service';
 import { SearchResultsService } from './search-results.service';
 
 @Component({
