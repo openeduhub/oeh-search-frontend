@@ -2,17 +2,20 @@ name: Cypress
 
 on:
   push:
-    branches: [develop, master]
+    branches: '**'
   pull_request:
     branches: [develop, master]
 
 jobs:
   build-and-publish-ci:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
         with:
           submodules: true
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 16          
       - uses: azure/docker-login@v1
         with:
           username: ${{ github.repository_owner }}
@@ -30,7 +33,7 @@ jobs:
   e2e-cypress-service-test:
     name: Setup staging frontend and test end to end
     needs: [build-and-publish-ci]
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-latest
     services:
       frontend-service:
         image: ${{ github.repository }}:ci_${{ github.sha }}
@@ -40,10 +43,9 @@ jobs:
           - 8080:80
     steps:
       - uses: actions/checkout@v2
-      - name: Use node.js 12.16
-        uses: actions/setup-node@v1
+      - uses: actions/setup-node@v2
         with:
-          node-version: 12.16
+          node-version: 16
       - name: Cypress run
         uses: cypress-io/github-action@v2
         env:
