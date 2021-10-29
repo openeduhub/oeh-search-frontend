@@ -199,19 +199,22 @@
     >
       <mat-icon
         *ngSwitchCase="'http://w3id.org/openeduhub/vocabs/conditionsOfAccess/no_login'"
-        svgIcon="login_green"
+        svgIcon="login"
+        class="icon-green"
       ></mat-icon>
       <mat-icon
         *ngSwitchCase="
           'http://w3id.org/openeduhub/vocabs/conditionsOfAccess/login_for_additional_features'
         "
-        svgIcon="login_orange"
+        svgIcon="login"
+        class="icon-orange"
       ></mat-icon>
       <mat-icon
         *ngSwitchCase="'http://w3id.org/openeduhub/vocabs/conditionsOfAccess/login'"
-        svgIcon="login_red"
+        svgIcon="login"
+        class="icon-red"
       ></mat-icon>
-      <mat-icon *ngSwitchDefault svgIcon="login_green" class="filter-grayscale"></mat-icon>
+      <mat-icon *ngSwitchDefault svgIcon="login" class="icon-gray"></mat-icon>
       <ng-container></ng-container>
       <span *ngFor="let conditionOfAccess of hit.skos.conditionsOfAccess">
         {{ conditionOfAccess.label | capitalizeFirstLetter }}
@@ -223,19 +226,19 @@
       [ngSwitch]="hit.skos.price[0].id"
     >
       <ng-container *ngSwitchCase="'http://w3id.org/openeduhub/vocabs/price/no'">
-        <mat-icon svgIcon="price_green"></mat-icon>
+        <mat-icon svgIcon="price" class="icon-green"></mat-icon>
         <span i18n>Free of charge</span>
       </ng-container>
       <ng-container *ngSwitchCase="'http://w3id.org/openeduhub/vocabs/price/yes'">
-        <mat-icon svgIcon="price_red"></mat-icon>
+        <mat-icon svgIcon="price" class="icon-red"></mat-icon>
         <span i18n>Paid content</span>
       </ng-container>
       <ng-container *ngSwitchCase="'http://w3id.org/openeduhub/vocabs/price/yes_for_additional'">
-        <mat-icon svgIcon="price_orange"></mat-icon>
+        <mat-icon svgIcon="price" class="icon-orange"></mat-icon>
         <span>{{ hit.skos.price[0].label }}</span>
       </ng-container>
       <ng-container *ngSwitchDefault>
-        <mat-icon svgIcon="price_green" class="filter-grayscale"></mat-icon>
+        <mat-icon svgIcon="price" class="icon-gray"></mat-icon>
         <span><ng-container i18n>Price</ng-container>: {{ hit.skos.price[0].label }}</span>
       </ng-container>
     </div>
@@ -245,15 +248,15 @@
       [ngSwitch]="hit.skos.containsAdvertisement[0].id"
     >
       <ng-container *ngSwitchCase="'http://w3id.org/openeduhub/vocabs/containsAdvertisement/no'">
-        <mat-icon svgIcon="advertisement_green"></mat-icon>
+        <mat-icon svgIcon="advertisement" class="icon-green"></mat-icon>
         <span i18n>No advertisement</span>
       </ng-container>
       <ng-container *ngSwitchCase="'http://w3id.org/openeduhub/vocabs/containsAdvertisement/yes'">
-        <mat-icon svgIcon="advertisement_red"></mat-icon>
+        <mat-icon svgIcon="advertisement" class="icon-red"></mat-icon>
         <span i18n>Contains advertisement</span>
       </ng-container>
       <ng-container *ngSwitchDefault>
-        <mat-icon svgIcon="advertisement_green" class="filter-grayscale"></mat-icon>
+        <mat-icon svgIcon="advertisement" class="icon-gray"></mat-icon>
         <span>
           <ng-container i18n>Contains advertisement</ng-container>:
           {{ hit.skos.containsAdvertisement[0].label }}

@@ -112,16 +112,7 @@ export class AppComponent implements DoCheck, OnInit {
     }
 
     private registerCustomIcons(): void {
-        for (const icon of [
-            'advertisement_green',
-            'advertisement_red',
-            'login_green',
-            'login_orange',
-            'login_red',
-            'price_green',
-            'price_orange',
-            'price_red',
-        ]) {
+        for (const icon of ['advertisement', 'login', 'price']) {
             this.matIconRegistry.addSvgIcon(
                 icon,
                 this.domSanitizer.bypassSecurityTrustResourceUrl(`./assets/icons/${icon}.svg`),
