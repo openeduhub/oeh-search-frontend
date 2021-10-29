@@ -9,13 +9,6 @@ import { WloSearchComponent } from './wlo-search.component';
 
 @NgModule({
     declarations: [WloSearchComponent],
-    imports: [
-        WloSearchRoutingModule,
-        CoreModule,
-        SharedModule,
-        SearchModule,
-        PreferencesModule,
-        MatProgressSpinnerModule,
-    ],
+    imports: [WloSearchRoutingModule, CoreModule, SharedModule, SearchModule, PreferencesModule],
 })
 export class WloSearchModule {}

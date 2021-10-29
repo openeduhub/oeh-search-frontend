@@ -27,6 +27,8 @@ import { IsOerPipe } from './shared/is-oer.pipe';
 import { LanguagePipe } from './shared/language.pipe';
 import { NodePropertyPipe } from './shared/nodeProperty.pipe';
 import { PreviewImageComponent } from './shared/preview-image/preview-image.component';
+import { ReportProblemComponent } from './shared/report-problem/report-problem.component';
+import { ReportProblemService } from './shared/report-problem/report-problem.service';
 import { TrimPipe } from './shared/trim.pipe';
 import { TruncatePipe } from './shared/truncate.pipe';
 import { WrapObservablePipe } from './shared/wrap-observable.pipe';
@@ -60,8 +62,14 @@ import { WrapObservablePipe } from './shared/wrap-observable.pipe';
         TrimPipe,
         TruncatePipe,
         WrapObservablePipe,
+        ReportProblemComponent,
     ],
     imports: [SharedModule],
-    providers: [SearchResultsService, SearchPageResolverService, SubjectsPortalResolverService],
+    providers: [
+        SearchResultsService,
+        SearchPageResolverService,
+        SubjectsPortalResolverService,
+        ReportProblemService,
+    ],
 })
 export class SearchModule {}

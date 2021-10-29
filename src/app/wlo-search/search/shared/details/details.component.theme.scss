@@ -5,6 +5,7 @@
     $foreground: map-get($theme, foreground);
     $background: map-get($theme, background);
     $primary: map-get($theme, primary);
+    $warn: map-get($theme, warn);
     $is-dark-theme: map-get($theme, is-dark);
     $custom-accent: map-get($theme, custom-accent);
     $primary-foreground-color: primary-foreground-color($theme);
@@ -25,6 +26,17 @@
         }
         .app-preview-panel-source {
             color: mat.get-color-from-palette($foreground, secondary-text);
+        }
+        .app-preview-panel-report-problem-button {
+            color: mat.get-color-from-palette($foreground, secondary-text);
+        }
+        .app-details-report-problem-state-success {
+            border-color: mat.get-color-from-palette($primary);
+            background-color: mat.get-color-from-palette($primary, 50);
+        }
+        .app-details-report-problem-state-error {
+            border-color: mat.get-color-from-palette($warn);
+            background-color: mat.get-color-from-palette($warn, 50);
         }
         .app-preview-related-items {
             background-color: mat.get-color-from-palette($primary, 50);

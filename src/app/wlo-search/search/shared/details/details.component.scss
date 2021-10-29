@@ -99,7 +99,7 @@
 .app-preview-panel-buttons {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px 15px;
+    gap: 20px 15px;
     margin: 30px 0;
     .app-preview-panel-button {
         height: 30px;
@@ -114,6 +114,22 @@
             margin-left: 10px;
             margin-right: -10px;
         }
+    }
+}
+
+.app-details-report-problem-state {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 10px;
+    border-width: 2px;
+    border-style: solid;
+    &.app-details-report-problem-state-loading {
+        border-color: #0000;
+    }
+    .mat-progress-spinner {
+        margin-right: 15px;
+        flex-shrink: 0;
     }
 }
 

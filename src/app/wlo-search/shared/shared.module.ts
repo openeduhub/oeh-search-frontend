@@ -20,6 +20,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSliderModule } from '@angular/material/slider';
@@ -56,6 +58,8 @@ import { ReportClickDirective } from './report-click.directive';
         MatInputModule,
         MatMenuModule,
         MatPaginatorModule,
+        MatProgressSpinnerModule,
+        MatRadioModule,
         MatRippleModule,
         MatSelectModule,
         MatSliderModule,
@@ -89,6 +93,8 @@ import { ReportClickDirective } from './report-click.directive';
         MatInputModule,
         MatMenuModule,
         MatPaginatorModule,
+        MatProgressSpinnerModule,
+        MatRadioModule,
         MatRippleModule,
         MatSelectModule,
         MatSliderModule,

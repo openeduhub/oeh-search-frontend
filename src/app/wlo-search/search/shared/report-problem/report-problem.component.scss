@@ -1,0 +1,26 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+::ng-deep .report-problem-panel .mat-dialog-container {
+    // Make dialog content respect max-height of the overlay
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+}
+
+.problem-kind-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.problem-kind-radio-button {
+    margin: 5px;
+}
