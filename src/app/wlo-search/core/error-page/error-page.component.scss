@@ -4,3 +4,11 @@
     max-width: 1200px;
     margin: auto;
 }
+
+pre {
+    white-space: pre-wrap;
+}
+
+a {
+    word-break: break-all;
+}

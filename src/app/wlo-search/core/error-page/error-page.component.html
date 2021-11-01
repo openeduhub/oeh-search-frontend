@@ -4,5 +4,8 @@
   <mat-expansion-panel-header>
     <mat-panel-title i18n>Details</mat-panel-title>
   </mat-expansion-panel-header>
+  <p>
+    Page URL: <a [href]="pageUrl">{{ pageUrl }}</a>
+  </p>
   <pre>{{ json }}</pre>
 </mat-expansion-panel>
