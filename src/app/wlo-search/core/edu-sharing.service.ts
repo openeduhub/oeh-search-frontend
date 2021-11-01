@@ -117,8 +117,8 @@ export class EduSharingService {
             sortAscending: [false, false],
             propertyFilter: ['-all-'],
             body: {
-                criterias: this.getSearchCriteria(searchString, filters, oer),
-                facettes: [],
+                criteria: this.getSearchCriteria(searchString, filters, oer),
+                facets: [],
                 resolveCollections: true,
                 facetLimit: 20,
                 facetMinCount: 1,
@@ -130,7 +130,7 @@ export class EduSharingService {
         searchString: string,
         filters: Filters,
         oer: ParsedParams['oer'],
-    ): SearchRequestParams['body']['criterias'] {
+    ): SearchRequestParams['body']['criteria'] {
         return [
             ...this.mapSearchString(searchString),
             ...this.mapFilters(filters),
@@ -143,7 +143,7 @@ export class EduSharingService {
         return null;
     }
 
-    private mapSearchString(searchString: string): SearchRequestParams['body']['criterias'] {
+    private mapSearchString(searchString: string): SearchRequestParams['body']['criteria'] {
         if (searchString) {
             return [{ property: 'ngsearchword', values: [searchString] }];
         } else {
@@ -151,14 +151,14 @@ export class EduSharingService {
         }
     }
 
-    private mapFilters(filters: Filters): SearchRequestParams['body']['criterias'] {
+    private mapFilters(filters: Filters): SearchRequestParams['body']['criteria'] {
         return Object.entries(filters).map(([facet, values]) => ({
             property: facetProperties[facet as Facet],
             values,
         }));
     }
 
-    private mapOer(oer: ParsedParams['oer']): SearchRequestParams['body']['criterias'] {
+    private mapOer(oer: ParsedParams['oer']): SearchRequestParams['body']['criteria'] {
         switch (oer) {
             case 'ALL':
                 return [{ property: 'license', values: ['OPEN', 'CC_BY_OPEN'] }];
