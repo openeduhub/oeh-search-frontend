@@ -33,6 +33,7 @@
             placeholder="Find suitable content, tools, and sources for teaching..."
             (focus)="showOverlay = true"
             autocomplete="off"
+            (keydown.tab)="focusOverlayIfOpen($event)"
             (keydown.enter)="onSubmit()"
           />
           <button
@@ -64,8 +65,9 @@
   [cdkConnectedOverlayPositions]="overlayPositions"
   [cdkConnectedOverlayWidth]="trigger.elementRef.nativeElement.getBoundingClientRect().width"
   (overlayOutsideClick)="onOutsideClick($event)"
+  (detach)="onDetach()"
 >
-  <div class="suggestion-card mat-elevation-z2" *ngIf="suggestions">
+  <div class="suggestion-card mat-elevation-z2" *ngIf="suggestions" cdkTrapFocus>
     <ng-container *ngFor="let category of categories">
       <div class="suggestion-group" *ngIf="suggestions[category]?.length > 0">
         <div class="label-container">
@@ -90,8 +92,10 @@
         <mat-chip-list>
           <mat-chip
             *ngFor="let suggestion of suggestions[category]"
-            class="chip-group-{{ category }}"
+            #suggestionChip
+            class="suggestion-chip chip-group-{{ category }}"
             (click)="addFilter(category, suggestion)"
+            (keydown.enter)="addFilter(category, suggestion)"
             [selectable]="false"
           >
             {{ suggestion | displayName: category }}

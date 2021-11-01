@@ -86,12 +86,12 @@ form {
         .label-container {
             display: flex;
         }
-        .what-is-oer-link {
-            padding-left: 10px;
-            font-size: 90%;
-            text-decoration: underline;
-            cursor: pointer;
-        }
+        // .what-is-oer-link {
+        //     padding-left: 10px;
+        //     font-size: 90%;
+        //     text-decoration: underline;
+        //     cursor: pointer;
+        // }
         .category-label {
             display: block;
             text-transform: uppercase;
@@ -99,6 +99,9 @@ form {
             font-size: 90%;
             color: #666;
             padding-bottom: 6px;
+        }
+        .suggestion-chip {
+            cursor: pointer;
         }
     }
 }

@@ -20,6 +20,8 @@ type Suggestions = { [key in Facet]?: string[] };
 export class SearchFieldComponent implements OnInit, OnDestroy {
     @ViewChild(CdkConnectedOverlay) overlay: CdkConnectedOverlay;
     @ViewChild('searchInput') searchInput: ElementRef<HTMLInputElement>;
+    @ViewChild('suggestionChip', { read: ElementRef })
+    firstSuggestionChip?: ElementRef<HTMLElement>;
 
     readonly overlayPositions: ConnectedPosition[] = [
         {
@@ -113,6 +115,29 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
                 queryParamsHandling: 'merge',
             },
         );
+    }
+
+    focusOverlayIfOpen(event: Event): void {
+        if (this.firstSuggestionChip) {
+            this.firstSuggestionChip.nativeElement.focus();
+            event.stopPropagation();
+            event.preventDefault();
+        }
+    }
+
+    onDetach(): void {
+        const focusWasOnOverlay = this.overlay.overlayRef.overlayElement.contains(
+            document.activeElement,
+        );
+        if (focusWasOnOverlay) {
+            this.searchInput.nativeElement.focus();
+        }
+        // Update `showOverlay` if the user closed the overlay by hitting Esc, but leave it if it
+        // was detached because we have no suggestions right now. In the latter case, we want to
+        // show the overlay again as soon as suggestions become available.
+        if (this.hasSuggestions) {
+            this.showOverlay = false;
+        }
     }
 
     addFilter(category: Facet, filter: string): void {
