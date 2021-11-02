@@ -15,8 +15,7 @@ jobs:
     steps:
       - id: request-image-info
         run: |
-          response_code=$(curl -s -o /dev/null -I -w "%{http_code}" https://hub.docker.com/v2/repositories/${{ env.IMAGE_NAME }}/tags/develop)
-          # response_code=$(curl -s -o /dev/null -I -L -w "%{http_code}" https://hub.docker.com/v2/repositories/${{ env.IMAGE_NAME }}/tags/${{ github.sha }}/)
+          response_code=$(curl -s -o /dev/null -I -L -w "%{http_code}" https://hub.docker.com/v2/repositories/${{ env.IMAGE_NAME }}/tags/${{ github.sha }}/)
           echo $response_code
           if [ $response_code -eq 200 ]; then
             echo "::set-output name=exists::true"
@@ -25,112 +24,106 @@ jobs:
             echo "::set-output name=exists::false"
           else
             echo "::error ::Got unexpected HTTP code $response_code"
-            # exit 22
+            exit 22
           fi
 
-  debug:
+  build-image:
+    name: Build image
     runs-on: 'ubuntu-latest'
     needs: check-image
+    if: ${{ needs.check-image.outputs.exists == 'false' }}
     steps:
-      - run: echo ${{ needs.check-image.outputs.exists }}
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - uses: azure/docker-login@v1
+        with:
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: ./node_modules
+          key: modules-${{ env.NODE_VERSION }}-${{ hashFiles('package-lock.json') }}
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
+      - name: Build the project
+        run: npm run build
+      - name: Build Docker image
+        run: docker build --tag ${{ github.repository }}:${{ github.sha }} .
+      - name: Publish to DockerHub
+        run: |
+          docker push ${{ github.repository }}:${{ github.sha }}
+          echo "::notice ::Published as ${{ github.repository }}:${{ github.sha }}"
 
-  # build-image:
-  #   name: Build image
-  #   runs-on: 'ubuntu-latest'
-  #   needs: check-image
-  #   if: ${{ needs.check-image.outputs.exists == 'false' }}
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #       with:
-  #         submodules: true
-  #     - uses: actions/setup-node@v2
-  #       with:
-  #         node-version: ${{ env.NODE_VERSION }}
-  #     - uses: azure/docker-login@v1
-  #       with:
-  #         username: ${{ github.repository_owner }}
-  #         password: ${{ secrets.DOCKERHUB_PASSWORD }}
-  #     - name: Cache dependencies
-  #       id: cache
-  #       uses: actions/cache@v2
-  #       with:
-  #         path: ./node_modules
-  #         key: modules-${{ env.NODE_VERSION }}-${{ hashFiles('package-lock.json') }}
-  #     - name: Install dependencies
-  #       if: steps.cache.outputs.cache-hit != 'true'
-  #       run: npm ci
-  #     - name: Build the project
-  #       run: npm run build
-  #     - name: Build Docker image
-  #       run: docker build --tag ${{ github.repository }}:${{ github.sha }} .
-  #     - name: Publish to DockerHub
-  #       run: |
-  #         docker push ${{ github.repository }}:${{ github.sha }}
-  #         echo "::notice ::Published as ${{ github.repository }}:${{ github.sha }}"
+  tag-image-ref:
+    name: Publish image
+    runs-on: 'ubuntu-latest'
+    needs: build-image
+    if: ${{ success() || needs.build-image.result == 'skipped' }}
+    steps:
+      - uses: azure/docker-login@v1
+        with:
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      - uses: rlespinasse/github-slug-action@v3.x
+      - name: Pull Docker image
+        run: docker pull ${{ github.repository }}:${{ github.sha }}
+      - name: Tag Docker image
+        run: docker tag ${{ github.repository }}:${{ github.sha }} ${{ github.repository }}:${{ env.GITHUB_REF_SLUG }}
+      - name: Publish to DockerHub
+        run: |
+          docker push ${{ github.repository }}:${{ env.GITHUB_REF_SLUG }}
+          echo "::notice ::Published as ${{ github.repository }}:${{ env.GITHUB_REF_SLUG }}"
 
-  # tag-image-ref:
-  #   name: Publish image
-  #   runs-on: 'ubuntu-latest'
-  #   needs: build-image
-  #   if: ${{ success() || needs.build-image.result == 'skipped' }}
-  #   steps:
-  #     - uses: azure/docker-login@v1
-  #       with:
-  #         username: ${{ github.repository_owner }}
-  #         password: ${{ secrets.DOCKERHUB_PASSWORD }}
-  #     - uses: rlespinasse/github-slug-action@v3.x
-  #     - name: Pull Docker image
-  #       run: docker pull ${{ github.repository }}:${{ github.sha }}
-  #     - name: Tag Docker image
-  #       run: docker tag ${{ github.repository }}:${{ github.sha }} ${{ github.repository }}:${{ env.GITHUB_REF_SLUG }}
-  #     - name: Publish to DockerHub
-  #       run: |
-  #         docker push ${{ github.repository }}:${{ env.GITHUB_REF_SLUG }}
-  #         echo "::notice ::Published as ${{ github.repository }}:${{ env.GITHUB_REF_SLUG }}"
+  lint:
+    name: Lint
+    runs-on: 'ubuntu-latest'
+    # Depend on `build-image` to make sure node_modules are cached. Also, we can skip this if the
+    # commit was already linted on another branch.
+    needs: build-image
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ./node_modules
+          key: modules-${{ env.NODE_VERSION }}-${{ hashFiles('package-lock.json') }}
+      - name: Lint
+        run: npm run lint
 
-  # lint:
-  #   name: Lint
-  #   runs-on: 'ubuntu-latest'
-  #   # Depend on `build-image` to make sure node_modules are cached. Also, we can skip this if the
-  #   # commit was already linted on another branch.
-  #   needs: build-image
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - uses: actions/setup-node@v2
-  #       with:
-  #         node-version: ${{ env.NODE_VERSION }}
-  #     - name: Cache dependencies
-  #       uses: actions/cache@v2
-  #       with:
-  #         path: ./node_modules
-  #         key: modules-${{ env.NODE_VERSION }}-${{ hashFiles('package-lock.json') }}
-  #     - name: Lint
-  #       run: npm run lint
-
-  # cypress-tests:
-  #   name: Cypress tests
-  #   needs: build-image
-  #   runs-on: ubuntu-latest
-  #   services:
-  #     frontend:
-  #       image: ${{ github.repository }}:${{ github.sha }}
-  #       env:
-  #         EDU_SHARING_API_URL: https://redaktion-staging.openeduhub.net/edu-sharing/rest
-  #       ports:
-  #         - 8080:80
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - uses: actions/setup-node@v2
-  #       with:
-  #         node-version: ${{ env.NODE_VERSION }}
-  #     - name: Cypress run
-  #       uses: cypress-io/github-action@v2
-  #       env:
-  #         CYPRESS_baseUrl: http://localhost:8080
-  #       with:
-  #         working-directory: e2e-cypress
-  #     - uses: actions/upload-artifact@v1
-  #       if: failure()
-  #       with:
-  #         name: cypress-screenshots
-  #         path: e2e-cypress/cypress/screenshots
+  cypress-tests:
+    name: Cypress tests
+    needs: build-image
+    runs-on: ubuntu-latest
+    services:
+      frontend:
+        image: ${{ github.repository }}:${{ github.sha }}
+        env:
+          EDU_SHARING_API_URL: https://redaktion-staging.openeduhub.net/edu-sharing/rest
+        ports:
+          - 8080:80
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        env:
+          CYPRESS_baseUrl: http://localhost:8080
+        with:
+          working-directory: e2e-cypress
+      - uses: actions/upload-artifact@v1
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: e2e-cypress/cypress/screenshots
