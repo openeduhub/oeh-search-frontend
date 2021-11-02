@@ -25,7 +25,7 @@ jobs:
             echo "::set-output name=exists::false"
           else
             echo "::error ::Got unexpected HTTP code $response_code"
-            exit 22
+            # exit 22
           fi
 
   debug:
