@@ -1,8 +1,6 @@
 # Open Edu Hub Search Frontend
 
-![](https://github.com/openeduhub/oeh-search-frontend/workflows/Publish/badge.svg)
-![](https://github.com/openeduhub/oeh-search-frontend/workflows/Lint/badge.svg)
-![](https://github.com/openeduhub/oeh-search-frontend/workflows/Cypress/badge.svg)
+[![CI](https://github.com/openeduhub/oeh-search-frontend/actions/workflows/ci.yml/badge.svg)](https://github.com/openeduhub/oeh-search-frontend/actions/workflows/ci.yml)
 
 You need at least a running Edu-Sharing instance to use the frontend. See
 https://github.com/edu-sharing/Edu-Sharing/.
