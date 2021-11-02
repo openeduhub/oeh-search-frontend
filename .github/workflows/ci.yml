@@ -85,3 +85,31 @@ jobs:
           key: modules-${{ env.NODE_VERSION }}-${{ hashFiles('package-lock.json') }}
       - name: Lint
         run: npm run lint
+
+  cypress-tests:
+    name: Cypress tests
+    needs: build-image
+    runs-on: ubuntu-latest
+    services:
+      frontend:
+        image: ${{ github.repository }}:${{ github.sha }}
+        env:
+          EDU_SHARING_API_URL: https://redaktion-staging.openeduhub.net/edu-sharing/rest
+        ports:
+          - 8080:80
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
+        env:
+          CYPRESS_baseUrl: http://localhost:8080
+        with:
+          working-directory: e2e-cypress
+      - uses: actions/upload-artifact@v1
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: e2e-cypress/cypress/screenshots        
