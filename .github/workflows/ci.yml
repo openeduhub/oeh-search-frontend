@@ -15,7 +15,8 @@ jobs:
     steps:
       - id: request-image-info
         run: |
-          response_code=$(curl -s -o /dev/null -I -L -w "%{http_code}" https://hub.docker.com/v2/repositories/${{ env.IMAGE_NAME }}/tags/${{ github.sha }}/)
+          response_code=$(curl -s -o /dev/null -I -L -w "%{http_code}" https://hub.docker.com/v2/repositories/${{ env.IMAGE_NAME }}/tags/develop/)
+          # response_code=$(curl -s -o /dev/null -I -L -w "%{http_code}" https://hub.docker.com/v2/repositories/${{ env.IMAGE_NAME }}/tags/${{ github.sha }}/)
           echo $response_code
           if [ $response_code -eq 200 ]; then
             echo "::set-output name=exists::true"
