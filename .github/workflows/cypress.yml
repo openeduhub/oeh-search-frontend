@@ -2,9 +2,8 @@ name: Cypress
 
 on:
   push:
-    branches: '**'
-  pull_request:
-    branches: [develop, master]
+    branches:
+      - never
 
 jobs:
   build-and-publish-ci:
