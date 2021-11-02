@@ -10,11 +10,11 @@ jobs:
   check-image:
     name: Check for existing image
     runs-on: 'ubuntu-latest'
-    continue-on-error: true
     outputs:
       exists: ${{ steps.request-image-info.outcome == 'success' }}
     steps:
       - id: request-image-info
+        continue-on-error: true
         run: curl --fail https://hub.docker.com/v2/repositories/${{ env.IMAGE_NAME }}/tags/${{ github.sha }}
 
   build-image:
@@ -49,38 +49,39 @@ jobs:
       - name: Publish to DockerHub
         run: docker push ${{ github.repository }}:${{ github.sha }}
 
-  # tag-image-ref:
-  #   name: Tag image to ref
-  #   runs-on: 'ubuntu-latest'
-  #   needs: build-image
-  #   if: ${{ success() || needs.build-image.result == 'skipped' }}
-  #   steps:
-  #     - uses: azure/docker-login@v1
-  #       with:
-  #         username: ${{ github.repository_owner }}
-  #         password: ${{ secrets.DOCKERHUB_PASSWORD }}
-  #     - uses: rlespinasse/github-slug-action@v3.x
-  #     - name: Pull Docker image
-  #       run: docker pull ${{ github.repository }}:${{ github.sha }}
-  #     - name: Tag Docker image
-  #       run: docker tag ${{ github.repository }}:${{ github.sha }} ${{ github.repository }}:${{ env.GITHUB_REF_SLUG }}
-  #     - name: Publish to DockerHub
-  #       run: docker push ${{ github.repository }}:${{ env.GITHUB_REF_SLUG }}
+  tag-image-ref:
+    name: Tag image to ref
+    runs-on: 'ubuntu-latest'
+    needs: build-image
+    if: ${{ success() || needs.build-image.result == 'skipped' }}
+    steps:
+      - uses: azure/docker-login@v1
+        with:
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      - uses: rlespinasse/github-slug-action@v3.x
+      - name: Pull Docker image
+        run: docker pull ${{ github.repository }}:${{ github.sha }}
+      - name: Tag Docker image
+        run: docker tag ${{ github.repository }}:${{ github.sha }} ${{ github.repository }}:${{ env.GITHUB_REF_SLUG }}
+      - name: Publish to DockerHub
+        run: docker push ${{ github.repository }}:${{ env.GITHUB_REF_SLUG }}
 
-  # lint:
-  #   name: Lint
-  #   runs-on: 'ubuntu-latest'
-  #   needs: check-image
-  #   if: ${{ needs.check-image.outputs.exists == 'false' }}
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #       with:
-  #         submodules: true
-  #     - uses: actions/setup-node@v2
-  #       with:
-  #         node-version: ${{ env.NODE_VERSION }}
-  #         cache: 'npm'
-  #     - name: Install dependencies
-  #       run: npm ci
-  #     - name: Lint
-  #       run: npm run lint
+  lint:
+    name: Lint
+    runs-on: 'ubuntu-latest'
+    # Depend on `build-image` to make sure node_modules are cached.
+    needs: build-image
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: ./node_modules
+          key: modules-${{ env.NODE_VERSION }}-${{ hashFiles('package-lock.json') }}
+      - name: Lint
+        run: npm run lint
