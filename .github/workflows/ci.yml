@@ -78,7 +78,6 @@ jobs:
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Cache dependencies
-        id: cache
         uses: actions/cache@v2
         with:
           path: ./node_modules
