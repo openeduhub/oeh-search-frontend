@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
+    DidYouMeanSuggestion,
     FacetsDict,
     MdsIdentifier,
     MdsLabelService,
@@ -9,7 +10,7 @@ import {
     SearchResults,
     SearchService,
 } from 'ngx-edu-sharing-api';
-import { Observable, ReplaySubject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { shareReplay } from 'rxjs/operators';
 import { facetProperties } from './facet-properties';
 import { ParsedParams, SearchParametersService } from './search-parameters.service';
@@ -25,11 +26,6 @@ export type Filters = {
     [key in Facet]?: string[];
 };
 
-export interface DidYouMeanSuggestion {
-    plain: string;
-    html: string;
-}
-
 @Injectable({
     providedIn: 'root',
 })
@@ -41,7 +37,9 @@ export class EduSharingService {
     private readonly facets$ = this.searchService
         .getFacets(Object.values(facetProperties), { includeActiveFilters: true })
         .pipe(shareReplay(1));
-    private didYouMeanSuggestion$ = new ReplaySubject<DidYouMeanSuggestion>(1);
+    private readonly didYouMeanSuggestion$ = this.searchService
+        .getDidYouMeanSuggestion()
+        .pipe(shareReplay(1));
 
     constructor(
         private searchParameters: SearchParametersService,
@@ -49,8 +47,9 @@ export class EduSharingService {
         private nodeService: NodeService,
         private mdsLabelService: MdsLabelService,
     ) {
-        // Subscribe to facets early, so required facets will be fetched with the search request.
+        // Subscribe early, so required data will be fetched with search requests.
         this.facets$.subscribe();
+        this.didYouMeanSuggestion$.subscribe();
     }
 
     /**
@@ -90,7 +89,7 @@ export class EduSharingService {
     }
 
     getDidYouMeanSuggestion(): Observable<DidYouMeanSuggestion> {
-        return this.didYouMeanSuggestion$.asObservable();
+        return this.didYouMeanSuggestion$;
     }
 
     getDisplayName(property: string, key: string): Observable<string> {
@@ -136,11 +135,6 @@ export class EduSharingService {
             ...this.mapFilters(filters),
             ...this.mapOer(oer),
         ];
-    }
-
-    private mapDidYouMeanSuggestion(response: SearchResults): DidYouMeanSuggestion {
-        // return { plain: 'Foo bar', html: '<em>Foo</em> bar' };
-        return null;
     }
 
     private mapSearchString(searchString: string): SearchRequestParams['body']['criteria'] {

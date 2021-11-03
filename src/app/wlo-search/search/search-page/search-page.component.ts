@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { AnalyticsService } from '../../core/analytics.service';
 import { ConfigService } from '../../core/config.service';
-import { DidYouMeanSuggestion, EduSharingService, Facet } from '../../core/edu-sharing.service';
+import { EduSharingService, Facet } from '../../core/edu-sharing.service';
 import { PageModeService } from '../../core/page-mode.service';
 import { ResolveService } from '../../core/resolve.service';
 import { SearchParametersService } from '../../core/search-parameters.service';
@@ -22,7 +22,7 @@ import { SearchResultsService } from './search-results/search-results.service';
 export class SearchPageComponent implements OnInit, OnDestroy {
     readonly routerPath = this.config.get().routerPath;
 
-    didYouMeanSuggestion: DidYouMeanSuggestion;
+    readonly didYouMeanSuggestion$ = this.eduSharing.getDidYouMeanSuggestion();
     showFilterBar = false;
     filterCount: number;
     pageIndex: number;
@@ -49,12 +49,6 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
-        this.eduSharing
-            .getDidYouMeanSuggestion()
-            .pipe(takeUntil(this.destroyed$))
-            .subscribe(
-                (didYouMeanSuggestion) => (this.didYouMeanSuggestion = didYouMeanSuggestion),
-            );
         this.view
             .getShowFilterBar()
             .pipe(takeUntil(this.destroyed$))

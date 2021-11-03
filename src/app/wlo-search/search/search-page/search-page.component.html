@@ -1,11 +1,11 @@
 <app-search-filterbar *ngIf="showFilterBar"></app-search-filterbar>
 
 <div class="results" [attr.data-style]="searchResultsStyle$ | async">
-  <p *ngIf="didYouMeanSuggestion" class="did-you-mean">
+  <p *ngIf="didYouMeanSuggestion$ | async as didYouMeanSuggestion" class="did-you-mean">
     <ng-container i18n>Did you mean:</ng-container>&nbsp;<a
-      [innerHTML]="didYouMeanSuggestion.html"
-      routerLink="{{ routerPath }}/search"
-      [queryParams]="{ q: didYouMeanSuggestion.plain }"
+      [innerHTML]="didYouMeanSuggestion.highlighted"
+      routerLink="."
+      [queryParams]="{ q: didYouMeanSuggestion.text }"
       queryParamsHandling="merge"
     ></a>
   </p>
@@ -17,7 +17,7 @@
           *ngIf="filterCount > 0"
           mat-flat-button
           color="primary"
-          routerLink="{{ routerPath }}/search"
+          routerLink="."
           [queryParams]="{ filters: null, oer: 'NONE' }"
           queryParamsHandling="merge"
           i18n
