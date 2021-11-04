@@ -6,7 +6,6 @@ import { HeaderbarComponent } from './headerbar/headerbar.component';
 import { MenubarComponent } from './menubar/menubar.component';
 import { OerSliderComponent } from './oer-slider/oer-slider.component';
 import { SearchFieldComponent } from './search-field/search-field.component';
-import { SkipTargetDirective } from './skip-nav/skip-target.directive';
 
 @NgModule({
     declarations: [
@@ -16,7 +15,6 @@ import { SkipTargetDirective } from './skip-nav/skip-target.directive';
         MenubarComponent,
         OerSliderComponent,
         SearchFieldComponent,
-        SkipTargetDirective,
     ],
     imports: [SharedModule],
     exports: [ErrorPageComponent, FooterbarComponent, HeaderbarComponent, MenubarComponent],

@@ -32,9 +32,10 @@ import { RouterModule } from '@angular/router';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { DisplayNamePipe } from './display-name.pipe';
 import { ReportClickDirective } from './report-click.directive';
+import { SkipTargetDirective } from './skip-target.directive';
 
 @NgModule({
-    declarations: [DisplayNamePipe, ReportClickDirective],
+    declarations: [DisplayNamePipe, SkipTargetDirective, ReportClickDirective],
     imports: [
         RouterModule,
         CommonModule,
@@ -102,6 +103,7 @@ import { ReportClickDirective } from './report-click.directive';
         MatSnackBarModule,
         MatTabsModule,
         MatTooltipModule,
+        SkipTargetDirective,
         SlickCarouselModule,
         ReportClickDirective,
     ],

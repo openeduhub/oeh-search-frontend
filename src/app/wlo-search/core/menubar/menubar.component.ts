@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { BehaviorSubject, EMPTY, timer } from 'rxjs';
 import { debounce } from 'rxjs/operators';
 import { ConfigService } from '../config.service';
-import { SkipNavService, SkipTarget } from '../skip-nav/skip-nav.service';
+import { SkipNavService, SkipTarget } from '../skip-nav.service';
 
 @Component({
     selector: 'app-menubar',

@@ -1,5 +1,5 @@
 import { Directive, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
-import { SkipNavService, SkipTarget } from './skip-nav.service';
+import { SkipNavService, SkipTarget } from '../core/skip-nav.service';
 /**
  * Adds the element to the skip navigation.
  *
