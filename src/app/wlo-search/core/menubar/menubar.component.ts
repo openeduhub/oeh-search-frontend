@@ -22,9 +22,7 @@ export class MenubarComponent {
     constructor(private config: ConfigService, private skipNav: SkipNavService) {
         this.isTouchDevice =
             // From https://stackoverflow.com/a/4819886
-            'ontouchstart' in window ||
-            navigator.maxTouchPoints > 0 ||
-            navigator.msMaxTouchPoints > 0;
+            'ontouchstart' in window || navigator.maxTouchPoints > 0;
         if (!this.isTouchDevice) {
             this.mouseOverNewsLink
                 .pipe(debounce((value) => (value ? EMPTY : timer(500))))

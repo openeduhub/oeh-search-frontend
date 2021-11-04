@@ -1,4 +1,4 @@
-import { CdkConnectedOverlay, ConnectedPosition } from '@angular/cdk/overlay';
+import { CdkConnectedOverlay, CdkOverlayOrigin, ConnectedPosition } from '@angular/cdk/overlay';
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -19,6 +19,7 @@ type Suggestions = { [key in Facet]?: string[] };
 })
 export class SearchFieldComponent implements OnInit, OnDestroy {
     @ViewChild(CdkConnectedOverlay) overlay: CdkConnectedOverlay;
+    @ViewChild(CdkOverlayOrigin) overlayOrigin: CdkOverlayOrigin;
     @ViewChild('searchInput') searchInput: ElementRef<HTMLInputElement>;
     @ViewChild('suggestionChip', { read: ElementRef })
     firstSuggestionChip?: ElementRef<HTMLElement>;
@@ -96,7 +97,7 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
 
     onOutsideClick(event: MouseEvent): void {
         const clickTarget = event.target as HTMLElement;
-        if (!(this.overlay.origin.elementRef.nativeElement as HTMLElement).contains(clickTarget)) {
+        if (!(this.overlayOrigin.elementRef.nativeElement as HTMLElement).contains(clickTarget)) {
             this.showOverlay = false;
         }
     }
