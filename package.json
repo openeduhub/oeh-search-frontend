@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "clean": "rm -rf dist",
-    "prebuild": "graphql-codegen",
+    "prebuild": "npm run generate",
     "build": "ng build --localize",
     "test": "ng test",
     "lint": "ng lint",
@@ -17,6 +17,7 @@
     "extract-i18n": "ng extract-i18n oeh-search-frontend --output-path src/locale && ng run oeh-search-frontend:xliffmerge",
     "start-de": "ng serve --configuration=de",
     "generate": "graphql-codegen",
+    "postgenerate": "prettier --write src/generated/*",
     "postinstall": "ngcc --tsconfig ./tsconfig.app.json",
     "analyze-bundle": "ng build --stats-json && webpack-bundle-analyzer ./dist/oeh-search-frontend/stats.json"
   },
