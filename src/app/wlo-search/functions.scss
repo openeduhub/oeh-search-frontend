@@ -1,4 +1,4 @@
-@use '~@angular/material' as mat;
+@use '@angular/material' as mat;
 
 // For using the primary color on theme background
 @function primary-foreground-color($theme) {
