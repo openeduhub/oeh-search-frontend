@@ -6,7 +6,7 @@
     "start": "ng serve",
     "clean": "rm -rf dist",
     "prebuild": "graphql-codegen",
-    "build": "ng build --configuration production --localize",
+    "build": "ng build --localize",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",

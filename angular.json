@@ -30,11 +30,8 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets",
-              "src/env.js"
-            ],
+            "inlineStyleLanguage": "scss",
+            "assets": ["src/favicon.ico", "src/assets", "src/env.js"],
             "styles": [
               "node_modules/slick-carousel/slick/slick.scss",
               "node_modules/slick-carousel/slick/slick-theme.scss",
@@ -43,30 +40,10 @@
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/slick-carousel/slick/slick.min.js"
-            ],
-            "vendorChunk": true,
-            "extractLicenses": false,
-            "buildOptimizer": false,
-            "sourceMap": true,
-            "optimization": false,
-            "namedChunks": true,
-            "preserveSymlinks": true
+            ]
           },
           "configurations": {
             "production": {
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -78,30 +55,46 @@
                   "maximumWarning": "2kb",
                   "maximumError": "10kb"
                 }
-              ]
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
             },
             "de": {
-              "localize": [
-                "de"
-              ]              
+              "localize": ["de"]
             }
           },
-          "defaultConfiguration": ""
+          "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "oeh-search-frontend:build",
             "proxyConfig": "src/proxy.conf.js"
           },
           "configurations": {
             "production": {
               "browserTarget": "oeh-search-frontend:build:production"
             },
+            "development": {
+              "browserTarget": "oeh-search-frontend:build:development"
+            },
             "de": {
-              "browserTarget": "oeh-search-frontend:build:de"
+              "browserTarget": "oeh-search-frontend:build:development,de"
             }
-          }
+          },
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
@@ -116,11 +109,8 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets",
-              "src/env.js"
-            ],
+            "inlineStyleLanguage": "scss",
+            "assets": ["src/favicon.ico", "src/assets", "src/env.js"],
             "styles": [
               "node_modules/slick-carousel/slick/slick.scss",
               "node_modules/slick-carousel/slick/slick-theme.scss",
@@ -135,10 +125,7 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": [
-              "src/**/*.ts",
-              "src/**/*.html"
-            ]
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
           }
         },
         "xliffmerge": {
@@ -149,10 +136,7 @@
               "srcDir": "src/locale",
               "genDir": "src/locale",
               "defaultLanguage": "en-US",
-              "languages": [
-                "en-US",
-                "de"
-              ]
+              "languages": ["en-US", "de"]
             }
           }
         }
