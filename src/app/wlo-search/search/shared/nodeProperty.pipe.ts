@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { Node } from 'ngx-edu-sharing-api';
 import { ConfigService } from '../../core/config.service';
-import { Collection } from '../../core/edu-sharing.service';
+import { Collection, EduSharingService } from '../../core/edu-sharing.service';
 import { collectionHasType } from './in-collection-with-type.pipe';
 
 export interface IdentifiedValue {
@@ -20,7 +20,7 @@ export class NodePropertyPipe implements PipeTransform {
         author: (node: Node) => this.getAuthor(node),
         url: (node: Node) => node.properties['ccm:wwwurl']?.[0] ?? node.content.url,
         source: (node: Node) => this.zipDisplayNames(node, 'ccm:replicationsource')?.[0],
-        sourceUrl: (node: Node) => 'http://example.org/TODO',
+        sourceUrl$: (node: Node) => this.eduSharing.getSourceUrl(node),
         license: (node: Node) => this.getLicense(node),
         mimeType: (node: Node) => node.mediatype,
         isExternal: (node: Node) => !!node.properties['ccm:wwwurl'],
@@ -75,7 +75,7 @@ export class NodePropertyPipe implements PipeTransform {
         },
     }[this.config.get().language];
 
-    constructor(private config: ConfigService) {}
+    constructor(private config: ConfigService, private eduSharing: EduSharingService) {}
 
     transform<P extends keyof NodePropertyPipe['propertyMappings']>(
         node: Node,

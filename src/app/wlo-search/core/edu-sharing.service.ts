@@ -11,7 +11,7 @@ import {
     SearchService,
 } from 'ngx-edu-sharing-api';
 import { Observable } from 'rxjs';
-import { shareReplay } from 'rxjs/operators';
+import { map, shareReplay } from 'rxjs/operators';
 import { facetProperties } from './facet-properties';
 import { ParsedParams, SearchParametersService } from './search-parameters.service';
 
@@ -94,6 +94,16 @@ export class EduSharingService {
 
     getDisplayName(property: string, key: string): Observable<string> {
         return this.mdsLabelService.getLabel(this.getMdsIdentifier(), property, key);
+    }
+
+    getSourceUrl(node: Node): Observable<string> {
+        return this.mdsLabelService
+            .findValue(
+                this.getMdsIdentifier(),
+                'ccm:replicationsource',
+                node.properties['ccm:replicationsource']?.[0],
+            )
+            .pipe(map((value) => value?.url));
     }
 
     private getMdsIdentifier(): MdsIdentifier {

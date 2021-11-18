@@ -40,7 +40,7 @@
     "graphql": "^15.5.1",
     "jquery": "^3.6.0",
     "material-icons": "^0.3.1",
-    "ngx-edu-sharing-api": "^0.1.0",
+    "ngx-edu-sharing-api": "^0.2.0",
     "ngx-slick-carousel": "^0.5.1",
     "rxjs": "^6.6.3",
     "slick-carousel": "^1.8.1",

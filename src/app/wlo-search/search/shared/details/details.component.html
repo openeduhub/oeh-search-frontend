@@ -79,9 +79,9 @@
     <app-badges class="badges" [hit]="hit" orientation="horizontal"></app-badges>
     <div class="app-preview-panel-source-container">
       <a
-        *ngIf="hit | nodeProperty: 'sourceUrl'"
+        *ngIf="hit | nodeProperty: 'sourceUrl$' | async as sourceUrl"
         class="app-preview-panel-source"
-        [href]="hit | nodeProperty: 'sourceUrl'"
+        [href]="sourceUrl"
         target="_blank"
         >{{ (hit | nodeProperty: 'source')?.displayName }}</a
       >
