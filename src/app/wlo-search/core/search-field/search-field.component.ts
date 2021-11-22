@@ -142,11 +142,10 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
     }
 
     addFilter(category: Facet, filter: string): void {
-        if (!this.filters[category]) {
-            this.filters[category] = [];
-        }
-        if (!this.filters[category].includes(filter)) {
-            this.filters[category].push(filter);
+        const filtersCopy = this.filters[category]?.slice() ?? [];
+        if (!filtersCopy.includes(filter)) {
+            filtersCopy.push(filter);
+            this.filters = { ...this.filters, [category]: filtersCopy };
             this.searchField.setValue('');
         }
         setTimeout(() => {
@@ -156,9 +155,11 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
     }
 
     removeFilter(category: Facet, filter: string): void {
-        const index = this.filters[category].indexOf(filter);
+        const filtersCopy = this.filters[category].slice();
+        const index = filtersCopy.indexOf(filter);
         if (index >= 0) {
-            this.filters[category].splice(index, 1);
+            filtersCopy.splice(index, 1);
+            this.filters = { ...this.filters, [category]: filtersCopy };
         }
         this.applySearch();
     }
