@@ -29,6 +29,7 @@
         .summary em {
             font-weight: mat.font-weight($typography, body-2);
         }
+        .did-you-mean,
         .summary {
             font-size: mat.font-size($typography, subheading-1);
         }
