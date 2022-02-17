@@ -81,9 +81,6 @@ jobs:
           docker push ${{ github.repository }}:${{ env.GITHUB_REF_SLUG }}
           echo "::notice ::Published as ${{ github.repository }}:${{ env.GITHUB_REF_SLUG }}"
 
-  # At the time the "lint" job was commented out, Angular did not support the `ng lint` command for
-  # Angular 13.
-
   lint:
     name: Lint
     runs-on: 'ubuntu-latest'
@@ -138,3 +135,30 @@ jobs:
         with:
           name: cypress-screenshots
           path: e2e-cypress/cypress/screenshots
+
+  build-web-components:
+    name: Build web components
+    runs-on: 'ubuntu-latest'
+    # Depend on `build-image` so we can use cached node_modules.
+    needs: build-image
+    if: ${{ success() || needs.build-image.result == 'skipped' }}    
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: ./node_modules
+          key: modules-${{ env.NODE_VERSION }}-${{ hashFiles('package-lock.json') }}
+      - name: Install dependencies
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: npm ci
+      - name: Build web components
+        run: npm run build:web-components
+      - uses: actions/upload-artifact@v1
+        with:
+          name: web-components
+          path: dist/web-components

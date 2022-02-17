@@ -65,6 +65,7 @@ import { WrapObservablePipe } from './shared/wrap-observable.pipe';
         ReportProblemComponent,
     ],
     imports: [SharedModule],
+    exports: [DetailsComponent],
     providers: [
         SearchResultsService,
         SearchPageResolverService,

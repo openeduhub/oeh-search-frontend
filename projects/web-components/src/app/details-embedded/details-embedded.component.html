@@ -1,0 +1,8 @@
+<app-details
+  *ngIf="_node | async as node"
+  [hit]="node"
+  mode="dialog"
+  (closeButtonClicked)="_onClosed()"
+></app-details>
+
+<!-- <pre>{{ _node | async | json }}</pre> -->

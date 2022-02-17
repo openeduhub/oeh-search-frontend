@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web Components Example</title>
+    <base href="/" />
+    <script>
+      window.__env = {
+        EDU_SHARING_API_URL: 'https://redaktion-staging.openeduhub.net/edu-sharing/rest',
+      };
+    </script>
+    <script src="web-components/de/runtime.js" type="module"></script>
+    <script src="web-components/de/polyfills.js" type="module"></script>
+    <script src="web-components/de/main.js" type="module"></script>
+    <link rel="stylesheet" href="web-components/de/styles.css" />
+    <style>
+      body {
+        padding: 100px;
+      }
+      .main-container {
+        display: flex;
+        gap: 100px;
+      }
+      .controls {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .details-container {
+        position: relative;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Web Components Example</h1>
+    <div class="main-container">
+      <div class="controls">
+        <button onClick="showNode('24a188da-1dc3-48b5-a7c7-f55685714ca0')">
+          Portal für zeitgemäße Prüfungskultur
+        </button>
+        <button onClick="showNode('19cba8d8-87b9-4b0e-b732-c790728e0351')">
+          Natural Selection
+        </button>
+        <button onClick="showNode('084a5f1b-db15-4567-a474-80554c99e7f1')">
+          MathePrisma - Lineare Datenstrukturen
+        </button>
+      </div>
+      <div class="details-container">
+        <oeh-details-embedded node-id="24a188da-1dc3-48b5-a7c7-f55685714ca0"></oeh-details-embedded>
+      </div>
+    </div>
+    <script>
+      function showNode(id) {
+        document.getElementsByTagName('oeh-details-embedded')[0].setAttribute('node-id', id);
+      }
+      document.getElementsByTagName('oeh-details-embedded')[0].addEventListener('closed', () => {
+        console.log('received closed event');
+      });
+    </script>
+  </body>
+</html>
