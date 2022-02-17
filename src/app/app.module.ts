@@ -1,7 +1,7 @@
 import { A11yModule } from '@angular/cdk/a11y';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { LayoutModule } from '@angular/cdk/layout';
-import { OverlayModule } from '@angular/cdk/overlay';
+import { OverlayModule, ScrollStrategyOptions } from '@angular/cdk/overlay';
 import {
     HttpClient,
     HttpClientModule,
@@ -20,7 +20,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatRippleModule } from '@angular/material/core';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MAT_DIALOG_SCROLL_STRATEGY } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -214,6 +214,24 @@ const httpLinkBeacon = (() => {
                 },
             }),
         },
+        (() => {
+            // From
+            // https://stackoverflow.com/questions/7944460/detect-safari-browser/23522755#23522755
+            const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+            if (isSafari) {
+                // There is a bug in Safari since version 15 that shifts interaction areas away from
+                // visible elements when scrolling of the main page is blocked, making it ignore
+                // button clicks. So we disable scroll blocking for Safari for now.
+                return {
+                    provide: MAT_DIALOG_SCROLL_STRATEGY,
+                    useFactory: (scrollStrategyOptions: ScrollStrategyOptions) =>
+                        scrollStrategyOptions.noop,
+                    deps: [ScrollStrategyOptions],
+                };
+            } else {
+                return [];
+            }
+        })(),
     ],
     bootstrap: [AppComponent],
 })
