@@ -6,6 +6,16 @@ on:
   pull_request:
     branches: [develop, master]
 
+# Currently, requests to the ElasticSearch Relay will fail due to unmet same origin policy. This is
+# not relevant for the new setup with Edu-Sharing as backend. Possible fixes are:
+# - Include test instances in the test relay's 'Access-Control-Allow-Origin' header.
+# - Set up a reverse proxy to serve frontend and relay from the same origin.
+# - Provide the relay with the test instance, requiring an ElasticSearch instance as well.
+#
+# For now, we disable the tests, since we need a relay close to the live version but with enabled
+# 'Access-Control-Allow-Origin' header, so both, suche.wirlernenonline.de and
+# staging.wirlernenonline.de are no good fits.
+
 jobs:
   build-and-publish-ci:
     runs-on: ubuntu-latest
