@@ -18,9 +18,9 @@ import { ViewService } from '../../../core/view.service';
 export class SearchFilterbarComponent implements OnInit, OnDestroy {
     readonly routerPath = this.config.get().routerPath;
     readonly mainFilters: Array<Facet> = [
+        'oehLrtAggregated',
         'discipline',
         'educationalContext',
-        'learningResourceType',
         'intendedEndUserRole',
         'source',
         'keyword',
@@ -31,6 +31,7 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
     filters: Filters = {};
     facetFilters: FormGroup;
     expandedFilters: { [key in Facet]?: boolean } = {
+        oehLrtAggregated: true,
         discipline: true,
         educationalContext: true,
     };

@@ -37,11 +37,11 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
 
     readonly categories: Facet[] = [
         'type',
+        'oehLrtAggregated',
         'educationalContext',
         'discipline',
         'keyword',
         'intendedEndUserRole',
-        'learningResourceType',
         'source',
     ];
 
