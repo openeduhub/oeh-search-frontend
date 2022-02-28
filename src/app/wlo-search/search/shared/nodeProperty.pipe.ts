@@ -26,8 +26,7 @@ export class NodePropertyPipe implements PipeTransform {
         isExternal: (node: Node) => !!node.properties['ccm:wwwurl'],
         duration: (node: Node) => this.parseInt(node.properties['cclom:duration']?.[0]),
         language: (node: Node) => node.properties['cclom:general_language'],
-        learningResourceType: (node: Node) =>
-            this.aggregateProperty(node, 'ccm:educationallearningresourcetype'),
+        oehLrtAggregated: (node: Node) => this.aggregateProperty(node, 'ccm:oeh_lrt_aggregated'),
         discipline: (node: Node) => this.aggregateProperty(node, 'ccm:taxonid'),
         educationalContext: (node: Node) => this.aggregateProperty(node, 'ccm:educationalcontext'),
         widget: (node: Node) => this.aggregateProperty(node, 'ccm:oeh_widgets'),
