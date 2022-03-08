@@ -85,6 +85,7 @@ export class AnalyticsService {
                 '__typename',
                 'previewImage',
                 'description',
+                'usedInCollections',
             ]);
             this.sessionId
                 .pipe(
