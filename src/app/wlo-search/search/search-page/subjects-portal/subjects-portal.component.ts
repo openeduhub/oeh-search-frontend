@@ -21,6 +21,7 @@ export class SubjectsPortalComponent implements OnInit, OnDestroy {
     isExpanded: boolean;
 
     private readonly destroyed$ = new Subject<void>();
+    unordered = () => 0;
 
     constructor(
         private searchParameters: SearchParametersService,

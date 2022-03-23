@@ -1,16 +1,12 @@
 <div class="header">
-  <h3 class="title" [ngSwitch]="type">
-    <ng-container *ngSwitchCase="'MATERIAL'" i18n>Contents</ng-container>
-    <ng-container *ngSwitchCase="'LESSONPLANNING'" i18n="plural|">Lesson Planning</ng-container>
-    <ng-container *ngSwitchCase="'TOOL'" i18n>Tools</ng-container>
-    <ng-container *ngSwitchCase="'SOURCE'" i18n>Sources</ng-container>
-    <ng-container *ngSwitchCase="'METHOD'" i18n>Methods</ng-container>
+  <h3 class="title">
+    {{ type | displayName: 'oehLrtAggregated' }}
   </h3>
   <a
     class="show-more-button"
     mat-button
     routerLink="{{ routerPath }}/search"
-    [queryParams]="type | generateFilters: 'type':filters"
+    [queryParams]="type | generateFilters: 'oehLrtAggregated':filters"
     queryParamsHandling="merge"
   >
     <ng-container i18n>show more</ng-container>
