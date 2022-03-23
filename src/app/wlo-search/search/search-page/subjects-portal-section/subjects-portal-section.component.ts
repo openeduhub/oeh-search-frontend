@@ -32,6 +32,7 @@ export class SubjectsPortalSectionComponent implements OnDestroy, AfterViewInit 
 
     @Input() hits: Node[];
     @Input() filters: Filters;
+    @Input() type: string;
 
     @ViewChild(SlickCarouselComponent) slickCarousel: SlickCarouselComponent;
 
@@ -39,7 +40,6 @@ export class SubjectsPortalSectionComponent implements OnDestroy, AfterViewInit 
     private slickConfigUpdateTrigger = new ReplaySubject<void>(1);
 
     constructor(
-        @Attribute('type') readonly type: string,
         private config: ConfigService,
         private elementRef: ElementRef<HTMLElement>,
         view: ViewService,
