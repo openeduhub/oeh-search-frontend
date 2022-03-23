@@ -129,7 +129,7 @@ export class EduSharingService {
                 criteria: this.getSearchCriteria(searchString, filters, oer),
                 facets: [],
                 resolveCollections: true,
-                facetLimit: 20,
+                facetLimit: 10,
                 facetMinCount: 1,
             },
         };
