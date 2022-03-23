@@ -33,7 +33,6 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
     expandedFilters: { [key in Facet]?: boolean } = {
         oehLrtAggregated: true,
         discipline: true,
-        educationalContext: true,
     };
 
     private destroyed$ = new Subject<void>();
