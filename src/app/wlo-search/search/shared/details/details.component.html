@@ -126,6 +126,18 @@
           <mat-icon>arrow_forward</mat-icon>
         </span>
       </a>
+      <a
+        *ngIf="(hit | nodeProperty: 'url') !== (hit | nodeProperty: 'detailsUrl')"
+        mat-flat-button
+        class="app-preview-panel-button"
+        [href]="hit | nodeProperty: 'detailsUrl'"
+        target="_blank"
+      >
+        <span class="app-preview-panel-button-wrapper">
+          <span i18n>All details</span>
+          <mat-icon>arrow_forward</mat-icon>
+        </span>
+      </a>
       <!-- <a
         mat-flat-button
         color="primary"

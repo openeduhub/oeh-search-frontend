@@ -19,6 +19,7 @@ export class NodePropertyPipe implements PipeTransform {
         description: (node: Node) => node.properties['cclom:general_description']?.[0],
         author: (node: Node) => this.getAuthor(node),
         url: (node: Node) => node.properties['ccm:wwwurl']?.[0] ?? node.content.url,
+        detailsUrl: (node: Node) => node.content.url,
         source: (node: Node) => this.zipDisplayNames(node, 'ccm:replicationsource')?.[0],
         sourceUrl$: (node: Node) => this.eduSharing.getSourceUrl(node),
         license: (node: Node) => this.getLicense(node),
