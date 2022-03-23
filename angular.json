@@ -17,6 +17,7 @@
       "sourceRoot": "src",
       "prefix": "app",
       "i18n": {
+        "sourceLocale": "en-US",
         "locales": {
           "de": "src/locale/messages.de.xlf"
         }
@@ -44,6 +45,7 @@
           },
           "configurations": {
             "production": {
+              "i18nMissingTranslation": "error",
               "budgets": [
                 {
                   "type": "initial",
