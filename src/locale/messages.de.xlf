@@ -619,9 +619,9 @@
           <context context-type="linenumber">21</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="1806667489382256324" datatype="html">
-        <source>Category</source>
-        <target state="final">Kategorie</target>
+      <trans-unit id="3029609593829675670" datatype="html">
+        <source>Content type</source>
+        <target state="final">Inhaltetyp</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/wlo-search/search/search-page/search-filterbar/search-filterbar.component.html</context>
           <context context-type="linenumber">25</context>
@@ -753,8 +753,8 @@
           <context context-type="linenumber">103</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="1698066153391119473" datatype="html">
-        <source>Search results content type</source>
+      <trans-unit id="2415524455366590864" datatype="html">
+        <source>Search results by content type</source>
         <target state="final">Suchergebnisse nach Inhaltetyp</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/wlo-search/search/search-page/search-page.component.html</context>
