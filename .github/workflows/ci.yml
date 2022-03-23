@@ -107,31 +107,41 @@ jobs:
   #     - name: Lint
   #       run: npm run lint
 
-  cypress-tests:
-    name: Cypress tests
-    runs-on: ubuntu-latest
-    needs: build-image
-    if: ${{ success() || needs.build-image.result == 'skipped' }}
-    services:
-      frontend:
-        image: ${{ github.repository }}:${{ github.sha }}
-        env:
-          EDU_SHARING_API_URL: https://redaktion-staging.openeduhub.net/edu-sharing/rest
-        ports:
-          - 8080:80
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-      - name: Cypress run
-        uses: cypress-io/github-action@v2
-        env:
-          CYPRESS_baseUrl: http://localhost:8080
-        with:
-          working-directory: e2e-cypress
-      - uses: actions/upload-artifact@v1
-        if: failure()
-        with:
-          name: cypress-screenshots
-          path: e2e-cypress/cypress/screenshots
+  # Currently, requests to the ElasticSearch Relay will fail due to unmet same origin policy. This is
+  # not relevant for the new setup with Edu-Sharing as backend. Possible fixes are:
+  # - Include test instances in the test relay's 'Access-Control-Allow-Origin' header.
+  # - Set up a reverse proxy to serve frontend and relay from the same origin.
+  # - Provide the relay with the test instance, requiring an ElasticSearch instance as well.
+  #
+  # For now, we disable the tests, since we need a relay close to the live version but with enabled
+  # 'Access-Control-Allow-Origin' header, so both, suche.wirlernenonline.de and
+  # staging.wirlernenonline.de are no good fits.  
+
+  # cypress-tests:
+  #   name: Cypress tests
+  #   runs-on: ubuntu-latest
+  #   needs: build-image
+  #   if: ${{ success() || needs.build-image.result == 'skipped' }}
+  #   services:
+  #     frontend:
+  #       image: ${{ github.repository }}:${{ github.sha }}
+  #       env:
+  #         EDU_SHARING_API_URL: https://redaktion-staging.openeduhub.net/edu-sharing/rest
+  #       ports:
+  #         - 8080:80
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: actions/setup-node@v2
+  #       with:
+  #         node-version: ${{ env.NODE_VERSION }}
+  #     - name: Cypress run
+  #       uses: cypress-io/github-action@v2
+  #       env:
+  #         CYPRESS_baseUrl: http://localhost:8080
+  #       with:
+  #         working-directory: e2e-cypress
+  #     - uses: actions/upload-artifact@v1
+  #       if: failure()
+  #       with:
+  #         name: cypress-screenshots
+  #         path: e2e-cypress/cypress/screenshots
