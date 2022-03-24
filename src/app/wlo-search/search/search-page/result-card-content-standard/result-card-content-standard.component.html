@@ -18,7 +18,7 @@
     {{ description | trim | truncate: 65 }}
   </p>
   <div class="metadata" *ngIf="hit | nodeProperty: 'oehLrtAggregated' as lrts">
-    <mat-icon i18n-matTooltip matTooltip="Learning resource type">photo_library</mat-icon>
+    <mat-icon i18n-matTooltip matTooltip="Learning resource type">perm_media</mat-icon>
     <span class="cdk-visually-hidden" i18n>Learning resource type</span>
     <div>
       <span *ngFor="let lrt of lrts">{{ lrt.displayName }}</span>

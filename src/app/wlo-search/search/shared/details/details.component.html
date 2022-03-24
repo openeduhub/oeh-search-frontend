@@ -16,7 +16,7 @@
       class="app-preview-panel-info-bar-item"
       *ngIf="hit | nodeProperty: 'oehLrtAggregated' as lrts; else widgetType"
     >
-      <mat-icon>photo_library</mat-icon>
+      <mat-icon>perm_media</mat-icon>
       <span>
         <ng-container *ngFor="let lrt of lrts; let last = last">
           {{ lrt.displayName }}<ng-container *ngIf="!last">,</ng-container>
