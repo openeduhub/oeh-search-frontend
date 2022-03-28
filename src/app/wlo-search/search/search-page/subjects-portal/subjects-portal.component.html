@@ -1,8 +1,25 @@
-<ng-container *ngFor="let category of results | keyvalue: unordered">
-  <app-subjects-portal-section
-    *ngIf="results[category.key]?.length > 0"
-    [type]="category.key"
-    [hits]="results[category.key]"
-    [filters]="filters"
-  ></app-subjects-portal-section>
-</ng-container>
+<app-subjects-portal-section
+  *ngFor="let category of results?.groups | keyvalue: unordered"
+  [type]="category.key"
+  [hits]="category.value"
+  [filters]="filters"
+></app-subjects-portal-section>
+
+<button
+  mat-button
+  color="primary"
+  class="show-more-button"
+  *ngIf="results?.hasMore"
+  (click)="showMoreGroups()"
+  [disabled]="loadingMoreGroups"
+>
+  <span class="show-more-button-content">
+    <ng-container i18n>show more</ng-container>
+    <mat-icon *ngIf="!loadingMoreGroups">keyboard_arrow_down</mat-icon>
+    <mat-progress-spinner
+      *ngIf="loadingMoreGroups"
+      mode="indeterminate"
+      diameter="18"
+    ></mat-progress-spinner>
+  </span>
+</button>

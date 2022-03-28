@@ -8,3 +8,15 @@ app-subjects-portal-section:first-of-type {
 app-subjects-portal-section {
     margin-bottom: 3em;
 }
+
+.show-more-button {
+    margin-bottom: 3em;
+}
+
+.show-more-button-content {
+    display: flex;
+    align-items: center;
+    mat-progress-spinner {
+        margin-left: 10px;
+    }
+}

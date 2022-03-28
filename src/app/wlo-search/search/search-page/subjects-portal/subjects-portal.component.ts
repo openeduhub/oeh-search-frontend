@@ -19,6 +19,7 @@ export class SubjectsPortalComponent implements OnInit, OnDestroy {
     results: SubjectsPortalResults;
     filters: Filters;
     isExpanded: boolean;
+    loadingMoreGroups = false;
 
     private readonly destroyed$ = new Subject<void>();
     readonly unordered = () => 0;
@@ -33,10 +34,7 @@ export class SubjectsPortalComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.resolve
             .resolve(this.resolver, this.route)
-            .pipe(takeUntil(this.destroyed$))
-            .subscribe((results) => {
-                this.results = results;
-            });
+            .subscribe((results) => (this.results = results));
         this.searchParameters
             .get()
             .pipe(takeUntil(this.destroyed$))
@@ -49,5 +47,13 @@ export class SubjectsPortalComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
         this.destroyed$.next();
         this.destroyed$.complete();
+    }
+
+    showMoreGroups(): void {
+        this.loadingMoreGroups = true;
+        this.resolver.showMoreGroups().subscribe((results) => {
+            this.loadingMoreGroups = false;
+            this.results = results;
+        });
     }
 }
