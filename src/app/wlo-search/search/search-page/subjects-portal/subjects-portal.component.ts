@@ -21,7 +21,7 @@ export class SubjectsPortalComponent implements OnInit, OnDestroy {
     isExpanded: boolean;
 
     private readonly destroyed$ = new Subject<void>();
-    unordered = () => 0;
+    readonly unordered = () => 0;
 
     constructor(
         private searchParameters: SearchParametersService,
@@ -31,7 +31,6 @@ export class SubjectsPortalComponent implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit(): void {
-        // this.route.data.subscribe((data: { results: SubjectsPortalResults }) => {
         this.resolve
             .resolve(this.resolver, this.route)
             .pipe(takeUntil(this.destroyed$))
