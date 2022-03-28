@@ -40,8 +40,8 @@ export class EduSharingService {
     private readonly didYouMeanSuggestion$ = this.searchService
         .getDidYouMeanSuggestion()
         .pipe(shareReplay(1));
-    /** A search request, which will also affect facets, is currently in flight. */
-    private readonly searchInFlightSubject = new BehaviorSubject<boolean>(false);
+    /** A request which will affect facets is currently in flight. */
+    private readonly facetUpdateInFlightSubject = new BehaviorSubject<boolean>(false);
 
     constructor(
         private searchParameters: SearchParametersService,
@@ -58,11 +58,11 @@ export class EduSharingService {
      * Sends a search request with current params and updates facets.
      */
     search(): Observable<SearchResults> {
-        this.searchInFlightSubject.next(true);
+        this.facetUpdateInFlightSubject.next(true);
         const requestParams = this.getSearchRequestParams(this.searchParameters.getCurrentValue());
         return this.searchService
             .search(requestParams)
-            .pipe(tap(() => this.searchInFlightSubject.next(false)));
+            .pipe(tap(() => this.facetUpdateInFlightSubject.next(false)));
     }
 
     /**
@@ -79,14 +79,17 @@ export class EduSharingService {
 
     getFacets(): Observable<FacetsDict> {
         // Do not return facets that for which an update is in flight.
-        return this.searchInFlightSubject.pipe(
+        return this.facetUpdateInFlightSubject.pipe(
             first((searchInFlight) => !searchInFlight),
             switchMap(() => this.facets$),
         );
     }
 
     loadMoreFacetValues(facet: Facet, size: number): void {
-        this.searchService.loadMoreFacets(facetProperties[facet], size);
+        this.facetUpdateInFlightSubject.next(true);
+        this.searchService
+            .loadMoreFacets(facetProperties[facet], size)
+            .then(() => this.facetUpdateInFlightSubject.next(false));
     }
 
     getFacetSuggestions(inputString: string): Observable<FacetsDict> {

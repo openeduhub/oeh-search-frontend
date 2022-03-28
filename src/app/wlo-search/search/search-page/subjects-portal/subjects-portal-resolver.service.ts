@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
-import { Node } from 'ngx-edu-sharing-api';
+import { FacetAggregation, Node } from 'ngx-edu-sharing-api';
 import * as rxjs from 'rxjs';
-import { BehaviorSubject, forkJoin, Observable } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { filter, map, switchMap, take } from 'rxjs/operators';
+import { facetProperties } from 'src/app/wlo-search/core/facet-properties';
 import { EduSharingService, Filters } from '../../../core/edu-sharing.service';
 import { SearchParametersService } from '../../../core/search-parameters.service';
 
@@ -17,7 +18,8 @@ const NUMBER_OF_RESULTS_PER_GROUP = 10;
 
 @Injectable()
 export class SubjectsPortalResolverService implements Resolve<SubjectsPortalResults> {
-    private readonly numberOfGroups = new BehaviorSubject<number>(INITIAL_NUMBER_OF_GROUPS);
+    /** Number of requested groups to fetch. */
+    private numberOfGroups = INITIAL_NUMBER_OF_GROUPS;
 
     constructor(
         private searchParameters: SearchParametersService,
@@ -25,24 +27,20 @@ export class SubjectsPortalResolverService implements Resolve<SubjectsPortalResu
     ) {}
 
     resolve(): Observable<SubjectsPortalResults> {
-        this.numberOfGroups.next(INITIAL_NUMBER_OF_GROUPS);
+        this.numberOfGroups = INITIAL_NUMBER_OF_GROUPS;
         return this.getSubjectsPortals().pipe(take(1));
     }
 
     showMoreGroups(): Observable<SubjectsPortalResults> {
-        this.numberOfGroups.next(this.numberOfGroups.value + INITIAL_NUMBER_OF_GROUPS);
+        this.numberOfGroups += INITIAL_NUMBER_OF_GROUPS;
         return this.getSubjectsPortals().pipe(take(1));
     }
 
     private getSubjectsPortals(): Observable<SubjectsPortalResults> {
-        const contentTypes$ = this.eduSharing.getFacets().pipe(
-            map((facets) => facets['ccm:oeh_lrt_aggregated']),
-            filter((contentTypes) => !!contentTypes),
-        );
-        return rxjs.combineLatest([contentTypes$, this.numberOfGroups]).pipe(
-            switchMap(([contentTypes, numberOfGroups]) => {
+        return this.getContentTypes(this.numberOfGroups).pipe(
+            switchMap((contentTypes) => {
                 const observables = contentTypes.values
-                    .slice(0, numberOfGroups)
+                    .slice(0, this.numberOfGroups)
                     .reduce((acc, contentType) => {
                         acc[contentType.value] = this.getHitsForType(contentType.value);
                         return acc;
@@ -67,5 +65,30 @@ export class SubjectsPortalResolverService implements Resolve<SubjectsPortalResu
                 oer,
             })
             .pipe(map((response) => response.nodes));
+    }
+
+    /**
+     * Returns an observable with the facet aggregation of `oehLrtAggregated`.
+     *
+     * Ensures that at least `minimumNumberOfGroups` are returned.
+     */
+    private getContentTypes(minimumNumberOfGroups: number): Observable<FacetAggregation> {
+        const inner$ = this.eduSharing.getFacets().pipe(
+            map((facets) => facets[facetProperties.oehLrtAggregated]),
+            filter((contentTypes) => !!contentTypes),
+        );
+        return inner$.pipe(
+            // If we don't have enough facet entries, we need to request the missing ones before
+            // returning the response of `getFacets()`.
+            switchMap((contentTypes) => {
+                const numberOfMissingGroups = minimumNumberOfGroups - contentTypes.values.length;
+                if (numberOfMissingGroups > 0 && contentTypes.hasMore) {
+                    this.eduSharing.loadMoreFacetValues('oehLrtAggregated', numberOfMissingGroups);
+                    return inner$;
+                } else {
+                    return rxjs.of(contentTypes);
+                }
+            }),
+        );
     }
 }
