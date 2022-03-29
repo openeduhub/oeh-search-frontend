@@ -113,7 +113,7 @@
       >Search results by content type</a
     >
   </nav>
-  <router-outlet></router-outlet>
+  <router-outlet *ngIf="results?.pagination.total > 0"></router-outlet>
 </div>
 
 <app-preview-panel></app-preview-panel>

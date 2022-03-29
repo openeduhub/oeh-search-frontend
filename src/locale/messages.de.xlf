@@ -579,6 +579,14 @@
           <context context-type="linenumber">16</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="1632247578204543569" datatype="html">
+        <source>There are no results with content-type information available for the current search.</source>
+        <target>Für die aktuelle Suche konnten keine Ergebnisse mit Informationen zum Inhaltetyp finden.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/search-page/subjects-portal/subjects-portal.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>      
       <trans-unit id="2715055948117230928" datatype="html">
         <source>Number of elements</source>
         <target state="final">Anzahl der Inhalte</target>

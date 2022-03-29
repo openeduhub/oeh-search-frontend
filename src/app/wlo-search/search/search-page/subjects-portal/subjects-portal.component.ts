@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { ConfigService } from '../../../core/config.service';
 import { Filters } from '../../../core/edu-sharing.service';
 import { ResolveService } from '../../../core/resolve.service';
 import { SearchParametersService } from '../../../core/search-parameters.service';
@@ -16,6 +17,7 @@ import {
     styleUrls: ['./subjects-portal.component.scss'],
 })
 export class SubjectsPortalComponent implements OnInit, OnDestroy {
+    readonly routerPath = this.config.get().routerPath;
     results: SubjectsPortalResults;
     filters: Filters;
     isExpanded: boolean;
@@ -25,10 +27,11 @@ export class SubjectsPortalComponent implements OnInit, OnDestroy {
     readonly unordered = () => 0;
 
     constructor(
-        private searchParameters: SearchParametersService,
-        private route: ActivatedRoute,
-        private resolver: SubjectsPortalResolverService,
+        private config: ConfigService,
         private resolve: ResolveService,
+        private resolver: SubjectsPortalResolverService,
+        private route: ActivatedRoute,
+        private searchParameters: SearchParametersService,
     ) {}
 
     ngOnInit(): void {

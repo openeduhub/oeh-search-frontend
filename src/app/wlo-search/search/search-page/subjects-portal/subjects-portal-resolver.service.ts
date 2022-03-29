@@ -39,6 +39,9 @@ export class SubjectsPortalResolverService implements Resolve<SubjectsPortalResu
     private getSubjectsPortals(): Observable<SubjectsPortalResults> {
         return this.getContentTypes(this.numberOfGroups).pipe(
             switchMap((contentTypes) => {
+                if (contentTypes.values.length === 0) {
+                    return rxjs.of({ groups: {}, hasMore: false });
+                }
                 const observables = contentTypes.values
                     .slice(0, this.numberOfGroups)
                     .reduce((acc, contentType) => {

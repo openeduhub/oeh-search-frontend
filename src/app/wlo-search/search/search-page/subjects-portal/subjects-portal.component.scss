@@ -5,8 +5,18 @@
 app-subjects-portal-section:first-of-type {
     margin-top: 16px;
 }
+
 app-subjects-portal-section {
     margin-bottom: 3em;
+}
+
+.no-results {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    a {
+        margin-top: 10px;
+    }
 }
 
 .show-more-button {

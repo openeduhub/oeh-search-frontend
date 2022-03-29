@@ -5,6 +5,20 @@
   [filters]="filters"
 ></app-subjects-portal-section>
 
+<div *ngIf="(results?.groups | keyvalue)?.length === 0" class="no-results">
+  <p i18n>We couldn't find any results with content-type information for the current search.</p>
+  <div>
+    <a
+      i18n
+      mat-flat-button
+      color="primary"
+      routerLink="{{ routerPath }}/search"
+      queryParamsHandling="merge"
+      >All search results</a
+    >
+  </div>
+</div>
+
 <button
   mat-button
   color="primary"
