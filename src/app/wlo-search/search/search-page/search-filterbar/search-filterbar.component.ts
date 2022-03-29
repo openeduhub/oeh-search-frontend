@@ -27,7 +27,6 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
     ];
     facets: FacetsDict;
     hasFacets: boolean;
-    orderedTypeBuckets: FacetValue[] | null;
     filters: Filters = {};
     facetFilters: FormGroup;
     expandedFilters: { [key in Facet]?: boolean } = {
@@ -122,13 +121,6 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
             // option.
             this.facets[facet] = facets[property] ?? { values: [], hasMore: false };
         }
-        this.orderedTypeBuckets = orderByProperty(this.facets.type?.values, 'value', [
-            'MATERIAL',
-            'LESSONPLANNING',
-            'TOOL',
-            'SOURCE',
-            'METHOD',
-        ]);
         this.hasFacets = Object.values(facets).some((facet) => facet.values.length > 0);
     }
 

@@ -21,16 +21,6 @@
         Currently, there are no applicable filters. Try another search string for more results.
       </p>
     </div>
-    <!--<div class="type" *ngIf="orderedTypeBuckets?.length > 0">
-      <mat-label><mat-icon>apps</mat-icon> <ng-container i18n>Category</ng-container></mat-label>
-      <app-multivalue-checkbox
-        formControlName="type"
-        [showCount]="false"
-        [columns]="2"
-        [buckets]="orderedTypeBuckets"
-      ></app-multivalue-checkbox>
-    </div>
-    -->
     <mat-accordion [multi]="true" displayMode="flat">
       <mat-expansion-panel
         *ngFor="let key of mainFilters"
