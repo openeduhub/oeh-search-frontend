@@ -19,21 +19,23 @@
   </div>
 </div>
 
-<button
-  mat-button
-  color="primary"
-  class="show-more-button"
-  *ngIf="results?.hasMore"
-  (click)="showMoreGroups()"
-  [disabled]="loadingMoreGroups"
->
-  <span class="show-more-button-content">
-    <ng-container i18n>show more</ng-container>
-    <mat-icon *ngIf="!loadingMoreGroups">keyboard_arrow_down</mat-icon>
-    <mat-progress-spinner
-      *ngIf="loadingMoreGroups"
-      mode="indeterminate"
-      diameter="18"
-    ></mat-progress-spinner>
-  </span>
-</button>
+<div class="show-more-button-container">
+  <button
+    mat-button
+    color="primary"
+    class="show-more-button"
+    *ngIf="results?.hasMore"
+    (click)="showMoreGroups()"
+    [disabled]="loadingMoreGroups"
+  >
+    <span class="show-more-button-content">
+      <ng-container i18n>show more</ng-container>
+      <mat-icon *ngIf="!loadingMoreGroups">keyboard_arrow_down</mat-icon>
+      <mat-progress-spinner
+        *ngIf="loadingMoreGroups"
+        mode="indeterminate"
+        diameter="18"
+      ></mat-progress-spinner>
+    </span>
+  </button>
+</div>
