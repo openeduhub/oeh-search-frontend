@@ -2,8 +2,8 @@
   <mat-checkbox
     *ngFor="let bucket of buckets"
     (change)="toggleValue(bucket.value, $event)"
-    [checked]="values.indexOf(bucket.value) != -1"
-    [class.checked]="values.indexOf(bucket.value) != -1"
+    [checked]="values.includes(bucket.value)"
+    [class.checked]="values.includes(bucket.value)"
   >
     <span class="label">{{ bucket.label }}</span>
     <span class="count" *ngIf="showCount">{{ bucket.count }}</span>
