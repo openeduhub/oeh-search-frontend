@@ -59,9 +59,9 @@
           <context context-type="linenumber">178</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="245718001035169979" datatype="html">
-        <source>Educational Context</source>
-        <target state="final">Bildungsumfeld</target>
+      <trans-unit id="7770415765844381821" datatype="html">
+        <source>Educational Level</source>
+        <target state="final">Bildungsstufe</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/wlo-search/search/search-page/search-filterbar/search-filterbar.component.html</context>
           <context context-type="linenumber">46</context>
@@ -227,9 +227,9 @@
           <context context-type="linenumber">75</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="178590682136914847" datatype="html">
-        <source>Educational context</source>
-        <target state="final">Bildungsumfeld</target>
+      <trans-unit id="4998349108965449757" datatype="html">
+        <source>Educational level</source>
+        <target state="final">Bildungsstufe</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/wlo-search/core/search-field/search-field.component.html</context>
           <context context-type="linenumber">77</context>
