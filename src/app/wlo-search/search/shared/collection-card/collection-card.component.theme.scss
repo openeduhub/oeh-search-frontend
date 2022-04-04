@@ -8,9 +8,6 @@
         .app-collection-card-container {
             background-color: mat.get-color-from-palette($primary, 400);
             color: mat.get-contrast-color-from-palette($primary, 400);
-            .editorial-icon {
-                background-color: mat.get-contrast-color-from-palette($primary, 400);
-            }
             // Background image, not compatible with background colors.
             //
             // &.app-collection-card-container-background-light {

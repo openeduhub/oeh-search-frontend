@@ -6,7 +6,7 @@
     [matTooltipPosition]="orientation === 'vertical' ? 'left' : 'above'"
     matTooltip="Recommended by editorial team"
   >
-    <div class="icon editorial-icon"></div>
+    <mat-icon svgIcon="editorial" class="icon editorial-icon"></mat-icon>
   </div>
   <div
     *ngIf="hit | isOer"
@@ -15,6 +15,6 @@
     [matTooltipPosition]="orientation === 'vertical' ? 'left' : 'above'"
     matTooltip="Open Educational Resources"
   >
-    <div class="icon oer-icon"></div>
+    <mat-icon svgIcon="oer" class="icon"></mat-icon>
   </div>
 </div>

@@ -9,10 +9,10 @@
         .app-badges-badge {
             background-color: mat.get-color-from-palette($background, card);
             > .icon {
-                background-color: mat.get-color-from-palette($foreground, secondary-text);
+                color: mat.get-color-from-palette($foreground, secondary-text);
             }
             > .editorial-icon {
-                background-color: #106029;
+                color: #106029;
             }
         }
     }
