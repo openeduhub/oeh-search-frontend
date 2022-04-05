@@ -84,9 +84,6 @@ jobs:
   lint:
     name: Lint
     runs-on: 'ubuntu-latest'
-    # Depend on `build-image` so we can use cached node_modules.
-    needs: build-image
-    if: ${{ success() || needs.build-image.result == 'skipped' }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -139,9 +136,6 @@ jobs:
   build-web-components:
     name: Build web components
     runs-on: 'ubuntu-latest'
-    # Depend on `build-image` so we can use cached node_modules.
-    needs: build-image
-    if: ${{ success() || needs.build-image.result == 'skipped' }}    
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
