@@ -24,7 +24,6 @@ import { DurationPipe } from './shared/duration.pipe';
 import { GenerateFiltersPipe } from './shared/generate-filters.pipe';
 import { InCollectionWithTypePipe } from './shared/in-collection-with-type.pipe';
 import { IsOerPipe } from './shared/is-oer.pipe';
-import { LanguagePipe } from './shared/language.pipe';
 import { NodePropertyPipe } from './shared/nodeProperty.pipe';
 import { PreviewImageComponent } from './shared/preview-image/preview-image.component';
 import { ReportProblemComponent } from './shared/report-problem/report-problem.component';
@@ -57,7 +56,6 @@ import { WrapObservablePipe } from './shared/wrap-observable.pipe';
         GenerateFiltersPipe,
         InCollectionWithTypePipe,
         IsOerPipe,
-        LanguagePipe,
         NodePropertyPipe,
         TrimPipe,
         TruncatePipe,

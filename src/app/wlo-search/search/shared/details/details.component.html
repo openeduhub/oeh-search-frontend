@@ -57,7 +57,7 @@
       <mat-icon>question_answer</mat-icon>
       <span>
         <ng-container *ngFor="let language of languages; let last = last">
-          {{ language | language }}<ng-container *ngIf="!last">,</ng-container>
+          {{ language.displayName }}<ng-container *ngIf="!last">,</ng-container>
         </ng-container>
       </span>
     </span>
