@@ -13,6 +13,9 @@
     </script>
     <script src="web-components/de/runtime.js" type="module"></script>
     <script src="web-components/de/polyfills.js" type="module"></script>
+    <!-- Alternatively to loading `scripts.js`, provide your own versions of jQuery and
+    slick-carousel.  -->
+    <script src="web-components/de/scripts.js" defer></script>
     <script src="web-components/de/main.js" type="module"></script>
     <link rel="stylesheet" href="web-components/de/styles.css" />
     <style>
@@ -30,6 +33,7 @@
       }
       .details-container {
         position: relative;
+        min-width: 0;
       }
     </style>
   </head>
@@ -48,7 +52,7 @@
         </button>
       </div>
       <div class="details-container">
-        <oeh-details-embedded node-id="24a188da-1dc3-48b5-a7c7-f55685714ca0"></oeh-details-embedded>
+        <oeh-details-embedded node-id="3d34cf39-371d-4e35-8a77-8341fab07f06"></oeh-details-embedded>
       </div>
     </div>
     <script>

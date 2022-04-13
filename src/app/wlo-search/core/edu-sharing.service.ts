@@ -74,7 +74,9 @@ export class EduSharingService {
     }
 
     getNode(id: string): Observable<Node> {
-        return this.nodeService.getNode(EduSharingService.repository, id);
+        return this.nodeService.getNodeFromSearchIndex(id, {
+            repository: EduSharingService.repository,
+        });
     }
 
     getFacets(): Observable<FacetsDict> {
