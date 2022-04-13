@@ -35,10 +35,10 @@ export class EduSharingService {
     private static readonly searchQuery = 'ngsearch';
 
     private readonly facets$ = this.searchService
-        .getFacets(Object.values(facetProperties), { includeActiveFilters: true })
+        .observeFacets(Object.values(facetProperties), { includeActiveFilters: true })
         .pipe(shareReplay(1));
     private readonly didYouMeanSuggestion$ = this.searchService
-        .getDidYouMeanSuggestion()
+        .observeDidYouMeanSuggestion()
         .pipe(shareReplay(1));
     /** A request which will affect facets is currently in flight. */
     private readonly facetUpdateInFlightSubject = new BehaviorSubject<boolean>(false);
@@ -89,7 +89,7 @@ export class EduSharingService {
         this.facetUpdateInFlightSubject.next(true);
         this.searchService
             .loadMoreFacets(facetProperties[facet], size)
-            .then(() => this.facetUpdateInFlightSubject.next(false));
+            .subscribe(() => this.facetUpdateInFlightSubject.next(false));
     }
 
     getFacetSuggestions(inputString: string): Observable<FacetsDict> {
