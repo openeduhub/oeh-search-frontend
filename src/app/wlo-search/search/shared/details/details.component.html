@@ -177,7 +177,7 @@
       <mat-icon i18n-matTooltip matTooltip="Discipline">book_icon</mat-icon>
       <span class="cdk-visually-hidden" i18n>Discipline</span>
       <div>
-        <span *ngFor="let discipline of disciplines | slice: 0:5">
+        <span *ngFor="let discipline of disciplines">
           {{ discipline.displayName }}
         </span>
       </div>
