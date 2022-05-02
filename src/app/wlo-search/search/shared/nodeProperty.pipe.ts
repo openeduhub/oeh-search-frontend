@@ -43,7 +43,7 @@ export class NodePropertyPipe implements PipeTransform {
             NONE: 'Keine oder unbekannte Lizenz',
             MULTI: 'Unterschiedliche Lizenzen',
             COPYRIGHT_FREE: 'Copyright, freier Zugang',
-            COPYRIGHT_LIiCENSE: 'Copyright, lizenzpflichtig',
+            COPYRIGHT_LICENSE: 'Copyright, lizenzpflichtig',
             SCHULFUNK: 'Schulfunk (§47 UrhG)',
             UNTERRICHTS_UND_LEHRMEDIEN: '§60b Unterrichts- und Lehrmedien',
             CC_0: 'CC-0',
