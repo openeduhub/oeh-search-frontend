@@ -20,7 +20,7 @@ export class NodePropertyPipe implements PipeTransform {
         author: (node: Node) => this.getAuthor(node),
         url: (node: Node) => node.properties['ccm:wwwurl']?.[0] ?? node.content.url,
         detailsUrl: (node: Node) => node.content.url + '?closeOnBack=true',
-        source: (node: Node) => this.zipDisplayNames(node, 'ccm:replicationsource')?.[0],
+        source: (node: Node) => node.properties['ccm:oeh_publisher_combined']?.[0],
         sourceUrl$: (node: Node) => this.eduSharing.getSourceUrl(node),
         license: (node: Node) => this.getLicense(node),
         mimeType: (node: Node) => node.mediatype,

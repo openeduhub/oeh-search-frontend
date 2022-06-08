@@ -115,7 +115,7 @@ export class EduSharingService {
             .findValue(
                 this.getMdsIdentifier(),
                 'ccm:replicationsource',
-                node.properties['ccm:replicationsource']?.[0],
+                (value) => value.caption === node.properties['ccm:oeh_publisher_combined']?.[0],
             )
             .pipe(map((value) => value?.url));
     }
