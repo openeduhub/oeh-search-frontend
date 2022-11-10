@@ -2,6 +2,7 @@ import { gql } from 'apollo-angular';
 import { Injectable } from '@angular/core';
 import * as Apollo from 'apollo-angular';
 export type Maybe<T> = T | null;
+export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
@@ -14,83 +15,83 @@ export type Scalars = {
     Float: number;
 };
 
-export type Query = {
-    __typename?: 'Query';
-    /** Returns an empty string. GraphQL requires at least one Query to be defined. */
-    dummy: Scalars['String'];
-};
-
-export type Mutation = {
-    __typename?: 'Mutation';
-    /** Report a search request being done by a user. */
-    searchRequest?: Maybe<Scalars['Boolean']>;
-    /** Return a fresh session ID. */
-    openSession: Scalars['String'];
-    /** Report result clicked by the user. */
-    resultClick?: Maybe<Scalars['Boolean']>;
-    /** Report a lifecycle state change of the web page. */
-    lifecycleEvent?: Maybe<Scalars['Boolean']>;
-};
-
-export type MutationSearchRequestArgs = {
-    sessionId: Scalars['String'];
-    userAgent: Scalars['String'];
-    screenWidth: Scalars['Int'];
-    screenHeight: Scalars['Int'];
-    language: Language;
-    searchString: Scalars['String'];
-    page: Scalars['Int'];
-    filters: Scalars['String'];
-    filtersSidebarIsVisible: Scalars['Boolean'];
-    numberResults: Scalars['Int'];
-};
-
-export type MutationOpenSessionArgs = {
-    userAgent: Scalars['String'];
-    screenWidth: Scalars['Int'];
-    screenHeight: Scalars['Int'];
-    language: Language;
-};
-
-export type MutationResultClickArgs = {
-    sessionId: Scalars['String'];
-    userAgent: Scalars['String'];
-    screenWidth: Scalars['Int'];
-    screenHeight: Scalars['Int'];
-    language: Language;
-    searchString: Scalars['String'];
-    page: Scalars['Int'];
-    filters: Scalars['String'];
-    filtersSidebarIsVisible: Scalars['Boolean'];
-    clickedResult: Scalars['String'];
-    clickKind: ClickKind;
-};
-
-export type MutationLifecycleEventArgs = {
-    sessionId: Scalars['String'];
-    userAgent: Scalars['String'];
-    screenWidth: Scalars['Int'];
-    screenHeight: Scalars['Int'];
-    language: Language;
-    event: LifecycleEvent;
-    state: Scalars['String'];
-};
+export enum ClickKind {
+    Click = 'click',
+    Contextmenu = 'contextmenu',
+    MiddleClick = 'middleClick',
+}
 
 export enum Language {
     De = 'de',
     En = 'en',
 }
 
-export enum ClickKind {
-    Click = 'click',
-    MiddleClick = 'middleClick',
-    Contextmenu = 'contextmenu',
+export enum LifecycleEvent {
+    Pagehide = 'pagehide',
+    Visibilitychange = 'visibilitychange',
 }
 
-export enum LifecycleEvent {
-    Visibilitychange = 'visibilitychange',
-    Pagehide = 'pagehide',
-}
+export type Mutation = {
+    __typename?: 'Mutation';
+    /** Report a lifecycle state change of the web page. */
+    lifecycleEvent?: Maybe<Scalars['Boolean']>;
+    /** Return a fresh session ID. */
+    openSession: Scalars['String'];
+    /** Report result clicked by the user. */
+    resultClick?: Maybe<Scalars['Boolean']>;
+    /** Report a search request being done by a user. */
+    searchRequest?: Maybe<Scalars['Boolean']>;
+};
+
+export type MutationLifecycleEventArgs = {
+    event: LifecycleEvent;
+    language: Language;
+    screenHeight: Scalars['Int'];
+    screenWidth: Scalars['Int'];
+    sessionId: Scalars['String'];
+    state: Scalars['String'];
+    userAgent: Scalars['String'];
+};
+
+export type MutationOpenSessionArgs = {
+    language: Language;
+    screenHeight: Scalars['Int'];
+    screenWidth: Scalars['Int'];
+    userAgent: Scalars['String'];
+};
+
+export type MutationResultClickArgs = {
+    clickKind: ClickKind;
+    clickedResult: Scalars['String'];
+    filters: Scalars['String'];
+    filtersSidebarIsVisible: Scalars['Boolean'];
+    language: Language;
+    page: Scalars['Int'];
+    screenHeight: Scalars['Int'];
+    screenWidth: Scalars['Int'];
+    searchString: Scalars['String'];
+    sessionId: Scalars['String'];
+    userAgent: Scalars['String'];
+};
+
+export type MutationSearchRequestArgs = {
+    filters: Scalars['String'];
+    filtersSidebarIsVisible: Scalars['Boolean'];
+    language: Language;
+    numberResults: Scalars['Int'];
+    page: Scalars['Int'];
+    screenHeight: Scalars['Int'];
+    screenWidth: Scalars['Int'];
+    searchString: Scalars['String'];
+    sessionId: Scalars['String'];
+    userAgent: Scalars['String'];
+};
+
+export type Query = {
+    __typename?: 'Query';
+    /** Returns an empty string. GraphQL requires at least one Query to be defined. */
+    dummy: Scalars['String'];
+};
 
 export type OpenAnalyticsSessionMutationVariables = Exact<{
     userAgent: Scalars['String'];
@@ -99,10 +100,7 @@ export type OpenAnalyticsSessionMutationVariables = Exact<{
     language: Language;
 }>;
 
-export type OpenAnalyticsSessionMutation = { __typename?: 'Mutation' } & Pick<
-    Mutation,
-    'openSession'
->;
+export type OpenAnalyticsSessionMutation = { __typename?: 'Mutation'; openSession: string };
 
 export type ReportLifecycleEventMutationVariables = Exact<{
     userAgent: Scalars['String'];
@@ -114,10 +112,10 @@ export type ReportLifecycleEventMutationVariables = Exact<{
     language: Language;
 }>;
 
-export type ReportLifecycleEventMutation = { __typename?: 'Mutation' } & Pick<
-    Mutation,
-    'lifecycleEvent'
->;
+export type ReportLifecycleEventMutation = {
+    __typename?: 'Mutation';
+    lifecycleEvent?: boolean | null;
+};
 
 export type ReportResultClickMutationVariables = Exact<{
     userAgent: Scalars['String'];
@@ -133,7 +131,7 @@ export type ReportResultClickMutationVariables = Exact<{
     clickKind: ClickKind;
 }>;
 
-export type ReportResultClickMutation = { __typename?: 'Mutation' } & Pick<Mutation, 'resultClick'>;
+export type ReportResultClickMutation = { __typename?: 'Mutation'; resultClick?: boolean | null };
 
 export type ReportSearchRequestMutationVariables = Exact<{
     userAgent: Scalars['String'];
@@ -148,10 +146,10 @@ export type ReportSearchRequestMutationVariables = Exact<{
     numberResults: Scalars['Int'];
 }>;
 
-export type ReportSearchRequestMutation = { __typename?: 'Mutation' } & Pick<
-    Mutation,
-    'searchRequest'
->;
+export type ReportSearchRequestMutation = {
+    __typename?: 'Mutation';
+    searchRequest?: boolean | null;
+};
 
 export const OpenAnalyticsSessionDocument = gql`
     mutation openAnalyticsSession(

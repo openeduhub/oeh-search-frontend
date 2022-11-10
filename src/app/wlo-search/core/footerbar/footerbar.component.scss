@@ -99,8 +99,7 @@ $rem: 20px;
         * {
             background: transparent !important;
             color: black !important;
-            -webkit-print-color-adjust: economy;
-            color-adjust: economy;
+            print-color-adjust: economy;
             box-shadow: none !important;
             text-shadow: none !important;
         }
