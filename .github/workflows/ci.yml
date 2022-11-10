@@ -33,19 +33,19 @@ jobs:
     needs: check-image
     if: ${{ needs.check-image.outputs.exists == 'false' }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           submodules: true
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
-      - uses: azure/docker-login@v1
+      - uses: docker/login-action@v2
         with:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
       - name: Cache dependencies
         id: cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ./node_modules
           key: modules-${{ env.NODE_VERSION }}-${{ hashFiles('package-lock.json') }}
@@ -67,11 +67,11 @@ jobs:
     needs: build-image
     if: ${{ success() || needs.build-image.result == 'skipped' }}
     steps:
-      - uses: azure/docker-login@v1
+      - uses: docker/login-action@v2
         with:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-      - uses: rlespinasse/github-slug-action@v3.x
+      - uses: rlespinasse/github-slug-action@v4
       - name: Pull Docker image
         run: docker pull ${{ github.repository }}:${{ github.sha }}
       - name: Tag Docker image
@@ -85,13 +85,13 @@ jobs:
     name: Lint
     runs-on: 'ubuntu-latest'
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Cache dependencies
         id: cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ./node_modules
           key: modules-${{ env.NODE_VERSION }}-${{ hashFiles('package-lock.json') }}
@@ -114,12 +114,12 @@ jobs:
         ports:
           - 8080:80
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Cypress run
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4
         env:
           CYPRESS_baseUrl: http://localhost:8080
           # We cannot guarantee that the given Edu-Sharing instance allows localhost with
@@ -137,13 +137,13 @@ jobs:
     name: Build web components
     runs-on: 'ubuntu-latest'
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Cache dependencies
         id: cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ./node_modules
           key: modules-${{ env.NODE_VERSION }}-${{ hashFiles('package-lock.json') }}
