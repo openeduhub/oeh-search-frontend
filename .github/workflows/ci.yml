@@ -18,10 +18,10 @@ jobs:
           response_code=$(curl -s -o /dev/null -I -L -w "%{http_code}" https://hub.docker.com/v2/repositories/${{ env.IMAGE_NAME }}/tags/${{ github.sha }}/)
           echo $response_code
           if [ $response_code -eq 200 ]; then
-            echo "::set-output name=exists::true"
+            echo "exists=true" >> $GITHUB_OUTPUT
             echo "::notice ::Found existing image ${{ github.repository }}:${{ github.sha }}"
           elif [ $response_code -eq 404 ]; then
-            echo "::set-output name=exists::false"
+            echo "exists=false" >> $GITHUB_OUTPUT
           else
             echo "::error ::Got unexpected HTTP code $response_code"
             exit 22
