@@ -52,8 +52,8 @@
             <mat-icon class="icon">list</mat-icon>
             <span i18n>Keywords</span>
           </mat-panel-title>
-          <mat-panel-title>
-            <span *ngSwitchDefault>{{ key }}</span>
+          <mat-panel-title *ngSwitchDefault>
+            <span>{{ key }}</span>
           </mat-panel-title>
         </mat-expansion-panel-header>
         <app-multivalue-checkbox
