@@ -47,7 +47,7 @@ $custom-accent: (
     ),
 );
 
-$app-custom-accent: mat.define-palette($custom-accent, custom-accent);
+$app-custom-accent: mat.define-palette($custom-accent, accent1, accent2, contrast);
 $app-primary: mat.define-palette($primary-palette);
 $app-accent: mat.define-palette($primary-palette, A200, A100, A400);
 $app-warn: mat.define-palette(mat.$red-palette);

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { SearchResults } from 'ngx-edu-sharing-api';
 import { Subject } from 'rxjs';
@@ -27,7 +27,7 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     filterCount: number;
     pageIndex: number;
     results: SearchResults;
-    selectedTab = new FormControl(0);
+    selectedTab = new UntypedFormControl(0);
     resultCardStyle: ResultCardStyle;
     resultPageNumbers: { from: number; to: number };
     readonly searchResultsStyle$ = this.pageMode.getPageConfig('searchResultsStyle');

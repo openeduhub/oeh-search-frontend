@@ -32,8 +32,6 @@ const wloSearchConfig: WloSearchConfig = {
             useValue: wloSearchConfig,
         },
     ],
-    entryComponents: [DetailsEmbeddedComponent],
-    // bootstrap: [DetailsEmbeddedComponent],
 })
 export class AppModule implements DoBootstrap {
     constructor(injector: Injector) {

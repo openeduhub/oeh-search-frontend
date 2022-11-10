@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FacetsDict, FacetValue } from 'ngx-edu-sharing-api';
 import { Subject } from 'rxjs';
@@ -28,7 +28,7 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
     facets: FacetsDict;
     hasFacets: boolean;
     filters: Filters = {};
-    facetFilters: FormGroup;
+    facetFilters: UntypedFormGroup;
     expandedFilters: { [key in Facet]?: boolean } = {
         oehLrtAggregated: true,
         discipline: true,
@@ -38,7 +38,7 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
 
     constructor(
         private config: ConfigService,
-        private formBuilder: FormBuilder,
+        private formBuilder: UntypedFormBuilder,
         private router: Router,
         private eduSharing: EduSharingService,
         private searchParameters: SearchParametersService,

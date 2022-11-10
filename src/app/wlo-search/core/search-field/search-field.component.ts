@@ -1,6 +1,6 @@
 import { CdkConnectedOverlay, CdkOverlayOrigin, ConnectedPosition } from '@angular/cdk/overlay';
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { UntypedFormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FacetsDict } from 'ngx-edu-sharing-api';
 import { combineLatest, Subject } from 'rxjs';
@@ -45,7 +45,7 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
         'source',
     ];
 
-    searchField = new FormControl();
+    searchField = new UntypedFormControl();
     filters: Filters = {};
     suggestions: Suggestions;
     showOverlay = false;
