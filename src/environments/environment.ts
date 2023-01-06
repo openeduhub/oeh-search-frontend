@@ -9,7 +9,7 @@ declare var window: ExtendedWindow;
 export const environment = {
     production: false,
     eduSharingApiUrl: window.__env?.EDU_SHARING_API_URL ?? '/edu-sharing-api',
-    wordpressUrl: window.__env?.WORDPRESS_URL ?? 'https://dev.wirlernenonline.de',
+    wordpressUrl: window.__env?.WORDPRESS_URL ?? 'https://wordpress.staging.openeduhub.net',
     showExperiments: readBoolean(window.__env?.SHOW_EXPERIMENTS, true),
     analyticsUrl: window.__env?.ANALYTICS_URL,
 };
