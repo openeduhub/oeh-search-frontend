@@ -1,8 +1,8 @@
 .app-collection-card-container {
     display: flex;
     flex-direction: column;
-    padding: 15px;
-    height: 70px;
+    padding: 8px 15px;
+    height: 98px;
     border-radius: 10px;
     transition: box-shadow 0.3s, transform 0.3s;
     &:hover {
@@ -43,16 +43,18 @@
 }
 
 .app-collection-card-title {
+    flex-grow: 1;
     width: 100%;
     margin-top: 0;
     margin-bottom: 5px;
 }
 .app-collection-card-title a {
-    display: block;
+    display: -webkit-box;
     width: 100%;
     overflow: hidden;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     text-overflow: ellipsis;
-    white-space: nowrap;
     color: unset;
     text-decoration: unset;
     &::after {
