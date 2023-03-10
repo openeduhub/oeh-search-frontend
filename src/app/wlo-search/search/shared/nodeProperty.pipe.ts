@@ -89,7 +89,7 @@ export class NodePropertyPipe implements PipeTransform {
     private zipDisplayNames(node: Node | Collection, property: string): IdentifiedValue[] {
         return node.properties[property]?.map((id, index) => ({
             id,
-            displayName: node.properties[property + '_DISPLAYNAME'][index],
+            displayName: node.properties[property + '_DISPLAYNAME']?.[index],
         }));
     }
 
