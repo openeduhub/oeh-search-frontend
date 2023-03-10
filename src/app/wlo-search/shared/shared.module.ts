@@ -31,11 +31,12 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { DisplayNamePipe } from './display-name.pipe';
+import { FocusStateDirective } from './focus-state.directive';
 import { ReportClickDirective } from './report-click.directive';
 import { SkipTargetDirective } from './skip-target.directive';
 
 @NgModule({
-    declarations: [DisplayNamePipe, SkipTargetDirective, ReportClickDirective],
+    declarations: [DisplayNamePipe, SkipTargetDirective, ReportClickDirective, FocusStateDirective],
     imports: [
         RouterModule,
         CommonModule,
@@ -79,6 +80,7 @@ import { SkipTargetDirective } from './skip-target.directive';
         OverlayModule,
         ReactiveFormsModule,
         DisplayNamePipe,
+        FocusStateDirective,
         MatChipsModule,
         MatAutocompleteModule,
         MatBadgeModule,

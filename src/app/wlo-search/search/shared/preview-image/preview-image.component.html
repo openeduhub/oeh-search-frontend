@@ -1,0 +1,31 @@
+<div *ngIf="showBlurredBackground" class="background-image-container">
+  <!-- The blur filter does not work with canvas as it does with img on Chrome, so we go for a black
+  background for now. -->
+  <!-- <canvas *ngIf="showCanvas" #backdropCanvas role="presentation" aria-hidden="true"></canvas> -->
+  <img
+    class="background-image"
+    [appPreviewImageInner]="previewImage"
+    [loadHighResImage]="false"
+    role="presentation"
+    alt=""
+    *ngIf="!replacedWithStatic"
+  />
+</div>
+
+<canvas
+  *ngIf="showCanvas"
+  #canvas
+  class="main-image-canvas"
+  role="presentation"
+  aria-hidden="true"
+  [style.objectFit]="objectFit"
+></canvas>
+
+<img
+  class="main-image"
+  (load)="onImageLoad($event)"
+  #image
+  [appPreviewImageInner]="previewImage"
+  [class.hidden]="replacedWithStatic && !playAnimation"
+  [style.objectFit]="objectFit"
+/>

@@ -25,12 +25,13 @@ import { GenerateFiltersPipe } from './shared/generate-filters.pipe';
 import { InCollectionWithTypePipe } from './shared/in-collection-with-type.pipe';
 import { IsOerPipe } from './shared/is-oer.pipe';
 import { NodePropertyPipe } from './shared/nodeProperty.pipe';
-import { PreviewImageComponent } from './shared/preview-image/preview-image.component';
+import { PreviewImageInnerComponent } from './shared/preview-image/preview-image-inner.component';
 import { ReportProblemComponent } from './shared/report-problem/report-problem.component';
 import { ReportProblemService } from './shared/report-problem/report-problem.service';
 import { TrimPipe } from './shared/trim.pipe';
 import { TruncatePipe } from './shared/truncate.pipe';
 import { WrapObservablePipe } from './shared/wrap-observable.pipe';
+import { PreviewImageComponent } from './shared/preview-image/preview-image.component';
 
 @NgModule({
     declarations: [
@@ -49,7 +50,7 @@ import { WrapObservablePipe } from './shared/wrap-observable.pipe';
         SubjectsPortalSectionComponent,
         CollectionCardComponent,
         DetailsComponent,
-        PreviewImageComponent,
+        PreviewImageInnerComponent,
         CapitalizeFirstLetterPipe,
         CollectionPropertyPipe,
         DurationPipe,
@@ -61,6 +62,7 @@ import { WrapObservablePipe } from './shared/wrap-observable.pipe';
         TruncatePipe,
         WrapObservablePipe,
         ReportProblemComponent,
+        PreviewImageComponent,
     ],
     imports: [SharedModule],
     exports: [DetailsComponent],

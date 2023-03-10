@@ -1,63 +1,53 @@
-import { Component, ElementRef, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Node } from 'ngx-edu-sharing-api';
 
-type PreviewImage = Node['preview'];
+export type PreviewImage = Node['preview'];
 
 @Component({
-    // Augment the built-in <img> element.
-    // eslint-disable-next-line @angular-eslint/component-selector
-    selector: '[appPreviewImage]',
-    template: '',
+    selector: 'app-preview-image',
+    templateUrl: './preview-image.component.html',
+    styleUrls: ['./preview-image.component.scss'],
 })
-export class PreviewImageComponent implements OnInit {
-    // Use an alias for a property input that is equal to the component selector.
-    // eslint-disable-next-line @angular-eslint/no-input-rename
-    @Input('appPreviewImage')
-    get previewImage() {
-        return this.previewImage_;
-    }
-    set previewImage(value: PreviewImage) {
-        this.previewImage_ = value;
-        this.setPreviewImage();
-        this.loadHighResImageIfWanted();
-    }
-    private previewImage_: PreviewImage;
+export class PreviewImageComponent {
+    @Input() previewImage: PreviewImage;
+    @Input() showBlurredBackground = false;
+    @Input() playAnimation = false;
+    @Input() objectFit: 'cover' | 'contain' = 'contain';
 
-    @Input()
-    get loadHighResImage() {
-        return this._loadHighResImage;
-    }
-    set loadHighResImage(value) {
-        this._loadHighResImage = value;
-        this.loadHighResImageIfWanted();
-    }
-    private _loadHighResImage = false;
+    @ViewChild('image') imageRef: ElementRef<HTMLImageElement>;
+    @ViewChild('canvas') canvasRef: ElementRef<HTMLCanvasElement>;
+    // @ViewChild('backdropCanvas') backdropCanvasRef: ElementRef<HTMLCanvasElement>;
 
-    constructor(private elementRef: ElementRef<HTMLImageElement>) {}
+    showCanvas: boolean = false;
+    replacedWithStatic: boolean = false;
 
-    ngOnInit(): void {
-        this.elementRef.nativeElement.alt = '';
-    }
-
-    private setPreviewImage() {
-        this.elementRef.nativeElement.src = this.getThumbnail(this.previewImage);
-    }
-
-    private loadHighResImageIfWanted(): void {
-        if (this.loadHighResImage && this.previewImage) {
-            // Wait a tick, so the browser will load and display the lower-res thumbnail instead of
-            // waiting for the high-res image before displaying anything.
+    constructor() {}
+    onImageLoad(event: Event): void {
+        if (this.isVideo()) {
+            const image = event.target as HTMLImageElement;
+            this.showCanvas = true;
             setTimeout(() => {
-                this.elementRef.nativeElement.src = this.previewImage.url;
+                this.initCanvas(image, this.canvasRef.nativeElement);
+                // this.initCanvas(image, this.backdropCanvasRef.nativeElement);
+                this.replacedWithStatic = true;
             });
         }
     }
 
-    private getThumbnail(previewImage: PreviewImage): string {
-        if (previewImage.data) {
-            return `data:${previewImage.mimetype || 'image/*'};base64,${previewImage.data}`;
-        } else {
-            return previewImage.url;
-        }
+    private initCanvas(image: HTMLImageElement, canvas: HTMLCanvasElement): void {
+        var width = image.naturalWidth;
+        var height = image.naturalHeight;
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext('2d').drawImage(image, 0, 0, width, height);
+    }
+
+    private isVideo(): boolean {
+        // We get preview images that set 'mimetype: image/jpeg' in metadata but point to a gif
+        // anyway. Just wrap all images for now.
+        return true;
+        // FIXME: Switch to something like this.
+        //
+        // return ['image/gif'].includes(this.previewImage.mimetype);
     }
 }

@@ -15,16 +15,6 @@ a:not(:hover) {
         height: 100%;
         margin: auto;
     }
-    .img-main {
-        transition: transform 0.2s;
-        object-fit: contain;
-    }
-    .img-bg {
-        height: 100%;
-        object-fit: cover;
-        filter: blur(20px);
-        transform: scale(1.25);
-    }
 }
 
 .pre-heading {

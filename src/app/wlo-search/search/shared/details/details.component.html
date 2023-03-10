@@ -9,7 +9,11 @@
   <mat-icon>close</mat-icon>
 </button>
 <div class="app-preview-panel-content-wrapper" [attr.data-mode]="mode">
-  <img class="app-preview-panel-image" [appPreviewImage]="hit.preview" [loadHighResImage]="true" />
+  <app-preview-image
+    class="app-preview-panel-image"
+    [previewImage]="hit.preview"
+    [playAnimation]="true"
+  ></app-preview-image>
 
   <div class="app-preview-panel-info-bar">
     <span

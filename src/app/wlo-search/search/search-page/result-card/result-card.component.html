@@ -3,12 +3,15 @@
   [class.app-result-card-selected]="(selectedItem$ | async) === hit"
   matRipple
   [matRippleTrigger]="cardContent?.cardButton"
+  appFocusState
+  #cardFocusState="appFocusState"
 >
   <app-result-card-content-standard
     *ngSwitchCase="'standard'"
     #cardContent
     [hit]="hit"
     [filters]="filters"
+    [playAnimation]="cardFocusState.hovering || cardFocusState.hasFocus"
   ></app-result-card-content-standard>
   <app-result-card-content-compact
     *ngSwitchCase="'compact'"

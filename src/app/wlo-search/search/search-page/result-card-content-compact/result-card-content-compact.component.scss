@@ -29,9 +29,10 @@
     .main-content-row {
         min-height: 99px;
         .thumbnail {
+            overflow: hidden;
+            float: right;
             height: 90px;
             width: 90px;
-            object-fit: cover;
             border-radius: 15px;
             margin-top: 2px;
             margin-left: 20px;

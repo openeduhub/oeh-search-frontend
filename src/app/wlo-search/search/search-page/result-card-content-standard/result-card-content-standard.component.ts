@@ -11,6 +11,7 @@ import { ViewService } from '../../../core/view.service';
 export class ResultCardContentStandardComponent {
     @Input() hit: Node;
     @Input() filters: Filters;
+    @Input() playAnimation: boolean;
     @ViewChild('cardButton') cardButton: HTMLButtonElement;
 
     thumbnail: string;

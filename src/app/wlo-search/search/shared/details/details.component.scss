@@ -20,7 +20,7 @@
 .app-preview-panel-image {
     width: 100%;
     max-height: 375px;
-    object-fit: contain;
+    overflow: hidden;
     border-top-left-radius: inherit;
     border-top-right-radius: inherit;
 }

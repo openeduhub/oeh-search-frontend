@@ -10,7 +10,11 @@
 </div>
 <mat-card-content>
   <div class="main-content-row">
-    <img class="thumbnail" [appPreviewImage]="hit.preview" align="right" />
+    <app-preview-image
+      class="thumbnail"
+      [previewImage]="hit.preview"
+      objectFit="cover"
+    ></app-preview-image>
     <p class="editorial-hint" *ngIf="hit | inCollectionWithType: 'EDITORIAL'">
       <ng-container i18n>Recommended by editorial team</ng-container>
     </p>

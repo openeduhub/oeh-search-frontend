@@ -1,6 +1,10 @@
 <div class="image-container" mat-card-image>
-  <img class="img-bg" [appPreviewImage]="hit.preview" />
-  <img class="img-main" [appPreviewImage]="hit.preview" [loadHighResImage]="false" />
+  <app-preview-image
+    class="preview-image"
+    [previewImage]="hit.preview"
+    [showBlurredBackground]="true"
+    [playAnimation]="playAnimation"
+  ></app-preview-image>
 </div>
 <div class="pre-heading">
   <span class="source">
