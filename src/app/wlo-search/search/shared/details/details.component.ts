@@ -42,7 +42,6 @@ export class DetailsComponent implements OnDestroy {
         nextArrow: '.app-preview-slick-next',
     };
     descriptionExpanded = false;
-    // fullEntry$ = new BehaviorSubject<Entry | null>(null);
     showEmbedButton$ = this.pageMode.getPageConfig('showEmbedButton');
     reportProblemResult$: Observable<WrappedResponse<void>>;
 
@@ -54,14 +53,6 @@ export class DetailsComponent implements OnDestroy {
         private reportProblemService: ReportProblemService,
     ) {
         this.hit$.subscribe(() => this.reset());
-        // this.hit$
-        //     .pipe(
-        //         takeUntil(this.destroyed$),
-        //         tap(() => this.fullEntry$.next(null)),
-        //         filter((hit) => !!hit),
-        //         switchMap((hit) => this.search.getEntry(hit.id)),
-        //     )
-        //     .subscribe((entry) => this.fullEntry$.next(entry));
     }
 
     ngOnDestroy(): void {
@@ -82,5 +73,6 @@ export class DetailsComponent implements OnDestroy {
 
     private reset(): void {
         this.descriptionExpanded = false;
+        this.reportProblemResult$ = null;
     }
 }
