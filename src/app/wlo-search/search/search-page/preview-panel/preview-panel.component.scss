@@ -25,6 +25,8 @@ $previewPanelSpanScreenThreshold: 800px;
 }
 
 .app-preview-panel-sidebar {
+    max-height: calc(100vh - 40px);
+    display: flex;
     width: 500px;
     top: 20px;
     position: sticky;

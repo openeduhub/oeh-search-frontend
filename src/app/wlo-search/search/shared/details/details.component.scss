@@ -5,8 +5,9 @@
     flex-direction: column;
     border-radius: inherit;
     word-break: break-word;
-    &[data-mode='dialog'] {
-        overflow: auto;
+    overflow: auto;
+    > * {
+        flex-shrink: 0;
     }
 }
 
