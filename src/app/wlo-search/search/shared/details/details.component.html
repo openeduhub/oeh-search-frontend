@@ -165,11 +165,14 @@
       class="app-details-report-problem-state app-details-report-problem-state-{{ result.state }}"
     >
       <mat-progress-spinner
+        *ngIf="!['success', 'error'].includes(result.state)"
         [color]="result.state === 'error' ? 'warn' : 'primary'"
         [mode]="result.state === 'loading' ? 'indeterminate' : 'determinate'"
         value="100"
         diameter="30"
       ></mat-progress-spinner>
+      <mat-icon *ngIf="result.state === 'success'">check_circle</mat-icon>
+      <mat-icon *ngIf="result.state === 'error'">error</mat-icon>
       <span *ngIf="result.state === 'success'" i18n
         >We received your report. Thank you for your help!</span
       >

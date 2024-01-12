@@ -128,7 +128,8 @@
     &.app-details-report-problem-state-loading {
         border-color: #0000;
     }
-    .mat-progress-spinner {
+    .mat-progress-spinner,
+    .mat-icon {
         margin-right: 15px;
         flex-shrink: 0;
     }
