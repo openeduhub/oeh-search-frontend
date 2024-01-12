@@ -213,6 +213,16 @@ features for GraphQL queries in VSCode.
 ext install apollographql.vscode-apollo
 ```
 
+## Wordpress integration
+
+Run
+
+```bash
+npm run build:web-components
+```
+
+and copy all data from the folder `dist/web-components/de` in the corresponding wordpress folder (`/wp-content/themes/wir-lernen-online/src/assets/js/angular/detail_view`)
+
 ## TODO
 
 -   Enable strict type checking
