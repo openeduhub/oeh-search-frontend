@@ -1,6 +1,6 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Injectable } from '@angular/core';
-import { NavigationStart, Router } from '@angular/router';
+import {Injectable} from '@angular/core';
+import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { Node } from 'ngx-edu-sharing-api';
 import * as rxjs from 'rxjs';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -45,7 +45,12 @@ export class ViewService {
         private breakpointObserver: BreakpointObserver,
         private router: Router,
         private pageMode: PageModeService,
+        private route: ActivatedRoute,
     ) {
+        this.route.url.subscribe(_segments => {
+            const url = window.location.pathname;
+            this.isTemplate.next(url.includes('/template'));
+        })
         this.registerStoredItems();
         this.registerBehaviorHooks();
     }
@@ -176,4 +181,6 @@ export class ViewService {
     getIsLoading(): Observable<boolean> {
         return this.isLoadingCounter.pipe(map((counter) => counter > 0));
     }
+
+    isTemplate = new BehaviorSubject<boolean>(false);
 }

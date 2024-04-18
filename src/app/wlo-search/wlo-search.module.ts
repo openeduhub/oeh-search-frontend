@@ -6,9 +6,10 @@ import { SearchModule } from './search/search.module';
 import { SharedModule } from './shared/shared.module';
 import { WloSearchRoutingModule } from './wlo-search-routing.module';
 import { WloSearchComponent } from './wlo-search.component';
+import { TemplateComponent } from "./template/template.component";
 
 @NgModule({
     declarations: [WloSearchComponent],
-    imports: [WloSearchRoutingModule, CoreModule, SharedModule, SearchModule, PreferencesModule],
+    imports: [WloSearchRoutingModule, CoreModule, SharedModule, SearchModule, PreferencesModule, TemplateComponent],
 })
 export class WloSearchModule {}
