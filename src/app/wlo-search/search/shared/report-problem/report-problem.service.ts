@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { Node } from 'ngx-edu-sharing-api';
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';

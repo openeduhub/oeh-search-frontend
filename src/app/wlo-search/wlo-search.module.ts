@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatLegacyProgressSpinnerModule as MatProgressSpinnerModule } from '@angular/material/legacy-progress-spinner';
 import { CoreModule } from './core/core.module';
 import { PreferencesModule } from './preferences/preferences.module';
 import { SearchModule } from './search/search.module';
