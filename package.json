@@ -24,6 +24,7 @@
   },
   "private": true,
   "dependencies": {
+    "@ngx-translate/core": "^15.0.0",
     "@angular/animations": "^16.2.12",
     "@angular/cdk": "^16.2.14",
     "@angular/common": "^16.2.12",
@@ -43,6 +44,7 @@
     "material-icons": "^1.12.1",
     "ngx-edu-sharing-api": "^9.1.0",
     "ngx-slick-carousel": "15.0.0",
+    "ngx-colors": "^3.5.3",
     "rxjs": "^6.6.3",
     "slick-carousel": "^1.8.1",
     "tslib": "^2.0.0",

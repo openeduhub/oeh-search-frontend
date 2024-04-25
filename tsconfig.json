@@ -31,6 +31,12 @@
       ],
       "@angular/*": [
         "./node_modules/@angular/*"
+      ],
+      "wlo-pages-lib": [
+        "projects/wlo-pages-lib"
+      ],
+      "ngx-edu-sharing-ui": [
+        "projects/edu-sharing-ui"
       ]
     },
     "useDefineForClassFields": false

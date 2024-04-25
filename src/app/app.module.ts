@@ -7,6 +7,8 @@ import {
     HttpHandler,
     HttpRequest,
     HTTP_INTERCEPTORS,
+    withInterceptorsFromDi,
+    provideHttpClient,
 } from '@angular/common/http';
 import { inject, NgModule, Provider } from '@angular/core';
 import { MAT_LEGACY_DIALOG_SCROLL_STRATEGY as MAT_DIALOG_SCROLL_STRATEGY } from '@angular/material/legacy-dialog';
@@ -15,7 +17,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InMemoryCache } from '@apollo/client/core';
 import { ApolloModule, APOLLO_NAMED_OPTIONS } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
-import { EduSharingApiModule } from 'ngx-edu-sharing-api';
+import { ConfigService, EduSharingApiModule } from 'ngx-edu-sharing-api';
 import { Observable, of, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import {
@@ -31,6 +33,20 @@ import { LanguageHeaderInterceptor } from './language-header.interceptor';
 import { TelemetryApiWrapper } from './telemetry-api-wrapper';
 import { TELEMETRY_API } from './wlo-search/telemetry-api';
 import { WloSearchConfig, WLO_SEARCH_CONFIG } from './wlo-search/wlo-search-config';
+import {
+    MissingTranslationHandler,
+    TranslateLoader,
+    TranslateModule,
+    TranslateService, TranslateStore
+} from "@ngx-translate/core";
+import {
+    EduSharingUiConfiguration,
+    EduSharingUiModule,
+    FallbackTranslationHandler,
+    TranslationLoader,
+    Toast as ToastAbstract,
+} from "ngx-edu-sharing-ui";
+import {TicketAuthInterceptor, TicketService, ToastService} from "wlo-pages-lib";
 
 const wloSearchConfig: WloSearchConfig = {
     routerPath: ROOT_PATH + WLO_SEARCH_PATH_COMPONENT,
@@ -95,6 +111,8 @@ const httpLinkBeacon = (() => {
     return new HttpLink(httpClient);
 })();
 
+const eduSharingApiModuleWithProviders = EduSharingApiModule.forRoot({ rootUrl: environment.eduSharingApiUrl })
+
 @NgModule({
     declarations: [AppComponent],
     imports: [
@@ -102,7 +120,7 @@ const httpLinkBeacon = (() => {
         BrowserAnimationsModule,
         BrowserModule,
         HttpClientModule,
-        EduSharingApiModule.forRoot({ rootUrl: environment.eduSharingApiUrl }),
+        eduSharingApiModuleWithProviders,
         ApolloModule,
     ],
     providers: [
@@ -130,6 +148,32 @@ const httpLinkBeacon = (() => {
                 return [];
             }
         })(),
+        // from here on dependencies of wlo-pages (edu-sharing web-components)
+        eduSharingApiModuleWithProviders.providers,
+        EduSharingUiModule.forRoot({
+            production: true,
+        }).providers,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: TranslationLoader.create,
+                deps: [HttpClient, ConfigService, EduSharingUiConfiguration],
+            },
+            missingTranslationHandler: {
+                provide: MissingTranslationHandler,
+                useClass: FallbackTranslationHandler,
+            },
+        }).providers,
+        { provide: ToastAbstract, useClass: ToastService },
+        TicketService,
+        provideHttpClient(withInterceptorsFromDi()), // see https://stackoverflow.com/a/76028543
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: TicketAuthInterceptor,
+            multi: true
+        },
+        TranslateStore,
+        TranslateService
     ],
     bootstrap: [AppComponent],
 })
