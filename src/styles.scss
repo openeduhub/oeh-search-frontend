@@ -106,6 +106,7 @@ $app-typography: map_merge(
 html,
 body {
     height: 100%;
+    --primary: rgb(3, 40, 80);
 }
 body {
     margin: 0;
