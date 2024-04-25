@@ -4,6 +4,7 @@
     padding: 20px;
     max-width: 800px;
     margin: auto;
+    --topic-color: #182e5c
 }
 
 wlo-collection-chips {
@@ -11,8 +12,16 @@ wlo-collection-chips {
     padding-bottom: 1.9em;
 }
 
+wlo-user-configurable {
+    display: block;
+    &.newest-widget {
+        padding-bottom: 1em;
+    }
+}
+
+
 .template-header {
-    background-color: #ec4a70;
+    background-color: var(--topic-color);
     margin-left: calc(50% - 50vw);
     margin-right: calc(50% - 50vw);
     .template-header-wrapper {
