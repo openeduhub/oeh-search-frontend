@@ -155,6 +155,8 @@ export class EduSharingService {
         oer: ParsedParams['oer'],
     ): SearchRequestParams['body']['criteria'] {
         return [
+            // set the default parameter so this filter gets obeyed by the backend (for wlo elements)
+            { property: 'virtual:kita_search', values: [''] },
             ...this.mapSearchString(searchString),
             ...this.mapFilters(filters),
             ...this.mapOer(oer),
