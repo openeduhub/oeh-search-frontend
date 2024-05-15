@@ -1,0 +1,61 @@
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 50px;
+    --topic-color: #182e5c;
+
+    .add-button {
+        margin-left: auto;
+    }
+
+    .mat-grid-list {
+        margin-top: 0.75rem;
+    }
+
+    .mat-grid-tile {
+        box-sizing: border-box;
+        border: 2px solid var(--topic-color);
+        border-radius: 10px;
+
+        .drop-list,
+        .component-wrapper {
+            width: 100%;
+            height: 100%;
+        }
+
+        .component-wrapper {
+            overflow-y: scroll;
+        }
+
+        .handle-button,
+        .settings-button {
+            position: absolute;
+            top: 10px;
+            z-index: 10;
+            padding: 5px;
+            color: #222;
+        }
+
+        .settings-button {
+            right: 10px;
+            cursor: pointer;
+        }
+
+        .handle-button {
+            left: 10px;
+            cursor: move;
+        }
+    }
+
+    /* this is required to avoid the duplication effect on dragging */
+    .cdk-drag-placeholder {
+        display: none;
+    }
+}
+
+:host mat-grid-list ::ng-deep {
+    .mat-grid-tile .mat-grid-tile-content {
+        position: relative;
+        display: block;
+    }
+}

@@ -10,7 +10,8 @@ import { SearchResultsComponent } from './search/search-page/search-results/sear
 import { SubjectsPortalResolverService } from './search/search-page/subjects-portal/subjects-portal-resolver.service';
 import { SubjectsPortalComponent } from './search/search-page/subjects-portal/subjects-portal.component';
 import { WloSearchComponent } from './wlo-search.component';
-import { TemplateComponent } from "./template/template.component";
+import { TemplateComponent } from './template/template.component';
+import { CustomizableDashboardComponent } from './customizable-dashboard/customizable-dashboard.component';
 
 const routes: Routes = [
     {
@@ -44,6 +45,7 @@ const routes: Routes = [
                 component: DetailsPageComponent,
                 resolve: { entry: DetailsPageResolverService },
             },
+            { path: 'dashboard', component: CustomizableDashboardComponent },
             { path: 'experiments', component: ExperimentsTogglesComponent },
             { path: 'template', component: TemplateComponent },
             { path: '', redirectTo: 'search', pathMatch: 'full' },

@@ -1,0 +1,28 @@
+<div class="dashboard">
+  <button mat-stroked-button class="add-button" color="primary" (click)="addComponent()">
+    <span i18n>Component</span>&nbsp;
+    <mat-icon>dashboard_customize</mat-icon>
+  </button>
+  <mat-grid-list class="grid-list" cols="3" gutterSize="10" rowHeight="300px">
+    <ng-container *ngFor="let tile of tiles; let i = index">
+      <mat-grid-tile [colspan]="tile.cols" [rowspan]="tile.rows">
+        <div class="drop-list" cdkDropList [cdkDropListConnectedTo]="drops" [cdkDropListData]="i">
+          <div
+            class="component-wrapper"
+            cdkDrag
+            (cdkDragEntered)="entered($event)"
+            [cdkDragData]="i"
+          >
+            <app-template [initialTopic]="tile.topic"></app-template>
+            <div class="handle-button" cdkDragHandle>
+              <mat-icon>drag_indicator</mat-icon>
+            </div>
+            <mat-icon class="settings-button" (click)="configureComponent(tile, i)">
+              settings
+            </mat-icon>
+          </div>
+        </div>
+      </mat-grid-tile>
+    </ng-container>
+  </mat-grid-list>
+</div>

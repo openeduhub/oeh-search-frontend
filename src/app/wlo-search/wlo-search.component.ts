@@ -22,6 +22,7 @@ import { ViewService } from './core/view.service';
 })
 export class WloSearchComponent implements OnInit, OnDestroy {
     readonly headerStyle$ = this.pageMode.getPageConfig('headerStyle');
+    readonly isDashboard$ = this.view.isDashboard;
     readonly isLoading$ = this.view.getIsLoading();
     readonly isTemplate$ = this.view.isTemplate;
     private readonly destroyed$ = new Subject<void>();
