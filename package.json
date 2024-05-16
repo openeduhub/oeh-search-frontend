@@ -48,7 +48,7 @@
     "rxjs": "^6.6.3",
     "slick-carousel": "^1.8.1",
     "tslib": "^2.0.0",
-    "uuid": "^9.0.1",
+    "uuid": "^3.3.2",
     "zone.js": "~0.13.3"
   },
   "devDependencies": {

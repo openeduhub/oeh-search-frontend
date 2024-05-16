@@ -327,6 +327,50 @@
           }
         }
       }
+    },
+    "z-api": {
+      "projectType": "library",
+      "root": "projects/z-api",
+      "sourceRoot": "projects/z-api/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/z-api/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/z-api/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/z-api/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "polyfills": [
+              "zone.js",
+              "zone.js/testing"
+            ],
+            "tsConfig": "projects/z-api/tsconfig.spec.json",
+            "karmaConfig": "projects/z-api/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "projects/z-api/**/*.ts",
+              "projects/z-api/**/*.html"
+            ],
+            "cache": true
+          }
+        }
+      }
     }
   },
   "cli": {

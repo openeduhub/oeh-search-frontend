@@ -3,9 +3,10 @@
     <div class="template-header-container">
       <div class="template-header-content">
         <h1 i18n>Themenseite zum Thema {{topic()}}</h1>
-        <p>Dieser Text beschreibt das Thema der Seite und führt in es ein. Er ist typischerweise etwas
+        <p *ngIf="!generatedHeader()">Dieser Text beschreibt das Thema der Seite und führt in es ein. Er ist typischerweise etwas
           länger und umfasst somit einige Sätze. Manche dieser Sätze haben vielen Kommata, andere nicht.
           Es können längere und kürzere Sätze dort vorkommen.</p>
+        <p *ngIf="generatedHeader()">{{generatedHeader()}}</p>
       </div>
     </div>
   </div>
@@ -18,7 +19,6 @@
         <wlo-collection-chips [collection]="topicCollectionID()"></wlo-collection-chips>
         <wlo-user-configurable class="newest-widget" [configOverwrite]="newestContentConfig()"></wlo-user-configurable>
         <wlo-user-configurable class="jobs-widget" [configOverwrite]="jobsContentConfig()"></wlo-user-configurable>
-
       </div>
     </div>
   </div>

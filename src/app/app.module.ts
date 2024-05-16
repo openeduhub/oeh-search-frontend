@@ -47,6 +47,7 @@ import {
     Toast as ToastAbstract,
 } from "ngx-edu-sharing-ui";
 import {TicketAuthInterceptor, TicketService, ToastService} from "wlo-pages-lib";
+import {ZApiModule} from "ngx-z-api";
 
 const wloSearchConfig: WloSearchConfig = {
     routerPath: ROOT_PATH + WLO_SEARCH_PATH_COMPONENT,
@@ -122,6 +123,8 @@ const eduSharingApiModuleWithProviders = EduSharingApiModule.forRoot({ rootUrl: 
         HttpClientModule,
         eduSharingApiModuleWithProviders,
         ApolloModule,
+        ZApiModule.forRoot({
+        })
     ],
     providers: [
         httpInterceptorProviders,

@@ -6,25 +6,33 @@ import {
 } from "wlo-pages-lib";
 import {ActivatedRoute} from "@angular/router";
 import {filter} from "rxjs/operators";
+import {AiTextPromptsService, ZApiModule} from "ngx-z-api";
 
 @Component({
     standalone: true,
-    imports: [SharedModule, UserConfigurableComponent, CollectionChipsComponent],
+    imports: [
+        SharedModule,
+        UserConfigurableComponent,
+        CollectionChipsComponent
+    ],
     selector: 'app-template',
     templateUrl: './template.component.html',
     styleUrls: ['./template.component.scss'],
 })
 export class TemplateComponent implements OnInit {
-    constructor(private route: ActivatedRoute) {}
+    constructor(private route: ActivatedRoute, private aiTextPromptsService: AiTextPromptsService) {}
     @HostBinding('style.--topic-color') topicColor: string = '#182e5c';
 
     topic: WritableSignal<string> = signal('$THEMA$');
     topicCollectionID: WritableSignal<string> = signal('66c667bc-8777-4c57-b476-35f54ce9ff5d'); // Religion
+    generatedHeader = signal('');
+
     newestContentConfig = computed(() => JSON.stringify({
         headline: 'Neueste Inhalte zum Thema '+this.topic(),
+        layout: 'carousel',
         description: '',
         searchMode: 'collection',
-        collectionID: this.topicCollectionID()
+        collectionId: this.topicCollectionID()
     }));
     jobsContentConfig = computed(() => JSON.stringify({
         headline: 'Das sind Berufe zum Thema '+this.topic(),
@@ -44,10 +52,24 @@ export class TemplateComponent implements OnInit {
                 // set the background to some random (but deterministic) color, just for visuals
                 this.topicColor = this.stringToColour(this.topic())
             }
-            if (params.collectionID) {
-                this.topicCollectionID.set(params.collectionID);
+            if (params.collectionId) {
+                this.topicCollectionID.set(params.collectionId);
             }
         });
+        // DEBUG
+        this.generateFromPrompt()
+    }
+
+    /** calls the Z-API to invoke ChatGPT */
+    private generateFromPrompt() {
+        this.aiTextPromptsService.publicPrompt({
+            widgetNodeId: "c937cabf-5ffd-47f0-a5e8-ef0ed370baf0",
+            contextNodeId: this.topicCollectionID(),
+        }).subscribe((result: any) => {
+            const response = result.responses[0];
+            console.log("RESPONSE: ", response);
+            this.generatedHeader.set(response);
+        })
     }
 
     // https://stackoverflow.com/a/16348977
