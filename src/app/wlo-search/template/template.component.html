@@ -16,9 +16,9 @@
   <div class="portal-wrapper">
     <div class="portal-wrapper-left">
       <div class="fachportal-header-accordion">
-        <wlo-collection-chips [collection]="topicCollectionID()"></wlo-collection-chips>
-        <wlo-user-configurable class="newest-widget" [configOverwrite]="newestContentConfig()"></wlo-user-configurable>
-        <wlo-user-configurable class="jobs-widget" [configOverwrite]="jobsContentConfig()"></wlo-user-configurable>
+        <wlo-collection-chips *ngIf="topicCollectionID()" [collection]="topicCollectionID()"></wlo-collection-chips>
+        <wlo-user-configurable *ngIf="jobsWidgetReady" class="newest-widget" [configOverwrite]="newestContentConfig()"></wlo-user-configurable>
+        <wlo-user-configurable *ngIf="jobsWidgetReady" class="jobs-widget" [configOverwrite]="jobsContentConfig()"></wlo-user-configurable>
       </div>
     </div>
   </div>

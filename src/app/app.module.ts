@@ -46,8 +46,8 @@ import {
     TranslationLoader,
     Toast as ToastAbstract,
 } from "ngx-edu-sharing-ui";
-import {TicketAuthInterceptor, TicketService, ToastService} from "wlo-pages-lib";
-import {ZApiModule} from "ngx-z-api";
+import { TicketAuthInterceptor, TicketService, ToastService } from "wlo-pages-lib";
+import { ZApiModule } from "ngx-z-api";
 
 const wloSearchConfig: WloSearchConfig = {
     routerPath: ROOT_PATH + WLO_SEARCH_PATH_COMPONENT,
@@ -58,6 +58,11 @@ const wloSearchConfig: WloSearchConfig = {
 const httpInterceptorProviders = [
     { provide: HTTP_INTERCEPTORS, useClass: LanguageHeaderInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: CachingInterceptor, multi: true },
+    {
+        provide: HTTP_INTERCEPTORS,
+        useClass: TicketAuthInterceptor,
+        multi: true
+    }
 ];
 
 const telemetryProviders = environment.analyticsUrl
@@ -169,12 +174,6 @@ const eduSharingApiModuleWithProviders = EduSharingApiModule.forRoot({ rootUrl: 
         }).providers,
         { provide: ToastAbstract, useClass: ToastService },
         TicketService,
-        provideHttpClient(withInterceptorsFromDi()), // see https://stackoverflow.com/a/76028543
-        {
-            provide: HTTP_INTERCEPTORS,
-            useClass: TicketAuthInterceptor,
-            multi: true
-        },
         TranslateStore,
         TranslateService
     ],

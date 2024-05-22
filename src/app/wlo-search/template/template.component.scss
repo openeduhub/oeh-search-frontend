@@ -60,6 +60,10 @@ wlo-user-configurable {
 }
 
 .portal-plus-filterbar-wrapper {
+    /* grabbing into the node-entry to avoid unappealingly thin cards */
+    ::ng-deep .grid-card {
+        min-width: 220px;
+    }
     display: block;
     .portal-wrapper {
         display: flex;
