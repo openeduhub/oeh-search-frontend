@@ -38,11 +38,12 @@ wlo-user-configurable {
                 display: flex;
                 flex-direction: column;
                 margin: 32px 0;
-                padding: 0 64px;
+                padding: 0 32px;
+                word-break: break-word;
                 h1 {
                     font-family: 'Montserrat-Medium', 'Helvetica Neue', Helvetica, Roboto, Arial,
                         sans-serif;
-                    font-size: 40px;
+                    font-size: 32px;
                     font-weight: normal;
                     line-height: 1.3;
                     color: #313131;

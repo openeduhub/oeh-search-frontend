@@ -19,6 +19,9 @@ import { CustomizationDialogComponent } from './customization-dialog/customizati
 import { CustomTile } from './custom-tile';
 import { SharedModule } from '../shared/shared.module';
 import { TemplateComponent } from '../template/template.component';
+import { AuthenticationService, NodeService } from 'ngx-edu-sharing-api';
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import * as uuid from 'uuid';
 
 @Component({
@@ -29,12 +32,18 @@ import * as uuid from 'uuid';
     imports: [CdkDragHandle, DragDropModule, MatGridListModule, SharedModule, TemplateComponent],
 })
 export class CustomizableDashboardComponent implements AfterViewInit, OnInit {
+    readonly GRID_NAME_PREFIX = 'GRID_CONFIG_';
     tiles: CustomTile[] = [];
     // drag & drop snippet found here: https://stackblitz.com/edit/drag-drop-dashboard-97r6zb
     drops: CdkDropList[];
     @ViewChildren(CdkDropList) dropsQuery: QueryList<CdkDropList>;
 
-    constructor(private cdr: ChangeDetectorRef, public dialog: MatDialog) {}
+    constructor(
+        private authService: AuthenticationService,
+        private cdr: ChangeDetectorRef,
+        public dialog: MatDialog,
+        private nodeApi: NodeService,
+    ) {}
 
     ngAfterViewInit() {
         this.dropsQuery.changes.subscribe(() => {
@@ -49,6 +58,17 @@ export class CustomizableDashboardComponent implements AfterViewInit, OnInit {
 
     ngOnInit() {
         this.addComponent();
+        // TODO: Modify accordingly
+        const username = 'test';
+        const password = 'tester';
+        if (username && password) {
+            // TODO: This currently only works in ngOnInit and when using Firefox
+            this.authService
+                .login(username, password)
+                .subscribe((data) =>
+                    this.createConfigNode().subscribe(() => console.log('Created successfully.')),
+                );
+        }
     }
 
     addComponent() {
@@ -115,5 +135,38 @@ export class CustomizableDashboardComponent implements AfterViewInit, OnInit {
 
     entered($event: CdkDragEnter) {
         moveItemInArray(this.tiles, $event.item.data, $event.container.data);
+    }
+
+    private createConfigNode(): Observable<any> {
+        return this.nodeApi
+            .createChild({
+                repository: '-home-',
+                node: '8bfa2ce6-141a-4748-bcb7-83d2bf925a23', // FIXME: hardcoded for now
+                type: 'ccm:io',
+                body: {
+                    'cm:name': [this.GRID_NAME_PREFIX + crypto.randomUUID()],
+                },
+            })
+            .pipe(
+                switchMap((node) => {
+                    console.log('created config node: ', node);
+                    // immediately set the permissions so that the node is publicly visible
+                    // in other words, publish the node
+                    return this.nodeApi.setPermissions(node.ref.id, {
+                        inherited: true,
+                        permissions: [
+                            {
+                                authority: {
+                                    properties: null,
+                                    editable: false,
+                                    authorityName: 'GROUP_EVERYONE',
+                                    authorityType: 'EVERYONE',
+                                },
+                                permissions: ['Consumer', 'CCPublish'],
+                            },
+                        ],
+                    });
+                }),
+            );
     }
 }
