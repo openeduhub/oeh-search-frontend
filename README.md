@@ -32,6 +32,23 @@ $ npm install
 
 ### Dev Server
 
+#### Prerequisites
+
+Check whether the correct node version is installed that is specified in `.nvmrc`.
+
+```bash
+$ node -v
+```
+
+If this is not the case, you might run:
+
+```bash
+$ nvm install # to install and use the specified node version
+$ nvm use # to switch to the specified node version, if it is already installed
+```
+
+#### Start-up information
+
 The dev server will serve the application on http://localhost:4200/ and reload automatically if you
 change any of the source files.
 
