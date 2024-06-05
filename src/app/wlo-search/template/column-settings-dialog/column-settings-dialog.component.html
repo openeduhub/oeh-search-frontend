@@ -1,0 +1,45 @@
+<h1 mat-dialog-title>
+  <span i18n>Configure</span> "{{ data.heading ? data.heading : data.uuid }}"
+</h1>
+
+<div mat-dialog-content [formGroup]="form" class="content settings-form">
+  <mat-form-field appearance="outline">
+    <mat-label i18n>Heading</mat-label>
+    <input matInput type="text" placeholder="Heading of the column" formControlName="heading" />
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label i18n>Description</mat-label>
+    <textarea
+      matInput
+      placeholder="Description of the column"
+      formControlName="description"
+    ></textarea>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label i18n>Type</mat-label>
+    <mat-select formControlName="type">
+      <mat-option [value]="option.value" *ngFor="let option of typeOptions">{{
+        option.viewValue
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label i18n>Grid-Type</mat-label>
+    <mat-select formControlName="gridType">
+      <mat-option [value]="option.value" *ngFor="let option of gridTypeOptions">{{
+        option.viewValue
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label i18n>Background-Color</mat-label>
+    <input matInput type="color" formControlName="backgroundColor" />
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label i18n>Grid-Definition</mat-label>
+    <textarea matInput placeholder="Grid im JSON-Format" formControlName="grid"></textarea>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="form" i18n>Apply</button>
+</div>

@@ -55,3 +55,9 @@ e2e-cypress/node_modules
 e2e-cypress/cypress/screenshots/*
 e2e-cypress/cypress/videos/*
 /e2e-cypress/cypress/integration/examples/
+
+# project-specific additions
+projects/edu-sharing-ui
+projects/wlo-pages-lib
+projects/z-api
+wlo-pages

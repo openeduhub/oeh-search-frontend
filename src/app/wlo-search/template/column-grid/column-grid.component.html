@@ -1,0 +1,77 @@
+<ng-container *ngIf="grid?.length >= 1">
+  <div
+    class="wlo-grid"
+    [class.wlo-grid-cols-1]="grid.length === 1"
+    [class.wlo-grid-cols-2]="grid.length === 2"
+    [class.wlo-grid-cols-3]="grid.length > 2"
+    [class.wlo-gap-0]="gridType === 'noGutter'"
+    [class.wlo-gap-2]="gridType === 'smallGutter'"
+    [class.wlo-gap-4]="gridType === 'mediumGutter'"
+    [class.wlo-gap-6]="gridType === 'largeGutter'"
+    [class.wlo-grid-border-radius]="gridType === 'noGutter'"
+  >
+    <div
+      class="wlo-grid-content"
+      [class.wlo-col-span-2]="grid.length >= 2 && gridItem.cols === 2"
+      [class.wlo-col-span-3]="grid.length >= 3 && gridItem.cols === 3"
+      [class.wlo-row-span-2]="gridItem.rows === 2"
+      [class.wlo-row-span-3]="gridItem.rows === 3"
+      [class.wlo-grid-border-radius]="gridType !== 'noGutter'"
+      *ngFor="let gridItem of grid; let i = index"
+    >
+      <ng-container *ngIf="gridItem.item === 'wlo-collection-chips'">
+        <wlo-collection-chips
+          *ngIf="topicCollectionID"
+          [collection]="topicCollectionID"
+        ></wlo-collection-chips>
+      </ng-container>
+      <ng-container *ngIf="gridItem.item === 'wlo-user-configurable'">
+        <wlo-user-configurable
+          *ngIf="jobsWidgetReady"
+          [class]="gridItem.classNames ? gridItem.classNames : ''"
+          [configOverwrite]="
+            gridItem.classNames?.split(' ')?.includes('newest-widget')
+              ? newestContentConfig()
+              : jobsContentConfig()
+          "
+        >
+        </wlo-user-configurable>
+      </ng-container>
+      <ng-container *ngIf="gridItem.item === 'wlo-card'">
+        <mat-card class="example-card">
+          <mat-card-header>
+            <div mat-card-avatar class="example-header-image"></div>
+            <mat-card-title>Shiba Inu</mat-card-title>
+            <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+          </mat-card-header>
+          <img
+            mat-card-image
+            src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+            alt="Photo of a Shiba Inu"
+          />
+          <mat-card-content>
+            <p>
+              The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog
+              from Japan. A small, agile dog that copes very well with mountainous terrain, the
+              Shiba Inu was originally bred for hunting.
+            </p>
+          </mat-card-content>
+          <mat-card-actions>
+            <button mat-button>LIKE</button>
+            <button mat-button>SHARE</button>
+          </mat-card-actions>
+        </mat-card>
+      </ng-container>
+      <ng-container *ngIf="gridItem.item === 'wlo-image'">
+        <img src="https://placehold.co/800x600" alt="Examplary WLO-Image" />
+      </ng-container>
+      <div class="text-widget" *ngIf="gridItem.item === 'wlo-text'">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+        cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </div>
+    </div>
+  </div>
+</ng-container>
