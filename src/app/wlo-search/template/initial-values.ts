@@ -19,6 +19,21 @@ export const gridColumns = [
     },
     {
         uuid: crypto.randomUUID(),
+        type: 'jumbotron',
+        grid: [
+            {
+                uuid: crypto.randomUUID(),
+                item: 'wlo-ai-text-widget',
+            },
+        ],
+        backgroundColor: '#BEDADE',
+    },
+    {
+        uuid: crypto.randomUUID(),
+        type: 'spacer',
+    },
+    {
+        uuid: crypto.randomUUID(),
         type: 'collapse',
         heading: 'Inhalt des Monats',
         grid: [

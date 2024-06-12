@@ -98,6 +98,7 @@
               <p class="wlo-description" *ngIf="column.description">{{ column.description }}</p>
               <app-column-grid
                 [backgroundColor]="column.backgroundColor"
+                [editMode]="editMode"
                 [generatedJobText]="generatedJobText()"
                 [grid]="column.grid"
                 [gridType]="column.gridType"
@@ -121,6 +122,7 @@
           <p class="wlo-description" *ngIf="column.description">{{ column.description }}</p>
           <app-column-grid
             [backgroundColor]="column.backgroundColor"
+            [editMode]="editMode"
             [generatedJobText]="generatedJobText()"
             [grid]="column.grid"
             [jobsWidgetReady]="jobsWidgetReady"

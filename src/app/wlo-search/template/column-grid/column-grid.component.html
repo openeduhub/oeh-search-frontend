@@ -19,6 +19,14 @@
       [class.wlo-grid-border-radius]="gridType !== 'noGutter'"
       *ngFor="let gridItem of grid; let i = index"
     >
+      <ng-container *ngIf="gridItem.item === 'wlo-ai-text-widget'">
+        <wlo-ai-text-widget
+          [contextNodeId]="topicCollectionID"
+          [editMode]="editMode"
+          [nodeId]="'35f22c01-65a7-42e1-8c9c-85a900fddafe'"
+          [selectDimensions]="selectDimensions"
+        ></wlo-ai-text-widget>
+      </ng-container>
       <ng-container *ngIf="gridItem.item === 'wlo-collection-chips'">
         <wlo-collection-chips
           *ngIf="topicCollectionID"

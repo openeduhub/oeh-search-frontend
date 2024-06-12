@@ -20,9 +20,10 @@ import { GridColumn } from './grid-column';
 import { typeOptions } from './grid-type-definitions';
 import { gridColumns } from './initial-values';
 import { SharedModule } from '../shared/shared.module';
-import { Node, NodeService } from 'ngx-edu-sharing-api';
+import { AuthenticationService, Node, NodeService } from 'ngx-edu-sharing-api';
 import { AiTextPromptsService } from 'ngx-z-api';
 import { filter } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Component({
     standalone: true,
@@ -35,11 +36,9 @@ import { filter } from 'rxjs/operators';
         NgForOf,
         SharedModule,
         TemplateComponent,
-        MatIconModule,
         MatLegacyButtonModule,
         ColumnGridComponent,
         NgIf,
-        MatIconModule,
     ],
     selector: 'app-template',
     templateUrl: './template.component.html',
@@ -49,6 +48,7 @@ export class TemplateComponent implements OnInit {
     constructor(
         private route: ActivatedRoute,
         private aiTextPromptsService: AiTextPromptsService,
+        private authService: AuthenticationService,
         private cdr: ChangeDetectorRef,
         private dialog: MatDialog,
         private nodeApi: NodeService,
@@ -93,6 +93,15 @@ export class TemplateComponent implements OnInit {
 
                 this.generateFromPrompt();
             });
+
+        const username = environment.eduSharingUsername;
+        const password = environment.eduSharingPassword;
+        if (username && password) {
+            // TODO: This currently only works in ngOnInit and when using Firefox
+            this.authService.login(username, password).subscribe((data) => {
+                console.log('login success', data);
+            });
+        }
 
         if (this.gridColumns?.length === 0) {
             this.gridColumns = gridColumns;
