@@ -35,12 +35,12 @@ export class ColumnGridComponent implements OnInit {
     @Input() grid: GridTile[];
     @Input() gridType: string = 'smallGutter';
     @Input() jobsWidgetReady: boolean;
+    @Input() selectDimensions = new Map<string, string[]>();
+    @Input() selectDimensionsPrefix: string = '';
     @Input() topic: string;
     @Input() topicCollectionID: string;
     newestContentConfig: Signal<string>;
     jobsContentConfig: Signal<string>;
-
-    selectDimensions = new Map();
 
     ngOnInit() {
         this.newestContentConfig = computed(() =>
@@ -63,30 +63,5 @@ export class ColumnGridComponent implements OnInit {
                 searchText: 'Berufe mit ' + this.topic,
             });
         });
-
-        // TODO: This is currently just mockup data
-        this.selectDimensions.set('$ZIELGRUPPE$', ['Lehrender', 'Lernender', 'Andere']);
-        this.selectDimensions.set('$MUTTERSPRACHE$', [
-            'Deutsch',
-            'Englisch',
-            'Französisch',
-            'Spanisch',
-        ]);
-        this.selectDimensions.set('$HERKUNFTSLAND$', ['Deutschland', 'Österreich', 'Sonstige']);
-        this.selectDimensions.set('$LEBENSALTER$', [
-            '<= 20',
-            '21 - 30',
-            '31 - 40',
-            '41 - 50',
-            '> 50',
-        ]);
-        this.selectDimensions.set('$INTERESSENGEBIET$', [
-            'Land-, Forst- und Tierwirtschaft und Gartenbau',
-            'Rohstoffgewinnung, Produktion und Fertigung',
-            'Bau, Architektur, Vermessung und Gebäudetechnik',
-            'Naturwissenschaft, Geografie und Informatik',
-            'Verkehr, Logistik, Schutz und Sicherheit',
-            'Sonstige Berufsgruppen',
-        ]);
     }
 }

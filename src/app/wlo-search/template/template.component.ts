@@ -20,7 +20,13 @@ import { GridColumn } from './grid-column';
 import { typeOptions } from './grid-type-definitions';
 import { gridColumns } from './initial-values';
 import { SharedModule } from '../shared/shared.module';
-import { AuthenticationService, Node, NodeService } from 'ngx-edu-sharing-api';
+import {
+    ApiRequestConfiguration,
+    AuthenticationService,
+    MdsService,
+    Node,
+    NodeService,
+} from 'ngx-edu-sharing-api';
 import { AiTextPromptsService } from 'ngx-z-api';
 import { filter } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -51,7 +57,9 @@ export class TemplateComponent implements OnInit {
         private authService: AuthenticationService,
         private cdr: ChangeDetectorRef,
         private dialog: MatDialog,
+        private mdsService: MdsService,
         private nodeApi: NodeService,
+        private apiRequestConfig: ApiRequestConfiguration,
     ) {}
     @HostBinding('style.--topic-color') topicColor: string = '#182e5c';
 
@@ -68,9 +76,13 @@ export class TemplateComponent implements OnInit {
     editMode: boolean = false;
     myNode: Node;
 
+    selectDimensions = new Map();
+    selectDimensionsPrefix = 'virtual:ai_text_widget_';
+
     typeOptions = typeOptions.concat([{ value: 'spacer', viewValue: 'Trennlinie' }]);
 
     ngOnInit(): void {
+        this.apiRequestConfig.setLocale('de_DE');
         // set the topic based on the query params "topic" and "collectionID"
         this.route.queryParams
             .pipe(filter((params) => params.topic || params.collectionId))
@@ -100,6 +112,19 @@ export class TemplateComponent implements OnInit {
             // TODO: This currently only works in ngOnInit and when using Firefox
             this.authService.login(username, password).subscribe((data) => {
                 console.log('login success', data);
+
+                this.mdsService.getMetadataSet({ metadataSet: 'mds_oeh' }).subscribe((data) => {
+                    const rawSelectDimensions = data.widgets.filter((widget) =>
+                        widget.id.includes(this.selectDimensionsPrefix),
+                    );
+                    rawSelectDimensions.forEach((selectDimension) => {
+                        // Note: The $ is added at this position to signal an existing placeholder
+                        this.selectDimensions.set(
+                            '$' + selectDimension.id + '$',
+                            selectDimension.values,
+                        );
+                    });
+                });
             });
         }
 
