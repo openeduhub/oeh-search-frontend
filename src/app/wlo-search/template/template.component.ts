@@ -106,8 +106,8 @@ export class TemplateComponent implements OnInit {
                 this.generateFromPrompt();
             });
 
-        const username = environment.eduSharingUsername;
-        const password = environment.eduSharingPassword;
+        const username = environment?.eduSharingUsername;
+        const password = environment?.eduSharingPassword;
         if (username && password) {
             // TODO: This currently only works in ngOnInit and when using Firefox
             this.authService.login(username, password).subscribe((data) => {
