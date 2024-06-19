@@ -4,7 +4,7 @@ import {
     AiTextWidgetComponent,
     CollectionChipsComponent,
     UserConfigurableComponent,
-} from 'wlo-pages-lib';
+} from 'ngx-edu-sharing-wlo-pages';
 import { GridTile } from '../grid-tile';
 import { SharedModule } from '../../shared/shared.module';
 

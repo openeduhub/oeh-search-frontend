@@ -254,39 +254,6 @@
           }
         }
       }
-    },
-    "wlo-pages-lib": {
-      "projectType": "library",
-      "root": "projects/wlo-pages-lib",
-      "sourceRoot": "projects/wlo-pages-lib/src",
-      "prefix": "wlo",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "project": "projects/wlo-pages-lib/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/wlo-pages-lib/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "projects/wlo-pages-lib/tsconfig.lib.json"
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "tsConfig": "projects/wlo-pages-lib/tsconfig.spec.json",
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ]
-          }
-        }
-      }
     }
   },
   "cli": {

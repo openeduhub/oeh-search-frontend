@@ -31,9 +31,6 @@
       ],
       "@angular/*": [
         "./node_modules/@angular/*"
-      ],
-      "wlo-pages-lib": [
-        "projects/wlo-pages-lib"
       ]
     },
     "useDefineForClassFields": false

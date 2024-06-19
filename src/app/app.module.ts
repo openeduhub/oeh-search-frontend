@@ -47,7 +47,7 @@ import {
     TranslationLoader,
     Toast as ToastAbstract,
 } from 'ngx-edu-sharing-ui';
-import { TicketAuthInterceptor, TicketService, ToastService } from 'wlo-pages-lib';
+import { TicketAuthInterceptor, TicketService, ToastService } from 'ngx-edu-sharing-wlo-pages';
 import { ZApiModule } from 'ngx-edu-sharing-z-api';
 
 const wloSearchConfig: WloSearchConfig = {

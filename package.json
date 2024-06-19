@@ -45,6 +45,7 @@
     "ngx-colors": "^3.5.3",
     "ngx-edu-sharing-api": "^9.1.0",
     "ngx-edu-sharing-ui": "^9.1.1",
+    "ngx-edu-sharing-wlo-pages": "^0.1.1",
     "ngx-edu-sharing-z-api": "^0.0.0",
     "ngx-slick-carousel": "^17.0.0",
     "rxjs": "^7.0.0",
@@ -102,5 +103,10 @@
   "lint-staged": {
     "*.{js,ts,md,html,css,scss}": "prettier --write",
     "*.ts": "eslint --fix"
+  },
+  "overrides": {
+    "ngx-edu-sharing-wlo-pages": {
+      "angular-material-css-vars": "^3.0.0"
+    }
   }
 }
