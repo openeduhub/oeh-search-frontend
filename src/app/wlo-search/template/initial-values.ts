@@ -1,12 +1,14 @@
+import { v4 as uuidv4 } from 'uuid';
+
 export const gridColumns = [
     {
-        uuid: crypto.randomUUID(),
+        uuid: uuidv4(),
         type: 'collapse',
         heading: 'Durchstöbere hier unsere Lehrplanthemen',
         description: 'Example text?',
         grid: [
             {
-                uuid: crypto.randomUUID(),
+                uuid: uuidv4(),
                 item: 'wlo-collection-chips',
                 cols: 3,
                 rows: 1,
@@ -14,40 +16,40 @@ export const gridColumns = [
         ],
     },
     {
-        uuid: crypto.randomUUID(),
+        uuid: uuidv4(),
         type: 'spacer',
     },
     {
-        uuid: crypto.randomUUID(),
+        uuid: uuidv4(),
         type: 'jumbotron',
         grid: [
             {
-                uuid: crypto.randomUUID(),
+                uuid: uuidv4(),
                 item: 'wlo-ai-text-widget',
             },
         ],
         backgroundColor: '#BEDADE',
     },
     {
-        uuid: crypto.randomUUID(),
+        uuid: uuidv4(),
         type: 'spacer',
     },
     {
-        uuid: crypto.randomUUID(),
+        uuid: uuidv4(),
         type: 'collapse',
         heading: 'Inhalt des Monats',
         grid: [
             {
-                uuid: crypto.randomUUID(),
+                uuid: uuidv4(),
                 item: 'wlo-image',
                 cols: 2,
             },
             {
-                uuid: crypto.randomUUID(),
+                uuid: uuidv4(),
                 item: 'wlo-text',
             },
             {
-                uuid: crypto.randomUUID(),
+                uuid: uuidv4(),
                 item: 'wlo-text',
                 cols: 3,
             },
@@ -56,21 +58,21 @@ export const gridColumns = [
         backgroundColor: 'rgba(255, 185, 48, 0.2)',
     },
     {
-        uuid: crypto.randomUUID(),
+        uuid: uuidv4(),
         type: 'collapse',
         heading: 'Andere Einstellungen',
         grid: [
             {
-                uuid: crypto.randomUUID(),
+                uuid: uuidv4(),
                 item: 'wlo-text',
             },
             {
-                uuid: crypto.randomUUID(),
+                uuid: uuidv4(),
                 item: 'wlo-image',
                 rows: 3,
             },
             {
-                uuid: crypto.randomUUID(),
+                uuid: uuidv4(),
                 item: 'wlo-text',
                 rows: 2,
             },
@@ -79,61 +81,61 @@ export const gridColumns = [
         backgroundColor: '#838896',
     },
     {
-        uuid: crypto.randomUUID(),
+        uuid: uuidv4(),
         type: 'jumbotron',
         grid: [
             {
-                uuid: crypto.randomUUID(),
+                uuid: uuidv4(),
                 item: 'wlo-card',
             },
             {
-                uuid: crypto.randomUUID(),
+                uuid: uuidv4(),
                 item: 'wlo-card',
             },
         ],
         gridType: 'smallGutter',
     },
     {
-        uuid: crypto.randomUUID(),
+        uuid: uuidv4(),
         type: 'text',
         heading: 'Erklärung Wechselpräpositionen',
         grid: [
             {
-                uuid: crypto.randomUUID(),
+                uuid: uuidv4(),
                 item: 'wlo-text',
             },
         ],
     },
     {
-        uuid: crypto.randomUUID(),
+        uuid: uuidv4(),
         type: 'text',
         heading: 'Chat GPT',
         grid: [
             {
-                uuid: crypto.randomUUID(),
+                uuid: uuidv4(),
                 item: 'wlo-text',
             },
         ],
     },
     {
-        uuid: crypto.randomUUID(),
+        uuid: uuidv4(),
         type: 'jumbotron',
         heading: 'Katzen! :D',
         description: 'Diese Beschreibung beschreibt Katzen beschreiblich.',
         grid: [
             {
-                uuid: crypto.randomUUID(),
+                uuid: uuidv4(),
                 item: 'wlo-text',
             },
         ],
         backgroundColor: '#81D4FA',
     },
     {
-        uuid: crypto.randomUUID(),
+        uuid: uuidv4(),
         type: 'jumbotron',
         grid: [
             {
-                uuid: crypto.randomUUID(),
+                uuid: uuidv4(),
                 item: 'wlo-user-configurable',
                 classNames: 'newest-widget',
             },
@@ -141,11 +143,11 @@ export const gridColumns = [
         backgroundColor: '#E3ECF6',
     },
     {
-        uuid: crypto.randomUUID(),
+        uuid: uuidv4(),
         type: 'jumbotron',
         grid: [
             {
-                uuid: crypto.randomUUID(),
+                uuid: uuidv4(),
                 item: 'wlo-user-configurable',
                 classNames: 'jobs-widget',
             },
@@ -153,12 +155,12 @@ export const gridColumns = [
         backgroundColor: '#F6E4E3',
     },
     {
-        uuid: crypto.randomUUID(),
+        uuid: uuidv4(),
         heading: 'New jobs?',
         type: 'collapse',
         grid: [
             {
-                uuid: crypto.randomUUID(),
+                uuid: uuidv4(),
                 item: 'wlo-user-configurable',
                 classNames: 'jobs-widget',
             },

@@ -30,6 +30,7 @@ import {
 import { AiTextPromptsService } from 'ngx-edu-sharing-z-api';
 import { filter } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
     standalone: true,
@@ -139,7 +140,7 @@ export class TemplateComponent implements OnInit {
 
     addColumn(type: string) {
         const newColumn: GridColumn = {
-            uuid: crypto.randomUUID(),
+            uuid: uuidv4(),
             type,
         };
         if (type !== 'spacer') {
