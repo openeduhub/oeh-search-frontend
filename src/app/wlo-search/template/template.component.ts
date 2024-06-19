@@ -27,7 +27,7 @@ import {
     Node,
     NodeService,
 } from 'ngx-edu-sharing-api';
-import { AiTextPromptsService } from 'ngx-z-api';
+import { AiTextPromptsService } from 'ngx-edu-sharing-z-api';
 import { filter } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 

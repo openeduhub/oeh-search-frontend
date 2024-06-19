@@ -88,13 +88,13 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "oeh-search-frontend:build:production"
+              "buildTarget": "oeh-search-frontend:build:production"
             },
             "development": {
-              "browserTarget": "oeh-search-frontend:build:development"
+              "buildTarget": "oeh-search-frontend:build:development"
             },
             "de": {
-              "browserTarget": "oeh-search-frontend:build:development,de"
+              "buildTarget": "oeh-search-frontend:build:development,de"
             }
           },
           "defaultConfiguration": "development"
@@ -102,7 +102,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "oeh-search-frontend:build"
+            "buildTarget": "oeh-search-frontend:build"
           }
         },
         "test": {
@@ -215,10 +215,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "web-components:build:production"
+              "buildTarget": "web-components:build:production"
             },
             "development": {
-              "browserTarget": "web-components:build:development"
+              "buildTarget": "web-components:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -226,7 +226,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "web-components:build"
+            "buildTarget": "web-components:build"
           }
         },
         "test": {
@@ -250,46 +250,6 @@
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/slick-carousel/slick/slick.min.js"
-            ]
-          }
-        }
-      }
-    },
-    "edu-sharing-ui": {
-      "projectType": "library",
-      "root": "projects/edu-sharing-ui",
-      "sourceRoot": "projects/edu-sharing-ui/src",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "project": "projects/edu-sharing-ui/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/edu-sharing-ui/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "projects/edu-sharing-ui/tsconfig.lib.json"
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/edu-sharing-ui/src/test.ts",
-            "tsConfig": "projects/edu-sharing-ui/tsconfig.spec.json",
-            "karmaConfig": "projects/edu-sharing-ui/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "projects/edu-sharing-ui/**/*.ts",
-              "projects/edu-sharing-ui/**/*.html"
             ]
           }
         }
@@ -324,50 +284,6 @@
               "zone.js",
               "zone.js/testing"
             ]
-          }
-        }
-      }
-    },
-    "z-api": {
-      "projectType": "library",
-      "root": "projects/z-api",
-      "sourceRoot": "projects/z-api/src",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "project": "projects/z-api/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "projects/z-api/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "projects/z-api/tsconfig.lib.json"
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
-            "tsConfig": "projects/z-api/tsconfig.spec.json",
-            "karmaConfig": "projects/z-api/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "projects/z-api/**/*.ts",
-              "projects/z-api/**/*.html"
-            ],
-            "cache": true
           }
         }
       }

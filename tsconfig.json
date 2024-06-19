@@ -34,12 +34,6 @@
       ],
       "wlo-pages-lib": [
         "projects/wlo-pages-lib"
-      ],
-      "ngx-edu-sharing-ui": [
-        "projects/edu-sharing-ui"
-      ],
-      "ngx-z-api": [
-        "projects/z-api"
       ]
     },
     "useDefineForClassFields": false

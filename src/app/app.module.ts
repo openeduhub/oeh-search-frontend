@@ -37,17 +37,18 @@ import {
     MissingTranslationHandler,
     TranslateLoader,
     TranslateModule,
-    TranslateService, TranslateStore
-} from "@ngx-translate/core";
+    TranslateService,
+    TranslateStore,
+} from '@ngx-translate/core';
 import {
     EduSharingUiConfiguration,
     EduSharingUiModule,
     FallbackTranslationHandler,
     TranslationLoader,
     Toast as ToastAbstract,
-} from "ngx-edu-sharing-ui";
-import { TicketAuthInterceptor, TicketService, ToastService } from "wlo-pages-lib";
-import { ZApiModule } from "ngx-z-api";
+} from 'ngx-edu-sharing-ui';
+import { TicketAuthInterceptor, TicketService, ToastService } from 'wlo-pages-lib';
+import { ZApiModule } from 'ngx-edu-sharing-z-api';
 
 const wloSearchConfig: WloSearchConfig = {
     routerPath: ROOT_PATH + WLO_SEARCH_PATH_COMPONENT,
@@ -61,8 +62,8 @@ const httpInterceptorProviders = [
     {
         provide: HTTP_INTERCEPTORS,
         useClass: TicketAuthInterceptor,
-        multi: true
-    }
+        multi: true,
+    },
 ];
 
 const telemetryProviders = environment.analyticsUrl
@@ -117,7 +118,9 @@ const httpLinkBeacon = (() => {
     return new HttpLink(httpClient);
 })();
 
-const eduSharingApiModuleWithProviders = EduSharingApiModule.forRoot({ rootUrl: environment.eduSharingApiUrl })
+const eduSharingApiModuleWithProviders = EduSharingApiModule.forRoot({
+    rootUrl: environment.eduSharingApiUrl,
+});
 
 @NgModule({
     declarations: [AppComponent],
@@ -128,8 +131,7 @@ const eduSharingApiModuleWithProviders = EduSharingApiModule.forRoot({ rootUrl: 
         HttpClientModule,
         eduSharingApiModuleWithProviders,
         ApolloModule,
-        ZApiModule.forRoot({
-        })
+        ZApiModule.forRoot({}),
     ],
     providers: [
         httpInterceptorProviders,
@@ -175,7 +177,7 @@ const eduSharingApiModuleWithProviders = EduSharingApiModule.forRoot({ rootUrl: 
         { provide: ToastAbstract, useClass: ToastService },
         TicketService,
         TranslateStore,
-        TranslateService
+        TranslateService,
     ],
     bootstrap: [AppComponent],
 })
