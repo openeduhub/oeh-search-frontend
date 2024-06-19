@@ -2,7 +2,7 @@
   <div class="template-header-wrapper">
     <div class="template-header-container">
       <div class="template-header-content">
-        <h1 i18n>Themenseite zum Thema {{ topic() }}</h1>
+        <h1 i18n>Topic page for {{ topic() }}</h1>
         <p *ngIf="generatedHeader(); else headerPlaceholder">{{ generatedHeader() }}</p>
         <ng-template #headerPlaceholder>
           Dieser Text beschreibt das Thema der Seite und führt in es ein. Er ist typischerweise
