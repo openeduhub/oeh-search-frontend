@@ -67,9 +67,7 @@ export class TemplateComponent implements OnInit {
     topicCollectionID: WritableSignal<string> = signal(null);
     generatedHeader: WritableSignal<string> = signal('');
     generatedJobText: WritableSignal<string> = signal('');
-    // TODO: this is basically a workaround for widget components not updating when getting new
-    //  config overrides for now; remove once they're able to do that
-    jobsWidgetReady = true;
+    jobsWidgetReady = false;
 
     gridColumns: GridColumn[] = [];
 
@@ -201,13 +199,7 @@ export class TemplateComponent implements OnInit {
                 const response = result.responses[0];
                 console.log('RESPONSE 2: ', response);
                 this.generatedJobText.set(response);
-                // FIXME: the following is just a trick to re-instantiate the widgets for them to
-                //  change to new override-configs
-                this.jobsWidgetReady = false;
-                setTimeout(() => {
-                    this.jobsWidgetReady = true;
-                    console.log('READY!');
-                }, 2); // DEBUG
+                this.jobsWidgetReady = true;
             });
     }
 
