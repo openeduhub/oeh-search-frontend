@@ -52,20 +52,27 @@ form {
 }
 
 :host mat-form-field.search-field ::ng-deep {
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
     .mat-form-field-wrapper {
         padding-bottom: 0;
     }
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
     .mat-form-field-underline {
         display: none;
     }
+    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
     .mat-form-field-infix {
         padding: 0;
         border: none;
     }
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of chips that may no longer apply for the MDC version.*/
+/* TODO(mdc-migration): The following rule targets internal classes of chips that may no longer apply for the MDC version.*/
+/* TODO(mdc-migration): The following rule targets internal classes of chips that may no longer apply for the MDC version.*/
 :host mat-chip-list ::ng-deep {
-    .mat-chip-list-wrapper .mat-standard-chip {
+    /* TODO(mdc-migration): The following rule targets internal classes of chips that may no longer apply for the MDC version.*/
+    .mat-chip-list-wrapper .mat-mdc-standard-chip {
         min-height: 30px;
     }
 }
@@ -105,24 +112,24 @@ form {
         }
     }
 }
-.mat-chip.chip-group-oer {
+.mat-mdc-chip.chip-group-oer {
     background-color: rgb(214, 166, 214);
 }
-.mat-chip.chip-group-type {
+.mat-mdc-chip.chip-group-type {
     background-color: rgb(166, 192, 214);
 }
-.mat-chip.chip-group-discipline {
+.mat-mdc-chip.chip-group-discipline {
     background-color: rgb(166, 214, 174);
 }
-.mat-chip.chip-group-educationalContext {
+.mat-mdc-chip.chip-group-educationalContext {
     background-color: rgb(214, 166, 166);
 }
-.mat-chip.chip-group-intendedEndUserRole {
+.mat-mdc-chip.chip-group-intendedEndUserRole {
     background-color: rgb(211, 214, 166);
 }
-.mat-chip.chip-group-learningResourceType {
+.mat-mdc-chip.chip-group-learningResourceType {
     background-color: rgb(214, 193, 166);
 }
-.mat-chip.chip-group-source {
+.mat-mdc-chip.chip-group-source {
     background-color: rgb(208, 166, 214);
 }

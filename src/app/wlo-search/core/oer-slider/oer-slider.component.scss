@@ -1,18 +1,22 @@
 :host ::ng-deep mat-slide-toggle {
+    /* TODO(mdc-migration): The following rule targets internal classes of slide-toggle that may no longer apply for the MDC version. */
     .mat-slide-toggle-bar {
         width: 46px;
         height: 17px;
         margin-right: 15px;
     }
-    &.mat-slide-toggle.mat-checked .mat-slide-toggle-thumb-container {
+    /* TODO(mdc-migration): The following rule targets internal classes of slide-toggle that may no longer apply for the MDC version. */
+    &.mat-mdc-slide-toggle.mat-checked .mat-slide-toggle-thumb-container {
         transform: translate3d(26px, 0, 0);
     }
+    /* TODO(mdc-migration): The following rule targets internal classes of slide-toggle that may no longer apply for the MDC version. */
     .mat-slide-toggle-thumb-container {
         top: -7px;
         left: -5px;
         height: 30px;
         width: 30px;
     }
+    /* TODO(mdc-migration): The following rule targets internal classes of slide-toggle that may no longer apply for the MDC version. */
     .mat-slide-toggle-thumb {
         height: 30px;
         width: 30px;

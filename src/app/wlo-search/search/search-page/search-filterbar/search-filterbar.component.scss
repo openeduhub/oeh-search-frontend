@@ -1,5 +1,6 @@
 $sidePadding: 20px;
 
+/* TODO(mdc-migration): The following rule targets internal classes of card that may no longer apply for the MDC version. */
 mat-card {
     height: 100%;
     display: flex;

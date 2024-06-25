@@ -59,7 +59,7 @@
         right: 50px;
         margin-top: -10px;
     }
-    .mat-spinner {
+    .mat-mdc-progress-spinner {
         align-self: center;
     }
     &:last-child {
@@ -128,7 +128,7 @@
     &.app-details-report-problem-state-loading {
         border-color: #0000;
     }
-    .mat-progress-spinner,
+    .mat-mdc-progress-spinner,
     .mat-icon {
         margin-right: 15px;
         flex-shrink: 0;

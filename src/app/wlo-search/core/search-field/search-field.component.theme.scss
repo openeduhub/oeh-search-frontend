@@ -27,7 +27,7 @@
 @mixin search-field-typography($typography) {
     app-search-field {
         .submit-button,
-        .mat-form-field {
+        .mat-mdc-form-field {
             font-size: mat.font-size($typography, subheading-1);
         }
     }

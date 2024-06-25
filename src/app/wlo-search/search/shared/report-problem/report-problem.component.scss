@@ -4,7 +4,7 @@
     min-height: 0;
 }
 
-::ng-deep .report-problem-panel .mat-dialog-container {
+::ng-deep .report-problem-panel .mat-mdc-dialog-container {
     // Make dialog content respect max-height of the overlay
     display: flex;
     flex-direction: column;

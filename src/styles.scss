@@ -37,7 +37,7 @@ $material-icons-font-path: '~material-icons/iconfont/';
     // Include theme styles for core and each component used in your app.
     // Alternatively, you can import and @include the theme mixins for each component
     // that you are using.
-    @include mat.all-legacy-component-themes($theme);
+    @include mat.all-component-themes($theme);
     @include mat.strong-focus-indicators-theme($theme);
     @include angular-material-theme-overrides($theme);
     @include wlo-search.components-themes($theme);
@@ -57,9 +57,9 @@ $material-icons-font-path: '~material-icons/iconfont/';
 //  If you specify typography styles for the components you use elsewhere, you should delete this line.
 //  If you don't need the default component typographies but still want the hierarchy styles,
 //  you can delete this line and instead use:
-//    `@include mat.legacy-typography-hierarchy(mat.define-legacy-typography-config());`
-@include mat.all-legacy-component-typographies();
-@include mat.legacy-core();
+//    `@include mat.legacy-typography-hierarchy(mat.define-typography-config());`
+@include mat.all-component-typographies();
+@include mat.core();
 @include mat.strong-focus-indicators();
 
 // Create the theme object (a Sass map containing all of the palettes).
@@ -79,18 +79,19 @@ $app-theme-dark: mat.define-dark-theme($app-primary, $app-accent, $app-warn);
 // Typography
 //
 // See @angular/material/core/typography/_typography.scss for defaults.
-$app-typography: mat.define-legacy-typography-config(
+$app-typography: mat.define-typography-config(
     $font-family: 'Source-Sans-Pro-Regular',
-    $display-1: mat.define-typography-level(32px, 40px, 500, 'Montserrat-Medium'),
-    $headline: mat.define-typography-level(24px, 32px, 700, 'Montserrat-Bold'),
-    $title: mat.define-typography-level(20px, 30px, 600, 'Montserrat-SemiBold'),
-    $subheading-2: mat.define-typography-level(18px, 27px, 600, 'Montserrat-SemiBold'),
-    $subheading-1: mat.define-typography-level(16px, 24px, 600, 'Montserrat-SemiBold'),
-    $body-2: mat.define-typography-level(14px, 24px, 700, 'Montserrat-Bold'),
-    $body-1: mat.define-typography-level(14px, 21px, 400),
+    $headline-4: mat.define-typography-level(32px, 40px, 500, 'Montserrat-Medium'),
+    $headline-5: mat.define-typography-level(24px, 32px, 700, 'Montserrat-Bold'),
+    $headline-6: mat.define-typography-level(20px, 30px, 600, 'Montserrat-SemiBold'),
+    $subtitle-1: mat.define-typography-level(18px, 27px, 600, 'Montserrat-SemiBold'),
+    $body-1: mat.define-typography-level(16px, 24px, 600, 'Montserrat-SemiBold'),
+    $subtitle-2: mat.define-typography-level(14px, 24px, 700, 'Montserrat-Bold'),
+    $body-2: mat.define-typography-level(14px, 21px, 400),
     $caption: mat.define-typography-level(11px, 15px, 500, 'Montserrat-Medium'),
     $button: mat.define-typography-level(14px, 20px, 500, 'Montserrat-Medium'),
-    $input: mat.define-typography-level(inherit, 1.125, 400),
+    /* TODO(mdc-migration): No longer supported. Use `body-1` instead. $input: mat.define-typography-level(inherit, 1.125, 400),
+ */
 );
 // Custom fields
 $app-typography: map_merge(
@@ -99,7 +100,7 @@ $app-typography: map_merge(
         tooltip: mat.define-typography-level(14px, 20px, 500),
     )
 );
-@include mat.all-legacy-component-typographies($app-typography);
+@include mat.all-component-typographies($app-typography);
 @include angular-material-typography-overrides($app-typography);
 @include wlo-search.components-typographies($app-typography);
 

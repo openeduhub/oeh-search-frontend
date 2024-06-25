@@ -12,7 +12,7 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
-import { MatLegacyButtonModule } from '@angular/material/legacy-button';
+import { MatButtonModule } from '@angular/material/button';
 import { ActivatedRoute } from '@angular/router';
 import { ColumnGridComponent } from './column-grid/column-grid.component';
 import { ColumnSettingsDialogComponent } from './column-settings-dialog/column-settings-dialog.component';
@@ -43,7 +43,7 @@ import { v4 as uuidv4 } from 'uuid';
         NgForOf,
         SharedModule,
         TemplateComponent,
-        MatLegacyButtonModule,
+        MatButtonModule,
         ColumnGridComponent,
         NgIf,
     ],

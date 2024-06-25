@@ -1,4 +1,5 @@
 <mat-card
+  appearance="outlined"
   [ngSwitch]="style"
   [class.app-result-card-selected]="(selectedItem$ | async) === hit"
   matRipple

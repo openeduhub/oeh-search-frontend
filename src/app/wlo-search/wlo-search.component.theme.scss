@@ -8,7 +8,7 @@
     app-wlo-search {
         > .loading-spinner {
             background-color: mat.get-color-from-palette($background, dialog, 0.5);
-            .mat-spinner circle {
+            .mat-mdc-progress-spinner circle {
                 stroke: $primary-foreground-color;
             }
         }

@@ -40,7 +40,7 @@
         }
     }
     app-result-card-content-compact {
-        .mat-card-content {
+        .mat-mdc-card-content {
             @include mat.typography-level($typography, caption);
         }
     }
