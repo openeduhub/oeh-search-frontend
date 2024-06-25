@@ -1,4 +1,4 @@
-<div class="header">
+<mat-card-header>
   <h2 class="app-result-card-title">
     <button (click)="onClick()" #cardButton>
       {{ hit | nodeProperty: 'title' | truncate: 52 }}
@@ -7,7 +7,7 @@
   <p class="source" *ngIf="hit | nodeProperty: 'source' as source">
     {{ source }}
   </p>
-</div>
+</mat-card-header>
 <mat-card-content>
   <div class="main-content-row">
     <app-preview-image
