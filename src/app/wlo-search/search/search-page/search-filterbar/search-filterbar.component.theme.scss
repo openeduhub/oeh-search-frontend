@@ -37,7 +37,7 @@
 @mixin search-filterbar-typography($typography) {
     app-search-filterbar {
         .type > mat-label {
-            @include mat.typography-level($typography, subheading-1);
+            @include mat.typography-level($typography, body-1);
         }
     }
 }

@@ -23,7 +23,7 @@
 @mixin collection-card-typography($typography) {
     app-collection-card {
         .app-collection-card-title {
-            @include mat.typography-level($typography, subheading-1);
+            @include mat.typography-level($typography, body-1);
         }
         .app-collection-card-metadata-item {
             @include mat.typography-level($typography, caption);

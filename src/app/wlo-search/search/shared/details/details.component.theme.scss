@@ -51,10 +51,10 @@
 
 @mixin details-typography($typography) {
     app-details {
-        font-size: mat.font-size($typography, subheading-1);
-        line-height: mat.line-height($typography, subheading-1);
+        font-size: mat.font-size($typography, body-1);
+        line-height: mat.line-height($typography, body-1);
         .app-preview-panel-title {
-            @include mat.typography-level($typography, 'display-1');
+            @include mat.typography-level($typography, 'headline-4');
         }
         .app-preview-panel-expand-description-button {
             font-weight: mat.font-weight($typography, button);
@@ -64,7 +64,7 @@
             line-height: mat.line-height($typography, body-1);
         }
         .app-preview-related-items-heading {
-            @include mat.typography-level($typography, 'title');
+            @include mat.typography-level($typography, 'headline-6');
         }
     }
 }
