@@ -107,29 +107,31 @@ export class TemplateComponent implements OnInit {
 
         const username = environment?.eduSharingUsername;
         const password = environment?.eduSharingPassword;
+        // TODO: This fix for local development currently only works in Firefox
         if (username && password) {
-            // TODO: This currently only works in ngOnInit and when using Firefox
             this.authService.login(username, password).subscribe((data) => {
                 console.log('login success', data);
-
-                this.mdsService.getMetadataSet({ metadataSet: 'mds_oeh' }).subscribe((data) => {
-                    const rawSelectDimensions = data.widgets.filter((widget) =>
-                        widget.id.includes(this.selectDimensionsPrefix),
-                    );
-                    rawSelectDimensions.forEach((selectDimension) => {
-                        // Note: The $ is added at this position to signal an existing placeholder
-                        this.selectDimensions.set(
-                            '$' + selectDimension.id + '$',
-                            selectDimension.values,
-                        );
-                    });
-                });
+                this.retrieveSelectDimensions();
             });
+        } else {
+            this.retrieveSelectDimensions();
         }
 
         if (this.gridColumns?.length === 0) {
             this.gridColumns = gridColumns;
         }
+    }
+
+    retrieveSelectDimensions() {
+        this.mdsService.getMetadataSet({ metadataSet: 'mds_oeh' }).subscribe((data) => {
+            const rawSelectDimensions = data.widgets.filter((widget) =>
+                widget.id.includes(this.selectDimensionsPrefix),
+            );
+            rawSelectDimensions.forEach((selectDimension) => {
+                // Note: The $ is added at this position to signal an existing placeholder
+                this.selectDimensions.set('$' + selectDimension.id + '$', selectDimension.values);
+            });
+        });
     }
 
     moveColumnPosition(oldIndex: number, newIndex: number) {
