@@ -10,16 +10,16 @@
 
     app-result-card {
         .app-result-card-selected::after {
-            border-color: mat.get-color-from-palette($primary, 400);
+            border-color: mat.m2-get-color-from-palette($primary, 400);
         }
         .body {
             mat-icon {
-                color: mat.get-color-from-palette($foreground, secondary-text);
+                color: mat.m2-get-color-from-palette($foreground, secondary-text);
             }
         }
         .metadata,
         .source {
-            color: mat.get-color-from-palette($foreground, secondary-text);
+            color: mat.m2-get-color-from-palette($foreground, secondary-text);
         }
     }
     app-result-card-content-compact {
@@ -32,16 +32,16 @@
 @mixin result-card-typography($typography) {
     app-result-card {
         .app-result-card-title {
-            @include mat.typography-level($typography, subtitle-1);
+            @include mat.m2-typography-level($typography, subtitle-1);
         }
         .metadata,
         .source {
-            @include mat.typography-level($typography, caption);
+            @include mat.m2-typography-level($typography, caption);
         }
     }
     app-result-card-content-compact {
         .mat-mdc-card-content {
-            @include mat.typography-level($typography, caption);
+            @include mat.m2-typography-level($typography, caption);
         }
     }
 }

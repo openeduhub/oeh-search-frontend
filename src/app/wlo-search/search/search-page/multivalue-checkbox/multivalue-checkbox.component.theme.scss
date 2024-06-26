@@ -13,28 +13,28 @@
         mat-checkbox {
             /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
             .mat-checkbox-frame {
-                border-color: mat.get-color-from-palette($foreground, disabled);
+                border-color: mat.m2-get-color-from-palette($foreground, disabled);
             }
             &:not(.checked) {
                 span.label {
-                    color: mat.get-color-from-palette($foreground, secondary-text);
+                    color: mat.m2-get-color-from-palette($foreground, secondary-text);
                 }
                 span.count {
-                    background-color: mat.get-color-from-palette($background, unselected-chip);
-                    color: mat.get-color-from-palette($foreground, secondary-text);
+                    background-color: mat.m2-get-color-from-palette($background, unselected-chip);
+                    color: mat.m2-get-color-from-palette($foreground, secondary-text);
                 }
                 /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
                 .mat-checkbox-inner-container {
-                    background-color: mat.get-color-from-palette($background, card);
+                    background-color: mat.m2-get-color-from-palette($background, card);
                 }
             }
             &.checked {
                 span.label {
-                    color: mat.get-color-from-palette($foreground, text);
+                    color: mat.m2-get-color-from-palette($foreground, text);
                 }
                 span.count {
-                    background-color: mat.get-color-from-palette($customAccent, accent2);
-                    color: mat.get-color-from-palette($customAccent, accent2-contrast);
+                    background-color: mat.m2-get-color-from-palette($customAccent, accent2);
+                    color: mat.m2-get-color-from-palette($customAccent, accent2-contrast);
                 }
                 /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
                 &.mat-accent .mat-checkbox-background {
@@ -50,10 +50,10 @@
         /* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
         mat-checkbox {
             .label {
-                @include mat.typography-level($typography, body-1);
+                @include mat.m2-typography-level($typography, body-1);
             }
             .count {
-                @include mat.typography-level($typography, body-2);
+                @include mat.m2-typography-level($typography, body-2);
             }
         }
     }

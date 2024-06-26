@@ -7,9 +7,9 @@
     // $custom-accent: map-get($theme, custom-accent);
     app-badges {
         .app-badges-badge {
-            background-color: mat.get-color-from-palette($background, card);
+            background-color: mat.m2-get-color-from-palette($background, card);
             > .icon {
-                color: mat.get-color-from-palette($foreground, secondary-text);
+                color: mat.m2-get-color-from-palette($foreground, secondary-text);
             }
             > .editorial-icon {
                 color: #106029;

@@ -10,7 +10,7 @@
         .breadcrumbs {
             color: $primary-foreground-color;
             mat-icon {
-                color: mat.get-color-from-palette($foreground, secondary-text, 0.25);
+                color: mat.m2-get-color-from-palette($foreground, secondary-text, 0.25);
             }
         }
         .did-you-mean a {
@@ -18,7 +18,7 @@
         }
         .participate-button {
             color: $primary-foreground-color;
-            background-color: mat.get-color-from-palette($customAccent, accent1);
+            background-color: mat.m2-get-color-from-palette($customAccent, accent1);
         }
     }
 }
@@ -27,11 +27,11 @@
     app-search {
         .did-you-mean em,
         .summary em {
-            font-weight: mat.font-weight($typography, body-2);
+            font-weight: mat.m2-font-weight($typography, body-2);
         }
         .did-you-mean,
         .summary {
-            font-size: mat.font-size($typography, body-1);
+            font-size: mat.m2-font-size($typography, body-1);
         }
     }
 }

@@ -10,36 +10,36 @@
     $custom-accent: map-get($theme, custom-accent);
     $primary-foreground-color: primary-foreground-color($theme);
 
-    $body-background-dark: lighten(mat.get-color-from-palette($background, background), 10%);
-    $body-background-light: darken(mat.get-color-from-palette($background, background), 5%);
+    $body-background-dark: lighten(mat.m2-get-color-from-palette($background, background), 10%);
+    $body-background-light: darken(mat.m2-get-color-from-palette($background, background), 5%);
     $body-background: if($is-dark-theme, $body-background-dark, $body-background-light);
 
     app-details {
         .app-preview-panel-close-button {
-            background-color: mat.get-color-from-palette($background, background, 0.75);
+            background-color: mat.m2-get-color-from-palette($background, background, 0.75);
         }
         .app-preview-panel-info-bar {
-            background-color: mat.get-color-from-palette($primary, 50);
+            background-color: mat.m2-get-color-from-palette($primary, 50);
         }
         .app-preview-panel-body {
             background-color: $body-background;
         }
         .app-preview-panel-source {
-            color: mat.get-color-from-palette($foreground, secondary-text);
+            color: mat.m2-get-color-from-palette($foreground, secondary-text);
         }
         .app-preview-panel-report-problem-button {
-            color: mat.get-color-from-palette($foreground, secondary-text);
+            color: mat.m2-get-color-from-palette($foreground, secondary-text);
         }
         .app-details-report-problem-state-success {
-            border-color: mat.get-color-from-palette($primary);
-            background-color: mat.get-color-from-palette($primary, 50);
+            border-color: mat.m2-get-color-from-palette($primary);
+            background-color: mat.m2-get-color-from-palette($primary, 50);
         }
         .app-details-report-problem-state-error {
-            border-color: mat.get-color-from-palette($warn);
-            background-color: mat.get-color-from-palette($warn, 50);
+            border-color: mat.m2-get-color-from-palette($warn);
+            background-color: mat.m2-get-color-from-palette($warn, 50);
         }
         .app-preview-related-items {
-            background-color: mat.get-color-from-palette($primary, 50);
+            background-color: mat.m2-get-color-from-palette($primary, 50);
         }
         .app-preview-slick-next,
         .app-preview-slick-prev {
@@ -51,20 +51,20 @@
 
 @mixin details-typography($typography) {
     app-details {
-        font-size: mat.font-size($typography, body-1);
-        line-height: mat.line-height($typography, body-1);
+        font-size: mat.m2-font-size($typography, body-1);
+        line-height: mat.m2-line-height($typography, body-1);
         .app-preview-panel-title {
-            @include mat.typography-level($typography, 'headline-4');
+            @include mat.m2-typography-level($typography, 'headline-4');
         }
         .app-preview-panel-expand-description-button {
-            font-weight: mat.font-weight($typography, button);
+            font-weight: mat.m2-font-weight($typography, button);
         }
         .app-preview-panel-info-bar-item,
         .app-preview-panel-metadata {
-            line-height: mat.line-height($typography, body-1);
+            line-height: mat.m2-line-height($typography, body-1);
         }
         .app-preview-related-items-heading {
-            @include mat.typography-level($typography, 'headline-6');
+            @include mat.m2-typography-level($typography, 'headline-6');
         }
     }
 }

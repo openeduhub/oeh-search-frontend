@@ -11,14 +11,14 @@
     app-search-filterbar {
         > mat-card {
             > .header {
-                color: mat.get-color-from-palette($primary);
-                background-color: mat.get-color-from-palette($primary, 50);
-                border-color: mat.get-color-from-palette($foreground, divider);
+                color: mat.m2-get-color-from-palette($primary);
+                background-color: mat.m2-get-color-from-palette($primary, 50);
+                border-color: mat.m2-get-color-from-palette($foreground, divider);
             }
             > .body {
                 > .type {
-                    background-color: mat.get-color-from-palette($background, app-bar);
-                    border-color: mat.get-color-from-palette($foreground, divider);
+                    background-color: mat.m2-get-color-from-palette($background, app-bar);
+                    border-color: mat.m2-get-color-from-palette($foreground, divider);
                     > mat-label {
                         color: $primary-foreground-color;
                     }
@@ -37,7 +37,7 @@
 @mixin search-filterbar-typography($typography) {
     app-search-filterbar {
         .type > mat-label {
-            @include mat.typography-level($typography, body-1);
+            @include mat.m2-typography-level($typography, body-1);
         }
     }
 }

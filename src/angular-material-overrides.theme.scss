@@ -5,16 +5,16 @@
     $primary: map-get($theme, primary);
 
     .mat-mdc-tooltip {
-        background: mat.get-color-from-palette($background, tooltip);
+        background: mat.m2-get-color-from-palette($background, tooltip);
     }
 
     .slick-prev::before,
     .slick-next::before {
-        color: mat.get-color-from-palette($foreground, text);
+        color: mat.m2-get-color-from-palette($foreground, text);
     }
 
     .app-backdrop {
-        background: mat.get-color-from-palette($background, background, 0.9);
+        background: mat.m2-get-color-from-palette($background, background, 0.9);
     }
 }
 
@@ -22,9 +22,9 @@
     /* TODO(mdc-migration): The following rule targets internal classes of tooltip that may no longer apply for the MDC version. */
     .mat-mdc-tooltip,
     .mat-tooltip-handset {
-        @include mat.typography-level($typography, tooltip);
+        @include mat.m2-typography-level($typography, tooltip);
     }
     .mat-mdc-chip {
-        @include mat.typography-level($typography, body-2);
+        @include mat.m2-typography-level($typography, body-2);
     }
 }

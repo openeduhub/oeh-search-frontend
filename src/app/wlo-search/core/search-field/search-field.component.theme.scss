@@ -9,15 +9,15 @@
     app-search-field {
         form {
             .search-field-wrapper {
-                background-color: mat.get-color-from-palette($background, dialog);
+                background-color: mat.m2-get-color-from-palette($background, dialog);
                 .search-field-input-wrapper {
-                    background-color: mat.get-color-from-palette($primary, 50);
+                    background-color: mat.m2-get-color-from-palette($primary, 50);
                     input {
-                        color: mat.get-color-from-palette($primary, text);
+                        color: mat.m2-get-color-from-palette($primary, text);
                     }
                 }
                 mat-icon {
-                    color: mat.get-color-from-palette($foreground, icon);
+                    color: mat.m2-get-color-from-palette($foreground, icon);
                 }
             }
         }
@@ -28,7 +28,7 @@
     app-search-field {
         .submit-button,
         .mat-mdc-form-field {
-            font-size: mat.font-size($typography, body-1);
+            font-size: mat.m2-font-size($typography, body-1);
         }
     }
 }

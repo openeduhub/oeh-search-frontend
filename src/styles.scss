@@ -42,8 +42,8 @@ $material-icons-font-path: '~material-icons/iconfont/';
     @include angular-material-theme-overrides($theme);
     @include wlo-search.components-themes($theme);
     body {
-        color: mat.get-color-from-palette(map-get($theme, foreground), text);
-        background-color: mat.get-color-from-palette(map-get($theme, background), background);
+        color: mat.m2-get-color-from-palette(map-get($theme, foreground), text);
+        background-color: mat.m2-get-color-from-palette(map-get($theme, background), background);
     }
 }
 
@@ -63,8 +63,8 @@ $material-icons-font-path: '~material-icons/iconfont/';
 @include mat.strong-focus-indicators();
 
 // Create the theme object (a Sass map containing all of the palettes).
-$app-theme-light: mat.define-light-theme($app-primary, $app-accent, $app-warn);
-$app-theme-dark: mat.define-dark-theme($app-primary, $app-accent, $app-warn);
+$app-theme-light: mat.m2-define-light-theme($app-primary, $app-accent, $app-warn);
+$app-theme-dark: mat.m2-define-dark-theme($app-primary, $app-accent, $app-warn);
 
 /*
 @media not all and (prefers-color-scheme: dark) {
@@ -79,17 +79,17 @@ $app-theme-dark: mat.define-dark-theme($app-primary, $app-accent, $app-warn);
 // Typography
 //
 // See @angular/material/core/typography/_typography.scss for defaults.
-$app-typography: mat.define-typography-config(
+$app-typography: mat.m2-define-typography-config(
     $font-family: 'Source-Sans-Pro-Regular',
-    $headline-4: mat.define-typography-level(32px, 40px, 500, 'Montserrat-Medium'),
-    $headline-5: mat.define-typography-level(24px, 32px, 700, 'Montserrat-Bold'),
-    $headline-6: mat.define-typography-level(20px, 30px, 600, 'Montserrat-SemiBold'),
-    $subtitle-1: mat.define-typography-level(18px, 27px, 600, 'Montserrat-SemiBold'),
-    $body-1: mat.define-typography-level(16px, 24px, 600, 'Montserrat-SemiBold'),
-    $subtitle-2: mat.define-typography-level(14px, 24px, 700, 'Montserrat-Bold'),
-    $body-2: mat.define-typography-level(14px, 21px, 400),
-    $caption: mat.define-typography-level(11px, 15px, 500, 'Montserrat-Medium'),
-    $button: mat.define-typography-level(14px, 20px, 500, 'Montserrat-Medium'),
+    $headline-4: mat.m2-define-typography-level(32px, 40px, 500, 'Montserrat-Medium'),
+    $headline-5: mat.m2-define-typography-level(24px, 32px, 700, 'Montserrat-Bold'),
+    $headline-6: mat.m2-define-typography-level(20px, 30px, 600, 'Montserrat-SemiBold'),
+    $subtitle-1: mat.m2-define-typography-level(18px, 27px, 600, 'Montserrat-SemiBold'),
+    $body-1: mat.m2-define-typography-level(16px, 24px, 600, 'Montserrat-SemiBold'),
+    $subtitle-2: mat.m2-define-typography-level(14px, 24px, 700, 'Montserrat-Bold'),
+    $body-2: mat.m2-define-typography-level(14px, 21px, 400),
+    $caption: mat.m2-define-typography-level(11px, 15px, 500, 'Montserrat-Medium'),
+    $button: mat.m2-define-typography-level(14px, 20px, 500, 'Montserrat-Medium'),
     /* TODO(mdc-migration): No longer supported. Use `body-1` instead. $input: mat.define-typography-level(inherit, 1.125, 400),
  */
 );
@@ -97,7 +97,7 @@ $app-typography: mat.define-typography-config(
 $app-typography: map_merge(
     $app-typography,
     (
-        tooltip: mat.define-typography-level(14px, 20px, 500),
+        tooltip: mat.m2-define-typography-level(14px, 20px, 500),
     )
 );
 @include mat.all-component-typographies($app-typography);
@@ -111,9 +111,9 @@ body {
 }
 body {
     margin: 0;
-    font-family: mat.font-family($app-typography);
-    font-size: mat.font-size($app-typography, body-1);
-    line-height: mat.line-height($app-typography, body-1);
+    font-family: mat.m2-font-family($app-typography);
+    font-size: mat.m2-font-size($app-typography, body-1);
+    line-height: mat.m2-line-height($app-typography, body-1);
 }
 :focus-visible {
     outline-style: solid;
