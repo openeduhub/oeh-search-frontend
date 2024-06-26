@@ -90,7 +90,6 @@
     "lint-staged": "^10.5.1",
     "ng-openapi-gen": "^0.23.0",
     "prettier": "^2.3.2",
-    "svg-inline-loader": "^0.8.2",
     "ts-node": "^8.10.2",
     "typescript": "^5.4.5",
     "webpack-bundle-analyzer": "^4.4.0",
@@ -104,10 +103,5 @@
   "lint-staged": {
     "*.{js,ts,md,html,css,scss}": "prettier --write",
     "*.ts": "eslint --fix"
-  },
-  "overrides": {
-    "ngx-edu-sharing-wlo-pages": {
-      "angular-material-css-vars": "^3.0.0"
-    }
   }
 }

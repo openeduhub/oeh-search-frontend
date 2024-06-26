@@ -6,8 +6,6 @@ import {
     HttpHandler,
     HttpRequest,
     HTTP_INTERCEPTORS,
-    withInterceptorsFromDi,
-    provideHttpClient,
     provideHttpClient,
     withInterceptorsFromDi,
 } from '@angular/common/http';
