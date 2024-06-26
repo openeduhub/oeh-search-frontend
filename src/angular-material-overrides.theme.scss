@@ -30,10 +30,10 @@
 
     // https://stackoverflow.com/a/77839560
     .mat-mdc-input-element {
-        font-size: 13px !important;
+        font-size: 14px !important;
         line-height: 1.125 !important;
         font-weight: 400 !important;
-        font-family: Montserrat-Medium, serif !important;
+        font-family: 'Montserrat-Medium', serif !important;
     }
 
     // Floating placeholder, select - selected option & all options
@@ -43,5 +43,6 @@
     .mat-mdc-option {
         font-size: 13px !important;
         font-weight: 400 !important;
+        font-family: 'Montserrat-Medium', serif !important;
     }
 }
