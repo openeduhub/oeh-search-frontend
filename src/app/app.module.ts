@@ -1,7 +1,6 @@
 import { ScrollStrategyOptions } from '@angular/cdk/overlay';
 import {
     HttpClient,
-    HttpClientModule,
     HttpEvent,
     HttpEventType,
     HttpHandler,
@@ -9,6 +8,8 @@ import {
     HTTP_INTERCEPTORS,
     withInterceptorsFromDi,
     provideHttpClient,
+    provideHttpClient,
+    withInterceptorsFromDi,
 } from '@angular/common/http';
 import { inject, NgModule, Provider } from '@angular/core';
 import { MAT_DIALOG_SCROLL_STRATEGY } from '@angular/material/dialog';
@@ -124,11 +125,11 @@ const eduSharingApiModuleWithProviders = EduSharingApiModule.forRoot({
 
 @NgModule({
     declarations: [AppComponent],
+    bootstrap: [AppComponent],
     imports: [
         AppRoutingModule,
         BrowserAnimationsModule,
         BrowserModule,
-        HttpClientModule,
         eduSharingApiModuleWithProviders,
         ApolloModule,
         ZApiModule.forRoot({}),
@@ -178,7 +179,7 @@ const eduSharingApiModuleWithProviders = EduSharingApiModule.forRoot({
         TicketService,
         TranslateStore,
         TranslateService,
+        provideHttpClient(withInterceptorsFromDi()),
     ],
-    bootstrap: [AppComponent],
 })
 export class AppModule {}
