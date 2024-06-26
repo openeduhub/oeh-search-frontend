@@ -23,7 +23,6 @@ form {
             border-radius: 22px;
             align-items: center;
             height: 43px;
-            margin: 4px;
             min-width: 0;
             .search-icon {
                 width: 22px;
@@ -52,18 +51,24 @@ form {
 }
 
 :host mat-form-field.search-field ::ng-deep {
-    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
-    .mat-form-field-wrapper {
-        padding-bottom: 0;
+    .mat-mdc-text-field-wrapper {
+        padding: 0;
+        background: none;
     }
-    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
-    .mat-form-field-underline {
+    .mat-mdc-form-field-underline {
         display: none;
     }
-    /* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
-    .mat-form-field-infix {
+    .mat-mdc-form-field-infix {
         padding: 0;
         border: none;
+        min-height: unset;
+    }
+    .mdc-line-ripple,
+    .mat-mdc-form-field-focus-overlay {
+        display: none;
+    }
+    .mdc-evolution-chip-set .mdc-evolution-chip-set__chips {
+        margin: 0;
     }
 }
 

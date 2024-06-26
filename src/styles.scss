@@ -63,7 +63,16 @@ $material-icons-font-path: 'material-icons/iconfont/';
 @include mat.strong-focus-indicators();
 
 // Create the theme object (a Sass map containing all of the palettes).
-$app-theme-light: mat.m2-define-light-theme($app-primary, $app-accent, $app-warn);
+$app-theme-light: mat.m2-define-light-theme(
+    (
+        color: (
+            primary: $app-primary,
+            accent: $app-accent,
+            warn: $app-warn,
+        ),
+        density: -1,
+    )
+);
 $app-theme-dark: mat.m2-define-dark-theme($app-primary, $app-accent, $app-warn);
 
 /*
