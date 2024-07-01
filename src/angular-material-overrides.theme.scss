@@ -16,6 +16,10 @@
     .app-backdrop {
         background: mat.m2-get-color-from-palette($background, background, 0.9);
     }
+
+    .mat-mdc-tooltip {
+        border-radius: 3px;
+    }
 }
 
 @mixin angular-material-typography-overrides($typography) {
