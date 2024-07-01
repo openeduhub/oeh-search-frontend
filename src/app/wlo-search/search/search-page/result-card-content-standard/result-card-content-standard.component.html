@@ -6,44 +6,48 @@
     [playAnimation]="playAnimation"
   ></app-preview-image>
 </div>
-<div class="pre-heading">
-  <span class="source">
-    <ng-container *ngIf="hit | nodeProperty: 'source' as source">
-      {{ source }}
-    </ng-container>
-  </span>
-  <app-badges class="badges" [hit]="hit" orientation="horizontal"></app-badges>
-</div>
-<h2 class="app-result-card-title">
-  <button (click)="onClick()" #cardButton>{{ hit | nodeProperty: 'title' | truncate: 42 }}</button>
-</h2>
-<div class="body">
-  <p class="description" *ngIf="hit | nodeProperty: 'description' as description">
-    {{ description | trim | truncate: 65 }}
-  </p>
-  <div class="metadata" *ngIf="hit | nodeProperty: 'oehLrtAggregated' as lrts">
-    <mat-icon i18n-matTooltip matTooltip="Learning resource type">perm_media</mat-icon>
-    <span class="cdk-visually-hidden" i18n>Learning resource type</span>
-    <div>
-      <span *ngFor="let lrt of lrts">{{ lrt.displayName }}</span>
+<mat-card-content>
+  <div class="pre-heading">
+    <span class="source">
+      <ng-container *ngIf="hit | nodeProperty: 'source' as source">
+        {{ source }}
+      </ng-container>
+    </span>
+    <app-badges class="badges" [hit]="hit" orientation="horizontal"></app-badges>
+  </div>
+  <h2 class="app-result-card-title">
+    <button (click)="onClick()" #cardButton>
+      {{ hit | nodeProperty: 'title' | truncate: 42 }}
+    </button>
+  </h2>
+  <div class="body">
+    <p class="description" *ngIf="hit | nodeProperty: 'description' as description">
+      {{ description | trim | truncate: 65 }}
+    </p>
+    <div class="metadata" *ngIf="hit | nodeProperty: 'oehLrtAggregated' as lrts">
+      <mat-icon i18n-matTooltip matTooltip="Learning resource type">perm_media</mat-icon>
+      <span class="cdk-visually-hidden" i18n>Learning resource type</span>
+      <div>
+        <span *ngFor="let lrt of lrts">{{ lrt.displayName }}</span>
+      </div>
+    </div>
+    <div class="metadata" *ngIf="hit | nodeProperty: 'discipline' as disciplines">
+      <mat-icon i18n-matTooltip matTooltip="Discipline">book_icon</mat-icon>
+      <span class="cdk-visually-hidden" i18n>Discipline</span>
+      <div>
+        <span *ngFor="let discipline of disciplines | slice: 0:5">
+          {{ discipline.displayName }}
+        </span>
+      </div>
+    </div>
+    <div class="metadata" *ngIf="hit | nodeProperty: 'educationalContext' as educationalContexts">
+      <mat-icon i18n-matTooltip matTooltip="Educational level">school</mat-icon>
+      <span class="cdk-visually-hidden" i18n>Educational level</span>
+      <div>
+        <span *ngFor="let context of educationalContexts">
+          {{ context.displayName }}
+        </span>
+      </div>
     </div>
   </div>
-  <div class="metadata" *ngIf="hit | nodeProperty: 'discipline' as disciplines">
-    <mat-icon i18n-matTooltip matTooltip="Discipline">book_icon</mat-icon>
-    <span class="cdk-visually-hidden" i18n>Discipline</span>
-    <div>
-      <span *ngFor="let discipline of disciplines | slice: 0:5">
-        {{ discipline.displayName }}
-      </span>
-    </div>
-  </div>
-  <div class="metadata" *ngIf="hit | nodeProperty: 'educationalContext' as educationalContexts">
-    <mat-icon i18n-matTooltip matTooltip="Educational level">school</mat-icon>
-    <span class="cdk-visually-hidden" i18n>Educational level</span>
-    <div>
-      <span *ngFor="let context of educationalContexts">
-        {{ context.displayName }}
-      </span>
-    </div>
-  </div>
-</div>
+</mat-card-content>
