@@ -1,5 +1,6 @@
 import { Component, computed, Input, OnInit, Signal } from '@angular/core';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { Node } from 'ngx-edu-sharing-api';
 import {
     AiTextWidgetComponent,
     CollectionChipsComponent,
@@ -63,5 +64,13 @@ export class ColumnGridComponent implements OnInit {
                 searchText: 'Berufe mit ' + this.topic,
             });
         });
+    }
+
+    retrieveCustomUrl(node: Node) {
+        const collectionId = node.properties?.['sys:node-uuid']?.[0];
+        if (collectionId) {
+            return window.location.origin + '/template?collectionId=' + collectionId;
+        }
+        return '';
     }
 }

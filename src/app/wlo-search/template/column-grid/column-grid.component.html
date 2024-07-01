@@ -31,6 +31,7 @@
       <ng-container *ngIf="gridItem.item === 'wlo-collection-chips'">
         <wlo-collection-chips
           *ngIf="topicCollectionID"
+          [customUrl]="retrieveCustomUrl"
           [collection]="topicCollectionID"
         ></wlo-collection-chips>
       </ng-container>
