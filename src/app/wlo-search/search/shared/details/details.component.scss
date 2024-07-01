@@ -115,6 +115,10 @@
             margin-left: 10px;
             margin-right: -10px;
         }
+        // fix for mat-button vs. mat-flat-button
+        &.app-preview-panel-report-problem-button {
+            padding: 0 var(--mat-filled-button-horizontal-padding, 16px);
+        }
     }
 }
 
