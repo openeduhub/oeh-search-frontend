@@ -6,6 +6,7 @@
 
     .mat-mdc-tooltip {
         background: mat.m2-get-color-from-palette($background, tooltip);
+        border-radius: 3px;
     }
 
     .slick-prev::before,
@@ -16,18 +17,9 @@
     .app-backdrop {
         background: mat.m2-get-color-from-palette($background, background, 0.9);
     }
-
-    .mat-mdc-tooltip {
-        border-radius: 3px;
-    }
 }
 
 @mixin angular-material-typography-overrides($typography) {
-    /* TODO(mdc-migration): The following rule targets internal classes of tooltip that may no longer apply for the MDC version. */
-    .mat-mdc-tooltip,
-    .mat-tooltip-handset {
-        @include mat.m2-typography-level($typography, tooltip);
-    }
     .mat-mdc-chip {
         @include mat.m2-typography-level($typography, body-2);
     }

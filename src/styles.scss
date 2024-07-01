@@ -102,16 +102,14 @@ $app-typography: mat.m2-define-typography-config(
     /* TODO(mdc-migration): No longer supported. Use `body-1` instead. $input: mat.define-typography-level(inherit, 1.125, 400),
  */
 );
-// Custom fields
-$app-typography: map_merge(
-    $app-typography,
-    (
-        tooltip: mat.m2-define-typography-level(14px, 20px, 500),
-    )
-);
 @include mat.all-component-typographies($app-typography);
 @include angular-material-typography-overrides($app-typography);
 @include wlo-search.components-typographies($app-typography);
+// custom adjustment for tooltips: https://stackoverflow.com/a/78298799
+$tooltip-typography: mat.m2-define-typography-config(
+    $caption: mat.m2-define-typography-level(13px, 18px, 400, 'Montserrat-Medium'),
+);
+@include mat.tooltip-typography($tooltip-typography);
 
 html,
 body {
