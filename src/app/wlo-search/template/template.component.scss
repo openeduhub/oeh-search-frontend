@@ -54,6 +54,18 @@
                 top: var(--action-button-spacing);
                 padding: 0;
                 min-width: 42px;
+                height: 36px;
+
+                .mat-icon {
+                    margin: 0 auto;
+                    font-size: 24px;
+                    height: 24px;
+                    width: 24px;
+                }
+
+                &.cdk-focused {
+                    display: none;
+                }
             }
 
             .edit-button {

@@ -10,12 +10,22 @@
           andere nicht. Es können längere und kürzere Sätze dort vorkommen.
         </ng-template>
         <!-- action buttons for editing and creating -->
+        <!-- duplicated code due to https://github.com/angular/components/issues/15367 -->
         <button
           mat-stroked-button
           class="edit-button"
-          [class.mat-flat-button]="editMode"
           color="primary"
           (click)="editMode = !editMode"
+          *ngIf="!editMode"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button
+          mat-flat-button
+          class="edit-button"
+          color="primary"
+          (click)="editMode = !editMode"
+          *ngIf="editMode"
         >
           <mat-icon>edit</mat-icon>
         </button>

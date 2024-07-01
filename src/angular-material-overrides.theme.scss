@@ -36,11 +36,12 @@
         font-family: 'Montserrat-Medium', serif !important;
     }
 
-    // Floating placeholder, select - selected option & all options
+    // Label, select, menu items
     .mdc-label,
     .mdc-floating-label,
     .mat-mdc-select,
-    .mat-mdc-option {
+    .mat-mdc-option,
+    .mat-mdc-menu-item-text {
         font-size: 13px !important;
         font-weight: 400 !important;
         font-family: 'Montserrat-Medium', serif !important;
