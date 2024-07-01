@@ -67,7 +67,8 @@
           *ngIf="facets[key].hasMore"
           (click)="loadMoreFacetBuckets(key)"
         >
-          <ng-container i18n>show more</ng-container><mat-icon>keyboard_arrow_down</mat-icon>
+          <ng-container i18n>show more</ng-container
+          ><mat-icon iconPositionEnd>keyboard_arrow_down</mat-icon>
         </button>
       </mat-expansion-panel>
     </mat-accordion>
