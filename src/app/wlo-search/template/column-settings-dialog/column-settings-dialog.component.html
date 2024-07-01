@@ -37,9 +37,9 @@
   </mat-form-field>
   <mat-form-field appearance="outline">
     <mat-label i18n>Grid-Definition</mat-label>
-    <textarea matInput placeholder="Grid im JSON-Format" formControlName="grid"></textarea>
+    <textarea matInput placeholder="Grid im JSON-Format" formControlName="grid" rows="3"></textarea>
   </mat-form-field>
 </div>
 <div mat-dialog-actions align="end">
-  <button mat-button [mat-dialog-close]="form" i18n>Apply</button>
+  <button mat-flat-button color="primary" [mat-dialog-close]="form" i18n>Apply</button>
 </div>
