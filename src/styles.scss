@@ -94,13 +94,11 @@ $app-typography: mat.m2-define-typography-config(
     $headline-5: mat.m2-define-typography-level(24px, 32px, 700, 'Montserrat-Bold'),
     $headline-6: mat.m2-define-typography-level(20px, 30px, 600, 'Montserrat-SemiBold'),
     $subtitle-1: mat.m2-define-typography-level(18px, 27px, 600, 'Montserrat-SemiBold'),
-    $body-1: mat.m2-define-typography-level(16px, 24px, 600, 'Montserrat-SemiBold'),
+    $body-1: mat.m2-define-typography-level(16px, 21px, 400, 'Source-Sans-Pro-Regular'),
     $subtitle-2: mat.m2-define-typography-level(14px, 24px, 700, 'Montserrat-Bold'),
-    $body-2: mat.m2-define-typography-level(14px, 21px, 400),
+    $body-2: mat.m2-define-typography-level(14px, 21px, 400, 'Source-Sans-Pro-Regular'),
     $caption: mat.m2-define-typography-level(11px, 15px, 500, 'Montserrat-Medium'),
     $button: mat.m2-define-typography-level(14px, 20px, 500, 'Montserrat-Medium'),
-    /* TODO(mdc-migration): No longer supported. Use `body-1` instead. $input: mat.define-typography-level(inherit, 1.125, 400),
- */
 );
 @include mat.all-component-typographies($app-typography);
 @include angular-material-typography-overrides($app-typography);
