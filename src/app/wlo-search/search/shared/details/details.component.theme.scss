@@ -28,7 +28,8 @@
             color: mat.m2-get-color-from-palette($foreground, secondary-text);
         }
         .app-preview-panel-report-problem-button {
-            color: mat.m2-get-color-from-palette($foreground, secondary-text);
+            // important is currently necessary to overwrite the default color
+            color: mat.m2-get-color-from-palette($foreground, secondary-text) !important;
         }
         .app-details-report-problem-state-success {
             border-color: mat.m2-get-color-from-palette($primary);
