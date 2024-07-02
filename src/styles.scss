@@ -102,12 +102,24 @@ $app-typography: mat.m2-define-typography-config(
 );
 @include mat.all-component-typographies($app-typography);
 @include angular-material-typography-overrides($app-typography);
-@include wlo-search.components-typographies($app-typography);
 // custom adjustment for tooltips: https://stackoverflow.com/a/78298799
 $tooltip-typography: mat.m2-define-typography-config(
     $caption: mat.m2-define-typography-level(13px, 18px, 400, 'Montserrat-Medium'),
 );
 @include mat.tooltip-typography($tooltip-typography);
+// custom adjustment for form types
+$form-typography: mat.m2-define-typography-config(
+    $body-1: mat.m2-define-typography-level(14px, 21px, 400, 'Source-Sans-Pro-Regular'),
+);
+@include mat.checkbox-typography($form-typography);
+@include mat.form-field-typography($form-typography);
+@include mat.input-typography($form-typography);
+@include mat.menu-typography($form-typography);
+@include mat.option-typography($form-typography);
+@include mat.radio-typography($form-typography);
+@include mat.select-typography($form-typography);
+// adjustments by the wlo-search components
+@include wlo-search.components-typographies($app-typography);
 
 html,
 body {

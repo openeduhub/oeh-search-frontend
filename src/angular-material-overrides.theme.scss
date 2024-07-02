@@ -23,23 +23,4 @@
     .mat-mdc-chip {
         @include mat.m2-typography-level($typography, body-2);
     }
-
-    // https://stackoverflow.com/a/77839560
-    .mat-mdc-input-element {
-        font-size: 14px !important;
-        line-height: 1.125 !important;
-        font-weight: 400 !important;
-        font-family: 'Montserrat-Medium', serif !important;
-    }
-
-    // Label, select, menu items
-    .mdc-label,
-    .mdc-floating-label,
-    .mat-mdc-select,
-    .mat-mdc-option,
-    .mat-mdc-menu-item-text {
-        font-size: 13px !important;
-        font-weight: 400 !important;
-        font-family: 'Montserrat-Medium', serif !important;
-    }
 }
