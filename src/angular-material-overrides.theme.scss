@@ -17,6 +17,11 @@
     .app-backdrop {
         background: mat.m2-get-color-from-palette($background, background, 0.9);
     }
+
+    // the padding of the mat-mdc-dialog-actions is not set properly
+    .mat-mdc-dialog-actions {
+        --mat-dialog-actions-padding: var(--mat-dialog-content-padding);
+    }
 }
 
 @mixin angular-material-typography-overrides($typography) {
