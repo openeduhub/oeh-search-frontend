@@ -110,6 +110,7 @@ $tooltip-typography: mat.m2-define-typography-config(
 // custom adjustment for form types
 $form-typography: mat.m2-define-typography-config(
     $body-1: mat.m2-define-typography-level(14px, 21px, 400, 'Source-Sans-Pro-Regular'),
+    $body-2: mat.m2-define-typography-level(14px, 21px, 400, 'Source-Sans-Pro-Regular'),
 );
 @include mat.checkbox-typography($form-typography);
 @include mat.form-field-typography($form-typography);
@@ -118,6 +119,8 @@ $form-typography: mat.m2-define-typography-config(
 @include mat.option-typography($form-typography);
 @include mat.radio-typography($form-typography);
 @include mat.select-typography($form-typography);
+// also overwrite the dialog typography
+@include mat.dialog-typography($form-typography);
 // adjustments by the wlo-search components
 @include wlo-search.components-typographies($app-typography);
 

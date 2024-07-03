@@ -12,6 +12,7 @@
 @import 'search/search-page/subjects-portal/subjects-portal.component.theme.scss';
 @import 'search/shared/collection-card/collection-card.component.theme.scss';
 @import 'search/shared/details/details.component.theme.scss';
+@import 'search/shared/report-problem/report-problem.component.theme.scss';
 @import 'wlo-search.component.theme.scss';
 
 @mixin components-themes($theme) {
@@ -24,6 +25,7 @@
     @include oer-slider-theme($theme);
     @include paginator-theme($theme);
     @include preview-panel-theme($theme);
+    @include report-problem-theme($theme);
     @include result-card-theme($theme);
     @include search-field-theme($theme);
     @include search-filterbar-theme($theme);

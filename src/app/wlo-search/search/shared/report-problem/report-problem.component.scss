@@ -24,3 +24,13 @@
 .problem-kind-radio-button {
     margin: 5px;
 }
+
+::ng-deep .problem-kind-radio-button {
+    .mdc-radio {
+        padding: 0 !important;
+    }
+
+    .mdc-form-field > label {
+        padding-left: 8px;
+    }
+}

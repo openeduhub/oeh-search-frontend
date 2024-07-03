@@ -52,6 +52,8 @@
 
 @mixin details-typography($typography) {
     app-details {
+        font-size: mat.m2-font-size($typography, body-1);
+        line-height: mat.m2-line-height($typography, body-1);
         .app-preview-panel-title {
             @include mat.m2-typography-level($typography, 'headline-4');
         }
