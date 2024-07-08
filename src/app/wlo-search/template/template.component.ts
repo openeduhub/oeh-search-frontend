@@ -76,7 +76,10 @@ export class TemplateComponent implements OnInit {
     myNode: Node;
 
     selectDimensions = new Map();
-    selectDimensionsPrefix = 'virtual:ai_text_widget_';
+    providedSelectDimensionKeys = [
+        'virtual:ai_text_widget_intendedenduserrole',
+        'virtual:ai_text_widget_target_language',
+    ];
 
     typeOptions = typeOptions.concat([{ value: 'spacer', viewValue: 'Trennlinie' }]);
 
@@ -125,7 +128,7 @@ export class TemplateComponent implements OnInit {
     retrieveSelectDimensions() {
         this.mdsService.getMetadataSet({ metadataSet: 'mds_oeh' }).subscribe((data) => {
             const rawSelectDimensions = data.widgets.filter((widget) =>
-                widget.id.includes(this.selectDimensionsPrefix),
+                this.providedSelectDimensionKeys.includes(widget.id),
             );
             rawSelectDimensions.forEach((selectDimension) => {
                 // Note: The $ is added at this position to signal an existing placeholder

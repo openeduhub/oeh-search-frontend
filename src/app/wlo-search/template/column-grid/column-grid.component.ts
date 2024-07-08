@@ -37,7 +37,6 @@ export class ColumnGridComponent implements OnInit {
     @Input() gridType: string = 'smallGutter';
     @Input() jobsWidgetReady: boolean;
     @Input() selectDimensions = new Map<string, string[]>();
-    @Input() selectDimensionsPrefix: string = '';
     @Input() topic: string;
     @Input() topicCollectionID: string;
     newestContentConfig: Signal<string>;
