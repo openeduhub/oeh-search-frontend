@@ -51,8 +51,12 @@
     </div>
   </div>
 </header>
-<div class="portal-plus-filterbar-wrapper">
-  <div class="fachportal-filterbar"></div>
+<app-filter-bar
+  [selectDimensions]="selectDimensions"
+  (selectValuesChanged)="selectValuesChanged($event)"
+  *ngIf="selectDimensionsLoaded"
+></app-filter-bar>
+<div class="portal-outer-wrapper">
   <div class="portal-wrapper">
     <div class="portal-wrapper-left">
       <div
@@ -109,11 +113,13 @@
               <app-column-grid
                 [backgroundColor]="column.backgroundColor"
                 [editMode]="editMode"
+                [filterBarReady]="filterBarReady"
                 [generatedJobText]="generatedJobText()"
                 [grid]="column.grid"
                 [gridType]="column.gridType"
                 [jobsWidgetReady]="jobsWidgetReady"
                 [selectDimensions]="selectDimensions"
+                [selectedDimensionValues]="selectedDimensionValues"
                 [topic]="topic()"
                 [topicCollectionID]="topicCollectionID()"
                 *ngIf="jobsWidgetReady"
@@ -134,10 +140,12 @@
           <app-column-grid
             [backgroundColor]="column.backgroundColor"
             [editMode]="editMode"
+            [filterBarReady]="filterBarReady"
             [generatedJobText]="generatedJobText()"
             [grid]="column.grid"
             [jobsWidgetReady]="jobsWidgetReady"
             [selectDimensions]="selectDimensions"
+            [selectedDimensionValues]="selectedDimensionValues"
             [topic]="topic()"
             [topicCollectionID]="topicCollectionID()"
             *ngIf="jobsWidgetReady"

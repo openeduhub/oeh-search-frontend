@@ -34,7 +34,7 @@
             .template-header-content {
                 display: flex;
                 flex-direction: column;
-                margin: 32px 0;
+                margin: 32px 0 52px 0;
                 padding: 0 64px;
 
                 h1 {
@@ -88,7 +88,7 @@
     }
 }
 
-.portal-plus-filterbar-wrapper {
+.portal-outer-wrapper {
     display: block;
     margin-top: -20px;
     margin-bottom: 20px;

@@ -8,6 +8,7 @@ import { WloSearchComponent } from './wlo-search.component';
 import { TemplateComponent } from './template/template.component';
 import { ColumnSettingsDialogComponent } from './template/column-settings-dialog/column-settings-dialog.component';
 import { ColumnGridComponent } from './template/column-grid/column-grid.component';
+import { FilterBarComponent } from './template/filter-bar/filter-bar.component';
 
 @NgModule({
     declarations: [WloSearchComponent],
@@ -20,6 +21,7 @@ import { ColumnGridComponent } from './template/column-grid/column-grid.componen
         TemplateComponent,
         ColumnGridComponent,
         ColumnSettingsDialogComponent,
+        FilterBarComponent,
     ],
 })
 export class WloSearchModule {}

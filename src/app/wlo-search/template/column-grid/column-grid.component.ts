@@ -7,6 +7,7 @@ import {
     UserConfigurableComponent,
 } from 'ngx-edu-sharing-wlo-pages';
 import { GridTile } from '../grid-tile';
+import { SelectDimension } from '../select-dimension';
 import { SharedModule } from '../../shared/shared.module';
 
 @Component({
@@ -32,11 +33,13 @@ export class ColumnGridComponent implements OnInit {
         this._backgroundColor = value ?? '#f4f4f4';
     }
     @Input() editMode: boolean;
+    @Input() filterBarReady: boolean;
     @Input() generatedJobText: string;
     @Input() grid: GridTile[];
     @Input() gridType: string = 'smallGutter';
     @Input() jobsWidgetReady: boolean;
-    @Input() selectDimensions = new Map<string, string[]>();
+    @Input() selectDimensions = new Map<string, SelectDimension[]>();
+    @Input() selectedDimensionValues: SelectDimension[] = [];
     @Input() topic: string;
     @Input() topicCollectionID: string;
     newestContentConfig: Signal<string>;

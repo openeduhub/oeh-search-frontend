@@ -19,6 +19,8 @@ import { ColumnSettingsDialogComponent } from './column-settings-dialog/column-s
 import { GridColumn } from './grid-column';
 import { typeOptions } from './grid-type-definitions';
 import { gridColumns } from './initial-values';
+import { FilterBarComponent } from './filter-bar/filter-bar.component';
+import { SelectDimension } from './select-dimension';
 import { SharedModule } from '../shared/shared.module';
 import {
     ApiRequestConfiguration,
@@ -38,6 +40,7 @@ import { v4 as uuidv4 } from 'uuid';
         CdkAccordionModule,
         CdkDragHandle,
         DragDropModule,
+        FilterBarComponent,
         MatGridListModule,
         MatIconModule,
         NgForOf,
@@ -80,6 +83,8 @@ export class TemplateComponent implements OnInit {
         'virtual:ai_text_widget_intendedenduserrole',
         'virtual:ai_text_widget_target_language',
     ];
+    selectedDimensionValues: SelectDimension[] = [];
+    selectDimensionsLoaded: boolean = false;
 
     typeOptions = typeOptions.concat([{ value: 'spacer', viewValue: 'Trennlinie' }]);
 
@@ -125,6 +130,12 @@ export class TemplateComponent implements OnInit {
         }
     }
 
+    get filterBarReady() {
+        const sameNumberOfValues =
+            this.selectDimensions.size === this.selectedDimensionValues.length;
+        return this.selectDimensionsLoaded && sameNumberOfValues;
+    }
+
     retrieveSelectDimensions() {
         this.mdsService.getMetadataSet({ metadataSet: 'mds_oeh' }).subscribe((data) => {
             const rawSelectDimensions = data.widgets.filter((widget) =>
@@ -134,7 +145,12 @@ export class TemplateComponent implements OnInit {
                 // Note: The $ is added at this position to signal an existing placeholder
                 this.selectDimensions.set('$' + selectDimension.id + '$', selectDimension.values);
             });
+            this.selectDimensionsLoaded = true;
         });
+    }
+
+    selectValuesChanged(event: SelectDimension[]) {
+        this.selectedDimensionValues = event;
     }
 
     moveColumnPosition(oldIndex: number, newIndex: number) {
