@@ -186,27 +186,29 @@ export class TemplateComponent implements OnInit {
 
     /** calls the Z-API to invoke ChatGPT */
     private generateFromPrompt() {
-        this.aiTextPromptsService
-            .publicPrompt({
-                widgetNodeId: 'c937cabf-5ffd-47f0-a5e8-ef0ed370baf0',
-                contextNodeId: this.topicCollectionID(),
-            })
-            .subscribe((result: any) => {
-                const response = result.responses[0];
-                console.log('RESPONSE: ', response);
-                this.generatedHeader.set(response);
-            });
-        this.aiTextPromptsService
-            .publicPrompt({
-                widgetNodeId: 'a625a9d6-383d-4835-84f2-a8e2792ea13f',
-                contextNodeId: this.topicCollectionID(),
-            })
-            .subscribe((result: any) => {
-                const response = result.responses[0];
-                console.log('RESPONSE 2: ', response);
-                this.generatedJobText.set(response);
-                this.jobsWidgetReady = true;
-            });
+        // TODO: Implement job widgets
+        this.jobsWidgetReady = true;
+        // this.aiTextPromptsService
+        //     .publicPrompt({
+        //         widgetNodeId: 'c937cabf-5ffd-47f0-a5e8-ef0ed370baf0',
+        //         contextNodeId: this.topicCollectionID(),
+        //     })
+        //     .subscribe((result: any) => {
+        //         const response = result.responses[0];
+        //         console.log('RESPONSE: ', response);
+        //         this.generatedHeader.set(response);
+        //     });
+        // this.aiTextPromptsService
+        //     .publicPrompt({
+        //         widgetNodeId: 'a625a9d6-383d-4835-84f2-a8e2792ea13f',
+        //         contextNodeId: this.topicCollectionID(),
+        //     })
+        //     .subscribe((result: any) => {
+        //         const response = result.responses[0];
+        //         console.log('RESPONSE 2: ', response);
+        //         this.generatedJobText.set(response);
+        //         this.jobsWidgetReady = true;
+        //     });
     }
 
     // https://stackoverflow.com/a/16348977
