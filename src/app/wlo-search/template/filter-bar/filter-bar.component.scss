@@ -40,13 +40,14 @@
                 select {
                     display: block;
                     height: 40px;
-                    width: auto;
+                    width: 100%;
                     margin: 0;
                     padding: 0 52px 0 32px;
                     border-radius: 10px;
                     border-color: rgba(182, 182, 182, 1);
                     color: rgba(7, 37, 69, 1);
                     font-size: 16px;
+                    background-color: #fff;
                     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='32' height='20' viewBox='0 0 32 24'><polygon points='0,0 32,0 16,24' style='fill: rgb%280, 59, 124%29'></polygon></svg>");
                     background-size: 14px;
                     background-position: right -35px center;
