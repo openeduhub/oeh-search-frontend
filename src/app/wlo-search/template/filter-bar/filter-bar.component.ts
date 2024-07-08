@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { SelectDimension } from '../select-dimension';
 import { SharedModule } from '../../shared/shared.module';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { MdsValue, MdsWidget } from 'ngx-edu-sharing-api';
 import { pairwise, startWith } from 'rxjs/operators';
 
 @Component({
@@ -12,11 +12,8 @@ import { pairwise, startWith } from 'rxjs/operators';
     standalone: true,
 })
 export class FilterBarComponent implements OnInit {
-    @Input() selectDimensions: Map<string, SelectDimension[]> = new Map<
-        string,
-        SelectDimension[]
-    >();
-    @Output() selectValuesChanged = new EventEmitter<SelectDimension[]>();
+    @Input() selectDimensions: Map<string, MdsWidget> = new Map<string, MdsWidget>();
+    @Output() selectValuesChanged = new EventEmitter<MdsValue[]>();
 
     form: FormGroup;
     selectDimensionsProcessed: boolean = false;
@@ -60,7 +57,8 @@ export class FilterBarComponent implements OnInit {
         this.dimensions.clear();
         // create select fields for all available dimensions
         this.availableSelectDimensionKeys.forEach((dimensionKey) => {
-            const firstSelectOptionId = this.selectDimensions.get(dimensionKey)?.[0]?.id ?? '';
+            const firstSelectOptionId =
+                this.selectDimensions.get(dimensionKey)?.values?.[0]?.id ?? '';
             const item = this.fb.group({
                 id: [firstSelectOptionId],
             });

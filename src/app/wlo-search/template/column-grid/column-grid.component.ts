@@ -1,13 +1,12 @@
 import { Component, computed, Input, OnInit, Signal } from '@angular/core';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { Node } from 'ngx-edu-sharing-api';
+import { MdsValue, MdsWidget, Node } from 'ngx-edu-sharing-api';
 import {
     AiTextWidgetComponent,
     CollectionChipsComponent,
     UserConfigurableComponent,
 } from 'ngx-edu-sharing-wlo-pages';
 import { GridTile } from '../grid-tile';
-import { SelectDimension } from '../select-dimension';
 import { SharedModule } from '../../shared/shared.module';
 
 @Component({
@@ -38,8 +37,8 @@ export class ColumnGridComponent implements OnInit {
     @Input() grid: GridTile[];
     @Input() gridType: string = 'smallGutter';
     @Input() jobsWidgetReady: boolean;
-    @Input() selectDimensions = new Map<string, SelectDimension[]>();
-    @Input() selectedDimensionValues: SelectDimension[] = [];
+    @Input() selectDimensions: Map<string, MdsWidget> = new Map<string, MdsWidget>();
+    @Input() selectedDimensionValues: MdsValue[] = [];
     @Input() topic: string;
     @Input() topicCollectionID: string;
     newestContentConfig: Signal<string>;

@@ -20,12 +20,13 @@ import { GridColumn } from './grid-column';
 import { typeOptions } from './grid-type-definitions';
 import { gridColumns } from './initial-values';
 import { FilterBarComponent } from './filter-bar/filter-bar.component';
-import { SelectDimension } from './select-dimension';
 import { SharedModule } from '../shared/shared.module';
 import {
     ApiRequestConfiguration,
     AuthenticationService,
     MdsService,
+    MdsValue,
+    MdsWidget,
     Node,
     NodeService,
 } from 'ngx-edu-sharing-api';
@@ -78,12 +79,12 @@ export class TemplateComponent implements OnInit {
     editMode: boolean = false;
     myNode: Node;
 
-    selectDimensions = new Map();
+    selectDimensions: Map<string, MdsWidget> = new Map<string, MdsWidget>();
     providedSelectDimensionKeys = [
         'virtual:ai_text_widget_intendedenduserrole',
         'virtual:ai_text_widget_target_language',
     ];
-    selectedDimensionValues: SelectDimension[] = [];
+    selectedDimensionValues: MdsValue[] = [];
     selectDimensionsLoaded: boolean = false;
 
     typeOptions = typeOptions.concat([{ value: 'spacer', viewValue: 'Trennlinie' }]);
@@ -138,18 +139,18 @@ export class TemplateComponent implements OnInit {
 
     retrieveSelectDimensions() {
         this.mdsService.getMetadataSet({ metadataSet: 'mds_oeh' }).subscribe((data) => {
-            const rawSelectDimensions = data.widgets.filter((widget) =>
+            const filteredMdsWidgets: MdsWidget[] = data.widgets.filter((widget: MdsWidget) =>
                 this.providedSelectDimensionKeys.includes(widget.id),
             );
-            rawSelectDimensions.forEach((selectDimension) => {
+            filteredMdsWidgets.forEach((mdsWidget: MdsWidget) => {
                 // Note: The $ is added at this position to signal an existing placeholder
-                this.selectDimensions.set('$' + selectDimension.id + '$', selectDimension.values);
+                this.selectDimensions.set('$' + mdsWidget.id + '$', mdsWidget);
             });
             this.selectDimensionsLoaded = true;
         });
     }
 
-    selectValuesChanged(event: SelectDimension[]) {
+    selectValuesChanged(event: MdsValue[]) {
         this.selectedDimensionValues = event;
     }
 

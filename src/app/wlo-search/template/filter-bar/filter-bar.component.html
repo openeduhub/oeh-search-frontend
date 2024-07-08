@@ -7,10 +7,10 @@
         *ngFor="let dimensionKey of availableSelectDimensionKeys; let i = index"
       >
         <div class="select-form-field" [formGroupName]="i">
-          <label>{{ dimensionKey }}</label>
+          <label>{{ selectDimensions.get(dimensionKey).caption ?? dimensionKey }}</label>
           <select formControlName="id">
             <option
-              *ngFor="let option of selectDimensions.get(dimensionKey)"
+              *ngFor="let option of selectDimensions.get(dimensionKey).values"
               [value]="option['id']"
             >
               {{ option['caption'] }}
