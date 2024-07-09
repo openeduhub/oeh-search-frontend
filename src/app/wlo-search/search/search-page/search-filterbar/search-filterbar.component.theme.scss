@@ -39,5 +39,11 @@
         .type > mat-label {
             @include mat.m2-typography-level($typography, body-1);
         }
+
+        mat-panel-title {
+            font-size: 16px;
+            font-family: Montserrat-SemiBold, serif;
+            font-weight: 600;
+        }
     }
 }
