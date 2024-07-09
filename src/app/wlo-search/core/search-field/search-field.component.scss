@@ -77,16 +77,13 @@ form {
 .suggestion-mat-chip-listbox ::ng-deep {
     .mdc-evolution-chip-set__chips .mat-mdc-standard-chip {
         min-height: 30px;
-
-        // workaround, as :last-child does not work
-        &.last-chip {
-            margin-right: 8px;
-        }
-
         .mdc-evolution-chip__text-label {
             font-family: 'Montserrat-Bold', serif;
             font-weight: 700;
         }
+    }
+    .mdc-evolution-chip-set__chips .category-chip:last-of-type {
+        margin-right: 8px;
     }
 }
 

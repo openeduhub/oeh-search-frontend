@@ -12,8 +12,7 @@
         <ng-container *ngFor="let category of categories">
           <mat-chip-row
             *ngFor="let filter of filters[category]; index as i"
-            class="chip-group-{{ category }}"
-            [class.last-chip]="i === filters[category].length - 1"
+            class="category-chip chip-group-{{ category }}"
             [removable]="true"
             (removed)="removeFilter(category, filter)"
             cdkMonitorElementFocus
