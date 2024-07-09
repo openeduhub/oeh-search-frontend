@@ -26,15 +26,6 @@
                 background: #fff !important;
             }
         }
-        // change height and width of the toggle button background
-        .mat-mdc-slide-toggle .mdc-switch {
-            width: 46px;
-            height: 17px;
-
-            .mdc-switch__track {
-                height: 17px;
-            }
-        }
         // change color of the toggle button
         .mat-mdc-slide-toggle.mat-mdc-slide-toggle-checked .mdc-switch__handle::after {
             background: mat.m2-get-color-from-palette($custom-accent, accent2) !important;
@@ -54,11 +45,6 @@
 
 @mixin oer-slider-typography($typography) {
     app-oer-slider {
-        /* TODO(mdc-migration): The following rule targets internal classes of slide-toggle that may no longer apply for the MDC version. */
-        .mat-slide-toggle-content {
-            @include mat.m2-typography-level($typography, button);
-        }
-
         .mdc-label {
             font-weight: 500;
             font-family: 'Montserrat-Medium', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;

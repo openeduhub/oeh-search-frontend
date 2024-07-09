@@ -22,16 +22,6 @@
     .mat-mdc-dialog-actions {
         --mat-dialog-actions-padding: var(--mat-dialog-content-padding);
     }
-
-    // the padding of the mat-mdc-dialog-actions is not set properly
-    .mat-mdc-slide-toggle .mdc-switch__handle:has(.mdc-switch__icons) {
-        margin-left: -5px !important;
-        border-radius: 15px;
-        --mat-switch-with-icon-handle-size: 30px;
-        --mat-switch-unselected-handle-size: 30px;
-        --mat-switch-selected-handle-size: 30px;
-        --mat-switch-pressed-handle-size: 30px;
-    }
 }
 
 @mixin angular-material-typography-overrides($typography) {
