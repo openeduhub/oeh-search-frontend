@@ -13,7 +13,7 @@
                 .search-field-input-wrapper {
                     background-color: mat.m2-get-color-from-palette($primary, 50);
                     input {
-                        color: mat.m2-get-color-from-palette($primary, text);
+                        color: mat.m2-get-color-from-palette($primary, text) !important;
                     }
                 }
                 mat-icon {
