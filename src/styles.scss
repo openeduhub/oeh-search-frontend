@@ -143,6 +143,7 @@ body {
 }
 
 .cdk-focused:not(.cdk-keyboard-focused) .mat-mdc-focus-indicator::before,
-.cdk-focused.mat-mdc-focus-indicator:not(.cdk-keyboard-focused)::before {
+.cdk-focused:not(.cdk-keyboard-focused).mat-mdc-focus-indicator::before,
+.cdk-focused:not(.cdk-keyboard-focused).mat-focus-indicator::before {
     display: none;
 }
