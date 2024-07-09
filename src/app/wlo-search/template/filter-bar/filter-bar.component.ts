@@ -3,6 +3,7 @@ import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { SharedModule } from '../../shared/shared.module';
 import { MdsValue, MdsWidget } from 'ngx-edu-sharing-api';
+import { firstValueFrom } from 'rxjs';
 import { pairwise, startWith } from 'rxjs/operators';
 
 @Component({
@@ -25,13 +26,13 @@ export class FilterBarComponent implements OnInit {
         private activatedRoute: ActivatedRoute,
     ) {}
 
-    ngOnInit() {
+    async ngOnInit() {
         this.form = this.fb.group({
             dimensions: this.fb.array([]),
         });
 
         // create the select fields
-        this.setSelectFields();
+        await this.setSelectFields();
 
         // listen for value changes in the form dimensions: https://stackoverflow.com/a/54205373
         // this fills the buffer with an initial value, and it will emit immediately on value change
@@ -83,14 +84,15 @@ export class FilterBarComponent implements OnInit {
     /**
      * Create the select fields based on the query parameters.
      */
-    setSelectFields() {
+    async setSelectFields() {
         this.selectDimensionsProcessed = false;
         // reset the dimensions to be always up-to-date
         this.dimensions.clear();
         // create select fields for all available dimensions
         // set the selections based on the query parameters
-        this.activatedRoute.queryParams.subscribe((params) => {
+        await firstValueFrom(this.activatedRoute.queryParams).then((params) => {
             const paramKeys = Object.keys(params);
+            const queryParamsToAdd: Params = {};
             this.filteredMdsWidgetIds.forEach((widgetId) => {
                 if (paramKeys.includes(widgetId)) {
                     const item = this.fb.group({
@@ -98,7 +100,6 @@ export class FilterBarComponent implements OnInit {
                     });
                     this.dimensions.push(item);
                 } else {
-                    // TODO: Create these in the query params as well
                     const firstSelectOptionId =
                         this.selectDimensions.get('$virtual:' + widgetId + '$')?.values?.[0]?.id ??
                         '';
@@ -106,9 +107,17 @@ export class FilterBarComponent implements OnInit {
                         id: [firstSelectOptionId],
                     });
                     this.dimensions.push(item);
+                    queryParamsToAdd[widgetId] = firstSelectOptionId;
                 }
             });
-
+            // add missing query parameters
+            if (Object.keys(queryParamsToAdd).length > 0) {
+                void this.router.navigate([], {
+                    relativeTo: this.activatedRoute,
+                    queryParams: queryParamsToAdd,
+                    queryParamsHandling: 'merge',
+                });
+            }
             this.selectValuesChanged.emit(this.dimensions.value);
             this.selectDimensionsProcessed = true;
         });

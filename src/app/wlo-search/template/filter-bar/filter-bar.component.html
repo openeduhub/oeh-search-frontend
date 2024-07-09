@@ -1,6 +1,10 @@
 <div class="variable-select-bar fachportal-filterbar">
   <div class="fachportal-filterbar-content">
-    <div class="fachportal-filterbar-dropdowns" [formGroup]="form">
+    <div
+      class="fachportal-filterbar-dropdowns"
+      [formGroup]="form"
+      *ngIf="selectDimensionsProcessed"
+    >
       <div
         class="select-container"
         formArrayName="dimensions"
