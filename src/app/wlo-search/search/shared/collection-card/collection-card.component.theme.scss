@@ -24,6 +24,7 @@
     app-collection-card {
         .app-collection-card-title {
             @include mat.m2-typography-level($typography, body-1);
+            font-family: 'Montserrat-SemiBold', serif;
         }
         .app-collection-card-metadata-item {
             @include mat.m2-typography-level($typography, caption);
