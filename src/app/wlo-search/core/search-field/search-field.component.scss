@@ -11,7 +11,6 @@ form {
         flex-grow: 1;
         border-radius: 27px;
         align-items: center;
-        align-items: center;
         padding: 5px 7px;
         min-height: 40px;
         &.multi-line {
@@ -31,8 +30,7 @@ form {
             }
             input {
                 height: 43px;
-                margin: 0;
-                margin-left: 8px;
+                margin: 4px;
                 flex-shrink: 1;
                 min-width: 0;
                 // Placeholder
@@ -69,16 +67,26 @@ form {
     }
     .mdc-evolution-chip-set .mdc-evolution-chip-set__chips {
         margin: 0;
+        align-items: center;
     }
 }
 
-/* TODO(mdc-migration): The following rule targets internal classes of chips that may no longer apply for the MDC version.*/
-/* TODO(mdc-migration): The following rule targets internal classes of chips that may no longer apply for the MDC version.*/
-/* TODO(mdc-migration): The following rule targets internal classes of chips that may no longer apply for the MDC version.*/
-:host mat-chip-list ::ng-deep {
-    /* TODO(mdc-migration): The following rule targets internal classes of chips that may no longer apply for the MDC version.*/
-    .mat-chip-list-wrapper .mat-mdc-standard-chip {
+// second selector without :host, as it is added at the bottom of the body
+// used a custom class instead
+:host mat-chip-grid ::ng-deep,
+.suggestion-mat-chip-listbox ::ng-deep {
+    .mdc-evolution-chip-set__chips .mat-mdc-standard-chip {
         min-height: 30px;
+
+        // workaround, as :last-child does not work
+        &.last-chip {
+            margin-right: 8px;
+        }
+
+        .mdc-evolution-chip__text-label {
+            font-family: 'Montserrat-Bold', serif;
+            font-weight: 700;
+        }
     }
 }
 

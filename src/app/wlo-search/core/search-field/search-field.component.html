@@ -11,8 +11,9 @@
       <mat-chip-grid #chipList>
         <ng-container *ngFor="let category of categories">
           <mat-chip-row
-            *ngFor="let filter of filters[category]"
+            *ngFor="let filter of filters[category]; index as i"
             class="chip-group-{{ category }}"
+            [class.last-chip]="i === filters[category].length - 1"
             [removable]="true"
             (removed)="removeFilter(category, filter)"
             cdkMonitorElementFocus
@@ -88,7 +89,7 @@
             <ng-container *ngSwitchCase="'source'" i18n>Source</ng-container>
           </label>
         </div>
-        <mat-chip-listbox>
+        <mat-chip-listbox class="suggestion-mat-chip-listbox">
           <mat-chip-option
             *ngFor="let suggestion of suggestions[category]"
             #suggestionChip
