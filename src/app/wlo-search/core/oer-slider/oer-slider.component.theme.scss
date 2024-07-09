@@ -7,24 +7,47 @@
     $primary: map-get($theme, primary);
 
     app-oer-slider {
-        /* TODO(mdc-migration): The following rule targets internal classes of slide-toggle that may no longer apply for the MDC version. */
-        .mat-slide-toggle-content {
+        .mdc-label {
+            margin-left: 15px !important;
             color: mat.m2-get-color-from-palette($primary, default-contrast);
         }
         .help-button mat-icon {
             color: mat.m2-get-color-from-palette($primary, default-contrast);
         }
-        /* TODO(mdc-migration): The following rule targets internal classes of slide-toggle that may no longer apply for the MDC version. */
-        .mat-slide-toggle-bar {
-            background-color: mat.m2-get-color-from-palette($primary, default-contrast, 0.38);
+        .mat-mdc-slide-toggle .mdc-switch__track {
+            &::before {
+                background: mat.m2-get-color-from-palette(
+                    $primary,
+                    default-contrast,
+                    0.38
+                ) !important;
+            }
+            &::after {
+                background: #fff !important;
+            }
         }
-        /* TODO(mdc-migration): The following rule targets internal classes of slide-toggle that may no longer apply for the MDC version. */
-        .mat-mdc-slide-toggle.mat-checked .mat-slide-toggle-bar {
-            background-color: mat.m2-get-color-from-palette($primary, default-contrast);
+        // change height and width of the toggle button background
+        .mat-mdc-slide-toggle .mdc-switch {
+            width: 46px;
+            height: 17px;
+
+            .mdc-switch__track {
+                height: 17px;
+            }
         }
-        /* TODO(mdc-migration): The following rule targets internal classes of slide-toggle that may no longer apply for the MDC version. */
-        .mat-mdc-slide-toggle.mat-checked .mat-slide-toggle-thumb {
-            background-color: mat.m2-get-color-from-palette($custom-accent, accent2);
+        // change color of the toggle button
+        .mat-mdc-slide-toggle.mat-mdc-slide-toggle-checked .mdc-switch__handle::after {
+            background: mat.m2-get-color-from-palette($custom-accent, accent2) !important;
+        }
+        .mat-mdc-slide-toggle
+            .mdc-switch.mdc-switch--unselected:enabled
+            .mdc-switch__handle::after {
+            background: #fff !important;
+        }
+        // remove icons from toggle
+        // TODO: This is also a setting, but this will change several selectors used above
+        .mat-mdc-slide-toggle .mdc-switch__icons {
+            display: none !important;
         }
     }
 }
@@ -34,6 +57,11 @@
         /* TODO(mdc-migration): The following rule targets internal classes of slide-toggle that may no longer apply for the MDC version. */
         .mat-slide-toggle-content {
             @include mat.m2-typography-level($typography, button);
+        }
+
+        .mdc-label {
+            font-weight: 500;
+            font-family: 'Montserrat-Medium', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
         }
     }
 }
