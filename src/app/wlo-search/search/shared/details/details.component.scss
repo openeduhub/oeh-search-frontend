@@ -59,7 +59,7 @@
         right: 50px;
         margin-top: -10px;
     }
-    .mat-spinner {
+    .mat-mdc-progress-spinner {
         align-self: center;
     }
     &:last-child {
@@ -115,6 +115,10 @@
             margin-left: 10px;
             margin-right: -10px;
         }
+        // fix for mat-button vs. mat-flat-button
+        &.app-preview-panel-report-problem-button {
+            padding: 0 var(--mat-filled-button-horizontal-padding, 16px);
+        }
     }
 }
 
@@ -128,7 +132,7 @@
     &.app-details-report-problem-state-loading {
         border-color: #0000;
     }
-    .mat-progress-spinner,
+    .mat-mdc-progress-spinner,
     .mat-icon {
         margin-right: 15px;
         flex-shrink: 0;

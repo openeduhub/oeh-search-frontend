@@ -4,26 +4,28 @@
     $foreground: map-get($theme, foreground);
     $primary: map-get($theme, primary);
 
-    .mat-tooltip {
-        background: mat.get-color-from-palette($background, tooltip);
+    .mat-mdc-tooltip {
+        background: mat.m2-get-color-from-palette($background, tooltip);
+        border-radius: 3px;
     }
 
     .slick-prev::before,
     .slick-next::before {
-        color: mat.get-color-from-palette($foreground, text);
+        color: mat.m2-get-color-from-palette($foreground, text);
     }
 
     .app-backdrop {
-        background: mat.get-color-from-palette($background, background, 0.9);
+        background: mat.m2-get-color-from-palette($background, background, 0.9);
+    }
+
+    // the padding of the mat-mdc-dialog-actions is not set properly
+    .mat-mdc-dialog-actions {
+        --mat-dialog-actions-padding: var(--mat-dialog-content-padding);
     }
 }
 
 @mixin angular-material-typography-overrides($typography) {
-    .mat-tooltip,
-    .mat-tooltip-handset {
-        @include mat.typography-level($typography, tooltip);
-    }
-    .mat-chip {
-        @include mat.typography-level($typography, body-2);
+    .mat-mdc-chip {
+        @include mat.m2-typography-level($typography, body-2);
     }
 }

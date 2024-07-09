@@ -7,28 +7,47 @@
     $primary: map-get($theme, primary);
 
     app-oer-slider {
-        .mat-slide-toggle-content {
-            color: mat.get-color-from-palette($primary, default-contrast);
+        .mdc-label {
+            margin-left: 15px !important;
+            color: mat.m2-get-color-from-palette($primary, default-contrast);
         }
         .help-button mat-icon {
-            color: mat.get-color-from-palette($primary, default-contrast);
+            color: mat.m2-get-color-from-palette($primary, default-contrast);
         }
-        .mat-slide-toggle-bar {
-            background-color: mat.get-color-from-palette($primary, default-contrast, 0.38);
+        .mat-mdc-slide-toggle .mdc-switch__track {
+            &::before {
+                background: mat.m2-get-color-from-palette(
+                    $primary,
+                    default-contrast,
+                    0.38
+                ) !important;
+            }
+            &::after {
+                background: #fff !important;
+            }
         }
-        .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
-            background-color: mat.get-color-from-palette($primary, default-contrast);
+        // change color of the toggle button
+        .mat-mdc-slide-toggle.mat-mdc-slide-toggle-checked .mdc-switch__handle::after {
+            background: mat.m2-get-color-from-palette($custom-accent, accent2) !important;
         }
-        .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
-            background-color: mat.get-color-from-palette($custom-accent, accent2);
+        .mat-mdc-slide-toggle
+            .mdc-switch.mdc-switch--unselected:enabled
+            .mdc-switch__handle::after {
+            background: #fff !important;
+        }
+        // remove icons from toggle
+        // TODO: This is also a setting, but this will change several selectors used above
+        .mat-mdc-slide-toggle .mdc-switch__icons {
+            display: none !important;
         }
     }
 }
 
 @mixin oer-slider-typography($typography) {
     app-oer-slider {
-        .mat-slide-toggle-content {
-            @include mat.typography-level($typography, button);
+        .mdc-label {
+            font-weight: 500;
+            font-family: 'Montserrat-Medium', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
         }
     }
 }

@@ -12,12 +12,12 @@ $previewPanelSpanScreenThreshold: 800px;
     }
 }
 
-::ng-deep .app-preview-panel-dialog-container .mat-dialog-container,
+::ng-deep .app-preview-panel-dialog-container .mat-mdc-dialog-container,
 .app-preview-panel-sidebar {
     border-radius: 20px;
 }
 
-::ng-deep .app-preview-panel-dialog-container .mat-dialog-container {
+::ng-deep .app-preview-panel-dialog-container .mat-mdc-dialog-container {
     height: unset;
     padding: 0;
     overflow: hidden;

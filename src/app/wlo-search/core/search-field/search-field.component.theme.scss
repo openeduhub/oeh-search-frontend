@@ -9,15 +9,15 @@
     app-search-field {
         form {
             .search-field-wrapper {
-                background-color: mat.get-color-from-palette($background, dialog);
+                background-color: mat.m2-get-color-from-palette($background, dialog);
                 .search-field-input-wrapper {
-                    background-color: mat.get-color-from-palette($primary, 50);
+                    background-color: mat.m2-get-color-from-palette($primary, 50);
                     input {
-                        color: mat.get-color-from-palette($primary, text);
+                        color: mat.m2-get-color-from-palette($primary, text) !important;
                     }
                 }
                 mat-icon {
-                    color: mat.get-color-from-palette($foreground, icon);
+                    color: mat.m2-get-color-from-palette($foreground, icon);
                 }
             }
         }
@@ -27,8 +27,10 @@
 @mixin search-field-typography($typography) {
     app-search-field {
         .submit-button,
-        .mat-form-field {
-            font-size: mat.font-size($typography, subheading-1);
+        // adjusting the selector is currently necessary to overwrite the default font-size:
+        // https://stackoverflow.com/a/43273285/3623608
+        .mat-mdc-form-field, .mat-mdc-form-field.mat-mdc-form-field {
+            font-size: mat.m2-font-size($typography, body-1);
         }
     }
 }

@@ -1,7 +1,7 @@
 @use '@angular/material' as mat;
 @use 'app/wlo-search';
 @import './fonts.scss';
-$material-icons-font-path: '~material-icons/iconfont/';
+$material-icons-font-path: 'material-icons/iconfont/';
 @import 'material-icons/iconfont/material-icons.scss';
 
 // App color palette
@@ -37,13 +37,13 @@ $material-icons-font-path: '~material-icons/iconfont/';
     // Include theme styles for core and each component used in your app.
     // Alternatively, you can import and @include the theme mixins for each component
     // that you are using.
-    @include mat.all-legacy-component-themes($theme);
+    @include mat.all-component-themes($theme);
     @include mat.strong-focus-indicators-theme($theme);
     @include angular-material-theme-overrides($theme);
     @include wlo-search.components-themes($theme);
     body {
-        color: mat.get-color-from-palette(map-get($theme, foreground), text);
-        background-color: mat.get-color-from-palette(map-get($theme, background), background);
+        color: mat.m2-get-color-from-palette(map-get($theme, foreground), text);
+        background-color: mat.m2-get-color-from-palette(map-get($theme, background), background);
     }
 }
 
@@ -57,14 +57,23 @@ $material-icons-font-path: '~material-icons/iconfont/';
 //  If you specify typography styles for the components you use elsewhere, you should delete this line.
 //  If you don't need the default component typographies but still want the hierarchy styles,
 //  you can delete this line and instead use:
-//    `@include mat.legacy-typography-hierarchy(mat.define-legacy-typography-config());`
-@include mat.all-legacy-component-typographies();
-@include mat.legacy-core();
+//    `@include mat.legacy-typography-hierarchy(mat.define-typography-config());`
+@include mat.all-component-typographies();
+@include mat.core();
 @include mat.strong-focus-indicators();
 
 // Create the theme object (a Sass map containing all of the palettes).
-$app-theme-light: mat.define-light-theme($app-primary, $app-accent, $app-warn);
-$app-theme-dark: mat.define-dark-theme($app-primary, $app-accent, $app-warn);
+$app-theme-light: mat.m2-define-light-theme(
+    (
+        color: (
+            primary: $app-primary,
+            accent: $app-accent,
+            warn: $app-warn,
+        ),
+        density: -1,
+    )
+);
+$app-theme-dark: mat.m2-define-dark-theme($app-primary, $app-accent, $app-warn);
 
 /*
 @media not all and (prefers-color-scheme: dark) {
@@ -79,28 +88,40 @@ $app-theme-dark: mat.define-dark-theme($app-primary, $app-accent, $app-warn);
 // Typography
 //
 // See @angular/material/core/typography/_typography.scss for defaults.
-$app-typography: mat.define-legacy-typography-config(
+$app-typography: mat.m2-define-typography-config(
     $font-family: 'Source-Sans-Pro-Regular',
-    $display-1: mat.define-typography-level(32px, 40px, 500, 'Montserrat-Medium'),
-    $headline: mat.define-typography-level(24px, 32px, 700, 'Montserrat-Bold'),
-    $title: mat.define-typography-level(20px, 30px, 600, 'Montserrat-SemiBold'),
-    $subheading-2: mat.define-typography-level(18px, 27px, 600, 'Montserrat-SemiBold'),
-    $subheading-1: mat.define-typography-level(16px, 24px, 600, 'Montserrat-SemiBold'),
-    $body-2: mat.define-typography-level(14px, 24px, 700, 'Montserrat-Bold'),
-    $body-1: mat.define-typography-level(14px, 21px, 400),
-    $caption: mat.define-typography-level(11px, 15px, 500, 'Montserrat-Medium'),
-    $button: mat.define-typography-level(14px, 20px, 500, 'Montserrat-Medium'),
-    $input: mat.define-typography-level(inherit, 1.125, 400),
+    $headline-4: mat.m2-define-typography-level(32px, 40px, 500, 'Montserrat-Medium'),
+    $headline-5: mat.m2-define-typography-level(24px, 32px, 700, 'Montserrat-Bold'),
+    $headline-6: mat.m2-define-typography-level(20px, 30px, 600, 'Montserrat-SemiBold'),
+    $subtitle-1: mat.m2-define-typography-level(18px, 27px, 600, 'Montserrat-SemiBold'),
+    $body-1: mat.m2-define-typography-level(16px, 21px, 400, 'Source-Sans-Pro-Regular'),
+    $subtitle-2: mat.m2-define-typography-level(14px, 24px, 700, 'Montserrat-Bold'),
+    $body-2: mat.m2-define-typography-level(14px, 21px, 400, 'Source-Sans-Pro-Regular'),
+    $caption: mat.m2-define-typography-level(11px, 15px, 500, 'Montserrat-Medium'),
+    $button: mat.m2-define-typography-level(14px, 20px, 500, 'Montserrat-Medium'),
 );
-// Custom fields
-$app-typography: map_merge(
-    $app-typography,
-    (
-        tooltip: mat.define-typography-level(14px, 20px, 500),
-    )
-);
-@include mat.all-legacy-component-typographies($app-typography);
+@include mat.all-component-typographies($app-typography);
 @include angular-material-typography-overrides($app-typography);
+// custom adjustment for tooltips: https://stackoverflow.com/a/78298799
+$tooltip-typography: mat.m2-define-typography-config(
+    $caption: mat.m2-define-typography-level(12px, 18px, 400, 'Montserrat-Medium'),
+);
+@include mat.tooltip-typography($tooltip-typography);
+// custom adjustment for form types
+$form-typography: mat.m2-define-typography-config(
+    $body-1: mat.m2-define-typography-level(14px, 21px, 400, 'Source-Sans-Pro-Regular'),
+    $body-2: mat.m2-define-typography-level(14px, 21px, 400, 'Source-Sans-Pro-Regular'),
+);
+@include mat.checkbox-typography($form-typography);
+@include mat.form-field-typography($form-typography);
+@include mat.input-typography($form-typography);
+@include mat.menu-typography($form-typography);
+@include mat.option-typography($form-typography);
+@include mat.radio-typography($form-typography);
+@include mat.select-typography($form-typography);
+// also overwrite the dialog typography
+@include mat.dialog-typography($form-typography);
+// adjustments by the wlo-search components
 @include wlo-search.components-typographies($app-typography);
 
 html,
@@ -110,9 +131,9 @@ body {
 }
 body {
     margin: 0;
-    font-family: mat.font-family($app-typography);
-    font-size: mat.font-size($app-typography, body-1);
-    line-height: mat.line-height($app-typography, body-1);
+    font-family: mat.m2-font-family($app-typography);
+    font-size: mat.m2-font-size($app-typography, body-1);
+    line-height: mat.m2-line-height($app-typography, body-1);
 }
 :focus-visible {
     outline-style: solid;
@@ -121,7 +142,8 @@ body {
     outline-color: currentcolor;
 }
 
-.cdk-focused:not(.cdk-keyboard-focused) .mat-focus-indicator::before,
-.cdk-focused.mat-focus-indicator:not(.cdk-keyboard-focused)::before {
+.cdk-focused:not(.cdk-keyboard-focused) .mat-mdc-focus-indicator::before,
+.cdk-focused:not(.cdk-keyboard-focused).mat-mdc-focus-indicator::before,
+.cdk-focused:not(.cdk-keyboard-focused).mat-focus-indicator::before {
     display: none;
 }

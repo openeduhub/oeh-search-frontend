@@ -1,21 +1,24 @@
 :host ::ng-deep mat-slide-toggle {
-    .mat-slide-toggle-bar {
+    // change height and width of the toggle button background
+    .mdc-switch {
         width: 46px;
         height: 17px;
-        margin-right: 15px;
+
+        .mdc-switch__track {
+            height: 17px;
+            border-radius: 8px;
+        }
     }
-    &.mat-slide-toggle.mat-checked .mat-slide-toggle-thumb-container {
-        transform: translate3d(26px, 0, 0);
-    }
-    .mat-slide-toggle-thumb-container {
-        top: -7px;
-        left: -5px;
-        height: 30px;
-        width: 30px;
-    }
-    .mat-slide-toggle-thumb {
-        height: 30px;
-        width: 30px;
+    // change height and width of the toggle button itself
+    .mdc-switch__handle {
+        height: 30px !important;
+        width: 30px !important;
+
+        &:has(.mdc-switch__icons) {
+            border-radius: 15px;
+            // fix position
+            margin-left: -5px !important;
+        }
     }
 }
 
@@ -45,8 +48,8 @@
 $help-button-size: 18px;
 
 .help-button {
-    margin: -5px;
-    margin-top: -9px;
+    margin-left: -5px;
+    margin-bottom: -5px;
     mat-icon {
         width: $help-button-size;
         height: $help-button-size;

@@ -1,8 +1,15 @@
 :host > div {
     display: grid;
     > mat-checkbox {
-        padding: 3px 4px;
+        // TODO: could not yet reproduce the old style without spacing on the left
+        padding: 3px 4px 3px 0;
         min-width: 0;
+        height: 24px;
+
+        ::ng-deep .mdc-label {
+            padding-left: 0;
+        }
+
         span {
             &.label {
                 flex-grow: 1;
@@ -20,18 +27,15 @@
 }
 
 :host ::ng-deep mat-checkbox {
-    .mat-checkbox-layout {
+    .mdc-form-field {
         display: flex;
         width: 100%;
         align-items: center;
     }
-    .mat-checkbox-label {
+    .mdc-label {
         display: flex;
         width: 100%;
         min-width: 0;
         align-items: center;
-    }
-    .mat-checkbox-frame {
-        border-width: 1px;
     }
 }

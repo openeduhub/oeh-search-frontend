@@ -10,12 +10,22 @@
           andere nicht. Es können längere und kürzere Sätze dort vorkommen.
         </ng-template>
         <!-- action buttons for editing and creating -->
+        <!-- duplicated code due to https://github.com/angular/components/issues/15367 -->
         <button
           mat-stroked-button
           class="edit-button"
-          [class.mat-flat-button]="editMode"
           color="primary"
           (click)="editMode = !editMode"
+          *ngIf="!editMode"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button
+          mat-flat-button
+          class="edit-button"
+          color="primary"
+          (click)="editMode = !editMode"
+          *ngIf="editMode"
         >
           <mat-icon>edit</mat-icon>
         </button>
@@ -41,8 +51,12 @@
     </div>
   </div>
 </header>
-<div class="portal-plus-filterbar-wrapper">
-  <div class="fachportal-filterbar"></div>
+<app-filter-bar
+  [selectDimensions]="selectDimensions"
+  (selectValuesChanged)="selectValuesChanged($event)"
+  *ngIf="selectDimensionsLoaded"
+></app-filter-bar>
+<div class="portal-outer-wrapper">
   <div class="portal-wrapper">
     <div class="portal-wrapper-left">
       <div
@@ -99,12 +113,13 @@
               <app-column-grid
                 [backgroundColor]="column.backgroundColor"
                 [editMode]="editMode"
+                [filterBarReady]="filterBarReady"
                 [generatedJobText]="generatedJobText()"
                 [grid]="column.grid"
                 [gridType]="column.gridType"
                 [jobsWidgetReady]="jobsWidgetReady"
                 [selectDimensions]="selectDimensions"
-                [selectDimensionsPrefix]="selectDimensionsPrefix"
+                [selectedDimensionValues]="selectedDimensionValues"
                 [topic]="topic()"
                 [topicCollectionID]="topicCollectionID()"
                 *ngIf="jobsWidgetReady"
@@ -125,11 +140,12 @@
           <app-column-grid
             [backgroundColor]="column.backgroundColor"
             [editMode]="editMode"
+            [filterBarReady]="filterBarReady"
             [generatedJobText]="generatedJobText()"
             [grid]="column.grid"
             [jobsWidgetReady]="jobsWidgetReady"
             [selectDimensions]="selectDimensions"
-            [selectDimensionsPrefix]="selectDimensionsPrefix"
+            [selectedDimensionValues]="selectedDimensionValues"
             [topic]="topic()"
             [topicCollectionID]="topicCollectionID()"
             *ngIf="jobsWidgetReady"

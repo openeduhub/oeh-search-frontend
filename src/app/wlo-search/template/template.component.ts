@@ -12,18 +12,21 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
-import { MatLegacyButtonModule } from '@angular/material/legacy-button';
+import { MatButtonModule } from '@angular/material/button';
 import { ActivatedRoute } from '@angular/router';
 import { ColumnGridComponent } from './column-grid/column-grid.component';
 import { ColumnSettingsDialogComponent } from './column-settings-dialog/column-settings-dialog.component';
 import { GridColumn } from './grid-column';
 import { typeOptions } from './grid-type-definitions';
 import { gridColumns } from './initial-values';
+import { FilterBarComponent } from './filter-bar/filter-bar.component';
 import { SharedModule } from '../shared/shared.module';
 import {
     ApiRequestConfiguration,
     AuthenticationService,
     MdsService,
+    MdsValue,
+    MdsWidget,
     Node,
     NodeService,
 } from 'ngx-edu-sharing-api';
@@ -38,12 +41,13 @@ import { v4 as uuidv4 } from 'uuid';
         CdkAccordionModule,
         CdkDragHandle,
         DragDropModule,
+        FilterBarComponent,
         MatGridListModule,
         MatIconModule,
         NgForOf,
         SharedModule,
         TemplateComponent,
-        MatLegacyButtonModule,
+        MatButtonModule,
         ColumnGridComponent,
         NgIf,
     ],
@@ -75,8 +79,13 @@ export class TemplateComponent implements OnInit {
     editMode: boolean = false;
     myNode: Node;
 
-    selectDimensions = new Map();
-    selectDimensionsPrefix = 'virtual:ai_text_widget_';
+    selectDimensions: Map<string, MdsWidget> = new Map<string, MdsWidget>();
+    providedSelectDimensionKeys = [
+        'virtual:ai_text_widget_intendedenduserrole',
+        'virtual:ai_text_widget_target_language',
+    ];
+    selectedDimensionValues: MdsValue[] = [];
+    selectDimensionsLoaded: boolean = false;
 
     typeOptions = typeOptions.concat([{ value: 'spacer', viewValue: 'Trennlinie' }]);
 
@@ -122,16 +131,27 @@ export class TemplateComponent implements OnInit {
         }
     }
 
+    get filterBarReady() {
+        const sameNumberOfValues =
+            this.selectDimensions.size === this.selectedDimensionValues.length;
+        return this.selectDimensionsLoaded && sameNumberOfValues;
+    }
+
     retrieveSelectDimensions() {
         this.mdsService.getMetadataSet({ metadataSet: 'mds_oeh' }).subscribe((data) => {
-            const rawSelectDimensions = data.widgets.filter((widget) =>
-                widget.id.includes(this.selectDimensionsPrefix),
+            const filteredMdsWidgets: MdsWidget[] = data.widgets.filter((widget: MdsWidget) =>
+                this.providedSelectDimensionKeys.includes(widget.id),
             );
-            rawSelectDimensions.forEach((selectDimension) => {
+            filteredMdsWidgets.forEach((mdsWidget: MdsWidget) => {
                 // Note: The $ is added at this position to signal an existing placeholder
-                this.selectDimensions.set('$' + selectDimension.id + '$', selectDimension.values);
+                this.selectDimensions.set('$' + mdsWidget.id + '$', mdsWidget);
             });
+            this.selectDimensionsLoaded = true;
         });
+    }
+
+    selectValuesChanged(event: MdsValue[]) {
+        this.selectedDimensionValues = event;
     }
 
     moveColumnPosition(oldIndex: number, newIndex: number) {
@@ -183,27 +203,29 @@ export class TemplateComponent implements OnInit {
 
     /** calls the Z-API to invoke ChatGPT */
     private generateFromPrompt() {
-        this.aiTextPromptsService
-            .publicPrompt({
-                widgetNodeId: 'c937cabf-5ffd-47f0-a5e8-ef0ed370baf0',
-                contextNodeId: this.topicCollectionID(),
-            })
-            .subscribe((result: any) => {
-                const response = result.responses[0];
-                console.log('RESPONSE: ', response);
-                this.generatedHeader.set(response);
-            });
-        this.aiTextPromptsService
-            .publicPrompt({
-                widgetNodeId: 'a625a9d6-383d-4835-84f2-a8e2792ea13f',
-                contextNodeId: this.topicCollectionID(),
-            })
-            .subscribe((result: any) => {
-                const response = result.responses[0];
-                console.log('RESPONSE 2: ', response);
-                this.generatedJobText.set(response);
-                this.jobsWidgetReady = true;
-            });
+        // TODO: Implement job widgets
+        this.jobsWidgetReady = true;
+        // this.aiTextPromptsService
+        //     .publicPrompt({
+        //         widgetNodeId: 'c937cabf-5ffd-47f0-a5e8-ef0ed370baf0',
+        //         contextNodeId: this.topicCollectionID(),
+        //     })
+        //     .subscribe((result: any) => {
+        //         const response = result.responses[0];
+        //         console.log('RESPONSE: ', response);
+        //         this.generatedHeader.set(response);
+        //     });
+        // this.aiTextPromptsService
+        //     .publicPrompt({
+        //         widgetNodeId: 'a625a9d6-383d-4835-84f2-a8e2792ea13f',
+        //         contextNodeId: this.topicCollectionID(),
+        //     })
+        //     .subscribe((result: any) => {
+        //         const response = result.responses[0];
+        //         console.log('RESPONSE 2: ', response);
+        //         this.generatedJobText.set(response);
+        //         this.jobsWidgetReady = true;
+        //     });
     }
 
     // https://stackoverflow.com/a/16348977

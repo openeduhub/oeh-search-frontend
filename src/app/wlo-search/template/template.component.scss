@@ -34,7 +34,7 @@
             .template-header-content {
                 display: flex;
                 flex-direction: column;
-                margin: 32px 0;
+                margin: 32px 0 52px 0;
                 padding: 0 64px;
 
                 h1 {
@@ -54,6 +54,14 @@
                 top: var(--action-button-spacing);
                 padding: 0;
                 min-width: 42px;
+                height: 36px;
+
+                .mat-icon {
+                    margin: 0 auto;
+                    font-size: 24px;
+                    height: 24px;
+                    width: 24px;
+                }
             }
 
             .edit-button {
@@ -80,7 +88,7 @@
     }
 }
 
-.portal-plus-filterbar-wrapper {
+.portal-outer-wrapper {
     display: block;
     margin-top: -20px;
     margin-bottom: 20px;
@@ -143,10 +151,6 @@
 
                         &.wlo-single-button {
                             border-radius: 8px;
-                        }
-
-                        &.mat-button-disabled {
-                            background: #d6d6d6;
                         }
 
                         &:disabled,

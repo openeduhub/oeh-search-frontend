@@ -11,14 +11,17 @@
     app-search-filterbar {
         > mat-card {
             > .header {
-                color: mat.get-color-from-palette($primary);
-                background-color: mat.get-color-from-palette($primary, 50);
-                border-color: mat.get-color-from-palette($foreground, divider);
+                color: mat.m2-get-color-from-palette($primary);
+                background-color: mat.m2-get-color-from-palette($primary, 50);
+                border-color: mat.m2-get-color-from-palette($foreground, divider);
+                .reset-button {
+                    color: mat.m2-get-color-from-palette($primary);
+                }
             }
             > .body {
                 > .type {
-                    background-color: mat.get-color-from-palette($background, app-bar);
-                    border-color: mat.get-color-from-palette($foreground, divider);
+                    background-color: mat.m2-get-color-from-palette($background, app-bar);
+                    border-color: mat.m2-get-color-from-palette($foreground, divider);
                     > mat-label {
                         color: $primary-foreground-color;
                     }
@@ -37,7 +40,22 @@
 @mixin search-filterbar-typography($typography) {
     app-search-filterbar {
         .type > mat-label {
-            @include mat.typography-level($typography, subheading-1);
+            @include mat.m2-typography-level($typography, body-1);
+        }
+
+        mat-panel-title {
+            font-size: 16px;
+            font-family: Montserrat-SemiBold, serif;
+            font-weight: 600;
+        }
+
+        .reset-button {
+            @include mat.m2-typography-level($typography, button);
+            .mat-icon {
+                font-size: 24px;
+                width: 24px;
+                height: 24px;
+            }
         }
     }
 }

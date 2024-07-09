@@ -43,6 +43,12 @@ app-search-filterbar {
             text-decoration: none;
         }
     }
+    .search-result-options {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+        .mat-mdc-tab-link {
+            height: 48px;
+        }
+    }
 }
 
 .summary {

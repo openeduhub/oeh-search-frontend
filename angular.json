@@ -24,12 +24,15 @@
       },
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/oeh-search-frontend",
+            "outputPath": {
+              "base": "dist/oeh-search-frontend"
+            },
             "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": [
+              "src/polyfills.ts"
+            ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": ["src/favicon.ico", "src/assets", "src/env.js"],
@@ -41,7 +44,8 @@
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/slick-carousel/slick/slick.min.js"
-            ]
+            ],
+            "browser": "src/main.ts"
           },
           "configurations": {
             "production": {
@@ -67,9 +71,7 @@
               "outputHashing": "all"
             },
             "development": {
-              "buildOptimizer": false,
               "optimization": false,
-              "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true,
@@ -153,12 +155,15 @@
       },
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/web-components",
+            "outputPath": {
+              "base": "dist/web-components"
+            },
             "index": "projects/web-components/src/index.html",
-            "main": "projects/web-components/src/main.ts",
-            "polyfills": "projects/web-components/src/polyfills.ts",
+            "polyfills": [
+              "projects/web-components/src/polyfills.ts"
+            ],
             "tsConfig": "projects/web-components/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -174,7 +179,8 @@
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/slick-carousel/slick/slick.min.js"
-            ]
+            ],
+            "browser": "projects/web-components/src/main.ts"
           },
           "configurations": {
             "production": {
@@ -200,10 +206,10 @@
               "outputHashing": "all"
             },
             "development": {
-              "localize": ["de"],
-              "buildOptimizer": false,
+              "localize": [
+                "de"
+              ],
               "optimization": false,
-              "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true

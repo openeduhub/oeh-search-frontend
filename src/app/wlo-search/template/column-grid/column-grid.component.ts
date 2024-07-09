@@ -1,5 +1,6 @@
 import { Component, computed, Input, OnInit, Signal } from '@angular/core';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MdsValue, MdsWidget, Node } from 'ngx-edu-sharing-api';
 import {
     AiTextWidgetComponent,
     CollectionChipsComponent,
@@ -31,12 +32,13 @@ export class ColumnGridComponent implements OnInit {
         this._backgroundColor = value ?? '#f4f4f4';
     }
     @Input() editMode: boolean;
+    @Input() filterBarReady: boolean;
     @Input() generatedJobText: string;
     @Input() grid: GridTile[];
     @Input() gridType: string = 'smallGutter';
     @Input() jobsWidgetReady: boolean;
-    @Input() selectDimensions = new Map<string, string[]>();
-    @Input() selectDimensionsPrefix: string = '';
+    @Input() selectDimensions: Map<string, MdsWidget> = new Map<string, MdsWidget>();
+    @Input() selectedDimensionValues: MdsValue[] = [];
     @Input() topic: string;
     @Input() topicCollectionID: string;
     newestContentConfig: Signal<string>;
@@ -63,5 +65,13 @@ export class ColumnGridComponent implements OnInit {
                 searchText: 'Berufe mit ' + this.topic,
             });
         });
+    }
+
+    retrieveCustomUrl(node: Node) {
+        const collectionId = node.properties?.['sys:node-uuid']?.[0];
+        if (collectionId) {
+            return window.location.origin + '/template?collectionId=' + collectionId;
+        }
+        return '';
     }
 }

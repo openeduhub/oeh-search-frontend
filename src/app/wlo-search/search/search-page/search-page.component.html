@@ -43,6 +43,7 @@
           class="style-toggle"
           [value]="resultCardStyle"
           (change)="setResultCardStyle($event.value)"
+          hideSingleSelectionIndicator="true"
           aria-label="Result view"
           i18n-aria-label
         >
@@ -89,6 +90,8 @@
   </div>
   <nav
     mat-tab-nav-bar
+    mat-stretch-tabs="false"
+    class="search-result-options"
     *ngIf="results?.pagination.total > 0 && (searchResultsStyle$ | async) === 'standard'"
   >
     <a

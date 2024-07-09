@@ -6,8 +6,8 @@
 
     app-collection-card {
         .app-collection-card-container {
-            background-color: mat.get-color-from-palette($primary, 400);
-            color: mat.get-contrast-color-from-palette($primary, 400);
+            background-color: mat.m2-get-color-from-palette($primary, 400);
+            color: mat.m2-get-contrast-color-from-palette($primary, 400);
             // Background image, not compatible with background colors.
             //
             // &.app-collection-card-container-background-light {
@@ -23,10 +23,11 @@
 @mixin collection-card-typography($typography) {
     app-collection-card {
         .app-collection-card-title {
-            @include mat.typography-level($typography, subheading-1);
+            @include mat.m2-typography-level($typography, body-1);
+            font-family: 'Montserrat-SemiBold', serif;
         }
         .app-collection-card-metadata-item {
-            @include mat.typography-level($typography, caption);
+            @include mat.m2-typography-level($typography, caption);
         }
     }
 }

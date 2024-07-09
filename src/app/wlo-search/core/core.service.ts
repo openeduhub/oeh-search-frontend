@@ -3,8 +3,6 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 
-declare let require: (path: string) => string;
-
 @Injectable({
     providedIn: 'root',
 })
@@ -33,12 +31,10 @@ export class CoreService {
         // When adding new icons, make sure to use a plain SVG format, e.g., when working with
         // Inkscape.
         for (const icon of ['advertisement', 'login', 'price', 'editorial', 'oer']) {
-            this.matIconRegistry.addSvgIconLiteral(
+            this.matIconRegistry.addSvgIcon(
                 icon,
-                this.domSanitizer.bypassSecurityTrustHtml(
-                    require('!svg-inline-loader?classPrefix!src/assets/wlo-search/icons/' +
-                        icon +
-                        '.svg'),
+                this.domSanitizer.bypassSecurityTrustResourceUrl(
+                    'assets/wlo-search/icons/' + icon + '.svg',
                 ),
             );
         }

@@ -1,0 +1,74 @@
+:host {
+    z-index: 10;
+}
+
+.fachportal-filterbar {
+    display: flex;
+    justify-content: center;
+    margin: -20px calc(50% - 50vw) 40px;
+    padding: 0 18px;
+    background: #f5f5f5;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+
+    .fachportal-filterbar-content {
+        display: flex;
+        flex-direction: column;
+        overflow: auto;
+        width: 100%;
+        max-width: 1200px;
+        padding: 0.6em;
+
+        .fachportal-filterbar-dropdowns {
+            flex-grow: 1;
+            display: flex;
+            gap: 1em;
+
+            .select-container {
+                display: flex;
+                flex-direction: column;
+                min-width: 250px;
+
+                label {
+                    font-size: 1.1rem;
+                    font-family: 'Montserrat-Medium', 'Helvetica Neue', Helvetica, Roboto, Arial,
+                        sans-serif;
+                    font-weight: normal;
+                    line-height: 1.8;
+                    color: #313131;
+                }
+
+                select {
+                    display: block;
+                    height: 40px;
+                    width: 100%;
+                    margin: 0;
+                    padding: 0 52px 0 32px;
+                    border-radius: 10px;
+                    border-color: rgba(182, 182, 182, 1);
+                    color: rgba(7, 37, 69, 1);
+                    font-size: 16px;
+                    background-color: #fff;
+                    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' width='32' height='20' viewBox='0 0 32 24'><polygon points='0,0 32,0 16,24' style='fill: rgb%280, 59, 124%29'></polygon></svg>");
+                    background-size: 14px;
+                    background-position: right -35px center;
+                    background-repeat: no-repeat;
+                    background-origin: content-box;
+                    // Chrome
+                    -webkit-appearance: none;
+                    // Firefox
+                    -moz-appearance: none;
+                    text-indent: 1px;
+                    text-overflow: '';
+                    // IE10 support
+                    &::-ms-expand {
+                        display: none;
+                    }
+
+                    &:focus {
+                        border-color: rgba(132, 132, 132, 1);
+                    }
+                }
+            }
+        }
+    }
+}

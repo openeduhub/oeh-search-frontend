@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { DoBootstrap, Injector, NgModule } from '@angular/core';
 import { createCustomElement } from '@angular/elements';
 import { BrowserModule } from '@angular/platform-browser';
@@ -22,7 +22,6 @@ const wloSearchConfig: WloSearchConfig = {
         AppRoutingModule,
         BrowserModule,
         BrowserAnimationsModule,
-        HttpClientModule,
         EduSharingApiModule.forRoot({ rootUrl: environment.eduSharingApiUrl }),
         SearchModule,
     ],
@@ -31,6 +30,7 @@ const wloSearchConfig: WloSearchConfig = {
             provide: WLO_SEARCH_CONFIG,
             useValue: wloSearchConfig,
         },
+        provideHttpClient(withInterceptorsFromDi()),
     ],
 })
 export class AppModule implements DoBootstrap {

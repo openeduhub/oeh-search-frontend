@@ -1,0 +1,27 @@
+<div class="variable-select-bar fachportal-filterbar">
+  <div class="fachportal-filterbar-content">
+    <div
+      class="fachportal-filterbar-dropdowns"
+      [formGroup]="form"
+      *ngIf="selectDimensionsProcessed"
+    >
+      <div
+        class="select-container"
+        formArrayName="dimensions"
+        *ngFor="let dimensionKey of availableSelectDimensionKeys; let i = index"
+      >
+        <div class="select-form-field" [formGroupName]="i">
+          <label>{{ selectDimensions.get(dimensionKey).caption ?? dimensionKey }}</label>
+          <select formControlName="id">
+            <option
+              *ngFor="let option of selectDimensions.get(dimensionKey).values"
+              [value]="option['id']"
+            >
+              {{ option['caption'] }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

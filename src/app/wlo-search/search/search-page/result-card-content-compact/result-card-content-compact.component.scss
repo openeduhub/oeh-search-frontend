@@ -1,29 +1,35 @@
-.header {
+.mat-mdc-card-header {
+    flex-wrap: wrap;
     margin-bottom: 5px;
     padding-bottom: 5px;
-}
 
-.app-result-card-title {
-    margin-bottom: 0;
-}
+    .source {
+        flex: 1 1 100%;
+    }
 
-.app-result-card-title button {
-    cursor: pointer;
-    background: unset;
-    border: unset;
-    text-align: unset;
-    font: unset;
-    &::after {
-        content: '';
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
+    .app-result-card-title {
+        margin-bottom: 0;
+        flex: 1 1 100%;
+
+        button {
+            cursor: pointer;
+            background: unset;
+            border: unset;
+            text-align: unset;
+            font: unset;
+            &::after {
+                content: '';
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+            }
+        }
     }
 }
 
-.mat-card-content {
+.mat-mdc-card-content {
     flex-grow: 1;
     margin-bottom: 0;
     .main-content-row {

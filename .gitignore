@@ -49,6 +49,7 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+build_and_move.sh
 
 # cypress
 e2e-cypress/node_modules

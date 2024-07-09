@@ -25,12 +25,14 @@
           [editMode]="editMode"
           [nodeId]="'35f22c01-65a7-42e1-8c9c-85a900fddafe'"
           [selectDimensions]="selectDimensions"
-          [selectDimensionsPrefix]="selectDimensionsPrefix"
+          [selectedDimensionValues]="selectedDimensionValues"
+          *ngIf="filterBarReady"
         ></wlo-ai-text-widget>
       </ng-container>
       <ng-container *ngIf="gridItem.item === 'wlo-collection-chips'">
         <wlo-collection-chips
           *ngIf="topicCollectionID"
+          [customUrl]="retrieveCustomUrl"
           [collection]="topicCollectionID"
         ></wlo-collection-chips>
       </ng-container>
@@ -47,7 +49,7 @@
         </wlo-user-configurable>
       </ng-container>
       <ng-container *ngIf="gridItem.item === 'wlo-card'">
-        <mat-card class="example-card">
+        <mat-card appearance="outlined" class="example-card">
           <mat-card-header>
             <div mat-card-avatar class="example-header-image"></div>
             <mat-card-title>Shiba Inu</mat-card-title>
