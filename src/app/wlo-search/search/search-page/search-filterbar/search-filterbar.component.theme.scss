@@ -14,6 +14,9 @@
                 color: mat.m2-get-color-from-palette($primary);
                 background-color: mat.m2-get-color-from-palette($primary, 50);
                 border-color: mat.m2-get-color-from-palette($foreground, divider);
+                .reset-button {
+                    color: mat.m2-get-color-from-palette($primary);
+                }
             }
             > .body {
                 > .type {
@@ -44,6 +47,15 @@
             font-size: 16px;
             font-family: Montserrat-SemiBold, serif;
             font-weight: 600;
+        }
+
+        .reset-button {
+            @include mat.m2-typography-level($typography, button);
+            .mat-icon {
+                font-size: 24px;
+                width: 24px;
+                height: 24px;
+            }
         }
     }
 }
