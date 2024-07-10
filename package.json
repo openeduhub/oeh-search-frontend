@@ -46,7 +46,7 @@
     "ngx-edu-sharing-api": "^9.1.1",
     "ngx-edu-sharing-ui": "^9.2.0",
     "ngx-edu-sharing-wlo-pages": "^0.1.5",
-    "ngx-edu-sharing-z-api": "^0.0.2",
+    "ngx-edu-sharing-z-api": "^0.0.3",
     "ngx-slick-carousel": "^17.0.0",
     "rxjs": "^7.0.0",
     "slick-carousel": "^1.8.1",
