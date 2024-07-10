@@ -1,5 +1,13 @@
 import { CdkConnectedOverlay, CdkOverlayOrigin, ConnectedPosition } from '@angular/cdk/overlay';
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {
+    AfterViewInit,
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    OnDestroy,
+    OnInit,
+    ViewChild,
+} from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FacetsDict } from 'ngx-edu-sharing-api';
@@ -17,7 +25,7 @@ type Suggestions = { [key in Facet]?: string[] };
     templateUrl: './search-field.component.html',
     styleUrls: ['./search-field.component.scss'],
 })
-export class SearchFieldComponent implements OnInit, OnDestroy {
+export class SearchFieldComponent implements AfterViewInit, OnInit, OnDestroy {
     @ViewChild(CdkConnectedOverlay) overlay: CdkConnectedOverlay;
     @ViewChild(CdkOverlayOrigin) overlayOrigin: CdkOverlayOrigin;
     @ViewChild('searchInput') searchInput: ElementRef<HTMLInputElement>;
@@ -54,11 +62,19 @@ export class SearchFieldComponent implements OnInit, OnDestroy {
     private destroyed$: Subject<void> = new Subject();
 
     constructor(
+        private cdr: ChangeDetectorRef,
         private config: ConfigService,
         private router: Router,
         private eduSharing: EduSharingService,
         private searchParameters: SearchParametersService,
     ) {}
+
+    ngAfterViewInit(): void {
+        // solves: "Expression has changed after it was checked."
+        // related issue: https://stackoverflow.com/a/35243106
+        this.searchField.setValue('');
+        this.cdr.detectChanges();
+    }
 
     ngOnInit(): void {
         this.searchParameters
