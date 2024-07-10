@@ -92,6 +92,7 @@
     mat-tab-nav-bar
     mat-stretch-tabs="false"
     class="search-result-options"
+    [tabPanel]="tabPanel"
     *ngIf="results?.pagination.total > 0 && (searchResultsStyle$ | async) === 'standard'"
   >
     <a
@@ -116,7 +117,9 @@
       >Search results by content type</a
     >
   </nav>
-  <router-outlet *ngIf="results?.pagination.total > 0"></router-outlet>
+  <mat-tab-nav-panel #tabPanel>
+    <router-outlet *ngIf="results?.pagination.total > 0"></router-outlet>
+  </mat-tab-nav-panel>
 </div>
 
 <app-preview-panel></app-preview-panel>
