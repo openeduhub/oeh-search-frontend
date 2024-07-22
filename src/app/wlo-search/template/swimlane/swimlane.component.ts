@@ -1,29 +1,19 @@
-import { Component, computed, Input, OnInit, Signal } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { MdsValue, MdsWidget, Node } from 'ngx-edu-sharing-api';
-import {
-    AiTextWidgetComponent,
-    CollectionChipsComponent,
-    UserConfigurableComponent,
-} from 'ngx-edu-sharing-wlo-pages';
+import { MdsValue, MdsWidget, Node, NodeEntries } from 'ngx-edu-sharing-api';
 import { GridTile } from '../grid-tile';
+import { GridWidgetComponent } from './grid-widget/grid-widget.component';
 import { SharedModule } from '../../shared/shared.module';
 
 @Component({
-    imports: [
-        AiTextWidgetComponent,
-        CollectionChipsComponent,
-        MatGridListModule,
-        UserConfigurableComponent,
-        SharedModule,
-    ],
+    imports: [GridWidgetComponent, MatGridListModule, SharedModule],
     selector: 'app-swimlane',
     templateUrl: './swimlane.component.html',
     styleUrls: ['./swimlane.component.scss'],
     standalone: true,
 })
-export class SwimlaneComponent implements OnInit {
-    // https://stackoverflow.com/a/56006046/3623608
+export class SwimlaneComponent {
+    // https://stackoverflow.com/a/56006046
     private _backgroundColor = '#f4f4f4';
     @Input() get backgroundColor() {
         return this._backgroundColor;
@@ -41,37 +31,14 @@ export class SwimlaneComponent implements OnInit {
     @Input() selectedDimensionValues: MdsValue[] = [];
     @Input() topic: string;
     @Input() topicCollectionID: string;
-    newestContentConfig: Signal<string>;
-    jobsContentConfig: Signal<string>;
+    @Input() topicWidgets: NodeEntries;
+    @Input() widgetConfigType: string;
 
-    ngOnInit() {
-        this.newestContentConfig = computed(() =>
-            JSON.stringify({
-                headline: 'Neueste Inhalte zum Thema ' + this.topic,
-                layout: 'carousel',
-                description: '',
-                searchMode: 'collection',
-                chosenColor: this.backgroundColor,
-                collectionId: this.topicCollectionID,
-            }),
-        );
-        this.jobsContentConfig = computed(() => {
-            return JSON.stringify({
-                headline: 'Das sind Berufe zum Thema ' + this.topic,
-                layout: 'carousel',
-                description: this.generatedJobText,
-                searchMode: 'ngsearchword',
-                chosenColor: this.backgroundColor,
-                searchText: 'Berufe mit ' + this.topic,
-            });
+    get topicWidgetIdMap(): Map<string, Node> {
+        const widgetMap = new Map<string, Node>();
+        this.topicWidgets.nodes?.forEach((node: Node) => {
+            widgetMap.set(node.ref.id, node);
         });
-    }
-
-    retrieveCustomUrl(node: Node) {
-        const collectionId = node.properties?.['sys:node-uuid']?.[0];
-        if (collectionId) {
-            return window.location.origin + '/template?collectionId=' + collectionId;
-        }
-        return '';
+        return widgetMap;
     }
 }

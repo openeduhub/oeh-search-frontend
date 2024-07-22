@@ -43,7 +43,7 @@ export class SwimlaneSettingsDialogComponent {
             return '#f4f4f4';
         }
         if (colorString.includes('rgb')) {
-            // https://stackoverflow.com/a/35663683/3623608
+            // https://stackoverflow.com/a/35663683
             const values = colorString
                 .replace(/rgba?\(/, '')
                 .replace(/rgb?\(/, '')
@@ -57,7 +57,7 @@ export class SwimlaneSettingsDialogComponent {
         return colorString;
     }
 
-    // https://stackoverflow.com/a/5624139/3623608
+    // https://stackoverflow.com/a/5624139
     componentToHex(c: number) {
         const hex = c.toString(16);
         return hex.length == 1 ? '0' + hex : hex;

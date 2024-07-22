@@ -92,7 +92,7 @@ export class TemplateComponent implements OnInit {
     private collectionPrefix: string = 'COLLECTION_';
     topicConfigNode: Node;
     private widgetConfigAspect: string = 'ccm:widget';
-    private widgetConfigType: string = 'ccm:widget_config';
+    widgetConfigType: string = 'ccm:widget_config';
     collectionNode: Node;
     topicWidgets: NodeEntries;
 
@@ -173,13 +173,19 @@ export class TemplateComponent implements OnInit {
                                                 'WIDGET_' + uuidv4(),
                                             );
                                             // (4) (set properties on children)
-                                            // store UUID in the config (swimlanes)
-                                            widget.uuid = childNode.ref.id;
+                                            const nodeId = childNode.ref.id;
+                                            const propertyValue = { searchMode: 'ngsearchword' };
+                                            await this.setProperty(
+                                                nodeId,
+                                                JSON.stringify(propertyValue),
+                                            );
+                                            // (5a) store UUID in the config (swimlanes)
+                                            widget.uuid = nodeId;
                                         }
                                     }
                                 }
                             }
-                            // (5) store adjusted config (swimlanes) with correct UUIDs
+                            // (5b) store adjusted config (swimlanes) with correct UUIDs
                             this.topicConfigNode = await this.setPropertyAndRetrieveUpdatedNode(
                                 this.topicConfigNode.ref.id,
                                 JSON.stringify(swimlanes),
@@ -300,10 +306,14 @@ export class TemplateComponent implements OnInit {
         }
     }
 
-    async setPropertyAndRetrieveUpdatedNode(nodeId: string, value: string) {
-        await firstValueFrom(
+    async setProperty(nodeId: string, value: string): Promise<Node> {
+        return firstValueFrom(
             this.nodeApi.setProperty('-home-', nodeId, 'ccm:widget_config', [value]),
         );
+    }
+
+    async setPropertyAndRetrieveUpdatedNode(nodeId: string, value: string) {
+        await this.setProperty(nodeId, value);
         return firstValueFrom(this.nodeApi.getNode(nodeId));
     }
 
@@ -348,7 +358,7 @@ export class TemplateComponent implements OnInit {
         });
 
         // TODO: fix error when closing (ERROR TypeError: Cannot set properties of null (setting '_closeInteractionType'))
-        // seems to be a known issue as of May 2023: https://stackoverflow.com/a/76273326/3623608
+        // seems to be a known issue as of May 2023: https://stackoverflow.com/a/76273326
         dialogRef.afterClosed().subscribe((result) => {
             if (result.status === 'VALID') {
                 const editedSwimlane = result.value;
