@@ -105,6 +105,7 @@ export class TemplateComponent implements OnInit {
     selectDimensionsLoaded: boolean = false;
 
     typeOptions = typeOptions.concat([{ value: 'spacer', viewValue: 'Trennlinie' }]);
+    requestInProgress: boolean = false;
 
     ngOnInit(): void {
         this.apiRequestConfig.setLocale('de_DE');
@@ -334,13 +335,24 @@ export class TemplateComponent implements OnInit {
         this.selectedDimensionValues = event;
     }
 
-    moveSwimlanePosition(oldIndex: number, newIndex: number) {
+    async moveSwimlanePosition(oldIndex: number, newIndex: number) {
         if (newIndex >= 0 && newIndex <= this.swimlanes.length - 1) {
+            this.requestInProgress = true;
+            // TODO: is it worse the experience that the calculation is done twice?
+            const swimlanesCopy = JSON.parse(JSON.stringify(this.swimlanes));
+            moveItemInArray(swimlanesCopy, oldIndex, newIndex);
+            this.topicConfigNode = await this.setPropertyAndRetrieveUpdatedNode(
+                this.topicConfigNode.ref.id,
+                JSON.stringify(swimlanesCopy),
+            );
+            // update swimlane visually as soon as the requests are done
             moveItemInArray(this.swimlanes, oldIndex, newIndex);
+            this.requestInProgress = false;
         }
     }
 
-    addSwimlane(type: string) {
+    async addSwimlane(type: string) {
+        this.requestInProgress = true;
         const newSwimlane: Swimlane = {
             uuid: uuidv4(),
             type,
@@ -349,7 +361,16 @@ export class TemplateComponent implements OnInit {
             newSwimlane.heading = 'Eine beispielhafte Überschrift';
             newSwimlane.grid = [];
         }
+        // TODO: is it worse the experience that the calculation is done twice?
+        const swimlanesCopy = JSON.parse(JSON.stringify(this.swimlanes));
+        swimlanesCopy.push(newSwimlane);
+        this.topicConfigNode = await this.setPropertyAndRetrieveUpdatedNode(
+            this.topicConfigNode.ref.id,
+            JSON.stringify(swimlanesCopy),
+        );
+        // display swimlane visually as soon as the requests are done
         this.swimlanes.push(newSwimlane);
+        this.requestInProgress = false;
     }
 
     editSwimlane(swimlane: Swimlane, index: number) {
@@ -362,7 +383,7 @@ export class TemplateComponent implements OnInit {
         dialogRef.afterClosed().subscribe((result) => {
             if (result.status === 'VALID') {
                 const editedSwimlane = result.value;
-                // TODO: Due to textual conversion, the grid must currently be parsed
+                // TODO: due to textual conversion, the grid must currently be parsed
                 if (editedSwimlane.grid) {
                     editedSwimlane.grid = JSON.parse(editedSwimlane.grid);
                 }
@@ -372,12 +393,39 @@ export class TemplateComponent implements OnInit {
         });
     }
 
-    deleteSwimlane(index: number) {
+    async deleteSwimlane(index: number) {
         if (
             this.swimlanes?.[index] &&
             confirm('Wollen Sie dieses Element wirklich löschen?') === true
         ) {
+            // delete possible nodes defined in the swimlane
+            // forEach does not support async / await
+            // -> for ... of ... (https://stackoverflow.com/a/37576787)
+            this.requestInProgress = true;
+            if (this.swimlanes[index].grid) {
+                for (const widget of this.swimlanes[index].grid) {
+                    if (this.currentlySupportedWidgetTypes.includes(widget.item)) {
+                        await firstValueFrom(this.nodeApi.deleteNode(widget.uuid)).then(
+                            () => {
+                                console.log('Deleted node');
+                            },
+                            () => {
+                                console.log('Error deleting node');
+                            },
+                        );
+                    }
+                }
+            }
+            const swimlanesCopy = JSON.parse(JSON.stringify(this.swimlanes));
+            // TODO: is it worse the experience that the calculation is done twice?
+            swimlanesCopy.splice(index, 1);
+            this.topicConfigNode = await this.setPropertyAndRetrieveUpdatedNode(
+                this.topicConfigNode.ref.id,
+                JSON.stringify(swimlanesCopy),
+            );
+            // remove swimlane visually as soon as the requests are done
             this.swimlanes.splice(index, 1);
+            this.requestInProgress = false;
         }
     }
 

@@ -12,29 +12,32 @@
         <!-- action buttons for editing and creating -->
         <!-- duplicated code due to https://github.com/angular/components/issues/15367 -->
         <button
+          *ngIf="!editMode"
           mat-stroked-button
           class="edit-button"
           color="primary"
+          [disabled]="requestInProgress"
           (click)="editMode = !editMode"
-          *ngIf="!editMode"
         >
           <mat-icon>edit</mat-icon>
         </button>
         <button
+          *ngIf="editMode"
           mat-flat-button
           class="edit-button"
           color="primary"
+          [disabled]="requestInProgress"
           (click)="editMode = !editMode"
-          *ngIf="editMode"
         >
           <mat-icon>edit</mat-icon>
         </button>
         <button
+          *ngIf="editMode"
           mat-stroked-button
           class="add-button"
           color="primary"
           [matMenuTriggerFor]="addComponentMenu"
-          *ngIf="editMode"
+          [disabled]="requestInProgress"
         >
           <mat-icon>add</mat-icon>
         </button>
@@ -42,6 +45,7 @@
           <button
             mat-menu-item
             *ngFor="let option of typeOptions"
+            [disabled]="requestInProgress"
             (click)="addSwimlane(option.value)"
           >
             {{ option.viewValue }}
@@ -72,11 +76,14 @@
           >
             <!-- action buttons for moving -->
             <div class="wlo-move-buttons" *ngIf="editMode">
-              <button [disabled]="i === 0" (click)="moveSwimlanePosition(i, i - 1)">
+              <button
+                [disabled]="i === 0 || requestInProgress"
+                (click)="moveSwimlanePosition(i, i - 1)"
+              >
                 <mat-icon>arrow_upward</mat-icon>
               </button>
               <button
-                [disabled]="i === swimlanes.length - 1"
+                [disabled]="i === swimlanes.length - 1 || requestInProgress"
                 (click)="moveSwimlanePosition(i, i + 1)"
               >
                 <mat-icon>arrow_downward</mat-icon>
@@ -84,11 +91,16 @@
             </div>
             <!-- action buttons for modifications -->
             <div class="wlo-edit-buttons" *ngIf="editMode">
-              <button (click)="editSwimlane(swimlane, i)" *ngIf="swimlane.type !== 'spacer'">
+              <button
+                *ngIf="swimlane.type !== 'spacer'"
+                [disabled]="requestInProgress"
+                (click)="editSwimlane(swimlane, i)"
+              >
                 <mat-icon>settings</mat-icon>
               </button>
               <button
                 [class.wlo-single-button]="swimlane.type === 'spacer'"
+                [disabled]="requestInProgress"
                 (click)="deleteSwimlane(i)"
               >
                 <mat-icon>delete</mat-icon>
