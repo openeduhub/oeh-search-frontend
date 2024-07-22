@@ -17,6 +17,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ColumnGridComponent } from './column-grid/column-grid.component';
 import { ColumnSettingsDialogComponent } from './column-settings-dialog/column-settings-dialog.component';
 import { GridColumn } from './grid-column';
+import { GridTile } from './grid-tile';
 import { typeOptions } from './grid-type-definitions';
 import { gridColumns } from './initial-values';
 import { FilterBarComponent } from './filter-bar/filter-bar.component';
@@ -28,9 +29,11 @@ import {
     MdsValue,
     MdsWidget,
     Node,
+    NodeEntries,
     NodeService,
 } from 'ngx-edu-sharing-api';
 import { AiTextPromptsService } from 'ngx-edu-sharing-z-api';
+import { firstValueFrom } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { v4 as uuidv4 } from 'uuid';
@@ -75,9 +78,23 @@ export class TemplateComponent implements OnInit {
     jobsWidgetReady = false;
 
     gridColumns: GridColumn[] = [];
-
     editMode: boolean = false;
-    myNode: Node;
+
+    private initialized: boolean = false;
+    private currentlySupportedWidgetTypes = [
+        'wlo-ai-text-widget',
+        'wlo-collection-chips',
+        'wlo-user-configurable',
+    ];
+    private parentWidgetConfigNodeId: string = '80bb0eab-d64f-466b-94c6-2eccc4045c6b';
+    private mapType: string = 'ccm:map';
+    private ioType: string = 'ccm:io';
+    private collectionPrefix: string = 'COLLECTION_';
+    topicConfigNode: Node;
+    private widgetConfigAspect: string = 'ccm:widget';
+    private widgetConfigType: string = 'ccm:widget_config';
+    collectionNode: Node;
+    topicWidgets: NodeEntries;
 
     selectDimensions: Map<string, MdsWidget> = new Map<string, MdsWidget>();
     providedSelectDimensionKeys = [
@@ -94,21 +111,91 @@ export class TemplateComponent implements OnInit {
         // set the topic based on the query params "topic" and "collectionID"
         this.route.queryParams
             .pipe(filter((params) => params.topic || params.collectionId))
-            .subscribe((params) => {
+            .subscribe(async (params) => {
                 if (params.topic) {
                     this.topic.set(params.topic);
                     // set the background to some random (but deterministic) color, just for visuals
                     this.topicColor = this.stringToColour(this.topic());
                 }
-                if (params.collectionId) {
+                if (params.collectionId && !this.initialized) {
                     this.topicCollectionID.set(params.collectionId);
+                    this.initialized = true;
                     // fetch the collection name
-                    this.nodeApi.getNode(params.collectionId).subscribe((node: Node) => {
-                        this.myNode = node;
-                        this.topic.set(node.title);
-                        // set the background to some random (but deterministic) color, just for visuals
-                        this.topicColor = this.stringToColour(this.topic());
-                    });
+                    await firstValueFrom(this.nodeApi.getNode(params.collectionId)).then(
+                        (node: Node) => {
+                            this.collectionNode = node;
+                            this.topic.set(node.title);
+                            // set the background to some random (but deterministic) color, just for visuals
+                            this.topicColor = this.stringToColour(this.topic());
+                        },
+                    );
+
+                    // retrieve children of widget config node and filter it by the collection ID
+                    const nodeEntries: NodeEntries = await this.getNodeChildren(
+                        this.parentWidgetConfigNodeId,
+                    );
+                    this.topicConfigNode = nodeEntries.nodes.find(
+                        (node: Node) =>
+                            node.type === this.mapType &&
+                            node.name === this.collectionPrefix + params.collectionId,
+                    );
+
+                    // topic node does not exist
+                    // -> (1) create node for topic
+                    // -> (2) load template
+                    // -> (3) generate children nodes for topic node
+                    // -> (4) set config to nodes from template (TODO)
+                    // -> (5) store config of existing children in topic node
+                    if (!this.topicConfigNode) {
+                        // (1) create node for topic as child of the widget config node
+                        this.topicConfigNode = await this.createChild(
+                            this.parentWidgetConfigNodeId,
+                            this.mapType,
+                            this.collectionPrefix + params.collectionId,
+                        );
+                        if (this.topicConfigNode) {
+                            // TODO: This is currently necessary to set the correct permissions of the node
+                            await this.setPermissions(this.topicConfigNode.ref.id);
+                            // (2) load template (gridColumns)
+                            // (3) generate children nodes for topic node
+                            // forEach does not support async / await
+                            // -> for ... of ... (https://stackoverflow.com/a/37576787)
+                            for (const column of gridColumns) {
+                                if (column.grid?.length > 0) {
+                                    for (const widget of column.grid) {
+                                        if (
+                                            this.currentlySupportedWidgetTypes.includes(widget.item)
+                                        ) {
+                                            // create child and add its ID as UUID to the gridColumns
+                                            const childNode: Node = await this.createChild(
+                                                this.topicConfigNode.ref.id,
+                                                this.ioType,
+                                                'WIDGET_' + uuidv4(),
+                                            );
+                                            // (4) (set properties on children)
+                                            // store UUID in the config (gridColumns)
+                                            widget.uuid = childNode.ref.id;
+                                        }
+                                    }
+                                }
+                            }
+                            // (5) store adjusted config (gridColumns) with correct UUIDs
+                            this.topicConfigNode = await this.setPropertyAndRetrieveUpdatedNode(
+                                this.topicConfigNode.ref.id,
+                                JSON.stringify(gridColumns),
+                            );
+                        }
+                    }
+                    // retrieve the list of stored widget nodes
+                    this.topicWidgets = await this.getNodeChildren(this.topicConfigNode.ref.id);
+                    // note: only the grid items of the columns should be represented as separate widget nodes
+                    const existingGridColumnsString =
+                        this.topicConfigNode.properties[this.widgetConfigType]?.[0] ?? '';
+                    this.gridColumns = existingGridColumnsString
+                        ? JSON.parse(existingGridColumnsString)
+                        : [];
+                    // sync both existing children (topicWidgets) and topic config (gridColumns)
+                    await this.syncGridColumns();
                 }
 
                 this.generateFromPrompt();
@@ -135,6 +222,91 @@ export class TemplateComponent implements OnInit {
         const sameNumberOfValues =
             this.selectDimensions.size === this.selectedDimensionValues.length;
         return this.selectDimensionsLoaded && sameNumberOfValues;
+    }
+
+    get topicWidgetsIds(): string[] {
+        return this.topicWidgets?.nodes?.map((node) => node.ref.id) ?? [];
+    }
+
+    async createChild(parentId: string, type: string, name: string): Promise<Node> {
+        // const widgetConfigType = this.widgetConfigType;
+        return await firstValueFrom(
+            this.nodeApi.createChild({
+                repository: '-home-',
+                node: parentId,
+                type,
+                aspects: [this.widgetConfigAspect],
+                body: {
+                    'cm:name': [name],
+                    // TODO: Setting this on creation does not yet work
+                    'ccm:widget_config': [JSON.stringify(gridColumns)],
+                },
+            }),
+        );
+    }
+
+    async setPermissions(nodeId: string): Promise<void> {
+        return await firstValueFrom(
+            this.nodeApi.setPermissions(nodeId, {
+                inherited: true,
+                permissions: [
+                    {
+                        authority: {
+                            properties: null,
+                            editable: false,
+                            authorityName: 'GROUP_EVERYONE',
+                            authorityType: 'EVERYONE',
+                        },
+                        permissions: ['Consumer', 'CCPublish'],
+                    },
+                ],
+            }),
+        );
+    }
+
+    async getNodeChildren(nodeId: string): Promise<NodeEntries> {
+        // TODO: We could also use pagination here, if these number of items is getting too large
+        return firstValueFrom(this.nodeApi.getChildren(nodeId, { maxItems: 500 }));
+    }
+
+    /**
+     * Filter out grid items not yet persisted and store updated config in node.
+     */
+    private async syncGridColumns() {
+        let updateNecessary: boolean = false;
+        this.gridColumns.forEach((column: GridColumn) => {
+            column.grid?.forEach((widget: GridTile, index: number, object: GridTile[]) => {
+                const idNecessary = this.currentlySupportedWidgetTypes.includes(widget.item);
+                // ID necessary, but not included -> remove from config
+                if (idNecessary && !this.topicWidgetsIds.includes(widget.uuid)) {
+                    // https://stackoverflow.com/a/24813338
+                    object.splice(index, 1);
+                    updateNecessary = true;
+                }
+            });
+        });
+
+        // TODO: This should only be possible, if the user has the proper privileges
+        if (updateNecessary) {
+            // overwrite config
+            this.topicConfigNode = await this.setPropertyAndRetrieveUpdatedNode(
+                this.topicConfigNode.ref.id,
+                JSON.stringify(this.gridColumns),
+            );
+            // set value of gridColumns to updated property
+            const existingGridColumnsString =
+                this.topicConfigNode.properties[this.widgetConfigType]?.[0] ?? '';
+            this.gridColumns = existingGridColumnsString
+                ? JSON.parse(existingGridColumnsString)
+                : [];
+        }
+    }
+
+    async setPropertyAndRetrieveUpdatedNode(nodeId: string, value: string) {
+        await firstValueFrom(
+            this.nodeApi.setProperty('-home-', nodeId, 'ccm:widget_config', [value]),
+        );
+        return firstValueFrom(this.nodeApi.getNode(nodeId));
     }
 
     retrieveSelectDimensions() {
