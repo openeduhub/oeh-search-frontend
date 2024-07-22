@@ -42,7 +42,7 @@
           <button
             mat-menu-item
             *ngFor="let option of typeOptions"
-            (click)="addColumn(option.value)"
+            (click)="addSwimlane(option.value)"
           >
             {{ option.viewValue }}
           </button>
@@ -59,41 +59,43 @@
 <div class="portal-outer-wrapper">
   <div class="portal-wrapper">
     <div class="portal-wrapper-left">
-      <ng-container *ngIf="gridColumns.length > 0; else noColumnsCreatedYet">
-        <!-- note: do not show empty columns to users -->
-        <ng-container *ngFor="let column of gridColumns; let i = index">
+      <ng-container *ngIf="swimlanes.length > 0; else noSwimlanesCreatedYet">
+        <!-- note: do not show empty swimlanes to users -->
+        <ng-container *ngFor="let swimlane of swimlanes; let i = index">
           <div
-            *ngIf="column.grid?.length > 0 || column.type === 'spacer' || editMode"
-            class="wlo-column"
-            [class.column-edit-mode]="editMode"
-            [style.background-color]="column.backgroundColor ? column.backgroundColor : '#f4f4f4'"
+            *ngIf="swimlane.grid?.length > 0 || swimlane.type === 'spacer' || editMode"
+            class="wlo-swimlane"
+            [class.swimlane-edit-mode]="editMode"
+            [style.background-color]="
+              swimlane.backgroundColor ? swimlane.backgroundColor : '#f4f4f4'
+            "
           >
             <!-- action buttons for moving -->
             <div class="wlo-move-buttons" *ngIf="editMode">
-              <button [disabled]="i === 0" (click)="moveColumnPosition(i, i - 1)">
+              <button [disabled]="i === 0" (click)="moveSwimlanePosition(i, i - 1)">
                 <mat-icon>arrow_upward</mat-icon>
               </button>
               <button
-                [disabled]="i === gridColumns.length - 1"
-                (click)="moveColumnPosition(i, i + 1)"
+                [disabled]="i === swimlanes.length - 1"
+                (click)="moveSwimlanePosition(i, i + 1)"
               >
                 <mat-icon>arrow_downward</mat-icon>
               </button>
             </div>
             <!-- action buttons for modifications -->
             <div class="wlo-edit-buttons" *ngIf="editMode">
-              <button (click)="editColumn(column, i)" *ngIf="column.type !== 'spacer'">
+              <button (click)="editSwimlane(swimlane, i)" *ngIf="swimlane.type !== 'spacer'">
                 <mat-icon>settings</mat-icon>
               </button>
               <button
-                [class.wlo-single-button]="column.type === 'spacer'"
-                (click)="deleteColumn(i)"
+                [class.wlo-single-button]="swimlane.type === 'spacer'"
+                (click)="deleteSwimlane(i)"
               >
                 <mat-icon>delete</mat-icon>
               </button>
             </div>
             <!-- type: collapse -->
-            <cdk-accordion class="wlo-accordion" *ngIf="column.type === 'collapse'">
+            <cdk-accordion class="wlo-accordion" *ngIf="swimlane.type === 'collapse'">
               <cdk-accordion-item
                 #accordionItem="cdkAccordionItem"
                 class="wlo-accordion-item"
@@ -105,7 +107,7 @@
                 expanded="true"
               >
                 <div class="wlo-accordion-item-header" (click)="accordionItem.toggle()">
-                  <h2>{{ column.heading ?? 'Accordion Header' }}</h2>
+                  <h2>{{ swimlane.heading ?? 'Accordion Header' }}</h2>
                   <span class="wlo-accordion-item-description">
                     <mat-icon *ngIf="accordionItem.expanded">expand_less</mat-icon>
                     <mat-icon *ngIf="!accordionItem.expanded">expand_more</mat-icon>
@@ -118,57 +120,59 @@
                   [attr.id]="'accordion-body-' + i"
                   [attr.aria-labelledby]="'accordion-header-' + i"
                 >
-                  <p class="wlo-description" *ngIf="column.description">{{ column.description }}</p>
-                  <app-column-grid
-                    [backgroundColor]="column.backgroundColor"
+                  <p class="wlo-description" *ngIf="swimlane.description">
+                    {{ swimlane.description }}
+                  </p>
+                  <app-swimlane
+                    [backgroundColor]="swimlane.backgroundColor"
                     [editMode]="editMode"
                     [filterBarReady]="filterBarReady"
                     [generatedJobText]="generatedJobText()"
-                    [grid]="column.grid"
-                    [gridType]="column.gridType"
+                    [grid]="swimlane.grid"
+                    [gridType]="swimlane.gridType"
                     [jobsWidgetReady]="jobsWidgetReady"
                     [selectDimensions]="selectDimensions"
                     [selectedDimensionValues]="selectedDimensionValues"
                     [topic]="topic()"
                     [topicCollectionID]="topicCollectionID()"
                     *ngIf="jobsWidgetReady"
-                  ></app-column-grid>
+                  ></app-swimlane>
                 </div>
               </cdk-accordion-item>
             </cdk-accordion>
 
             <!-- type: jumbotron, text, container -->
             <div
-              [class.wlo-container]="column.type === 'container'"
-              [class.wlo-jumbotron]="column.type === 'jumbotron'"
-              [class.wlo-text]="column.type === 'text'"
-              *ngIf="['container', 'jumbotron', 'text'].includes(column.type)"
+              [class.wlo-container]="swimlane.type === 'container'"
+              [class.wlo-jumbotron]="swimlane.type === 'jumbotron'"
+              [class.wlo-text]="swimlane.type === 'text'"
+              *ngIf="['container', 'jumbotron', 'text'].includes(swimlane.type)"
             >
-              <h2 *ngIf="column.heading">{{ column.heading }}</h2>
-              <p class="wlo-description" *ngIf="column.description">{{ column.description }}</p>
-              <app-column-grid
-                [backgroundColor]="column.backgroundColor"
+              <h2 *ngIf="swimlane.heading">{{ swimlane.heading }}</h2>
+              <p class="wlo-description" *ngIf="swimlane.description">{{ swimlane.description }}</p>
+              <app-swimlane
+                [backgroundColor]="swimlane.backgroundColor"
                 [editMode]="editMode"
                 [filterBarReady]="filterBarReady"
                 [generatedJobText]="generatedJobText()"
-                [grid]="column.grid"
+                [grid]="swimlane.grid"
                 [jobsWidgetReady]="jobsWidgetReady"
                 [selectDimensions]="selectDimensions"
                 [selectedDimensionValues]="selectedDimensionValues"
                 [topic]="topic()"
                 [topicCollectionID]="topicCollectionID()"
                 *ngIf="jobsWidgetReady"
-              ></app-column-grid>
+              ></app-swimlane>
             </div>
 
-            <ng-container *ngIf="column.type === 'spacer'">
+            <ng-container *ngIf="swimlane.type === 'spacer'">
               <hr class="wlo-spacer" />
             </ng-container>
           </div>
         </ng-container>
       </ng-container>
-      <ng-template #noColumnsCreatedYet>
-        <p class="no-columns">No columns have been created yet.</p>
+      <ng-template #noSwimlanesCreatedYet>
+        <p class="no-swimlanes">No swimlanes have been created yet.</p>
       </ng-template>
     </div>
   </div>

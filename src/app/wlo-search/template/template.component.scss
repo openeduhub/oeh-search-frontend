@@ -111,7 +111,7 @@
             max-width: var(--maximal-width);
             border-radius: var(--border-radius);
 
-            .wlo-column {
+            .wlo-swimlane {
                 position: relative;
                 border-top-left-radius: var(--border-radius);
                 border-top-right-radius: var(--border-radius);
@@ -260,7 +260,7 @@
                 }
 
                 /* overwrites for edit mode */
-                &.column-edit-mode {
+                &.swimlane-edit-mode {
                     h2 {
                         margin: 0 7.5% 0 7.5%;
                     }
@@ -290,7 +290,7 @@
                 display: none;
             }
 
-            .no-columns {
+            .no-swimlanes {
                 padding: 10px;
                 font-size: 16px;
                 text-align: center;

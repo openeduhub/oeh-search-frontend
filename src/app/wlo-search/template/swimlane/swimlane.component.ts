@@ -17,12 +17,12 @@ import { SharedModule } from '../../shared/shared.module';
         UserConfigurableComponent,
         SharedModule,
     ],
-    selector: 'app-column-grid',
-    templateUrl: './column-grid.component.html',
-    styleUrls: ['./column-grid.component.scss'],
+    selector: 'app-swimlane',
+    templateUrl: './swimlane.component.html',
+    styleUrls: ['./swimlane.component.scss'],
     standalone: true,
 })
-export class ColumnGridComponent implements OnInit {
+export class SwimlaneComponent implements OnInit {
     // https://stackoverflow.com/a/56006046/3623608
     private _backgroundColor = '#f4f4f4';
     @Input() get backgroundColor() {

@@ -6,8 +6,8 @@ import { SharedModule } from './shared/shared.module';
 import { WloSearchRoutingModule } from './wlo-search-routing.module';
 import { WloSearchComponent } from './wlo-search.component';
 import { TemplateComponent } from './template/template.component';
-import { ColumnSettingsDialogComponent } from './template/column-settings-dialog/column-settings-dialog.component';
-import { ColumnGridComponent } from './template/column-grid/column-grid.component';
+import { SwimlaneSettingsDialogComponent } from './template/swimlane-settings-dialog/swimlane-settings-dialog.component';
+import { SwimlaneComponent } from './template/swimlane/swimlane.component';
 import { FilterBarComponent } from './template/filter-bar/filter-bar.component';
 
 @NgModule({
@@ -19,8 +19,8 @@ import { FilterBarComponent } from './template/filter-bar/filter-bar.component';
         SearchModule,
         PreferencesModule,
         TemplateComponent,
-        ColumnGridComponent,
-        ColumnSettingsDialogComponent,
+        SwimlaneComponent,
+        SwimlaneSettingsDialogComponent,
         FilterBarComponent,
     ],
 })

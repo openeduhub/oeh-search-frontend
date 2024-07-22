@@ -7,17 +7,17 @@ import {
 } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { SharedModule } from '../../shared/shared.module';
-import { GridColumn } from '../grid-column';
+import { Swimlane } from '../swimlane';
 import { gridTypeOptions, typeOptions } from '../grid-type-definitions';
 
 @Component({
-    selector: 'app-column-settings-dialog',
-    templateUrl: './column-settings-dialog.component.html',
-    styleUrls: ['./column-settings-dialog.component.scss'],
+    selector: 'app-swimlane-settings-dialog',
+    templateUrl: './swimlane-settings-dialog.component.html',
+    styleUrls: ['./swimlane-settings-dialog.component.scss'],
     standalone: true,
     imports: [FormsModule, MatDialogModule, ReactiveFormsModule, SharedModule],
 })
-export class ColumnSettingsDialogComponent {
+export class SwimlaneSettingsDialogComponent {
     form = new UntypedFormGroup({
         type: new UntypedFormControl(this.data.type),
         heading: new UntypedFormControl(this.data.heading),
@@ -31,7 +31,7 @@ export class ColumnSettingsDialogComponent {
     typeOptions = typeOptions;
     gridTypeOptions = gridTypeOptions;
 
-    constructor(@Inject(MAT_DIALOG_DATA) public data: GridColumn) {}
+    constructor(@Inject(MAT_DIALOG_DATA) public data: Swimlane) {}
 
     /**
      * Ensure that a given colorString is converted into a valid hex string.

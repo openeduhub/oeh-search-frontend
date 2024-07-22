@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 
-export const gridColumns = [
+export const swimlanes = [
     {
         uuid: uuidv4(),
         type: 'collapse',

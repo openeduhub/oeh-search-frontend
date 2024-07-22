@@ -14,12 +14,12 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { ActivatedRoute } from '@angular/router';
-import { ColumnGridComponent } from './column-grid/column-grid.component';
-import { ColumnSettingsDialogComponent } from './column-settings-dialog/column-settings-dialog.component';
-import { GridColumn } from './grid-column';
+import { SwimlaneComponent } from './swimlane/swimlane.component';
+import { SwimlaneSettingsDialogComponent } from './swimlane-settings-dialog/swimlane-settings-dialog.component';
+import { Swimlane } from './swimlane';
 import { GridTile } from './grid-tile';
 import { typeOptions } from './grid-type-definitions';
-import { gridColumns } from './initial-values';
+import { swimlanes } from './initial-values';
 import { FilterBarComponent } from './filter-bar/filter-bar.component';
 import { SharedModule } from '../shared/shared.module';
 import {
@@ -51,7 +51,7 @@ import { v4 as uuidv4 } from 'uuid';
         SharedModule,
         TemplateComponent,
         MatButtonModule,
-        ColumnGridComponent,
+        SwimlaneComponent,
         NgIf,
     ],
     selector: 'app-template',
@@ -77,7 +77,7 @@ export class TemplateComponent implements OnInit {
     generatedJobText: WritableSignal<string> = signal('');
     jobsWidgetReady = false;
 
-    gridColumns: GridColumn[] = [];
+    swimlanes: Swimlane[] = [];
     editMode: boolean = false;
 
     private initialized: boolean = false;
@@ -156,46 +156,46 @@ export class TemplateComponent implements OnInit {
                         if (this.topicConfigNode) {
                             // TODO: This is currently necessary to set the correct permissions of the node
                             await this.setPermissions(this.topicConfigNode.ref.id);
-                            // (2) load template (gridColumns)
+                            // (2) load template (swimlanes)
                             // (3) generate children nodes for topic node
                             // forEach does not support async / await
                             // -> for ... of ... (https://stackoverflow.com/a/37576787)
-                            for (const column of gridColumns) {
-                                if (column.grid?.length > 0) {
-                                    for (const widget of column.grid) {
+                            for (const swimlane of swimlanes) {
+                                if (swimlane.grid?.length > 0) {
+                                    for (const widget of swimlane.grid) {
                                         if (
                                             this.currentlySupportedWidgetTypes.includes(widget.item)
                                         ) {
-                                            // create child and add its ID as UUID to the gridColumns
+                                            // create child and add its ID as UUID to the swimlanes
                                             const childNode: Node = await this.createChild(
                                                 this.topicConfigNode.ref.id,
                                                 this.ioType,
                                                 'WIDGET_' + uuidv4(),
                                             );
                                             // (4) (set properties on children)
-                                            // store UUID in the config (gridColumns)
+                                            // store UUID in the config (swimlanes)
                                             widget.uuid = childNode.ref.id;
                                         }
                                     }
                                 }
                             }
-                            // (5) store adjusted config (gridColumns) with correct UUIDs
+                            // (5) store adjusted config (swimlanes) with correct UUIDs
                             this.topicConfigNode = await this.setPropertyAndRetrieveUpdatedNode(
                                 this.topicConfigNode.ref.id,
-                                JSON.stringify(gridColumns),
+                                JSON.stringify(swimlanes),
                             );
                         }
                     }
                     // retrieve the list of stored widget nodes
                     this.topicWidgets = await this.getNodeChildren(this.topicConfigNode.ref.id);
-                    // note: only the grid items of the columns should be represented as separate widget nodes
-                    const existingGridColumnsString =
+                    // note: only the grid items of the swimlane should be represented as separate widget nodes
+                    const existingSwimlanesString =
                         this.topicConfigNode.properties[this.widgetConfigType]?.[0] ?? '';
-                    this.gridColumns = existingGridColumnsString
-                        ? JSON.parse(existingGridColumnsString)
+                    this.swimlanes = existingSwimlanesString
+                        ? JSON.parse(existingSwimlanesString)
                         : [];
-                    // sync both existing children (topicWidgets) and topic config (gridColumns)
-                    await this.syncGridColumns();
+                    // sync both existing children (topicWidgets) and topic config (swimlanes)
+                    await this.syncSwimlanes();
                 }
 
                 this.generateFromPrompt();
@@ -213,8 +213,8 @@ export class TemplateComponent implements OnInit {
             this.retrieveSelectDimensions();
         }
 
-        if (this.gridColumns?.length === 0) {
-            this.gridColumns = gridColumns;
+        if (this.swimlanes?.length === 0) {
+            this.swimlanes = swimlanes;
         }
     }
 
@@ -239,7 +239,7 @@ export class TemplateComponent implements OnInit {
                 body: {
                     'cm:name': [name],
                     // TODO: Setting this on creation does not yet work
-                    'ccm:widget_config': [JSON.stringify(gridColumns)],
+                    'ccm:widget_config': [JSON.stringify(swimlanes)],
                 },
             }),
         );
@@ -272,10 +272,10 @@ export class TemplateComponent implements OnInit {
     /**
      * Filter out grid items not yet persisted and store updated config in node.
      */
-    private async syncGridColumns() {
+    private async syncSwimlanes() {
         let updateNecessary: boolean = false;
-        this.gridColumns.forEach((column: GridColumn) => {
-            column.grid?.forEach((widget: GridTile, index: number, object: GridTile[]) => {
+        this.swimlanes.forEach((swimlane: Swimlane) => {
+            swimlane.grid?.forEach((widget: GridTile, index: number, object: GridTile[]) => {
                 const idNecessary = this.currentlySupportedWidgetTypes.includes(widget.item);
                 // ID necessary, but not included -> remove from config
                 if (idNecessary && !this.topicWidgetsIds.includes(widget.uuid)) {
@@ -291,14 +291,12 @@ export class TemplateComponent implements OnInit {
             // overwrite config
             this.topicConfigNode = await this.setPropertyAndRetrieveUpdatedNode(
                 this.topicConfigNode.ref.id,
-                JSON.stringify(this.gridColumns),
+                JSON.stringify(this.swimlanes),
             );
-            // set value of gridColumns to updated property
-            const existingGridColumnsString =
+            // set value of swimlanes to updated property
+            const existingSwimlanesString =
                 this.topicConfigNode.properties[this.widgetConfigType]?.[0] ?? '';
-            this.gridColumns = existingGridColumnsString
-                ? JSON.parse(existingGridColumnsString)
-                : [];
+            this.swimlanes = existingSwimlanesString ? JSON.parse(existingSwimlanesString) : [];
         }
     }
 
@@ -326,50 +324,50 @@ export class TemplateComponent implements OnInit {
         this.selectedDimensionValues = event;
     }
 
-    moveColumnPosition(oldIndex: number, newIndex: number) {
-        if (newIndex >= 0 && newIndex <= this.gridColumns.length - 1) {
-            moveItemInArray(this.gridColumns, oldIndex, newIndex);
+    moveSwimlanePosition(oldIndex: number, newIndex: number) {
+        if (newIndex >= 0 && newIndex <= this.swimlanes.length - 1) {
+            moveItemInArray(this.swimlanes, oldIndex, newIndex);
         }
     }
 
-    addColumn(type: string) {
-        const newColumn: GridColumn = {
+    addSwimlane(type: string) {
+        const newSwimlane: Swimlane = {
             uuid: uuidv4(),
             type,
         };
         if (type !== 'spacer') {
-            newColumn.heading = 'Eine beispielhafte Überschrift';
-            newColumn.grid = [];
+            newSwimlane.heading = 'Eine beispielhafte Überschrift';
+            newSwimlane.grid = [];
         }
-        this.gridColumns.push(newColumn);
+        this.swimlanes.push(newSwimlane);
     }
 
-    editColumn(column: GridColumn, index: number) {
-        const dialogRef = this.dialog.open(ColumnSettingsDialogComponent, {
-            data: column,
+    editSwimlane(swimlane: Swimlane, index: number) {
+        const dialogRef = this.dialog.open(SwimlaneSettingsDialogComponent, {
+            data: swimlane,
         });
 
         // TODO: fix error when closing (ERROR TypeError: Cannot set properties of null (setting '_closeInteractionType'))
         // seems to be a known issue as of May 2023: https://stackoverflow.com/a/76273326/3623608
         dialogRef.afterClosed().subscribe((result) => {
             if (result.status === 'VALID') {
-                const editedColumn = result.value;
+                const editedSwimlane = result.value;
                 // TODO: Due to textual conversion, the grid must currently be parsed
-                if (editedColumn.grid) {
-                    editedColumn.grid = JSON.parse(editedColumn.grid);
+                if (editedSwimlane.grid) {
+                    editedSwimlane.grid = JSON.parse(editedSwimlane.grid);
                 }
-                this.gridColumns[index] = { ...column, ...editedColumn };
+                this.swimlanes[index] = { ...swimlane, ...editedSwimlane };
             }
             console.log('Closed', result);
         });
     }
 
-    deleteColumn(index: number) {
+    deleteSwimlane(index: number) {
         if (
-            this.gridColumns?.[index] &&
+            this.swimlanes?.[index] &&
             confirm('Wollen Sie dieses Element wirklich löschen?') === true
         ) {
-            this.gridColumns.splice(index, 1);
+            this.swimlanes.splice(index, 1);
         }
     }
 

@@ -1,4 +1,4 @@
-import { SelectOption } from './column-settings-dialog/select-option';
+import { SelectOption } from './swimlane-settings-dialog/select-option';
 
 export const typeOptions: SelectOption[] = [
     {

@@ -1,6 +1,6 @@
 import { GridTile } from './grid-tile';
 
-export interface GridColumn {
+export interface Swimlane {
     uuid: string;
     type?: string;
     heading?: string;
