@@ -64,6 +64,7 @@
   </div>
 </header>
 <app-filter-bar
+  [requestInProgress]="requestInProgress"
   [selectDimensions]="selectDimensions"
   (selectValuesChanged)="selectValuesChanged($event)"
   *ngIf="selectDimensionsLoaded"

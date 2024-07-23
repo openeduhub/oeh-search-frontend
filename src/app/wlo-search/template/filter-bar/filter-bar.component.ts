@@ -14,6 +14,21 @@ import { pairwise, startWith } from 'rxjs/operators';
     standalone: true,
 })
 export class FilterBarComponent implements OnInit {
+    private _requestInProgress: boolean;
+    @Input() set requestInProgress(value: boolean) {
+        this._requestInProgress = value;
+        if (!this.form) {
+            return;
+        }
+        if (value) {
+            this.form.disable();
+        } else {
+            this.form.enable();
+        }
+    }
+    get requestInProgress(): boolean {
+        return this._requestInProgress;
+    }
     @Input() selectDimensions: Map<string, MdsWidget> = new Map<string, MdsWidget>();
     @Output() selectValuesChanged = new EventEmitter<MdsValue[]>();
 
