@@ -1,3 +1,11 @@
+<div
+  class="reloading-indicator"
+  [class.light-bg]="requestInProgress"
+  *ngIf="!loadedSuccessfully || requestInProgress"
+>
+  <!-- for requestInProgress the page might be too large to display a visible spinner -->
+  <es-spinner *ngIf="!loadedSuccessfully"></es-spinner>
+</div>
 <header class="template-header">
   <div class="template-header-wrapper">
     <div class="template-header-container">
@@ -188,7 +196,7 @@
         </ng-container>
       </ng-container>
       <ng-template #noSwimlanesCreatedYet>
-        <p class="no-swimlanes">No swimlanes have been created yet.</p>
+        <p class="no-swimlanes">Bisher wurden noch keine Swimlanes mit Inhalten erstellt.</p>
       </ng-template>
     </div>
   </div>

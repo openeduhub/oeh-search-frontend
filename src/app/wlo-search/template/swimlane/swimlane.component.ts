@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MdsValue, MdsWidget, Node, NodeEntries } from 'ngx-edu-sharing-api';
-import { GridTile } from '../grid-tile';
+import { GridTile } from './grid-tile';
 import { GridWidgetComponent } from './grid-widget/grid-widget.component';
 import { SharedModule } from '../../shared/shared.module';
 

@@ -1,0 +1,49 @@
+.settings-form {
+    padding-top: 5px !important;
+
+    mat-form-field {
+        width: 100%;
+    }
+
+    .grid-definition {
+        display: block;
+        margin-top: 10px;
+        margin-bottom: 10px;
+
+        // TODO: Move into theme file
+        --mat-expansion-header-text-font: Montserrat-SemiBold, serif;
+        --mat-expansion-header-text-weight: 400;
+
+        .mat-expansion-panel-header-description {
+            font-size: 13px;
+        }
+
+        .delete-btn {
+            font-size: 20px;
+            float: right;
+        }
+
+        .dimensions {
+            margin-top: 5px;
+
+            .tile-dimension {
+                button {
+                    margin-right: 0.5rem;
+                    padding: 0;
+                    min-width: inherit;
+                }
+
+                .line-break {
+                    display: block;
+                    margin-top: 0.5rem;
+                }
+            }
+        }
+    }
+
+    .no-grid-tiles {
+        padding: 10px;
+        font-size: 16px;
+        text-align: center;
+    }
+}

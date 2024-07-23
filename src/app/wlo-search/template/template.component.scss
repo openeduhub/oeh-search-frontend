@@ -10,6 +10,24 @@
     margin: auto;
 }
 
+.reloading-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: wait;
+    background: #fff;
+    z-index: 100;
+
+    &.light-bg {
+        background: rgba(0, 0, 0, 0.4);
+    }
+}
+
 .template-header {
     background-color: var(--topic-color);
 

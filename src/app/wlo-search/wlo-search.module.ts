@@ -6,7 +6,7 @@ import { SharedModule } from './shared/shared.module';
 import { WloSearchRoutingModule } from './wlo-search-routing.module';
 import { WloSearchComponent } from './wlo-search.component';
 import { TemplateComponent } from './template/template.component';
-import { SwimlaneSettingsDialogComponent } from './template/swimlane-settings-dialog/swimlane-settings-dialog.component';
+import { SwimlaneSettingsDialogComponent } from './template/swimlane/swimlane-settings-dialog/swimlane-settings-dialog.component';
 import { SwimlaneComponent } from './template/swimlane/swimlane.component';
 import { FilterBarComponent } from './template/filter-bar/filter-bar.component';
 

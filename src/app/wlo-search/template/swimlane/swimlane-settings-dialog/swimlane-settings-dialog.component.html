@@ -1,0 +1,115 @@
+<h1 mat-dialog-title>
+  <span i18n>Configure</span> "{{ data.heading ? data.heading : data.uuid }}"
+</h1>
+
+<div mat-dialog-content [formGroup]="form" class="content settings-form">
+  <mat-form-field appearance="outline">
+    <mat-label i18n>Heading</mat-label>
+    <input matInput type="text" placeholder="Heading of the swimlane" formControlName="heading" />
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label i18n>Description</mat-label>
+    <textarea
+      matInput
+      placeholder="Description of the swimlane"
+      formControlName="description"
+    ></textarea>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label i18n>Type</mat-label>
+    <mat-select formControlName="type">
+      <mat-option [value]="option.value" *ngFor="let option of typeOptions">{{
+        option.viewValue
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label i18n>Grid-Type</mat-label>
+    <mat-select formControlName="gridType">
+      <mat-option [value]="option.value" *ngFor="let option of gridTypeOptions">{{
+        option.viewValue
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label i18n>Background-Color</mat-label>
+    <input matInput type="color" formControlName="backgroundColor" />
+  </mat-form-field>
+  <mat-label i18n>Grid-Definition</mat-label>
+  <mat-accordion
+    multi="true"
+    hideToggle="true"
+    class="grid-definition"
+    *ngIf="gridItems?.length > 0; else noGridTiles"
+  >
+    <mat-expansion-panel
+      #panelItem="matExpansionPanel"
+      *ngFor="let gridTile of gridItems; let i = index"
+    >
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ gridTile.item }}
+        </mat-panel-title>
+        <mat-panel-description>
+          Klicke zum {{ panelItem.expanded ? 'Schließen' : 'Konfigurieren' }}
+        </mat-panel-description>
+        <button mat-button class="delete-btn" (click)="$event.stopPropagation(); removeGridTile(i)">
+          &times;
+        </button>
+      </mat-expansion-panel-header>
+      <mat-label i18n>Dimensions</mat-label>
+      <div class="dimensions">
+        <ng-container *ngFor="let dim of tileDimensions">
+          <!-- TODO: currently, no suitable solution for including different button types exist -->
+          <button
+            *ngIf="
+              gridTile.rows === dim.numberOfRows && gridTile.cols === dim.numberOfCols;
+              else nonMatchingDimensions
+            "
+            mat-button
+            mat-flat-button
+            color="primary"
+            [style.height]="dim.numberOfRows * 35 + 'px'"
+            [style.width]="dim.numberOfCols * 35 + 'px'"
+            (click)="patchDimensions(i, dim.numberOfRows, dim.numberOfCols)"
+          >
+            {{ dim.numberOfRows }}x{{ dim.numberOfCols }}
+          </button>
+          <ng-template #nonMatchingDimensions>
+            <button
+              mat-button
+              mat-stroked-button
+              color="primary"
+              [style.height]="dim.numberOfRows * 35 + 'px'"
+              [style.width]="dim.numberOfCols * 35 + 'px'"
+              (click)="patchDimensions(i, dim.numberOfRows, dim.numberOfCols)"
+            >
+              {{ dim.numberOfRows }}x{{ dim.numberOfCols }}
+            </button>
+          </ng-template>
+          <div *ngIf="dim.numberOfCols === 3" class="line-break"></div>
+        </ng-container>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <ng-template #noGridTiles>
+    <div class="no-grid-tiles">Bisher wurden noch keine Grid-Elemente hinzugefügt.</div>
+  </ng-template>
+  <button mat-stroked-button class="add-button" color="primary" [matMenuTriggerFor]="addWidgetMenu">
+    <mat-icon>add</mat-icon>
+    Widget hinzufügen
+  </button>
+  <mat-menu #addWidgetMenu="matMenu">
+    <button
+      mat-menu-item
+      *ngFor="let option of widgetTypeOptions"
+      (click)="addGridTile(option.value)"
+    >
+      {{ option.viewValue }}
+    </button>
+  </mat-menu>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-flat-button color="primary" mat-dialog-close i18n>Close</button>
+  <button mat-flat-button color="primary" [mat-dialog-close]="form" i18n>Apply</button>
+</div>

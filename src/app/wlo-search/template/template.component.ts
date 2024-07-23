@@ -14,10 +14,10 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { ActivatedRoute } from '@angular/router';
+import { GridTile } from './swimlane/grid-tile';
 import { SwimlaneComponent } from './swimlane/swimlane.component';
-import { SwimlaneSettingsDialogComponent } from './swimlane-settings-dialog/swimlane-settings-dialog.component';
-import { Swimlane } from './swimlane';
-import { GridTile } from './grid-tile';
+import { SwimlaneSettingsDialogComponent } from './swimlane/swimlane-settings-dialog/swimlane-settings-dialog.component';
+import { Swimlane } from './swimlane/swimlane';
 import { typeOptions } from './grid-type-definitions';
 import { swimlanes } from './initial-values';
 import { FilterBarComponent } from './filter-bar/filter-bar.component';
@@ -32,6 +32,7 @@ import {
     NodeEntries,
     NodeService,
 } from 'ngx-edu-sharing-api';
+import { SpinnerComponent } from 'ngx-edu-sharing-ui';
 import { AiTextPromptsService } from 'ngx-edu-sharing-z-api';
 import { firstValueFrom } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -51,6 +52,7 @@ import { v4 as uuidv4 } from 'uuid';
         SharedModule,
         TemplateComponent,
         MatButtonModule,
+        SpinnerComponent,
         SwimlaneComponent,
         NgIf,
     ],
@@ -81,6 +83,7 @@ export class TemplateComponent implements OnInit {
     editMode: boolean = false;
 
     private initialized: boolean = false;
+    loadedSuccessfully: boolean = false;
     private currentlySupportedWidgetTypes = [
         'wlo-ai-text-widget',
         'wlo-collection-chips',
@@ -203,26 +206,28 @@ export class TemplateComponent implements OnInit {
                         : [];
                     // sync both existing children (topicWidgets) and topic config (swimlanes)
                     await this.syncSwimlanes();
+
+                    const username = environment?.eduSharingUsername;
+                    const password = environment?.eduSharingPassword;
+                    // TODO: This fix for local development currently only works in Firefox
+                    if (username && password) {
+                        this.authService.login(username, password).subscribe(async (data) => {
+                            console.log('login success', data);
+                            await this.retrieveSelectDimensions();
+                        });
+                    } else {
+                        await this.retrieveSelectDimensions();
+                    }
+
+                    if (this.swimlanes?.length === 0) {
+                        this.swimlanes = swimlanes;
+                    }
+
+                    this.generateFromPrompt();
+
+                    this.loadedSuccessfully = true;
                 }
-
-                this.generateFromPrompt();
             });
-
-        const username = environment?.eduSharingUsername;
-        const password = environment?.eduSharingPassword;
-        // TODO: This fix for local development currently only works in Firefox
-        if (username && password) {
-            this.authService.login(username, password).subscribe((data) => {
-                console.log('login success', data);
-                this.retrieveSelectDimensions();
-            });
-        } else {
-            this.retrieveSelectDimensions();
-        }
-
-        if (this.swimlanes?.length === 0) {
-            this.swimlanes = swimlanes;
-        }
     }
 
     get filterBarReady() {
@@ -318,17 +323,19 @@ export class TemplateComponent implements OnInit {
         return firstValueFrom(this.nodeApi.getNode(nodeId));
     }
 
-    retrieveSelectDimensions() {
-        this.mdsService.getMetadataSet({ metadataSet: 'mds_oeh' }).subscribe((data) => {
-            const filteredMdsWidgets: MdsWidget[] = data.widgets.filter((widget: MdsWidget) =>
-                this.providedSelectDimensionKeys.includes(widget.id),
-            );
-            filteredMdsWidgets.forEach((mdsWidget: MdsWidget) => {
-                // Note: The $ is added at this position to signal an existing placeholder
-                this.selectDimensions.set('$' + mdsWidget.id + '$', mdsWidget);
-            });
-            this.selectDimensionsLoaded = true;
-        });
+    async retrieveSelectDimensions(): Promise<void> {
+        await firstValueFrom(this.mdsService.getMetadataSet({ metadataSet: 'mds_oeh' })).then(
+            (data) => {
+                const filteredMdsWidgets: MdsWidget[] = data.widgets.filter((widget: MdsWidget) =>
+                    this.providedSelectDimensionKeys.includes(widget.id),
+                );
+                filteredMdsWidgets.forEach((mdsWidget: MdsWidget) => {
+                    // Note: The $ is added at this position to signal an existing placeholder
+                    this.selectDimensions.set('$' + mdsWidget.id + '$', mdsWidget);
+                });
+                this.selectDimensionsLoaded = true;
+            },
+        );
     }
 
     selectValuesChanged(event: MdsValue[]) {
@@ -380,16 +387,85 @@ export class TemplateComponent implements OnInit {
 
         // TODO: fix error when closing (ERROR TypeError: Cannot set properties of null (setting '_closeInteractionType'))
         // seems to be a known issue as of May 2023: https://stackoverflow.com/a/76273326
-        dialogRef.afterClosed().subscribe((result) => {
-            if (result.status === 'VALID') {
+        dialogRef.afterClosed().subscribe(async (result) => {
+            if (result?.status === 'VALID') {
                 const editedSwimlane = result.value;
-                // TODO: due to textual conversion, the grid must currently be parsed
+                if (!editedSwimlane) {
+                    return;
+                }
+                this.requestInProgress = true;
+                // parse grid string
                 if (editedSwimlane.grid) {
                     editedSwimlane.grid = JSON.parse(editedSwimlane.grid);
                 }
-                this.swimlanes[index] = { ...swimlane, ...editedSwimlane };
+                // create a copy of the swimlanes
+                const swimlanesCopy = JSON.parse(JSON.stringify(this.swimlanes));
+                // actions related to edited swimlane
+                const editedSwimlaneUUIDs =
+                    editedSwimlane.grid?.map((gridItem: GridTile) => gridItem.uuid) ?? [];
+                // sync updated grid items with existing swimlane grid
+                // (1) remove deleted grid elements
+                // iterate existing grid and check, if items still exist
+                if (swimlane.grid?.length > 0) {
+                    for (const gridTile of swimlane.grid) {
+                        // relevant type, but not included anymore -> delete
+                        if (
+                            this.currentlySupportedWidgetTypes.includes(gridTile.item) &&
+                            !editedSwimlaneUUIDs.includes(gridTile.uuid)
+                        ) {
+                            await firstValueFrom(this.nodeApi.deleteNode(gridTile.uuid)).then(
+                                () => {
+                                    console.log('Deleted node');
+                                },
+                                () => {
+                                    console.log('Error deleting node');
+                                },
+                            );
+                        }
+                    }
+                }
+                const existingSwimlaneUUIDs =
+                    swimlane.grid?.map((gridItem: GridTile) => gridItem.uuid) ?? [];
+                // (2) create new grid elements and adjust UUID of the swimlane
+                if (editedSwimlane.grid?.length > 0) {
+                    for (const gridTile of editedSwimlane.grid) {
+                        // relevant type, but not included anymore -> delete
+                        if (
+                            this.currentlySupportedWidgetTypes.includes(gridTile.item) &&
+                            !existingSwimlaneUUIDs.includes(gridTile.uuid)
+                        ) {
+                            // create child and add its ID as UUID to the swimlanes
+                            const childNode: Node = await this.createChild(
+                                this.topicConfigNode.ref.id,
+                                this.ioType,
+                                'WIDGET_' + uuidv4(),
+                            );
+                            // (set properties on children)
+                            const nodeId = childNode.ref.id;
+                            const propertyValue = { searchMode: 'ngsearchword' };
+                            await this.setProperty(nodeId, JSON.stringify(propertyValue));
+                            // store UUID in the config (swimlanes)
+                            gridTile.uuid = nodeId;
+                        }
+                    }
+                }
+                // (3) store updated swimlanes in node config
+                swimlanesCopy[index] = editedSwimlane;
+                // (4) change updated swimlanes in the topic node
+                this.topicConfigNode = await this.setPropertyAndRetrieveUpdatedNode(
+                    this.topicConfigNode.ref.id,
+                    JSON.stringify(swimlanesCopy),
+                );
+                // (5) sync with server state
+                this.topicWidgets = await this.getNodeChildren(this.topicConfigNode.ref.id);
+                // note: only the grid items of the swimlane should be represented as separate widget nodes
+                const existingSwimlanesString =
+                    this.topicConfigNode.properties[this.widgetConfigType]?.[0] ?? '';
+                this.swimlanes = existingSwimlanesString ? JSON.parse(existingSwimlanesString) : [];
+
+                this.requestInProgress = false;
             }
-            console.log('Closed', result);
+            console.log('Closed', result?.value);
         });
     }
 

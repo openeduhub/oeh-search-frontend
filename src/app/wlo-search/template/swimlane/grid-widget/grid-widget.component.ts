@@ -46,7 +46,7 @@ export class GridWidgetComponent implements OnInit {
     }
 
     get parsedWidgetNodeProperties() {
-        const properties = this.widgetNode.properties[this.widgetConfigType]?.[0];
+        const properties = this.widgetNode?.properties?.[this.widgetConfigType]?.[0];
         if (properties && JSON.parse(properties)) {
             return JSON.parse(properties);
         }

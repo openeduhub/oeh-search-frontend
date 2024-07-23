@@ -1,4 +1,4 @@
-import { SelectOption } from './swimlane-settings-dialog/select-option';
+import { SelectOption } from './swimlane/swimlane-settings-dialog/select-option';
 
 export const typeOptions: SelectOption[] = [
     {
@@ -35,5 +35,32 @@ export const gridTypeOptions: SelectOption[] = [
     {
         value: 'largeGutter',
         viewValue: 'Großer Abstand zwischen Elementen',
+    },
+];
+
+export const widgetTypeOptions: SelectOption[] = [
+    {
+        value: 'wlo-ai-text-widget',
+        viewValue: 'KI-Widget',
+    },
+    {
+        value: 'wlo-card',
+        viewValue: 'Karte',
+    },
+    {
+        value: 'wlo-collection-chips',
+        viewValue: 'Themenbaum',
+    },
+    {
+        value: 'wlo-image',
+        viewValue: 'Bild',
+    },
+    {
+        value: 'wlo-text',
+        viewValue: 'Text',
+    },
+    {
+        value: 'wlo-user-configurable',
+        viewValue: 'Inhalte-Teaser',
     },
 ];
