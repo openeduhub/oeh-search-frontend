@@ -95,6 +95,8 @@ export class SwimlaneSettingsDialogComponent implements OnInit {
         const gridTile: GridTile = {
             uuid: uuidv4(),
             item: widgetItemName,
+            rows: 1,
+            cols: 3,
         };
         this.gridItems.push(gridTile);
         this.syncGridItemsWithFormData();
