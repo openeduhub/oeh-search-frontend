@@ -47,6 +47,20 @@
       *ngFor="let gridTile of gridItems; let i = index"
     >
       <mat-expansion-panel-header>
+        <div class="wlo-move-buttons">
+          <button
+            [disabled]="i === 0"
+            (click)="$event.stopPropagation(); moveGridTilePosition(i, i - 1)"
+          >
+            <mat-icon>arrow_upward</mat-icon>
+          </button>
+          <button
+            [disabled]="i === gridItems.length - 1"
+            (click)="$event.stopPropagation(); moveGridTilePosition(i, i + 1)"
+          >
+            <mat-icon>arrow_downward</mat-icon>
+          </button>
+        </div>
         <mat-panel-title>
           {{ gridTile.item }}
         </mat-panel-title>

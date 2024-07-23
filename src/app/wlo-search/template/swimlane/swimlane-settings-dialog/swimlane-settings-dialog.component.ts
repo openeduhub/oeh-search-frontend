@@ -1,3 +1,4 @@
+import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, Inject, OnInit } from '@angular/core';
 import {
     FormsModule,
@@ -96,22 +97,30 @@ export class SwimlaneSettingsDialogComponent implements OnInit {
             item: widgetItemName,
         };
         this.gridItems.push(gridTile);
-        // sync with form data
-        this.form.get('grid').setValue(JSON.stringify(this.gridItems));
+        this.syncGridItemsWithFormData();
+    }
+
+    async moveGridTilePosition(oldIndex: number, newIndex: number) {
+        if (newIndex >= 0 && newIndex <= this.gridItems.length - 1) {
+            moveItemInArray(this.gridItems, oldIndex, newIndex);
+            this.syncGridItemsWithFormData();
+        }
     }
 
     removeGridTile(index: number) {
         if (confirm('Wollen Sie dieses Element wirklich löschen?') === true) {
             this.gridItems.splice(index, 1);
-            // sync with form data
-            this.form.get('grid').setValue(JSON.stringify(this.gridItems));
+            this.syncGridItemsWithFormData();
         }
     }
 
     patchDimensions(index: number, rows: number, cols: number) {
         this.gridItems[index].rows = rows;
         this.gridItems[index].cols = cols;
-        // sync with form data
+        this.syncGridItemsWithFormData();
+    }
+
+    private syncGridItemsWithFormData() {
         this.form.get('grid').setValue(JSON.stringify(this.gridItems));
     }
 }

@@ -14,8 +14,45 @@
         --mat-expansion-header-text-font: Montserrat-SemiBold, serif;
         --mat-expansion-header-text-weight: 400;
 
+        .mat-expansion-panel-header-title {
+            margin-left: 70px;
+        }
+
         .mat-expansion-panel-header-description {
             font-size: 13px;
+        }
+
+        .wlo-move-buttons {
+            position: absolute;
+            left: 5px;
+            top: 5px;
+            z-index: 10;
+
+            button {
+                min-width: inherit;
+                line-height: 10px;
+                padding: 5px 5px 2px 5px;
+                border: 1px solid #e0e0e0;
+                background: #f4f4f4;
+                cursor: pointer;
+
+                &:first-child {
+                    border-radius: 8px 0 0 8px;
+                }
+
+                &:last-child {
+                    border-radius: 0 8px 8px 0;
+                }
+
+                &:disabled,
+                &[disabled] {
+                    cursor: not-allowed;
+                }
+
+                mat-icon {
+                    font-size: 20px;
+                }
+            }
         }
 
         .delete-btn {
