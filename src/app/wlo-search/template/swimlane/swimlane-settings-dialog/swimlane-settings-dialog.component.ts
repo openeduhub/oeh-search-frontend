@@ -170,9 +170,9 @@ export class SwimlaneSettingsDialogComponent implements OnInit {
         }
     }
 
-    setConfigValue(index: number, configItem: keyof WidgetConfig, configValue: any) {
+    // keyof -> https://stackoverflow.com/a/69198602
+    setConfigValue(index: number, configItem: keyof WidgetConfig, configValue: string) {
         if (this.gridItems[index].config && this.availableWidgetConfigTypes.includes(configItem)) {
-            // https://stackoverflow.com/a/69198602
             this.gridItems[index].config[configItem] = configValue;
             this.syncGridItemsWithFormData();
         }
@@ -191,7 +191,7 @@ export class SwimlaneSettingsDialogComponent implements OnInit {
         this.syncGridItemsWithFormData();
     }
 
-    private syncGridItemsWithFormData() {
+    syncGridItemsWithFormData() {
         this.form.get('grid').setValue(JSON.stringify(this.gridItems));
     }
 }

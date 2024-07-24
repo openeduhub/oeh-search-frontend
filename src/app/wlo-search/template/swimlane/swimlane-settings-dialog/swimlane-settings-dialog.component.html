@@ -73,7 +73,7 @@
           &times;
         </button>
       </mat-expansion-panel-header>
-      <mat-label i18n>Grid dimensions</mat-label>
+      <mat-label i18n>General settings</mat-label>
       <div class="dimensions">
         <ng-container *ngFor="let dim of tileDimensions">
           <!-- TODO: currently, no suitable solution for including different button types exist -->
@@ -106,13 +106,22 @@
           <div *ngIf="dim.numberOfCols === 3" class="line-break"></div>
         </ng-container>
       </div>
-      <!-- TODO: Classes input -->
-
+      <mat-form-field appearance="outline">
+        <mat-label i18n>CSS class names</mat-label>
+        <input
+          matInput
+          type="text"
+          placeholder="CSS classes set to the widget (use spaces between multiple class names)"
+          [ngModel]="gridTile.classNames"
+          (ngModelChange)="gridTile.classNames = $event; syncGridItemsWithFormData()"
+          [ngModelOptions]="{ standalone: true }"
+        />
+      </mat-form-field>
       <div
         class="grid-config"
         *ngIf="supportedWidgetTypesWithConfig.includes(gridTile.item) && gridTile.config"
       >
-        <mat-label class="config-label" i18n>Configuration</mat-label>
+        <mat-label class="config-label" i18n>Widget configuration</mat-label>
         <mat-form-field
           [class.extended-margin-bottom]="configHints.get(configItem)"
           appearance="outline"

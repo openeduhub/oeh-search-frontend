@@ -1,6 +1,7 @@
 <ng-container *ngIf="widgetType === 'wlo-ai-text-widget'">
   <wlo-ai-text-widget
     *ngIf="filterBarReady"
+    [class]="widgetClasses ? widgetClasses : ''"
     [contextNodeId]="topicCollectionID"
     [editMode]="editMode"
     [nodeId]="widgetNodeId"
@@ -11,6 +12,7 @@
 <ng-container *ngIf="widgetType === 'wlo-collection-chips'">
   <wlo-collection-chips
     *ngIf="topicCollectionID"
+    [class]="widgetClasses ? widgetClasses : ''"
     [customUrl]="retrieveCustomUrl"
     [collection]="topicCollectionID"
   ></wlo-collection-chips>
@@ -24,7 +26,7 @@
   </wlo-user-configurable>
 </ng-container>
 <ng-container *ngIf="widgetType === 'wlo-card'">
-  <mat-card appearance="outlined" class="example-card">
+  <mat-card appearance="outlined" class="example-card" [class]="widgetClasses ? widgetClasses : ''">
     <mat-card-header>
       <div mat-card-avatar class="example-header-image"></div>
       <mat-card-title>Shiba Inu</mat-card-title>
@@ -49,9 +51,17 @@
   </mat-card>
 </ng-container>
 <ng-container *ngIf="widgetType === 'wlo-image'">
-  <img src="https://placehold.co/800x600" alt="Examplary WLO-Image" />
+  <img
+    src="https://placehold.co/800x600"
+    alt="Examplary WLO-Image"
+    [class]="widgetClasses ? widgetClasses : ''"
+  />
 </ng-container>
-<div class="text-widget" *ngIf="widgetType === 'wlo-text'">
+<div
+  class="text-widget"
+  [class]="widgetClasses ? widgetClasses : ''"
+  *ngIf="widgetType === 'wlo-text'"
+>
   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
   labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
   nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
