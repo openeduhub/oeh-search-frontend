@@ -1,5 +1,7 @@
-import { Component, computed, Input, OnInit, Signal } from '@angular/core';
+import { Component, computed, Input, signal, Signal, WritableSignal } from '@angular/core';
+import { widgetConfigType } from '../../grid-type-definitions';
 import { SharedModule } from '../../../shared/shared.module';
+import { WidgetConfig } from './widget-config';
 import { MdsValue, MdsWidget, Node } from 'ngx-edu-sharing-api';
 import {
     AiTextWidgetComponent,
@@ -19,7 +21,7 @@ import {
     templateUrl: './grid-widget.component.html',
     styleUrl: './grid-widget.component.scss',
 })
-export class GridWidgetComponent implements OnInit {
+export class GridWidgetComponent {
     @Input() backgroundColor: string;
     @Input() editMode: boolean;
     @Input() filterBarReady: boolean;
@@ -30,12 +32,29 @@ export class GridWidgetComponent implements OnInit {
     @Input() topic: string;
     @Input() topicCollectionID: string;
     @Input() widgetClasses: string;
-    @Input() widgetConfigType: string;
-    @Input() widgetNode: Node;
+    // https://stackoverflow.com/a/56006046
+    private _widgetNode: Node;
+    @Input() get widgetNode(): Node {
+        return this._widgetNode;
+    }
+    set widgetNode(value: Node) {
+        this._widgetNode = value;
+        this.setContentConfig(value);
+    }
     @Input() widgetNodeId: string;
     @Input() widgetType: string;
 
-    jobsContentConfig: Signal<string>;
+    contentConfig: WritableSignal<WidgetConfig> = signal({});
+    contentConfigAsString: Signal<string> = computed(() => {
+        return JSON.stringify(this.contentConfig());
+    });
+
+    setContentConfig(widgetNode: Node) {
+        const widgetConfig = widgetNode?.properties?.[widgetConfigType]?.[0];
+        if (widgetConfig && JSON.parse(widgetConfig)?.config) {
+            this.contentConfig.set(JSON.parse(widgetConfig).config);
+        }
+    }
 
     retrieveCustomUrl(node: Node) {
         const collectionId = node.properties?.['sys:node-uuid']?.[0];
@@ -43,37 +62,5 @@ export class GridWidgetComponent implements OnInit {
             return window.location.origin + '/template?collectionId=' + collectionId;
         }
         return '';
-    }
-
-    get parsedWidgetNodeProperties() {
-        const properties = this.widgetNode?.properties?.[this.widgetConfigType]?.[0];
-        if (properties && JSON.parse(properties)) {
-            return JSON.parse(properties);
-        }
-        return {};
-    }
-
-    get newestContentConfig() {
-        return JSON.stringify({
-            headline: 'Neueste Inhalte zum Thema ' + this.topic,
-            layout: 'carousel',
-            description: '',
-            searchMode: this.parsedWidgetNodeProperties.searchMode ?? 'collection',
-            chosenColor: this.backgroundColor,
-            collectionId: this.topicCollectionID,
-        });
-    }
-
-    ngOnInit() {
-        this.jobsContentConfig = computed(() => {
-            return JSON.stringify({
-                headline: 'Das sind Berufe zum Thema ' + this.topic,
-                layout: 'carousel',
-                description: this.generatedJobText,
-                searchMode: 'ngsearchword',
-                chosenColor: this.backgroundColor,
-                searchText: 'Berufe mit ' + this.topic,
-            });
-        });
     }
 }

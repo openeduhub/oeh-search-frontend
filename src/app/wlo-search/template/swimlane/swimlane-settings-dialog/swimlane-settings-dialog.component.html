@@ -1,5 +1,7 @@
 <h1 mat-dialog-title>
-  <span i18n>Configure</span> "{{ data.heading ? data.heading : data.uuid }}"
+  <span i18n>Configure</span> "{{
+    data.swimlane.heading ? data.swimlane.heading : data.swimlane.uuid
+  }}"
 </h1>
 
 <div mat-dialog-content [formGroup]="form" class="content settings-form">
@@ -71,7 +73,7 @@
           &times;
         </button>
       </mat-expansion-panel-header>
-      <mat-label i18n>Dimensions</mat-label>
+      <mat-label i18n>Grid dimensions</mat-label>
       <div class="dimensions">
         <ng-container *ngFor="let dim of tileDimensions">
           <!-- TODO: currently, no suitable solution for including different button types exist -->
@@ -103,6 +105,25 @@
           </ng-template>
           <div *ngIf="dim.numberOfCols === 3" class="line-break"></div>
         </ng-container>
+      </div>
+      <!-- TODO: Classes input -->
+
+      <div
+        class="grid-config"
+        *ngIf="supportedWidgetTypes.includes(gridTile.item) && gridTile.config"
+      >
+        <mat-label class="config-label" i18n>Configuration</mat-label>
+        <mat-form-field appearance="outline" *ngFor="let configItem of availableWidgetConfigTypes">
+          <mat-label i18n>{{ configItem[0].toUpperCase() + configItem.slice(1) }}</mat-label>
+          <input
+            matInput
+            type="text"
+            [placeholder]="configItem + ' of the widget'"
+            [ngModel]="gridTile.config[configItem]"
+            (ngModelChange)="setConfigValue(i, configItem, $event)"
+            [ngModelOptions]="{ standalone: true }"
+          />
+        </mat-form-field>
       </div>
     </mat-expansion-panel>
   </mat-accordion>

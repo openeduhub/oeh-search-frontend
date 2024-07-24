@@ -8,11 +8,20 @@ import {
 } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { SharedModule } from '../../../shared/shared.module';
-import { gridTypeOptions, typeOptions, widgetTypeOptions } from '../../grid-type-definitions';
+import {
+    currentlySupportedWidgetTypes,
+    gridTypeOptions,
+    typeOptions,
+    widgetConfigType,
+    widgetConfigTypes,
+    widgetTypeOptions,
+} from '../../grid-type-definitions';
 import { GridTile } from '../grid-tile';
+import { WidgetConfig } from '../grid-widget/widget-config';
 import { Swimlane } from '../swimlane';
 import { SelectOption } from './select-option';
 import { TileDimension } from './tile-dimension';
+import { Node, NodeEntries } from 'ngx-edu-sharing-api';
 import { v4 as uuidv4 } from 'uuid';
 
 @Component({
@@ -39,22 +48,46 @@ export class SwimlaneSettingsDialogComponent implements OnInit {
         new TileDimension(3, 2),
         new TileDimension(3, 3),
     ];
+    supportedWidgetTypes: string[] = currentlySupportedWidgetTypes;
+    availableWidgetConfigTypes: Array<keyof WidgetConfig> = widgetConfigTypes;
 
-    constructor(@Inject(MAT_DIALOG_DATA) public data: Swimlane) {}
+    constructor(
+        @Inject(MAT_DIALOG_DATA) public data: { swimlane: Swimlane; widgets: NodeEntries },
+    ) {}
 
     ngOnInit() {
         this.form = new UntypedFormGroup({
-            type: new UntypedFormControl(this.data.type),
-            heading: new UntypedFormControl(this.data.heading),
-            description: new UntypedFormControl(this.data.description),
-            gridType: new UntypedFormControl(this.data.gridType),
+            type: new UntypedFormControl(this.data.swimlane.type),
+            heading: new UntypedFormControl(this.data.swimlane.heading),
+            description: new UntypedFormControl(this.data.swimlane.description),
+            gridType: new UntypedFormControl(this.data.swimlane.gridType),
             backgroundColor: new UntypedFormControl(
-                this.initializeBackgroundColor(this.data.backgroundColor),
+                this.initializeBackgroundColor(this.data.swimlane.backgroundColor),
             ),
-            grid: new UntypedFormControl(JSON.stringify(this.data.grid)),
+            grid: new UntypedFormControl(JSON.stringify(this.data.swimlane.grid)),
         });
         // note: using a copy is essentially at the point to not overwrite the parent data
-        this.gridItems = JSON.parse(JSON.stringify(this.data.grid));
+        const dataGrid: GridTile[] = JSON.parse(JSON.stringify(this.data.swimlane.grid));
+        // note: as we need a structure to work with, the idea is that we fill the dataGrid
+        //       with the configs of the existing widget nodes and sync them on close with
+        //       the widget nodes itself, while not keeping them on the main topic node config.
+        this.data.widgets.nodes?.forEach((node: Node) => {
+            const widgetConfig = node?.properties?.[widgetConfigType]?.[0];
+            if (widgetConfig && JSON.parse(widgetConfig)?.config) {
+                const relatedGridTile: GridTile =
+                    dataGrid.find((gridTile: GridTile) => gridTile.uuid === node.ref.id) ?? null;
+                if (relatedGridTile) {
+                    relatedGridTile.config = JSON.parse(widgetConfig).config;
+                }
+            }
+        });
+        // iterate to set missing configs in the GridTiles
+        dataGrid?.forEach((gridTile: GridTile) => {
+            if (currentlySupportedWidgetTypes.includes(gridTile.item) && !gridTile.config) {
+                gridTile.config = {};
+            }
+        });
+        this.gridItems = dataGrid;
     }
 
     /**
@@ -97,6 +130,7 @@ export class SwimlaneSettingsDialogComponent implements OnInit {
             item: widgetItemName,
             rows: 1,
             cols: 3,
+            config: {},
         };
         this.gridItems.push(gridTile);
         this.syncGridItemsWithFormData();
@@ -105,6 +139,14 @@ export class SwimlaneSettingsDialogComponent implements OnInit {
     async moveGridTilePosition(oldIndex: number, newIndex: number) {
         if (newIndex >= 0 && newIndex <= this.gridItems.length - 1) {
             moveItemInArray(this.gridItems, oldIndex, newIndex);
+            this.syncGridItemsWithFormData();
+        }
+    }
+
+    setConfigValue(index: number, configItem: keyof WidgetConfig, configValue: any) {
+        if (this.gridItems[index].config && this.availableWidgetConfigTypes.includes(configItem)) {
+            // https://stackoverflow.com/a/69198602
+            this.gridItems[index].config[configItem] = configValue;
             this.syncGridItemsWithFormData();
         }
     }

@@ -32,7 +32,6 @@ export class SwimlaneComponent {
     @Input() topic: string;
     @Input() topicCollectionID: string;
     @Input() topicWidgets: NodeEntries;
-    @Input() widgetConfigType: string;
 
     get topicWidgetIdMap(): Map<string, Node> {
         const widgetMap = new Map<string, Node>();

@@ -19,11 +19,7 @@
   <wlo-user-configurable
     *ngIf="jobsWidgetReady"
     [class]="widgetClasses ? widgetClasses : ''"
-    [configOverwrite]="
-      widgetClasses?.split(' ')?.includes('newest-widget')
-        ? newestContentConfig
-        : jobsContentConfig()
-    "
+    [configOverwrite]="contentConfigAsString()"
   >
   </wlo-user-configurable>
 </ng-container>
