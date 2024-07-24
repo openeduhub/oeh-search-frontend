@@ -52,7 +52,15 @@ export class GridWidgetComponent {
     setContentConfig(widgetNode: Node) {
         const widgetConfig = widgetNode?.properties?.[widgetConfigType]?.[0];
         if (widgetConfig && JSON.parse(widgetConfig)?.config) {
-            this.contentConfig.set(JSON.parse(widgetConfig).config);
+            const contentConfig: WidgetConfig = JSON.parse(widgetConfig).config;
+            // extend config by default values
+            if (!contentConfig.chosenColor || contentConfig.chosenColor === '') {
+                contentConfig.chosenColor = this.backgroundColor;
+            }
+            if (!contentConfig.collectionId || contentConfig.collectionId === '') {
+                contentConfig.collectionId = this.topicCollectionID;
+            }
+            this.contentConfig.set(contentConfig);
         }
     }
 

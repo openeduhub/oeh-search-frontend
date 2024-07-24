@@ -9,7 +9,7 @@ import {
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { SharedModule } from '../../../shared/shared.module';
 import {
-    currentlySupportedWidgetTypes,
+    currentlySupportedWidgetTypesWithConfig,
     gridTypeOptions,
     typeOptions,
     widgetConfigType,
@@ -48,8 +48,9 @@ export class SwimlaneSettingsDialogComponent implements OnInit {
         new TileDimension(3, 2),
         new TileDimension(3, 3),
     ];
-    supportedWidgetTypes: string[] = currentlySupportedWidgetTypes;
+    supportedWidgetTypesWithConfig: string[] = currentlySupportedWidgetTypesWithConfig;
     availableWidgetConfigTypes: Array<keyof WidgetConfig> = widgetConfigTypes;
+    configHints: Map<string, string> = new Map<string, string>();
 
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: { swimlane: Swimlane; widgets: NodeEntries },
@@ -83,11 +84,37 @@ export class SwimlaneSettingsDialogComponent implements OnInit {
         });
         // iterate to set missing configs in the GridTiles
         dataGrid?.forEach((gridTile: GridTile) => {
-            if (currentlySupportedWidgetTypes.includes(gridTile.item) && !gridTile.config) {
+            if (
+                currentlySupportedWidgetTypesWithConfig.includes(gridTile.item) &&
+                !gridTile.config
+            ) {
                 gridTile.config = {};
             }
         });
         this.gridItems = dataGrid;
+        this.syncGridItemsWithFormData();
+        this.configHints.set(
+            'headline',
+            'The headline of the content teaser, which is later extended by the topic name.',
+        );
+        this.configHints.set('layout', 'The layout of the content teaser, e.g., carousel');
+        this.configHints.set('description', 'The description used by the content teaser.');
+        this.configHints.set(
+            'searchMode',
+            'The search mode used by the content teaser, e.g, collection or ngsearchword.',
+        );
+        this.configHints.set(
+            'searchText',
+            'The search text used by the content teaser, which is later extended by the topic name.',
+        );
+        this.configHints.set(
+            'chosenColor',
+            'Optional background color used by the content teaser, which defaults to the swimlane background.',
+        );
+        this.configHints.set(
+            'collectionId',
+            'Optional collectionId used by the content teaser, which defaults to the collectionID of the page.',
+        );
     }
 
     /**

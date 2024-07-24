@@ -110,10 +110,14 @@
 
       <div
         class="grid-config"
-        *ngIf="supportedWidgetTypes.includes(gridTile.item) && gridTile.config"
+        *ngIf="supportedWidgetTypesWithConfig.includes(gridTile.item) && gridTile.config"
       >
         <mat-label class="config-label" i18n>Configuration</mat-label>
-        <mat-form-field appearance="outline" *ngFor="let configItem of availableWidgetConfigTypes">
+        <mat-form-field
+          [class.extended-margin-bottom]="configHints.get(configItem)"
+          appearance="outline"
+          *ngFor="let configItem of availableWidgetConfigTypes"
+        >
           <mat-label i18n>{{ configItem[0].toUpperCase() + configItem.slice(1) }}</mat-label>
           <input
             matInput
@@ -123,6 +127,9 @@
             (ngModelChange)="setConfigValue(i, configItem, $event)"
             [ngModelOptions]="{ standalone: true }"
           />
+          <mat-hint *ngIf="configHints.get(configItem)">
+            {{ configHints.get(configItem) }}
+          </mat-hint>
         </mat-form-field>
       </div>
     </mat-expansion-panel>

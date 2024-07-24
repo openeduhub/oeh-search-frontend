@@ -17,6 +17,7 @@ import { ActivatedRoute } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { FilterBarComponent } from './filter-bar/filter-bar.component';
 import {
+    currentlySupportedWidgetTypesWithConfig,
     currentlySupportedWidgetTypes,
     typeOptions,
     widgetConfigType,
@@ -187,14 +188,20 @@ export class TemplateComponent implements OnInit {
                                                 this.ioType,
                                                 'WIDGET_' + uuidv4(),
                                             );
-                                            // (4) set widget / gridTile config that might be set in the grid on children nodes
                                             const nodeId = childNode.ref.id;
-                                            const widgetConfig: WidgetConfig =
-                                                gridTile.config ?? {};
-                                            await this.setProperty(
-                                                nodeId,
-                                                JSON.stringify({ config: widgetConfig }),
-                                            );
+                                            // (4) set widget / gridTile config that might be set in the grid on children nodes
+                                            if (
+                                                currentlySupportedWidgetTypesWithConfig.includes(
+                                                    gridTile.item,
+                                                )
+                                            ) {
+                                                const widgetConfig: WidgetConfig =
+                                                    gridTile.config ?? {};
+                                                await this.setProperty(
+                                                    nodeId,
+                                                    JSON.stringify({ config: widgetConfig }),
+                                                );
+                                            }
                                             // (5a) store UUID in the config (swimlanes)
                                             gridTile.uuid = nodeId;
                                             // (5b) delete gridTile config (we do not want to store the widget configs in the main node)
@@ -432,25 +439,29 @@ export class TemplateComponent implements OnInit {
                 }
                 const existingSwimlaneUUIDs =
                     swimlane.grid?.map((gridItem: GridTile) => gridItem.uuid) ?? [];
-                // (2) create new grid elements and adjust UUID of the swimlane
+                // iterate swimlane grid
                 if (editedSwimlane.grid?.length > 0) {
                     for (const gridTile of editedSwimlane.grid) {
                         // relevant type
                         if (currentlySupportedWidgetTypes.includes(gridTile.item)) {
-                            // not yet included -> create child and add its ID as UUID to the swimlanes
+                            // (2) not yet included -> create child and add its ID as UUID to the swimlanes
                             if (!existingSwimlaneUUIDs.includes(gridTile.uuid)) {
                                 const childNode: Node = await this.createChild(
                                     this.topicConfigNode.ref.id,
                                     this.ioType,
                                     'WIDGET_' + uuidv4(),
                                 );
-                                // set empty properties on children to be extended later
                                 const nodeId = childNode.ref.id;
-                                const widgetConfig: WidgetConfig = gridTile.config ?? {};
-                                await this.setProperty(
-                                    nodeId,
-                                    JSON.stringify({ config: widgetConfig }),
-                                );
+                                // set empty properties on children to be extended later
+                                if (
+                                    currentlySupportedWidgetTypesWithConfig.includes(gridTile.item)
+                                ) {
+                                    const widgetConfig: WidgetConfig = gridTile.config ?? {};
+                                    await this.setProperty(
+                                        nodeId,
+                                        JSON.stringify({ config: widgetConfig }),
+                                    );
+                                }
                                 // store UUID in the config (swimlanes)
                                 gridTile.uuid = nodeId;
                             }
@@ -461,7 +472,7 @@ export class TemplateComponent implements OnInit {
                                 );
                                 if (existingNode) {
                                     const existingNodeConfigString =
-                                        existingNode.properties[widgetConfigType]?.[0] ?? '';
+                                        existingNode.properties[widgetConfigType]?.[0];
                                     if (
                                         existingNodeConfigString &&
                                         JSON.parse(existingNodeConfigString)

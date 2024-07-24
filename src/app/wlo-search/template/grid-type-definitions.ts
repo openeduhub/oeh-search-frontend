@@ -7,6 +7,8 @@ export const currentlySupportedWidgetTypes: string[] = [
     'wlo-user-configurable',
 ];
 
+export const currentlySupportedWidgetTypesWithConfig: string[] = ['wlo-user-configurable'];
+
 export const gridTypeOptions: SelectOption[] = [
     {
         value: 'noGutter',
