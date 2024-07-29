@@ -24,10 +24,11 @@ import {
 } from './type-definitions';
 import { swimlanes } from './initial-values';
 import { GridTile } from './swimlane/grid-tile';
+import { NodeConfig } from './swimlane/grid-widget/node-config';
+import { WidgetConfig } from './swimlane/grid-widget/widget-config';
 import { SwimlaneComponent } from './swimlane/swimlane.component';
 import { SwimlaneSettingsDialogComponent } from './swimlane/swimlane-settings-dialog/swimlane-settings-dialog.component';
 import { Swimlane } from './swimlane/swimlane';
-import { WidgetConfig } from './swimlane/grid-widget/widget-config';
 import {
     ApiRequestConfiguration,
     AuthenticationService,
@@ -100,6 +101,8 @@ export class TemplateComponent implements OnInit {
     private widgetConfigAspect: string = 'ccm:widget';
     collectionNode: Node;
     topicWidgets: NodeEntries;
+    private topicPrompt: string = 'Gib eine kurze Einleitung in das Thema $THEMA$.';
+    private topicTemplateWidgetId: string = 'headerPrompt';
 
     selectDimensions: Map<string, MdsWidget> = new Map<string, MdsWidget>();
     providedSelectDimensionKeys = [
@@ -215,9 +218,14 @@ export class TemplateComponent implements OnInit {
                                 }
                             }
                             // (5c) store adjusted config (swimlanes) with correct UUIDs
+                            const topicConfig: NodeConfig = {
+                                prompt: this.topicPrompt,
+                                templateWidgetId: this.topicTemplateWidgetId,
+                                swimlanes,
+                            };
                             this.topicConfigNode = await this.setPropertyAndRetrieveUpdatedNode(
                                 this.topicConfigNode.ref.id,
-                                JSON.stringify(swimlanes),
+                                JSON.stringify(topicConfig),
                             );
                         }
                     }
@@ -226,11 +234,7 @@ export class TemplateComponent implements OnInit {
                     // retrieve the list of stored widget nodes
                     this.topicWidgets = await this.getNodeChildren(this.topicConfigNode.ref.id);
                     // note: only the grid items of the swimlane should be represented as separate widget nodes
-                    const existingSwimlanesString =
-                        this.topicConfigNode.properties[widgetConfigType]?.[0] ?? '';
-                    this.swimlanes = existingSwimlanesString
-                        ? JSON.parse(existingSwimlanesString)
-                        : [];
+                    this.swimlanes = this.topicNodeConfig.swimlanes ?? [];
                     // sync both existing children (topicWidgets) and topic config (swimlanes)
                     await this.syncSwimlanes();
 
@@ -249,6 +253,14 @@ export class TemplateComponent implements OnInit {
         const sameNumberOfValues =
             this.selectDimensions.size === this.selectedDimensionValues.length;
         return this.selectDimensionsLoaded && sameNumberOfValues;
+    }
+
+    get topicNodeConfig(): NodeConfig {
+        const topicConfig = this.topicConfigNode.properties[widgetConfigType]?.[0];
+        if (!topicConfig) {
+            return {};
+        }
+        return JSON.parse(topicConfig) ?? {};
     }
 
     get topicWidgetsIds(): string[] {
@@ -319,14 +331,14 @@ export class TemplateComponent implements OnInit {
         // TODO: This should only be possible, if the user has the proper privileges
         if (updateNecessary) {
             // overwrite config
+            const topicConfig: NodeConfig = this.topicNodeConfig;
+            topicConfig.swimlanes = this.swimlanes;
             this.topicConfigNode = await this.setPropertyAndRetrieveUpdatedNode(
                 this.topicConfigNode.ref.id,
-                JSON.stringify(this.swimlanes),
+                JSON.stringify(topicConfig),
             );
             // set value of swimlanes to updated property
-            const existingSwimlanesString =
-                this.topicConfigNode.properties[widgetConfigType]?.[0] ?? '';
-            this.swimlanes = existingSwimlanesString ? JSON.parse(existingSwimlanesString) : [];
+            this.swimlanes = this.topicNodeConfig.swimlanes ?? [];
         }
     }
 
@@ -366,9 +378,11 @@ export class TemplateComponent implements OnInit {
             // TODO: is it worse the experience that the calculation is done twice?
             const swimlanesCopy = JSON.parse(JSON.stringify(this.swimlanes));
             moveItemInArray(swimlanesCopy, oldIndex, newIndex);
+            const topicConfig: NodeConfig = this.topicNodeConfig;
+            topicConfig.swimlanes = swimlanesCopy;
             this.topicConfigNode = await this.setPropertyAndRetrieveUpdatedNode(
                 this.topicConfigNode.ref.id,
-                JSON.stringify(swimlanesCopy),
+                JSON.stringify(topicConfig),
             );
             // update swimlane visually as soon as the requests are done
             moveItemInArray(this.swimlanes, oldIndex, newIndex);
@@ -389,9 +403,11 @@ export class TemplateComponent implements OnInit {
         // TODO: is it worse the experience that the calculation is done twice?
         const swimlanesCopy = JSON.parse(JSON.stringify(this.swimlanes));
         swimlanesCopy.push(newSwimlane);
+        const topicConfig: NodeConfig = this.topicNodeConfig;
+        topicConfig.swimlanes = swimlanesCopy;
         this.topicConfigNode = await this.setPropertyAndRetrieveUpdatedNode(
             this.topicConfigNode.ref.id,
-            JSON.stringify(swimlanesCopy),
+            JSON.stringify(topicConfig),
         );
         // display swimlane visually as soon as the requests are done
         this.swimlanes.push(newSwimlane);
@@ -516,16 +532,16 @@ export class TemplateComponent implements OnInit {
                 // (4) store updated swimlanes in node config
                 swimlanesCopy[index] = editedSwimlane;
                 // (5) change updated swimlanes in the topic node
+                const topicConfig: NodeConfig = this.topicNodeConfig;
+                topicConfig.swimlanes = swimlanesCopy;
                 this.topicConfigNode = await this.setPropertyAndRetrieveUpdatedNode(
                     this.topicConfigNode.ref.id,
-                    JSON.stringify(swimlanesCopy),
+                    JSON.stringify(topicConfig),
                 );
                 // (6) sync with server state
                 this.topicWidgets = await this.getNodeChildren(this.topicConfigNode.ref.id);
                 // note: only the grid items of the swimlane should be represented as separate widget nodes
-                const existingSwimlanesString =
-                    this.topicConfigNode.properties[widgetConfigType]?.[0] ?? '';
-                this.swimlanes = existingSwimlanesString ? JSON.parse(existingSwimlanesString) : [];
+                this.swimlanes = this.topicNodeConfig.swimlanes ?? [];
 
                 this.requestInProgress = false;
             }
@@ -559,9 +575,11 @@ export class TemplateComponent implements OnInit {
             const swimlanesCopy = JSON.parse(JSON.stringify(this.swimlanes));
             // TODO: is it worse the experience that the calculation is done twice?
             swimlanesCopy.splice(index, 1);
+            const topicConfig: NodeConfig = this.topicNodeConfig;
+            topicConfig.swimlanes = swimlanesCopy;
             this.topicConfigNode = await this.setPropertyAndRetrieveUpdatedNode(
                 this.topicConfigNode.ref.id,
-                JSON.stringify(swimlanesCopy),
+                JSON.stringify(topicConfig),
             );
             // remove swimlane visually as soon as the requests are done
             this.swimlanes.splice(index, 1);
@@ -573,7 +591,7 @@ export class TemplateComponent implements OnInit {
     private generateFromPrompt() {
         this.aiTextPromptsService
             .publicPrompt({
-                widgetNodeId: 'c937cabf-5ffd-47f0-a5e8-ef0ed370baf0',
+                widgetNodeId: this.topicConfigNode.ref.id,
                 contextNodeId: this.topicCollectionID(),
                 body: {},
             })
