@@ -19,46 +19,48 @@
         </ng-template>
         <!-- action buttons for editing and creating -->
         <!-- duplicated code due to https://github.com/angular/components/issues/15367 -->
-        <button
-          *ngIf="!editMode"
-          mat-stroked-button
-          class="edit-button"
-          color="primary"
-          [disabled]="requestInProgress"
-          (click)="editMode = !editMode"
-        >
-          <mat-icon>edit</mat-icon>
-        </button>
-        <button
-          *ngIf="editMode"
-          mat-flat-button
-          class="edit-button"
-          color="primary"
-          [disabled]="requestInProgress"
-          (click)="editMode = !editMode"
-        >
-          <mat-icon>edit</mat-icon>
-        </button>
-        <button
-          *ngIf="editMode"
-          mat-stroked-button
-          class="add-button"
-          color="primary"
-          [matMenuTriggerFor]="addComponentMenu"
-          [disabled]="requestInProgress"
-        >
-          <mat-icon>add</mat-icon>
-        </button>
-        <mat-menu #addComponentMenu="matMenu">
+        <ng-container *ngIf="userHasEditRights()">
           <button
-            mat-menu-item
-            *ngFor="let option of typeOptions"
+            *ngIf="!editMode"
+            mat-stroked-button
+            class="edit-button"
+            color="primary"
             [disabled]="requestInProgress"
-            (click)="addSwimlane(option.value)"
+            (click)="editMode = !editMode"
           >
-            {{ option.viewValue }}
+            <mat-icon>edit</mat-icon>
           </button>
-        </mat-menu>
+          <button
+            *ngIf="editMode"
+            mat-flat-button
+            class="edit-button"
+            color="primary"
+            [disabled]="requestInProgress"
+            (click)="editMode = !editMode"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button
+            *ngIf="editMode"
+            mat-stroked-button
+            class="add-button"
+            color="primary"
+            [matMenuTriggerFor]="addComponentMenu"
+            [disabled]="requestInProgress"
+          >
+            <mat-icon>add</mat-icon>
+          </button>
+          <mat-menu #addComponentMenu="matMenu">
+            <button
+              mat-menu-item
+              *ngFor="let option of typeOptions"
+              [disabled]="requestInProgress"
+              (click)="addSwimlane(option.value)"
+            >
+              {{ option.viewValue }}
+            </button>
+          </mat-menu>
+        </ng-container>
       </div>
     </div>
   </div>
@@ -83,38 +85,40 @@
               swimlane.backgroundColor ? swimlane.backgroundColor : '#f4f4f4'
             "
           >
-            <!-- action buttons for moving -->
-            <div class="wlo-move-buttons" *ngIf="editMode">
-              <button
-                [disabled]="i === 0 || requestInProgress"
-                (click)="moveSwimlanePosition(i, i - 1)"
-              >
-                <mat-icon>arrow_upward</mat-icon>
-              </button>
-              <button
-                [disabled]="i === swimlanes.length - 1 || requestInProgress"
-                (click)="moveSwimlanePosition(i, i + 1)"
-              >
-                <mat-icon>arrow_downward</mat-icon>
-              </button>
-            </div>
-            <!-- action buttons for modifications -->
-            <div class="wlo-edit-buttons" *ngIf="editMode">
-              <button
-                *ngIf="swimlane.type !== 'spacer'"
-                [disabled]="requestInProgress"
-                (click)="editSwimlane(swimlane, i)"
-              >
-                <mat-icon>settings</mat-icon>
-              </button>
-              <button
-                [class.wlo-single-button]="swimlane.type === 'spacer'"
-                [disabled]="requestInProgress"
-                (click)="deleteSwimlane(i)"
-              >
-                <mat-icon>delete</mat-icon>
-              </button>
-            </div>
+            <ng-container *ngIf="userHasEditRights()">
+              <!-- action buttons for moving -->
+              <div class="wlo-move-buttons" *ngIf="editMode">
+                <button
+                  [disabled]="i === 0 || requestInProgress"
+                  (click)="moveSwimlanePosition(i, i - 1)"
+                >
+                  <mat-icon>arrow_upward</mat-icon>
+                </button>
+                <button
+                  [disabled]="i === swimlanes.length - 1 || requestInProgress"
+                  (click)="moveSwimlanePosition(i, i + 1)"
+                >
+                  <mat-icon>arrow_downward</mat-icon>
+                </button>
+              </div>
+              <!-- action buttons for modifications -->
+              <div class="wlo-edit-buttons" *ngIf="editMode">
+                <button
+                  *ngIf="swimlane.type !== 'spacer'"
+                  [disabled]="requestInProgress"
+                  (click)="editSwimlane(swimlane, i)"
+                >
+                  <mat-icon>settings</mat-icon>
+                </button>
+                <button
+                  [class.wlo-single-button]="swimlane.type === 'spacer'"
+                  [disabled]="requestInProgress"
+                  (click)="deleteSwimlane(i)"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </ng-container>
             <!-- type: collapse -->
             <cdk-accordion class="wlo-accordion" *ngIf="swimlane.type === 'collapse'">
               <cdk-accordion-item

@@ -79,6 +79,8 @@ export class TemplateComponent implements OnInit {
     ) {}
     @HostBinding('style.--topic-color') topicColor: string = '#182e5c';
 
+    userHasEditRights: WritableSignal<boolean> = signal(false);
+
     topic: WritableSignal<string> = signal('$THEMA$');
     topicCollectionID: WritableSignal<string> = signal(null);
     generatedHeader: WritableSignal<string> = signal('');
@@ -219,6 +221,8 @@ export class TemplateComponent implements OnInit {
                             );
                         }
                     }
+                    // check the user privileges for the topic config node
+                    this.checkUserAccess(this.topicConfigNode);
                     // retrieve the list of stored widget nodes
                     this.topicWidgets = await this.getNodeChildren(this.topicConfigNode.ref.id);
                     // note: only the grid items of the swimlane should be represented as separate widget nodes
@@ -249,6 +253,10 @@ export class TemplateComponent implements OnInit {
 
     get topicWidgetsIds(): string[] {
         return this.topicWidgets?.nodes?.map((node) => node.ref.id) ?? [];
+    }
+
+    private checkUserAccess(node: Node) {
+        this.userHasEditRights.set(node.access.includes('Write'));
     }
 
     async createChild(parentId: string, type: string, name: string): Promise<Node> {
