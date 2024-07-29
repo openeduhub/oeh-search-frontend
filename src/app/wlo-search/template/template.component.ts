@@ -21,7 +21,7 @@ import {
     currentlySupportedWidgetTypes,
     typeOptions,
     widgetConfigType,
-} from './grid-type-definitions';
+} from './type-definitions';
 import { swimlanes } from './initial-values';
 import { GridTile } from './swimlane/grid-tile';
 import { SwimlaneComponent } from './swimlane/swimlane.component';

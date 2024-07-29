@@ -1,5 +1,5 @@
 import { Component, computed, Input, signal, Signal, WritableSignal } from '@angular/core';
-import { widgetConfigType } from '../../grid-type-definitions';
+import { widgetConfigType } from '../../type-definitions';
 import { SharedModule } from '../../../shared/shared.module';
 import { WidgetConfig } from './widget-config';
 import { MdsValue, MdsWidget, Node } from 'ngx-edu-sharing-api';

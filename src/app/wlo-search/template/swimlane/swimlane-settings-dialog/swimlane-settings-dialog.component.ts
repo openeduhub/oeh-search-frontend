@@ -15,7 +15,7 @@ import {
     widgetConfigType,
     widgetConfigTypes,
     widgetTypeOptions,
-} from '../../grid-type-definitions';
+} from '../../type-definitions';
 import { GridTile } from '../grid-tile';
 import { WidgetConfig } from '../grid-widget/widget-config';
 import { Swimlane } from '../swimlane';

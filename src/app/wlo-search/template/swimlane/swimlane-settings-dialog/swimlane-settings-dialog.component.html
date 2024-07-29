@@ -122,6 +122,9 @@
         *ngIf="supportedWidgetTypesWithConfig.includes(gridTile.item) && gridTile.config"
       >
         <mat-label class="config-label" i18n>Widget configuration</mat-label>
+        <p class="config-note">
+          Note: These are initial settings that can also be changed later via the widget itself.
+        </p>
         <mat-form-field
           [class.extended-margin-bottom]="configHints.get(configItem)"
           appearance="outline"

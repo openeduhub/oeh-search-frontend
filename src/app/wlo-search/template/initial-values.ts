@@ -26,23 +26,6 @@ export const swimlanes: Swimlane[] = [
         grid: [
             {
                 uuid: uuidv4(),
-                item: 'wlo-ai-text-widget',
-                cols: 3,
-                rows: 1,
-            },
-        ],
-        backgroundColor: '#BEDADE',
-    },
-    {
-        uuid: uuidv4(),
-        type: 'spacer',
-    },
-    {
-        uuid: uuidv4(),
-        type: 'jumbotron',
-        grid: [
-            {
-                uuid: uuidv4(),
                 item: 'wlo-user-configurable',
                 classNames: 'newest-widget',
                 cols: 3,
@@ -66,17 +49,34 @@ export const swimlanes: Swimlane[] = [
         grid: [
             {
                 uuid: uuidv4(),
-                item: 'wlo-user-configurable',
-                classNames: 'jobs-widget',
+                item: 'wlo-ai-text-widget',
                 cols: 3,
                 rows: 1,
-                config: {
-                    headline: 'Das sind Berufe zum Thema',
-                    layout: 'carousel',
-                    searchMode: 'ngsearchword',
-                    searchText: 'Berufe mit',
-                },
             },
         ],
-    },
+        backgroundColor: '#BEDADE',
+    }, // ,
+    // {
+    //     uuid: uuidv4(),
+    //     type: 'spacer',
+    // },
+    // {
+    //     uuid: uuidv4(),
+    //     type: 'jumbotron',
+    //     grid: [
+    //         {
+    //             uuid: uuidv4(),
+    //             item: 'wlo-user-configurable',
+    //             classNames: 'jobs-widget',
+    //             cols: 3,
+    //             rows: 1,
+    //             config: {
+    //                 headline: 'Das sind Berufe zum Thema',
+    //                 layout: 'carousel',
+    //                 searchMode: 'ngsearchword',
+    //                 searchText: 'Berufe mit',
+    //             },
+    //         },
+    //     ],
+    // },
 ];

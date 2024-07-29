@@ -49,6 +49,10 @@ export const typeOptions: SelectOption[] = [
 
 export const widgetTypeOptions: SelectOption[] = [
     {
+        value: 'wlo-user-configurable',
+        viewValue: 'Inhalte-Teaser',
+    },
+    {
         value: 'wlo-ai-text-widget',
         viewValue: 'KI-Widget',
     },
@@ -67,10 +71,6 @@ export const widgetTypeOptions: SelectOption[] = [
     {
         value: 'wlo-text',
         viewValue: 'Text',
-    },
-    {
-        value: 'wlo-user-configurable',
-        viewValue: 'Inhalte-Teaser',
     },
 ];
 
