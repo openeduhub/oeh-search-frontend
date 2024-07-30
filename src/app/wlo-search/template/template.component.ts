@@ -116,6 +116,7 @@ export class TemplateComponent implements OnInit {
     requestInProgress: boolean = false;
 
     ngOnInit(): void {
+        this.initializeEventListeners();
         this.apiRequestConfig.setLocale('de_DE');
         // set the topic based on the query params "topic" and "collectionID"
         this.route.queryParams
@@ -247,6 +248,44 @@ export class TemplateComponent implements OnInit {
                     this.loadedSuccessfully = true;
                 }
             });
+    }
+
+    private initializeEventListeners() {
+        // listen to custom colorChange event dispatched by the wlo-user-configurable
+        document.getElementsByTagName('body')[0].addEventListener(
+            'colorChange',
+            async (e: CustomEvent) => {
+                const color = e.detail?.color ?? '';
+                const nodeId = e.detail?.node ?? '';
+
+                if (color !== '' && nodeId !== '') {
+                    // do not use a copy of swimlanes in order to avoid loading effects
+                    let changesMade: boolean = false;
+                    this.swimlanes.forEach((swimlane) => {
+                        swimlane.grid?.forEach((gridItem: GridTile) => {
+                            if (
+                                gridItem &&
+                                gridItem.uuid === nodeId &&
+                                swimlane.backgroundColor !== color
+                            ) {
+                                swimlane.backgroundColor = color;
+                                changesMade = true;
+                            }
+                        });
+                    });
+
+                    if (changesMade) {
+                        const topicConfig: NodeConfig = this.topicNodeConfig;
+                        topicConfig.swimlanes = this.swimlanes;
+                        this.topicConfigNode = await this.setPropertyAndRetrieveUpdatedNode(
+                            this.topicConfigNode.ref.id,
+                            JSON.stringify(topicConfig),
+                        );
+                    }
+                }
+            },
+            false,
+        );
     }
 
     get filterBarReady() {
