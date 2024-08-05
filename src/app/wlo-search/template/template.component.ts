@@ -639,23 +639,6 @@ export class TemplateComponent implements OnInit {
                     const response = result.responses[0];
                     console.log('RESPONSE: ', response);
                     this.generatedHeader.set(response);
-                },
-                (error: any) => {
-                    console.log('An error occurred: ', error);
-                    this.jobsWidgetReady = true;
-                },
-            );
-        this.aiTextPromptsService
-            .publicPrompt({
-                widgetNodeId: 'a625a9d6-383d-4835-84f2-a8e2792ea13f',
-                contextNodeId: this.topicCollectionID(),
-                body: {},
-            })
-            .subscribe(
-                (result: any) => {
-                    const response = result.responses[0];
-                    console.log('RESPONSE 2: ', response);
-                    this.generatedJobText.set(response);
                     this.jobsWidgetReady = true;
                 },
                 (error: any) => {
