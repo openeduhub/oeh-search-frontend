@@ -35,7 +35,16 @@
             ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": ["src/favicon.ico", "src/assets", "src/env.js"],
+            "assets": [
+              "src/favicon.ico",
+              "src/assets",
+              "src/env.js",
+              {
+                "glob": "**/*",
+                "input": "node_modules/ngx-edu-sharing-wlo-pages/images",
+                "output": "/assets/images/"
+              }
+            ],
             "styles": [
               "node_modules/slick-carousel/slick/slick.scss",
               "node_modules/slick-carousel/slick/slick-theme.scss",
@@ -115,7 +124,16 @@
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "inlineStyleLanguage": "scss",
-            "assets": ["src/favicon.ico", "src/assets", "src/env.js"],
+            "assets": [
+              "src/favicon.ico",
+              "src/assets",
+              "src/env.js",
+              {
+                "glob": "**/*",
+                "input": "node_modules/ngx-edu-sharing-wlo-pages/images",
+                "output": "/assets/images/"
+              }
+            ],
             "styles": [
               "node_modules/slick-carousel/slick/slick.scss",
               "node_modules/slick-carousel/slick/slick-theme.scss",
