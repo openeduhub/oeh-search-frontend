@@ -73,7 +73,7 @@
           &times;
         </button>
       </mat-expansion-panel-header>
-      <mat-label i18n>General settings</mat-label>
+      <mat-label>General settings</mat-label>
       <div class="dimensions">
         <ng-container *ngFor="let dim of tileDimensions">
           <!-- TODO: currently, no suitable solution for including different button types exist -->
@@ -107,7 +107,7 @@
         </ng-container>
       </div>
       <mat-form-field appearance="outline">
-        <mat-label i18n>CSS class names</mat-label>
+        <mat-label>CSS class names</mat-label>
         <input
           matInput
           type="text"
@@ -121,7 +121,7 @@
         class="grid-config"
         *ngIf="supportedWidgetTypesWithConfig.includes(gridTile.item) && gridTile.config"
       >
-        <mat-label class="config-label" i18n>Widget configuration</mat-label>
+        <mat-label class="config-label">Widget configuration</mat-label>
         <p class="config-note">
           Note: These are initial settings that can also be changed later via the widget itself.
         </p>
@@ -130,7 +130,7 @@
           appearance="outline"
           *ngFor="let configItem of availableWidgetConfigTypes"
         >
-          <mat-label i18n>{{ configItem[0].toUpperCase() + configItem.slice(1) }}</mat-label>
+          <mat-label>{{ configItem[0].toUpperCase() + configItem.slice(1) }}</mat-label>
           <input
             matInput
             type="text"
@@ -164,6 +164,6 @@
   </mat-menu>
 </div>
 <div mat-dialog-actions align="end">
-  <button mat-flat-button color="primary" mat-dialog-close i18n>Close</button>
+  <button mat-flat-button color="primary" mat-dialog-close>Close</button>
   <button mat-flat-button color="primary" [mat-dialog-close]="form" i18n>Apply</button>
 </div>
