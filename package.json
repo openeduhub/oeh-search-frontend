@@ -43,9 +43,9 @@
     "jquery": "^3.6.0",
     "material-icons": "^1.12.1",
     "ngx-colors": "^3.5.3",
-    "ngx-edu-sharing-api": "^9.1.1",
-    "ngx-edu-sharing-ui": "^9.2.0",
-    "ngx-edu-sharing-wlo-pages": "^0.1.5",
+    "ngx-edu-sharing-api": "9999.0.0",
+    "ngx-edu-sharing-ui": "9999.0.2",
+    "ngx-edu-sharing-wlo-pages": "^0.1.8",
     "ngx-edu-sharing-z-api": "^0.0.3",
     "ngx-slick-carousel": "^17.0.0",
     "rxjs": "^7.0.0",
@@ -105,25 +105,6 @@
     "*.ts": "eslint --fix"
   },
   "overrides": {
-    "ngx-edu-sharing-api": {
-      "@angular/common": "^18.0.0",
-      "@angular/core": "^18.0.0"
-    },
-    "ngx-edu-sharing-ui": {
-      "angular-material-css-vars": "^7.0.0"
-    },
-    "ngx-edu-sharing-wlo-pages": {
-      "@angular/animations": "^18.0.0",
-      "@angular/cdk": "^18.0.0",
-      "@angular/common": "^18.0.0",
-      "@angular/compiler": "^18.0.0",
-      "@angular/core": "^18.0.0",
-      "@angular/forms": "^18.0.0",
-      "@angular/material": "^18.0.0",
-      "@angular/platform-browser": "^18.0.0",
-      "@angular/platform-browser-dynamic": "^18.0.0",
-      "angular-material-css-vars": "^7.0.0"
-    },
     "ngx-slick-carousel": {
       "@angular/common": "^18.0.0",
       "@angular/core": "^18.0.0",
