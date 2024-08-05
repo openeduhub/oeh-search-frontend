@@ -45,8 +45,14 @@ import {
     FallbackTranslationHandler,
     TranslationLoader,
     Toast as ToastAbstract,
+    OptionsHelperService as OptionsHelperServiceAbstract,
 } from 'ngx-edu-sharing-ui';
-import { TicketAuthInterceptor, TicketService, ToastService } from 'ngx-edu-sharing-wlo-pages';
+import {
+    OptionsHelperService,
+    TicketAuthInterceptor,
+    TicketService,
+    ToastService,
+} from 'ngx-edu-sharing-wlo-pages';
 import { ZApiModule } from 'ngx-edu-sharing-z-api';
 
 const wloSearchConfig: WloSearchConfig = {
@@ -162,6 +168,10 @@ const eduSharingApiModuleWithProviders = EduSharingApiModule.forRoot({
         EduSharingUiModule.forRoot({
             production: true,
         }).providers,
+        {
+            provide: OptionsHelperServiceAbstract,
+            useClass: OptionsHelperService,
+        },
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
