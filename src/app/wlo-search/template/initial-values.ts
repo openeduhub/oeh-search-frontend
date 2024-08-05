@@ -27,22 +27,45 @@ export const swimlanes: Swimlane[] = [
             {
                 uuid: uuidv4(),
                 item: 'wlo-user-configurable',
-                classNames: 'newest-widget',
+                classNames: 'job-widget',
                 cols: 3,
                 rows: 1,
                 config: {
-                    headline: 'Neueste Inhalte zum Thema',
+                    headline: 'Berufsprofile',
                     layout: 'carousel',
                     searchMode: 'collection',
                 },
             },
         ],
-        backgroundColor: '#E3ECF6',
+        backgroundColor: '#FFF9EB',
     },
     {
         uuid: uuidv4(),
         type: 'spacer',
     },
+    // {
+    //     uuid: uuidv4(),
+    //     type: 'jumbotron',
+    //     grid: [
+    //         {
+    //             uuid: uuidv4(),
+    //             item: 'wlo-user-configurable',
+    //             classNames: 'newest-widget',
+    //             cols: 3,
+    //             rows: 1,
+    //             config: {
+    //                 headline: 'Neueste Inhalte zum Thema',
+    //                 layout: 'carousel',
+    //                 searchMode: 'collection',
+    //             },
+    //         },
+    //     ],
+    //     backgroundColor: '#E3ECF6',
+    // },
+    // {
+    //     uuid: uuidv4(),
+    //     type: 'spacer',
+    // },
     {
         uuid: uuidv4(),
         type: 'jumbotron',
