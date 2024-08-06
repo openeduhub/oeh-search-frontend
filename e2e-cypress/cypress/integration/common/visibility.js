@@ -70,7 +70,7 @@ Then('I see the search button', () => {
 Then('I see the search button label {string}', (label) => {
     cy.get('app-search-field')
         .find('button[class*="submit-button"]')
-        .find('span[class*="mat-button-wrapper"]')
+        .find('span[class*="mdc-button__label"]')
         .should('have.text', label);
 });
 
@@ -81,7 +81,7 @@ Then('I see the filter button', () => {
 Then('I see the filter button label {string}', (filter) => {
     cy.get('app-headerbar')
         .find('button[class*="filter-button"]')
-        .find('span[class*="mat-button-wrapper"]')
+        .find('span[class*="mdc-button__label"]')
         .find('span[class*="button-wrapper"]')
         .find('span')
         .should('have.text', filter);
