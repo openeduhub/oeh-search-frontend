@@ -1,12 +1,11 @@
 import { Component, Input } from '@angular/core';
-import { MatGridListModule } from '@angular/material/grid-list';
 import { MdsValue, MdsWidget, Node, NodeEntries } from 'ngx-edu-sharing-api';
 import { GridTile } from './grid-tile';
 import { GridWidgetComponent } from './grid-widget/grid-widget.component';
 import { SharedModule } from '../../shared/shared.module';
 
 @Component({
-    imports: [GridWidgetComponent, MatGridListModule, SharedModule],
+    imports: [GridWidgetComponent, SharedModule],
     selector: 'app-swimlane',
     templateUrl: './swimlane.component.html',
     styleUrls: ['./swimlane.component.scss'],
@@ -18,9 +17,11 @@ export class SwimlaneComponent {
     @Input() get backgroundColor() {
         return this._backgroundColor;
     }
+
     set backgroundColor(value) {
         this._backgroundColor = value ?? '#f4f4f4';
     }
+
     @Input() editMode: boolean;
     @Input() filterBarReady: boolean;
     @Input() generatedJobText: string;

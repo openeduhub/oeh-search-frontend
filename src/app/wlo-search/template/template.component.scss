@@ -141,6 +141,7 @@
 
                 /* Simple hack for overflowing containers as it was done in Wordpress */
                 padding-bottom: 30px;
+
                 &:not(:first-child) {
                     margin-top: -25px;
                 }

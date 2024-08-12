@@ -1,28 +1,28 @@
-import { CdkAccordionModule } from '@angular/cdk/accordion';
-import { CdkDragHandle, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
-import { NgForOf, NgIf } from '@angular/common';
-import {
-    ChangeDetectorRef,
-    Component,
-    HostBinding,
-    OnInit,
-    signal,
-    WritableSignal,
-} from '@angular/core';
+import { CdkDragHandle, moveItemInArray } from '@angular/cdk/drag-drop';
+import { Component, HostBinding, OnInit, signal, WritableSignal } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
 import { ActivatedRoute } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
-import { FilterBarComponent } from './filter-bar/filter-bar.component';
 import {
+    collectionPrefix,
     currentlySupportedWidgetTypesWithConfig,
     currentlySupportedWidgetTypes,
-    typeOptions,
+    default_mds,
+    initialLocaleString,
+    initialSwimlanes,
+    initialTopicColor,
+    ioType,
+    mapType,
+    parentWidgetConfigNodeId,
+    providedSelectDimensionKeys,
+    swimlaneTypeOptions,
+    topicPrompt,
+    topicTemplateWidgetId,
+    widgetConfigAspect,
     widgetConfigType,
-} from './type-definitions';
-import { swimlanes } from './initial-values';
+    widgetPrefix,
+} from './custom-definitions';
+import { FilterBarComponent } from './filter-bar/filter-bar.component';
 import { GridTile } from './swimlane/grid-tile';
 import { NodeConfig } from './swimlane/grid-widget/node-config';
 import { WidgetConfig } from './swimlane/grid-widget/widget-config';
@@ -49,19 +49,12 @@ import { v4 as uuidv4 } from 'uuid';
 @Component({
     standalone: true,
     imports: [
-        CdkAccordionModule,
         CdkDragHandle,
-        DragDropModule,
         FilterBarComponent,
-        MatGridListModule,
-        MatIconModule,
-        NgForOf,
         SharedModule,
         TemplateComponent,
-        MatButtonModule,
         SpinnerComponent,
         SwimlaneComponent,
-        NgIf,
     ],
     selector: 'app-template',
     templateUrl: './template.component.html',
@@ -69,71 +62,56 @@ import { v4 as uuidv4 } from 'uuid';
 })
 export class TemplateComponent implements OnInit {
     constructor(
-        private route: ActivatedRoute,
         private aiTextPromptsService: AiTextPromptsService,
+        private apiRequestConfig: ApiRequestConfiguration,
         private authService: AuthenticationService,
-        private cdr: ChangeDetectorRef,
         private dialog: MatDialog,
         private mdsService: MdsService,
         private nodeApi: NodeService,
-        private apiRequestConfig: ApiRequestConfiguration,
+        private route: ActivatedRoute,
     ) {}
-    @HostBinding('style.--topic-color') topicColor: string = '#182e5c';
+
+    @HostBinding('style.--topic-color') topicColor: string = initialTopicColor;
+
+    loadedSuccessfully: boolean = false;
+    requestInProgress: boolean = false;
+    private initializedWithParams: boolean = false;
 
     userHasEditRights: WritableSignal<boolean> = signal(false);
+    editMode: boolean = false;
 
     topic: WritableSignal<string> = signal('$THEMA$');
     topicCollectionID: WritableSignal<string> = signal(null);
     generatedHeader: WritableSignal<string> = signal('');
     generatedJobText: WritableSignal<string> = signal('');
-    jobsWidgetReady = false;
+    jobsWidgetReady: boolean = false;
 
-    swimlanes: Swimlane[] = [];
-    editMode: boolean = false;
-
-    private initialized: boolean = false;
-    loadedSuccessfully: boolean = false;
-    private parentWidgetConfigNodeId: string = '80bb0eab-d64f-466b-94c6-2eccc4045c6b';
-    private mapType: string = 'ccm:map';
-    private ioType: string = 'ccm:io';
-    private collectionPrefix: string = 'COLLECTION_';
-    topicConfigNode: Node;
-    private widgetConfigAspect: string = 'ccm:widget';
-    collectionNode: Node;
+    private topicConfigNode: Node;
     topicWidgets: NodeEntries;
-    private topicPrompt: string = 'Gib eine kurze Einleitung in das Thema $THEMA$.';
-    private topicTemplateWidgetId: string = 'headerPrompt';
+    swimlanes: Swimlane[] = [];
 
     selectDimensions: Map<string, MdsWidget> = new Map<string, MdsWidget>();
-    providedSelectDimensionKeys = [
-        'virtual:ai_text_widget_intendedenduserrole',
-        'virtual:ai_text_widget_target_language',
-    ];
     selectedDimensionValues: MdsValue[] = [];
     selectDimensionsLoaded: boolean = false;
 
-    typeOptions = typeOptions.concat([{ value: 'spacer', viewValue: 'Trennlinie' }]);
-    requestInProgress: boolean = false;
+    swimlaneTypeOptions = swimlaneTypeOptions.concat([
+        { value: 'spacer', viewValue: 'Trennlinie' },
+    ]);
 
     ngOnInit(): void {
-        this.initializeEventListeners();
-        this.apiRequestConfig.setLocale('de_DE');
-        // set the topic based on the query params "topic" and "collectionID"
+        this.initializeCustomEventListeners();
+        this.apiRequestConfig.setLocale(initialLocaleString);
+        // set the topic based on the query param "collectionID"
         this.route.queryParams
             .pipe(filter((params) => params.topic || params.collectionId))
             .subscribe(async (params) => {
-                if (params.topic) {
-                    this.topic.set(params.topic);
-                    // set the background to some random (but deterministic) color, just for visuals
-                    this.topicColor = this.stringToColour(this.topic());
-                }
-                if (params.collectionId && !this.initialized) {
+                // the queryParams might be called twice, thus, initializedWithParams is important
+                if (params.collectionId && !this.initializedWithParams) {
                     this.topicCollectionID.set(params.collectionId);
-                    this.initialized = true;
-                    // fetch the collection name
+                    this.initializedWithParams = true;
+                    // fetch the collection node to set the topic name and topic color
                     await firstValueFrom(this.nodeApi.getNode(params.collectionId)).then(
                         (node: Node) => {
-                            this.collectionNode = node;
                             this.topic.set(node.title);
                             // set the background to some random (but deterministic) color, just for visuals
                             this.topicColor = this.stringToColour(this.topic());
@@ -144,91 +122,22 @@ export class TemplateComponent implements OnInit {
                     const password = environment?.eduSharingPassword;
                     // TODO: This fix for local development currently only works in Firefox
                     if (username && password) {
-                        await firstValueFrom(this.authService.login(username, password)).then(
-                            async (data) => {
-                                console.log('login success', data);
-                                await this.retrieveSelectDimensions();
-                            },
-                        );
-                    } else {
-                        await this.retrieveSelectDimensions();
+                        await firstValueFrom(this.authService.login(username, password));
                     }
+                    await this.retrieveSelectDimensions();
 
-                    // retrieve children of widget config node and filter it by the collection ID
+                    // retrieve children of widget config node and check, whether a topic node exists
                     const nodeEntries: NodeEntries = await this.getNodeChildren(
-                        this.parentWidgetConfigNodeId,
+                        parentWidgetConfigNodeId,
                     );
                     this.topicConfigNode = nodeEntries.nodes.find(
                         (node: Node) =>
-                            node.type === this.mapType &&
-                            node.name === this.collectionPrefix + params.collectionId,
+                            node.type === mapType &&
+                            node.name === collectionPrefix + params.collectionId,
                     );
-
-                    // topic node does not exist
-                    // -> (1) create node for topic
-                    // -> (2) load template
-                    // -> (3) generate children nodes for topic node
-                    // -> (4) set config to nodes from template (TODO)
-                    // -> (5) store config of existing children in topic node
+                    // if no topic node exists, create it
                     if (!this.topicConfigNode) {
-                        // (1) create node for topic as child of the widget config node
-                        this.topicConfigNode = await this.createChild(
-                            this.parentWidgetConfigNodeId,
-                            this.mapType,
-                            this.collectionPrefix + params.collectionId,
-                        );
-                        if (this.topicConfigNode) {
-                            // TODO: This is currently necessary to set the correct permissions of the node
-                            await this.setPermissions(this.topicConfigNode.ref.id);
-                            // (2) load template (swimlanes)
-                            // (3) generate children nodes for topic node
-                            // forEach does not support async / await
-                            // -> for ... of ... (https://stackoverflow.com/a/37576787)
-                            for (const swimlane of swimlanes) {
-                                if (swimlane.grid?.length > 0) {
-                                    for (const gridTile of swimlane.grid) {
-                                        if (currentlySupportedWidgetTypes.includes(gridTile.item)) {
-                                            // create child and add its ID as UUID to the swimlanes
-                                            const childNode: Node = await this.createChild(
-                                                this.topicConfigNode.ref.id,
-                                                this.ioType,
-                                                'WIDGET_' + uuidv4(),
-                                            );
-                                            const nodeId = childNode.ref.id;
-                                            // (4) set widget / gridTile config that might be set in the grid on children nodes
-                                            if (
-                                                currentlySupportedWidgetTypesWithConfig.includes(
-                                                    gridTile.item,
-                                                )
-                                            ) {
-                                                const widgetConfig: WidgetConfig =
-                                                    gridTile.config ?? {};
-                                                await this.setProperty(
-                                                    nodeId,
-                                                    JSON.stringify({ config: widgetConfig }),
-                                                );
-                                            }
-                                            // (5a) store UUID in the config (swimlanes)
-                                            gridTile.uuid = nodeId;
-                                            // (5b) delete gridTile config (we do not want to store the widget configs in the main node)
-                                            if (gridTile.config) {
-                                                delete gridTile.config;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            // (5c) store adjusted config (swimlanes) with correct UUIDs
-                            const topicConfig: NodeConfig = {
-                                prompt: this.topicPrompt,
-                                templateWidgetId: this.topicTemplateWidgetId,
-                                swimlanes,
-                            };
-                            this.topicConfigNode = await this.setPropertyAndRetrieveUpdatedNode(
-                                this.topicConfigNode.ref.id,
-                                JSON.stringify(topicConfig),
-                            );
-                        }
+                        await this.createTopicNodeWithChildren(params.collectionId);
                     }
                     // check the user privileges for the topic config node
                     this.checkUserAccess(this.topicConfigNode);
@@ -238,19 +147,14 @@ export class TemplateComponent implements OnInit {
                     this.swimlanes = this.topicNodeConfig.swimlanes ?? [];
                     // sync both existing children (topicWidgets) and topic config (swimlanes)
                     await this.syncSwimlanes();
-
-                    if (this.swimlanes?.length === 0) {
-                        this.swimlanes = swimlanes;
-                    }
-
+                    // generate header text
                     this.generateFromPrompt();
-
                     this.loadedSuccessfully = true;
                 }
             });
     }
 
-    private initializeEventListeners() {
+    private initializeCustomEventListeners() {
         // listen to custom colorChange event dispatched by the wlo-user-configurable
         document.getElementsByTagName('body')[0].addEventListener(
             'colorChange',
@@ -288,13 +192,79 @@ export class TemplateComponent implements OnInit {
         );
     }
 
+    /**
+     * Create topic node with its children, if it does not exist.
+     * (1) create node for topic
+     * (2) load template
+     * (3) generate children nodes for topic node
+     * (4) set config to nodes from template (TODO)
+     * (5) store config of existing children in topic node
+     *
+     * @param collectionId
+     */
+    private async createTopicNodeWithChildren(collectionId: string) {
+        // (1) create node for topic as child of the widget config node
+        this.topicConfigNode = await this.createChild(
+            parentWidgetConfigNodeId,
+            mapType,
+            collectionPrefix + collectionId,
+        );
+        if (this.topicConfigNode) {
+            // TODO: This is currently necessary to set the correct permissions of the node
+            await this.setPermissions(this.topicConfigNode.ref.id);
+            // (2) load template (swimlanes)
+            // (3) generate children nodes for topic node
+            // forEach does not support async / await
+            // -> for ... of ... (https://stackoverflow.com/a/37576787)
+            for (const swimlane of initialSwimlanes) {
+                if (swimlane.grid?.length > 0) {
+                    for (const gridTile of swimlane.grid) {
+                        if (currentlySupportedWidgetTypes.includes(gridTile.item)) {
+                            // create child and add its ref.id as UUID to the swimlanes
+                            const childNode: Node = await this.createChild(
+                                this.topicConfigNode.ref.id,
+                                ioType,
+                                widgetPrefix + uuidv4(),
+                            );
+                            const nodeId = childNode.ref.id;
+                            // (4) set widget / gridTile config that might be set in the grid on children nodes
+                            if (currentlySupportedWidgetTypesWithConfig.includes(gridTile.item)) {
+                                const widgetConfig: WidgetConfig = gridTile.config ?? {};
+                                await this.setProperty(
+                                    nodeId,
+                                    JSON.stringify({ config: widgetConfig }),
+                                );
+                            }
+                            // (5a) store UUID in the config (swimlanes)
+                            gridTile.uuid = nodeId;
+                            // (5b) delete gridTile config (we do not want to store the widget configs in the main node)
+                            if (gridTile.config) {
+                                delete gridTile.config;
+                            }
+                        }
+                    }
+                }
+            }
+            // (5c) store adjusted config (swimlanes) with correct UUIDs
+            const topicConfig: NodeConfig = {
+                prompt: topicPrompt,
+                templateWidgetId: topicTemplateWidgetId,
+                swimlanes: initialSwimlanes,
+            };
+            this.topicConfigNode = await this.setPropertyAndRetrieveUpdatedNode(
+                this.topicConfigNode.ref.id,
+                JSON.stringify(topicConfig),
+            );
+        }
+    }
+
     get filterBarReady() {
         const sameNumberOfValues =
             this.selectDimensions.size === this.selectedDimensionValues.length;
         return this.selectDimensionsLoaded && sameNumberOfValues;
     }
 
-    get topicNodeConfig(): NodeConfig {
+    private get topicNodeConfig(): NodeConfig {
         const topicConfig = this.topicConfigNode.properties[widgetConfigType]?.[0];
         if (!topicConfig) {
             return {};
@@ -302,7 +272,7 @@ export class TemplateComponent implements OnInit {
         return JSON.parse(topicConfig) ?? {};
     }
 
-    get topicWidgetsIds(): string[] {
+    private get topicWidgetsIds(): string[] {
         return this.topicWidgets?.nodes?.map((node) => node.ref.id) ?? [];
     }
 
@@ -310,23 +280,21 @@ export class TemplateComponent implements OnInit {
         this.userHasEditRights.set(node.access.includes('Write'));
     }
 
-    async createChild(parentId: string, type: string, name: string): Promise<Node> {
+    private async createChild(parentId: string, type: string, name: string): Promise<Node> {
         return await firstValueFrom(
             this.nodeApi.createChild({
                 repository: '-home-',
                 node: parentId,
                 type,
-                aspects: [this.widgetConfigAspect],
+                aspects: [widgetConfigAspect],
                 body: {
                     'cm:name': [name],
-                    // TODO: Setting this on creation does not yet work
-                    'ccm:widget_config': [JSON.stringify(swimlanes)],
                 },
             }),
         );
     }
 
-    async setPermissions(nodeId: string): Promise<void> {
+    private async setPermissions(nodeId: string): Promise<void> {
         return await firstValueFrom(
             this.nodeApi.setPermissions(nodeId, {
                 inherited: true,
@@ -345,8 +313,8 @@ export class TemplateComponent implements OnInit {
         );
     }
 
-    async getNodeChildren(nodeId: string): Promise<NodeEntries> {
-        // TODO: We could also use pagination here, if these number of items is getting too large
+    private async getNodeChildren(nodeId: string): Promise<NodeEntries> {
+        // TODO: Pagination vs. large maxItems number
         return firstValueFrom(this.nodeApi.getChildren(nodeId, { maxItems: 500 }));
     }
 
@@ -381,22 +349,22 @@ export class TemplateComponent implements OnInit {
         }
     }
 
-    async setProperty(nodeId: string, value: string): Promise<Node> {
+    private async setProperty(nodeId: string, value: string): Promise<Node> {
         return firstValueFrom(
-            this.nodeApi.setProperty('-home-', nodeId, 'ccm:widget_config', [value]),
+            this.nodeApi.setProperty('-home-', nodeId, widgetConfigType, [value]),
         );
     }
 
-    async setPropertyAndRetrieveUpdatedNode(nodeId: string, value: string) {
+    private async setPropertyAndRetrieveUpdatedNode(nodeId: string, value: string): Promise<Node> {
         await this.setProperty(nodeId, value);
         return firstValueFrom(this.nodeApi.getNode(nodeId));
     }
 
-    async retrieveSelectDimensions(): Promise<void> {
-        await firstValueFrom(this.mdsService.getMetadataSet({ metadataSet: 'mds_oeh' })).then(
+    private async retrieveSelectDimensions(): Promise<void> {
+        await firstValueFrom(this.mdsService.getMetadataSet({ metadataSet: default_mds })).then(
             (data) => {
                 const filteredMdsWidgets: MdsWidget[] = data.widgets.filter((widget: MdsWidget) =>
-                    this.providedSelectDimensionKeys.includes(widget.id),
+                    providedSelectDimensionKeys.includes(widget.id),
                 );
                 filteredMdsWidgets.forEach((mdsWidget: MdsWidget) => {
                     // Note: The $ is added at this position to signal an existing placeholder
@@ -417,6 +385,7 @@ export class TemplateComponent implements OnInit {
             // TODO: is it worse the experience that the calculation is done twice?
             const swimlanesCopy = JSON.parse(JSON.stringify(this.swimlanes));
             moveItemInArray(swimlanesCopy, oldIndex, newIndex);
+            // TODO: move the update functionality into separate function
             const topicConfig: NodeConfig = this.topicNodeConfig;
             topicConfig.swimlanes = swimlanesCopy;
             this.topicConfigNode = await this.setPropertyAndRetrieveUpdatedNode(
@@ -442,6 +411,7 @@ export class TemplateComponent implements OnInit {
         // TODO: is it worse the experience that the calculation is done twice?
         const swimlanesCopy = JSON.parse(JSON.stringify(this.swimlanes));
         swimlanesCopy.push(newSwimlane);
+        // TODO: move the update functionality into separate function
         const topicConfig: NodeConfig = this.topicNodeConfig;
         topicConfig.swimlanes = swimlanesCopy;
         this.topicConfigNode = await this.setPropertyAndRetrieveUpdatedNode(
@@ -511,8 +481,8 @@ export class TemplateComponent implements OnInit {
                             if (!existingSwimlaneUUIDs.includes(gridTile.uuid)) {
                                 const childNode: Node = await this.createChild(
                                     this.topicConfigNode.ref.id,
-                                    this.ioType,
-                                    'WIDGET_' + uuidv4(),
+                                    ioType,
+                                    widgetPrefix + uuidv4(),
                                 );
                                 const nodeId = childNode.ref.id;
                                 // set empty properties on children to be extended later
@@ -571,6 +541,7 @@ export class TemplateComponent implements OnInit {
                 // (4) store updated swimlanes in node config
                 swimlanesCopy[index] = editedSwimlane;
                 // (5) change updated swimlanes in the topic node
+                // TODO: move the update functionality into separate function
                 const topicConfig: NodeConfig = this.topicNodeConfig;
                 topicConfig.swimlanes = swimlanesCopy;
                 this.topicConfigNode = await this.setPropertyAndRetrieveUpdatedNode(
@@ -614,6 +585,7 @@ export class TemplateComponent implements OnInit {
             const swimlanesCopy = JSON.parse(JSON.stringify(this.swimlanes));
             // TODO: is it worse the experience that the calculation is done twice?
             swimlanesCopy.splice(index, 1);
+            // TODO: move the update functionality into separate function
             const topicConfig: NodeConfig = this.topicNodeConfig;
             topicConfig.swimlanes = swimlanesCopy;
             this.topicConfigNode = await this.setPropertyAndRetrieveUpdatedNode(

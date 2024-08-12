@@ -53,7 +53,7 @@
           <mat-menu #addComponentMenu="matMenu">
             <button
               mat-menu-item
-              *ngFor="let option of typeOptions"
+              *ngFor="let option of swimlaneTypeOptions"
               [disabled]="requestInProgress"
               (click)="addSwimlane(option.value)"
             >

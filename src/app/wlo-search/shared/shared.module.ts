@@ -1,4 +1,6 @@
 import { A11yModule } from '@angular/cdk/a11y';
+import { CdkAccordionModule } from '@angular/cdk/accordion';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { LayoutModule } from '@angular/cdk/layout';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { CommonModule } from '@angular/common';
@@ -41,9 +43,11 @@ import { SkipTargetDirective } from './skip-target.directive';
         RouterModule,
         CommonModule,
         A11yModule,
-        FormsModule,
+        CdkAccordionModule,
+        DragDropModule,
         LayoutModule,
         OverlayModule,
+        FormsModule,
         ReactiveFormsModule,
         MatChipsModule,
         MatAutocompleteModule,
@@ -75,9 +79,11 @@ import { SkipTargetDirective } from './skip-target.directive';
         RouterModule,
         CommonModule,
         A11yModule,
-        FormsModule,
+        CdkAccordionModule,
+        DragDropModule,
         LayoutModule,
         OverlayModule,
+        FormsModule,
         ReactiveFormsModule,
         DisplayNamePipe,
         FocusStateDirective,

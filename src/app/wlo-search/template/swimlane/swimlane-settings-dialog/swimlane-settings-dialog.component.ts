@@ -1,21 +1,17 @@
 import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, Inject, OnInit } from '@angular/core';
-import {
-    FormsModule,
-    ReactiveFormsModule,
-    UntypedFormControl,
-    UntypedFormGroup,
-} from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SharedModule } from '../../../shared/shared.module';
 import {
+    configHints,
     currentlySupportedWidgetTypesWithConfig,
     gridTypeOptions,
-    typeOptions,
+    swimlaneTypeOptions,
     widgetConfigType,
     widgetConfigTypes,
     widgetTypeOptions,
-} from '../../type-definitions';
+} from '../../custom-definitions';
 import { GridTile } from '../grid-tile';
 import { WidgetConfig } from '../grid-widget/widget-config';
 import { Swimlane } from '../swimlane';
@@ -29,11 +25,11 @@ import { v4 as uuidv4 } from 'uuid';
     templateUrl: './swimlane-settings-dialog.component.html',
     styleUrls: ['./swimlane-settings-dialog.component.scss'],
     standalone: true,
-    imports: [FormsModule, MatDialogModule, ReactiveFormsModule, SharedModule],
+    imports: [SharedModule],
 })
 export class SwimlaneSettingsDialogComponent implements OnInit {
     form: UntypedFormGroup;
-    typeOptions: SelectOption[] = typeOptions;
+    swimlaneTypeOptions: SelectOption[] = swimlaneTypeOptions;
     gridTypeOptions: SelectOption[] = gridTypeOptions;
     widgetTypeOptions: SelectOption[] = widgetTypeOptions;
     gridItems: GridTile[];
@@ -50,7 +46,7 @@ export class SwimlaneSettingsDialogComponent implements OnInit {
     ];
     supportedWidgetTypesWithConfig: string[] = currentlySupportedWidgetTypesWithConfig;
     availableWidgetConfigTypes: Array<keyof WidgetConfig> = widgetConfigTypes;
-    configHints: Map<string, string> = new Map<string, string>();
+    configHints: Map<string, string> = configHints;
 
     constructor(
         @Inject(MAT_DIALOG_DATA) public data: { swimlane: Swimlane; widgets: NodeEntries },
@@ -93,28 +89,6 @@ export class SwimlaneSettingsDialogComponent implements OnInit {
         });
         this.gridItems = dataGrid;
         this.syncGridItemsWithFormData();
-        this.configHints.set(
-            'headline',
-            'The headline of the content teaser, which is later extended by the topic name.',
-        );
-        this.configHints.set('layout', 'The layout of the content teaser, e.g., carousel');
-        this.configHints.set('description', 'The description used by the content teaser.');
-        this.configHints.set(
-            'searchMode',
-            'The search mode used by the content teaser, e.g, collection or ngsearchword.',
-        );
-        this.configHints.set(
-            'searchText',
-            'The search text used by the content teaser, which is later extended by the topic name.',
-        );
-        this.configHints.set(
-            'chosenColor',
-            'Optional background color used by the content teaser, which defaults to the swimlane background.',
-        );
-        this.configHints.set(
-            'collectionId',
-            'Optional collectionId used by the content teaser, which defaults to the collectionID of the page.',
-        );
     }
 
     /**
@@ -122,7 +96,7 @@ export class SwimlaneSettingsDialogComponent implements OnInit {
      *
      * @param colorString
      */
-    initializeBackgroundColor(colorString: string) {
+    private initializeBackgroundColor(colorString: string) {
         if (!colorString || colorString === '') {
             return '#f4f4f4';
         }
@@ -142,12 +116,12 @@ export class SwimlaneSettingsDialogComponent implements OnInit {
     }
 
     // https://stackoverflow.com/a/5624139
-    componentToHex(c: number) {
+    private componentToHex(c: number) {
         const hex = c.toString(16);
         return hex.length == 1 ? '0' + hex : hex;
     }
 
-    rgbToHex(r: number, g: number, b: number) {
+    private rgbToHex(r: number, g: number, b: number) {
         return '#' + this.componentToHex(r) + this.componentToHex(g) + this.componentToHex(b);
     }
 
@@ -185,7 +159,7 @@ export class SwimlaneSettingsDialogComponent implements OnInit {
         }
     }
 
-    patchDimensions(index: number, rows: number, cols: number) {
+    setDimensions(index: number, rows: number, cols: number) {
         this.gridItems[index].rows = rows;
         this.gridItems[index].cols = cols;
         this.syncGridItemsWithFormData();

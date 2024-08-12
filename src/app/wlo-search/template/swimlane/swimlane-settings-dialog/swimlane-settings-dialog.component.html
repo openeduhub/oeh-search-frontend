@@ -20,17 +20,17 @@
   <mat-form-field appearance="outline">
     <mat-label i18n>Type</mat-label>
     <mat-select formControlName="type">
-      <mat-option [value]="option.value" *ngFor="let option of typeOptions">{{
-        option.viewValue
-      }}</mat-option>
+      <mat-option [value]="option.value" *ngFor="let option of swimlaneTypeOptions">
+        {{ option.viewValue }}
+      </mat-option>
     </mat-select>
   </mat-form-field>
   <mat-form-field appearance="outline">
     <mat-label i18n>Grid-Type</mat-label>
     <mat-select formControlName="gridType">
-      <mat-option [value]="option.value" *ngFor="let option of gridTypeOptions">{{
-        option.viewValue
-      }}</mat-option>
+      <mat-option [value]="option.value" *ngFor="let option of gridTypeOptions">
+        {{ option.viewValue }}
+      </mat-option>
     </mat-select>
   </mat-form-field>
   <mat-form-field appearance="outline">
@@ -87,7 +87,7 @@
             color="primary"
             [style.height]="dim.numberOfRows * 35 + 'px'"
             [style.width]="dim.numberOfCols * 35 + 'px'"
-            (click)="patchDimensions(i, dim.numberOfRows, dim.numberOfCols)"
+            (click)="setDimensions(i, dim.numberOfRows, dim.numberOfCols)"
           >
             {{ dim.numberOfRows }}x{{ dim.numberOfCols }}
           </button>
@@ -98,7 +98,7 @@
               color="primary"
               [style.height]="dim.numberOfRows * 35 + 'px'"
               [style.width]="dim.numberOfCols * 35 + 'px'"
-              (click)="patchDimensions(i, dim.numberOfRows, dim.numberOfCols)"
+              (click)="setDimensions(i, dim.numberOfRows, dim.numberOfCols)"
             >
               {{ dim.numberOfRows }}x{{ dim.numberOfCols }}
             </button>

@@ -1,5 +1,5 @@
 import { Component, computed, Input, signal, Signal, WritableSignal } from '@angular/core';
-import { widgetConfigType } from '../../type-definitions';
+import { widgetConfigType } from '../../custom-definitions';
 import { SharedModule } from '../../../shared/shared.module';
 import { WidgetConfig } from './widget-config';
 import { MdsValue, MdsWidget, Node } from 'ngx-edu-sharing-api';
@@ -37,10 +37,12 @@ export class GridWidgetComponent {
     @Input() get widgetNode(): Node {
         return this._widgetNode;
     }
+
     set widgetNode(value: Node) {
         this._widgetNode = value;
         this.setContentConfig(value);
     }
+
     @Input() widgetNodeId: string;
     @Input() widgetType: string;
 
