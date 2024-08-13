@@ -13,6 +13,9 @@ import {
     initialTopicColor,
     ioType,
     mapType,
+    pageConfigPropagateType,
+    pageConfigRefType,
+    pageConfigType,
     parentWidgetConfigNodeId,
     providedSelectDimensionKeys,
     swimlaneTypeOptions,
@@ -39,6 +42,7 @@ import {
     NodeEntries,
     NodeService,
 } from 'ngx-edu-sharing-api';
+import { ParentEntries } from 'ngx-edu-sharing-api/lib/api/models/parent-entries';
 import { SpinnerComponent } from 'ngx-edu-sharing-ui';
 import { AiTextPromptsService } from 'ngx-edu-sharing-z-api';
 import { firstValueFrom } from 'rxjs';
@@ -86,6 +90,7 @@ export class TemplateComponent implements OnInit {
     generatedJobText: WritableSignal<string> = signal('');
     jobsWidgetReady: boolean = false;
 
+    private collectionNode: Node;
     private topicConfigNode: Node;
     topicWidgets: NodeEntries;
     swimlanes: Swimlane[] = [];
@@ -113,10 +118,12 @@ export class TemplateComponent implements OnInit {
                     await firstValueFrom(this.nodeApi.getNode(params.collectionId)).then(
                         (node: Node) => {
                             this.topic.set(node.title);
+                            this.collectionNode = node;
                             // set the background to some random (but deterministic) color, just for visuals
                             this.topicColor = this.stringToColour(this.topic());
                         },
                     );
+                    const pageConfig = await this.retrievePageConfig(this.collectionNode);
 
                     const username = environment?.eduSharingUsername;
                     const password = environment?.eduSharingPassword;
@@ -358,6 +365,34 @@ export class TemplateComponent implements OnInit {
     private async setPropertyAndRetrieveUpdatedNode(nodeId: string, value: string): Promise<Node> {
         await this.setProperty(nodeId, value);
         return firstValueFrom(this.nodeApi.getNode(nodeId));
+    }
+
+    private async retrievePageConfig(node: Node): Promise<Object> {
+        // check, whether the node itself has a pageConfigRef
+        let pageRef =
+            node.properties[pageConfigPropagateType]?.[0] ??
+            node.properties[pageConfigRefType]?.[0];
+        // otherwise, iterate the parents to retrieve the pageConfigRef
+        if (!pageRef) {
+            const parents: ParentEntries = await firstValueFrom(
+                this.nodeApi.getParents(node.ref.id, {
+                    propertyFilter: ['-all-'],
+                    fullPath: true,
+                }),
+            );
+            pageRef = parents.nodes.find(
+                (parent: Node) => !!parent.properties[pageConfigPropagateType]?.[0],
+            )?.properties[pageConfigRefType]?.[0];
+        }
+        if (pageRef) {
+            // workspace://SpacesStore/UUID -> UUID
+            const pageNodeId: string = pageRef.split('/')?.[pageRef.split('/').length - 1];
+            if (pageNodeId) {
+                const pageNode: Node = await firstValueFrom(this.nodeApi.getNode(pageNodeId));
+                return pageNode.properties[pageConfigType]?.[0] ?? {};
+            }
+        }
+        return {};
     }
 
     private async retrieveSelectDimensions(): Promise<void> {

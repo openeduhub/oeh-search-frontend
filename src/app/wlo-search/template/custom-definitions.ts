@@ -118,6 +118,12 @@ export const ioType: string = 'ccm:io';
 
 export const mapType: string = 'ccm:map';
 
+export const pageConfigPropagateType: string = 'ccm:page_config_propagate';
+
+export const pageConfigRefType: string = 'ccm:page_config_ref';
+
+export const pageConfigType: string = 'ccm:page_config';
+
 export const parentWidgetConfigNodeId: string = '80bb0eab-d64f-466b-94c6-2eccc4045c6b';
 
 export const providedSelectDimensionKeys: string[] = [
