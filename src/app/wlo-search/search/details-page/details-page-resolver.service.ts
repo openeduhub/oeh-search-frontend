@@ -8,7 +8,7 @@ import { Node } from 'ngx-edu-sharing-api';
 @Injectable({
     providedIn: SearchModule,
 })
-export class DetailsPageResolverService  {
+export class DetailsPageResolverService {
     constructor(private eduSharing: EduSharingService) {}
 
     resolve(route: ActivatedRouteSnapshot): Observable<Node> {

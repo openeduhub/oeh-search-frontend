@@ -6,7 +6,7 @@ import { EduSharingService } from '../../core/edu-sharing.service';
 import { SearchParametersService } from '../../core/search-parameters.service';
 
 @Injectable()
-export class SearchPageResolverService  {
+export class SearchPageResolverService {
     constructor(
         private searchParameters: SearchParametersService,
         private eduSharing: EduSharingService,

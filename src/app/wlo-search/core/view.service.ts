@@ -1,5 +1,5 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { Node } from 'ngx-edu-sharing-api';
 import * as rxjs from 'rxjs';
@@ -47,10 +47,10 @@ export class ViewService {
         private pageMode: PageModeService,
         private route: ActivatedRoute,
     ) {
-        this.route.url.subscribe(_segments => {
+        this.route.url.subscribe((_segments) => {
             const url = window.location.pathname;
             this.isTemplate.next(url.includes('/template'));
-        })
+        });
         this.registerStoredItems();
         this.registerBehaviorHooks();
     }

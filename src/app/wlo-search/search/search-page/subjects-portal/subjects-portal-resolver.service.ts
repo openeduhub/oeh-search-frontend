@@ -17,7 +17,7 @@ const INITIAL_NUMBER_OF_GROUPS = 5;
 const NUMBER_OF_RESULTS_PER_GROUP = 10;
 
 @Injectable()
-export class SubjectsPortalResolverService  {
+export class SubjectsPortalResolverService {
     /** Number of requested groups to fetch. */
     private numberOfGroups = INITIAL_NUMBER_OF_GROUPS;
 

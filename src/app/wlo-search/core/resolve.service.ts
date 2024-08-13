@@ -17,9 +17,12 @@ export class ResolveService {
      *
      * @param resolver has to to return an Observable that will emit once and then complete
      */
-    resolve<T>(resolver: {
-    resolve: ResolveFn<T>;
-}, route: ActivatedRoute): Observable<T> {
+    resolve<T>(
+        resolver: {
+            resolve: ResolveFn<T>;
+        },
+        route: ActivatedRoute,
+    ): Observable<T> {
         return combineLatest([route.params, route.queryParams]).pipe(
             tap(() => Promise.resolve().then(() => this.view.setIsLoading())),
             switchMap(() =>
