@@ -3,10 +3,15 @@
     *ngIf="filterBarReady"
     [class]="widgetClasses ? widgetClasses : ''"
     [contextNodeId]="topicCollectionID"
+    [defaultNodeId]="defaultAiTextWidgetNodeId"
     [editMode]="editMode"
+    [gridIndex]="gridIndex"
     [nodeId]="widgetNodeId"
+    [pageVariantNode]="pageVariantNode"
+    [parentWidgetConfigNodeId]="parentWidgetConfigNodeId"
     [selectDimensions]="selectDimensions"
     [selectedDimensionValues]="selectedDimensionValues"
+    [swimlaneIndex]="swimlaneIndex"
   ></wlo-ai-text-widget>
 </ng-container>
 <ng-container *ngIf="widgetType === 'wlo-collection-chips'">
@@ -15,14 +20,20 @@
     [class]="widgetClasses ? widgetClasses : ''"
     [customUrl]="retrieveCustomUrl"
     [collection]="topicCollectionID"
+    [defaultNodeId]="defaultCollectionChipsNodeId"
   ></wlo-collection-chips>
 </ng-container>
 <ng-container *ngIf="widgetType === 'wlo-user-configurable'">
   <wlo-user-configurable
-    *ngIf="jobsWidgetReady"
     [class]="widgetClasses ? widgetClasses : ''"
-    [configOverwrite]="contentConfigAsString()"
+    [contextNodeId]="topicCollectionID"
+    [defaultNodeId]="defaultUserConfigurableNodeId"
+    [gridIndex]="gridIndex"
     [nodeId]="widgetNodeId"
+    [pageVariantNode]="pageVariantNode"
+    [parentWidgetConfigNodeId]="parentWidgetConfigNodeId"
+    [searchText]="topic"
+    [swimlaneIndex]="swimlaneIndex"
   >
   </wlo-user-configurable>
 </ng-container>

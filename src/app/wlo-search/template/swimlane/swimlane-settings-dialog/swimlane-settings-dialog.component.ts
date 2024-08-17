@@ -2,23 +2,19 @@ import { moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, Inject, OnInit } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { NodeService } from 'ngx-edu-sharing-api';
+import { firstValueFrom } from 'rxjs';
 import { SharedModule } from '../../../shared/shared.module';
 import {
-    configHints,
-    currentlySupportedWidgetTypesWithConfig,
     gridTypeOptions,
     swimlaneTypeOptions,
-    widgetConfigType,
-    widgetConfigTypes,
     widgetTypeOptions,
+    workspaceSpacesStorePrefix,
 } from '../../custom-definitions';
 import { GridTile } from '../grid-tile';
-import { WidgetConfig } from '../grid-widget/widget-config';
 import { Swimlane } from '../swimlane';
 import { SelectOption } from './select-option';
 import { TileDimension } from './tile-dimension';
-import { Node, NodeEntries } from 'ngx-edu-sharing-api';
-import { v4 as uuidv4 } from 'uuid';
 
 @Component({
     selector: 'app-swimlane-settings-dialog',
@@ -44,12 +40,10 @@ export class SwimlaneSettingsDialogComponent implements OnInit {
         new TileDimension(3, 2),
         new TileDimension(3, 3),
     ];
-    supportedWidgetTypesWithConfig: string[] = currentlySupportedWidgetTypesWithConfig;
-    availableWidgetConfigTypes: Array<keyof WidgetConfig> = widgetConfigTypes;
-    configHints: Map<string, string> = configHints;
 
     constructor(
-        @Inject(MAT_DIALOG_DATA) public data: { swimlane: Swimlane; widgets: NodeEntries },
+        @Inject(MAT_DIALOG_DATA) public data: { swimlane: Swimlane },
+        private nodeApi: NodeService,
     ) {}
 
     ngOnInit() {
@@ -61,33 +55,10 @@ export class SwimlaneSettingsDialogComponent implements OnInit {
             backgroundColor: new UntypedFormControl(
                 this.initializeBackgroundColor(this.data.swimlane.backgroundColor),
             ),
-            grid: new UntypedFormControl(JSON.stringify(this.data.swimlane.grid)),
+            grid: new UntypedFormControl(JSON.stringify(this.data.swimlane.grid ?? '[]')),
         });
         // note: using a copy is essentially at the point to not overwrite the parent data
-        const dataGrid: GridTile[] = JSON.parse(JSON.stringify(this.data.swimlane.grid));
-        // note: as we need a structure to work with, the idea is that we fill the dataGrid
-        //       with the configs of the existing widget nodes and sync them on close with
-        //       the widget nodes itself, while not keeping them on the main topic node config.
-        this.data.widgets.nodes?.forEach((node: Node) => {
-            const widgetConfig = node?.properties?.[widgetConfigType]?.[0];
-            if (widgetConfig && JSON.parse(widgetConfig)?.config) {
-                const relatedGridTile: GridTile =
-                    dataGrid.find((gridTile: GridTile) => gridTile.uuid === node.ref.id) ?? null;
-                if (relatedGridTile) {
-                    relatedGridTile.config = JSON.parse(widgetConfig).config;
-                }
-            }
-        });
-        // iterate to set missing configs in the GridTiles
-        dataGrid?.forEach((gridTile: GridTile) => {
-            if (
-                currentlySupportedWidgetTypesWithConfig.includes(gridTile.item) &&
-                !gridTile.config
-            ) {
-                gridTile.config = {};
-            }
-        });
-        this.gridItems = dataGrid;
+        this.gridItems = JSON.parse(JSON.stringify(this.data.swimlane.grid ?? '[]'));
         this.syncGridItemsWithFormData();
     }
 
@@ -127,11 +98,9 @@ export class SwimlaneSettingsDialogComponent implements OnInit {
 
     addGridTile(widgetItemName: string) {
         const gridTile: GridTile = {
-            uuid: uuidv4(),
             item: widgetItemName,
             rows: 1,
             cols: 3,
-            config: {},
         };
         this.gridItems.push(gridTile);
         this.syncGridItemsWithFormData();
@@ -144,16 +113,25 @@ export class SwimlaneSettingsDialogComponent implements OnInit {
         }
     }
 
-    // keyof -> https://stackoverflow.com/a/69198602
-    setConfigValue(index: number, configItem: keyof WidgetConfig, configValue: string) {
-        if (this.gridItems[index].config && this.availableWidgetConfigTypes.includes(configItem)) {
-            this.gridItems[index].config[configItem] = configValue;
-            this.syncGridItemsWithFormData();
-        }
-    }
-
-    removeGridTile(index: number) {
-        if (confirm('Wollen Sie dieses Element wirklich löschen?') === true) {
+    async removeGridTile(index: number) {
+        // Only ask for elements with nodeId, as those will result in lost configs
+        // use randomId assignment in order to track movements of elements
+        if (
+            !this.gridItems[index].nodeId ||
+            confirm(
+                'Wollen Sie dieses Element wirklich löschen? Damit geht die gespeicherte Konfiguration des Widgets verloren.',
+            ) === true
+        ) {
+            if (this.gridItems[index].nodeId) {
+                const nodeId: string = this.gridItems[index].nodeId.includes(
+                    workspaceSpacesStorePrefix,
+                )
+                    ? this.gridItems[index].nodeId.split('/')?.[
+                          this.gridItems[index].nodeId.split('/').length - 1
+                      ]
+                    : this.gridItems[index].nodeId;
+                await firstValueFrom(this.nodeApi.deleteNode(nodeId));
+            }
             this.gridItems.splice(index, 1);
             this.syncGridItemsWithFormData();
         }

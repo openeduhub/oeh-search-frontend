@@ -1,38 +1,11 @@
-import { WidgetConfig } from './swimlane/grid-widget/widget-config';
 import { SelectOption } from './swimlane/swimlane-settings-dialog/select-option';
-import { Swimlane } from './swimlane/swimlane';
-import { v4 as uuidv4 } from 'uuid';
 
-export const collectionPrefix: string = 'COLLECTION_';
+export const defaultMds: string = 'mds_oeh';
 
-export const configHints: Map<string, string> = new Map<string, string>([
-    ['headline', 'The headline of the content teaser, which is later extended by the topic name.'],
-    ['layout', 'The layout of the content teaser, e.g., carousel.'],
-    ['description', 'The description used by the content teaser.'],
-    ['searchMode', 'The search mode used by the content teaser, e.g, collection or ngsearchword.'],
-    [
-        'searchText',
-        'The search text used by the content teaser, which is later extended by the topic name.',
-    ],
-    [
-        'chosenColor',
-        'Optional background color used by the content teaser, which defaults to the swimlane background.',
-    ],
-    [
-        'collectionId',
-        'Optional collectionId used by the content teaser, which defaults to the collectionID of the page.',
-    ],
-]);
-
-export const currentlySupportedWidgetTypes: string[] = [
-    'wlo-ai-text-widget',
-    'wlo-collection-chips',
-    'wlo-user-configurable',
-];
-
-export const currentlySupportedWidgetTypesWithConfig: string[] = ['wlo-user-configurable'];
-
-export const default_mds: string = 'mds_oeh';
+export const defaultTopicTextNodeId: string = '2340e5cf-4e9d-4b42-b6df-e64087be7961';
+export const defaultAiTextWidgetNodeId: string = '10d5ec39-907a-43f6-a024-344300e6a4c8';
+export const defaultUserConfigurableNodeId: string = '89653b20-516c-43a2-9042-382aef5ae087';
+export const defaultCollectionChipsNodeId: string = 'd43cfd0e-ce5a-4428-a3bb-2c37a155bf32';
 
 export const gridTypeOptions: SelectOption[] = [
     {
@@ -55,74 +28,31 @@ export const gridTypeOptions: SelectOption[] = [
 
 export const initialLocaleString: string = 'de_DE';
 
-export const initialSwimlanes: Swimlane[] = [
-    {
-        uuid: uuidv4(),
-        type: 'collapse',
-        heading: 'Durchstöbere hier unsere Lehrplanthemen',
-        description: 'Example text?',
-        grid: [
-            {
-                uuid: uuidv4(),
-                item: 'wlo-collection-chips',
-                cols: 3,
-                rows: 1,
-            },
-        ],
-    },
-    {
-        uuid: uuidv4(),
-        type: 'spacer',
-    },
-    {
-        uuid: uuidv4(),
-        type: 'jumbotron',
-        grid: [
-            {
-                uuid: uuidv4(),
-                item: 'wlo-user-configurable',
-                classNames: 'job-widget',
-                cols: 3,
-                rows: 1,
-                config: {
-                    headline: 'Berufsprofile',
-                    layout: 'carousel',
-                    searchMode: 'collection',
-                },
-            },
-        ],
-        backgroundColor: '#FFF9EB',
-    },
-    {
-        uuid: uuidv4(),
-        type: 'spacer',
-    },
-    {
-        uuid: uuidv4(),
-        type: 'jumbotron',
-        grid: [
-            {
-                uuid: uuidv4(),
-                item: 'wlo-ai-text-widget',
-                cols: 3,
-                rows: 1,
-            },
-        ],
-        backgroundColor: '#BEDADE',
-    },
-];
-
 export const initialTopicColor: string = '#182e5c';
 
 export const ioType: string = 'ccm:io';
 
 export const mapType: string = 'ccm:map';
 
+export const pageConfigAspect: string = 'ccm:page';
+
+export const pageConfigPrefix: string = 'PAGE_';
+
 export const pageConfigPropagateType: string = 'ccm:page_config_propagate';
 
 export const pageConfigRefType: string = 'ccm:page_config_ref';
 
 export const pageConfigType: string = 'ccm:page_config';
+
+export const pageVariantConfigAspect: string = 'ccm:page_variant';
+
+export const pageVariantConfigPrefix: string = 'PAGE_VARIANT_';
+
+export const pageVariantConfigType: string = 'ccm:page_variant_config';
+
+export const pageVariantIsTemplateType: string = 'ccm:page_variant_is_template';
+
+export const parentPageConfigNodeId: string = '25e341e1-7058-4210-b0d3-838255884682';
 
 export const parentWidgetConfigNodeId: string = '80bb0eab-d64f-466b-94c6-2eccc4045c6b';
 
@@ -150,25 +80,9 @@ export const swimlaneTypeOptions: SelectOption[] = [
     },
 ];
 
-export const topicPrompt: string = 'Gib eine kurze Einleitung in das Thema $THEMA$.';
-
-export const topicTemplateWidgetId: string = 'headerPrompt';
-
 export const widgetConfigAspect: string = 'ccm:widget';
 
 export const widgetConfigType: string = 'ccm:widget_config';
-
-export const widgetConfigTypes: Array<keyof WidgetConfig> = [
-    'headline',
-    'layout',
-    'description',
-    'searchMode',
-    'searchText',
-    'chosenColor',
-    'collectionId',
-];
-
-export const widgetPrefix: string = 'WIDGET_';
 
 export const widgetTypeOptions: SelectOption[] = [
     {
@@ -196,3 +110,5 @@ export const widgetTypeOptions: SelectOption[] = [
         viewValue: 'Text',
     },
 ];
+
+export const workspaceSpacesStorePrefix: string = 'workspace://SpacesStore/';

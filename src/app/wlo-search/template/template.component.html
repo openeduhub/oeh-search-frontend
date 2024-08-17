@@ -1,10 +1,10 @@
 <div
   class="reloading-indicator"
   [class.light-bg]="requestInProgress"
-  *ngIf="!loadedSuccessfully || requestInProgress"
+  *ngIf="!initialLoadSuccessfully || requestInProgress"
 >
   <!-- for requestInProgress the page might be too large to display a visible spinner -->
-  <es-spinner *ngIf="!loadedSuccessfully"></es-spinner>
+  <es-spinner *ngIf="!initialLoadSuccessfully"></es-spinner>
 </div>
 <header class="template-header">
   <div class="template-header-wrapper">
@@ -152,16 +152,15 @@
                     [backgroundColor]="swimlane.backgroundColor"
                     [editMode]="editMode"
                     [filterBarReady]="filterBarReady"
-                    [generatedJobText]="generatedJobText()"
                     [grid]="swimlane.grid"
                     [gridType]="swimlane.gridType"
-                    [jobsWidgetReady]="jobsWidgetReady"
+                    [pageVariantNode]="pageVariantNode"
                     [selectDimensions]="selectDimensions"
                     [selectedDimensionValues]="selectedDimensionValues"
+                    [swimlaneIndex]="i"
                     [topic]="topic()"
                     [topicCollectionID]="topicCollectionID()"
                     [topicWidgets]="topicWidgets"
-                    *ngIf="jobsWidgetReady"
                   ></app-swimlane>
                 </div>
               </cdk-accordion-item>
@@ -180,15 +179,14 @@
                 [backgroundColor]="swimlane.backgroundColor"
                 [editMode]="editMode"
                 [filterBarReady]="filterBarReady"
-                [generatedJobText]="generatedJobText()"
                 [grid]="swimlane.grid"
-                [jobsWidgetReady]="jobsWidgetReady"
+                [pageVariantNode]="pageVariantNode"
                 [selectDimensions]="selectDimensions"
                 [selectedDimensionValues]="selectedDimensionValues"
+                [swimlaneIndex]="i"
                 [topic]="topic()"
                 [topicCollectionID]="topicCollectionID()"
                 [topicWidgets]="topicWidgets"
-                *ngIf="jobsWidgetReady"
               ></app-swimlane>
             </div>
 

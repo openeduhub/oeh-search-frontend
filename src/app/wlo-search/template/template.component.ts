@@ -2,36 +2,6 @@ import { CdkDragHandle, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, HostBinding, OnInit, signal, WritableSignal } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { SharedModule } from '../shared/shared.module';
-import {
-    collectionPrefix,
-    currentlySupportedWidgetTypesWithConfig,
-    currentlySupportedWidgetTypes,
-    default_mds,
-    initialLocaleString,
-    initialSwimlanes,
-    initialTopicColor,
-    ioType,
-    mapType,
-    pageConfigPropagateType,
-    pageConfigRefType,
-    pageConfigType,
-    parentWidgetConfigNodeId,
-    providedSelectDimensionKeys,
-    swimlaneTypeOptions,
-    topicPrompt,
-    topicTemplateWidgetId,
-    widgetConfigAspect,
-    widgetConfigType,
-    widgetPrefix,
-} from './custom-definitions';
-import { FilterBarComponent } from './filter-bar/filter-bar.component';
-import { GridTile } from './swimlane/grid-tile';
-import { NodeConfig } from './swimlane/grid-widget/node-config';
-import { WidgetConfig } from './swimlane/grid-widget/widget-config';
-import { SwimlaneComponent } from './swimlane/swimlane.component';
-import { SwimlaneSettingsDialogComponent } from './swimlane/swimlane-settings-dialog/swimlane-settings-dialog.component';
-import { Swimlane } from './swimlane/swimlane';
 import {
     ApiRequestConfiguration,
     AuthenticationService,
@@ -42,13 +12,43 @@ import {
     NodeEntries,
     NodeService,
 } from 'ngx-edu-sharing-api';
+import { Mds } from 'ngx-edu-sharing-api/lib/api/models/mds';
 import { ParentEntries } from 'ngx-edu-sharing-api/lib/api/models/parent-entries';
 import { SpinnerComponent } from 'ngx-edu-sharing-ui';
-import { AiTextPromptsService } from 'ngx-edu-sharing-z-api';
+import { AiTextPromptsService, TextPromptEntity } from 'ngx-edu-sharing-z-api';
 import { firstValueFrom } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { v4 as uuidv4 } from 'uuid';
+import { SharedModule } from '../shared/shared.module';
+import {
+    defaultMds,
+    defaultTopicTextNodeId,
+    initialLocaleString,
+    initialTopicColor,
+    ioType,
+    mapType,
+    pageConfigPropagateType,
+    pageConfigRefType,
+    pageConfigType,
+    providedSelectDimensionKeys,
+    swimlaneTypeOptions,
+    widgetConfigAspect,
+    pageVariantConfigType,
+    parentPageConfigNodeId,
+    pageConfigPrefix,
+    pageConfigAspect,
+    pageVariantConfigPrefix,
+    pageVariantConfigAspect,
+    pageVariantIsTemplateType,
+    workspaceSpacesStorePrefix,
+} from './custom-definitions';
+import { FilterBarComponent } from './filter-bar/filter-bar.component';
+import { PageConfig } from './page-config';
+import { PageVariantConfig } from './page-variant-config';
+import { SwimlaneComponent } from './swimlane/swimlane.component';
+import { SwimlaneSettingsDialogComponent } from './swimlane/swimlane-settings-dialog/swimlane-settings-dialog.component';
+import { Swimlane } from './swimlane/swimlane';
 
 @Component({
     standalone: true,
@@ -77,7 +77,7 @@ export class TemplateComponent implements OnInit {
 
     @HostBinding('style.--topic-color') topicColor: string = initialTopicColor;
 
-    loadedSuccessfully: boolean = false;
+    initialLoadSuccessfully: boolean = false;
     requestInProgress: boolean = false;
     private initializedWithParams: boolean = false;
 
@@ -87,11 +87,14 @@ export class TemplateComponent implements OnInit {
     topic: WritableSignal<string> = signal('$THEMA$');
     topicCollectionID: WritableSignal<string> = signal(null);
     generatedHeader: WritableSignal<string> = signal('');
-    generatedJobText: WritableSignal<string> = signal('');
-    jobsWidgetReady: boolean = false;
 
     private collectionNode: Node;
-    private topicConfigNode: Node;
+    private collectionNodeHasPageConfig: boolean = false;
+    private pageConfigNode: Node;
+    private pageVariantConfigs: NodeEntries;
+    private pageVariantDefaultPosition: number = -1;
+    pageVariantNode: Node;
+    private selectedVariantPosition: number = -1;
     topicWidgets: NodeEntries;
     swimlanes: Swimlane[] = [];
 
@@ -103,197 +106,302 @@ export class TemplateComponent implements OnInit {
         { value: 'spacer', viewValue: 'Trennlinie' },
     ]);
 
+    get filterBarReady(): boolean {
+        const sameNumberOfValues =
+            this.selectDimensions.size === this.selectedDimensionValues.length;
+        return this.selectDimensionsLoaded && sameNumberOfValues;
+    }
+
+    private get selectedDimensionValueIds(): string[] {
+        return this.selectedDimensionValues.map((value: MdsValue) => value.id);
+    }
+
     ngOnInit(): void {
-        this.initializeCustomEventListeners();
+        // set the default language for API requests
         this.apiRequestConfig.setLocale(initialLocaleString);
         // set the topic based on the query param "collectionID"
         this.route.queryParams
             .pipe(filter((params) => params.topic || params.collectionId))
             .subscribe(async (params) => {
-                // the queryParams might be called twice, thus, initializedWithParams is important
+                // due to reconnect with queryParams, this might be called twice, thus, initializedWithParams is important
                 if (params.collectionId && !this.initializedWithParams) {
                     this.topicCollectionID.set(params.collectionId);
                     this.initializedWithParams = true;
-                    // fetch the collection node to set the topic name and topic color
-                    await firstValueFrom(this.nodeApi.getNode(params.collectionId)).then(
-                        (node: Node) => {
-                            this.topic.set(node.title);
-                            this.collectionNode = node;
-                            // set the background to some random (but deterministic) color, just for visuals
-                            this.topicColor = this.stringToColour(this.topic());
-                        },
-                    );
-                    const pageConfig = await this.retrievePageConfig(this.collectionNode);
-
+                    // 0) login for local development
                     const username = environment?.eduSharingUsername;
                     const password = environment?.eduSharingPassword;
                     // TODO: This fix for local development currently only works in Firefox
                     if (username && password) {
                         await firstValueFrom(this.authService.login(username, password));
                     }
+                    // 1) fetch the collection node to set the topic name, color and check the user access
+                    this.collectionNode = await firstValueFrom(
+                        this.nodeApi.getNode(params.collectionId),
+                    );
+                    this.topic.set(this.collectionNode.title);
+                    // check the user privileges for the collection node and initialize custom listeners
+                    this.checkUserAccess(this.collectionNode);
+                    if (this.userHasEditRights()) {
+                        this.initializeCustomEventListeners();
+                    }
+                    // TODO: use a color from the palette defined in the collection
+                    // set the background to some random (but deterministic) color, just for visuals
+                    this.topicColor = this.stringToColour(this.topic());
+
+                    // 2) retrieve the select dimensions
                     await this.retrieveSelectDimensions();
 
-                    // retrieve children of widget config node and check, whether a topic node exists
-                    const nodeEntries: NodeEntries = await this.getNodeChildren(
-                        parentWidgetConfigNodeId,
-                    );
-                    this.topicConfigNode = nodeEntries.nodes.find(
-                        (node: Node) =>
-                            node.type === mapType &&
-                            node.name === collectionPrefix + params.collectionId,
-                    );
-                    // if no topic node exists, create it
-                    if (!this.topicConfigNode) {
-                        await this.createTopicNodeWithChildren(params.collectionId);
+                    // 3) retrieve the page config node either by checking the node itself or by iterating the parents of the collectionNode
+                    this.pageConfigNode = await this.retrievePageConfigNode(this.collectionNode);
+                    if (!this.pageConfigNode) {
+                        return;
                     }
-                    // check the user privileges for the topic config node
-                    this.checkUserAccess(this.topicConfigNode);
-                    // retrieve the list of stored widget nodes
-                    this.topicWidgets = await this.getNodeChildren(this.topicConfigNode.ref.id);
-                    // note: only the grid items of the swimlane should be represented as separate widget nodes
-                    this.swimlanes = this.topicNodeConfig.swimlanes ?? [];
-                    // sync both existing children (topicWidgets) and topic config (swimlanes)
-                    await this.syncSwimlanes();
-                    // generate header text
-                    this.generateFromPrompt();
-                    this.loadedSuccessfully = true;
+                    // parse the page config from the properties
+                    const pageConfig: PageConfig = this.pageConfigNode.properties[
+                        pageConfigType
+                    ]?.[0]
+                        ? JSON.parse(this.pageConfigNode.properties[pageConfigType][0])
+                        : {};
+                    if (!pageConfig.variants) {
+                        console.error('pageConfig does not include variants', pageConfig);
+                        return;
+                    }
+                    this.pageVariantConfigs = await this.getNodeChildren(
+                        this.pageConfigNode.ref.id,
+                    );
+                    // default the ID with the default or the first occurrence
+                    this.pageVariantDefaultPosition = pageConfig.variants.indexOf(
+                        pageConfig.default,
+                    );
+                    let selectedVariantId = pageConfig.default ?? pageConfig.variants[0];
+                    selectedVariantId =
+                        selectedVariantId.split('/')?.[selectedVariantId.split('/').length - 1];
+                    // iterate variant configs and check, whether the variables of one occurrence match
+                    let highestNumberOfMatches: number = 0;
+                    this.pageVariantConfigs.nodes?.forEach((variantNode: Node) => {
+                        const variantConfig: PageVariantConfig = variantNode.properties[
+                            pageVariantConfigType
+                        ]?.[0]
+                            ? JSON.parse(variantNode.properties[pageVariantConfigType][0])
+                            : {};
+                        if (variantConfig.variables) {
+                            let matchesCount: number = 0;
+                            Object.keys(variantConfig.variables)?.forEach((key: string) => {
+                                // TODO: Replace by a more consistent check of both key and value
+                                if (
+                                    this.selectedDimensionValueIds.includes(
+                                        variantConfig.variables[key],
+                                    )
+                                ) {
+                                    matchesCount += 1;
+                                }
+                            });
+                            // select the variant with the most matches
+                            if (matchesCount > highestNumberOfMatches) {
+                                selectedVariantId = variantNode.ref.id;
+                            }
+                        }
+                    });
+                    this.selectedVariantPosition = pageConfig.variants.indexOf(
+                        workspaceSpacesStorePrefix + selectedVariantId,
+                    );
+                    // 4) retrieve the variant config node of the page and set the swimlanes
+                    this.pageVariantNode = this.pageVariantConfigs.nodes?.find(
+                        (node: Node) => node.ref.id === selectedVariantId,
+                    );
+                    const pageVariant: PageVariantConfig = this.pageVariantNode.properties[
+                        pageVariantConfigType
+                    ]?.[0]
+                        ? JSON.parse(this.pageVariantNode.properties[pageVariantConfigType][0])
+                        : {};
+                    if (!pageVariant.structure) {
+                        console.error(
+                            'No structure was found in pageVariant',
+                            this.pageVariantNode,
+                        );
+                        return;
+                    }
+                    this.swimlanes = pageVariant.structure.swimlanes ?? [];
+                    // 5) generate the header text
+                    await this.generateFromPrompt();
+                    // 6) everything loaded?
+                    this.initialLoadSuccessfully = true;
                 }
             });
     }
 
-    private initializeCustomEventListeners() {
-        // listen to custom colorChange event dispatched by the wlo-user-configurable
+    private checkUserAccess(node: Node): void {
+        this.userHasEditRights.set(node.access.includes('Write'));
+    }
+
+    private initializeCustomEventListeners(): void {
+        // listen to custom colorChange event dispatched by wlo-user-configurable
         document.getElementsByTagName('body')[0].addEventListener(
             'colorChange',
             async (e: CustomEvent) => {
-                const color = e.detail?.color ?? '';
-                const nodeId = e.detail?.node ?? '';
+                console.log('DEBUG: colorChange event', e);
+                const color: string = e.detail?.color ?? '';
+                const pageVariantNode: Node = e.detail?.pageVariantNode ?? null;
+                const swimlaneIndex: number = e.detail?.swimlaneIndex ?? -1;
 
-                if (color !== '' && nodeId !== '') {
-                    // do not use a copy of swimlanes in order to avoid loading effects
-                    let changesMade: boolean = false;
-                    this.swimlanes.forEach((swimlane) => {
-                        swimlane.grid?.forEach((gridItem: GridTile) => {
-                            if (
-                                gridItem &&
-                                gridItem.uuid === nodeId &&
-                                swimlane.backgroundColor !== color
-                            ) {
-                                swimlane.backgroundColor = color;
-                                changesMade = true;
-                            }
-                        });
-                    });
-
-                    if (changesMade) {
-                        const topicConfig: NodeConfig = this.topicNodeConfig;
-                        topicConfig.swimlanes = this.swimlanes;
-                        this.topicConfigNode = await this.setPropertyAndRetrieveUpdatedNode(
-                            this.topicConfigNode.ref.id,
-                            JSON.stringify(topicConfig),
+                if (
+                    color !== '' &&
+                    pageVariantNode &&
+                    pageVariantNode.ref.id === this.pageVariantNode.ref.id &&
+                    swimlaneIndex > -1
+                ) {
+                    let changesNecessary: boolean =
+                        this.swimlanes[swimlaneIndex]?.backgroundColor !== color;
+                    if (changesNecessary) {
+                        // check, whether a new "direct" node has to be created
+                        const pageNodeCreated: boolean =
+                            await this.checkForCustomPageNodeExistence();
+                        console.log('DEBUG: change necessary', pageNodeCreated);
+                        const pageVariant: PageVariantConfig = this.retrievePageVariant();
+                        this.swimlanes[swimlaneIndex].backgroundColor = color;
+                        pageVariant.structure.swimlanes = this.swimlanes;
+                        await this.setProperty(
+                            this.pageVariantNode.ref.id,
+                            pageVariantConfigType,
+                            JSON.stringify(pageVariant),
                         );
                     }
                 }
             },
             false,
         );
+
+        // listen to custom colorChange event dispatched by wlo-user-configurable
+        document.getElementsByTagName('body')[0].addEventListener(
+            'widgetNodeAdded',
+            async (e: CustomEvent) => {
+                console.log('DEBUG: widgetNodeAdded event', e);
+                const pageVariantNode: Node = e.detail?.pageVariantNode ?? null;
+                const swimlaneIndex: number = e.detail?.swimlaneIndex ?? -1;
+                const gridIndex: number = e.detail?.gridIndex ?? -1;
+                const widgetNodeId: string = e.detail?.widgetNodeId ?? '';
+
+                const validParentVariant: boolean =
+                    pageVariantNode && pageVariantNode.ref.id === this.pageVariantNode.ref.id;
+                const validSwimlaneIndex: boolean = swimlaneIndex > -1;
+                const validGridIndex: boolean = gridIndex > -1;
+                const validWidgetNodeId: boolean = widgetNodeId && widgetNodeId !== '';
+
+                let addedSuccessfully: boolean = false;
+                if (
+                    validParentVariant &&
+                    validGridIndex &&
+                    validSwimlaneIndex &&
+                    validWidgetNodeId
+                ) {
+                    const pageNodeCreated: boolean = await this.checkForCustomPageNodeExistence();
+                    console.log('DEBUG: change necessary', pageNodeCreated);
+                    const pageVariant: PageVariantConfig = this.retrievePageVariant();
+                    if (this.swimlanes?.[swimlaneIndex]?.grid?.[gridIndex] && pageVariant) {
+                        this.swimlanes[swimlaneIndex].grid[gridIndex].nodeId =
+                            widgetNodeId.includes(workspaceSpacesStorePrefix)
+                                ? widgetNodeId
+                                : workspaceSpacesStorePrefix + widgetNodeId;
+                        pageVariant.structure.swimlanes = this.swimlanes;
+                        await this.setProperty(
+                            this.pageVariantNode.ref.id,
+                            pageVariantConfigType,
+                            JSON.stringify(pageVariant),
+                        );
+                        addedSuccessfully = true;
+                    }
+                }
+                // note: if it exists, but cannot be added in the grid, we might want to delete the node again
+                if (validWidgetNodeId && !addedSuccessfully) {
+                    const nodeIdToDelete: string = widgetNodeId.includes(workspaceSpacesStorePrefix)
+                        ? widgetNodeId.split('/')?.[widgetNodeId.split('/').length - 1]
+                        : widgetNodeId;
+                    await firstValueFrom(this.nodeApi.deleteNode(nodeIdToDelete));
+                }
+            },
+            false,
+        );
+
+        // TODO: Add created config nodes to the swimlane
+    }
+
+    private async retrieveSelectDimensions(): Promise<void> {
+        await firstValueFrom(this.mdsService.getMetadataSet({ metadataSet: defaultMds })).then(
+            (data: Mds) => {
+                const filteredMdsWidgets: MdsWidget[] = data.widgets.filter((widget: MdsWidget) =>
+                    providedSelectDimensionKeys.includes(widget.id),
+                );
+                filteredMdsWidgets.forEach((mdsWidget: MdsWidget) => {
+                    // Note: The $ is added at this position to signal an existing placeholder
+                    this.selectDimensions.set('$' + mdsWidget.id + '$', mdsWidget);
+                });
+                this.selectDimensionsLoaded = true;
+            },
+            (error: Error) => {
+                console.error('Error occurred while requesting select dimensions.', error);
+            },
+        );
+    }
+
+    private async retrievePageConfigNode(node: Node): Promise<Node> {
+        // check, whether the node itself has a pageConfigRef
+        let pageRef = node.properties[pageConfigRefType]?.[0];
+        this.collectionNodeHasPageConfig = !!pageRef;
+        // otherwise, iterate the parents to retrieve the pageConfigRef, if pageConfigPropagate is set
+        if (!pageRef) {
+            const parents: ParentEntries = await firstValueFrom(
+                this.nodeApi.getParents(node.ref.id, {
+                    propertyFilter: ['-all-'],
+                    fullPath: true,
+                }),
+            );
+            pageRef = parents.nodes.find(
+                (parent: Node) => !!parent.properties[pageConfigPropagateType]?.[0],
+            )?.properties[pageConfigRefType]?.[0];
+        }
+        if (pageRef) {
+            // workspace://SpacesStore/UUID -> UUID
+            const pageNodeId: string = pageRef.split('/')?.[pageRef.split('/').length - 1];
+            if (pageNodeId) {
+                return await firstValueFrom(this.nodeApi.getNode(pageNodeId));
+            }
+        }
+        return null;
     }
 
     /**
-     * Create topic node with its children, if it does not exist.
-     * (1) create node for topic
-     * (2) load template
-     * (3) generate children nodes for topic node
-     * (4) set config to nodes from template (TODO)
-     * (5) store config of existing children in topic node
-     *
-     * @param collectionId
+     * Helper function to retrieve the children of a given node.
      */
-    private async createTopicNodeWithChildren(collectionId: string) {
-        // (1) create node for topic as child of the widget config node
-        this.topicConfigNode = await this.createChild(
-            parentWidgetConfigNodeId,
-            mapType,
-            collectionPrefix + collectionId,
-        );
-        if (this.topicConfigNode) {
-            // TODO: This is currently necessary to set the correct permissions of the node
-            await this.setPermissions(this.topicConfigNode.ref.id);
-            // (2) load template (swimlanes)
-            // (3) generate children nodes for topic node
-            // forEach does not support async / await
-            // -> for ... of ... (https://stackoverflow.com/a/37576787)
-            for (const swimlane of initialSwimlanes) {
-                if (swimlane.grid?.length > 0) {
-                    for (const gridTile of swimlane.grid) {
-                        if (currentlySupportedWidgetTypes.includes(gridTile.item)) {
-                            // create child and add its ref.id as UUID to the swimlanes
-                            const childNode: Node = await this.createChild(
-                                this.topicConfigNode.ref.id,
-                                ioType,
-                                widgetPrefix + uuidv4(),
-                            );
-                            const nodeId = childNode.ref.id;
-                            // (4) set widget / gridTile config that might be set in the grid on children nodes
-                            if (currentlySupportedWidgetTypesWithConfig.includes(gridTile.item)) {
-                                const widgetConfig: WidgetConfig = gridTile.config ?? {};
-                                await this.setProperty(
-                                    nodeId,
-                                    JSON.stringify({ config: widgetConfig }),
-                                );
-                            }
-                            // (5a) store UUID in the config (swimlanes)
-                            gridTile.uuid = nodeId;
-                            // (5b) delete gridTile config (we do not want to store the widget configs in the main node)
-                            if (gridTile.config) {
-                                delete gridTile.config;
-                            }
-                        }
-                    }
-                }
-            }
-            // (5c) store adjusted config (swimlanes) with correct UUIDs
-            const topicConfig: NodeConfig = {
-                prompt: topicPrompt,
-                templateWidgetId: topicTemplateWidgetId,
-                swimlanes: initialSwimlanes,
-            };
-            this.topicConfigNode = await this.setPropertyAndRetrieveUpdatedNode(
-                this.topicConfigNode.ref.id,
-                JSON.stringify(topicConfig),
-            );
-        }
+    private async getNodeChildren(nodeId: string): Promise<NodeEntries> {
+        // TODO: Pagination vs. large maxItems number
+        return firstValueFrom(this.nodeApi.getChildren(nodeId, { maxItems: 500 }));
     }
 
-    get filterBarReady() {
-        const sameNumberOfValues =
-            this.selectDimensions.size === this.selectedDimensionValues.length;
-        return this.selectDimensionsLoaded && sameNumberOfValues;
+    // REACT TO OUTPUT EVENTS //
+    /**
+     * Called by app-filter-bar selectValuesChanged output event.
+     */
+    selectValuesChanged(event: MdsValue[]): void {
+        this.selectedDimensionValues = event;
     }
 
-    private get topicNodeConfig(): NodeConfig {
-        const topicConfig = this.topicConfigNode.properties[widgetConfigType]?.[0];
-        if (!topicConfig) {
-            return {};
-        }
-        return JSON.parse(topicConfig) ?? {};
-    }
-
-    private get topicWidgetsIds(): string[] {
-        return this.topicWidgets?.nodes?.map((node) => node.ref.id) ?? [];
-    }
-
-    private checkUserAccess(node: Node) {
-        this.userHasEditRights.set(node.access.includes('Write'));
-    }
-
-    private async createChild(parentId: string, type: string, name: string): Promise<Node> {
+    // MODIFICATIONS OF THE PAGE //
+    /**
+     * Helper function to create a child for an existing node.
+     */
+    private async createChild(
+        parentId: string,
+        type: string,
+        name: string,
+        aspect?: string,
+    ): Promise<Node> {
+        const aspects: string[] = aspect ? [aspect] : [widgetConfigAspect];
         return await firstValueFrom(
             this.nodeApi.createChild({
                 repository: '-home-',
                 node: parentId,
                 type,
-                aspects: [widgetConfigAspect],
+                aspects,
                 body: {
                     'cm:name': [name],
                 },
@@ -301,6 +409,28 @@ export class TemplateComponent implements OnInit {
         );
     }
 
+    /**
+     * Helper function to set a property to an existing node.
+     */
+    private async setProperty(nodeId: string, propertyName: string, value: string): Promise<Node> {
+        return firstValueFrom(this.nodeApi.setProperty('-home-', nodeId, propertyName, [value]));
+    }
+
+    /**
+     * Another helper function due to setProperty not returning a node currently.
+     */
+    private async setPropertyAndRetrieveUpdatedNode(
+        nodeId: string,
+        propertyName: string,
+        value: string,
+    ): Promise<Node> {
+        await this.setProperty(nodeId, propertyName, value);
+        return firstValueFrom(this.nodeApi.getNode(nodeId));
+    }
+
+    /**
+     * Helper function to set the correct permissions for a given node.
+     */
     private async setPermissions(nodeId: string): Promise<void> {
         return await firstValueFrom(
             this.nodeApi.setPermissions(nodeId, {
@@ -320,149 +450,191 @@ export class TemplateComponent implements OnInit {
         );
     }
 
-    private async getNodeChildren(nodeId: string): Promise<NodeEntries> {
-        // TODO: Pagination vs. large maxItems number
-        return firstValueFrom(this.nodeApi.getChildren(nodeId, { maxItems: 500 }));
+    /**
+     * Helper function to add a possible non-existing page config node.
+     */
+    private async checkForCustomPageNodeExistence(): Promise<boolean> {
+        console.log('checkForCustomPageNodeExistence');
+        if (!this.collectionNodeHasPageConfig) {
+            console.log('checkForCustomPageNodeExistence no page config');
+            // page ccm:map for page config node
+            this.pageConfigNode = await this.createChild(
+                parentPageConfigNodeId,
+                mapType,
+                pageConfigPrefix + uuidv4(),
+                pageConfigAspect,
+            );
+            // TODO: remove, if not necessary
+            await this.setPermissions(this.pageConfigNode.ref.id);
+            const pageVariants: string[] = [];
+            // iterate variant config nodes and create ccm:io child nodes for it
+            if (this.pageVariantConfigs.nodes?.length > 0) {
+                for (const variantNode of this.pageVariantConfigs.nodes) {
+                    let pageConfigVariantNode: Node = await this.createChild(
+                        this.pageConfigNode.ref.id,
+                        ioType,
+                        pageVariantConfigPrefix + uuidv4(),
+                        pageVariantConfigAspect,
+                    );
+                    // TODO: remove, if not necessary
+                    await this.setPermissions(pageConfigVariantNode.ref.id);
+                    pageVariants.push(workspaceSpacesStorePrefix + pageConfigVariantNode.ref.id);
+                    const variantConfig: PageVariantConfig = variantNode.properties[
+                        pageVariantConfigType
+                    ]?.[0]
+                        ? JSON.parse(variantNode.properties[pageVariantConfigType][0])
+                        : {};
+                    await this.setProperty(
+                        pageConfigVariantNode.ref.id,
+                        pageVariantConfigType,
+                        JSON.stringify(variantConfig),
+                    );
+                    await this.setProperty(
+                        pageConfigVariantNode.ref.id,
+                        pageVariantIsTemplateType,
+                        'false',
+                    );
+                }
+            }
+            const defaultVariant: string =
+                this.pageVariantDefaultPosition >= 0
+                    ? pageVariants?.[this.pageVariantDefaultPosition] ?? pageVariants[0]
+                    : undefined;
+            const pageConfig: PageConfig = {
+                variants: pageVariants,
+            };
+            if (defaultVariant) {
+                pageConfig.default = defaultVariant;
+            }
+            // update ccm:page_config of page config node
+            this.pageConfigNode = await this.setPropertyAndRetrieveUpdatedNode(
+                this.pageConfigNode.ref.id,
+                pageConfigType,
+                JSON.stringify(pageConfig),
+            );
+            // get page variant configs
+            this.pageVariantConfigs = await this.getNodeChildren(this.pageConfigNode.ref.id);
+            // parse the page config ref again
+            const pageVariant: PageVariantConfig = this.retrievePageVariant();
+            this.swimlanes = pageVariant.structure.swimlanes ?? [];
+            // set ccm:page_config_ref in collection
+            await firstValueFrom(
+                this.nodeApi.setProperty('-home-', this.collectionNode.ref.id, pageConfigRefType, [
+                    workspaceSpacesStorePrefix + this.pageConfigNode.ref.id,
+                ]),
+            );
+            // set this.collectionNodeHasPageConfig to true
+            this.collectionNodeHasPageConfig = true;
+            return true;
+        }
+        return false;
     }
 
     /**
-     * Filter out grid items not yet persisted and store updated config in node.
+     * Helper function to retrieve the page variant of an existing page config node.
      */
-    private async syncSwimlanes() {
-        let updateNecessary: boolean = false;
-        this.swimlanes.forEach((swimlane: Swimlane) => {
-            swimlane.grid?.forEach((widget: GridTile, index: number, object: GridTile[]) => {
-                const idNecessary = currentlySupportedWidgetTypes.includes(widget.item);
-                // ID necessary, but not included -> remove from config
-                if (idNecessary && !this.topicWidgetsIds.includes(widget.uuid)) {
-                    // https://stackoverflow.com/a/24813338
-                    object.splice(index, 1);
-                    updateNecessary = true;
-                }
-            });
-        });
-
-        // TODO: This should only be possible, if the user has the proper privileges
-        if (updateNecessary) {
-            // overwrite config
-            const topicConfig: NodeConfig = this.topicNodeConfig;
-            topicConfig.swimlanes = this.swimlanes;
-            this.topicConfigNode = await this.setPropertyAndRetrieveUpdatedNode(
-                this.topicConfigNode.ref.id,
-                JSON.stringify(topicConfig),
-            );
-            // set value of swimlanes to updated property
-            this.swimlanes = this.topicNodeConfig.swimlanes ?? [];
+    private retrievePageVariant(): PageVariantConfig {
+        // parse the page config from the properties
+        const pageConfig: PageConfig = this.pageConfigNode.properties[pageConfigType]?.[0]
+            ? JSON.parse(this.pageConfigNode.properties[pageConfigType][0])
+            : {};
+        if (!pageConfig.variants) {
+            console.error('pageConfig does not include variants.', pageConfig);
+            return null;
         }
-    }
-
-    private async setProperty(nodeId: string, value: string): Promise<Node> {
-        return firstValueFrom(
-            this.nodeApi.setProperty('-home-', nodeId, widgetConfigType, [value]),
+        let selectedVariantId: string = pageConfig.variants?.[this.selectedVariantPosition];
+        if (!selectedVariantId) {
+            console.error(
+                'No selectedVariantId was found.',
+                pageConfig.variants,
+                this.selectedVariantPosition,
+            );
+            return null;
+        }
+        selectedVariantId = selectedVariantId.split('/')?.[selectedVariantId.split('/').length - 1];
+        this.pageVariantNode = this.pageVariantConfigs.nodes?.find(
+            (node: Node) => node.ref.id === selectedVariantId,
         );
-    }
-
-    private async setPropertyAndRetrieveUpdatedNode(nodeId: string, value: string): Promise<Node> {
-        await this.setProperty(nodeId, value);
-        return firstValueFrom(this.nodeApi.getNode(nodeId));
-    }
-
-    private async retrievePageConfig(node: Node): Promise<Object> {
-        // check, whether the node itself has a pageConfigRef
-        let pageRef =
-            node.properties[pageConfigPropagateType]?.[0] ??
-            node.properties[pageConfigRefType]?.[0];
-        // otherwise, iterate the parents to retrieve the pageConfigRef
-        if (!pageRef) {
-            const parents: ParentEntries = await firstValueFrom(
-                this.nodeApi.getParents(node.ref.id, {
-                    propertyFilter: ['-all-'],
-                    fullPath: true,
-                }),
+        if (!this.pageVariantNode) {
+            console.error(
+                'No pageVariantNode was found.',
+                selectedVariantId,
+                this.pageVariantConfigs.nodes,
             );
-            pageRef = parents.nodes.find(
-                (parent: Node) => !!parent.properties[pageConfigPropagateType]?.[0],
-            )?.properties[pageConfigRefType]?.[0];
+            return null;
         }
-        if (pageRef) {
-            // workspace://SpacesStore/UUID -> UUID
-            const pageNodeId: string = pageRef.split('/')?.[pageRef.split('/').length - 1];
-            if (pageNodeId) {
-                const pageNode: Node = await firstValueFrom(this.nodeApi.getNode(pageNodeId));
-                return pageNode.properties[pageConfigType]?.[0] ?? {};
-            }
+        const pageVariant: PageVariantConfig = this.pageVariantNode.properties[
+            pageVariantConfigType
+        ]?.[0]
+            ? JSON.parse(this.pageVariantNode.properties[pageVariantConfigType][0])
+            : null;
+        if (!pageVariant || !pageVariant.structure) {
+            console.error('Either no pageVariant or no structure in it was found.', pageVariant);
+            return null;
         }
-        return {};
+        return pageVariant;
     }
 
-    private async retrieveSelectDimensions(): Promise<void> {
-        await firstValueFrom(this.mdsService.getMetadataSet({ metadataSet: default_mds })).then(
-            (data) => {
-                const filteredMdsWidgets: MdsWidget[] = data.widgets.filter((widget: MdsWidget) =>
-                    providedSelectDimensionKeys.includes(widget.id),
-                );
-                filteredMdsWidgets.forEach((mdsWidget: MdsWidget) => {
-                    // Note: The $ is added at this position to signal an existing placeholder
-                    this.selectDimensions.set('$' + mdsWidget.id + '$', mdsWidget);
-                });
-                this.selectDimensionsLoaded = true;
-            },
-        );
-    }
-
-    selectValuesChanged(event: MdsValue[]) {
-        this.selectedDimensionValues = event;
-    }
-
-    async moveSwimlanePosition(oldIndex: number, newIndex: number) {
-        if (newIndex >= 0 && newIndex <= this.swimlanes.length - 1) {
-            this.requestInProgress = true;
-            // TODO: is it worse the experience that the calculation is done twice?
-            const swimlanesCopy = JSON.parse(JSON.stringify(this.swimlanes));
-            moveItemInArray(swimlanesCopy, oldIndex, newIndex);
-            // TODO: move the update functionality into separate function
-            const topicConfig: NodeConfig = this.topicNodeConfig;
-            topicConfig.swimlanes = swimlanesCopy;
-            this.topicConfigNode = await this.setPropertyAndRetrieveUpdatedNode(
-                this.topicConfigNode.ref.id,
-                JSON.stringify(topicConfig),
-            );
-            // update swimlane visually as soon as the requests are done
-            moveItemInArray(this.swimlanes, oldIndex, newIndex);
+    /**
+     * Add a new swimlane to the page and persist it in the config.
+     */
+    async addSwimlane(type: string): Promise<void> {
+        this.requestInProgress = true;
+        await this.checkForCustomPageNodeExistence();
+        const pageVariant: PageVariantConfig = this.retrievePageVariant();
+        if (!pageVariant) {
             this.requestInProgress = false;
         }
-    }
-
-    async addSwimlane(type: string) {
-        this.requestInProgress = true;
         const newSwimlane: Swimlane = {
-            uuid: uuidv4(),
             type,
         };
         if (type !== 'spacer') {
             newSwimlane.heading = 'Eine beispielhafte Überschrift';
             newSwimlane.grid = [];
         }
-        // TODO: is it worse the experience that the calculation is done twice?
-        const swimlanesCopy = JSON.parse(JSON.stringify(this.swimlanes));
+        const swimlanesCopy = JSON.parse(JSON.stringify(this.swimlanes ?? []));
         swimlanesCopy.push(newSwimlane);
-        // TODO: move the update functionality into separate function
-        const topicConfig: NodeConfig = this.topicNodeConfig;
-        topicConfig.swimlanes = swimlanesCopy;
-        this.topicConfigNode = await this.setPropertyAndRetrieveUpdatedNode(
-            this.topicConfigNode.ref.id,
-            JSON.stringify(topicConfig),
+        pageVariant.structure.swimlanes = swimlanesCopy;
+        await this.setProperty(
+            this.pageVariantNode.ref.id,
+            pageVariantConfigType,
+            JSON.stringify(pageVariant),
         );
-        // display swimlane visually as soon as the requests are done
+        // add swimlane visually as soon as the requests are done
         this.swimlanes.push(newSwimlane);
         this.requestInProgress = false;
+    }
+
+    /**
+     * Move the position of a swimlane on the page and persist it in the config.
+     */
+    async moveSwimlanePosition(oldIndex: number, newIndex: number) {
+        if (newIndex >= 0 && newIndex <= this.swimlanes.length - 1) {
+            this.requestInProgress = true;
+            await this.checkForCustomPageNodeExistence();
+            const pageVariant: PageVariantConfig = this.retrievePageVariant();
+            if (!pageVariant) {
+                this.requestInProgress = false;
+            }
+            const swimlanesCopy = JSON.parse(JSON.stringify(this.swimlanes ?? []));
+            moveItemInArray(swimlanesCopy, oldIndex, newIndex);
+            pageVariant.structure.swimlanes = swimlanesCopy;
+            await this.setProperty(
+                this.pageVariantNode.ref.id,
+                pageVariantConfigType,
+                JSON.stringify(pageVariant),
+            );
+            // move swimlane position visually as soon as the requests are done
+            moveItemInArray(this.swimlanes, oldIndex, newIndex);
+            this.requestInProgress = false;
+        }
     }
 
     editSwimlane(swimlane: Swimlane, index: number) {
         const dialogRef = this.dialog.open(SwimlaneSettingsDialogComponent, {
             data: {
                 swimlane,
-                widgets: this.topicWidgets,
+                // widgets: this.topicWidgets,
             },
         });
 
@@ -474,141 +646,66 @@ export class TemplateComponent implements OnInit {
                 if (!editedSwimlane) {
                     return;
                 }
-                this.requestInProgress = true;
                 // parse grid string
                 if (editedSwimlane.grid) {
                     editedSwimlane.grid = JSON.parse(editedSwimlane.grid);
                 }
+                // TODO: detect, whether a change was made
+                if (JSON.stringify(editedSwimlane) === JSON.stringify(swimlane)) {
+                    console.log('DEBUG: Return, because no change was made.');
+                    return;
+                }
+                this.requestInProgress = true;
+                await this.checkForCustomPageNodeExistence();
+                const pageVariant: PageVariantConfig = this.retrievePageVariant();
+                if (!pageVariant) {
+                    this.requestInProgress = false;
+                }
                 // create a copy of the swimlanes
-                const swimlanesCopy = JSON.parse(JSON.stringify(this.swimlanes));
-                // actions related to edited swimlane
-                const editedSwimlaneUUIDs =
-                    editedSwimlane.grid?.map((gridItem: GridTile) => gridItem.uuid) ?? [];
-                // sync updated grid items with existing swimlane grid
-                // (1) remove deleted grid elements
-                // iterate existing grid and check, if items still exist
-                if (swimlane.grid?.length > 0) {
-                    for (const gridTile of swimlane.grid) {
-                        // relevant type, but not included anymore -> delete
-                        if (
-                            currentlySupportedWidgetTypes.includes(gridTile.item) &&
-                            !editedSwimlaneUUIDs.includes(gridTile.uuid)
-                        ) {
-                            await firstValueFrom(this.nodeApi.deleteNode(gridTile.uuid)).then(
-                                () => {
-                                    console.log('Deleted node');
-                                },
-                                () => {
-                                    console.log('Error deleting node');
-                                },
-                            );
-                        }
-                    }
-                }
-                const existingSwimlaneUUIDs =
-                    swimlane.grid?.map((gridItem: GridTile) => gridItem.uuid) ?? [];
-                // iterate swimlane grid
-                if (editedSwimlane.grid?.length > 0) {
-                    for (const gridTile of editedSwimlane.grid) {
-                        // relevant type
-                        if (currentlySupportedWidgetTypes.includes(gridTile.item)) {
-                            // (2) not yet included -> create child and add its ID as UUID to the swimlanes
-                            if (!existingSwimlaneUUIDs.includes(gridTile.uuid)) {
-                                const childNode: Node = await this.createChild(
-                                    this.topicConfigNode.ref.id,
-                                    ioType,
-                                    widgetPrefix + uuidv4(),
-                                );
-                                const nodeId = childNode.ref.id;
-                                // set empty properties on children to be extended later
-                                if (
-                                    currentlySupportedWidgetTypesWithConfig.includes(gridTile.item)
-                                ) {
-                                    const widgetConfig: WidgetConfig = gridTile.config ?? {};
-                                    await this.setProperty(
-                                        nodeId,
-                                        JSON.stringify({ config: widgetConfig }),
-                                    );
-                                }
-                                // store UUID in the config (swimlanes)
-                                gridTile.uuid = nodeId;
-                            }
-                            // included -> update properties, if necessary
-                            else {
-                                const existingNode = this.topicWidgets.nodes.find(
-                                    (node: Node) => node.ref.id === gridTile.uuid,
-                                );
-                                if (existingNode) {
-                                    const existingNodeConfigString =
-                                        existingNode.properties[widgetConfigType]?.[0];
-                                    if (
-                                        existingNodeConfigString &&
-                                        JSON.parse(existingNodeConfigString)
-                                    ) {
-                                        const parsedConfig: WidgetConfig =
-                                            JSON.parse(existingNodeConfigString).config ?? {};
-                                        // check, whether the config is not equal
-                                        if (
-                                            !this.compareTwoObjects(parsedConfig, gridTile.config)
-                                        ) {
-                                            // overwrite ".config"-value of existing property in order to keep existing attributes
-                                            const updatedConfig =
-                                                JSON.parse(existingNodeConfigString);
-                                            updatedConfig.config = gridTile.config;
-                                            await this.setProperty(
-                                                existingNode.ref.id,
-                                                JSON.stringify(updatedConfig),
-                                            );
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                // TODO: check, if modifications were made
-                // (3) do not store config twice in topic config and widget config
-                editedSwimlane.grid?.forEach((gridTile: GridTile) => {
-                    if (gridTile.config) {
-                        delete gridTile.config;
-                    }
-                });
-                // (4) store updated swimlanes in node config
+                const swimlanesCopy = JSON.parse(JSON.stringify(this.swimlanes ?? []));
+                // store updated swimlane in config
                 swimlanesCopy[index] = editedSwimlane;
-                // (5) change updated swimlanes in the topic node
-                // TODO: move the update functionality into separate function
-                const topicConfig: NodeConfig = this.topicNodeConfig;
-                topicConfig.swimlanes = swimlanesCopy;
-                this.topicConfigNode = await this.setPropertyAndRetrieveUpdatedNode(
-                    this.topicConfigNode.ref.id,
-                    JSON.stringify(topicConfig),
+                // overwrite swimlanes
+                pageVariant.structure.swimlanes = swimlanesCopy;
+                await this.setProperty(
+                    this.pageVariantNode.ref.id,
+                    pageVariantConfigType,
+                    JSON.stringify(pageVariant),
                 );
-                // (6) sync with server state
-                this.topicWidgets = await this.getNodeChildren(this.topicConfigNode.ref.id);
-                // note: only the grid items of the swimlane should be represented as separate widget nodes
-                this.swimlanes = this.topicNodeConfig.swimlanes ?? [];
-
+                // visually change swimlanes
+                console.log('DEBUG: Overwrite swimlanes', pageVariant.structure.swimlanes);
+                this.swimlanes = pageVariant.structure.swimlanes;
                 this.requestInProgress = false;
             }
             console.log('Closed', result?.value);
         });
     }
 
+    /**
+     * Delete a swimlane from the page with possible widget nodes and persist it in the config.
+     */
     async deleteSwimlane(index: number) {
         if (
             this.swimlanes?.[index] &&
             confirm('Wollen Sie dieses Element wirklich löschen?') === true
         ) {
+            this.requestInProgress = true;
+            await this.checkForCustomPageNodeExistence();
+            const pageVariant: PageVariantConfig = this.retrievePageVariant();
+            if (!pageVariant) {
+                this.requestInProgress = false;
+            }
             // delete possible nodes defined in the swimlane
             // forEach does not support async / await
             // -> for ... of ... (https://stackoverflow.com/a/37576787)
-            this.requestInProgress = true;
             if (this.swimlanes[index].grid) {
                 for (const widget of this.swimlanes[index].grid) {
-                    if (currentlySupportedWidgetTypes.includes(widget.item)) {
-                        await firstValueFrom(this.nodeApi.deleteNode(widget.uuid)).then(
+                    if (widget.nodeId) {
+                        const nodeId: string =
+                            widget.nodeId.split('/')?.[widget.nodeId.split('/').length - 1];
+                        await firstValueFrom(this.nodeApi.deleteNode(nodeId)).then(
                             () => {
-                                console.log('Deleted node');
+                                console.log('Deleted child node');
                             },
                             () => {
                                 console.log('Error deleting node');
@@ -617,42 +714,35 @@ export class TemplateComponent implements OnInit {
                     }
                 }
             }
-            const swimlanesCopy = JSON.parse(JSON.stringify(this.swimlanes));
-            // TODO: is it worse the experience that the calculation is done twice?
+            const swimlanesCopy = JSON.parse(JSON.stringify(this.swimlanes ?? []));
             swimlanesCopy.splice(index, 1);
-            // TODO: move the update functionality into separate function
-            const topicConfig: NodeConfig = this.topicNodeConfig;
-            topicConfig.swimlanes = swimlanesCopy;
-            this.topicConfigNode = await this.setPropertyAndRetrieveUpdatedNode(
-                this.topicConfigNode.ref.id,
-                JSON.stringify(topicConfig),
+            pageVariant.structure.swimlanes = swimlanesCopy;
+            await this.setProperty(
+                this.pageVariantNode.ref.id,
+                pageVariantConfigType,
+                JSON.stringify(pageVariant),
             );
-            // remove swimlane visually as soon as the requests are done
+            // delete swimlane visually as soon as the requests are done
             this.swimlanes.splice(index, 1);
             this.requestInProgress = false;
         }
     }
 
-    /** calls the Z-API to invoke ChatGPT */
-    private generateFromPrompt() {
-        this.aiTextPromptsService
-            .publicPrompt({
-                widgetNodeId: this.topicConfigNode.ref.id,
+    /**
+     * Calls the z-API to invoke ChatGPT.
+     */
+    private async generateFromPrompt(): Promise<void> {
+        const result: TextPromptEntity = await firstValueFrom(
+            this.aiTextPromptsService.publicPrompt({
+                widgetNodeId: defaultTopicTextNodeId,
                 contextNodeId: this.topicCollectionID(),
                 body: {},
-            })
-            .subscribe(
-                (result: any) => {
-                    const response = result.responses[0];
-                    console.log('RESPONSE: ', response);
-                    this.generatedHeader.set(response);
-                    this.jobsWidgetReady = true;
-                },
-                (error: any) => {
-                    console.log('An error occurred: ', error);
-                    this.jobsWidgetReady = true;
-                },
-            );
+            }),
+        );
+        const response = result?.responses[0];
+        if (response) {
+            this.generatedHeader.set(response);
+        }
     }
 
     // https://stackoverflow.com/a/16348977
@@ -667,21 +757,5 @@ export class TemplateComponent implements OnInit {
             colour += value.toString(16).padStart(2, '0');
         }
         return colour;
-    }
-
-    // TODO: there might be better ways to compare objects
-    // https://stackoverflow.com/a/75974855
-    private compareTwoObjects(object1: any, object2: any): boolean {
-        let compareRes = true;
-        if (object1 && object2 && Object.keys(object1).length === Object.keys(object2).length) {
-            Object.keys(object1).forEach((key) => {
-                if (object1[key] !== object2[key]) {
-                    compareRes = false;
-                }
-            });
-        } else {
-            compareRes = false;
-        }
-        return compareRes;
     }
 }
