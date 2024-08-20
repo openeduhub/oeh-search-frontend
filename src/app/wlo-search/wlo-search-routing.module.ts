@@ -11,6 +11,7 @@ import { SubjectsPortalResolverService } from './search/search-page/subjects-por
 import { SubjectsPortalComponent } from './search/search-page/subjects-portal/subjects-portal.component';
 import { WloSearchComponent } from './wlo-search.component';
 import { TemplateComponent } from './template/template.component';
+import { LessonFlowTemplateComponent } from './lesson-flow-pattern/lesson-flow-template.component';
 
 const routes: Routes = [
     {
@@ -46,6 +47,7 @@ const routes: Routes = [
             },
             { path: 'experiments', component: ExperimentsTogglesComponent },
             { path: 'template', component: TemplateComponent },
+            { path: 'lesson_flow', component: LessonFlowTemplateComponent },
             { path: '', redirectTo: 'search', pathMatch: 'full' },
             { path: 'error', component: ErrorPageComponent },
         ],

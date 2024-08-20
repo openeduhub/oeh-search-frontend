@@ -42,6 +42,7 @@
     "graphql": "^16.9.0",
     "jquery": "^3.6.0",
     "material-icons": "^1.12.1",
+    "milligram": "^1.4.1",
     "ngx-colors": "^3.5.3",
     "ngx-edu-sharing-api": "9999.0.1",
     "ngx-edu-sharing-ui": "9999.0.2",

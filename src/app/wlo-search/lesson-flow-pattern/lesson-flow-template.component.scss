@@ -1,0 +1,114 @@
+@import '../../../styles';
+
+.lesson-flow-template {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    h2 {
+        margin-top: 20px;
+        margin-bottom: 24px;
+        font-size: 28px;
+        width: 100%;
+        text-align: center;
+    }
+
+    p {
+        font-size: 16px;
+        width: 100%;
+        text-align: center;
+        font-style: italic;
+        font-weight: 400;
+    }
+
+    .didactic-approach-form-field {
+        width: 70%;
+        margin: 0 auto;
+    }
+
+    table {
+        border-top: 0.2rem solid #e1e1e1 !important;
+        th {
+            font-weight: bold;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: white;
+            border-bottom: 0.2rem solid #e1e1e1 !important;
+        }
+        td,
+        th {
+            padding: 1rem 1.2rem;
+        }
+        .border-right {
+            border-right: 0.2rem solid #e1e1e1 !important;
+        }
+        .font-bold {
+            font-weight: bold;
+        }
+        .vertical-text {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+        }
+        .w-50px {
+            width: 50px;
+        }
+        .w-175px {
+            width: 175px;
+        }
+        .w-100 {
+            width: 100%;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .bg-gray {
+            background: #d3d3d3;
+        }
+        .min-height {
+            min-height: 50px;
+        }
+        .display-flex {
+            display: flex;
+        }
+        .flex-center {
+            align-items: center;
+        }
+        textarea {
+            margin-bottom: 0;
+            resize: none;
+        }
+        .input-margin-bottom {
+            margin-bottom: 5px !important;
+        }
+    }
+
+    //table {
+    //    width: 100%;
+    //
+    //    th {
+    //        font-weight: bold;
+    //        font-size: 16px;
+    //    }
+    //
+    //    tr > th, td {
+    //        padding: 10px;
+    //
+    //        &:not(:last-of-type) {
+    //            border-right: 1px solid #333;
+    //        }
+    //
+    //        &:first-child {
+    //            font-weight: bold;
+    //            font-size: 16px;
+    //        }
+    //    }
+    //
+    //    tr:not(:last-of-type) {
+    //        th, td {
+    //            border-bottom: 1px solid #333;
+    //        }
+    //    }
+    //}
+}

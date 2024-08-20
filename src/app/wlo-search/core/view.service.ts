@@ -50,6 +50,7 @@ export class ViewService {
         this.route.url.subscribe((_segments) => {
             const url = window.location.pathname;
             this.isTemplate.next(url.includes('/template'));
+            this.isLessonFlow.next(url.includes('/lesson_flow'));
         });
         this.registerStoredItems();
         this.registerBehaviorHooks();
@@ -183,4 +184,5 @@ export class ViewService {
     }
 
     isTemplate = new BehaviorSubject<boolean>(false);
+    isLessonFlow = new BehaviorSubject<boolean>(false);
 }

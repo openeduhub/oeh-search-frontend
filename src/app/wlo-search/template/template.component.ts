@@ -49,6 +49,7 @@ import { PageVariantConfig } from './page-variant-config';
 import { SwimlaneComponent } from './swimlane/swimlane.component';
 import { SwimlaneSettingsDialogComponent } from './swimlane/swimlane-settings-dialog/swimlane-settings-dialog.component';
 import { Swimlane } from './swimlane/swimlane';
+import { LessonFlowTemplateComponent } from '../lesson-flow-pattern/lesson-flow-template.component';
 
 @Component({
     standalone: true,
@@ -59,6 +60,7 @@ import { Swimlane } from './swimlane/swimlane';
         TemplateComponent,
         SpinnerComponent,
         SwimlaneComponent,
+        LessonFlowTemplateComponent,
     ],
     selector: 'app-template',
     templateUrl: './template.component.html',

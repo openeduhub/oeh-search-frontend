@@ -1,6 +1,8 @@
 <header>
   <app-menubar *ngIf="(headerStyle$ | async) === 'standard'"></app-menubar>
-  <app-headerbar *ngIf="(isTemplate$ | async) !== true"></app-headerbar>
+  <app-headerbar
+    *ngIf="(isTemplate$ | async) !== true && (isLessonFlow$ | async) !== true"
+  ></app-headerbar>
 </header>
 <main appSkipTarget="MAIN_CONTENT" class="main">
   <router-outlet></router-outlet>

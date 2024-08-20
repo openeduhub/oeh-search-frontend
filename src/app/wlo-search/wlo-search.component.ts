@@ -24,6 +24,7 @@ export class WloSearchComponent implements OnInit, OnDestroy {
     readonly headerStyle$ = this.pageMode.getPageConfig('headerStyle');
     readonly isLoading$ = this.view.getIsLoading();
     readonly isTemplate$ = this.view.isTemplate;
+    readonly isLessonFlow$ = this.view.isLessonFlow;
     private readonly destroyed$ = new Subject<void>();
 
     constructor(

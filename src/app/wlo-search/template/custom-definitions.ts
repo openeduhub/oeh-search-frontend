@@ -1,4 +1,4 @@
-import { SelectOption } from './swimlane/swimlane-settings-dialog/select-option';
+import { SelectOption } from '../shared/select-option';
 
 export const defaultMds: string = 'mds_oeh';
 

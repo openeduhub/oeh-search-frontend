@@ -13,7 +13,7 @@ import {
 } from '../../custom-definitions';
 import { GridTile } from '../grid-tile';
 import { Swimlane } from '../swimlane';
-import { SelectOption } from './select-option';
+import { SelectOption } from '../../../shared/select-option';
 import { TileDimension } from './tile-dimension';
 
 @Component({

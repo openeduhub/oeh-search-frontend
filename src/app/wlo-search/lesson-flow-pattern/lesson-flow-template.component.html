@@ -1,0 +1,198 @@
+<div class="lesson-flow-template">
+  <h2>Workshop 3: Maschinenlesbare Unterrichtsmethoden</h2>
+
+  <p>Bitte wählen Sie zuerst Ihre Favoriten-Katze aus, bevor Sie fortfahren.</p>
+
+  <div class="didactic-approach-form-field" style="text-align: center">
+    <label id="choose-cat" style="font-size: 15px; margin-bottom: 10px">Wähle deine Katze</label>
+    <mat-radio-group aria-labelledby="choose-cat" [(ngModel)]="favoriteCat">
+      <mat-radio-button class="example-radio-button" [value]="image" *ngFor="let image of images">
+        <img [src]="image" [alt]="image" height="200" />
+      </mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <hr />
+
+  <ng-container *ngIf="favoriteCat">
+    <p>
+      Bitte wählen Sie nun den zugrundeliegenden didaktischen Ansatz aus.
+      <br />
+      Anschließend bekommen Sie die Möglichkeit, darauf aufbauend ein Template Ihrer individuellen
+      Unterrichtsmethode zu entfernen.
+      <br />
+      Alternativ können Sie auch ein
+      <a (click)="loadTemplate()" style="cursor: pointer; text-decoration: underline"
+        >vorhandenes Template</a
+      >
+      laden.
+    </p>
+
+    <mat-form-field class="didactic-approach-form-field">
+      <mat-label>Didaktischer Ansatz</mat-label>
+      <mat-select [(value)]="selectedApproachId">
+        <mat-option [value]="approach.value" *ngFor="let approach of approachesOptions">
+          {{ approach.viewValue }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="didactic-approach-form-field">
+      <mat-label> Geben Sie Ihrem Template einen Namen </mat-label>
+      <input [(ngModel)]="templateName" type="text" matInput />
+    </mat-form-field>
+
+    <table *ngIf="selectedApproachId" style="background: #fff">
+      <thead>
+        <tr>
+          <th class="text-center border-right" style="width: 40px">Schritt</th>
+          <th class="text-center border-right" style="width: 150px">Phase</th>
+          <th class="w-175px text-center border-right">Methode</th>
+          <th class="text-center border-right" style="width: 275px">Aktivitäten</th>
+          <th class="text-center border-right" style="width: 100px">
+            Zeit
+            <span *ngIf="totalTime > 0">({{ totalTime }} min)</span>
+          </th>
+          <th class="text-center border-right">Lehrende</th>
+          <th class="text-center border-right">Lernende</th>
+          <th class="text-center border-right">Sozialform</th>
+          <th class="text-center border-right">Lernformat</th>
+          <th class="text-center">Synchronizität</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let step of steps">
+          <tr
+            *ngFor="
+              let phase of approachesStepMatchingMap.get(selectedApproachId + separator + step.id)
+                ?.phases;
+              let phaseIndex = index
+            "
+          >
+            <td
+              class="font-bold vertical-text text-center bg-gray"
+              [rowSpan]="
+                approachesStepMatchingMap.get(selectedApproachId + separator + step.id)?.phases
+                  .length
+              "
+              *ngIf="phaseIndex === 0"
+            >
+              {{ step.name }}
+            </td>
+            <td>
+              <div class="min-height display-flex flex-center">
+                {{ phase.name }}
+              </div>
+            </td>
+            <!-- dirty hack due to time constrains -->
+            <!-- found here: https://stackoverflow.com/a/72065713 -->
+            <td style="position: relative">
+              <textarea
+                [(ngModel)]="phase.method.name"
+                style="
+                  position: absolute;
+                  top: 1rem;
+                  left: 1.2rem;
+                  width: calc(100% - 2.4rem);
+                  height: calc(100% - 2rem);
+                  min-height: inherit;
+                "
+              ></textarea>
+            </td>
+            <!-- activities -->
+            <td>
+              <div
+                style="display: flex; justify-content: start"
+                class="text-center"
+                *ngFor="let activity of phase.method.activities; let activityIndex = index"
+              >
+                <input
+                  [(ngModel)]="activity.name"
+                  type="text"
+                  style="display: inline-block; flex-grow: 3; margin-bottom: 0"
+                  [class.input-margin-bottom]="activityIndex !== phase.method.activities.length - 1"
+                />
+                <button
+                  *ngIf="activityIndex === phase.method.activities.length - 1; else removeButton"
+                  class="button button-outline"
+                  style="
+                    margin-left: 5px;
+                    margin-bottom: 0;
+                    padding: 0;
+                    min-width: 38px;
+                    border-radius: 0.4rem;
+                  "
+                  (click)="addActivity(phase.method.activities)"
+                >
+                  +
+                </button>
+                <ng-template #removeButton>
+                  <button
+                    class="button button-outline"
+                    style="
+                      margin-left: 5px;
+                      margin-bottom: 0;
+                      padding: 0;
+                      min-width: 38px;
+                      border-radius: 0.4rem;
+                    "
+                    (click)="removeActivity(phase.method.activities, activityIndex)"
+                  >
+                    -
+                  </button>
+                </ng-template>
+              </div>
+            </td>
+            <td>
+              <div
+                style="display: flex; justify-content: start"
+                class="text-center"
+                *ngFor="let activity of phase.method.activities; let activityIndex = index"
+              >
+                <input
+                  [(ngModel)]="activity.time"
+                  type="number"
+                  min="1"
+                  max="360"
+                  style="display: inline-block; flex-grow: 3; margin-bottom: 0"
+                  [class.input-margin-bottom]="activityIndex !== phase.method.activities.length - 1"
+                />
+                <span style="line-height: 38px; margin-left: 5px">min</span>
+              </div>
+            </td>
+            <!-- remaining fields -->
+            <td *ngFor="let activityItem of activityItems">
+              <div
+                style="display: flex; justify-content: start"
+                class="text-center"
+                *ngFor="let activity of phase.method.activities; let activityIndex = index"
+              >
+                <input
+                  [(ngModel)]="activity[activityItem]"
+                  type="text"
+                  style="display: inline-block; flex-grow: 3; margin-bottom: 0"
+                  [class.input-margin-bottom]="activityIndex !== phase.method.activities.length - 1"
+                />
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+
+    <button class="button" (click)="exportJSON()">Export (als JSON)</button>
+
+    <button class="button button-outline" (click)="showDebug = !showDebug">
+      {{ showDebug ? 'Debug-Ansicht ausblenden' : 'Debug-Ansicht einblenden' }}
+    </button>
+
+    <div *ngIf="showDebug">
+      <h3>Debug-Ansicht:</h3>
+      <pre>
+<ng-container *ngFor="let step of steps;">
+{{ approachesStepMatchingMap.get(selectedApproachId + separator + step.id)?.phases | json }}
+</ng-container>
+      </pre>
+    </div>
+  </ng-container>
+</div>
