@@ -26,7 +26,7 @@ export class Activity {
         this.id = uuid.v4();
         this.name = name;
         this.description = '';
-        this.time = time ?? 1;
+        this.time = time ?? 0;
         this.lecturerTask = lecturerTask ?? '';
         this.learnerTask = learnerTask ?? '';
         this.socialForm = socialForm ?? '';

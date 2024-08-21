@@ -1,32 +1,54 @@
 <div class="lesson-flow-template">
   <h2>Workshop 3: Maschinenlesbare Unterrichtsmethoden</h2>
 
-  <p>Bitte wählen Sie zuerst Ihre Favoriten-Katze aus, bevor Sie fortfahren.</p>
-
-  <div class="didactic-approach-form-field" style="text-align: center">
-    <label id="choose-cat" style="font-size: 15px; margin-bottom: 10px">Wähle deine Katze</label>
+  <div class="didactic-approach-form-field" style="text-align: center; font-style: italic">
+    <label id="choose-cat" style="font-size: 15px; margin-bottom: 15px"
+      >Bitte wählen Sie zuerst Ihre Favoriten-Katze aus, bevor Sie fortfahren.</label
+    >
     <mat-radio-group aria-labelledby="choose-cat" [(ngModel)]="favoriteCat">
-      <mat-radio-button class="example-radio-button" [value]="image" *ngFor="let image of images">
+      <mat-radio-button
+        class="example-radio-button"
+        [value]="image"
+        *ngFor="let image of images"
+        style="margin-left: 5px"
+      >
         <img [src]="image" [alt]="image" height="200" />
       </mat-radio-button>
     </mat-radio-group>
   </div>
 
-  <hr />
+  <hr style="margin: 2rem 0" />
 
   <ng-container *ngIf="favoriteCat">
-    <p>
-      Bitte wählen Sie nun den zugrundeliegenden didaktischen Ansatz aus.
+    <div class="p-element">
+      Wählen Sie nun den zugrundeliegenden didaktischen Ansatz aus.
       <br />
       Anschließend bekommen Sie die Möglichkeit, darauf aufbauend ein Template Ihrer individuellen
-      Unterrichtsmethode zu entfernen.
+      Unterrichtsmethode zu entwerfen.
       <br />
-      Alternativ können Sie auch ein
-      <a (click)="loadTemplate()" style="cursor: pointer; text-decoration: underline"
-        >vorhandenes Template</a
-      >
-      laden.
-    </p>
+      <br />
+      Alternativ können Sie auch ein vorhandenes Template laden:
+      <ul style="margin-top: 15px; list-style: none">
+        <li>
+          <button
+            class="button button-outline"
+            (click)="loadTemplate('resource-saving-knowledge-transfer')"
+            style="height: 28px; line-height: 28px; margin-bottom: 0"
+          >
+            Ressourcenschonende Wissensvermittlung
+          </button>
+        </li>
+        <li>
+          <button
+            class="button button-outline"
+            (click)="loadTemplate('transfer-task')"
+            style="height: 28px; line-height: 28px"
+          >
+            Transferaufgabe mit Lebensweltbezug
+          </button>
+        </li>
+      </ul>
+    </div>
 
     <mat-form-field class="didactic-approach-form-field">
       <mat-label>Didaktischer Ansatz</mat-label>
@@ -38,26 +60,98 @@
     </mat-form-field>
 
     <mat-form-field class="didactic-approach-form-field">
-      <mat-label> Geben Sie Ihrem Template einen Namen </mat-label>
+      <mat-label> Geben Sie Ihrem Template einen Namen</mat-label>
       <input [(ngModel)]="templateName" type="text" matInput />
     </mat-form-field>
 
     <table *ngIf="selectedApproachId" style="background: #fff">
       <thead>
         <tr>
-          <th class="text-center border-right" style="width: 40px">Schritt</th>
-          <th class="text-center border-right" style="width: 150px">Phase</th>
-          <th class="w-175px text-center border-right">Methode</th>
-          <th class="text-center border-right" style="width: 275px">Aktivitäten</th>
-          <th class="text-center border-right" style="width: 100px">
+          <th
+            class="text-center border-right"
+            style="width: 40px"
+            matTooltip="Beschreibt die einzelnen Grundschritte von Lehr- und Lernprozessen."
+            matTooltipPosition="above"
+            matTooltipTouchGestures="on"
+          >
+            Schritt
+          </th>
+          <th
+            class="text-center border-right"
+            style="width: 120px"
+            matTooltip="Umfasst die verschiedenen zeitlichen und inhaltlichen Phasen, die einen strukturierten Lehr- und Lernprozess auf Basis eines didaktischen Ansatzes bilden."
+            matTooltipPosition="above"
+            matTooltipTouchGestures="on"
+          >
+            Phase
+          </th>
+          <th
+            class="w-175px text-center border-right"
+            matTooltip="Bezeichnet spezifische, kleine und oft modular einsetzbare Methoden, die gezielt in den Unterrichtsablauf eingebaut werden können, um bestimmte Lernziele oder Interaktionen zu unterstützen."
+            matTooltipPosition="above"
+            matTooltipTouchGestures="on"
+          >
+            Methode
+          </th>
+          <th
+            class="text-center border-right"
+            style="width: 275px"
+            matTooltip=" Eine spezifische Handlung oder Aufgabe, die Lernende ausführen, um ein bestimmtes Lernziel zu erreichen."
+            matTooltipPosition="above"
+            matTooltipTouchGestures="on"
+          >
+            Aktivitäten
+          </th>
+          <th
+            class="text-center border-right"
+            style="width: 115px"
+            matTooltip="Der zeitliche Rahmen, in dem die Aktivität stattfindet und abgeschlossen werden."
+            matTooltipPosition="above"
+            matTooltipTouchGestures="on"
+          >
             Zeit
             <span *ngIf="totalTime > 0">({{ totalTime }} min)</span>
           </th>
-          <th class="text-center border-right">Lehrende</th>
-          <th class="text-center border-right">Lernende</th>
-          <th class="text-center border-right">Sozialform</th>
-          <th class="text-center border-right">Lernformat</th>
-          <th class="text-center">Synchronizität</th>
+          <th
+            class="text-center border-right"
+            matTooltip="Personen, die die Aktivitäten anleiten und unterstützen."
+            matTooltipPosition="above"
+            matTooltipTouchGestures="on"
+          >
+            Lehrende
+          </th>
+          <th
+            class="text-center border-right"
+            matTooltip="Personen, die Wissen und Fähigkeiten erwerben, anwenden oder vertiefen."
+            matTooltipPosition="above"
+            matTooltipTouchGestures="on"
+          >
+            Lernende
+          </th>
+          <th
+            class="text-center border-right"
+            matTooltip="Die Art und Weise, wie Lernende organisiert werden (z.B. Einzelarbeit, Gruppenarbeit), um eine Aktivität durchzuführen."
+            matTooltipPosition="above"
+            matTooltipTouchGestures="on"
+          >
+            Sozialform
+          </th>
+          <th
+            class="text-center border-right"
+            matTooltip="Die Struktur und Gestaltung der Aktivitäten, die den Austausch und die Beteiligung der Lernenden bestimmt (z.B. Online/Präsenz)."
+            matTooltipPosition="above"
+            matTooltipTouchGestures="on"
+          >
+            Lernformat
+          </th>
+          <th
+            class="text-center"
+            matTooltip="Der zeitliche Bezug der Kommunikation, ob sie in Echtzeit (synchron) oder zeitversetzt (asynchron) stattfindet."
+            matTooltipPosition="above"
+            matTooltipTouchGestures="on"
+          >
+            Synchronizität
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -70,7 +164,8 @@
             "
           >
             <td
-              class="font-bold vertical-text text-center bg-gray"
+              class="font-bold text-center bg-gray"
+              [class.vertical-text]="!isSafari"
               [rowSpan]="
                 approachesStepMatchingMap.get(selectedApproachId + separator + step.id)?.phases
                   .length
@@ -80,7 +175,16 @@
               {{ step.name }}
             </td>
             <td>
-              <div class="min-height display-flex flex-center">
+              <div
+                class="min-height display-flex flex-center"
+                [matTooltip]="
+                  approachPhasesToTooltipsMap.get(selectedApproachId)
+                    ? approachPhasesToTooltipsMap.get(selectedApproachId)[phaseIndex]
+                    : null
+                "
+                matTooltipPosition="right"
+                matTooltipTouchGestures="on"
+              >
                 {{ phase.name }}
               </div>
             </td>
@@ -152,7 +256,7 @@
                 <input
                   [(ngModel)]="activity.time"
                   type="number"
-                  min="1"
+                  min="0"
                   max="360"
                   style="display: inline-block; flex-grow: 3; margin-bottom: 0"
                   [class.input-margin-bottom]="activityIndex !== phase.method.activities.length - 1"
@@ -180,7 +284,7 @@
       </tbody>
     </table>
 
-    <button class="button" (click)="exportJSON()">Export (als JSON)</button>
+    <button class="button" (click)="exportJSON()">Export (JSON)</button>
 
     <button class="button button-outline" (click)="showDebug = !showDebug">
       {{ showDebug ? 'Debug-Ansicht ausblenden' : 'Debug-Ansicht einblenden' }}
