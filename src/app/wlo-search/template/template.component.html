@@ -1,204 +1,217 @@
 <div
   class="reloading-indicator"
   [class.light-bg]="requestInProgress"
-  *ngIf="!initialLoadSuccessfully || requestInProgress"
+  *ngIf="!pageConfigCheckFailed && (!initialLoadSuccessfully || requestInProgress)"
 >
   <!-- for requestInProgress the page might be too large to display a visible spinner -->
   <es-spinner *ngIf="!initialLoadSuccessfully"></es-spinner>
 </div>
-<header class="template-header">
-  <div class="template-header-wrapper">
-    <div class="template-header-container">
-      <div class="template-header-content">
-        <h1 i18n>Topic page for {{ topic() }}</h1>
-        <p *ngIf="generatedHeader(); else headerPlaceholder">{{ generatedHeader() }}</p>
-        <ng-template #headerPlaceholder>
-          Dieser Text beschreibt das Thema der Seite und führt in es ein. Er ist typischerweise
-          etwas länger und umfasst somit einige Sätze. Manche dieser Sätze haben vielen Kommata,
-          andere nicht. Es können längere und kürzere Sätze dort vorkommen.
-        </ng-template>
-        <!-- action buttons for editing and creating -->
-        <!-- duplicated code due to https://github.com/angular/components/issues/15367 -->
-        <ng-container *ngIf="userHasEditRights()">
-          <button
-            *ngIf="!editMode"
-            mat-stroked-button
-            class="edit-button"
-            color="primary"
-            [disabled]="requestInProgress"
-            (click)="editMode = !editMode"
-          >
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button
-            *ngIf="editMode"
-            mat-flat-button
-            class="edit-button"
-            color="primary"
-            [disabled]="requestInProgress"
-            (click)="editMode = !editMode"
-          >
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button
-            *ngIf="editMode"
-            mat-stroked-button
-            class="add-button"
-            color="primary"
-            [matMenuTriggerFor]="addComponentMenu"
-            [disabled]="requestInProgress"
-          >
-            <mat-icon>add</mat-icon>
-          </button>
-          <mat-menu #addComponentMenu="matMenu">
+<ng-container *ngIf="!pageConfigCheckFailed; else pageConfigCheckFailedMessage">
+  <header class="template-header">
+    <div class="template-header-wrapper">
+      <div class="template-header-container">
+        <div class="template-header-content">
+          <h1 i18n>Topic page for {{ topic() }}</h1>
+          <p *ngIf="generatedHeader(); else headerPlaceholder">{{ generatedHeader() }}</p>
+          <ng-template #headerPlaceholder>
+            Dieser Text beschreibt das Thema der Seite und führt in es ein. Er ist typischerweise
+            etwas länger und umfasst somit einige Sätze. Manche dieser Sätze haben vielen Kommata,
+            andere nicht. Es können längere und kürzere Sätze dort vorkommen.
+          </ng-template>
+          <!-- action buttons for editing and creating -->
+          <!-- duplicated code due to https://github.com/angular/components/issues/15367 -->
+          <ng-container *ngIf="userHasEditRights()">
             <button
-              mat-menu-item
-              *ngFor="let option of swimlaneTypeOptions"
+              *ngIf="!editMode"
+              mat-stroked-button
+              class="edit-button"
+              color="primary"
               [disabled]="requestInProgress"
-              (click)="addSwimlane(option.value)"
+              (click)="editMode = !editMode"
             >
-              {{ option.viewValue }}
+              <mat-icon>edit</mat-icon>
             </button>
-          </mat-menu>
+            <button
+              *ngIf="editMode"
+              mat-flat-button
+              class="edit-button"
+              color="primary"
+              [disabled]="requestInProgress"
+              (click)="editMode = !editMode"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button
+              *ngIf="editMode"
+              mat-stroked-button
+              class="add-button"
+              color="primary"
+              [matMenuTriggerFor]="addComponentMenu"
+              [disabled]="requestInProgress"
+            >
+              <mat-icon>add</mat-icon>
+            </button>
+            <mat-menu #addComponentMenu="matMenu">
+              <button
+                mat-menu-item
+                *ngFor="let option of swimlaneTypeOptions"
+                [disabled]="requestInProgress"
+                (click)="addSwimlane(option.value)"
+              >
+                {{ option.viewValue }}
+              </button>
+            </mat-menu>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </header>
+  <app-filter-bar
+    [requestInProgress]="requestInProgress"
+    [selectDimensions]="selectDimensions"
+    (selectValuesChanged)="selectValuesChanged($event)"
+    *ngIf="selectDimensionsLoaded"
+  ></app-filter-bar>
+  <div class="portal-outer-wrapper">
+    <div class="portal-wrapper">
+      <div class="portal-wrapper-left">
+        <ng-container *ngIf="swimlanes.length > 0; else noSwimlanesCreatedYet">
+          <!-- note: do not show empty swimlanes to users -->
+          <ng-container *ngFor="let swimlane of swimlanes; let i = index">
+            <div
+              *ngIf="swimlane.grid?.length > 0 || swimlane.type === 'spacer' || editMode"
+              class="wlo-swimlane"
+              [class.swimlane-edit-mode]="editMode"
+              [style.background-color]="
+                swimlane.backgroundColor ? swimlane.backgroundColor : '#f4f4f4'
+              "
+            >
+              <ng-container *ngIf="userHasEditRights()">
+                <!-- action buttons for moving -->
+                <div class="wlo-move-buttons" *ngIf="editMode">
+                  <button
+                    [disabled]="i === 0 || requestInProgress"
+                    (click)="moveSwimlanePosition(i, i - 1)"
+                  >
+                    <mat-icon>arrow_upward</mat-icon>
+                  </button>
+                  <button
+                    [disabled]="i === swimlanes.length - 1 || requestInProgress"
+                    (click)="moveSwimlanePosition(i, i + 1)"
+                  >
+                    <mat-icon>arrow_downward</mat-icon>
+                  </button>
+                </div>
+                <!-- action buttons for modifications -->
+                <div class="wlo-edit-buttons" *ngIf="editMode">
+                  <button
+                    *ngIf="swimlane.type !== 'spacer'"
+                    [disabled]="requestInProgress"
+                    (click)="editSwimlane(swimlane, i)"
+                  >
+                    <mat-icon>settings</mat-icon>
+                  </button>
+                  <button
+                    [class.wlo-single-button]="swimlane.type === 'spacer'"
+                    [disabled]="requestInProgress"
+                    (click)="deleteSwimlane(i)"
+                  >
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+              </ng-container>
+              <!-- type: collapse -->
+              <cdk-accordion class="wlo-accordion" *ngIf="swimlane.type === 'collapse'">
+                <cdk-accordion-item
+                  #accordionItem="cdkAccordionItem"
+                  class="wlo-accordion-item"
+                  role="button"
+                  tabindex="0"
+                  [attr.id]="'accordion-header-' + i"
+                  [attr.aria-expanded]="accordionItem.expanded"
+                  [attr.aria-controls]="'accordion-body-' + i"
+                  expanded="true"
+                >
+                  <div class="wlo-accordion-item-header" (click)="accordionItem.toggle()">
+                    <h2>{{ swimlane.heading ?? 'Accordion Header' }}</h2>
+                    <span class="wlo-accordion-item-description">
+                      <mat-icon *ngIf="accordionItem.expanded">expand_less</mat-icon>
+                      <mat-icon *ngIf="!accordionItem.expanded">expand_more</mat-icon>
+                    </span>
+                  </div>
+                  <div
+                    class="wlo-accordion-item-body"
+                    role="region"
+                    [style.display]="accordionItem.expanded ? '' : 'none'"
+                    [attr.id]="'accordion-body-' + i"
+                    [attr.aria-labelledby]="'accordion-header-' + i"
+                  >
+                    <p class="wlo-description" *ngIf="swimlane.description">
+                      {{ swimlane.description }}
+                    </p>
+                    <app-swimlane
+                      [backgroundColor]="swimlane.backgroundColor"
+                      [editMode]="editMode"
+                      [filterBarReady]="filterBarReady"
+                      [grid]="swimlane.grid"
+                      [gridType]="swimlane.gridType"
+                      [pageVariantNode]="pageVariantNode"
+                      [selectDimensions]="selectDimensions"
+                      [selectedDimensionValues]="selectedDimensionValues"
+                      [swimlaneIndex]="i"
+                      [topic]="topic()"
+                      [topicCollectionID]="topicCollectionID()"
+                      [topicWidgets]="topicWidgets"
+                    ></app-swimlane>
+                  </div>
+                </cdk-accordion-item>
+              </cdk-accordion>
+
+              <!-- type: jumbotron, text, container -->
+              <div
+                [class.wlo-container]="swimlane.type === 'container'"
+                [class.wlo-jumbotron]="swimlane.type === 'jumbotron'"
+                [class.wlo-text]="swimlane.type === 'text'"
+                *ngIf="['container', 'jumbotron', 'text'].includes(swimlane.type)"
+              >
+                <h2 *ngIf="swimlane.heading">{{ swimlane.heading }}</h2>
+                <p class="wlo-description" *ngIf="swimlane.description">
+                  {{ swimlane.description }}
+                </p>
+                <app-swimlane
+                  [backgroundColor]="swimlane.backgroundColor"
+                  [editMode]="editMode"
+                  [filterBarReady]="filterBarReady"
+                  [grid]="swimlane.grid"
+                  [pageVariantNode]="pageVariantNode"
+                  [selectDimensions]="selectDimensions"
+                  [selectedDimensionValues]="selectedDimensionValues"
+                  [swimlaneIndex]="i"
+                  [topic]="topic()"
+                  [topicCollectionID]="topicCollectionID()"
+                  [topicWidgets]="topicWidgets"
+                ></app-swimlane>
+              </div>
+
+              <ng-container *ngIf="swimlane.type === 'spacer'">
+                <hr class="wlo-spacer" />
+              </ng-container>
+            </div>
+          </ng-container>
         </ng-container>
+        <ng-template #noSwimlanesCreatedYet>
+          <p class="no-swimlanes">Bisher wurden noch keine Swimlanes mit Inhalten erstellt.</p>
+        </ng-template>
       </div>
     </div>
   </div>
-</header>
-<app-filter-bar
-  [requestInProgress]="requestInProgress"
-  [selectDimensions]="selectDimensions"
-  (selectValuesChanged)="selectValuesChanged($event)"
-  *ngIf="selectDimensionsLoaded"
-></app-filter-bar>
-<div class="portal-outer-wrapper">
-  <div class="portal-wrapper">
-    <div class="portal-wrapper-left">
-      <ng-container *ngIf="swimlanes.length > 0; else noSwimlanesCreatedYet">
-        <!-- note: do not show empty swimlanes to users -->
-        <ng-container *ngFor="let swimlane of swimlanes; let i = index">
-          <div
-            *ngIf="swimlane.grid?.length > 0 || swimlane.type === 'spacer' || editMode"
-            class="wlo-swimlane"
-            [class.swimlane-edit-mode]="editMode"
-            [style.background-color]="
-              swimlane.backgroundColor ? swimlane.backgroundColor : '#f4f4f4'
-            "
-          >
-            <ng-container *ngIf="userHasEditRights()">
-              <!-- action buttons for moving -->
-              <div class="wlo-move-buttons" *ngIf="editMode">
-                <button
-                  [disabled]="i === 0 || requestInProgress"
-                  (click)="moveSwimlanePosition(i, i - 1)"
-                >
-                  <mat-icon>arrow_upward</mat-icon>
-                </button>
-                <button
-                  [disabled]="i === swimlanes.length - 1 || requestInProgress"
-                  (click)="moveSwimlanePosition(i, i + 1)"
-                >
-                  <mat-icon>arrow_downward</mat-icon>
-                </button>
-              </div>
-              <!-- action buttons for modifications -->
-              <div class="wlo-edit-buttons" *ngIf="editMode">
-                <button
-                  *ngIf="swimlane.type !== 'spacer'"
-                  [disabled]="requestInProgress"
-                  (click)="editSwimlane(swimlane, i)"
-                >
-                  <mat-icon>settings</mat-icon>
-                </button>
-                <button
-                  [class.wlo-single-button]="swimlane.type === 'spacer'"
-                  [disabled]="requestInProgress"
-                  (click)="deleteSwimlane(i)"
-                >
-                  <mat-icon>delete</mat-icon>
-                </button>
-              </div>
-            </ng-container>
-            <!-- type: collapse -->
-            <cdk-accordion class="wlo-accordion" *ngIf="swimlane.type === 'collapse'">
-              <cdk-accordion-item
-                #accordionItem="cdkAccordionItem"
-                class="wlo-accordion-item"
-                role="button"
-                tabindex="0"
-                [attr.id]="'accordion-header-' + i"
-                [attr.aria-expanded]="accordionItem.expanded"
-                [attr.aria-controls]="'accordion-body-' + i"
-                expanded="true"
-              >
-                <div class="wlo-accordion-item-header" (click)="accordionItem.toggle()">
-                  <h2>{{ swimlane.heading ?? 'Accordion Header' }}</h2>
-                  <span class="wlo-accordion-item-description">
-                    <mat-icon *ngIf="accordionItem.expanded">expand_less</mat-icon>
-                    <mat-icon *ngIf="!accordionItem.expanded">expand_more</mat-icon>
-                  </span>
-                </div>
-                <div
-                  class="wlo-accordion-item-body"
-                  role="region"
-                  [style.display]="accordionItem.expanded ? '' : 'none'"
-                  [attr.id]="'accordion-body-' + i"
-                  [attr.aria-labelledby]="'accordion-header-' + i"
-                >
-                  <p class="wlo-description" *ngIf="swimlane.description">
-                    {{ swimlane.description }}
-                  </p>
-                  <app-swimlane
-                    [backgroundColor]="swimlane.backgroundColor"
-                    [editMode]="editMode"
-                    [filterBarReady]="filterBarReady"
-                    [grid]="swimlane.grid"
-                    [gridType]="swimlane.gridType"
-                    [pageVariantNode]="pageVariantNode"
-                    [selectDimensions]="selectDimensions"
-                    [selectedDimensionValues]="selectedDimensionValues"
-                    [swimlaneIndex]="i"
-                    [topic]="topic()"
-                    [topicCollectionID]="topicCollectionID()"
-                    [topicWidgets]="topicWidgets"
-                  ></app-swimlane>
-                </div>
-              </cdk-accordion-item>
-            </cdk-accordion>
+</ng-container>
 
-            <!-- type: jumbotron, text, container -->
-            <div
-              [class.wlo-container]="swimlane.type === 'container'"
-              [class.wlo-jumbotron]="swimlane.type === 'jumbotron'"
-              [class.wlo-text]="swimlane.type === 'text'"
-              *ngIf="['container', 'jumbotron', 'text'].includes(swimlane.type)"
-            >
-              <h2 *ngIf="swimlane.heading">{{ swimlane.heading }}</h2>
-              <p class="wlo-description" *ngIf="swimlane.description">{{ swimlane.description }}</p>
-              <app-swimlane
-                [backgroundColor]="swimlane.backgroundColor"
-                [editMode]="editMode"
-                [filterBarReady]="filterBarReady"
-                [grid]="swimlane.grid"
-                [pageVariantNode]="pageVariantNode"
-                [selectDimensions]="selectDimensions"
-                [selectedDimensionValues]="selectedDimensionValues"
-                [swimlaneIndex]="i"
-                [topic]="topic()"
-                [topicCollectionID]="topicCollectionID()"
-                [topicWidgets]="topicWidgets"
-              ></app-swimlane>
-            </div>
-
-            <ng-container *ngIf="swimlane.type === 'spacer'">
-              <hr class="wlo-spacer" />
-            </ng-container>
-          </div>
-        </ng-container>
-      </ng-container>
-      <ng-template #noSwimlanesCreatedYet>
-        <p class="no-swimlanes">Bisher wurden noch keine Swimlanes mit Inhalten erstellt.</p>
-      </ng-template>
-    </div>
-  </div>
-</div>
+<!-- failed to load page config -> currently, no further action possible -->
+<ng-template #pageConfigCheckFailedMessage>
+  <p class="no-page-config">
+    <strong>Hinweis:</strong>
+    Für diese Seite konnte keine Seiten-Konfiguration gefunden werden. Bitte wenden Sie sich an
+    Ihren Systemadministrator.
+  </p>
+</ng-template>

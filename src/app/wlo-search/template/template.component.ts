@@ -91,6 +91,7 @@ export class TemplateComponent implements OnInit {
     private collectionNode: Node;
     private collectionNodeHasPageConfig: boolean = false;
     private pageConfigNode: Node;
+    pageConfigCheckFailed: boolean = false;
     private pageVariantConfigs: NodeEntries;
     private pageVariantDefaultPosition: number = -1;
     pageVariantNode: Node;
@@ -363,9 +364,11 @@ export class TemplateComponent implements OnInit {
             // workspace://SpacesStore/UUID -> UUID
             const pageNodeId: string = pageRef.split('/')?.[pageRef.split('/').length - 1];
             if (pageNodeId) {
+                this.pageConfigCheckFailed = false;
                 return await firstValueFrom(this.nodeApi.getNode(pageNodeId));
             }
         }
+        this.pageConfigCheckFailed = true;
         return null;
     }
 
