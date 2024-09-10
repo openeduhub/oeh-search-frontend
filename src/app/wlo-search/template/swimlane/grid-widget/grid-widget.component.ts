@@ -45,11 +45,24 @@ export class GridWidgetComponent {
     defaultUserConfigurableNodeId: string = defaultUserConfigurableNodeId;
     parentWidgetConfigNodeId: string = parentWidgetConfigNodeId;
 
+    constructor() {}
+
     retrieveCustomUrl(node: Node) {
         const collectionId = node.properties?.['sys:node-uuid']?.[0];
         if (collectionId) {
             return window.location.origin + '/template?collectionId=' + collectionId;
         }
         return '';
+    }
+
+    // TODO: argument type Node is not assignable to parameter type Node
+    clickedItem(node: any) {
+        let clickableUrl: string = node.properties['ccm:wwwurl']?.[0];
+        if (!clickableUrl) {
+            clickableUrl = node.content.url;
+        }
+        if (clickableUrl) {
+            window.open(clickableUrl, '_blank');
+        }
     }
 }

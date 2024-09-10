@@ -25,6 +25,7 @@
 </ng-container>
 <ng-container *ngIf="widgetType === 'wlo-user-configurable'">
   <wlo-user-configurable
+    class="user-configurable"
     [class]="widgetClasses ? widgetClasses : ''"
     [contextNodeId]="topicCollectionID"
     [defaultNodeId]="defaultUserConfigurableNodeId"
@@ -34,6 +35,7 @@
     [parentWidgetConfigNodeId]="parentWidgetConfigNodeId"
     [searchText]="topic"
     [swimlaneIndex]="swimlaneIndex"
+    (itemClickedEvent)="clickedItem($event)"
   >
   </wlo-user-configurable>
 </ng-container>
