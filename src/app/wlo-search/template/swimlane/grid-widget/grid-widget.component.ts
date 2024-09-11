@@ -50,7 +50,12 @@ export class GridWidgetComponent {
     retrieveCustomUrl(node: Node) {
         const collectionId = node.properties?.['sys:node-uuid']?.[0];
         if (collectionId) {
-            return window.location.origin + '/template?collectionId=' + collectionId;
+            // take into account potential sub-paths, e.g., due to language switch
+            const pathNameArray: string[] = window.location.pathname.split('/');
+            // example pathNameArray = [ "", "de", "template" ]
+            const suffix: string =
+                pathNameArray.length > 2 && pathNameArray[1] !== '' ? '/' + pathNameArray[1] : '';
+            return window.location.origin + suffix + '/template?collectionId=' + collectionId;
         }
         return '';
     }
