@@ -127,7 +127,7 @@ jobs:
           CYPRESS_chromeWebSecurity: false
         with:
           working-directory: e2e-cypress
-      - uses: actions/upload-artifact@v1
+      - uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: cypress-screenshots
@@ -152,7 +152,7 @@ jobs:
         run: npm ci
       - name: Build web components
         run: npm run build:web-components
-      - uses: actions/upload-artifact@v1
+      - uses: actions/upload-artifact@v4
         with:
           name: web-components
           path: dist/web-components
