@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import {
     defaultAiTextWidgetNodeId,
     defaultCollectionChipsNodeId,
+    defaultTopicsColumnBrowserNodeId,
     defaultUserConfigurableNodeId,
     parentWidgetConfigNodeId,
 } from '../../custom-definitions';
@@ -10,6 +11,7 @@ import { MdsValue, MdsWidget, Node } from 'ngx-edu-sharing-api';
 import {
     AiTextWidgetComponent,
     CollectionChipsComponent,
+    TopicsColumnBrowserComponent,
     UserConfigurableComponent,
 } from 'ngx-edu-sharing-wlo-pages';
 
@@ -19,6 +21,7 @@ import {
     imports: [
         AiTextWidgetComponent,
         CollectionChipsComponent,
+        TopicsColumnBrowserComponent,
         UserConfigurableComponent,
         SharedModule,
     ],
@@ -42,6 +45,7 @@ export class GridWidgetComponent {
 
     defaultAiTextWidgetNodeId: string = defaultAiTextWidgetNodeId;
     defaultCollectionChipsNodeId: string = defaultCollectionChipsNodeId;
+    defaultTopicsColumnBrowserNodeId: string = defaultTopicsColumnBrowserNodeId;
     defaultUserConfigurableNodeId: string = defaultUserConfigurableNodeId;
     parentWidgetConfigNodeId: string = parentWidgetConfigNodeId;
 

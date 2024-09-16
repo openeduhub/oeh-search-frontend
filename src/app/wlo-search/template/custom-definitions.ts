@@ -6,6 +6,7 @@ export const defaultTopicTextNodeId: string = '2340e5cf-4e9d-4b42-b6df-e64087be7
 export const defaultAiTextWidgetNodeId: string = '10d5ec39-907a-43f6-a024-344300e6a4c8';
 export const defaultUserConfigurableNodeId: string = '89653b20-516c-43a2-9042-382aef5ae087';
 export const defaultCollectionChipsNodeId: string = 'd43cfd0e-ce5a-4428-a3bb-2c37a155bf32';
+export const defaultTopicsColumnBrowserNodeId: string = '4f46b4cd-19df-4139-bbb1-bfc3aea08d39';
 
 export const gridTypeOptions: SelectOption[] = [
     {
@@ -94,12 +95,16 @@ export const widgetTypeOptions: SelectOption[] = [
         viewValue: 'KI-Widget',
     },
     {
-        value: 'wlo-card',
-        viewValue: 'Karte',
-    },
-    {
         value: 'wlo-collection-chips',
         viewValue: 'Themenbaum',
+    },
+    {
+        value: 'wlo-topics-column-browser',
+        viewValue: 'Themenbaum (ausklappbar)',
+    },
+    {
+        value: 'wlo-card',
+        viewValue: 'Karte',
     },
     {
         value: 'wlo-image',

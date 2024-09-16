@@ -23,6 +23,15 @@
     [defaultNodeId]="defaultCollectionChipsNodeId"
   ></wlo-collection-chips>
 </ng-container>
+<ng-container *ngIf="widgetType === 'wlo-topics-column-browser'">
+  <wlo-topics-column-browser
+    *ngIf="topicCollectionID"
+    [class]="widgetClasses ? widgetClasses : ''"
+    [collectionId]="topicCollectionID"
+    [defaultNodeId]="defaultTopicsColumnBrowserNodeId"
+    [height]="'400'"
+  ></wlo-topics-column-browser>
+</ng-container>
 <ng-container *ngIf="widgetType === 'wlo-user-configurable'">
   <wlo-user-configurable
     class="user-configurable"
