@@ -46,6 +46,7 @@ import {
 import { FilterBarComponent } from './filter-bar/filter-bar.component';
 import { PageConfig } from './page-config';
 import { PageVariantConfig } from './page-variant-config';
+import { GridTile } from './swimlane/grid-tile';
 import { SwimlaneComponent } from './swimlane/swimlane.component';
 import { SwimlaneSettingsDialogComponent } from './swimlane/swimlane-settings-dialog/swimlane-settings-dialog.component';
 import { Swimlane } from './swimlane/swimlane';
@@ -206,7 +207,7 @@ export class TemplateComponent implements OnInit {
                     this.selectedVariantPosition = pageConfig.variants.indexOf(
                         workspaceSpacesStorePrefix + selectedVariantId,
                     );
-                    // 4) retrieve the variant config node of the page and set the swimlanes
+                    // 4) retrieve the variant config node of the page
                     this.pageVariantNode = this.pageVariantConfigs.nodes?.find(
                         (node: Node) => node.ref.id === selectedVariantId,
                     );
@@ -222,10 +223,16 @@ export class TemplateComponent implements OnInit {
                         );
                         return;
                     }
+                    // 5) if page config was retrieved from parent,
+                    //    remove possible existing nodeIds from swimlane grids
+                    if (!this.collectionNode.properties[pageConfigRefType]?.[0]) {
+                        this.removeNodeIdsFromPageVariantConfig(pageVariant);
+                    }
+                    // 6) set the swimlanes
                     this.swimlanes = pageVariant.structure.swimlanes ?? [];
-                    // 5) generate the header text
+                    // 7) generate the header text
                     await this.generateFromPrompt();
-                    // 6) everything loaded?
+                    // 8) everything loaded?
                     this.initialLoadSuccessfully = true;
                 }
             });
@@ -487,6 +494,7 @@ export class TemplateComponent implements OnInit {
                     ]?.[0]
                         ? JSON.parse(variantNode.properties[pageVariantConfigType][0])
                         : {};
+                    this.removeNodeIdsFromPageVariantConfig(variantConfig);
                     await this.setProperty(
                         pageConfigVariantNode.ref.id,
                         pageVariantConfigType,
@@ -729,6 +737,19 @@ export class TemplateComponent implements OnInit {
             this.swimlanes.splice(index, 1);
             this.requestInProgress = false;
         }
+    }
+
+    /**
+     * Helper function to remove possible existing nodeIds from page variant config.
+     */
+    private removeNodeIdsFromPageVariantConfig(pageVariant: PageVariantConfig): void {
+        pageVariant.structure.swimlanes?.forEach((swimlane: Swimlane) => {
+            swimlane.grid?.forEach((gridItem: GridTile) => {
+                if (gridItem.nodeId) {
+                    delete gridItem.nodeId;
+                }
+            });
+        });
     }
 
     /**
