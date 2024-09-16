@@ -18,8 +18,8 @@
   <wlo-collection-chips
     *ngIf="topicCollectionID"
     [class]="widgetClasses ? widgetClasses : ''"
+    [collectionId]="topicCollectionID"
     [customUrl]="retrieveCustomUrl"
-    [collection]="topicCollectionID"
     [defaultNodeId]="defaultCollectionChipsNodeId"
   ></wlo-collection-chips>
 </ng-container>
@@ -28,6 +28,7 @@
     *ngIf="topicCollectionID"
     [class]="widgetClasses ? widgetClasses : ''"
     [collectionId]="topicCollectionID"
+    [customUrl]="retrieveCustomUrl"
     [defaultNodeId]="defaultTopicsColumnBrowserNodeId"
     [height]="'400'"
   ></wlo-topics-column-browser>
