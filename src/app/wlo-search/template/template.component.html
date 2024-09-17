@@ -66,12 +66,12 @@
       </div>
     </div>
   </header>
-  <app-filter-bar
+  <wlo-filter-bar
     [requestInProgress]="requestInProgress"
     [selectDimensions]="selectDimensions"
     (selectValuesChanged)="selectValuesChanged($event)"
     *ngIf="selectDimensionsLoaded"
-  ></app-filter-bar>
+  ></wlo-filter-bar>
   <div class="portal-outer-wrapper">
     <div class="portal-wrapper">
       <div class="portal-wrapper-left">

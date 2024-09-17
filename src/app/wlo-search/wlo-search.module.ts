@@ -8,7 +8,6 @@ import { WloSearchComponent } from './wlo-search.component';
 import { TemplateComponent } from './template/template.component';
 import { SwimlaneSettingsDialogComponent } from './template/swimlane/swimlane-settings-dialog/swimlane-settings-dialog.component';
 import { SwimlaneComponent } from './template/swimlane/swimlane.component';
-import { FilterBarComponent } from './template/filter-bar/filter-bar.component';
 
 @NgModule({
     declarations: [WloSearchComponent],
@@ -21,7 +20,6 @@ import { FilterBarComponent } from './template/filter-bar/filter-bar.component';
         TemplateComponent,
         SwimlaneComponent,
         SwimlaneSettingsDialogComponent,
-        FilterBarComponent,
     ],
 })
 export class WloSearchModule {}

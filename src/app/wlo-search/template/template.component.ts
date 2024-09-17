@@ -15,6 +15,7 @@ import {
 import { Mds } from 'ngx-edu-sharing-api/lib/api/models/mds';
 import { ParentEntries } from 'ngx-edu-sharing-api/lib/api/models/parent-entries';
 import { SpinnerComponent } from 'ngx-edu-sharing-ui';
+import { FilterBarComponent } from 'ngx-edu-sharing-wlo-pages';
 import { AiTextPromptsService, TextPromptEntity } from 'ngx-edu-sharing-z-api';
 import { firstValueFrom } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -43,7 +44,6 @@ import {
     pageVariantIsTemplateType,
     workspaceSpacesStorePrefix,
 } from './custom-definitions';
-import { FilterBarComponent } from './filter-bar/filter-bar.component';
 import { PageConfig } from './page-config';
 import { PageVariantConfig } from './page-variant-config';
 import { GridTile } from './swimlane/grid-tile';
