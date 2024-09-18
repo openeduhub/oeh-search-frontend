@@ -12,7 +12,6 @@ import {
     NodeEntries,
     NodeService,
 } from 'ngx-edu-sharing-api';
-import { Mds } from 'ngx-edu-sharing-api/lib/api/models/mds';
 import { ParentEntries } from 'ngx-edu-sharing-api/lib/api/models/parent-entries';
 import { SpinnerComponent } from 'ngx-edu-sharing-ui';
 import { FilterBarComponent } from 'ngx-edu-sharing-wlo-pages';
@@ -150,10 +149,7 @@ export class TemplateComponent implements OnInit {
                     // set the background to some random (but deterministic) color, just for visuals
                     this.topicColor = this.stringToColour(this.topic());
 
-                    // 2) retrieve the select dimensions
-                    await this.retrieveSelectDimensions();
-
-                    // 3) retrieve the page config node either by checking the node itself or by iterating the parents of the collectionNode
+                    // 2) retrieve the page config node either by checking the node itself or by iterating the parents of the collectionNode
                     this.pageConfigNode = await this.retrievePageConfigNode(this.collectionNode);
                     if (!this.pageConfigNode) {
                         return;
@@ -207,7 +203,7 @@ export class TemplateComponent implements OnInit {
                     this.selectedVariantPosition = pageConfig.variants.indexOf(
                         workspaceSpacesStorePrefix + selectedVariantId,
                     );
-                    // 4) retrieve the variant config node of the page
+                    // 3) retrieve the variant config node of the page
                     this.pageVariantNode = this.pageVariantConfigs.nodes?.find(
                         (node: Node) => node.ref.id === selectedVariantId,
                     );
@@ -223,16 +219,16 @@ export class TemplateComponent implements OnInit {
                         );
                         return;
                     }
-                    // 5) if page config was retrieved from parent,
+                    // 4) if page config was retrieved from parent,
                     //    remove possible existing nodeIds from swimlane grids
                     if (!this.collectionNode.properties[pageConfigRefType]?.[0]) {
                         this.removeNodeIdsFromPageVariantConfig(pageVariant);
                     }
-                    // 6) set the swimlanes
+                    // 5) set the swimlanes
                     this.swimlanes = pageVariant.structure.swimlanes ?? [];
-                    // 7) generate the header text
+                    // 6) generate the header text
                     await this.generateFromPrompt();
-                    // 8) everything loaded?
+                    // 7) everything loaded?
                     this.initialLoadSuccessfully = true;
                 }
             });
@@ -333,24 +329,6 @@ export class TemplateComponent implements OnInit {
         // TODO: Add created config nodes to the swimlane
     }
 
-    private async retrieveSelectDimensions(): Promise<void> {
-        await firstValueFrom(this.mdsService.getMetadataSet({ metadataSet: defaultMds })).then(
-            (data: Mds) => {
-                const filteredMdsWidgets: MdsWidget[] = data.widgets.filter((widget: MdsWidget) =>
-                    providedSelectDimensionKeys.includes(widget.id),
-                );
-                filteredMdsWidgets.forEach((mdsWidget: MdsWidget) => {
-                    // Note: The $ is added at this position to signal an existing placeholder
-                    this.selectDimensions.set('$' + mdsWidget.id + '$', mdsWidget);
-                });
-                this.selectDimensionsLoaded = true;
-            },
-            (error: Error) => {
-                console.error('Error occurred while requesting select dimensions.', error);
-            },
-        );
-    }
-
     private async retrievePageConfigNode(node: Node): Promise<Node> {
         // check, whether the node itself has a pageConfigRef
         let pageRef = node.properties[pageConfigRefType]?.[0];
@@ -388,8 +366,17 @@ export class TemplateComponent implements OnInit {
     }
 
     // REACT TO OUTPUT EVENTS //
+
     /**
-     * Called by app-filter-bar selectValuesChanged output event.
+     * Called by wlo-filter-bar selectDimensionsChanged output event.
+     */
+    selectDimensionsChanged(event: Map<string, MdsWidget>): void {
+        this.selectDimensions = event;
+        this.selectDimensionsLoaded = true;
+    }
+
+    /**
+     * Called by wlo-filter-bar selectValuesChanged output event.
      */
     selectValuesChanged(event: MdsValue[]): void {
         this.selectedDimensionValues = event;
@@ -782,4 +769,7 @@ export class TemplateComponent implements OnInit {
         }
         return colour;
     }
+
+    protected readonly defaultMds: string = defaultMds;
+    protected readonly providedSelectDimensionKeys: string[] = providedSelectDimensionKeys;
 }

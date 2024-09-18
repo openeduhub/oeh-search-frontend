@@ -66,12 +66,19 @@
       </div>
     </div>
   </header>
-  <wlo-filter-bar
-    [requestInProgress]="requestInProgress"
-    [selectDimensions]="selectDimensions"
-    (selectValuesChanged)="selectValuesChanged($event)"
-    *ngIf="selectDimensionsLoaded"
-  ></wlo-filter-bar>
+  <div class="variable-select-bar fachportal-filterbar">
+    <div class="fachportal-filterbar-content">
+      <wlo-filter-bar
+        [requestInProgress]="requestInProgress"
+        [metadataSetName]="defaultMds"
+        [selectDimensionKeysOfInterest]="providedSelectDimensionKeys"
+        (selectDimensionsChanged)="selectDimensionsChanged($event)"
+        (selectValuesChanged)="selectValuesChanged($event)"
+      ></wlo-filter-bar>
+    </div>
+  </div>
+
+  <hr />
   <div class="portal-outer-wrapper">
     <div class="portal-wrapper">
       <div class="portal-wrapper-left">

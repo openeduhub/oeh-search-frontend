@@ -104,6 +104,25 @@
     }
 }
 
+.fachportal-filterbar {
+    margin: -20px calc(50% - 50vw) 40px;
+    padding: 0 18px;
+    display: flex;
+    justify-content: center;
+    background: #f5f5f5;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+
+    .fachportal-filterbar-content {
+        display: flex;
+        flex-direction: column;
+        overflow: auto;
+        width: 100%;
+        max-width: 1200px;
+        padding: 0.6em;
+    }
+}
+
 @media only screen and (min-width: 901px) {
     .template-header {
         margin-left: calc(50% - 50vw);
