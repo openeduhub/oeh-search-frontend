@@ -30,6 +30,7 @@ import {
 })
 export class GridWidgetComponent {
     @Input() backgroundColor: string;
+    @Input() contextNodeId: string;
     @Input() editMode: boolean;
     @Input() filterBarReady: boolean;
     @Input() gridIndex: number;
@@ -38,7 +39,6 @@ export class GridWidgetComponent {
     @Input() selectedDimensionValues: MdsValue[] = [];
     @Input() swimlaneIndex: number;
     @Input() topic: string;
-    @Input() topicCollectionID: string;
     @Input() widgetClasses: string;
     @Input() widgetNodeId: string;
     @Input() widgetType: string;

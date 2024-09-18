@@ -23,6 +23,7 @@ export class SwimlaneComponent {
         this._backgroundColor = value ?? '#f4f4f4';
     }
 
+    @Input() contextNodeId: string;
     @Input() editMode: boolean;
     @Input() filterBarReady: boolean;
     @Input() grid: GridTile[];
@@ -32,7 +33,6 @@ export class SwimlaneComponent {
     @Input() selectedDimensionValues: MdsValue[] = [];
     @Input() swimlaneIndex: number;
     @Input() topic: string;
-    @Input() topicCollectionID: string;
     @Input() topicWidgets: NodeEntries;
 
     protected readonly workspaceSpacesStorePrefix = workspaceSpacesStorePrefix;

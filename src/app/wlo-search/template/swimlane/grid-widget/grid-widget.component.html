@@ -2,7 +2,7 @@
   <wlo-ai-text-widget
     *ngIf="filterBarReady"
     [class]="widgetClasses ? widgetClasses : ''"
-    [contextNodeId]="topicCollectionID"
+    [contextNodeId]="contextNodeId"
     [defaultNodeId]="defaultAiTextWidgetNodeId"
     [editMode]="editMode"
     [gridIndex]="gridIndex"
@@ -16,18 +16,18 @@
 </ng-container>
 <ng-container *ngIf="widgetType === 'wlo-collection-chips'">
   <wlo-collection-chips
-    *ngIf="topicCollectionID"
+    *ngIf="contextNodeId"
     [class]="widgetClasses ? widgetClasses : ''"
-    [collectionId]="topicCollectionID"
+    [collectionId]="contextNodeId"
     [customUrl]="retrieveCustomUrl"
     [defaultNodeId]="defaultCollectionChipsNodeId"
   ></wlo-collection-chips>
 </ng-container>
 <ng-container *ngIf="widgetType === 'wlo-topics-column-browser'">
   <wlo-topics-column-browser
-    *ngIf="topicCollectionID"
+    *ngIf="contextNodeId"
     [class]="widgetClasses ? widgetClasses : ''"
-    [collectionId]="topicCollectionID"
+    [collectionId]="contextNodeId"
     [customUrl]="retrieveCustomUrl"
     [defaultNodeId]="defaultTopicsColumnBrowserNodeId"
     [height]="'400'"
@@ -37,7 +37,7 @@
   <wlo-user-configurable
     class="user-configurable"
     [class]="widgetClasses ? widgetClasses : ''"
-    [contextNodeId]="topicCollectionID"
+    [contextNodeId]="contextNodeId"
     [defaultNodeId]="defaultUserConfigurableNodeId"
     [gridIndex]="gridIndex"
     [nodeId]="widgetNodeId"

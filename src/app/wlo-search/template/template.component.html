@@ -158,6 +158,7 @@
                     </p>
                     <app-swimlane
                       [backgroundColor]="swimlane.backgroundColor"
+                      [contextNodeId]="topicCollectionID()"
                       [editMode]="editMode"
                       [filterBarReady]="filterBarReady"
                       [grid]="swimlane.grid"
@@ -167,7 +168,6 @@
                       [selectedDimensionValues]="selectedDimensionValues"
                       [swimlaneIndex]="i"
                       [topic]="topic()"
-                      [topicCollectionID]="topicCollectionID()"
                       [topicWidgets]="topicWidgets"
                     ></app-swimlane>
                   </div>
@@ -187,6 +187,7 @@
                 </p>
                 <app-swimlane
                   [backgroundColor]="swimlane.backgroundColor"
+                  [contextNodeId]="topicCollectionID()"
                   [editMode]="editMode"
                   [filterBarReady]="filterBarReady"
                   [grid]="swimlane.grid"
@@ -195,7 +196,6 @@
                   [selectedDimensionValues]="selectedDimensionValues"
                   [swimlaneIndex]="i"
                   [topic]="topic()"
-                  [topicCollectionID]="topicCollectionID()"
                   [topicWidgets]="topicWidgets"
                 ></app-swimlane>
               </div>
