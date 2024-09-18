@@ -53,7 +53,6 @@ import {
     TicketService,
     ToastService,
 } from 'ngx-edu-sharing-wlo-pages';
-import { ZApiModule } from 'ngx-edu-sharing-z-api';
 
 const wloSearchConfig: WloSearchConfig = {
     routerPath: ROOT_PATH + WLO_SEARCH_PATH_COMPONENT,
@@ -136,7 +135,6 @@ const eduSharingApiModuleWithProviders = EduSharingApiModule.forRoot({
         BrowserModule,
         eduSharingApiModuleWithProviders,
         ApolloModule,
-        ZApiModule.forRoot({}),
     ],
     providers: [
         httpInterceptorProviders,
