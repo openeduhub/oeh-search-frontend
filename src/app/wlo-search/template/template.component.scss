@@ -58,23 +58,6 @@
             background: #fff;
             border-radius: var(--border-radius) var(--border-radius) 0 0;
 
-            .template-header-content {
-                display: flex;
-                flex-direction: column;
-                margin: 32px 0 52px 0;
-                padding: 0 64px;
-
-                h1 {
-                    font-family: 'Montserrat-Medium', 'Helvetica Neue', Helvetica, Roboto, Arial,
-                        sans-serif;
-                    font-size: 40px;
-                    font-weight: normal;
-                    line-height: 1.3;
-                    color: #313131;
-                    margin-bottom: 0.5em;
-                }
-            }
-
             .edit-button,
             .add-button {
                 position: absolute;

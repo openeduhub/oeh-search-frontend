@@ -10,59 +10,55 @@
   <header class="template-header">
     <div class="template-header-wrapper">
       <div class="template-header-container">
-        <div class="template-header-content">
-          <h1 i18n>Topic page for {{ topic() }}</h1>
-          <p *ngIf="generatedHeader(); else headerPlaceholder">{{ generatedHeader() }}</p>
-          <ng-template #headerPlaceholder>
-            Dieser Text beschreibt das Thema der Seite und führt in es ein. Er ist typischerweise
-            etwas länger und umfasst somit einige Sätze. Manche dieser Sätze haben vielen Kommata,
-            andere nicht. Es können längere und kürzere Sätze dort vorkommen.
-          </ng-template>
-          <!-- action buttons for editing and creating -->
-          <!-- duplicated code due to https://github.com/angular/components/issues/15367 -->
-          <ng-container *ngIf="userHasEditRights()">
+        <wlo-topic-header
+          [contextNodeId]="topicCollectionID()"
+          [defaultNodeId]="defaultTopicTextNodeId"
+          [topic]="topic()"
+        ></wlo-topic-header>
+        <!-- action buttons for editing and creating -->
+        <!-- duplicated code due to https://github.com/angular/components/issues/15367 -->
+        <ng-container *ngIf="userHasEditRights()">
+          <button
+            *ngIf="!editMode"
+            mat-stroked-button
+            class="edit-button"
+            color="primary"
+            [disabled]="requestInProgress"
+            (click)="editMode = !editMode"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button
+            *ngIf="editMode"
+            mat-flat-button
+            class="edit-button"
+            color="primary"
+            [disabled]="requestInProgress"
+            (click)="editMode = !editMode"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button
+            *ngIf="editMode"
+            mat-stroked-button
+            class="add-button"
+            color="primary"
+            [matMenuTriggerFor]="addComponentMenu"
+            [disabled]="requestInProgress"
+          >
+            <mat-icon>add</mat-icon>
+          </button>
+          <mat-menu #addComponentMenu="matMenu">
             <button
-              *ngIf="!editMode"
-              mat-stroked-button
-              class="edit-button"
-              color="primary"
+              mat-menu-item
+              *ngFor="let option of swimlaneTypeOptions"
               [disabled]="requestInProgress"
-              (click)="editMode = !editMode"
+              (click)="addSwimlane(option.value)"
             >
-              <mat-icon>edit</mat-icon>
+              {{ option.viewValue }}
             </button>
-            <button
-              *ngIf="editMode"
-              mat-flat-button
-              class="edit-button"
-              color="primary"
-              [disabled]="requestInProgress"
-              (click)="editMode = !editMode"
-            >
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button
-              *ngIf="editMode"
-              mat-stroked-button
-              class="add-button"
-              color="primary"
-              [matMenuTriggerFor]="addComponentMenu"
-              [disabled]="requestInProgress"
-            >
-              <mat-icon>add</mat-icon>
-            </button>
-            <mat-menu #addComponentMenu="matMenu">
-              <button
-                mat-menu-item
-                *ngFor="let option of swimlaneTypeOptions"
-                [disabled]="requestInProgress"
-                (click)="addSwimlane(option.value)"
-              >
-                {{ option.viewValue }}
-              </button>
-            </mat-menu>
-          </ng-container>
-        </div>
+          </mat-menu>
+        </ng-container>
       </div>
     </div>
   </header>

@@ -5,7 +5,6 @@ import { ActivatedRoute } from '@angular/router';
 import {
     ApiRequestConfiguration,
     AuthenticationService,
-    MdsService,
     MdsValue,
     MdsWidget,
     Node,
@@ -14,8 +13,7 @@ import {
 } from 'ngx-edu-sharing-api';
 import { ParentEntries } from 'ngx-edu-sharing-api/lib/api/models/parent-entries';
 import { SpinnerComponent } from 'ngx-edu-sharing-ui';
-import { FilterBarComponent } from 'ngx-edu-sharing-wlo-pages';
-import { AiTextPromptsService, TextPromptEntity } from 'ngx-edu-sharing-z-api';
+import { FilterBarComponent, TopicHeaderComponent } from 'ngx-edu-sharing-wlo-pages';
 import { firstValueFrom } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -59,6 +57,7 @@ import { Swimlane } from './swimlane/swimlane';
         TemplateComponent,
         SpinnerComponent,
         SwimlaneComponent,
+        TopicHeaderComponent,
     ],
     selector: 'app-template',
     templateUrl: './template.component.html',
@@ -66,11 +65,9 @@ import { Swimlane } from './swimlane/swimlane';
 })
 export class TemplateComponent implements OnInit {
     constructor(
-        private aiTextPromptsService: AiTextPromptsService,
         private apiRequestConfig: ApiRequestConfiguration,
         private authService: AuthenticationService,
         private dialog: MatDialog,
-        private mdsService: MdsService,
         private nodeApi: NodeService,
         private route: ActivatedRoute,
     ) {}
@@ -86,7 +83,6 @@ export class TemplateComponent implements OnInit {
 
     topic: WritableSignal<string> = signal('$THEMA$');
     topicCollectionID: WritableSignal<string> = signal(null);
-    generatedHeader: WritableSignal<string> = signal('');
 
     private collectionNode: Node;
     private collectionNodeHasPageConfig: boolean = false;
@@ -226,9 +222,7 @@ export class TemplateComponent implements OnInit {
                     }
                     // 5) set the swimlanes
                     this.swimlanes = pageVariant.structure.swimlanes ?? [];
-                    // 6) generate the header text
-                    await this.generateFromPrompt();
-                    // 7) everything loaded?
+                    // 6) everything loaded
                     this.initialLoadSuccessfully = true;
                 }
             });
@@ -739,23 +733,6 @@ export class TemplateComponent implements OnInit {
         });
     }
 
-    /**
-     * Calls the z-API to invoke ChatGPT.
-     */
-    private async generateFromPrompt(): Promise<void> {
-        const result: TextPromptEntity = await firstValueFrom(
-            this.aiTextPromptsService.publicPrompt({
-                widgetNodeId: defaultTopicTextNodeId,
-                contextNodeId: this.topicCollectionID(),
-                body: {},
-            }),
-        );
-        const response = result?.responses[0];
-        if (response) {
-            this.generatedHeader.set(response);
-        }
-    }
-
     // https://stackoverflow.com/a/16348977
     stringToColour(str: string) {
         let hash = 0;
@@ -771,5 +748,6 @@ export class TemplateComponent implements OnInit {
     }
 
     protected readonly defaultMds: string = defaultMds;
+    protected readonly defaultTopicTextNodeId: string = defaultTopicTextNodeId;
     protected readonly providedSelectDimensionKeys: string[] = providedSelectDimensionKeys;
 }
