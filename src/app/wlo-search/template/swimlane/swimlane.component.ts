@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MdsValue, MdsWidget, Node, NodeEntries } from 'ngx-edu-sharing-api';
 import { SharedModule } from '../../shared/shared.module';
 import { workspaceSpacesStorePrefix } from '../custom-definitions';
@@ -34,6 +34,11 @@ export class SwimlaneComponent {
     @Input() swimlaneIndex: number;
     @Input() topic: string;
     @Input() topicWidgets: NodeEntries;
+    @Output() nodeClicked: EventEmitter<Node> = new EventEmitter<Node>();
+
+    clickedNode(node: Node): void {
+        this.nodeClicked.emit(node);
+    }
 
     protected readonly workspaceSpacesStorePrefix = workspaceSpacesStorePrefix;
 }

@@ -18,6 +18,8 @@ import { firstValueFrom } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { v4 as uuidv4 } from 'uuid';
+import { ViewService } from '../core/view.service';
+import { SearchModule } from '../search/search.module';
 import { SharedModule } from '../shared/shared.module';
 import {
     defaultMds,
@@ -53,10 +55,11 @@ import { Swimlane } from './swimlane/swimlane';
     imports: [
         CdkDragHandle,
         FilterBarComponent,
+        SearchModule,
         SharedModule,
-        TemplateComponent,
         SpinnerComponent,
         SwimlaneComponent,
+        TemplateComponent,
         TopicHeaderComponent,
     ],
     selector: 'app-template',
@@ -70,6 +73,7 @@ export class TemplateComponent implements OnInit {
         private dialog: MatDialog,
         private nodeApi: NodeService,
         private route: ActivatedRoute,
+        private viewService: ViewService,
     ) {}
 
     @HostBinding('style.--topic-color') topicColor: string = initialTopicColor;
@@ -360,6 +364,30 @@ export class TemplateComponent implements OnInit {
     }
 
     // REACT TO OUTPUT EVENTS //
+
+    /**
+     * Called by app-swimlane nodeClicked output event.
+     * Handles the unselection of the current node and the selection of the clicked node.
+     */
+    handleNodeClick(node: Node): void {
+        // TODO: there might be better ways to work with the Observable, however, using
+        //       subscribe resulted in circulation
+        firstValueFrom(this.viewService.getSelectedItem()).then((selectedNode: Node) => {
+            // no node was selected yet
+            if (!selectedNode) {
+                this.viewService.selectItem(node);
+            }
+            // the same node was selected again
+            else if (selectedNode !== node) {
+                this.viewService.unselectItem();
+                this.viewService.selectItem(node);
+            }
+            // another node was selected
+            else {
+                this.viewService.unselectItem();
+            }
+        });
+    }
 
     /**
      * Called by wlo-filter-bar selectDimensionsChanged output event.

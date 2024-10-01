@@ -4,9 +4,10 @@
     --maximal-width: 1200px;
     --action-button-border-radius: 18px;
     --action-button-spacing: 9px;
+    --filterbar-height: 89px;
+    --filterbar-offset: 20px;
     display: flex;
     flex-direction: column;
-    max-width: var(--maximal-width);
     margin: auto;
 }
 
@@ -124,7 +125,6 @@
     margin-top: -20px;
     margin-bottom: 20px;
     z-index: 10;
-    background: #f4f4f4;
     border-radius: var(--border-radius);
 
     .portal-wrapper {
@@ -140,6 +140,7 @@
             flex-grow: 1;
             width: 100%;
             max-width: var(--maximal-width);
+            background: #f4f4f4;
             border-radius: var(--border-radius);
 
             .wlo-swimlane {
@@ -340,6 +341,28 @@
     .mat-grid-tile .mat-grid-tile-content {
         position: relative;
         display: block;
+    }
+}
+
+// adjust style of app-preview-panel for topic page
+:host app-preview-panel ::ng-deep .app-preview-panel-sidebar {
+    max-height: calc(100vh - var(--filterbar-height) - 2 * var(--filterbar-offset));
+    display: flex;
+    width: 450px;
+    top: calc(var(--filterbar-height) + var(--filterbar-offset));
+    position: sticky;
+
+    @media screen and (max-width: 800px) {
+        position: relative;
+        top: unset;
+        height: 100%;
+        overscroll-behavior: contain;
+        overflow-y: auto;
+    }
+
+    @media screen and (min-width: 801px) {
+        margin-left: var(--filterbar-offset);
+        margin-right: var(--filterbar-offset);
     }
 }
 

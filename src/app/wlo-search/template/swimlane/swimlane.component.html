@@ -33,6 +33,7 @@
         [widgetClasses]="gridItem.classNames"
         [widgetNodeId]="gridItem.nodeId?.includes(workspaceSpacesStorePrefix) ? gridItem.nodeId.split('/')?.[gridItem.nodeId.split('/').length - 1] : gridItem.nodeId"
         [widgetType]="gridItem.item"
+        (nodeClicked)="clickedNode($event)"
       >
       </app-grid-widget>
     </div>

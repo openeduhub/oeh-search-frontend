@@ -172,6 +172,7 @@
                       [swimlaneIndex]="i"
                       [topic]="topic()"
                       [topicWidgets]="topicWidgets"
+                      (nodeClicked)="handleNodeClick($event)"
                     ></app-swimlane>
                   </div>
                 </cdk-accordion-item>
@@ -200,6 +201,7 @@
                   [swimlaneIndex]="i"
                   [topic]="topic()"
                   [topicWidgets]="topicWidgets"
+                  (nodeClicked)="handleNodeClick($event)"
                 ></app-swimlane>
               </div>
 
@@ -213,6 +215,7 @@
           <p class="no-swimlanes">Bisher wurden noch keine Swimlanes mit Inhalten erstellt.</p>
         </ng-template>
       </div>
+      <app-preview-panel></app-preview-panel>
     </div>
   </div>
 </ng-container>

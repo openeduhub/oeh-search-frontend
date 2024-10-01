@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {
     defaultAiTextWidgetNodeId,
     defaultCollectionChipsNodeId,
@@ -42,6 +42,7 @@ export class GridWidgetComponent {
     @Input() widgetClasses: string;
     @Input() widgetNodeId: string;
     @Input() widgetType: string;
+    @Output() nodeClicked: EventEmitter<Node> = new EventEmitter<Node>();
 
     defaultAiTextWidgetNodeId: string = defaultAiTextWidgetNodeId;
     defaultCollectionChipsNodeId: string = defaultCollectionChipsNodeId;
@@ -51,7 +52,7 @@ export class GridWidgetComponent {
 
     constructor() {}
 
-    retrieveCustomUrl(node: Node) {
+    retrieveCustomUrl(node: Node): string {
         const collectionId = node.properties?.['sys:node-uuid']?.[0];
         if (collectionId) {
             // take into account potential sub-paths, e.g., due to language switch
@@ -65,13 +66,7 @@ export class GridWidgetComponent {
     }
 
     // TODO: argument type Node is not assignable to parameter type Node
-    clickedItem(node: any) {
-        let clickableUrl: string = node.properties['ccm:wwwurl']?.[0];
-        if (!clickableUrl) {
-            clickableUrl = node.content.url;
-        }
-        if (clickableUrl) {
-            window.open(clickableUrl, '_blank');
-        }
+    clickedItem(node: any): void {
+        this.nodeClicked.emit(node as Node);
     }
 }
