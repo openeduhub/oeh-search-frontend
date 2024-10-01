@@ -11,13 +11,12 @@
         EDU_SHARING_API_URL: 'https://repository.staging.openeduhub.net/edu-sharing/rest',
       };
     </script>
-    <script src="web-components/de/runtime.js" type="module"></script>
-    <script src="web-components/de/polyfills.js" type="module"></script>
+    <script src="web-components/browser/de/polyfills.js" type="module"></script>
     <!-- Alternatively to loading `scripts.js`, provide your own versions of jQuery and
     slick-carousel.  -->
-    <script src="web-components/de/scripts.js" defer></script>
-    <script src="web-components/de/main.js" type="module"></script>
-    <link rel="stylesheet" href="web-components/de/styles.css" />
+    <script src="web-components/browser/de/scripts.js" defer></script>
+    <script src="web-components/browser/de/main.js" type="module"></script>
+    <link rel="stylesheet" href="web-components/browser/de/styles.css" />
     <style>
       body {
         padding: 100px;
@@ -34,6 +33,7 @@
       .details-container {
         position: relative;
         min-width: 0;
+        width: 500px;
       }
     </style>
   </head>
@@ -41,25 +41,25 @@
     <h1>Web Components Example</h1>
     <div class="main-container">
       <div class="controls">
-        <button onClick="showNode('24a188da-1dc3-48b5-a7c7-f55685714ca0')">
-          Portal für zeitgemäße Prüfungskultur
+        <button onClick="showNode('d59e1fda-7056-49f6-9fcd-91acce5afaad')">
+          Was geht? - Prima Klima
         </button>
-        <button onClick="showNode('19cba8d8-87b9-4b0e-b732-c790728e0351')">
-          Natural Selection
+        <button onClick="showNode('458f3148-83e9-46e7-ad57-8f621dc03107')">
+          OER - ein Katalysator für Medienkompetenz
         </button>
-        <button onClick="showNode('084a5f1b-db15-4567-a474-80554c99e7f1')">
-          MathePrisma - Lineare Datenstrukturen
+        <button onClick="showNode('46368512-d9fa-4610-971c-4c9f551eb52b')">
+          War in Ukraine | critical energy infrastructure
         </button>
       </div>
       <div class="details-container">
-        <oeh-details-embedded node-id="3d34cf39-371d-4e35-8a77-8341fab07f06"></oeh-details-embedded>
+        <app-details-embedded node-id="5423c18d-9ba7-49d2-8dd0-7599f2a2750e"></app-details-embedded>
       </div>
     </div>
     <script>
       function showNode(id) {
-        document.getElementsByTagName('oeh-details-embedded')[0].setAttribute('node-id', id);
+        document.getElementsByTagName('app-details-embedded')[0].setAttribute('node-id', id);
       }
-      document.getElementsByTagName('oeh-details-embedded')[0].addEventListener('closed', () => {
+      document.getElementsByTagName('app-details-embedded')[0].addEventListener('closed', () => {
         console.log('received closed event');
       });
     </script>

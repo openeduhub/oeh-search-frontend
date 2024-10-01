@@ -36,7 +36,7 @@ const wloSearchConfig: WloSearchConfig = {
 export class AppModule implements DoBootstrap {
     constructor(injector: Injector) {
         const detailsEmbeddedElement = createCustomElement(DetailsEmbeddedComponent, { injector });
-        customElements.define('oeh-details-embedded', detailsEmbeddedElement);
+        customElements.define('app-details-embedded', detailsEmbeddedElement);
     }
 
     // eslint-disable-next-line @angular-eslint/no-empty-lifecycle-method
