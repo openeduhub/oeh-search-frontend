@@ -369,23 +369,35 @@ export class TemplateComponent implements OnInit {
      * Called by app-swimlane nodeClicked output event.
      * Handles the unselection of the current node and the selection of the clicked node.
      */
-    handleNodeClick(node: Node): void {
+    handleNodeChange(node: Node): void {
         // TODO: there might be better ways to work with the Observable, however, using
         //       subscribe resulted in circulation
-        firstValueFrom(this.viewService.getSelectedItem()).then((selectedNode: Node) => {
+        firstValueFrom(this.viewService.getSelectedItem()).then((currentNode: Node) => {
+            let selectedNode: Node;
             // no node was selected yet
-            if (!selectedNode) {
+            if (!currentNode) {
                 this.viewService.selectItem(node);
-            }
-            // the same node was selected again
-            else if (selectedNode !== node) {
-                this.viewService.unselectItem();
-                this.viewService.selectItem(node);
+                selectedNode = node;
             }
             // another node was selected
+            else if (currentNode !== node) {
+                this.viewService.unselectItem();
+                this.viewService.selectItem(node);
+                selectedNode = node;
+            }
+            // the same node was selected again
             else {
                 this.viewService.unselectItem();
+                selectedNode = null;
             }
+            // send CustomEvent back as acknowledgement
+            const customEvent = new CustomEvent('selectedNodeUpdated', {
+                detail: {
+                    selectedNode,
+                },
+            });
+            // dispatch the event
+            document.getElementsByTagName('body')[0].dispatchEvent(customEvent);
         });
     }
 
