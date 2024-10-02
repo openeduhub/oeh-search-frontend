@@ -49,13 +49,9 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
-build_and_move.sh
 
 # cypress
 e2e-cypress/node_modules
 e2e-cypress/cypress/screenshots/*
 e2e-cypress/cypress/videos/*
 /e2e-cypress/cypress/integration/examples/
-
-# local development: do not commit .npmrc containing legacy-peer-deps=true
-.npmrc
