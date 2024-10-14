@@ -19,9 +19,17 @@
   </div>
 
   <h4 class="app-collection-card-title">
-    <a #link [href]="collection | collectionProperty: 'url'" target="_blank">{{
-      collection | collectionProperty: 'title'
-    }}</a>
+    <a
+      #link
+      [href]="
+        retrieveCustomUrl && retrieveCustomUrl(collection)
+          ? retrieveCustomUrl(collection)
+          : (collection | collectionProperty: 'url')
+      "
+      target="_blank"
+    >
+      {{ collection | collectionProperty: 'title' }}
+    </a>
   </h4>
 
   <div class="app-collection-card-metadata-row">

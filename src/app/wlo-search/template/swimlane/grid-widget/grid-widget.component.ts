@@ -5,6 +5,7 @@ import {
     defaultTopicsColumnBrowserNodeId,
     defaultUserConfigurableNodeId,
     parentWidgetConfigNodeId,
+    retrieveCustomUrl,
 } from '../../custom-definitions';
 import { SharedModule } from '../../../shared/shared.module';
 import { MdsValue, MdsWidget, Node } from 'ngx-edu-sharing-api';
@@ -52,18 +53,7 @@ export class GridWidgetComponent {
 
     constructor() {}
 
-    retrieveCustomUrl(node: Node): string {
-        const collectionId = node.properties?.['sys:node-uuid']?.[0];
-        if (collectionId) {
-            // take into account potential sub-paths, e.g., due to language switch
-            const pathNameArray: string[] = window.location.pathname.split('/');
-            // example pathNameArray = [ "", "de", "template" ]
-            const suffix: string =
-                pathNameArray.length > 2 && pathNameArray[1] !== '' ? '/' + pathNameArray[1] : '';
-            return window.location.origin + suffix + '/template?collectionId=' + collectionId;
-        }
-        return '';
-    }
+    retrieveCustomUrl: (node: Node) => string = retrieveCustomUrl;
 
     // TODO: argument type Node is not assignable to parameter type Node
     clickedItem(node: any): void {

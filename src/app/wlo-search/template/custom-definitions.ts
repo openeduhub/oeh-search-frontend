@@ -1,4 +1,5 @@
 import { SelectOption } from './swimlane/swimlane-settings-dialog/select-option';
+import type { Node } from 'ngx-edu-sharing-api';
 
 export const defaultMds: string = 'mds_oeh';
 
@@ -61,6 +62,19 @@ export const providedSelectDimensionKeys: string[] = [
     'virtual:ai_text_widget_intendedenduserrole',
     'virtual:ai_text_widget_target_language',
 ];
+
+export const retrieveCustomUrl = (node: Node): string => {
+    const collectionId = node.properties?.['sys:node-uuid']?.[0];
+    if (collectionId) {
+        // take into account potential sub-paths, e.g., due to language switch
+        const pathNameArray: string[] = window.location.pathname.split('/');
+        // example pathNameArray = [ "", "de", "template" ]
+        const suffix: string =
+            pathNameArray.length > 2 && pathNameArray[1] !== '' ? '/' + pathNameArray[1] : '';
+        return window.location.origin + suffix + '/template?collectionId=' + collectionId;
+    }
+    return '';
+};
 
 export const swimlaneTypeOptions: SelectOption[] = [
     {
