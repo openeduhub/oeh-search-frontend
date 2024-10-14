@@ -30,12 +30,6 @@
       ],
       "@angular/*": [
         "./node_modules/@angular/*"
-      ],
-      "ngx-edu-sharing-wlo-pages": [
-        "projects/wlo-pages-lib/src/lib",
-      ],
-      "ngx-edu-sharing-wlo-pages/*": [
-        "projects/wlo-pages-lib/src/lib/*",
       ]
     },
     "useDefineForClassFields": false

@@ -88,6 +88,9 @@
             },
             "de": {
               "localize": ["de"]
+            },
+            "lib-dev": {
+              "tsConfig": "tsconfig.lib-dev.json"
             }
           },
           "defaultConfiguration": "production"
@@ -106,6 +109,12 @@
             },
             "de": {
               "buildTarget": "oeh-search-frontend:build:development,de"
+            },
+            "lib-dev": {
+              "buildTarget": "oeh-search-frontend:build:development,lib-dev"
+            },
+            "lib-dev-de": {
+              "buildTarget": "oeh-search-frontend:build:development,de,lib-dev"
             }
           },
           "defaultConfiguration": "development"
