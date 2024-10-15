@@ -52,7 +52,7 @@ $ nvm use # to switch to the specified node version, if it is already installed
 The dev server will serve the application on http://localhost:4200/ and reload automatically if you
 change any of the source files.
 
-Either
+Either:
 
 -   start the dev server:
 
@@ -64,6 +64,25 @@ Either
     ```bash
     $ npm run start-de
     ```
+
+In order to develop `wlo-pages-lib`, checkout both projects (`oeh-search-frontend` and `wlo-pages-lib`) in one folder. `wlo-pages-lib` should now be automatically linked within the `projects` folder.
+
+Now, you can either:
+
+-   start the dev server (with hot-reloading of `wlo-pages-lib`):
+
+    ```bash
+    $ npm run start:lib-dev
+    ```
+
+-   or start the dev server with German translations:
+    ```bash
+    $ npm run start-de:lib-dev
+    ```
+
+Known errors:
+
+-   `Error: Cannot resolve type entity i1.ActionbarComponent to symbol` -> try to delete the `node_modules` folder located in `projects/wlo-pages/lib`, if existing.
 
 ### Docker Image
 
