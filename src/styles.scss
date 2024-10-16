@@ -129,12 +129,15 @@ body {
     height: 100%;
     --primary: rgb(3, 40, 80);
 }
+
 body {
     margin: 0;
     font-family: mat.m2-font-family($app-typography);
     font-size: mat.m2-font-size($app-typography, body-1);
     line-height: mat.m2-line-height($app-typography, body-1);
+    background: #f3f6f9;
 }
+
 :focus-visible {
     outline-style: solid;
     outline-offset: 2px;
