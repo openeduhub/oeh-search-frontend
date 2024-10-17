@@ -118,6 +118,14 @@ export class TemplateComponent implements OnInit {
         { value: 'spacer', viewValue: 'Trennlinie' },
     ]);
 
+    selectedMenuItem: string = '';
+    menuItems = {
+        feedback: 'Feedback',
+        profiling: 'Profilierung',
+        statistics: 'Statistiken',
+        topicTree: 'Themenbaum',
+    };
+
     get filterBarReady(): boolean {
         const sameNumberOfValues =
             this.selectDimensions.size === this.selectedDimensionValues.length;

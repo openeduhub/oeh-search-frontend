@@ -68,24 +68,53 @@
   </header>
 
   <!-- SIDE MENU WITH MULTIPLE COLLAPSIBLE ITEMS -->
-  <wlo-side-menu-wrapper>
-    <wlo-collapsible-menu-item [title]="'Profilierung'" [icon]="'person'">
-      Der Inhalt für die Profilierung kommt hier hinein.
-    </wlo-collapsible-menu-item>
-    <wlo-collapsible-menu-item [title]="'Themenbaum'">
-      <wlo-topics-column-browser
-        [contextNodeId]="topicCollectionID()"
-        [customUrl]="retrieveCustomUrl"
-        [defaultNodeId]="defaultTopicsColumnBrowserNodeId"
-        [height]="'400'"
-      ></wlo-topics-column-browser>
-    </wlo-collapsible-menu-item>
-    <wlo-collapsible-menu-item [title]="'Statistiken'">
-      Der Inhalt für die Statistiken kommt hier hinein.
-    </wlo-collapsible-menu-item>
-    <wlo-collapsible-menu-item [title]="'Feedback'">
-      Der Inhalt für das Feedback kommt hier hinein.
-    </wlo-collapsible-menu-item>
+  <wlo-side-menu-wrapper
+    [selectedMenuItem]="selectedMenuItem"
+    (closeContentView)="selectedMenuItem = ''"
+  >
+    <ng-container slot="menu">
+      <wlo-collapsible-menu-item
+        [selectedMenuItem]="selectedMenuItem"
+        [title]="menuItems.profiling"
+        [icon]="'person'"
+        (nestedComponentChange)="selectedMenuItem = $event"
+      ></wlo-collapsible-menu-item>
+      <wlo-collapsible-menu-item
+        [selectedMenuItem]="selectedMenuItem"
+        [title]="menuItems.topicTree"
+        (nestedComponentChange)="selectedMenuItem = $event"
+      ></wlo-collapsible-menu-item>
+      <wlo-collapsible-menu-item
+        [selectedMenuItem]="selectedMenuItem"
+        [title]="menuItems.statistics"
+        (nestedComponentChange)="selectedMenuItem = $event"
+      ></wlo-collapsible-menu-item>
+      <wlo-collapsible-menu-item
+        [selectedMenuItem]="selectedMenuItem"
+        [title]="menuItems.feedback"
+        (nestedComponentChange)="selectedMenuItem = $event"
+      ></wlo-collapsible-menu-item>
+    </ng-container>
+    <ng-container slot="content">
+      <ng-container *ngIf="selectedMenuItem === menuItems.profiling">
+        Inhalt von {{ menuItems.profiling }} folgt.
+      </ng-container>
+      <ng-container *ngIf="selectedMenuItem === menuItems.topicTree">
+        <h2 style="font-size: 18px">Themenbaum von {{ topic() }}</h2>
+        <wlo-topics-column-browser
+          [contextNodeId]="topicCollectionID()"
+          [customUrl]="retrieveCustomUrl"
+          [defaultNodeId]="defaultTopicsColumnBrowserNodeId"
+          [height]="'400'"
+        ></wlo-topics-column-browser>
+      </ng-container>
+      <ng-container *ngIf="selectedMenuItem === menuItems.statistics">
+        Inhalt von {{ menuItems.statistics }} folgt.
+      </ng-container>
+      <ng-container *ngIf="selectedMenuItem === menuItems.feedback">
+        Inhalt von {{ menuItems.feedback }} folgt.
+      </ng-container>
+    </ng-container>
   </wlo-side-menu-wrapper>
 
   <!-- FILTER BAR -->
