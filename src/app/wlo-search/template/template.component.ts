@@ -13,7 +13,13 @@ import {
 } from 'ngx-edu-sharing-api';
 import { ParentEntries } from 'ngx-edu-sharing-api/lib/api/models/parent-entries';
 import { SpinnerComponent } from 'ngx-edu-sharing-ui';
-import { FilterBarComponent, TopicHeaderComponent } from 'ngx-edu-sharing-wlo-pages';
+import {
+    CollapsibleMenuItemComponent,
+    FilterBarComponent,
+    SideMenuWrapperComponent,
+    TopicHeaderComponent,
+    TopicsColumnBrowserComponent,
+} from 'ngx-edu-sharing-wlo-pages';
 import { firstValueFrom } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -24,6 +30,7 @@ import { SharedModule } from '../shared/shared.module';
 import {
     defaultMds,
     defaultTopicTextNodeId,
+    defaultTopicsColumnBrowserNodeId,
     initialLocaleString,
     initialTopicColor,
     ioType,
@@ -32,8 +39,8 @@ import {
     pageConfigRefType,
     pageConfigType,
     providedSelectDimensionKeys,
+    retrieveCustomUrl,
     swimlaneTypeOptions,
-    widgetConfigAspect,
     pageVariantConfigType,
     parentPageConfigNodeId,
     pageConfigPrefix,
@@ -41,6 +48,7 @@ import {
     pageVariantConfigPrefix,
     pageVariantConfigAspect,
     pageVariantIsTemplateType,
+    widgetConfigAspect,
     workspaceSpacesStorePrefix,
 } from './custom-definitions';
 import { PageConfig } from './page-config';
@@ -54,13 +62,16 @@ import { Swimlane } from './swimlane/swimlane';
     standalone: true,
     imports: [
         CdkDragHandle,
+        CollapsibleMenuItemComponent,
         FilterBarComponent,
         SearchModule,
         SharedModule,
+        SideMenuWrapperComponent,
         SpinnerComponent,
         SwimlaneComponent,
         TemplateComponent,
         TopicHeaderComponent,
+        TopicsColumnBrowserComponent,
     ],
     selector: 'app-template',
     templateUrl: './template.component.html',
@@ -789,5 +800,7 @@ export class TemplateComponent implements OnInit {
 
     protected readonly defaultMds: string = defaultMds;
     protected readonly defaultTopicTextNodeId: string = defaultTopicTextNodeId;
+    protected readonly defaultTopicsColumnBrowserNodeId: string = defaultTopicsColumnBrowserNodeId;
     protected readonly providedSelectDimensionKeys: string[] = providedSelectDimensionKeys;
+    protected readonly retrieveCustomUrl = retrieveCustomUrl;
 }

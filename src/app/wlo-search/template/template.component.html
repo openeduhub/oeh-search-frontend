@@ -7,6 +7,7 @@
   <es-spinner *ngIf="!initialLoadSuccessfully"></es-spinner>
 </div>
 <ng-container *ngIf="!pageConfigCheckFailed; else pageConfigCheckFailedMessage">
+  <!-- TOPIC HERO HEADER -->
   <header class="template-header">
     <div class="template-header-wrapper">
       <div class="template-header-container">
@@ -65,6 +66,29 @@
       </div>
     </div>
   </header>
+
+  <!-- SIDE MENU WITH MULTIPLE COLLAPSIBLE ITEMS -->
+  <wlo-side-menu-wrapper>
+    <wlo-collapsible-menu-item [title]="'Profilierung'" [icon]="'person'">
+      Der Inhalt für die Profilierung kommt hier hinein.
+    </wlo-collapsible-menu-item>
+    <wlo-collapsible-menu-item [title]="'Feedback'">
+      Der Inhalt für das Feedback kommt hier hinein.
+    </wlo-collapsible-menu-item>
+    <wlo-collapsible-menu-item [title]="'Themenbaum'">
+      <wlo-topics-column-browser
+        [contextNodeId]="topicCollectionID()"
+        [customUrl]="retrieveCustomUrl"
+        [defaultNodeId]="defaultTopicsColumnBrowserNodeId"
+        [height]="'400'"
+      ></wlo-topics-column-browser>
+    </wlo-collapsible-menu-item>
+    <wlo-collapsible-menu-item [title]="'Statistiken'">
+      Der Inhalt für die Statistiken kommt hier hinein.
+    </wlo-collapsible-menu-item>
+  </wlo-side-menu-wrapper>
+
+  <!-- FILTER BAR -->
   <div class="variable-select-bar fachportal-filterbar">
     <div class="fachportal-filterbar-content">
       <wlo-filter-bar
