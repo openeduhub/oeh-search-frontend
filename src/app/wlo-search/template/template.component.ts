@@ -5,35 +5,54 @@ import { ActivatedRoute } from '@angular/router';
 import {
     ApiRequestConfiguration,
     AuthenticationService,
+    CollectionReference,
+    CollectionService,
+    FacetsDict,
+    HOME_REPOSITORY,
     MdsValue,
     MdsWidget,
     Node,
     NodeEntries,
     NodeService,
+    ReferenceEntries,
+    SearchService,
 } from 'ngx-edu-sharing-api';
+import { Facet } from 'ngx-edu-sharing-api/lib/api/models/facet';
 import { ParentEntries } from 'ngx-edu-sharing-api/lib/api/models/parent-entries';
+import { SearchResultNode } from 'ngx-edu-sharing-api/lib/api/models/search-result-node';
+import { Value } from 'ngx-edu-sharing-api/lib/api/models/value';
 import { SpinnerComponent } from 'ngx-edu-sharing-ui';
 import {
     CollapsibleMenuItemComponent,
     FilterBarComponent,
     SideMenuWrapperComponent,
+    StatisticChart,
+    StatisticsSummaryComponent,
     TopicHeaderComponent,
     TopicsColumnBrowserComponent,
 } from 'ngx-edu-sharing-wlo-pages';
-import { firstValueFrom } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { firstValueFrom, Observable } from 'rxjs';
+import { filter, shareReplay } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { v4 as uuidv4 } from 'uuid';
 import { ViewService } from '../core/view.service';
 import { SearchModule } from '../search/search.module';
 import { SharedModule } from '../shared/shared.module';
 import {
+    defaultLrt,
     defaultMds,
     defaultTopicTextNodeId,
     defaultTopicsColumnBrowserNodeId,
     initialLocaleString,
     initialTopicColor,
     ioType,
+    lrtBaseUrl,
+    lrtIdsEvents,
+    lrtIdsLessonPlanning,
+    lrtIdsMedia,
+    lrtIdsPracticeMaterials,
+    lrtIdsSources,
+    lrtIdsTools,
     mapType,
     pageConfigPropagateType,
     pageConfigRefType,
@@ -68,6 +87,7 @@ import { Swimlane } from './swimlane/swimlane';
         SharedModule,
         SideMenuWrapperComponent,
         SpinnerComponent,
+        StatisticsSummaryComponent,
         SwimlaneComponent,
         TemplateComponent,
         TopicHeaderComponent,
@@ -78,14 +98,23 @@ import { Swimlane } from './swimlane/swimlane';
     styleUrls: ['./template.component.scss'],
 })
 export class TemplateComponent implements OnInit {
+    private readonly facets$: Observable<FacetsDict> = this.searchService
+        .observeFacets([defaultLrt], { includeActiveFilters: true })
+        .pipe(shareReplay(1));
+
     constructor(
         private apiRequestConfig: ApiRequestConfiguration,
         private authService: AuthenticationService,
+        private collectionService: CollectionService,
         private dialog: MatDialog,
         private nodeApi: NodeService,
         private route: ActivatedRoute,
+        private searchService: SearchService,
         private viewService: ViewService,
-    ) {}
+    ) {
+        // Subscribe early, so required data will be fetched with search requests.
+        this.facets$.subscribe();
+    }
 
     @HostBinding('style.--topic-color') topicColor: string = initialTopicColor;
 
@@ -126,6 +155,25 @@ export class TemplateComponent implements OnInit {
         topicTree: 'Themenbaum',
     };
 
+    // statistics related variables
+    searchResultCount: number = 0;
+    searchUrl: string = '';
+    lrtMapping: Map<string, string[]> = new Map<string, string[]>();
+    // TODO: find better option for line breaks than <br>
+    statistics: StatisticChart[] = [
+        new StatisticChart('Medien', 'collections', lrtIdsMedia),
+        new StatisticChart('Unterrichts<br>planung', 'import_contacts', lrtIdsLessonPlanning),
+        new StatisticChart(
+            'Praxis<br>materialien',
+            'sentiment_satisfied_alt',
+            lrtIdsPracticeMaterials,
+        ),
+        new StatisticChart('Quellen', 'language', lrtIdsSources),
+        new StatisticChart('Tools', 'home_repair_service', lrtIdsTools),
+        new StatisticChart('Bildungs<br>angebote', 'school', lrtIdsEvents),
+    ];
+    statisticsLoaded: boolean = false;
+
     get filterBarReady(): boolean {
         const sameNumberOfValues =
             this.selectDimensions.size === this.selectedDimensionValues.length;
@@ -136,7 +184,13 @@ export class TemplateComponent implements OnInit {
         return this.selectedDimensionValues.map((value: MdsValue) => value.id);
     }
 
-    ngOnInit(): void {
+    async ngOnInit(): Promise<void> {
+        // retrieve the learning resource types for the statistics
+        for (const statistic of this.statistics) {
+            await this.retrieveAndSetLrtVocab(statistic);
+        }
+        // retrieve the search URL
+        this.searchUrl = this.retrieveSearchUrl();
         // set the default language for API requests
         this.apiRequestConfig.setLocale(initialLocaleString);
         // set the topic based on the query param "collectionID"
@@ -145,6 +199,32 @@ export class TemplateComponent implements OnInit {
             .subscribe(async (params) => {
                 // due to reconnect with queryParams, this might be called twice, thus, initializedWithParams is important
                 if (params.collectionId && !this.initializedWithParams) {
+                    // request the references of the collection (retrieved from wirlernenonline-theme/page-templates/template_themenseite.php L.135)
+                    const referenceEntries: ReferenceEntries = await firstValueFrom(
+                        this.collectionService.getReferences({
+                            repository: HOME_REPOSITORY,
+                            collection: params.collectionId,
+                            sortProperties: ['ccm:collection_ordered_position'],
+                            sortAscending: [true],
+                        }),
+                    );
+                    // filter out deleted references
+                    const nonDeletedReferences: CollectionReference[] =
+                        referenceEntries.references.filter(
+                            (ref: CollectionReference) => !!ref.originalId,
+                        );
+                    // post process those
+                    this.statistics.forEach((statistic: StatisticChart) => {
+                        const filteredReferences: CollectionReference[] = this.filterContents(
+                            nonDeletedReferences,
+                            statistic.vocab,
+                        );
+                        statistic.data.editorialCount = filteredReferences.length;
+                        statistic.data.oerCount =
+                            filteredReferences.filter((ref: CollectionReference) => this.isOer(ref))
+                                ?.length ?? 0;
+                    });
+                    // set the topicCollectionID
                     this.topicCollectionID.set(params.collectionId);
                     this.initializedWithParams = true;
                     // 0) login for local development
@@ -167,6 +247,29 @@ export class TemplateComponent implements OnInit {
                     // TODO: use a color from the palette defined in the collection
                     // set the background to some random (but deterministic) color, just for visuals
                     this.topicColor = this.stringToColour(this.topic());
+                    // perform search to retrieve the number of search results
+                    const searchResult: SearchResultNode = await this.performSearch(this.topic());
+                    this.searchResultCount = searchResult.pagination.total;
+
+                    // use facets to retrieve the number of items for different learning resource types
+                    const facets: Value[] =
+                        searchResult.facets?.find((facet: Facet) => facet.property === defaultLrt)
+                            ?.values ?? [];
+                    this.statistics.forEach((statistic: StatisticChart) => {
+                        let count: number = 0;
+                        facets.forEach((facet: Value) => {
+                            if (statistic.vocab.includes(facet.value)) {
+                                count += facet.count;
+                            }
+                        });
+                        statistic.data.totalCount = count;
+                        // TODO: This is caused by the use of different methods to calculate these counts.
+                        //       This workaround should not be necessary, if a reliable solution does exist.
+                        if (statistic.data.totalCount < statistic.data.editorialCount) {
+                            statistic.data.totalCount = statistic.data.editorialCount;
+                        }
+                    });
+                    this.statisticsLoaded = true;
 
                     // 2) retrieve the page config node either by checking the node itself or by iterating the parents of the collectionNode
                     this.pageConfigNode = await this.retrievePageConfigNode(this.collectionNode);
@@ -249,6 +352,97 @@ export class TemplateComponent implements OnInit {
                     this.initialLoadSuccessfully = true;
                 }
             });
+    }
+
+    /**
+     * Helper function to request a learning resource type with a given ID.
+     *
+     * @param lrtId
+     */
+    private async getNewLrtList(lrtId: string): Promise<string[]> {
+        let newLrtList: string[] = [];
+        if (!this.lrtMapping.get(lrtId)) {
+            const url: string = lrtBaseUrl + lrtId + '.json';
+            try {
+                const response: Response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`Response status: ${response.status}`);
+                }
+                const vocabJson = await response.json();
+                newLrtList.push(vocabJson.id);
+
+                if (vocabJson.narrower?.length > 0) {
+                    vocabJson.narrower.forEach((narrow) => {
+                        newLrtList.push(narrow.id);
+                    });
+                }
+                this.lrtMapping.set(lrtId, newLrtList);
+            } catch (error) {
+                console.error(error.message);
+            }
+        }
+
+        return this.lrtMapping.get(lrtId) ?? [];
+    }
+
+    /**
+     * Helper function to retrieve the learning resource types including narrow elements and store them into the given statistic object.
+     *
+     * @param statistic
+     */
+    private async retrieveAndSetLrtVocab(statistic: StatisticChart): Promise<void> {
+        let vocab: string[] = [];
+
+        for (const lrtId of statistic.relatedLrtIds) {
+            const lrtVocab: string[] = await this.getNewLrtList(lrtId);
+            vocab = vocab.concat(lrtVocab);
+        }
+
+        statistic.vocab = vocab;
+    }
+
+    /**
+     * Helper function to filter a given content array with given vocab IDs.
+     *
+     * @param contentArray
+     * @param vocabIds
+     */
+    private filterContents(
+        contentArray: CollectionReference[],
+        vocabIds: string[],
+    ): CollectionReference[] {
+        const filteredContent: CollectionReference[] = [];
+        contentArray.forEach((content: CollectionReference) => {
+            if (
+                content.properties?.[defaultLrt]?.some((lrtId: string) => vocabIds.includes(lrtId))
+            ) {
+                filteredContent.push(content);
+            }
+        });
+        return filteredContent;
+    }
+
+    /**
+     * Helper function to decide, whether a given node contains OER content or not.
+     *
+     * @param node
+     */
+    private isOer(node: CollectionReference): boolean {
+        const oerLicenses: string[] = ['CC_0', 'CC_BY', 'CC_BY_SA', 'PDM'];
+        const nodeLicense: string = node.properties?.['ccm:commonlicense_key']?.[0] ?? '';
+        return oerLicenses.includes(nodeLicense);
+    }
+
+    /**
+     * Helper function to retrieve the search URL.
+     */
+    private retrieveSearchUrl(): string {
+        // take into account potential sub-paths, e.g., due to language switch
+        const pathNameArray: string[] = window.location.pathname.split('/');
+        // example pathNameArray = [ "", "de", "template" ]
+        const suffix: string =
+            pathNameArray.length > 2 && pathNameArray[1] !== '' ? '/' + pathNameArray[1] : '';
+        return window.location.origin + suffix + '/search';
     }
 
     private checkUserAccess(node: Node): void {
@@ -344,6 +538,37 @@ export class TemplateComponent implements OnInit {
         );
 
         // TODO: Add created config nodes to the swimlane
+    }
+
+    /**
+     * Helper function to perform a search for a given search term and max items.
+     *
+     * @param searchTerm
+     * @param maxItems
+     */
+    private async performSearch(
+        searchTerm: string,
+        maxItems: number = 0,
+    ): Promise<SearchResultNode> {
+        const criteria = [
+            {
+                property: 'ngsearchword',
+                values: [searchTerm],
+            },
+        ];
+        return this.searchService
+            .search({
+                query: 'ngsearch',
+                repository: HOME_REPOSITORY,
+                maxItems,
+                contentType: 'ALL',
+                metadataset: this.defaultMds,
+                body: {
+                    criteria,
+                    resolveCollections: true,
+                },
+            })
+            .toPromise();
     }
 
     private async retrievePageConfigNode(node: Node): Promise<Node> {

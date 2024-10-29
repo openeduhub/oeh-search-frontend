@@ -1,6 +1,8 @@
 import { SelectOption } from './swimlane/swimlane-settings-dialog/select-option';
 import type { Node } from 'ngx-edu-sharing-api';
 
+export const defaultLrt: string = 'ccm:oeh_lrt';
+
 export const defaultMds: string = 'mds_oeh';
 
 export const defaultTopicTextNodeId: string = '2340e5cf-4e9d-4b42-b6df-e64087be7961';
@@ -33,6 +35,39 @@ export const initialLocaleString: string = 'de_DE';
 export const initialTopicColor: string = '#182e5c';
 
 export const ioType: string = 'ccm:io';
+
+export const lrtBaseUrl: string =
+    'https://vocabs.openeduhub.de/w3id.org/openeduhub/vocabs/new_lrt/';
+
+export const lrtIdsEvents: string[] = [
+    '03ab835b-c39c-48d1-b5af-7611de2f6464', // educational offer vocab
+    '955590ae-5f06-4513-98e9-91dfa8d5a05e', // event meeting vocab
+];
+
+export const lrtIdsLessonPlanning: string[] = [
+    '7381f17f-50a6-4ce1-b3a0-9d85a482eec0', // methods vocab
+    '0a79a1d0-583b-47ce-86a7-517ab352d796', // lesson planning vocab
+];
+
+export const lrtIdsMedia: string[] = [
+    'a6d1ac52-c557-4151-bc6f-0d99b0b96fb9', // images vocab
+    '7a6e9608-2554-4981-95dc-47ab9ba924de', // video vocab
+    'ec2682af-08a9-4ab1-a324-9dca5151e99f', // audio vocab
+    '4665caac-99d7-4da3-b9fb-498d8ece034f', // interactive vocab
+];
+
+export const lrtIdsPracticeMaterials: string[] = [
+    'cd625d33-5d7b-4a86-a54a-9a897ded729f', // questionnaire vocab
+    '588efe4f-976f-48eb-84aa-8bcb45679f85', // learning materials vocab
+];
+
+export const lrtIdsSources: string[] = [
+    '3869b453-d3c1-4b34-8f25-9127e9d68766', // sources vocab
+];
+
+export const lrtIdsTools: string[] = [
+    'cefccf75-cba3-427d-9a0f-35b4fedcbba1', // tools vocab
+];
 
 export const mapType: string = 'ccm:map';
 

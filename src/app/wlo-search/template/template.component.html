@@ -109,7 +109,19 @@
         ></wlo-topics-column-browser>
       </ng-container>
       <ng-container *ngIf="selectedMenuItem === menuItems.statistics">
-        Inhalt von {{ menuItems.statistics }} folgt.
+        <h2 style="font-size: 18px">Inhalte von {{ topic() }}</h2>
+        <wlo-statistics-summary
+          *ngIf="statisticsLoaded; else loadingIndicator"
+          [searchResultCount]="searchResultCount"
+          [searchUrl]="searchUrl"
+          [statistics]="statistics"
+          [topic]="topic()"
+        >
+          ></wlo-statistics-summary
+        >
+        <ng-template #loadingIndicator>
+          <es-spinner></es-spinner>
+        </ng-template>
       </ng-container>
       <ng-container *ngIf="selectedMenuItem === menuItems.feedback">
         Inhalt von {{ menuItems.feedback }} folgt.
