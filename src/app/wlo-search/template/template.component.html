@@ -102,6 +102,7 @@
       <ng-container *ngIf="selectedMenuItem === menuItems.topicTree">
         <h2 style="font-size: 18px">Themenbaum von {{ topic() }}</h2>
         <wlo-topics-column-browser
+          *ngIf="topicCollectionID(); else loadingIndicator"
           [contextNodeId]="topicCollectionID()"
           [customUrl]="retrieveCustomUrl"
           [defaultNodeId]="defaultTopicsColumnBrowserNodeId"
@@ -119,13 +120,13 @@
         >
           ></wlo-statistics-summary
         >
-        <ng-template #loadingIndicator>
-          <es-spinner></es-spinner>
-        </ng-template>
       </ng-container>
       <ng-container *ngIf="selectedMenuItem === menuItems.feedback">
         Inhalt von {{ menuItems.feedback }} folgt.
       </ng-container>
+      <ng-template #loadingIndicator>
+        <es-spinner></es-spinner>
+      </ng-template>
     </ng-container>
   </wlo-side-menu-wrapper>
 
