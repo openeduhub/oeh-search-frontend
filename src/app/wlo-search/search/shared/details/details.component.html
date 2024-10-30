@@ -108,28 +108,27 @@
     </p>
     <div class="app-preview-panel-buttons">
       <a
-        mat-flat-button
-        color="primary"
-        class="app-preview-panel-button"
+        mat-stroked-button
+        class="app-preview-panel-button btn-outline-primary"
         [href]="hit | nodeProperty: 'url'"
         target="_blank"
         [appReportClick]="hit"
       >
         <span class="app-preview-panel-button-wrapper">
           <span i18n>Go to original page</span>
-          <mat-icon>arrow_forward</mat-icon>
+          <mat-icon>open_in_new</mat-icon>
         </span>
       </a>
       <a
         *ngIf="(hit | nodeProperty: 'url') !== (hit | nodeProperty: 'detailsUrl')"
         mat-flat-button
+        color="primary"
         class="app-preview-panel-button"
         [href]="hit | nodeProperty: 'detailsUrl'"
         target="_blank"
       >
         <span class="app-preview-panel-button-wrapper">
           <span i18n>All details</span>
-          <mat-icon>arrow_forward</mat-icon>
         </span>
       </a>
       <!-- <a
