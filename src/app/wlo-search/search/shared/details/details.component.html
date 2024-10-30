@@ -180,11 +180,12 @@
         >Sorry, we couldn't send your report: {{ result.error.message }}</span
       >
     </div>
+    <!-- metadata listing -->
     <div
       class="app-preview-panel-metadata app-preview-panel-metadata-icon"
       *ngIf="hit | nodeProperty: 'discipline' as disciplines"
     >
-      <mat-icon i18n-matTooltip matTooltip="Discipline">book_icon</mat-icon>
+      <mat-icon i18n-matTooltip matTooltip="Discipline" class="icon-gray">book_icon</mat-icon>
       <span class="cdk-visually-hidden" i18n>Discipline</span>
       <div>
         <span *ngFor="let discipline of disciplines">
@@ -196,7 +197,7 @@
       class="app-preview-panel-metadata app-preview-panel-metadata-icon"
       *ngIf="hit | nodeProperty: 'educationalContext' as educationalContexts"
     >
-      <mat-icon i18n-matTooltip matTooltip="Educational level">school</mat-icon>
+      <mat-icon i18n-matTooltip matTooltip="Educational level" class="icon-gray">school</mat-icon>
       <span class="cdk-visually-hidden" i18n>Educational level</span>
       <div>
         <span *ngFor="let context of educationalContexts">
@@ -206,9 +207,19 @@
     </div>
     <div
       class="app-preview-panel-metadata app-preview-panel-metadata-icon"
+      *ngIf="hit | nodeProperty: 'author'"
+    >
+      <mat-icon i18n-matTooltip matTooltip="Author" svgIcon="author" class="icon-gray"></mat-icon>
+      <span>
+        <ng-container i18n>Author</ng-container>:
+        {{ hit | nodeProperty: 'author' }}
+      </span>
+    </div>
+    <div
+      class="app-preview-panel-metadata app-preview-panel-metadata-icon"
       *ngIf="hit | nodeProperty: 'license' as license"
     >
-      <mat-icon i18n-matTooltip matTooltip="License">lock</mat-icon>
+      <mat-icon i18n-matTooltip matTooltip="License" class="icon-gray">lock</mat-icon>
       <span class="cdk-visually-hidden" i18n>License</span>
       <div>
         <span>
@@ -283,9 +294,6 @@
           {{ containsAdvertisement.displayName }}
         </span>
       </ng-container>
-    </div>
-    <div class="app-preview-panel-metadata" *ngIf="hit | nodeProperty: 'author'">
-      <span><ng-container i18n>Author</ng-container>: {{ hit | nodeProperty: 'author' }}</span>
     </div>
   </div>
   <div class="app-preview-related-items" *ngIf="usedInCollections$ | async as usedInCollections">
