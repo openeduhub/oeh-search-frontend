@@ -76,6 +76,7 @@
     }
 
     .report-problem-link {
+        margin-top: 10px;
         margin-left: auto;
         color: var(--primary);
 
@@ -148,10 +149,13 @@
 .app-details-report-problem-state {
     display: flex;
     align-items: center;
-    margin-bottom: 30px;
-    padding: 10px;
+    flex-direction: column;
+    gap: 5px;
+    margin: 10px 0;
+    padding: 12px 18px;
     border-width: 2px;
     border-style: solid;
+    text-align: center;
 
     &.app-details-report-problem-state-loading {
         border-color: #0000;
@@ -159,8 +163,13 @@
 
     .mat-mdc-progress-spinner,
     .mat-icon {
-        margin-right: 15px;
-        flex-shrink: 0;
+        width: 32px;
+        height: 32px;
+        font-size: 32px;
+    }
+
+    .app-details-contact-support-btn {
+        margin-top: 10px;
     }
 }
 

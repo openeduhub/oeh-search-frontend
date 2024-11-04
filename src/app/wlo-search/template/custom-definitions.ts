@@ -98,6 +98,8 @@ export const providedSelectDimensionKeys: string[] = [
     'virtual:ai_text_widget_target_language',
 ];
 
+export const reportProblemItemKey: string = 'latestReport';
+
 export const retrieveCustomUrl = (node: Node): string => {
     const collectionId = node.properties?.['sys:node-uuid']?.[0];
     if (collectionId) {

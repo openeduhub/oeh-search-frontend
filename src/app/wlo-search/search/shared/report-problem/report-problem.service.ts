@@ -5,6 +5,7 @@ import { Node } from 'ngx-edu-sharing-api';
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { environment } from '../../../../../environments/environment';
+import { reportProblemItemKey } from '../../../template/custom-definitions';
 import { WrappedResponse, wrapResponse } from '../wrap-observable.pipe';
 import { ReportProblemComponent } from './report-problem.component';
 
@@ -19,7 +20,7 @@ export const problemKinds = {
     OTHER: $localize`Something else`,
 };
 
-interface ResultData {
+export interface ResultData {
     problemKind: keyof typeof problemKinds;
     message?: string;
     email: string;
@@ -34,6 +35,7 @@ export class ReportProblemService {
     constructor(private dialog: MatDialog, private httpClient: HttpClient) {}
 
     openDialog(element: Node): Observable<WrappedResponse<void> | null> {
+        // open dialog
         const dialogRef = this.dialog.open(ReportProblemComponent, {
             width: '600px',
             maxHeight: '100vh',
@@ -42,6 +44,9 @@ export class ReportProblemService {
                 element,
             },
         });
+        // reset localStorage item
+        localStorage.setItem(reportProblemItemKey, null);
+        // return Observable of WrappedResponse
         return dialogRef.afterClosed().pipe(
             switchMap((result) => {
                 if (result) {
@@ -54,6 +59,9 @@ export class ReportProblemService {
     }
 
     private sendReport(element: Node, data: ResultData): Observable<void> {
+        // set localStorage item
+        localStorage.setItem(reportProblemItemKey, JSON.stringify({ element, data }));
+        // return report response
         return this.apiSendReport(eduSharingRepository, element.ref.id, {
             reason: `${problemKinds[data.problemKind]} (${data.problemKind})`,
             userComment: data.message,

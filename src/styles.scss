@@ -176,3 +176,22 @@ body {
         background: var(--primary);
     }
 }
+
+.mdc-button--outlined.btn-outline-warn:not(:disabled) {
+    color: mat.m2-get-color-from-palette(mat.$m2-red-palette, 500);
+    border: 1.5px solid mat.m2-get-color-from-palette(mat.$m2-red-palette, 500);
+
+    .mat-icon,
+    .mat-mdc-icon {
+        margin-left: 6px !important;
+        margin-right: -3px !important;
+        font-size: 20px;
+        width: 20px;
+        height: 20px;
+    }
+
+    &:hover {
+        color: #fff;
+        background: mat.m2-get-color-from-palette(mat.$m2-red-palette, 500);
+    }
+}

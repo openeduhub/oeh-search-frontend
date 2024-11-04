@@ -32,10 +32,12 @@
             color: mat.m2-get-color-from-palette($foreground, secondary-text) !important;
         }
         .app-details-report-problem-state-success {
-            border-color: mat.m2-get-color-from-palette($primary);
-            background-color: mat.m2-get-color-from-palette($primary, 50);
+            color: mat.m2-get-color-from-palette(mat.$m2-green-palette, 600);
+            border-color: mat.m2-get-color-from-palette(mat.$m2-green-palette, 600);
+            background-color: mat.m2-get-color-from-palette(mat.$m2-green-palette, 50);
         }
         .app-details-report-problem-state-error {
+            color: mat.m2-get-color-from-palette($warn);
             border-color: mat.m2-get-color-from-palette($warn);
             background-color: mat.m2-get-color-from-palette($warn, 50);
         }

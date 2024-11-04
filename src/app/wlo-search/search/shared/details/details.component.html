@@ -299,12 +299,7 @@
         </span>
       </ng-container>
     </div>
-    <a href="javascript:void(0)" (click)="reportProblem()" class="report-problem-link">
-      <span class="app-preview-panel-button-wrapper">
-        <span i18n>Report problem</span>
-        <mat-icon>announcement</mat-icon>
-      </span>
-    </a>
+    <!-- TODO: Add i18n to textes -->
     <div
       *ngIf="reportProblemResult$ | async as result"
       class="app-details-report-problem-state app-details-report-problem-state-{{ result.state }}"
@@ -316,15 +311,29 @@
         value="100"
         diameter="30"
       ></mat-progress-spinner>
-      <mat-icon *ngIf="result.state === 'success'">check_circle</mat-icon>
-      <mat-icon *ngIf="result.state === 'error'">error</mat-icon>
-      <span *ngIf="result.state === 'success'" i18n>
-        We received your report. Thank you for your help!
+      <mat-icon *ngIf="result.state === 'success'">sentiment_satisfied_alt</mat-icon>
+      <mat-icon *ngIf="result.state === 'error'">sentiment_very_dissatisfied</mat-icon>
+      <span *ngIf="result.state === 'success'">
+        Deine Meldung ist erfolgreich bei uns eingegangen. Vielen Dank für deine Hilfe!
       </span>
-      <span *ngIf="result.state === 'error'" i18n>
-        Sorry, we couldn't send your report: {{ result.error.message }}
+      <span *ngIf="result.state === 'error'">
+        Entschuldige, wir konnten deine Meldung leider nicht abschicken.
+        <br />
+        <button
+          mat-stroked-button
+          class="btn-outline-warn app-details-contact-support-btn"
+          (click)="contactSupport()"
+        >
+          Support kontaktieren
+        </button>
       </span>
     </div>
+    <a href="javascript:void(0)" (click)="reportProblem()" class="report-problem-link">
+      <span class="app-preview-panel-button-wrapper">
+        <span i18n>Report problem</span>
+        <mat-icon>announcement</mat-icon>
+      </span>
+    </a>
   </div>
   <div class="app-preview-related-items" *ngIf="usedInCollections$ | async as usedInCollections">
     <h3 class="app-preview-related-items-heading" i18n>Related Subject Pages</h3>
