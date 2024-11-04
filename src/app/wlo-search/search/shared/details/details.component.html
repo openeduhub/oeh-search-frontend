@@ -196,6 +196,7 @@
         </span>
       </div>
     </div>
+    <!-- TODO: add i18n to tooltips -->
     <div
       class="app-preview-panel-metadata app-preview-panel-metadata-icon"
       *ngIf="hit | nodeProperty: 'conditionsOfAccess' as conditionsOfAccess"
@@ -205,6 +206,7 @@
         *ngSwitchCase="'http://w3id.org/openeduhub/vocabs/conditionsOfAccess/no_login'"
         svgIcon="login"
         class="icon-green"
+        matTooltip="Zugangsvoraussetzungen"
       ></mat-icon>
       <mat-icon
         *ngSwitchCase="
@@ -212,13 +214,20 @@
         "
         svgIcon="login"
         class="icon-orange"
+        matTooltip="Zugangsvoraussetzungen"
       ></mat-icon>
       <mat-icon
         *ngSwitchCase="'http://w3id.org/openeduhub/vocabs/conditionsOfAccess/login'"
         svgIcon="login"
         class="icon-red"
+        matTooltip="Zugangsvoraussetzungen"
       ></mat-icon>
-      <mat-icon *ngSwitchDefault svgIcon="login" class="icon-gray"></mat-icon>
+      <mat-icon
+        *ngSwitchDefault
+        svgIcon="login"
+        class="icon-gray"
+        matTooltip="Zugangsvoraussetzungen"
+      ></mat-icon>
       <span>{{ conditionsOfAccess.displayName | capitalizeFirstLetter }}</span>
     </div>
     <div
@@ -227,19 +236,19 @@
       [ngSwitch]="price.id"
     >
       <ng-container *ngSwitchCase="'http://w3id.org/openeduhub/vocabs/price/no'">
-        <mat-icon svgIcon="price" class="icon-green"></mat-icon>
+        <mat-icon svgIcon="price" class="icon-green" matTooltip="Kosten"></mat-icon>
         <span i18n>Free of charge</span>
       </ng-container>
       <ng-container *ngSwitchCase="'http://w3id.org/openeduhub/vocabs/price/yes'">
-        <mat-icon svgIcon="price" class="icon-red"></mat-icon>
+        <mat-icon svgIcon="price" class="icon-red" matTooltip="Kosten"></mat-icon>
         <span i18n>Paid content</span>
       </ng-container>
       <ng-container *ngSwitchCase="'http://w3id.org/openeduhub/vocabs/price/yes_for_additional'">
-        <mat-icon svgIcon="price" class="icon-orange"></mat-icon>
+        <mat-icon svgIcon="price" class="icon-orange" matTooltip="Kosten"></mat-icon>
         <span>{{ price.displayName }}</span>
       </ng-container>
       <ng-container *ngSwitchDefault>
-        <mat-icon svgIcon="price" class="icon-gray"></mat-icon>
+        <mat-icon svgIcon="price" class="icon-gray" matTooltip="Kosten"></mat-icon>
         <span><ng-container i18n>Price</ng-container>: {{ price.displayName }}</span>
       </ng-container>
     </div>
@@ -249,15 +258,27 @@
       [ngSwitch]="containsAdvertisement.id"
     >
       <ng-container *ngSwitchCase="'http://w3id.org/openeduhub/vocabs/containsAdvertisement/no'">
-        <mat-icon svgIcon="advertisement" class="icon-green"></mat-icon>
+        <mat-icon
+          svgIcon="advertisement"
+          class="icon-green"
+          matTooltip="Werbung enthalten?"
+        ></mat-icon>
         <span i18n>No advertisement</span>
       </ng-container>
       <ng-container *ngSwitchCase="'http://w3id.org/openeduhub/vocabs/containsAdvertisement/yes'">
-        <mat-icon svgIcon="advertisement" class="icon-red"></mat-icon>
+        <mat-icon
+          svgIcon="advertisement"
+          class="icon-red"
+          matTooltip="Werbung enthalten?"
+        ></mat-icon>
         <span i18n>Contains advertisement</span>
       </ng-container>
       <ng-container *ngSwitchDefault>
-        <mat-icon svgIcon="advertisement" class="icon-gray"></mat-icon>
+        <mat-icon
+          svgIcon="advertisement"
+          class="icon-gray"
+          matTooltip="Werbung enthalten?"
+        ></mat-icon>
         <span>
           <ng-container i18n>Contains advertisement</ng-container>:
           {{ containsAdvertisement.displayName }}
