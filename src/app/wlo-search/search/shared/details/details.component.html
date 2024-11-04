@@ -15,12 +15,15 @@
     [playAnimation]="true"
   ></app-preview-image>
 
+  <!-- TODO: Add i18n to tooltips -->
+  <!-- information bar under preview image -->
   <div class="app-preview-panel-info-bar">
+    <!-- content type -->
     <span
       class="app-preview-panel-info-bar-item"
       *ngIf="hit | nodeProperty: 'oehLrtAggregated' as lrts; else externalType"
     >
-      <mat-icon>perm_media</mat-icon>
+      <mat-icon matTooltip="Inhaltetyp">perm_media</mat-icon>
       <span>
         <ng-container *ngFor="let lrt of lrts; let last = last">
           {{ lrt.displayName }}<ng-container *ngIf="!last">,</ng-container>
@@ -32,7 +35,7 @@
         class="app-preview-panel-info-bar-item"
         *ngIf="hit | nodeProperty: 'isExternal'; else mimeType"
       >
-        <mat-icon>photo_library</mat-icon>
+        <mat-icon matTooltip="Inhaltetyp">photo_library</mat-icon>
         <span i18n>Website</span>
       </span>
     </ng-template>
@@ -41,27 +44,38 @@
         class="app-preview-panel-info-bar-item"
         *ngIf="hit | nodeProperty: 'mimeType' as mimeType"
       >
-        <mat-icon>photo_library</mat-icon>
+        <mat-icon matTooltip="Inhaltetyp">photo_library</mat-icon>
         <span>
           {{ mimeType }}
         </span>
       </span>
     </ng-template>
+
+    <!-- duration -->
     <span
       class="app-preview-panel-info-bar-item"
       *ngIf="hit | nodeProperty: 'duration' as duration"
     >
-      <mat-icon>alarm</mat-icon>
+      <mat-icon matTooltip="Dauer">alarm</mat-icon>
       <span>{{ duration | duration }}</span>
     </span>
+
+    <!-- language -->
     <span
       class="app-preview-panel-info-bar-item"
-      *ngIf="hit | nodeProperty: 'language' as languages"
+      *ngIf="
+        (hit | nodeProperty: 'language').length > 0 && hit | nodeProperty: 'language' as languages
+      "
     >
-      <mat-icon>question_answer</mat-icon>
+      <mat-icon matTooltip="Sprache(n)">question_answer</mat-icon>
       <span>
         <ng-container *ngFor="let language of languages; let last = last">
-          {{ language.displayName }}<ng-container *ngIf="!last">,</ng-container>
+          <ng-container
+            *ngIf="(language.displayName || language.id) !== ''; else noLanguageDefined"
+          >
+            {{ language.displayName || language.id }}<ng-container *ngIf="!last">,</ng-container>
+          </ng-container>
+          <ng-template #noLanguageDefined> - </ng-template>
         </ng-container>
       </span>
     </span>
@@ -196,7 +210,7 @@
         </span>
       </div>
     </div>
-    <!-- TODO: add i18n to tooltips -->
+    <!-- TODO: Add i18n to tooltips -->
     <div
       class="app-preview-panel-metadata app-preview-panel-metadata-icon"
       *ngIf="hit | nodeProperty: 'conditionsOfAccess' as conditionsOfAccess"
