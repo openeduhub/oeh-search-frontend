@@ -6,6 +6,7 @@
     border-radius: inherit;
     word-break: break-word;
     overflow: auto;
+
     > * {
         flex-shrink: 0;
     }
@@ -37,9 +38,11 @@
     display: inline-flex;
     align-items: center;
     min-height: 32px;
+
     &:not(:last-child) {
         margin-right: 25px;
     }
+
     > mat-icon {
         margin-right: 6px;
     }
@@ -50,22 +53,40 @@
     flex-direction: column;
     flex-grow: 1;
     padding: 28px 44px;
+
     &:not(:last-child) {
         padding-bottom: 58px;
         margin-bottom: -30px;
     }
+
     .badges {
         position: absolute;
         right: 50px;
         margin-top: -10px;
     }
+
     .mat-mdc-progress-spinner {
         align-self: center;
     }
+
     &:last-child {
         padding-bottom: 26px;
         border-bottom-right-radius: inherit;
         border-bottom-left-radius: inherit;
+    }
+
+    .report-problem-link {
+        margin-left: auto;
+        color: var(--primary);
+
+        mat-icon,
+        .mat-icon,
+        .mat-mdc-icon {
+            margin-left: 5px;
+            height: 20px;
+            width: 20px;
+            font-size: 20px;
+        }
     }
 }
 
@@ -92,6 +113,7 @@
     margin-left: 15px;
     padding: 0 6px;
     cursor: pointer;
+
     &:hover > span {
         text-decoration: underline;
     }
@@ -102,24 +124,25 @@
     flex-wrap: wrap;
     gap: 20px 15px;
     margin: 30px 0;
+
     .app-preview-panel-button {
         height: 30px;
         line-height: 30px;
         border-radius: 15px;
-        .app-preview-panel-button-wrapper {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        mat-icon {
+
+        mat-icon,
+        .mat-icon,
+        .mat-mdc-icon {
             margin-left: 10px;
             margin-right: -10px;
         }
-        // fix for mat-button vs. mat-flat-button
-        &.app-preview-panel-report-problem-button {
-            padding: 0 var(--mat-filled-button-horizontal-padding, 16px);
-        }
     }
+}
+
+.app-preview-panel-button-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .app-details-report-problem-state {
@@ -129,9 +152,11 @@
     padding: 10px;
     border-width: 2px;
     border-style: solid;
+
     &.app-details-report-problem-state-loading {
         border-color: #0000;
     }
+
     .mat-mdc-progress-spinner,
     .mat-icon {
         margin-right: 15px;
@@ -143,24 +168,30 @@
     display: flex;
     align-items: center;
     min-height: 20px;
+
     &.app-preview-panel-metadata-icon {
         min-height: 30px;
     }
+
     &:not(.app-preview-panel-metadata-icon) {
         padding-left: 40px;
     }
+
     &:not(:last-child) {
         padding-bottom: 10px;
     }
+
     > mat-icon {
         margin-right: 10px;
         min-width: 28px;
         height: 22px;
         font-size: 22px;
     }
+
     span {
         display: inline-flex;
         // white-space: nowrap; // causes overflow of long words like URLs
+
         &:not(:last-child)::after {
             content: ',';
             margin-right: 0.4em;
@@ -171,12 +202,15 @@
 .app-preview-related-items {
     border-radius: inherit;
     padding: 20px 40px;
+
     .app-preview-related-items-heading {
         margin-top: 2px;
         margin-bottom: 9px;
     }
+
     .app-preview-related-items-carousel-container {
         position: relative;
+
         .app-slick-button {
             position: absolute;
             top: 0;
@@ -192,12 +226,15 @@
             align-items: center;
             justify-content: center;
             transition: opacity 0.3s;
+
             &.app-preview-slick-prev {
                 left: -30px;
             }
+
             &.app-preview-slick-next {
                 right: -30px;
             }
+
             &.slick-disabled,
             &.slick-hidden {
                 opacity: 0;
