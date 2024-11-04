@@ -130,6 +130,13 @@ body {
     --primary: #032850;
 }
 
+// fix opening mat-dialog moves elements with position: sticky
+// related answer: https://stackoverflow.com/a/49067665
+html.cdk-global-scrollblock {
+    position: static !important;
+    overflow-y: hidden !important;
+}
+
 body {
     margin: 0;
     font-family: mat.m2-font-family($app-typography);
