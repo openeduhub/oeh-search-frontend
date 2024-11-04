@@ -91,27 +91,15 @@ export class DetailsComponent implements OnDestroy {
             // https://stackoverflow.com/a/22765878
             const br: string = '%0D%0A';
             mailText +=
-                '&body=Ich möchte ein Problem mit dem Element "' +
-                latestReportData.element.name +
-                '" melden.' +
-                br +
-                br +
-                br;
-            mailText +=
-                '----- Die nachfolgenden Informationen dienen zum Debugging. Bitte nicht löschen. -----' +
-                br +
-                br;
-            mailText += 'Primäre ID: ' + element.ref.id + br + br;
-            mailText +=
-                'Die Begründung der Meldung: ' +
-                problemKinds[resultData.problemKind] +
-                ' (' +
-                resultData.problemKind +
-                ')' +
-                br +
-                br;
-            mailText += 'Weitere Informationen vom Nutzer:' + br;
-            mailText += resultData.message;
+                `&body=` +
+                `Ich möchte ein Problem mit dem Element "${element.name}" melden.${br}${br}${br}` +
+                `----- Die nachfolgenden Informationen dienen zum Debugging.` +
+                ` Bitte nicht löschen. -----${br}${br}` +
+                `Primäre ID: ${element.ref.id}${br}${br}` +
+                `Die Begründung der Meldung: ${problemKinds[resultData.problemKind]}` +
+                ` (${resultData.problemKind})${br}${br}` +
+                `Weitere Informationen vom Nutzer:${br}` +
+                resultData.message;
         }
 
         window.location.href = mailText;
