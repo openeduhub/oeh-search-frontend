@@ -100,7 +100,7 @@
         Inhalt von {{ menuItems.profiling }} folgt.
       </ng-container>
       <ng-container *ngIf="selectedMenuItem === menuItems.topicTree">
-        <h2 style="font-size: 18px">Themenbaum von {{ topic() }}</h2>
+        <h2 class="side-menu-header">Themenbaum von {{ topic() }}</h2>
         <wlo-topics-column-browser
           *ngIf="topicCollectionID(); else loadingIndicator"
           [contextNodeId]="topicCollectionID()"
@@ -110,7 +110,7 @@
         ></wlo-topics-column-browser>
       </ng-container>
       <ng-container *ngIf="selectedMenuItem === menuItems.statistics">
-        <h2 style="font-size: 18px">Inhalte von {{ topic() }}</h2>
+        <h2 class="side-menu-header">Inhalte von {{ topic() }}</h2>
         <wlo-statistics-summary
           *ngIf="statisticsLoaded; else loadingIndicator"
           [searchResultCount]="searchResultCount"
