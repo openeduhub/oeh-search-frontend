@@ -41,27 +41,6 @@
           >
             <mat-icon>edit</mat-icon>
           </button>
-          <button
-            *ngIf="editMode"
-            mat-stroked-button
-            class="add-button"
-            color="primary"
-            [matMenuTriggerFor]="addComponentMenu"
-            [disabled]="requestInProgress"
-            aria-label="Add a new swimlane"
-          >
-            <mat-icon>add</mat-icon>
-          </button>
-          <mat-menu #addComponentMenu="matMenu">
-            <button
-              mat-menu-item
-              *ngFor="let option of swimlaneTypeOptions"
-              [disabled]="requestInProgress"
-              (click)="addSwimlane(option.value)"
-            >
-              {{ option.viewValue }}
-            </button>
-          </mat-menu>
         </ng-container>
       </div>
     </div>
@@ -156,7 +135,22 @@
                 swimlane.backgroundColor ? swimlane.backgroundColor : '#f4f4f4'
               "
             >
+              <!-- edit privileges -->
               <ng-container *ngIf="userHasEditRights()">
+                <!-- border with button to add a swimlane -->
+                <app-add-swimlane-border-button
+                  [requestInProgress]="requestInProgress"
+                  (addSwimlaneTriggered)="addSwimlane($event, i)"
+                  *ngIf="editMode"
+                ></app-add-swimlane-border-button>
+                <!-- special case for last element -->
+                <app-add-swimlane-border-button
+                  position="bottom"
+                  [requestInProgress]="requestInProgress"
+                  (addSwimlaneTriggered)="addSwimlane($event, i + 1)"
+                  *ngIf="editMode && i === swimlanes.length - 1"
+                ></app-add-swimlane-border-button>
+
                 <!-- action buttons for moving -->
                 <div class="wlo-move-buttons" *ngIf="editMode">
                   <button

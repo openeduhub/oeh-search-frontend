@@ -21,7 +21,7 @@ import { Facet } from 'ngx-edu-sharing-api/lib/api/models/facet';
 import { ParentEntries } from 'ngx-edu-sharing-api/lib/api/models/parent-entries';
 import { SearchResultNode } from 'ngx-edu-sharing-api/lib/api/models/search-result-node';
 import { Value } from 'ngx-edu-sharing-api/lib/api/models/value';
-import { SpinnerComponent } from 'ngx-edu-sharing-ui';
+import { EduSharingUiCommonModule, SpinnerComponent } from 'ngx-edu-sharing-ui';
 import {
     CollapsibleMenuItemComponent,
     FilterBarComponent,
@@ -38,6 +38,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { ViewService } from '../core/view.service';
 import { SearchModule } from '../search/search.module';
 import { SharedModule } from '../shared/shared.module';
+import { AddSwimlaneBorderButtonComponent } from './add-swimlane-button/add-swimlane-border-button.component';
 import {
     defaultLrt,
     defaultMds,
@@ -59,7 +60,6 @@ import {
     pageConfigType,
     providedSelectDimensionKeys,
     retrieveCustomUrl,
-    swimlaneTypeOptions,
     pageVariantConfigType,
     parentPageConfigNodeId,
     pageConfigPrefix,
@@ -80,8 +80,10 @@ import { Swimlane } from './swimlane/swimlane';
 @Component({
     standalone: true,
     imports: [
+        AddSwimlaneBorderButtonComponent,
         CdkDragHandle,
         CollapsibleMenuItemComponent,
+        EduSharingUiCommonModule,
         FilterBarComponent,
         SearchModule,
         SharedModule,
@@ -142,10 +144,6 @@ export class TemplateComponent implements OnInit {
     selectDimensions: Map<string, MdsWidget> = new Map<string, MdsWidget>();
     selectedDimensionValues: MdsValue[] = [];
     selectDimensionsLoaded: boolean = false;
-
-    swimlaneTypeOptions = swimlaneTypeOptions.concat([
-        { value: 'spacer', viewValue: 'Trennlinie' },
-    ]);
 
     selectedMenuItem: string = '';
     menuItems = {
@@ -854,7 +852,7 @@ export class TemplateComponent implements OnInit {
     /**
      * Add a new swimlane to the page and persist it in the config.
      */
-    async addSwimlane(type: string): Promise<void> {
+    async addSwimlane(type: string, positionToAdd: number): Promise<void> {
         this.requestInProgress = true;
         await this.checkForCustomPageNodeExistence();
         const pageVariant: PageVariantConfig = this.retrievePageVariant();
@@ -869,7 +867,7 @@ export class TemplateComponent implements OnInit {
             newSwimlane.grid = [];
         }
         const swimlanesCopy = JSON.parse(JSON.stringify(this.swimlanes ?? []));
-        swimlanesCopy.push(newSwimlane);
+        swimlanesCopy.splice(positionToAdd, 0, newSwimlane);
         pageVariant.structure.swimlanes = swimlanesCopy;
         await this.setProperty(
             this.pageVariantNode.ref.id,
@@ -877,7 +875,7 @@ export class TemplateComponent implements OnInit {
             JSON.stringify(pageVariant),
         );
         // add swimlane visually as soon as the requests are done
-        this.swimlanes.push(newSwimlane);
+        this.swimlanes.splice(positionToAdd, 0, newSwimlane);
         this.requestInProgress = false;
     }
 

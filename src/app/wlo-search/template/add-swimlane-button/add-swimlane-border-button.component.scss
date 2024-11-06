@@ -1,0 +1,45 @@
+:host {
+    --position-left: 24px;
+}
+
+.add-swimlane-container {
+    position: absolute;
+    top: calc(-30px / 2);
+    left: var(--position-left);
+    width: calc(100% - 2 * var(--position-left));
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+
+    &.position-bottom {
+        top: unset;
+        bottom: calc(-30px / 2);
+    }
+
+    .container-border {
+        border-bottom: 2px solid rgba(0, 0, 0, 0.7);
+        border-radius: 1px;
+        width: calc(50% - var(--position-left));
+    }
+
+    .add-swimlane-btn {
+        margin-left: 8px;
+        margin-right: 8px;
+        padding: 0;
+        width: 30px;
+        height: 30px;
+        border: 2px solid rgba(0, 0, 0, 0.7);
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba(0, 0, 0, 0.7);
+
+        i.mat-icon,
+        i.mat-mdc-icon {
+            font-size: 22px;
+            width: 22px;
+            height: 22px;
+        }
+    }
+}
