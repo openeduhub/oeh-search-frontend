@@ -93,9 +93,9 @@ export const parentPageConfigNodeId: string = '25e341e1-7058-4210-b0d3-838255884
 
 export const parentWidgetConfigNodeId: string = '80bb0eab-d64f-466b-94c6-2eccc4045c6b';
 
-export const providedSelectDimensionKeys: string[] = [
-    'virtual:ai_text_widget_intendedenduserrole',
-    'virtual:ai_text_widget_target_language',
+export const profilingFilterbarDimensionKeys: string[] = [
+    'virtual:profiling_widget_intention',
+    'virtual:profiling_widget_education_level',
 ];
 
 export const reportProblemItemKey: string = 'latestReport';
@@ -130,6 +130,11 @@ export const swimlaneTypeOptions: SelectOption[] = [
         value: 'text',
         viewValue: 'Text-Inhalt',
     },
+];
+
+export const verticalFilterbarDimensionKeys: string[] = [
+    'virtual:ai_text_widget_intendedenduserrole',
+    'virtual:ai_text_widget_target_language',
 ];
 
 export const widgetConfigAspect: string = 'ccm:widget';

@@ -58,7 +58,6 @@ import {
     pageConfigPropagateType,
     pageConfigRefType,
     pageConfigType,
-    providedSelectDimensionKeys,
     retrieveCustomUrl,
     pageVariantConfigType,
     parentPageConfigNodeId,
@@ -67,6 +66,8 @@ import {
     pageVariantConfigPrefix,
     pageVariantConfigAspect,
     pageVariantIsTemplateType,
+    profilingFilterbarDimensionKeys,
+    verticalFilterbarDimensionKeys,
     widgetConfigAspect,
     workspaceSpacesStorePrefix,
 } from './custom-definitions';
@@ -1032,6 +1033,7 @@ export class TemplateComponent implements OnInit {
     protected readonly defaultMds: string = defaultMds;
     protected readonly defaultTopicTextNodeId: string = defaultTopicTextNodeId;
     protected readonly defaultTopicsColumnBrowserNodeId: string = defaultTopicsColumnBrowserNodeId;
-    protected readonly providedSelectDimensionKeys: string[] = providedSelectDimensionKeys;
+    protected readonly profilingFilterbarDimensionKeys: string[] = profilingFilterbarDimensionKeys;
     protected readonly retrieveCustomUrl = retrieveCustomUrl;
+    protected readonly verticalFilterbarDimensionKeys: string[] = verticalFilterbarDimensionKeys;
 }

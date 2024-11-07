@@ -76,7 +76,16 @@
     </ng-container>
     <ng-container slot="content">
       <ng-container *ngIf="selectedMenuItem === menuItems.profiling">
-        Inhalt von {{ menuItems.profiling }} folgt.
+        <h2 class="side-menu-header">Wer bist du?</h2>
+        <wlo-filter-bar
+          alignment="vertical"
+          [requestInProgress]="requestInProgress"
+          [metadataSetName]="defaultMds"
+          [selectDimensionKeysOfInterest]="verticalFilterbarDimensionKeys"
+          [viewModes]="['radio', 'checkbox']"
+          (selectDimensionsChanged)="selectDimensionsChanged($event)"
+          (selectValuesChanged)="selectValuesChanged($event)"
+        ></wlo-filter-bar>
       </ng-container>
       <ng-container *ngIf="selectedMenuItem === menuItems.topicTree">
         <h2 class="side-menu-header">Themenbaum von {{ topic() }}</h2>
@@ -111,9 +120,11 @@
   <div class="variable-select-bar fachportal-filterbar">
     <div class="fachportal-filterbar-content">
       <wlo-filter-bar
+        alignment="horizontal"
         [requestInProgress]="requestInProgress"
         [metadataSetName]="defaultMds"
-        [selectDimensionKeysOfInterest]="providedSelectDimensionKeys"
+        [viewModes]="['select']"
+        [selectDimensionKeysOfInterest]="verticalFilterbarDimensionKeys"
         (selectDimensionsChanged)="selectDimensionsChanged($event)"
         (selectValuesChanged)="selectValuesChanged($event)"
       ></wlo-filter-bar>
