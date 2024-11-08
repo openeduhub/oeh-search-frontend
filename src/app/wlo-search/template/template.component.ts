@@ -23,8 +23,8 @@ import { SearchResultNode } from 'ngx-edu-sharing-api/lib/api/models/search-resu
 import { Value } from 'ngx-edu-sharing-api/lib/api/models/value';
 import { EduSharingUiCommonModule, SpinnerComponent } from 'ngx-edu-sharing-ui';
 import {
-    CollapsibleMenuItemComponent,
     FilterBarComponent,
+    SideMenuItemComponent,
     SideMenuWrapperComponent,
     StatisticChart,
     StatisticsSummaryComponent,
@@ -83,11 +83,11 @@ import { Swimlane } from './swimlane/swimlane';
     imports: [
         AddSwimlaneBorderButtonComponent,
         CdkDragHandle,
-        CollapsibleMenuItemComponent,
         EduSharingUiCommonModule,
         FilterBarComponent,
         SearchModule,
         SharedModule,
+        SideMenuItemComponent,
         SideMenuWrapperComponent,
         SpinnerComponent,
         StatisticsSummaryComponent,
@@ -1014,6 +1014,17 @@ export class TemplateComponent implements OnInit {
                 }
             });
         });
+    }
+
+    /**
+     * Function to call on wlo-side-menu-item itemClicked output.
+     */
+    collapsibleItemClicked(item: string) {
+        if (this.selectedMenuItem === item) {
+            this.selectedMenuItem = '';
+        } else {
+            this.selectedMenuItem = item;
+        }
     }
 
     // https://stackoverflow.com/a/16348977

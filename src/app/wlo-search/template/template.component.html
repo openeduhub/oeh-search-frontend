@@ -52,27 +52,27 @@
     (closeContentView)="selectedMenuItem = ''"
   >
     <ng-container slot="menu">
-      <wlo-collapsible-menu-item
+      <wlo-side-menu-item
+        [icon]="'person'"
         [selectedMenuItem]="selectedMenuItem"
         [title]="menuItems.profiling"
-        [icon]="'person'"
-        (nestedComponentChange)="selectedMenuItem = $event"
-      ></wlo-collapsible-menu-item>
-      <wlo-collapsible-menu-item
+        (itemClicked)="collapsibleItemClicked($event)"
+      ></wlo-side-menu-item>
+      <wlo-side-menu-item
         [selectedMenuItem]="selectedMenuItem"
         [title]="menuItems.topicTree"
-        (nestedComponentChange)="selectedMenuItem = $event"
-      ></wlo-collapsible-menu-item>
-      <wlo-collapsible-menu-item
+        (itemClicked)="collapsibleItemClicked($event)"
+      ></wlo-side-menu-item>
+      <wlo-side-menu-item
         [selectedMenuItem]="selectedMenuItem"
         [title]="menuItems.statistics"
-        (nestedComponentChange)="selectedMenuItem = $event"
-      ></wlo-collapsible-menu-item>
-      <wlo-collapsible-menu-item
+        (itemClicked)="collapsibleItemClicked($event)"
+      ></wlo-side-menu-item>
+      <wlo-side-menu-item
         [selectedMenuItem]="selectedMenuItem"
         [title]="menuItems.feedback"
-        (nestedComponentChange)="selectedMenuItem = $event"
-      ></wlo-collapsible-menu-item>
+        (itemClicked)="collapsibleItemClicked($event)"
+      ></wlo-side-menu-item>
     </ng-container>
     <ng-container slot="content">
       <ng-container *ngIf="selectedMenuItem === menuItems.profiling">
