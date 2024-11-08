@@ -147,6 +147,11 @@ export class TemplateComponent implements OnInit {
     selectDimensionsLoaded: boolean = false;
 
     selectedMenuItem: string = '';
+    actionItems = {
+        editMode: 'Bearbeitungsmodus',
+        previewMode: 'Zurück zur Vorschau',
+    };
+
     menuItems = {
         feedback: 'Feedback',
         profiling: 'Profilierung',

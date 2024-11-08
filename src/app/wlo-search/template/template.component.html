@@ -16,37 +16,24 @@
           [defaultNodeId]="defaultTopicTextNodeId"
           [topic]="topic()"
         ></wlo-topic-header>
-        <!-- action buttons for editing and creating -->
-        <!-- duplicated code due to https://github.com/angular/components/issues/15367 -->
-        <ng-container *ngIf="userHasEditRights()">
-          <button
-            *ngIf="!editMode"
-            mat-stroked-button
-            class="edit-button"
-            color="primary"
-            [disabled]="requestInProgress"
-            (click)="editMode = !editMode"
-            aria-label="Switch into edit mode"
-          >
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button
-            *ngIf="editMode"
-            mat-flat-button
-            class="edit-button"
-            color="primary"
-            [disabled]="requestInProgress"
-            (click)="editMode = !editMode"
-            aria-label="Switch into view mode"
-          >
-            <mat-icon>edit</mat-icon>
-          </button>
-        </ng-container>
       </div>
     </div>
   </header>
 
-  <!-- SIDE MENU WITH MULTIPLE COLLAPSIBLE ITEMS -->
+  <!-- LEFT SIDE MENU WITH ACTION BUTTONS -->
+  <wlo-side-menu-wrapper position="left">
+    <ng-container slot="menu">
+      <wlo-side-menu-item
+        [attr.aria-label]="editMode ? 'Switch into preview mode' : 'Switch into edit mode'"
+        color="primary"
+        position="left"
+        [title]="editMode ? actionItems.previewMode : actionItems.editMode"
+        (itemClicked)="editMode = !editMode"
+      ></wlo-side-menu-item>
+    </ng-container>
+  </wlo-side-menu-wrapper>
+
+  <!-- RIGHT SIDE MENU WITH MULTIPLE COLLAPSIBLE ITEMS -->
   <wlo-side-menu-wrapper
     [selectedMenuItem]="selectedMenuItem"
     (closeContentView)="selectedMenuItem = ''"

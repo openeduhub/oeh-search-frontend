@@ -2,8 +2,6 @@
     --topic-color: #182e5c;
     --border-radius: 24px;
     --maximal-width: 1200px;
-    --action-button-border-radius: 18px;
-    --action-button-spacing: 9px;
     --filterbar-height: 89px;
     --filterbar-offset: 20px;
     display: flex;
@@ -58,32 +56,6 @@
             justify-content: space-between;
             background: #fff;
             border-radius: var(--border-radius) var(--border-radius) 0 0;
-
-            .edit-button,
-            .add-button {
-                position: absolute;
-                top: var(--action-button-spacing);
-                padding: 0;
-                min-width: 42px;
-                height: 36px;
-
-                .mat-icon {
-                    margin: 0 auto;
-                    font-size: 24px;
-                    height: 24px;
-                    width: 24px;
-                }
-            }
-
-            .edit-button {
-                left: var(--action-button-spacing);
-                border-top-left-radius: var(--action-button-border-radius);
-            }
-
-            .add-button {
-                right: var(--action-button-spacing);
-                border-top-right-radius: var(--action-button-border-radius);
-            }
         }
     }
 }
