@@ -63,9 +63,7 @@
     <!-- language -->
     <span
       class="app-preview-panel-info-bar-item"
-      *ngIf="
-        (hit | nodeProperty: 'language').length > 0 && hit | nodeProperty: 'language' as languages
-      "
+      *ngIf="hit | nodeProperty: 'language' as languages"
     >
       <mat-icon matTooltip="Sprache(n)">question_answer</mat-icon>
       <span>
