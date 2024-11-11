@@ -354,7 +354,7 @@
         margin-right: 0;
     }
 
-    @media screen and (min-width: calc(var(--maximal-width) + 1px)) {
+    @media screen and (min-width: 1201px) {
         // half the offset is enough due to padding-right of the topic page
         margin-right: calc(var(--sidebar-offset) / 2);
     }
