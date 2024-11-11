@@ -33,7 +33,11 @@ export class DetailsComponent implements OnDestroy {
 
     readonly usedInCollections$ = this.hit$.pipe(
         map((hit) =>
-            hit.usedInCollections?.filter((collection) => getCollectionProperty(collection, 'url')),
+            hit.usedInCollections?.filter(
+                (collection) =>
+                    getCollectionProperty(collection, 'url') &&
+                    getCollectionProperty(collection, 'editorialState') === 'activated',
+            ),
         ),
         map((collections) => (collections?.length === 0 ? null : collections)),
     );

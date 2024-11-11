@@ -8,6 +8,7 @@ const collectionMappings = {
     color: (collection: Collection) => collection.properties['ccm:collectioncolor']?.[0],
     childReferencesCount: (collection: Collection) => collection.collection.childReferencesCount,
     childCollectionsCount: (collection: Collection) => collection.collection.childCollectionsCount,
+    editorialState: (collection: Collection) => collection.properties['ccm:editorial_state']?.[0],
 };
 
 export function getCollectionProperty<P extends keyof typeof collectionMappings>(
