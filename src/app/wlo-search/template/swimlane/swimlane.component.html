@@ -1,15 +1,15 @@
-<ng-container *ngIf="grid?.length >= 1">
-  <div
-    class="wlo-grid"
-    [class.wlo-grid-cols-1]="grid.length === 1"
-    [class.wlo-grid-cols-2]="grid.length === 2"
-    [class.wlo-grid-cols-3]="grid.length > 2"
-    [class.wlo-gap-0]="gridType === 'noGutter'"
-    [class.wlo-gap-2]="gridType === 'smallGutter'"
-    [class.wlo-gap-4]="gridType === 'mediumGutter'"
-    [class.wlo-gap-6]="gridType === 'largeGutter'"
-    [class.wlo-grid-border-radius]="gridType === 'noGutter'"
-  >
+<div
+  class="wlo-grid"
+  [class.wlo-grid-cols-1]="grid.length < 2"
+  [class.wlo-grid-cols-2]="grid.length === 2"
+  [class.wlo-grid-cols-3]="grid.length > 2"
+  [class.wlo-gap-0]="gridType === 'noGutter'"
+  [class.wlo-gap-2]="gridType === 'smallGutter'"
+  [class.wlo-gap-4]="gridType === 'mediumGutter'"
+  [class.wlo-gap-6]="gridType === 'largeGutter'"
+  [class.wlo-grid-border-radius]="gridType === 'noGutter'"
+>
+  <ng-container *ngIf="grid?.length >= 1; else addWidgetView">
     <div
       class="wlo-grid-content"
       [class.wlo-col-span-2]="grid.length >= 2 && gridItem.cols === 2"
@@ -37,5 +37,26 @@
       >
       </app-grid-widget>
     </div>
-  </div>
-</ng-container>
+  </ng-container>
+  <ng-template #addWidgetView>
+    <div class="add-widget-container">
+      <button
+        class="add-widget-btn"
+        mat-flat-button
+        color="primary"
+        [matMenuTriggerFor]="addWidgetMenu"
+      >
+        <i esIcon="add"></i> Widget hinzufügen
+      </button>
+      <mat-menu #addWidgetMenu="matMenu">
+        <button
+          mat-menu-item
+          *ngFor="let option of widgetTypeOptions"
+          (click)="addGridTile(option.value)"
+        >
+          {{ option.viewValue }}
+        </button>
+      </mat-menu>
+    </div>
+  </ng-template>
+</div>

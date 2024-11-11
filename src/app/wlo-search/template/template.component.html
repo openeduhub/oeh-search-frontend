@@ -232,6 +232,7 @@
                       [swimlaneIndex]="i"
                       [topic]="topic()"
                       [topicWidgets]="topicWidgets"
+                      (gridTileAdded)="handleAddGridTile($event, i)"
                       (nodeClicked)="handleNodeChange($event)"
                     ></app-swimlane>
                   </div>
@@ -261,6 +262,7 @@
                   [swimlaneIndex]="i"
                   [topic]="topic()"
                   [topicWidgets]="topicWidgets"
+                  (gridTileAdded)="handleAddGridTile($event, i)"
                   (nodeClicked)="handleNodeChange($event)"
                 ></app-swimlane>
               </div>
