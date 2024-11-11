@@ -84,6 +84,7 @@ export class SearchFieldComponent implements AfterViewInit, OnInit, OnDestroy {
                 const { searchString, filters } = searchParameters || {};
                 this.searchField.setValue(searchString, { emitEvent: false });
                 this.filters = filters ?? {};
+                this.cdr.detectChanges();
             });
         combineLatest([
             this.searchField.valueChanges.pipe(startWith(this.searchField.value)),
