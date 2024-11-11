@@ -2,8 +2,10 @@
     --topic-color: #182e5c;
     --border-radius: 24px;
     --maximal-width: 1200px;
-    --filterbar-height: 89px;
-    --filterbar-offset: 20px;
+    --sidebar-height: 89px;
+    --sidebar-offset: 16px;
+    --offcanvas-menu-width: 48px;
+    --offcanvas-offset: 8px;
     display: flex;
     flex-direction: column;
     margin: auto;
@@ -64,12 +66,16 @@
     position: sticky;
     top: 0;
     margin: -20px calc(50% - 50vw) 40px;
-    padding: 0 18px;
+    padding-right: calc(var(--offcanvas-menu-width) + var(--offcanvas-offset));
     display: flex;
     justify-content: center;
     background: #f5f5f5;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
     z-index: 99;
+
+    &.reserve-space-left {
+        padding-left: calc(var(--offcanvas-menu-width) + var(--offcanvas-offset));
+    }
 
     .fachportal-filterbar-content {
         display: flex;
@@ -100,8 +106,13 @@
     display: block;
     margin-top: -20px;
     margin-bottom: 30px;
+    padding-right: calc(var(--offcanvas-menu-width) + var(--offcanvas-offset));
     z-index: 10;
     border-radius: var(--border-radius);
+
+    &.reserve-space-left {
+        padding-left: calc(var(--offcanvas-menu-width) + var(--offcanvas-offset));
+    }
 
     .portal-wrapper {
         display: flex;
@@ -323,10 +334,10 @@
 
 // adjust style of app-preview-panel for topic page
 :host app-preview-panel ::ng-deep .app-preview-panel-sidebar {
-    max-height: calc(100vh - var(--filterbar-height) - 2 * var(--filterbar-offset));
+    max-height: calc(100vh - var(--sidebar-height) - 2 * var(--sidebar-offset));
     display: flex;
     width: 450px;
-    top: calc(var(--filterbar-height) + var(--filterbar-offset));
+    top: calc(var(--sidebar-height) + var(--sidebar-offset));
     position: sticky;
 
     @media screen and (max-width: 800px) {
@@ -338,8 +349,14 @@
     }
 
     @media screen and (min-width: 801px) {
-        margin-left: var(--filterbar-offset);
-        margin-right: var(--filterbar-offset);
+        margin-left: var(--sidebar-offset);
+        // the offset is already set by the topic page
+        margin-right: 0;
+    }
+
+    @media screen and (min-width: calc(var(--maximal-width) + 1px)) {
+        // half the offset is enough due to padding-right of the topic page
+        margin-right: calc(var(--sidebar-offset) / 2);
     }
 }
 

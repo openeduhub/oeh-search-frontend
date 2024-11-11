@@ -105,7 +105,10 @@
   </wlo-side-menu-wrapper>
 
   <!-- FILTER BAR -->
-  <div class="variable-select-bar fachportal-filterbar">
+  <div
+    class="variable-select-bar fachportal-filterbar"
+    [class.reserve-space-left]="userHasEditRights()"
+  >
     <div class="fachportal-filterbar-content">
       <wlo-filter-bar
         alignment="horizontal"
@@ -120,7 +123,7 @@
   </div>
 
   <hr />
-  <div class="portal-outer-wrapper">
+  <div class="portal-outer-wrapper" [class.reserve-space-left]="userHasEditRights()">
     <div class="portal-wrapper">
       <div class="portal-wrapper-left">
         <ng-container *ngIf="swimlanes.length > 0; else noSwimlanesCreatedYet">
