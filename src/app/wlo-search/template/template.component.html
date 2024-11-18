@@ -21,7 +21,7 @@
   </header>
 
   <!-- LEFT SIDE MENU WITH ACTION BUTTONS -->
-  <wlo-side-menu-wrapper position="left">
+  <wlo-side-menu-wrapper position="left" *ngIf="userHasEditRights()">
     <ng-container slot="menu">
       <wlo-side-menu-item
         [attr.aria-label]="editMode ? 'Switch into preview mode' : 'Switch into edit mode'"
