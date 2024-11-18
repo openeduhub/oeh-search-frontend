@@ -189,10 +189,6 @@ export class TemplateComponent implements OnInit {
     }
 
     async ngOnInit(): Promise<void> {
-        // retrieve the learning resource types for the statistics
-        for (const statistic of this.statistics) {
-            await this.retrieveAndSetLrtVocab(statistic);
-        }
         // retrieve the search URL
         this.searchUrl = this.retrieveSearchUrl();
         // set the default language for API requests
@@ -203,31 +199,6 @@ export class TemplateComponent implements OnInit {
             .subscribe(async (params) => {
                 // due to reconnect with queryParams, this might be called twice, thus, initializedWithParams is important
                 if (params.collectionId && !this.initializedWithParams) {
-                    // request the references of the collection (retrieved from wirlernenonline-theme/page-templates/template_themenseite.php L.135)
-                    const referenceEntries: ReferenceEntries = await firstValueFrom(
-                        this.collectionService.getReferences({
-                            repository: HOME_REPOSITORY,
-                            collection: params.collectionId,
-                            sortProperties: ['ccm:collection_ordered_position'],
-                            sortAscending: [true],
-                        }),
-                    );
-                    // filter out deleted references
-                    const nonDeletedReferences: CollectionReference[] =
-                        referenceEntries.references.filter(
-                            (ref: CollectionReference) => !!ref.originalId,
-                        );
-                    // post process those
-                    this.statistics.forEach((statistic: StatisticChart) => {
-                        const filteredReferences: CollectionReference[] = this.filterContents(
-                            nonDeletedReferences,
-                            statistic.vocab,
-                        );
-                        statistic.data.editorialCount = filteredReferences.length;
-                        statistic.data.oerCount =
-                            filteredReferences.filter((ref: CollectionReference) => this.isOer(ref))
-                                ?.length ?? 0;
-                    });
                     // set the topicCollectionID
                     this.topicCollectionID.set(params.collectionId);
                     this.initializedWithParams = true;
@@ -251,29 +222,6 @@ export class TemplateComponent implements OnInit {
                     // TODO: use a color from the palette defined in the collection
                     // set the background to some random (but deterministic) color, just for visuals
                     this.topicColor = this.stringToColour(this.topic());
-                    // perform search to retrieve the number of search results
-                    const searchResult: SearchResultNode = await this.performSearch(this.topic());
-                    this.searchResultCount = searchResult.pagination.total;
-
-                    // use facets to retrieve the number of items for different learning resource types
-                    const facets: Value[] =
-                        searchResult.facets?.find((facet: Facet) => facet.property === defaultLrt)
-                            ?.values ?? [];
-                    this.statistics.forEach((statistic: StatisticChart) => {
-                        let count: number = 0;
-                        facets.forEach((facet: Value) => {
-                            if (statistic.vocab.includes(facet.value)) {
-                                count += facet.count;
-                            }
-                        });
-                        statistic.data.totalCount = count;
-                        // TODO: This is caused by the use of different methods to calculate these counts.
-                        //       This workaround should not be necessary, if a reliable solution does exist.
-                        if (statistic.data.totalCount < statistic.data.editorialCount) {
-                            statistic.data.totalCount = statistic.data.editorialCount;
-                        }
-                    });
-                    this.statisticsLoaded = true;
 
                     // 2) retrieve the page config node either by checking the node itself or by iterating the parents of the collectionNode
                     this.pageConfigNode = await this.retrievePageConfigNode(this.collectionNode);
@@ -352,8 +300,63 @@ export class TemplateComponent implements OnInit {
                     }
                     // 5) set the swimlanes
                     this.swimlanes = pageVariant.structure.swimlanes ?? [];
-                    // 6) everything loaded
+                    // 6) initial load finished (page structure loaded)
                     this.initialLoadSuccessfully = true;
+
+                    // (7) post-load the statistics
+                    // retrieve the learning resource types for the statistics
+                    for (const statistic of this.statistics) {
+                        await this.retrieveAndSetLrtVocab(statistic);
+                    }
+                    // request the references of the collection (retrieved from wirlernenonline-theme/page-templates/template_themenseite.php L.135)
+                    const referenceEntries: ReferenceEntries = await firstValueFrom(
+                        this.collectionService.getReferences({
+                            repository: HOME_REPOSITORY,
+                            collection: params.collectionId,
+                            sortProperties: ['ccm:collection_ordered_position'],
+                            sortAscending: [true],
+                        }),
+                    );
+                    // filter out deleted references
+                    const nonDeletedReferences: CollectionReference[] =
+                        referenceEntries.references.filter(
+                            (ref: CollectionReference) => !!ref.originalId,
+                        );
+                    // post process those
+                    this.statistics.forEach((statistic: StatisticChart) => {
+                        const filteredReferences: CollectionReference[] = this.filterContents(
+                            nonDeletedReferences,
+                            statistic.vocab,
+                        );
+                        statistic.data.editorialCount = filteredReferences.length;
+                        statistic.data.oerCount =
+                            filteredReferences.filter((ref: CollectionReference) => this.isOer(ref))
+                                ?.length ?? 0;
+                    });
+
+                    // perform search to retrieve the number of search results
+                    const searchResult: SearchResultNode = await this.performSearch(this.topic());
+                    this.searchResultCount = searchResult.pagination.total;
+
+                    // use facets to retrieve the number of items for different learning resource types
+                    const facets: Value[] =
+                        searchResult.facets?.find((facet: Facet) => facet.property === defaultLrt)
+                            ?.values ?? [];
+                    this.statistics.forEach((statistic: StatisticChart) => {
+                        let count: number = 0;
+                        facets.forEach((facet: Value) => {
+                            if (statistic.vocab.includes(facet.value)) {
+                                count += facet.count;
+                            }
+                        });
+                        statistic.data.totalCount = count;
+                        // TODO: This is caused by the use of different methods to calculate these counts.
+                        //       This workaround should not be necessary, if a reliable solution does exist.
+                        if (statistic.data.totalCount < statistic.data.editorialCount) {
+                            statistic.data.totalCount = statistic.data.editorialCount;
+                        }
+                    });
+                    this.statisticsLoaded = true;
                 }
             });
     }
