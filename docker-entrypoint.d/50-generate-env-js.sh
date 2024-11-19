@@ -23,5 +23,5 @@ function generateEnvJs() {
 generateEnvJs
 
 # Copy to each localization directory
-for dest in /usr/share/nginx/html/*; do cp env.js $dest; done
+for dest in /usr/share/nginx/html/search/*; do cp env.js $dest; done
 rm env.js
