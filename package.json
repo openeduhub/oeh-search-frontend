@@ -11,7 +11,7 @@
     "clean": "rm -rf dist",
     "clean-cache-install": "npm cache clean --force && npm i",
     "prebuild": "npm run generate",
-    "build": "ng build --localize",
+    "build": "ng build --localize --base-href /search/",
     "build:web-components": "ng build web-components --output-hashing none",
     "test": "ng test",
     "lint": "ng lint",
