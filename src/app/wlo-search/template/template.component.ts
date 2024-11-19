@@ -587,7 +587,7 @@ export class TemplateComponent implements OnInit {
             const parents: ParentEntries = await firstValueFrom(
                 this.nodeApi.getParents(node.ref.id, {
                     propertyFilter: ['-all-'],
-                    fullPath: true,
+                    fullPath: false,
                 }),
             );
             pageRef = parents.nodes.find(
