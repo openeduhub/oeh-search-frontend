@@ -105,9 +105,15 @@ export const retrieveCustomUrl = (node: Node): string => {
     if (collectionId) {
         // take into account potential sub-paths, e.g., due to language switch
         const pathNameArray: string[] = window.location.pathname.split('/');
-        // example pathNameArray = [ "", "de", "template" ]
-        const suffix: string =
-            pathNameArray.length > 2 && pathNameArray[1] !== '' ? '/' + pathNameArray[1] : '';
+        // example pathNameArray = [ "", "search", "de", "template" ]
+        let suffix: string = '';
+        if (pathNameArray.length > 2) {
+            pathNameArray.forEach((subPath: string, index: number): void => {
+                if (index > 0 && ['', 'template'].includes(subPath)) {
+                    suffix += '/' + subPath;
+                }
+            });
+        }
         return window.location.origin + suffix + '/template?collectionId=' + collectionId;
     }
     return '';
