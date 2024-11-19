@@ -109,7 +109,7 @@ export const retrieveCustomUrl = (node: Node): string => {
         let suffix: string = '';
         if (pathNameArray.length > 2) {
             pathNameArray.forEach((subPath: string, index: number): void => {
-                if (index > 0 && ['', 'template'].includes(subPath)) {
+                if (index > 0 && !['', 'template'].includes(subPath)) {
                     suffix += '/' + subPath;
                 }
             });
