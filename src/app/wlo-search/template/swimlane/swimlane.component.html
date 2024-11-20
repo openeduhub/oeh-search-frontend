@@ -7,7 +7,6 @@
   [class.wlo-gap-2]="gridType === 'smallGutter'"
   [class.wlo-gap-4]="gridType === 'mediumGutter'"
   [class.wlo-gap-6]="gridType === 'largeGutter'"
-  [class.wlo-grid-border-radius]="gridType === 'noGutter'"
 >
   <ng-container *ngIf="grid?.length >= 1; else addWidgetView">
     <div
@@ -16,7 +15,6 @@
       [class.wlo-col-span-3]="grid.length >= 3 && gridItem.cols === 3"
       [class.wlo-row-span-2]="gridItem.rows === 2"
       [class.wlo-row-span-3]="gridItem.rows === 3"
-      [class.wlo-grid-border-radius]="gridType !== 'noGutter'"
       *ngFor="let gridItem of grid; let i = index"
     >
       <app-grid-widget

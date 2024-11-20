@@ -1,17 +1,12 @@
 .wlo-grid {
     display: grid;
     place-items: center;
+    overflow: hidden;
 
     @for $i from 1 through 3 {
         &.wlo-grid-cols-#{$i} {
             grid-template-columns: repeat($i, minmax(0, 1fr));
         }
-    }
-
-    &.wlo-grid-border-radius,
-    .wlo-grid-border-radius {
-        border-radius: 15px;
-        overflow: hidden;
     }
 
     @for $i from 0 through 6 {
