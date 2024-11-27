@@ -33,7 +33,6 @@ export class GridWidgetComponent {
     @Input() backgroundColor: string;
     @Input() contextNodeId: string;
     @Input() editMode: boolean;
-    @Input() filterBarReady: boolean;
     @Input() gridIndex: number;
     @Input() pageVariantNode: Node;
     @Input() selectDimensions: Map<string, MdsWidget> = new Map<string, MdsWidget>();

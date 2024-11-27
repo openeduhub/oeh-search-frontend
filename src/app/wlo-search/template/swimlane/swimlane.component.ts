@@ -27,7 +27,6 @@ export class SwimlaneComponent {
 
     @Input() contextNodeId: string;
     @Input() editMode: boolean;
-    @Input() filterBarReady: boolean;
     @Input() grid: GridTile[] = [];
     @Input() gridType: string = 'smallGutter';
     @Input() pageVariantNode: Node;

@@ -72,7 +72,7 @@
           [selectDimensionKeysOfInterest]="profilingFilterbarDimensionKeys"
           [viewModes]="['radio', 'checkbox']"
           (selectDimensionsChanged)="selectDimensionsChanged($event)"
-          (selectValuesChanged)="selectValuesChanged($event)"
+          (selectValuesChanged)="selectValuesChanged()"
         ></wlo-filter-bar>
       </ng-container>
       <ng-container *ngIf="selectedMenuItem === menuItems.topicTree">
@@ -117,7 +117,7 @@
         [viewModes]="['select']"
         [selectDimensionKeysOfInterest]="verticalFilterbarDimensionKeys"
         (selectDimensionsChanged)="selectDimensionsChanged($event)"
-        (selectValuesChanged)="selectValuesChanged($event)"
+        (selectValuesChanged)="selectValuesChanged()"
       ></wlo-filter-bar>
     </div>
   </div>
@@ -223,7 +223,6 @@
                       [backgroundColor]="swimlane.backgroundColor"
                       [contextNodeId]="topicCollectionID()"
                       [editMode]="editMode"
-                      [filterBarReady]="filterBarReady"
                       [grid]="swimlane.grid"
                       [gridType]="swimlane.gridType"
                       [pageVariantNode]="pageVariantNode"
@@ -254,7 +253,6 @@
                   [backgroundColor]="swimlane.backgroundColor"
                   [contextNodeId]="topicCollectionID()"
                   [editMode]="editMode"
-                  [filterBarReady]="filterBarReady"
                   [grid]="swimlane.grid"
                   [pageVariantNode]="pageVariantNode"
                   [selectDimensions]="selectDimensions"

@@ -1,7 +1,7 @@
 import { CdkDragHandle, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, HostBinding, OnInit, signal, WritableSignal } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import {
     ApiRequestConfiguration,
     AuthenticationService,
@@ -142,6 +142,7 @@ export class TemplateComponent implements OnInit {
     topicWidgets: NodeEntries;
     swimlanes: Swimlane[] = [];
 
+    latestParams: Params;
     selectDimensions: Map<string, MdsWidget> = new Map<string, MdsWidget>();
     selectedDimensionValues: MdsValue[] = [];
     selectDimensionsLoaded: boolean = false;
@@ -178,12 +179,6 @@ export class TemplateComponent implements OnInit {
     ];
     statisticsLoaded: boolean = false;
 
-    get filterBarReady(): boolean {
-        const sameNumberOfValues =
-            this.selectDimensions.size === this.selectedDimensionValues.length;
-        return this.selectDimensionsLoaded && sameNumberOfValues;
-    }
-
     private get selectedDimensionValueIds(): string[] {
         return this.selectedDimensionValues.map((value: MdsValue) => value.id);
     }
@@ -197,6 +192,7 @@ export class TemplateComponent implements OnInit {
         this.route.queryParams
             .pipe(filter((params) => params.topic || params.collectionId))
             .subscribe(async (params) => {
+                this.latestParams = params;
                 // due to reconnect with queryParams, this might be called twice, thus, initializedWithParams is important
                 if (params.collectionId && !this.initializedWithParams) {
                     // set the topicCollectionID
@@ -682,15 +678,46 @@ export class TemplateComponent implements OnInit {
      * Called by wlo-filter-bar selectDimensionsChanged output event.
      */
     selectDimensionsChanged(event: Map<string, MdsWidget>): void {
-        this.selectDimensions = event;
+        // iterate incoming select dimensions and insert new or overwrite existing ones
+        event.forEach((value: MdsWidget, key: string): void => {
+            this.selectDimensions.set(key, value);
+        });
         this.selectDimensionsLoaded = true;
     }
 
     /**
      * Called by wlo-filter-bar selectValuesChanged output event.
      */
-    selectValuesChanged(event: MdsValue[]): void {
-        this.selectedDimensionValues = event;
+    selectValuesChanged(): void {
+        if (!this.latestParams) {
+            return;
+        }
+        // changes are detected using the URL params to also include values of different filterbars
+        // convert both select dimension keys and params into the same format
+        // Map<$virtual:key$, ...> => [key, ...]
+        const convertedSelectDimensionKeys: string[] = Array.from(this.selectDimensions.keys())
+            .map((key: string) => key.split('$')?.[1] ?? key)
+            .map((key: string) => key.split('virtual:')?.[1] ?? key);
+        const latestParamKeys: string[] = Object.keys(this.latestParams);
+        const selectedDimensionValues: MdsValue[] = [];
+        // iterate over select dimension keys to ensure correct positioning
+        convertedSelectDimensionKeys.forEach((dimensionKey) => {
+            if (latestParamKeys.includes(dimensionKey)) {
+                selectedDimensionValues.push({
+                    id: this.latestParams[dimensionKey],
+                });
+            } else {
+                console.log(
+                    'DEBUGGING: Not included in params -> push empty string',
+                    this.latestParams,
+                    dimensionKey,
+                );
+                selectedDimensionValues.push({
+                    id: '',
+                });
+            }
+        });
+        this.selectedDimensionValues = selectedDimensionValues;
     }
 
     // MODIFICATIONS OF THE PAGE //
