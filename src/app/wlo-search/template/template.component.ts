@@ -23,6 +23,7 @@ import { SearchResultNode } from 'ngx-edu-sharing-api/lib/api/models/search-resu
 import { Value } from 'ngx-edu-sharing-api/lib/api/models/value';
 import { EduSharingUiCommonModule, SpinnerComponent } from 'ngx-edu-sharing-ui';
 import {
+    ColorChangeEvent,
     FilterBarComponent,
     SideMenuItemComponent,
     SideMenuWrapperComponent,
@@ -30,6 +31,7 @@ import {
     StatisticsSummaryComponent,
     TopicHeaderComponent,
     TopicsColumnBrowserComponent,
+    WidgetNodeAddedEvent,
 } from 'ngx-edu-sharing-wlo-pages';
 import { firstValueFrom, Observable } from 'rxjs';
 import { filter, shareReplay } from 'rxjs/operators';
@@ -74,9 +76,9 @@ import {
 import { PageConfig } from './page-config';
 import { PageVariantConfig } from './page-variant-config';
 import { GridTile } from './swimlane/grid-tile';
+import { Swimlane } from './swimlane/swimlane';
 import { SwimlaneComponent } from './swimlane/swimlane.component';
 import { SwimlaneSettingsDialogComponent } from './swimlane/swimlane-settings-dialog/swimlane-settings-dialog.component';
-import { Swimlane } from './swimlane/swimlane';
 
 @Component({
     standalone: true,
@@ -456,11 +458,12 @@ export class TemplateComponent implements OnInit {
         // listen to custom colorChange event dispatched by wlo-user-configurable
         document.getElementsByTagName('body')[0].addEventListener(
             'colorChange',
-            async (e: CustomEvent) => {
+            async (e: CustomEvent<ColorChangeEvent>): Promise<void> => {
                 console.log('DEBUG: colorChange event', e);
-                const color: string = e.detail?.color ?? '';
-                const pageVariantNode: Node = e.detail?.pageVariantNode ?? null;
-                const swimlaneIndex: number = e.detail?.swimlaneIndex ?? -1;
+                const colorChangeDetails: ColorChangeEvent = e.detail;
+                const color: string = colorChangeDetails?.color ?? '';
+                const pageVariantNode: Node = colorChangeDetails?.pageVariantNode ?? null;
+                const swimlaneIndex: number = colorChangeDetails?.swimlaneIndex ?? -1;
 
                 if (
                     color !== '' &&
@@ -492,12 +495,13 @@ export class TemplateComponent implements OnInit {
         // listen to custom colorChange event dispatched by wlo-user-configurable
         document.getElementsByTagName('body')[0].addEventListener(
             'widgetNodeAdded',
-            async (e: CustomEvent) => {
+            async (e: CustomEvent<WidgetNodeAddedEvent>): Promise<void> => {
                 console.log('DEBUG: widgetNodeAdded event', e);
-                const pageVariantNode: Node = e.detail?.pageVariantNode ?? null;
-                const swimlaneIndex: number = e.detail?.swimlaneIndex ?? -1;
-                const gridIndex: number = e.detail?.gridIndex ?? -1;
-                const widgetNodeId: string = e.detail?.widgetNodeId ?? '';
+                const widgetNodeDetails: WidgetNodeAddedEvent = e.detail;
+                const pageVariantNode: Node = widgetNodeDetails?.pageVariantNode ?? null;
+                const swimlaneIndex: number = widgetNodeDetails?.swimlaneIndex ?? -1;
+                const gridIndex: number = widgetNodeDetails?.gridIndex ?? -1;
+                const widgetNodeId: string = widgetNodeDetails?.widgetNodeId ?? '';
 
                 const validParentVariant: boolean =
                     pageVariantNode && pageVariantNode.ref.id === this.pageVariantNode.ref.id;
