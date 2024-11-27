@@ -62,7 +62,11 @@
       ></wlo-side-menu-item>
     </ng-container>
     <ng-container slot="content">
-      <ng-container *ngIf="selectedMenuItem === menuItems.profiling">
+      <!-- Note: Multiple wlo-filter-bar items will overwrite each other -->
+      <!-- Workaround: -->
+      <!-- * use *ngIf to delay the initialization -->
+      <!-- * use [hidden] to still load it in the background -->
+      <div [hidden]="selectedMenuItem !== menuItems.profiling" *ngIf="initialLoadSuccessfully">
         <h2 class="side-menu-header">Wer bist du?</h2>
         <wlo-filter-bar
           alignment="vertical"
@@ -74,7 +78,7 @@
           (selectDimensionsChanged)="selectDimensionsChanged($event)"
           (selectValuesChanged)="selectValuesChanged()"
         ></wlo-filter-bar>
-      </ng-container>
+      </div>
       <ng-container *ngIf="selectedMenuItem === menuItems.topicTree">
         <h2 class="side-menu-header">Themenbaum von {{ topic() }}</h2>
         <wlo-topics-column-browser
