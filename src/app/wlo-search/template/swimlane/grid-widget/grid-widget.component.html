@@ -39,6 +39,15 @@
     [height]="'400'"
   ></wlo-topics-column-browser>
 </ng-container>
+<ng-container *ngIf="widgetType === 'wlo-topics-tree-table'">
+  <wlo-topics-tree-table
+    *ngIf="contextNodeId"
+    [class]="widgetClasses ? widgetClasses : ''"
+    [contextNodeId]="contextNodeId"
+    [customUrl]="retrieveCustomUrl"
+    [defaultNodeId]="defaultTopicsTreeTableNodeId"
+  ></wlo-topics-tree-table>
+</ng-container>
 <ng-container *ngIf="widgetType === 'wlo-user-configurable'">
   <wlo-user-configurable
     class="user-configurable"

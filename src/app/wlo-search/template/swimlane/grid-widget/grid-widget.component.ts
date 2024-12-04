@@ -3,6 +3,7 @@ import {
     defaultAiTextWidgetNodeId,
     defaultCollectionChipsNodeId,
     defaultTopicsColumnBrowserNodeId,
+    defaultTopicsTreeTableNodeId,
     defaultUserConfigurableNodeId,
     parentWidgetConfigNodeId,
     retrieveCustomUrl,
@@ -13,6 +14,7 @@ import {
     AiTextWidgetComponent,
     CollectionChipsComponent,
     TopicsColumnBrowserComponent,
+    TopicsTreeTableComponent,
     UserConfigurableComponent,
 } from 'ngx-edu-sharing-wlo-pages';
 
@@ -23,6 +25,7 @@ import {
         AiTextWidgetComponent,
         CollectionChipsComponent,
         TopicsColumnBrowserComponent,
+        TopicsTreeTableComponent,
         UserConfigurableComponent,
         SharedModule,
     ],
@@ -47,6 +50,7 @@ export class GridWidgetComponent {
     defaultAiTextWidgetNodeId: string = defaultAiTextWidgetNodeId;
     defaultCollectionChipsNodeId: string = defaultCollectionChipsNodeId;
     defaultTopicsColumnBrowserNodeId: string = defaultTopicsColumnBrowserNodeId;
+    defaultTopicsTreeTableNodeId: string = defaultTopicsTreeTableNodeId;
     defaultUserConfigurableNodeId: string = defaultUserConfigurableNodeId;
     parentWidgetConfigNodeId: string = parentWidgetConfigNodeId;
 
