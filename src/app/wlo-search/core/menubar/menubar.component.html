@@ -116,21 +116,21 @@
                   opens-right
                 "
                 role="none"
-                aria-haspopup="true"
-                aria-label="News"
                 (mouseenter)="onMouseEnterNews()"
                 (mouseleave)="onMouseLeaveNews()"
               >
                 <a
                   href="{{ wordpressUrl }}/news/"
                   role="menuitem"
+                  aria-haspopup="true"
                   (click)="onNewsLinkClicked($event)"
                   >News</a
                 >
                 <ul
                   class="vertical menu submenu is-dropdown-submenu first-sub"
                   data-submenu=""
-                  role="menubar"
+                  role="menu"
+                  aria-label="News"
                   [style.display]="(newsSubMenuOpen | async) ? 'flex' : 'none'"
                 >
                   <li
