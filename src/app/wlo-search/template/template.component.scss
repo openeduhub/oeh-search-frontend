@@ -62,31 +62,6 @@
     }
 }
 
-.fachportal-filterbar {
-    position: sticky;
-    top: 0;
-    margin: -20px calc(50% - 50vw) 40px;
-    padding-right: calc(var(--offcanvas-menu-width) + var(--offcanvas-offset));
-    display: flex;
-    justify-content: center;
-    background: #f5f5f5;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-    z-index: 99;
-
-    &.reserve-space-left {
-        padding-left: calc(var(--offcanvas-menu-width) + var(--offcanvas-offset));
-    }
-
-    .fachportal-filterbar-content {
-        display: flex;
-        flex-direction: column;
-        overflow: auto;
-        width: 100%;
-        max-width: 1200px;
-        padding: 0.6em;
-    }
-}
-
 @media only screen and (min-width: 901px) {
     .template-header {
         margin-left: calc(50% - 50vw);

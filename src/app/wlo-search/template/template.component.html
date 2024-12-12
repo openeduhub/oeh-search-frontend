@@ -108,25 +108,6 @@
     </ng-container>
   </wlo-side-menu-wrapper>
 
-  <!-- FILTER BAR -->
-  <div
-    class="variable-select-bar fachportal-filterbar"
-    [class.reserve-space-left]="userHasEditRights()"
-  >
-    <div class="fachportal-filterbar-content">
-      <wlo-filter-bar
-        alignment="horizontal"
-        [requestInProgress]="requestInProgress"
-        [metadataSetName]="defaultMds"
-        [viewModes]="['select']"
-        [selectDimensionKeysOfInterest]="verticalFilterbarDimensionKeys"
-        (selectDimensionsChanged)="selectDimensionsChanged($event)"
-        (selectValuesChanged)="selectValuesChanged()"
-      ></wlo-filter-bar>
-    </div>
-  </div>
-
-  <hr />
   <div class="portal-outer-wrapper" [class.reserve-space-left]="userHasEditRights()">
     <div class="portal-wrapper">
       <div class="portal-wrapper-left">
