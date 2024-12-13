@@ -9,8 +9,14 @@ $rem: 20px;
     position: relative !important;
 }
 
-.menu-item-suche {
-    text-decoration: underline;
+// Note: this class is important for Tab navigation working properly
+.invisible {
+    visibility: hidden;
+}
+
+// Note: the search item should be visually marked as active item
+.menu-item-suche a {
+    text-decoration: underline !important;
 }
 
 @media screen and (max-width: 1023px) {
@@ -371,6 +377,7 @@ $rem: 20px;
     }
     .dropdown.menu.vertical > li .is-dropdown-submenu {
         top: 0;
+        margin-left: 0;
     }
     .dropdown.menu.vertical > li.opens-right > .is-dropdown-submenu {
         right: auto;
@@ -633,4 +640,145 @@ $rem: 20px;
             box-shadow: 0 8px 12px -2px rgba(0, 0, 0, 0.4);
         }
     }
+}
+
+// The following styles were extracted from wirlernenonline.de
+// in order to make the animations working properly
+.linear {
+    transition-timing-function: linear !important;
+}
+
+.fade-in.mui-enter {
+    transition-duration: 500ms;
+    transition-timing-function: linear;
+    opacity: 0;
+    transition-property: opacity;
+}
+
+.fade-in.mui-enter.mui-enter-active {
+    opacity: 1;
+}
+
+.fade-out.mui-leave {
+    transition-duration: 500ms;
+    transition-timing-function: linear;
+    opacity: 1;
+    transition-property: opacity;
+}
+
+.fade-out.mui-leave.mui-leave-active {
+    opacity: 0;
+}
+
+// The following styles were extracted from wirlernenonline.de
+// in order to make the mobile view working properly
+.menu.is-drilldown-submenu {
+    margin: 0;
+}
+
+.is-drilldown {
+    min-height: 288px;
+    max-width: 100%;
+}
+
+.is-drilldown {
+    position: relative;
+    overflow: hidden;
+}
+.is-drilldown li {
+    display: block;
+}
+.is-drilldown.animate-height {
+    transition: height 0.5s;
+}
+
+.drilldown a {
+    // Note: Hard fix for now, as the body cannot be changed
+    padding: #{0.7 * $rem} #{1 * $rem};
+    background: #ececec;
+}
+
+.drilldown .is-drilldown-submenu {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    z-index: -1;
+    width: 100%;
+    background: #ececec;
+    transition: transform 0.15s linear;
+}
+.drilldown .is-drilldown-submenu.is-active {
+    z-index: 1;
+    display: block;
+    transform: translateX(-100%);
+}
+.drilldown .is-drilldown-submenu.is-closing {
+    transform: translateX(100%);
+}
+
+.drilldown .nested.is-drilldown-submenu {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.drilldown .drilldown-submenu-cover-previous {
+    min-height: 100%;
+}
+
+.drilldown .is-drilldown-submenu-parent > a {
+    position: relative;
+}
+.drilldown .is-drilldown-submenu-parent > a::after {
+    display: block;
+    width: 0;
+    height: 0;
+    border: inset 6px;
+    content: '';
+    border-right-width: 0;
+    border-left-style: solid;
+    border-color: transparent transparent transparent #003e82;
+    position: absolute;
+    top: 50%;
+    margin-top: -6px;
+    right: #{1 * $rem};
+}
+
+.drilldown.align-left .is-drilldown-submenu-parent > a::after {
+    display: block;
+    width: 0;
+    height: 0;
+    border: inset 6px;
+    content: '';
+    border-right-width: 0;
+    border-left-style: solid;
+    border-color: transparent transparent transparent #003e82;
+    right: #{1 * $rem};
+    left: auto;
+}
+
+.drilldown.align-right .is-drilldown-submenu-parent > a::after {
+    display: block;
+    width: 0;
+    height: 0;
+    border: inset 6px;
+    content: '';
+    border-left-width: 0;
+    border-right-style: solid;
+    border-color: transparent #003e82 transparent transparent;
+    right: auto;
+    left: #{1 * $rem};
+}
+
+.drilldown .js-drilldown-back > a::before {
+    display: block;
+    width: 0;
+    height: 0;
+    border: inset 6px;
+    content: '';
+    border-left-width: 0;
+    border-right-style: solid;
+    border-color: transparent #003e82 transparent transparent;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: #{0.75 * $rem};
 }

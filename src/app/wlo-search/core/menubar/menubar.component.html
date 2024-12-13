@@ -5,15 +5,24 @@
     - Replace static URLs with {{ wordpressUrl }}
     - Replace link to suche.wirlernenonline.de with `<a [routerLink]="routerPath" role="menuitem">Suche</a>`
     - Add `[class.hide-on-mobile]="!mobileMenuOpen"` to `#main-menu`
-    - Add `(click)="mobileMenuOpen = !mobileMenuOpen"` to `button.menu-icon`
-    - Add `(click)="newsSubMenuOpen = !newsSubMenuOpen"` to "News" `a`
+    - Add `(click)="toggleMobileMenu()"` to `button.menu-icon`, which adds animation classes
+    - Add `(click)="onWloLinkClicked($event)"` to "WLO" `a`
+    - Add `(click)="onNewsLinkClicked($event)"` to "News" `a`
+    - Add to "WLO" sub menu `li`:
+      ```
+        (mouseenter)="changeWloMenuOpen(true)"
+        (mouseleave)="changeWloMenuOpen(false)"
+      ```
     - Add to "News" sub menu `li`:
       ```
-        (mouseenter)="onMouseEnterNews()"
-        (mouseleave)="onMouseLeaveNews()"
+        (mouseenter)="changeNewsMenuOpen(true)"
+        (mouseleave)="changeNewsMenuOpen(false)"
       ```
-    - Add `(click)="onNewsLinkClicked($event)` to "News" sub menu `a`
-    - Add `[style.display]="(newsSubMenuOpen | async) ? 'flex' : 'none'"` to "News" sub menu `ul`\
+    - Add `js-drilldown-back` elements for mobile view
+    - Add `(click)="onWloLinkClicked($event)` to "WLO" `js-drilldown-back` `a`
+    - Add `(click)="onNewsLinkClicked($event)` to "News" `js-drilldown-back` `a`
+    - Add `[style.display]="wloSubMenuOpen() || isMobile() ? 'flex' : 'none'"` to "WLO" sub menu `ul`
+    - Add `[style.display]="newsSubMenuOpen() || isMobile() ? 'flex' : 'none'"` to "News" sub menu `ul`
     - Replace `href="#main-content"` on `a.skip-link` with:
       ```
         href
@@ -21,6 +30,8 @@
         (click)="skipTo('MAIN_CONTENT')"
       ```
     - Replace logo src with `./assets/images/wlo-logo.svg`
+    - Fix aria-haspopup and aria-label placements due to results of Lighthouse report
+    - Add conditional `drilldown` classes for mobile support
 -->
 
 <nav id="site-header" class="site-header" aria-label="WirLernenOnline: Freie Bildung zum Mitmachen">
@@ -30,8 +41,9 @@
     onclick="return false;"
     (click)="skipTo('MAIN_CONTENT')"
     aria-label="skip-link"
-    >Zum Inhalt springen</a
   >
+    Zum Inhalt springen
+  </a>
   <div
     class="title-bar"
     data-responsive-toggle="main-menu"
@@ -43,17 +55,18 @@
       type="button"
       data-toggle=""
       aria-label="Hauptmenü"
-      (click)="mobileMenuOpen = !mobileMenuOpen"
+      (click)="toggleMobileMenu()"
     ></button>
     <a class="mobile-logo-container" href="{{ wordpressUrl }}" aria-label="Link zur Startseite">
       <img class="logo" src="./assets/wlo-search/images/wlo-logo.svg" alt="Logo WLO" />
     </a>
   </div>
   <div
-    class="top-bar"
+    #mainMenu
     id="main-menu"
-    data-animate="fade-in fade-out"
+    class="top-bar"
     [class.hide-on-mobile]="!mobileMenuOpen"
+    data-animate="fade-in fade-out"
   >
     <div class="top-bar-left position-relative">
       <div class="grid-container">
@@ -64,125 +77,263 @@
             </a>
           </div>
           <div class="large-shrink small-12 cell">
-            <ul
-              class="vertical large-horizontal menu top-menu dropdown"
-              data-responsive-menu="drilldown large-dropdown"
-              role="menubar"
-              data-dropdown-menu="t07ua1-dropdown-menu"
-              data-mutate="xyfd5v-responsive-menu"
-            >
-              <li
-                id="menu-item-11613"
-                class="
-                  menu-item
-                  menu-item-type-custom
-                  menu-item-object-custom
-                  menu-item-11613
-                  menu-item-suche
-                "
-                role="none"
+            <div [class.is-drilldown]="isMobile()">
+              <ul
+                class="vertical large-horizontal menu top-menu"
+                [ngClass]="!isMobile() ? 'dropdown' : 'drilldown'"
+                role="menubar"
+                data-dropdown-menu="jynury-dropdown-menu"
+                data-events="mutate"
+                data-mutate="agglvg-responsive-menu"
+                data-responsive-menu="drilldown large-dropdown"
+                aria-multiselectable="false"
               >
-                <a [routerLink]="routerPath" role="menuitem">Suche</a>
-              </li>
-              <li
-                id="menu-item-9932"
-                class="
-                  menu-item
-                  menu-item-type-post_type
-                  menu-item-object-page menu-item-9932 menu-item-fachportale
-                "
-                role="none"
-              >
-                <a href="{{ wordpressUrl }}/fachportale/" role="menuitem">Fachportale</a>
-              </li>
-              <li
-                id="menu-item-37338"
-                class="
-                  menu-item
-                  menu-item-type-post_type
-                  menu-item-object-page menu-item-37338 menu-item-wirlernenonline
-                "
-                role="none"
-              >
-                <a href="{{ wordpressUrl }}/wirlernenonline/" role="menuitem">Über WLO</a>
-              </li>
-              <li
-                id="menu-item-37339"
-                class="
-                  menu-item
-                  menu-item-type-post_type
-                  menu-item-object-page menu-item-has-children menu-item-37339 menu-item-news
-                  is-dropdown-submenu-parent
-                  opens-right
-                "
-                role="none"
-                (mouseenter)="onMouseEnterNews()"
-                (mouseleave)="onMouseLeaveNews()"
-              >
-                <a
-                  href="{{ wordpressUrl }}/news/"
-                  role="menuitem"
-                  aria-haspopup="true"
-                  (click)="onNewsLinkClicked($event)"
-                  >News</a
+                <!-- WLO (dropdown menu) -->
+                <li
+                  id="menu-item-110570"
+                  class="
+                    menu-item
+                    menu-item-type-post_type
+                    menu-item-object-page
+                    menu-item-home
+                    menu-item-has-children
+                    menu-item-110570
+                    menu-item-wirlernenonline.de
+                  "
+                  [ngClass]="
+                    !isMobile()
+                      ? 'is-dropdown-submenu-parent opens-right'
+                      : 'is-drilldown-submenu-parent'
+                  "
+                  role="none"
+                  [attr.aria-expanded]="wloSubMenuOpen()"
+                  (mouseenter)="changeWloMenuOpen(true)"
+                  (mouseleave)="changeWloMenuOpen(false)"
                 >
-                <ul
-                  class="vertical menu submenu is-dropdown-submenu first-sub"
-                  data-submenu=""
-                  role="menu"
-                  aria-label="News"
-                  [style.display]="(newsSubMenuOpen | async) ? 'flex' : 'none'"
+                  <a
+                    href="{{ wordpressUrl }}"
+                    role="menuitem"
+                    aria-haspopup="true"
+                    (click)="onWloLinkClicked($event)"
+                  >
+                    WLO
+                  </a>
+                  <ul
+                    #wloSubMenu
+                    class="vertical menu submenu first-sub"
+                    [class.invisible]="isMobile() && !wloSubMenuOpen()"
+                    [class.is-active]="isMobile() && wloSubMenuOpen()"
+                    [ngClass]="
+                      !isMobile()
+                        ? 'is-dropdown-submenu'
+                        : 'is-drilldown-submenu drilldown-submenu-cover-previous'
+                    "
+                    [style.display]="wloSubMenuOpen() || isMobile() ? 'flex' : 'none'"
+                    data-submenu=""
+                    role="menu"
+                    [attr.aria-hidden]="!wloSubMenuOpen()"
+                    aria-label="WLO"
+                  >
+                    <li class="js-drilldown-back" *ngIf="isMobile()">
+                      <a href="" tabindex="0" (click)="onWloLinkClicked($event)"> Back </a>
+                    </li>
+                    <li
+                      id="menu-item-110572"
+                      class="
+                        menu-item
+                        menu-item-type-post_type
+                        menu-item-object-page menu-item-110572 menu-item-qualitatssicherung
+                        is-submenu-item
+                      "
+                      [ngClass]="
+                        !isMobile() ? 'is-dropdown-submenu-item' : 'is-drilldown-submenu-item'
+                      "
+                      role="none"
+                    >
+                      <a href="{{ wordpressUrl }}/qualitatssicherung/" role="menuitem">
+                        Qualitätssicherung
+                      </a>
+                    </li>
+                    <li
+                      id="menu-item-110573"
+                      class="
+                        menu-item
+                        menu-item-type-post_type
+                        menu-item-object-page
+                        menu-item-110573
+                        menu-item-quellenerschliessung-uebersicht
+                        is-submenu-item
+                      "
+                      [ngClass]="
+                        !isMobile() ? 'is-dropdown-submenu-item' : 'is-drilldown-submenu-item'
+                      "
+                      role="none"
+                    >
+                      <a href="{{ wordpressUrl }}/quellenerschliessung-uebersicht/" role="menuitem">
+                        Quellenerschließung
+                      </a>
+                    </li>
+                    <li
+                      id="menu-item-110571"
+                      class="
+                        menu-item
+                        menu-item-type-post_type
+                        menu-item-object-page menu-item-110571 menu-item-plugins
+                        is-submenu-item
+                      "
+                      [ngClass]="
+                        !isMobile() ? 'is-dropdown-submenu-item' : 'is-drilldown-submenu-item'
+                      "
+                      role="none"
+                    >
+                      <a href="{{ wordpressUrl }}/plugins/" role="menuitem">WLO Plug-ins</a>
+                    </li>
+                  </ul>
+                </li>
+                <!-- OER-Statistik -->
+                <li
+                  id="menu-item-94214"
+                  class="
+                    menu-item
+                    menu-item-type-post_type
+                    menu-item-object-page menu-item-94214 menu-item-statistics
+                  "
+                  role="none"
                 >
-                  <li
-                    id="menu-item-37341"
-                    class="
-                      menu-item
-                      menu-item-type-post_type
-                      menu-item-object-page menu-item-37341 menu-item-neuigkeiten
-                      is-submenu-item is-dropdown-submenu-item
-                    "
-                    role="none"
+                  <a href="{{ wordpressUrl }}/statistics/" role="menuitem">OER-Statistik</a>
+                </li>
+                <!-- OER -->
+                <li
+                  id="menu-item-67902"
+                  class="
+                    menu-item
+                    menu-item-type-post_type
+                    menu-item-object-page menu-item-67902 menu-item-oer
+                  "
+                  role="none"
+                >
+                  <a href="{{ wordpressUrl }}/oer/" role="menuitem">OER</a>
+                </li>
+                <!-- Suche -->
+                <li
+                  id="menu-item-11613"
+                  class="
+                    menu-item menu-item-type-custom menu-item-object-custom
+                    current-menu-item
+                    menu-item-11613 menu-item-suche
+                  "
+                  role="none"
+                >
+                  <a [routerLink]="routerPath" role="menuitem">Suche</a>
+                </li>
+                <!-- Fachportale -->
+                <li
+                  id="menu-item-55118"
+                  class="
+                    menu-item
+                    menu-item-type-custom
+                    menu-item-object-custom
+                    menu-item-55118
+                    menu-item-fachportale
+                  "
+                  role="none"
+                >
+                  <a href="{{ wordpressUrl }}/fachportale/" role="menuitem">Fachportale</a>
+                </li>
+                <!-- News (dropdown menu) -->
+                <li
+                  id="menu-item-37339"
+                  class="
+                    menu-item
+                    menu-item-type-post_type
+                    menu-item-object-page menu-item-has-children menu-item-37339 menu-item-news
+                  "
+                  [ngClass]="
+                    !isMobile()
+                      ? 'is-dropdown-submenu-parent opens-right'
+                      : 'is-drilldown-submenu-parent'
+                  "
+                  role="none"
+                  [attr.aria-expanded]="newsSubMenuOpen()"
+                  (mouseenter)="changeNewsMenuOpen(true)"
+                  (mouseleave)="changeNewsMenuOpen(false)"
+                >
+                  <a
+                    href="{{ wordpressUrl }}/news/"
+                    role="menuitem"
+                    aria-haspopup="true"
+                    (click)="onNewsLinkClicked($event)"
                   >
-                    <a href="{{ wordpressUrl }}/neuigkeiten/" role="menuitem">Blog</a>
-                  </li>
-                  <li
-                    id="menu-item-37337"
-                    class="
-                      menu-item
-                      menu-item-type-post_type
-                      menu-item-object-page menu-item-37337 menu-item-presse-2
-                      is-submenu-item is-dropdown-submenu-item
+                    News
+                  </a>
+                  <ul
+                    #newsSubMenu
+                    class="vertical menu submenu first-sub"
+                    [class.invisible]="isMobile() && !newsSubMenuOpen()"
+                    [class.is-active]="isMobile() && newsSubMenuOpen()"
+                    [ngClass]="
+                      !isMobile()
+                        ? 'is-dropdown-submenu'
+                        : 'is-drilldown-submenu drilldown-submenu-cover-previous'
                     "
-                    role="none"
+                    [style.display]="newsSubMenuOpen() || isMobile() ? 'flex' : 'none'"
+                    data-submenu=""
+                    role="menu"
+                    [attr.aria-hidden]="!newsSubMenuOpen()"
+                    aria-label="News"
                   >
-                    <a href="{{ wordpressUrl }}/presse-2/" role="menuitem">Presse</a>
-                  </li>
-                  <li
-                    id="menu-item-37342"
-                    class="
-                      menu-item
-                      menu-item-type-post_type
-                      menu-item-object-page menu-item-37342 menu-item-newsletter
-                      is-submenu-item is-dropdown-submenu-item
-                    "
-                    role="none"
-                  >
-                    <a href="{{ wordpressUrl }}/newsletter/" role="menuitem">Newsletter</a>
-                  </li>
-                </ul>
-              </li>
-              <li
-                id="menu-item-37340"
-                class="
-                  menu-item
-                  menu-item-type-post_type
-                  menu-item-object-page menu-item-37340 menu-item-oerverstehen
-                "
-                role="none"
-              >
-                <a href="{{ wordpressUrl }}/oerverstehen/" role="menuitem">OER</a>
-              </li>
-            </ul>
+                    <li class="js-drilldown-back" *ngIf="isMobile()">
+                      <a href="" tabindex="0" (click)="onNewsLinkClicked($event)"> Back </a>
+                    </li>
+                    <li
+                      id="menu-item-37341"
+                      class="
+                        menu-item
+                        menu-item-type-post_type
+                        menu-item-object-page menu-item-37341 menu-item-neuigkeiten
+                        is-submenu-item
+                      "
+                      [ngClass]="
+                        !isMobile() ? 'is-dropdown-submenu-item' : 'is-drilldown-submenu-item'
+                      "
+                      role="none"
+                    >
+                      <a href="{{ wordpressUrl }}/neuigkeiten/" role="menuitem">Blog</a>
+                    </li>
+                    <li
+                      id="menu-item-37342"
+                      class="
+                        menu-item
+                        menu-item-type-post_type
+                        menu-item-object-page menu-item-37342 menu-item-newsletter
+                        is-submenu-item
+                      "
+                      [ngClass]="
+                        !isMobile() ? 'is-dropdown-submenu-item' : 'is-drilldown-submenu-item'
+                      "
+                      role="none"
+                    >
+                      <a href="{{ wordpressUrl }}/newsletter/" role="menuitem">Newsletter</a>
+                    </li>
+                    <li
+                      id="menu-item-37337"
+                      class="
+                        menu-item
+                        menu-item-type-post_type
+                        menu-item-object-page menu-item-37337 menu-item-presse-2
+                        is-submenu-item
+                      "
+                      [ngClass]="
+                        !isMobile() ? 'is-dropdown-submenu-item' : 'is-drilldown-submenu-item'
+                      "
+                      role="none"
+                    >
+                      <a href="{{ wordpressUrl }}/presse/" role="menuitem">Presse</a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
           </div>
           <div class="cell small-12 large-auto">
             <ul class="menu top-call-to-action-menu align-right">
