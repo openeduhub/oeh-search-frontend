@@ -114,6 +114,7 @@
                     href="{{ wordpressUrl }}"
                     role="menuitem"
                     aria-haspopup="true"
+                    [attr.tabindex]="wloSubMenuOpen() || newsSubMenuOpen() ? -1 : 0"
                     (click)="onWloLinkClicked($event)"
                   >
                     WLO
@@ -200,7 +201,13 @@
                   "
                   role="none"
                 >
-                  <a href="{{ wordpressUrl }}/statistics/" role="menuitem">OER-Statistik</a>
+                  <a
+                    [attr.tabindex]="wloSubMenuOpen() || newsSubMenuOpen() ? -1 : 0"
+                    href="{{ wordpressUrl }}/statistics/"
+                    role="menuitem"
+                  >
+                    OER-Statistik
+                  </a>
                 </li>
                 <!-- OER -->
                 <li
@@ -212,7 +219,13 @@
                   "
                   role="none"
                 >
-                  <a href="{{ wordpressUrl }}/oer/" role="menuitem">OER</a>
+                  <a
+                    [attr.tabindex]="wloSubMenuOpen() || newsSubMenuOpen() ? -1 : 0"
+                    href="{{ wordpressUrl }}/oer/"
+                    role="menuitem"
+                  >
+                    OER
+                  </a>
                 </li>
                 <!-- Suche -->
                 <li
@@ -224,7 +237,13 @@
                   "
                   role="none"
                 >
-                  <a [routerLink]="routerPath" role="menuitem">Suche</a>
+                  <a
+                    [attr.tabindex]="wloSubMenuOpen() || newsSubMenuOpen() ? -1 : 0"
+                    [routerLink]="routerPath"
+                    role="menuitem"
+                  >
+                    Suche
+                  </a>
                 </li>
                 <!-- Fachportale -->
                 <li
@@ -238,7 +257,13 @@
                   "
                   role="none"
                 >
-                  <a href="{{ wordpressUrl }}/fachportale/" role="menuitem">Fachportale</a>
+                  <a
+                    [attr.tabindex]="wloSubMenuOpen() || newsSubMenuOpen() ? -1 : 0"
+                    href="{{ wordpressUrl }}/fachportale/"
+                    role="menuitem"
+                  >
+                    Fachportale
+                  </a>
                 </li>
                 <!-- News (dropdown menu) -->
                 <li
@@ -262,6 +287,7 @@
                     href="{{ wordpressUrl }}/news/"
                     role="menuitem"
                     aria-haspopup="true"
+                    [attr.tabindex]="wloSubMenuOpen() || newsSubMenuOpen() ? -1 : 0"
                     (click)="onNewsLinkClicked($event)"
                   >
                     News
