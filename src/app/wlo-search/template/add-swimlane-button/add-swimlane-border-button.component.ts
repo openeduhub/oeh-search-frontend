@@ -5,11 +5,11 @@ import { swimlaneTypeOptions } from '../custom-definitions';
 import { SelectOption } from '../swimlane/swimlane-settings-dialog/select-option';
 
 @Component({
-    selector: 'app-add-swimlane-border-button',
     standalone: true,
     imports: [EduSharingUiCommonModule, SharedModule],
+    selector: 'app-add-swimlane-border-button',
     templateUrl: './add-swimlane-border-button.component.html',
-    styleUrl: './add-swimlane-border-button.component.scss',
+    styleUrls: ['./add-swimlane-border-button.component.scss'],
 })
 export class AddSwimlaneBorderButtonComponent {
     @Input() position: string = 'top';

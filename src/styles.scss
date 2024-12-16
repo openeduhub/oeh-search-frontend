@@ -146,6 +146,38 @@ body {
     background: $white;
 }
 
+.action-btn {
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0 4px 4px 0 $black-40;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    &:disabled,
+    &[disabled] {
+        cursor: not-allowed;
+    }
+
+    &.btn-default {
+        color: $gray-dark;
+        background: $gray-light;
+    }
+
+    &.btn-modify {
+        color: $primary-dark;
+        background: $neon-default;
+    }
+
+    mat-icon {
+        font-size: 24px;
+    }
+}
+
 .alert-warning {
     margin: 24px 24px 0 24px !important;
     padding: 16px;
