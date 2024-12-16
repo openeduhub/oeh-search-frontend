@@ -13,6 +13,7 @@
 @import 'search/shared/collection-card/collection-card.component.theme.scss';
 @import 'search/shared/details/details.component.theme.scss';
 @import 'search/shared/report-problem/report-problem.component.theme.scss';
+@import 'template/template.component.theme.scss';
 @import 'wlo-search.component.theme.scss';
 
 @mixin components-themes($theme) {
@@ -31,6 +32,7 @@
     @include search-filterbar-theme($theme);
     @include search-page-theme($theme);
     @include subjects-portal-theme($theme);
+    @include template-page-theme($theme);
     @include wlo-search-theme($theme);
 }
 

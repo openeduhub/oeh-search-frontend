@@ -1,0 +1,23 @@
+@use '@angular/material' as mat;
+@import '../functions';
+
+@mixin template-page-theme($theme) {
+    $primary: map-get($theme, primary);
+    $customAccent: map-get($theme, custom-accent);
+    $customGray: map-get($theme, custom-gray);
+
+    app-template {
+        // overwrite border radius
+        --mdc-fab-small-container-shape: 4px;
+
+        .action-btn {
+            color: mat.m2-get-color-from-palette($customGray, gray3);
+            background: mat.m2-get-color-from-palette($customGray, gray1);
+
+            &.btn-modify {
+                color: mat.m2-get-color-from-palette($primary);
+                background: mat.m2-get-color-from-palette($customAccent, accent1);
+            }
+        }
+    }
+}

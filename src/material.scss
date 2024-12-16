@@ -39,7 +39,7 @@ $primary-palette: (
 );
 
 $custom-accent: (
-    accent1: #e3f702,
+    accent1: #e4f700,
     accent2: #ec4a70,
     contrast: (
         accent1: rgba(black, 0.87),
@@ -47,7 +47,19 @@ $custom-accent: (
     ),
 );
 
+$custom-gray: (
+    gray1: #f4f4f4,
+    gray2: #cacaca,
+    gray3: #545454,
+    contrast: (
+        gray1: white,
+        gray2: rgba(black, 0.87),
+        gray3: rgba(black, 0.87),
+    ),
+);
+
 $app-custom-accent: mat.m2-define-palette($custom-accent, accent1, accent2, contrast);
+$app-custom-gray: mat.m2-define-palette($custom-gray, gray1, gray2, gray3);
 $app-primary: mat.m2-define-palette($primary-palette);
 $app-accent: mat.m2-define-palette($primary-palette, A200, A100, A400);
 $app-warn: mat.m2-define-palette(mat.$m2-red-palette);

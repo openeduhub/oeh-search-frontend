@@ -141,40 +141,44 @@
                 <!-- action buttons for moving -->
                 <div class="wlo-move-buttons" *ngIf="editMode">
                   <button
-                    class="action-btn btn-default"
+                    mat-mini-fab
+                    class="action-btn"
                     [disabled]="i === 0 || requestInProgress"
                     (click)="moveSwimlanePosition(i, i - 1)"
                     aria-label="Move swimlane upwards"
                   >
-                    <mat-icon>arrow_upward</mat-icon>
+                    <i esIcon="arrow_upward"></i>
                   </button>
                   <button
-                    class="action-btn btn-default"
+                    mat-mini-fab
+                    class="action-btn"
                     [disabled]="i === swimlanes.length - 1 || requestInProgress"
                     (click)="moveSwimlanePosition(i, i + 1)"
                     aria-label="Move swimlane downwards"
                   >
-                    <mat-icon>arrow_downward</mat-icon>
+                    <i esIcon="arrow_downward"></i>
                   </button>
                 </div>
                 <!-- action buttons for modifications -->
                 <div class="wlo-edit-buttons" *ngIf="editMode">
                   <button
+                    mat-mini-fab
                     class="action-btn btn-modify"
                     *ngIf="swimlane.type !== 'spacer'"
                     [disabled]="requestInProgress"
                     (click)="editSwimlane(swimlane, i)"
                     aria-label="Edit swimlane"
                   >
-                    <mat-icon>tune</mat-icon>
+                    <i esIcon="tune"></i>
                   </button>
                   <button
-                    class="action-btn btn-default"
+                    mat-mini-fab
+                    class="action-btn"
                     [disabled]="requestInProgress"
                     (click)="deleteSwimlane(i)"
                     aria-label="Delete swimlane"
                   >
-                    <mat-icon>delete</mat-icon>
+                    <i esIcon="delete"></i>
                   </button>
                 </div>
               </ng-container>
