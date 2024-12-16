@@ -1,4 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { MdsValue, MdsWidget, Node } from 'ngx-edu-sharing-api';
+import {
+    AiTextWidgetComponent,
+    CollectionChipsComponent,
+    TopicsColumnBrowserComponent,
+    TopicsTreeTableComponent,
+    UserConfigurableComponent,
+} from 'ngx-edu-sharing-wlo-pages';
+import { SharedModule } from '../../../shared/shared.module';
 import {
     defaultAiTextWidgetNodeId,
     defaultCollectionChipsNodeId,
@@ -8,27 +17,18 @@ import {
     parentWidgetConfigNodeId,
     retrieveCustomUrl,
 } from '../../custom-definitions';
-import { SharedModule } from '../../../shared/shared.module';
-import { MdsValue, MdsWidget, Node } from 'ngx-edu-sharing-api';
-import {
-    AiTextWidgetComponent,
-    CollectionChipsComponent,
-    TopicsColumnBrowserComponent,
-    TopicsTreeTableComponent,
-    UserConfigurableComponent,
-} from 'ngx-edu-sharing-wlo-pages';
 
 @Component({
-    selector: 'app-grid-widget',
     standalone: true,
     imports: [
         AiTextWidgetComponent,
         CollectionChipsComponent,
+        SharedModule,
         TopicsColumnBrowserComponent,
         TopicsTreeTableComponent,
         UserConfigurableComponent,
-        SharedModule,
     ],
+    selector: 'app-grid-widget',
     templateUrl: './grid-widget.component.html',
     styleUrl: './grid-widget.component.scss',
 })
@@ -47,12 +47,12 @@ export class GridWidgetComponent {
     @Input() widgetType: string;
     @Output() nodeClicked: EventEmitter<Node> = new EventEmitter<Node>();
 
-    defaultAiTextWidgetNodeId: string = defaultAiTextWidgetNodeId;
-    defaultCollectionChipsNodeId: string = defaultCollectionChipsNodeId;
-    defaultTopicsColumnBrowserNodeId: string = defaultTopicsColumnBrowserNodeId;
-    defaultTopicsTreeTableNodeId: string = defaultTopicsTreeTableNodeId;
-    defaultUserConfigurableNodeId: string = defaultUserConfigurableNodeId;
-    parentWidgetConfigNodeId: string = parentWidgetConfigNodeId;
+    readonly defaultAiTextWidgetNodeId: string = defaultAiTextWidgetNodeId;
+    readonly defaultCollectionChipsNodeId: string = defaultCollectionChipsNodeId;
+    readonly defaultTopicsColumnBrowserNodeId: string = defaultTopicsColumnBrowserNodeId;
+    readonly defaultTopicsTreeTableNodeId: string = defaultTopicsTreeTableNodeId;
+    readonly defaultUserConfigurableNodeId: string = defaultUserConfigurableNodeId;
+    readonly parentWidgetConfigNodeId: string = parentWidgetConfigNodeId;
 
     constructor() {}
 
