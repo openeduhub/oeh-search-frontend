@@ -344,27 +344,3 @@
         margin-right: calc(var(--sidebar-offset) / 2);
     }
 }
-
-/* This needs to be on the outside, as dragged elements are added to the body */
-.cdk-drag.component-wrapper {
-    overflow-y: scroll;
-
-    .handle-button,
-    .settings-button {
-        position: absolute;
-        top: 10px;
-        z-index: 10;
-        padding: 5px;
-        color: #222;
-    }
-
-    .settings-button {
-        right: 10px;
-        cursor: pointer;
-    }
-
-    .handle-button {
-        left: 10px;
-        cursor: move;
-    }
-}
