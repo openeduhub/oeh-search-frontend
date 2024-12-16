@@ -128,7 +128,7 @@ $form-typography: mat.m2-define-typography-config(
 html,
 body {
     height: 100%;
-    --primary: $primary-dark;
+    --primary: #{$primary-dark};
 }
 
 // fix opening mat-dialog moves elements with position: sticky
