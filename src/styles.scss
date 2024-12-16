@@ -171,6 +171,7 @@ body {
     display: none;
 }
 
+// TODO: Move into theme file of details component
 .mdc-button--outlined.btn-outline-primary:not(:disabled) {
     color: var(--primary);
     border: 1.5px solid var(--primary);

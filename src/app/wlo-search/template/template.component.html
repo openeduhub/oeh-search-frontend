@@ -1,6 +1,6 @@
 <div
-  class="reloading-indicator"
-  [class.light-bg]="requestInProgress"
+  class="reloading-indicator-bg"
+  [class.transparent-bg]="requestInProgress"
   *ngIf="!pageConfigCheckFailed && (!initialLoadSuccessfully || requestInProgress)"
 >
   <!-- for requestInProgress the page might be too large to display a visible spinner -->

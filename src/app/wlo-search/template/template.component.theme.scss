@@ -2,9 +2,12 @@
 @import '../functions';
 
 @mixin template-page-theme($theme) {
+    $foreground: map-get($theme, foreground);
+    $background: map-get($theme, background);
     $primary: map-get($theme, primary);
     $customAccent: map-get($theme, custom-accent);
     $customGray: map-get($theme, custom-gray);
+    $primary-foreground-color: primary-foreground-color($theme);
 
     app-template {
         // overwrite border radius
@@ -18,6 +21,21 @@
                 color: mat.m2-get-color-from-palette($primary);
                 background: mat.m2-get-color-from-palette($customAccent, accent1);
             }
+        }
+
+        .reloading-indicator-bg {
+            background: mat.m2-get-color-from-palette($background, background);
+        }
+
+        // note: this element is located within the wlo-topic-header,
+        //       thus, !important is necessary to overwrite its style
+        h1 {
+            color: mat.m2-get-color-from-palette($foreground, text) !important;
+        }
+
+        .template-header-container,
+        .portal-wrapper-left {
+            background: mat.m2-get-color-from-palette($background, background);
         }
     }
 }
