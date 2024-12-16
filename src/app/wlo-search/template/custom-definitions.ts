@@ -33,7 +33,7 @@ export const gridTypeOptions: SelectOption[] = [
 
 export const initialLocaleString: string = 'de_DE';
 
-export const initialTopicColor: string = '#182e5c';
+export const initialTopicColor: string = '#032850';
 
 export const ioType: string = 'ccm:io';
 

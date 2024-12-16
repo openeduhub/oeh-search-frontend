@@ -1,5 +1,7 @@
+@import '../../../colors';
+
 :host {
-    --topic-color: #182e5c;
+    --topic-color: $primary-dark;
     --border-radius: 24px;
     --maximal-width: 1200px;
     --sidebar-height: 89px;
