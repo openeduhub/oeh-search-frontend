@@ -63,15 +63,6 @@
     }
 }
 
-.no-page-config {
-    margin-top: 25px;
-    padding: 10px;
-    font-size: 16px;
-    text-align: center;
-    border: 1px solid $dark-gray;
-    border-radius: 3px;
-}
-
 .template-header {
     background-color: var(--topic-color);
 
@@ -90,7 +81,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            background: #fff;
+            background: $white;
             border-radius: var(--border-radius) var(--border-radius) 0 0;
         }
     }

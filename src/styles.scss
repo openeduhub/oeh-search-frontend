@@ -146,6 +146,17 @@ body {
     background: $white;
 }
 
+.alert-warning {
+    margin: 24px 24px 0 24px !important;
+    padding: 16px;
+    font-size: 16px;
+    text-align: center;
+    border: 1px solid $accent-warning;
+    border-radius: 4px;
+    color: $black;
+    background: $accent-warning-20;
+}
+
 :focus-visible {
     outline-style: solid;
     outline-offset: 2px;
