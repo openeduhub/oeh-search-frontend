@@ -7,6 +7,7 @@
     top: calc(-40px / 2);
     left: var(--position-left);
     width: calc(100% - 2 * var(--position-left));
+    // TODO: Remove too large z-indexes, if possible
     z-index: 1000;
     display: flex;
     align-items: center;
@@ -17,11 +18,13 @@
     }
 
     .container-border {
-        border-bottom: 2px solid $gray-medium;
+        border-bottom-width: 2px;
+        border-bottom-style: solid;
         border-radius: 1px;
         width: calc(50% - var(--position-left));
     }
 
+    // add additional space to the left and right of the button
     .add-swimlane-btn {
         margin-left: 8px;
         margin-right: 8px;
