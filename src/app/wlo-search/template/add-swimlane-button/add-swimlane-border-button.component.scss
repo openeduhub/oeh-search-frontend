@@ -1,22 +1,21 @@
-@import '../../../../colors';
-
 .add-swimlane-container {
     --position-left: 24px;
+    --button-height: 40px;
 
     position: absolute;
-    top: calc(-40px / 2);
+    top: calc(-1 * var(--button-height) / 2);
     left: var(--position-left);
     width: calc(100% - 2 * var(--position-left));
-    // TODO: Remove too large z-indexes, if possible
-    z-index: 1000;
     display: flex;
     align-items: center;
 
+    // if the button should be placed at the bottom of the container
     &.position-bottom {
         top: unset;
-        bottom: calc(-40px / 2);
+        bottom: calc(-1 * var(--button-height) / 2);
     }
 
+    // the borders next to the add button
     .container-border {
         border-bottom-width: 2px;
         border-bottom-style: solid;
