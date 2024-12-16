@@ -1,5 +1,6 @@
 @use '@angular/material' as mat;
 @use 'app/wlo-search';
+@import './colors.scss';
 @import './fonts.scss';
 $material-icons-font-path: 'material-icons/iconfont/';
 @import 'material-icons/iconfont/material-icons.scss';
@@ -127,7 +128,7 @@ $form-typography: mat.m2-define-typography-config(
 html,
 body {
     height: 100%;
-    --primary: #032850;
+    --primary: $primary-dark;
 }
 
 // fix opening mat-dialog moves elements with position: sticky
@@ -142,7 +143,7 @@ body {
     font-family: mat.m2-font-family($app-typography);
     font-size: mat.m2-font-size($app-typography, body-1);
     line-height: mat.m2-line-height($app-typography, body-1);
-    background: #f3f6f9;
+    background: $white;
 }
 
 :focus-visible {
@@ -172,7 +173,7 @@ body {
     }
 
     &:hover {
-        color: #fff;
+        color: $white;
         background: var(--primary);
     }
 }
@@ -191,7 +192,7 @@ body {
     }
 
     &:hover {
-        color: #fff;
+        color: $white;
         background: mat.m2-get-color-from-palette(mat.$m2-red-palette, 500);
     }
 }

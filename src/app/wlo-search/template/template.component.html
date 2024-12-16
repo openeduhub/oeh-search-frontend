@@ -141,6 +141,7 @@
                 <!-- action buttons for moving -->
                 <div class="wlo-move-buttons" *ngIf="editMode">
                   <button
+                    class="action-btn btn-default"
                     [disabled]="i === 0 || requestInProgress"
                     (click)="moveSwimlanePosition(i, i - 1)"
                     aria-label="Move swimlane upwards"
@@ -148,6 +149,7 @@
                     <mat-icon>arrow_upward</mat-icon>
                   </button>
                   <button
+                    class="action-btn btn-default"
                     [disabled]="i === swimlanes.length - 1 || requestInProgress"
                     (click)="moveSwimlanePosition(i, i + 1)"
                     aria-label="Move swimlane downwards"
@@ -158,15 +160,16 @@
                 <!-- action buttons for modifications -->
                 <div class="wlo-edit-buttons" *ngIf="editMode">
                   <button
+                    class="action-btn btn-modify"
                     *ngIf="swimlane.type !== 'spacer'"
                     [disabled]="requestInProgress"
                     (click)="editSwimlane(swimlane, i)"
                     aria-label="Edit swimlane"
                   >
-                    <mat-icon>settings</mat-icon>
+                    <mat-icon>tune</mat-icon>
                   </button>
                   <button
-                    [class.wlo-single-button]="swimlane.type === 'spacer'"
+                    class="action-btn btn-default"
                     [disabled]="requestInProgress"
                     (click)="deleteSwimlane(i)"
                     aria-label="Delete swimlane"
