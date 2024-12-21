@@ -1,4 +1,14 @@
+:host {
+    display: flex;
+    min-width: 0;
+}
+
+// custom adjustments for the slide-toggle
 :host ::ng-deep mat-slide-toggle {
+    // add spacing between the toggle and its label
+    .mdc-label {
+        margin-left: 15px !important;
+    }
     // change height and width of the toggle button background
     .mdc-switch {
         width: 46px;
@@ -7,24 +17,29 @@
         .mdc-switch__track {
             height: 17px;
             border-radius: 8px;
+
+            // remove border from switch track
+            &::before {
+                border: none;
+            }
+        }
+
+        // fix position of switch button
+        &.mdc-switch--unselected .mdc-switch__handle {
+            margin-left: -5px !important;
+            border-radius: 15px;
         }
     }
     // change height and width of the toggle button itself
     .mdc-switch__handle {
         height: 30px !important;
         width: 30px !important;
-
-        &:has(.mdc-switch__icons) {
-            border-radius: 15px;
-            // fix position
-            margin-left: -5px !important;
-        }
     }
-}
-
-:host {
-    display: flex;
-    min-width: 0;
+    // remove icons from toggle
+    // TODO: This is also a setting, but will change several selectors used above
+    .mdc-switch__icons {
+        display: none !important;
+    }
 }
 
 .slider-container {
@@ -45,12 +60,16 @@
     }
 }
 
+// TODO: Typography
 $help-button-size: 18px;
 
 .help-button {
-    margin-left: -5px;
-    margin-bottom: -5px;
-    mat-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .mat-icon,
+    .mat-mdc-icon {
         width: $help-button-size;
         height: $help-button-size;
         line-height: $help-button-size;

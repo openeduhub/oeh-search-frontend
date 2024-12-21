@@ -2,34 +2,54 @@
 @import '../../../functions';
 
 @mixin search-filterbar-theme($theme) {
-    $foreground: map-get($theme, foreground);
-    $background: map-get($theme, background);
-    $primary: map-get($theme, primary);
-    $customAccent: map-get($theme, custom-accent);
-    $primary-foreground-color: primary-foreground-color($theme);
-
     app-search-filterbar {
         > mat-card {
-            > .header {
-                color: mat.m2-get-color-from-palette($primary);
-                background-color: mat.m2-get-color-from-palette($primary, 50);
-                border-color: mat.m2-get-color-from-palette($foreground, divider);
+            > .header,
+            .close-button {
+                @if mat.get-theme-type($theme) == light {
+                    color: mat.get-theme-color($theme, primary, 25);
+                } @else {
+                    color: mat.get-theme-color($theme, primary);
+                }
                 .reset-button {
-                    color: mat.m2-get-color-from-palette($primary);
+                    color: mat.get-theme-color($theme, primary);
                 }
             }
+            > .header {
+                @if mat.get-theme-type($theme) == light {
+                    background-color: rgba(mat.get-theme-color($theme, secondary, 60), 0.3);
+                } @else {
+                    background-color: mat.get-theme-color($theme, surface-container);
+                }
+                border-color: mat.get-theme-color($theme, outline-variant);
+            }
             > .body {
-                > .type {
-                    background-color: mat.m2-get-color-from-palette($background, app-bar);
-                    border-color: mat.m2-get-color-from-palette($foreground, divider);
-                    > mat-label {
-                        color: $primary-foreground-color;
+                > .mat-accordion .mat-expansion-panel .mat-expansion-panel-header {
+                    @if mat.get-theme-type($theme) == light {
+                        background-color: mat.get-theme-color($theme, surface);
+                    } @else {
+                        background-color: mat.get-theme-color($theme, surface-container);
+                    }
+                    .mat-expansion-panel-header-title {
+                        @if mat.get-theme-type($theme) == light {
+                            color: mat.get-theme-color($theme, primary, 25);
+                        } @else {
+                            color: mat.get-theme-color($theme, primary);
+                        }
+                    }
+                    svg path {
+                        @if mat.get-theme-type($theme) == light {
+                            fill: mat.get-theme-color($theme, primary, 25);
+                        } @else {
+                            fill: mat.get-theme-color($theme, primary);
+                        }
                     }
                 }
-                > .mat-accordion .mat-expansion-panel .mat-expansion-panel-header {
-                    .mat-expansion-panel-header-title,
-                    .mat-expansion-indicator::after {
-                        color: $primary-foreground-color;
+                > .mat-accordion .mat-expansion-panel .mat-expansion-panel-body {
+                    @if mat.get-theme-type($theme) == light {
+                        background-color: mat.get-theme-color($theme, surface);
+                    } @else {
+                        background-color: mat.get-theme-color($theme, surface-container);
                     }
                 }
             }
@@ -51,7 +71,8 @@
 
         .reset-button {
             @include mat.m2-typography-level($typography, button);
-            .mat-icon {
+            .mat-icon,
+            .mat-mdc-icon {
                 font-size: 24px;
                 width: 24px;
                 height: 24px;

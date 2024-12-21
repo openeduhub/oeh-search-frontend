@@ -7,11 +7,11 @@ form {
     display: flex;
     width: 100%;
     .search-field-wrapper {
+        padding: 5px 7px;
         display: flex;
         flex-grow: 1;
         border-radius: 27px;
         align-items: center;
-        padding: 5px 7px;
         min-height: 40px;
         &.multi-line {
             border-radius: 20px;
@@ -24,24 +24,28 @@ form {
             height: 43px;
             min-width: 0;
             .search-icon {
+                margin-top: -1px;
+                margin-right: 6px;
+                margin-left: 16px;
                 width: 22px;
                 height: 22px;
-                margin-left: 16px;
             }
             input {
-                height: 43px;
                 margin: 4px;
-                flex-shrink: 1;
+                height: 43px;
                 min-width: 0;
+                flex-shrink: 1;
                 // Placeholder
                 text-overflow: ellipsis;
             }
             .submit-button {
+                margin: 6px;
+                padding-left: 16px;
+                padding-right: 16px;
+                height: 32px;
+                border-radius: 16px;
                 display: flex;
                 align-items: center;
-                line-height: 30px;
-                border-radius: 15px;
-                margin: 6px;
                 flex-shrink: 0;
             }
         }
@@ -74,16 +78,30 @@ form {
 // second selector without :host, as it is added at the bottom of the body
 // used a custom class instead
 :host mat-chip-grid ::ng-deep,
+:host mat-chip-listbox ::ng-deep,
 .suggestion-mat-chip-listbox ::ng-deep {
     .mdc-evolution-chip-set__chips .mat-mdc-standard-chip {
         min-height: 30px;
         .mdc-evolution-chip__text-label {
+            // TODO: Typography
             font-family: 'Montserrat-Bold', serif;
             font-weight: 700;
         }
     }
     .mdc-evolution-chip-set__chips .category-chip:last-of-type {
         margin-right: 8px;
+    }
+    .mdc-evolution-chip__action {
+        // do not signal that the button is clickable
+        cursor: default;
+        &::before {
+            border: none;
+        }
+    }
+    // suggestion chips and remove chip buttons should be marked as being clickable
+    .suggestion-chip .mdc-evolution-chip__action,
+    .mat-mdc-chip-remove {
+        cursor: pointer;
     }
 }
 
@@ -92,10 +110,9 @@ form {
 }
 
 .suggestion-card {
-    width: 100%;
-    background-color: white;
-    border-radius: 20px;
     padding: 10px;
+    width: 100%;
+    border-radius: 20px;
     .suggestion-group {
         &:not(:last-of-type) {
             padding-bottom: 20px;
@@ -103,6 +120,7 @@ form {
         .label-container {
             display: flex;
         }
+        // TODO: Typography
         // .what-is-oer-link {
         //     padding-left: 10px;
         //     font-size: 90%;
@@ -110,36 +128,15 @@ form {
         //     cursor: pointer;
         // }
         .category-label {
+            padding-bottom: 6px;
             display: block;
+            // TODO: Typography
             text-transform: uppercase;
             font-weight: 500;
             font-size: 90%;
-            color: #666;
-            padding-bottom: 6px;
         }
         .suggestion-chip {
             cursor: pointer;
         }
     }
-}
-.mat-mdc-chip.chip-group-oer {
-    background-color: rgb(214, 166, 214);
-}
-.mat-mdc-chip.chip-group-type {
-    background-color: rgb(166, 192, 214);
-}
-.mat-mdc-chip.chip-group-discipline {
-    background-color: rgb(166, 214, 174);
-}
-.mat-mdc-chip.chip-group-educationalContext {
-    background-color: rgb(214, 166, 166);
-}
-.mat-mdc-chip.chip-group-intendedEndUserRole {
-    background-color: rgb(211, 214, 166);
-}
-.mat-mdc-chip.chip-group-learningResourceType {
-    background-color: rgb(214, 193, 166);
-}
-.mat-mdc-chip.chip-group-source {
-    background-color: rgb(208, 166, 214);
 }

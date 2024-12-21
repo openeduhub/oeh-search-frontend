@@ -1,12 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { EduSharingUiCommonModule } from 'ngx-edu-sharing-ui';
 import { SharedModule } from '../../shared/shared.module';
 import { swimlaneTypeOptions } from '../custom-definitions';
 import { SelectOption } from '../swimlane/swimlane-settings-dialog/select-option';
 
 @Component({
     standalone: true,
-    imports: [EduSharingUiCommonModule, SharedModule],
+    imports: [SharedModule],
     selector: 'app-add-swimlane-border-button',
     templateUrl: './add-swimlane-border-button.component.html',
     styleUrls: ['./add-swimlane-border-button.component.scss'],

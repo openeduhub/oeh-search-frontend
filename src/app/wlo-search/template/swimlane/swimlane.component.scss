@@ -44,19 +44,18 @@
         }
 
         .text-widget {
-            background: #fff;
-            height: 100%;
             padding: 10px;
+            height: 100%;
             box-sizing: border-box;
         }
     }
 
     .add-widget-container {
-        margin-bottom: 16px;
         padding: 16px 24px;
         width: 100%;
         height: 100%;
-        border: 1px solid rgba(0, 0, 0, 0.7);
+        border-width: 1px;
+        border-style: solid;
         border-radius: 8px;
         display: flex;
         align-items: center;
@@ -66,13 +65,8 @@
         .add-widget-btn {
             padding: 8px 18px;
             border-radius: 50px;
+            // TODO: Typography
             font-family: 'Montserrat-Bold', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
-            color: var(--primary);
-            background: #e4f700;
-
-            &:hover {
-                background: #b4da1c;
-            }
 
             ::ng-deep .mdc-button__label {
                 display: flex;
@@ -80,11 +74,12 @@
                 justify-content: center;
 
                 i {
-                    font-size: 20px;
+                    margin-right: 5px;
                     height: 20px;
                     width: 20px;
+                    // TODO: Typography
+                    font-size: 20px;
                     font-weight: 800;
-                    margin-right: 5px;
                 }
             }
         }

@@ -1,0 +1,17 @@
+@use '@angular/material' as mat;
+@import '../../../../../additional-colors';
+@import '../../../functions';
+
+@mixin swimlane-settings-dialog-theme($theme) {
+    app-swimlane-settings-dialog {
+        .wlo-move-buttons {
+            button {
+                border-color: $gray-light-alt;
+                background: $gray-light;
+            }
+        }
+        .grid-definition .mdc-button--outlined {
+            border-color: mat.get-theme-color($theme, outline);
+        }
+    }
+}

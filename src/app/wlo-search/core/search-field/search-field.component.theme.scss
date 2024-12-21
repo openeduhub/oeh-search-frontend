@@ -1,23 +1,29 @@
 @use '@angular/material' as mat;
 
 @mixin search-field-theme($theme) {
-    $foreground: map-get($theme, foreground);
-    $background: map-get($theme, background);
-    $primary: map-get($theme, primary);
-    $custom: map-get($theme, custom-accent);
-
     app-search-field {
-        form {
-            .search-field-wrapper {
-                background-color: mat.m2-get-color-from-palette($background, dialog);
-                .search-field-input-wrapper {
-                    background-color: mat.m2-get-color-from-palette($primary, 50);
-                    input {
-                        color: mat.m2-get-color-from-palette($primary, text) !important;
+        form .search-field-wrapper {
+            background-color: mat.get-theme-color($theme, surface);
+
+            .search-field-input-wrapper {
+                @if mat.get-theme-type($theme) == light {
+                    background-color: rgba(mat.get-theme-color($theme, secondary, 60), 0.3);
+                } @else {
+                    background-color: mat.get-theme-color($theme, surface-container);
+                }
+                input {
+                    @if mat.get-theme-type($theme) == light {
+                        color: mat.get-theme-color($theme, primary, 25);
+                    } @else {
+                        color: mat.get-theme-color($theme, primary);
+                    }
+
+                    &::placeholder {
+                        color: mat.get-theme-color($theme, secondary);
                     }
                 }
-                mat-icon {
-                    color: mat.m2-get-color-from-palette($foreground, icon);
+                .search-icon {
+                    color: mat.get-theme-color($theme, primary);
                 }
             }
         }
@@ -26,11 +32,14 @@
 
 @mixin search-field-typography($typography) {
     app-search-field {
-        .submit-button,
         // adjusting the selector is currently necessary to overwrite the default font-size:
         // https://stackoverflow.com/a/43273285/3623608
-        .mat-mdc-form-field, .mat-mdc-form-field.mat-mdc-form-field {
+        .mat-mdc-form-field,
+        .mat-mdc-form-field.mat-mdc-form-field {
             font-size: mat.m2-font-size($typography, body-1);
+        }
+        .submit-button {
+            font-size: 17px;
         }
     }
 }

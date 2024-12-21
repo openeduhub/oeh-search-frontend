@@ -1,3 +1,4 @@
+@import 'core/footerbar/footerbar.component.theme.scss';
 @import 'core/headerbar/headerbar.component.theme.scss';
 @import 'core/menubar/menubar.component.theme.scss';
 @import 'core/oer-slider/oer-slider.component.theme.scss';
@@ -5,35 +6,37 @@
 @import 'search/search-page/badges/badges.component.theme.scss';
 @import 'search/search-page/multivalue-checkbox/multivalue-checkbox.component.theme.scss';
 @import 'search/search-page/paginator/paginator.component.theme.scss';
-@import 'search/search-page/preview-panel/preview-panel.component.theme.scss';
 @import 'search/search-page/result-card/result-card.component.theme.scss';
 @import 'search/search-page/search-filterbar/search-filterbar.component.theme.scss';
 @import 'search/search-page/search-page.component.theme.scss';
-@import 'search/search-page/subjects-portal/subjects-portal.component.theme.scss';
 @import 'search/shared/collection-card/collection-card.component.theme.scss';
 @import 'search/shared/details/details.component.theme.scss';
-@import 'search/shared/report-problem/report-problem.component.theme.scss';
 @import 'template/add-swimlane-button/add-swimlane-border-button.component.theme.scss';
+@import 'template/swimlane/swimlane.component.theme.scss';
 @import 'template/template.component.theme.scss';
 @import 'wlo-search.component.theme.scss';
 
+// list of replacements used:
+// * primary -> primary (role)
+// * primary, 400 -> primary, 25
+// * secondary-text -> neutral, 35
+// * transparent background -> rgba(surface (role), .5)
 @mixin components-themes($theme) {
     @include add-swimlane-border-theme($theme);
     @include badges-theme($theme);
     @include collection-card-theme($theme);
     @include details-theme($theme);
+    @include footerbar-theme($theme);
     @include headerbar-theme($theme);
     @include menubar-theme($theme);
     @include multivalue-checkbox-theme($theme);
     @include oer-slider-theme($theme);
     @include paginator-theme($theme);
-    @include preview-panel-theme($theme);
-    @include report-problem-theme($theme);
     @include result-card-theme($theme);
     @include search-field-theme($theme);
     @include search-filterbar-theme($theme);
     @include search-page-theme($theme);
-    @include subjects-portal-theme($theme);
+    @include swimlane-theme($theme);
     @include template-page-theme($theme);
     @include wlo-search-theme($theme);
 }
@@ -45,7 +48,6 @@
     @include multivalue-checkbox-typography($typography);
     @include oer-slider-typography($typography);
     @include paginator-typography($typography);
-    @include preview-panel-typography($typography);
     @include result-card-typography($typography);
     @include search-field-typography($typography);
     @include search-filterbar-typography($typography);

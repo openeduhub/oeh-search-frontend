@@ -50,13 +50,13 @@
             [disabled]="i === 0"
             (click)="$event.stopPropagation(); moveGridTilePosition(i, i - 1)"
           >
-            <mat-icon>arrow_upward</mat-icon>
+            <i esIcon="arrow_upward"></i>
           </button>
           <button
             [disabled]="i === gridItems.length - 1"
             (click)="$event.stopPropagation(); moveGridTilePosition(i, i + 1)"
           >
-            <mat-icon>arrow_downward</mat-icon>
+            <i esIcon="arrow_downward"></i>
           </button>
         </div>
         <mat-panel-title>

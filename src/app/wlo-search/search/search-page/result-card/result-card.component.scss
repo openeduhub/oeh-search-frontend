@@ -14,12 +14,6 @@ mat-card {
     border-radius: $card-border-radius;
     overflow: hidden;
     word-break: break-word;
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25) !important;
-    transition: box-shadow 0.3s, transform 0.3s;
-    &:hover {
-        transform: translate(0, -4px);
-        box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.25) !important;
-    }
     &.app-result-card-selected::after {
         position: absolute;
         content: '';

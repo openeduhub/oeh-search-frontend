@@ -1,6 +1,6 @@
 <mat-card appearance="raised" *ngIf="facetFilters" [formGroup]="facetFilters">
   <div class="header">
-    <mat-icon>tune</mat-icon>
+    <i esIcon="tune"></i>
     <h2 i18n>Filters</h2>
     <a
       class="reset-button"
@@ -9,10 +9,16 @@
       [queryParams]="{ filters: null }"
       queryParamsHandling="merge"
     >
-      <mat-icon>undo</mat-icon> <ng-container i18n>Reset</ng-container>
+      <i esIcon="undo"></i> <ng-container i18n>Reset</ng-container>
     </a>
-    <button mat-icon-button (click)="closeFilterBar()" i18n-aria-label aria-label="Hide filters">
-      <mat-icon>close</mat-icon>
+    <button
+      class="close-button"
+      mat-icon-button
+      (click)="closeFilterBar()"
+      i18n-aria-label
+      aria-label="Hide filters"
+    >
+      <i esIcon="close"></i>
     </button>
   </div>
   <div class="body">
@@ -29,27 +35,27 @@
       >
         <mat-expansion-panel-header [ngSwitch]="key">
           <mat-panel-title *ngSwitchCase="'oehLrtAggregated'">
-            <mat-icon class="icon">perm_media</mat-icon>
+            <i class="icon" esIcon="perm_media"></i>
             <span i18n>Content type</span>
           </mat-panel-title>
           <mat-panel-title *ngSwitchCase="'discipline'">
-            <mat-icon class="icon">book_icon</mat-icon>
+            <i class="icon" esIcon="book_icon"></i>
             <span i18n>Discipline</span>
           </mat-panel-title>
           <mat-panel-title *ngSwitchCase="'educationalContext'">
-            <mat-icon class="icon">school</mat-icon>
+            <i class="icon" esIcon="school"></i>
             <span i18n>Educational Level</span>
           </mat-panel-title>
           <mat-panel-title *ngSwitchCase="'intendedEndUserRole'">
-            <mat-icon class="icon">group</mat-icon>
+            <i class="icon" esIcon="group"></i>
             <span i18n>Intended End User Role</span>
           </mat-panel-title>
           <mat-panel-title *ngSwitchCase="'source'">
-            <mat-icon class="icon">cloud</mat-icon>
+            <i class="icon" esIcon="cloud"></i>
             <span i18n>Supplier</span>
           </mat-panel-title>
           <mat-panel-title *ngSwitchCase="'keyword'">
-            <mat-icon class="icon">list</mat-icon>
+            <i class="icon" esIcon="list"></i>
             <span i18n>Keywords</span>
           </mat-panel-title>
           <mat-panel-title *ngSwitchDefault>
@@ -67,8 +73,8 @@
           *ngIf="facets[key].hasMore"
           (click)="loadMoreFacetBuckets(key)"
         >
-          <ng-container i18n>show more</ng-container
-          ><mat-icon iconPositionEnd>keyboard_arrow_down</mat-icon>
+          <ng-container i18n>show more</ng-container>
+          <i esIcon="keyboard_arrow_down"></i>
         </button>
       </mat-expansion-panel>
     </mat-accordion>

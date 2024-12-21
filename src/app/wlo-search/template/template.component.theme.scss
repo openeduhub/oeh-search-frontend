@@ -1,41 +1,40 @@
 @use '@angular/material' as mat;
+@import '../../../additional-colors';
 @import '../functions';
 
 @mixin template-page-theme($theme) {
-    $foreground: map-get($theme, foreground);
-    $background: map-get($theme, background);
-    $primary: map-get($theme, primary);
-    $customAccent: map-get($theme, custom-accent);
-    $customGray: map-get($theme, custom-gray);
-    $primary-foreground-color: primary-foreground-color($theme);
-
     app-template {
-        // overwrite border radius
-        --mdc-fab-small-container-shape: 4px;
-
         .action-btn {
-            color: mat.m2-get-color-from-palette($customGray, gray3);
-            background: mat.m2-get-color-from-palette($customGray, gray1);
+            @if mat.get-theme-type($theme) == light {
+                color: mat.get-theme-color($theme, neutral, 35);
+                background: mat.get-theme-color($theme, neutral, 99);
+            } @else {
+                color: mat.get-theme-color($theme, neutral, 99);
+                background: mat.get-theme-color($theme, neutral, 35);
+            }
 
             &.btn-modify {
-                color: mat.m2-get-color-from-palette($primary);
-                background: mat.m2-get-color-from-palette($customAccent, accent1);
+                color: mat.get-theme-color($theme, on-primary);
+                background: mat.get-theme-color($theme, primary);
             }
         }
 
         .reloading-indicator-bg {
-            background: mat.m2-get-color-from-palette($background, background);
-        }
+            background: mat.get-theme-color($theme, surface);
 
-        // note: this element is located within the wlo-topic-header,
-        //       thus, !important is necessary to overwrite its style
-        h1 {
-            color: mat.m2-get-color-from-palette($foreground, text) !important;
+            &.transparent-bg {
+                background: rgba(mat.get-theme-color($theme, inverse-surface), 0.5);
+            }
         }
 
         .template-header-container,
         .portal-wrapper-left {
-            background: mat.m2-get-color-from-palette($background, background);
+            background: mat.get-theme-color($theme, surface);
+        }
+
+        .alert-warning {
+            border: 1px solid $accent-warning;
+            background: $accent-warning-20;
         }
     }
 }

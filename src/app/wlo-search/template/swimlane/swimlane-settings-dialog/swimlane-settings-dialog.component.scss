@@ -1,3 +1,7 @@
+:host {
+    width: 100%;
+}
+
 .settings-form {
     padding-top: 5px !important;
 
@@ -6,19 +10,23 @@
     }
 
     .grid-definition {
-        display: block;
         margin-top: 10px;
         margin-bottom: 10px;
+        display: block;
 
-        // TODO: Move into theme file
+        // TODO: Typography
         --mat-expansion-header-text-font: Montserrat-SemiBold, serif;
         --mat-expansion-header-text-weight: 400;
+        // overwrite border-radius of dimension selection buttons
+        --mdc-filled-button-container-shape: 4px !important;
+        --mdc-outlined-button-container-shape: 4px !important;
 
         .mat-expansion-panel-header-title {
             margin-left: 70px;
         }
 
         .mat-expansion-panel-header-description {
+            // TODO: Typography
             font-size: 13px;
         }
 
@@ -32,8 +40,8 @@
                 min-width: inherit;
                 line-height: 10px;
                 padding: 5px 5px 2px 5px;
-                border: 1px solid #e0e0e0;
-                background: #f4f4f4;
+                border-width: 1px;
+                border-style: solid;
                 cursor: pointer;
 
                 &:first-child {
@@ -49,13 +57,16 @@
                     cursor: not-allowed;
                 }
 
-                mat-icon {
+                .mat-icon,
+                .mat-mdc-icon {
+                    // TODO: Typography
                     font-size: 20px;
                 }
             }
         }
 
         .delete-btn {
+            // TODO: Typography
             font-size: 20px;
             float: right;
         }
@@ -72,8 +83,8 @@
                 }
 
                 .line-break {
-                    display: block;
                     margin-top: 0.5rem;
+                    display: block;
                 }
             }
         }
@@ -86,21 +97,23 @@
             }
 
             .config-label {
-                display: block;
                 margin-bottom: 5px;
+                display: block;
             }
 
             .config-note {
-                font-size: 13px;
                 margin-bottom: 20px;
                 padding-left: 10px;
+                // TODO: Typography
+                font-size: 13px;
             }
         }
     }
 
     .no-grid-tiles {
         padding: 10px;
-        font-size: 16px;
         text-align: center;
+        // TODO: Typography
+        font-size: 16px;
     }
 }

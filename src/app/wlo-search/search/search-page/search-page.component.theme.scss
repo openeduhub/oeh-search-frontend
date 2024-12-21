@@ -1,24 +1,63 @@
 @use '@angular/material' as mat;
+@import '../../../../additional-colors';
 @import '../../functions';
 
 @mixin search-page-theme($theme) {
-    $foreground: map-get($theme, foreground);
-    $primary-foreground-color: primary-foreground-color($theme);
-    $customAccent: map-get($theme, custom-accent);
-
     app-search {
-        .breadcrumbs {
-            color: $primary-foreground-color;
-            mat-icon {
-                color: mat.m2-get-color-from-palette($foreground, secondary-text, 0.25);
-            }
-        }
         .did-you-mean a {
-            color: $primary-foreground-color;
+            color: mat.get-theme-color($theme, primary);
         }
         .participate-button {
-            color: $primary-foreground-color;
-            background-color: mat.m2-get-color-from-palette($customAccent, accent1);
+            color: mat.get-theme-color($theme, primary, 40);
+            background-color: $neon-default;
+
+            &:hover {
+                background: $neon-medium;
+            }
+        }
+        // change color of tabs for all search results and search results by content type
+        .search-result-options {
+            --mat-tab-header-active-label-text-color: #{mat.get-theme-color($theme, primary)};
+            --mat-tab-header-active-focus-label-text-color: #{mat.get-theme-color($theme, primary)};
+            @if mat.get-theme-type($theme) == light {
+                --mat-tab-header-inactive-label-text-color: #{mat.get-theme-color(
+                        $theme,
+                        neutral,
+                        35
+                    )};
+                --mat-tab-header-inactive-hover-label-text-color: #{mat.get-theme-color(
+                        $theme,
+                        neutral,
+                        35
+                    )};
+            } @else {
+                --mat-tab-header-inactive-label-text-color: #{mat.get-theme-color(
+                        $theme,
+                        neutral,
+                        80
+                    )};
+                --mat-tab-header-inactive-hover-label-text-color: #{mat.get-theme-color(
+                        $theme,
+                        neutral,
+                        80
+                    )};
+            }
+        }
+        // change background color of view mode toggle button
+        .style-toggle {
+            @if mat.get-theme-type($theme) == light {
+                --mat-standard-button-toggle-selected-state-background-color: #{mat.get-theme-color(
+                        $theme,
+                        neutral,
+                        80
+                    )};
+            } @else {
+                --mat-standard-button-toggle-selected-state-background-color: #{mat.get-theme-color(
+                        $theme,
+                        neutral,
+                        35
+                    )};
+            }
         }
     }
 }
@@ -32,6 +71,10 @@
         .did-you-mean,
         .summary {
             font-size: mat.m2-font-size($typography, body-1);
+        }
+        // TODO: Replace static font-weight
+        .participate-button {
+            font-weight: 700;
         }
     }
 }

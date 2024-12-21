@@ -1,27 +1,111 @@
 @use '@angular/material' as mat;
-@mixin angular-material-theme-overrides($theme) {
-    $background: map-get($theme, background);
-    $foreground: map-get($theme, foreground);
-    $primary: map-get($theme, primary);
+@import 'additional-colors';
 
-    .mat-mdc-tooltip {
-        background: mat.m2-get-color-from-palette($background, tooltip);
-        border-radius: 3px;
+// global overrides
+@mixin angular-material-theme-overrides($theme) {
+    // overwrite variables
+    // badge background-color
+    --mat-badge-background-color: #{$pink-default};
+
+    // overwrite border radius for template page
+    app-template {
+        --mdc-fab-small-container-shape: 4px;
     }
 
+    // overwrite chips default color, background-color + radius for search-field component + suggestion-card dropdown
+    app-search-field,
+    .suggestion-card {
+        // neutral-variant, 30 is equal to on-surface-variant that is used as the chip text color
+        // the color should not change in dark mode
+        --mdc-chip-label-text-color: #{mat.get-theme-color($theme, neutral-variant, 30)};
+        --mdc-chip-with-trailing-icon-trailing-icon-color: #{mat.get-theme-color(
+                $theme,
+                neutral-variant,
+                30
+            )};
+        --mdc-chip-elevated-container-color: #{$gray-light-alt};
+        --mdc-chip-container-shape-radius: 16px;
+
+        // TODO: Replace static colors
+        .mat-mdc-chip.chip-group-oer {
+            background-color: #{$chip-group-oer};
+        }
+        .mat-mdc-chip.chip-group-type {
+            background-color: #{$chip-group-type};
+        }
+        .mat-mdc-chip.chip-group-discipline {
+            background-color: #{$chip-group-discipline};
+        }
+        .mat-mdc-chip.chip-group-educationalContext {
+            background-color: #{$chip-group-educationalContext};
+        }
+        .mat-mdc-chip.chip-group-intendedEndUserRole {
+            background-color: #{$chip-group-intendedEndUserRole};
+        }
+        .mat-mdc-chip.chip-group-learningResourceType {
+            background-color: #{$chip-group-learningResourceType};
+        }
+        .mat-mdc-chip.chip-group-source {
+            background-color: #{$chip-group-source};
+        }
+    }
+
+    // overwrite suggestion dropdown background-color
+    .suggestion-card {
+        @if mat.get-theme-type($theme) == light {
+            background-color: mat.get-theme-color($theme, surface);
+        } @else {
+            background-color: mat.get-theme-color($theme, surface-container);
+        }
+    }
+
+    //--mdc-switch-unselected-icon-color: #EC4A70;
+
+    // use roles to retrieve colors, i.e., primary or on-primary
+    // reference for roles: https://material-foundation.github.io/material-theme-builder/
+
+    // set color depending on the theme: https://v18.material.angular.io/guide/theming#theme-your-own-components-using-a-material-3-theme
+    //.mat-mdc-button-base {
+    //    //@if mat.get-theme-type($theme) == dark {
+    //    //    color: mat.get-theme-color($theme, secondary, 0) !important;
+    //    //    background: mat.get-theme-color($theme, secondary, 80) !important;
+    //    //} @else {
+    //    //    color: mat.get-theme-color($theme, secondary, 100) !important;
+    //    //    background: mat.get-theme-color($theme, secondary, 40) !important;
+    //    //}
+    //
+    //    // Try out system variables
+    //    //color: var(--mat-sys-on-primary-container) !important;
+    //    //background: var(--mat-sys-on-primary-container) !important;
+    //
+    //
+    //    color: mat.get-theme-color($theme, on-secondary) !important;
+    //    background: mat.get-theme-color($theme, secondary) !important;
+    //}
+
+    //$background: map-get($theme, background);
+    //$foreground: map-get($theme, foreground);
+    //$primary: map-get($theme, primary);
+    //
+    //.mat-mdc-tooltip {
+    //    background: mat.m2-get-color-from-palette($background, tooltip);
+    //    border-radius: 3px;
+    //}
+    //
     .slick-prev::before,
     .slick-next::before {
-        color: mat.m2-get-color-from-palette($foreground, text);
+        //color: mat.m2-get-color-from-palette($foreground, text);
+        color: mat.get-theme-color($theme, inverse-surface);
     }
-
-    .app-backdrop {
-        background: mat.m2-get-color-from-palette($background, background, 0.9);
-    }
-
-    // the padding of the mat-mdc-dialog-actions is not set properly
-    .mat-mdc-dialog-actions {
-        --mat-dialog-actions-padding: var(--mat-dialog-content-padding);
-    }
+    //
+    //.app-backdrop {
+    //    background: mat.m2-get-color-from-palette($background, background, 0.9);
+    //}
+    //
+    //// the padding of the mat-mdc-dialog-actions is not set properly
+    //.mat-mdc-dialog-actions {
+    //    --mat-dialog-actions-padding: var(--mat-dialog-content-padding);
+    //}
 }
 
 @mixin angular-material-typography-overrides($typography) {

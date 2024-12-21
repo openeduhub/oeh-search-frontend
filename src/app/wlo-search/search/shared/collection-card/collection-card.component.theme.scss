@@ -2,20 +2,15 @@
 @import '../../../functions';
 
 @mixin collection-card-theme($theme) {
-    $primary: map-get($theme, primary);
-
     app-collection-card {
         .app-collection-card-container {
-            background-color: mat.m2-get-color-from-palette($primary, 400);
-            color: mat.m2-get-contrast-color-from-palette($primary, 400);
-            // Background image, not compatible with background colors.
-            //
-            // &.app-collection-card-container-background-light {
-            //     color: mat.get-color-from-palette($app-light-theme-foreground, text);
-            // }
-            // &.app-collection-card-container-background-dark {
-            //     color: mat.get-color-from-palette($app-dark-theme-foreground, text);
-            // }
+            color: mat.get-theme-color($theme, on-primary);
+            background: mat.get-theme-color($theme, primary);
+            transition: box-shadow 0.3s, transform 0.3s;
+            &:hover {
+                transform: translate(0, -4px);
+                box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25);
+            }
         }
     }
 }

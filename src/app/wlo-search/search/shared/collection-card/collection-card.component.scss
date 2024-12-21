@@ -1,14 +1,9 @@
 .app-collection-card-container {
+    padding: 8px 15px;
     display: flex;
     flex-direction: column;
-    padding: 8px 15px;
     height: 98px;
     border-radius: 10px;
-    transition: box-shadow 0.3s, transform 0.3s;
-    &:hover {
-        transform: translate(0, -4px);
-        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25);
-    }
 }
 
 // Background image, not compatible with background colors.
@@ -31,22 +26,23 @@
 // }
 
 .app-collection-card-icon-container {
+    margin-bottom: 5px;
     display: flex;
     justify-content: flex-end;
-    margin-bottom: 5px;
 }
 
 .editorial-icon {
     width: 16px;
     height: 16px;
+    // TODO: Typography
     font-size: 16px;
 }
 
 .app-collection-card-title {
-    flex-grow: 1;
-    width: 100%;
     margin-top: 0;
     margin-bottom: 5px;
+    flex-grow: 1;
+    width: 100%;
 }
 .app-collection-card-title a {
     display: -webkit-box;
@@ -70,10 +66,12 @@
 .app-collection-card-metadata-item {
     line-height: 12px;
     display: inline-flex;
-    mat-icon {
+    .mat-icon,
+    .mat-mdc-icon {
+        margin-right: 5px;
         height: 12px;
         width: 12px;
+        // TODO: Typography
         font-size: 12px;
-        margin-right: 5px;
     }
 }

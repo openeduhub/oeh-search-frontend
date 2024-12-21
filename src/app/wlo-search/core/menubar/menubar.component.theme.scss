@@ -1,48 +1,221 @@
 @use '@angular/material' as mat;
+@import '../../../../additional-colors';
 @import '../../functions';
 
 @mixin menubar-theme($theme) {
-    $foreground: map-get($theme, foreground);
-    $background: map-get($theme, background);
-    $primary-foreground-color: primary-foreground-color($theme);
-
+    // custom theme created for extracted styles, thus, the same order and selectors are used
+    // single selectors might be combined (e.g., a{}) or combined (e.g., &:hover)
+    // ::after selectors might require !important
     app-menubar {
-        header {
-            background-color: mat.m2-get-color-from-palette($background, dialog);
-            border-bottom-color: mat.m2-get-color-from-palette($foreground, divider);
-            /*
-            @media (prefers-color-scheme: dark) {
-                background-color: mat.get-color-from-palette($background, app-bar);
+        @media screen and (max-width: 1023px) {
+            .top-bar {
+                @if mat.get-theme-type($theme) == light {
+                    background: mat.get-theme-color($theme, neutral, 95) !important;
+                } @else {
+                    background: mat.get-theme-color($theme, neutral, 0) !important;
+                }
+                // TODO: Change, if necessary
+                box-shadow: 0 8px 12px -2px rgb(0 0 0 / 40%);
             }
-            */
         }
-        a {
-            color: $primary-foreground-color;
-        }
-        *:focus {
-            outline-color: $primary-foreground-color;
-        }
-        .dropdown.menu.large-horizontal > li.is-dropdown-submenu-parent > a::after {
-            border-top-color: $primary-foreground-color;
-        }
-        .dropdown.menu.vertical > li.opens-right > a::after {
-            border-left-color: $primary-foreground-color;
-        }
-        .is-dropdown-submenu {
-            background-color: mat.m2-get-color-from-palette($background, background);
-            border-color: mat.m2-get-color-from-palette($foreground, divider);
-        }
-        .is-dropdown-submenu-item:hover {
-            background-color: mat.m2-get-color-from-palette($foreground, text, 0.1);
-        }
-        .menu-icon::after {
-            background: $primary-foreground-color;
-            box-shadow: 0 7px 0 $primary-foreground-color, 0 14px 0 $primary-foreground-color;
-        }
-        @media screen and (max-width: 63.99875em) {
-            .site-header .top-bar {
-                background-color: mat.m2-get-color-from-palette($foreground, text, 0.08);
+
+        @media all {
+            a {
+                color: mat.get-theme-color($theme, primary);
+                background-color: transparent;
+
+                // TODO: Add, if necessary
+                //&:hover, &:focus {
+                //    color: #003570;
+                //}
             }
+
+            button:-moz-focusring,
+            [type='button']:-moz-focusring {
+                outline: 1px dotted ButtonText;
+            }
+
+            button {
+                background: transparent;
+            }
+
+            // TODO: Change, if necessary
+            ::-moz-placeholder {
+                color: #313131;
+            }
+            :-ms-input-placeholder {
+                color: #313131;
+            }
+            ::-ms-input-placeholder {
+                color: #313131;
+            }
+            ::placeholder {
+                color: #313131;
+            }
+
+            // TODO: Change, if necessary
+            @media print {
+                * {
+                    background: transparent !important;
+                    color: black !important;
+                    print-color-adjust: economy;
+                    box-shadow: none !important;
+                    text-shadow: none !important;
+                }
+            }
+
+            .menu-icon::after,
+            .menu-icon:hover::after {
+                background: mat.get-theme-color($theme, primary) !important;
+                box-shadow: 0 7px 0 mat.get-theme-color($theme, primary),
+                    0 14px 0 mat.get-theme-color($theme, primary) !important;
+            }
+
+            .dropdown.menu > li.is-dropdown-submenu-parent > a::after {
+                border-color: mat.get-theme-color($theme, primary) transparent transparent !important;
+            }
+
+            .dropdown.menu.vertical > li.opens-right > a::after {
+                border-color: transparent transparent transparent
+                    mat.get-theme-color($theme, primary) !important;
+            }
+
+            @media print, screen and (min-width: 64em) {
+                .dropdown.menu.large-horizontal > li.is-dropdown-submenu-parent > a::after {
+                    border-color: mat.get-theme-color($theme, primary) transparent transparent !important;
+                }
+            }
+
+            .is-dropdown-submenu {
+                @if mat.get-theme-type($theme) == light {
+                    background: mat.get-theme-color($theme, neutral, 99);
+                } @else {
+                    background: mat.get-theme-color($theme, neutral, 0);
+                }
+            }
+
+            .title-bar {
+                color: mat.get-theme-color($theme, primary);
+            }
+
+            .title-bar,
+            .site-header {
+                @if mat.get-theme-type($theme) == light {
+                    background: mat.get-theme-color($theme, neutral, 99);
+                } @else {
+                    background: mat.get-theme-color($theme, neutral, 0);
+                }
+            }
+
+            .top-bar,
+            .top-bar ul {
+                background-color: transparent;
+            }
+
+            *:focus {
+                outline: 1px dotted mat.get-theme-color($theme, primary);
+            }
+
+            .site-header {
+                // TODO: Replace (border-bottom-color: #ececec;)
+                @if mat.get-theme-type($theme) == light {
+                    border-bottom-color: mat.get-theme-color($theme, neutral, 95);
+                } @else {
+                    border-bottom-color: mat.get-theme-color($theme, neutral, 0);
+                }
+            }
+
+            @media print, screen and (max-width: 39.99875em) {
+                .site-header .top-bar {
+                    @if mat.get-theme-type($theme) == light {
+                        background-color: mat.get-theme-color($theme, neutral, 95);
+                    } @else {
+                        background-color: mat.get-theme-color($theme, neutral, 0);
+                    }
+                }
+            }
+
+            @media print, screen and (min-width: 40em) and (max-width: 63.99875em) {
+                .site-header .top-bar {
+                    @if mat.get-theme-type($theme) == light {
+                        background-color: mat.get-theme-color($theme, neutral, 95);
+                    } @else {
+                        background-color: mat.get-theme-color($theme, neutral, 0);
+                    }
+                }
+            }
+
+            .top-call-to-action-menu li a {
+                background-color: $neon-default;
+                @if mat.get-theme-type($theme) == light {
+                    color: mat.get-theme-color($theme, primary);
+                } @else {
+                    color: mat.get-theme-color($theme, primary, 40);
+                }
+
+                &:hover {
+                    background: $neon-medium;
+                }
+            }
+
+            .is-dropdown-submenu {
+                @if mat.get-theme-type($theme) == light {
+                    background-color: mat.get-theme-color($theme, neutral, 99) !important;
+                } @else {
+                    background-color: mat.get-theme-color($theme, neutral, 0) !important;
+                }
+            }
+
+            .is-dropdown-submenu-item:hover {
+                @if mat.get-theme-type($theme) == light {
+                    // rgba is used to simulate the existing color of WLO
+                    background-color: rgba(
+                        mat.get-theme-color($theme, secondary, 70),
+                        0.3
+                    ) !important;
+                } @else {
+                    background-color: mat.get-theme-color($theme, secondary, 10) !important;
+                }
+            }
+
+            .skip-link {
+                // TODO: Change, if necessary
+                background-color: #f1f1f1;
+                box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.6);
+                color: mat.get-theme-color($theme, primary);
+
+                &:focus {
+                    color: mat.get-theme-color($theme, primary);
+                }
+            }
+
+            // TODO: Change, if necessary
+            @media all {
+                @media screen and (max-width: 1024px) {
+                    #main-menu {
+                        box-shadow: 0 8px 12px -2px rgba(0, 0, 0, 0.4);
+                    }
+                }
+            }
+        }
+
+        .drilldown a,
+        .drilldown .is-drilldown-submenu {
+            @if mat.get-theme-type($theme) == light {
+                background: mat.get-theme-color($theme, neutral, 95);
+            } @else {
+                background: mat.get-theme-color($theme, neutral, 0);
+            }
+        }
+
+        .drilldown .is-drilldown-submenu-parent > a::after,
+        .drilldown.align-left .is-drilldown-submenu-parent > a::after {
+            border-color: transparent transparent transparent mat.get-theme-color($theme, primary) !important;
+        }
+
+        .drilldown.align-right .is-drilldown-submenu-parent > a::after,
+        .drilldown .js-drilldown-back > a::before {
+            border-color: transparent mat.get-theme-color($theme, primary) transparent transparent !important;
         }
     }
 }

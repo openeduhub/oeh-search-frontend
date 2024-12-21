@@ -31,6 +31,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
+import { EduSharingUiCommonModule } from 'ngx-edu-sharing-ui';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { DisplayNamePipe } from './display-name.pipe';
 import { FocusStateDirective } from './focus-state.directive';
@@ -45,6 +46,7 @@ import { SkipTargetDirective } from './skip-target.directive';
         A11yModule,
         CdkAccordionModule,
         DragDropModule,
+        EduSharingUiCommonModule,
         LayoutModule,
         OverlayModule,
         FormsModule,
@@ -81,6 +83,7 @@ import { SkipTargetDirective } from './skip-target.directive';
         A11yModule,
         CdkAccordionModule,
         DragDropModule,
+        EduSharingUiCommonModule,
         LayoutModule,
         OverlayModule,
         FormsModule,

@@ -2,11 +2,9 @@
 @import '../../functions';
 
 @mixin add-swimlane-border-theme($theme) {
-    $customGray: map-get($theme, custom-gray);
-
     app-add-swimlane-border-button {
         .container-border {
-            border-color: mat.m2-get-color-from-palette($customGray, gray2);
+            border-color: mat.get-theme-color($theme, neutral, 80);
         }
     }
 }

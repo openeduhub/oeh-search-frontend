@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MdsValue, MdsWidget, Node, NodeEntries } from 'ngx-edu-sharing-api';
-import { EduSharingUiCommonModule } from 'ngx-edu-sharing-ui';
 import { SharedModule } from '../../shared/shared.module';
 import { widgetTypeOptions, workspaceSpacesStorePrefix } from '../custom-definitions';
 import { GridTile } from './grid-tile';
@@ -8,7 +7,7 @@ import { GridWidgetComponent } from './grid-widget/grid-widget.component';
 import { SelectOption } from './swimlane-settings-dialog/select-option';
 
 @Component({
-    imports: [GridWidgetComponent, EduSharingUiCommonModule, SharedModule],
+    imports: [GridWidgetComponent, SharedModule],
     selector: 'app-swimlane',
     templateUrl: './swimlane.component.html',
     styleUrls: ['./swimlane.component.scss'],

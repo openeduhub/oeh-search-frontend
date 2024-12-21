@@ -21,8 +21,9 @@
           [queryParams]="{ filters: null, oer: 'NONE' }"
           queryParamsHandling="merge"
           i18n
-          >Search without filters</a
         >
+          Search without filters
+        </a>
       </div>
     </div>
     <ng-container *ngIf="results?.pagination.total > 0 && resultPageNumbers">
@@ -54,7 +55,7 @@
             i18n-matTooltip
             matTooltip="Standard view"
           >
-            <mat-icon>view_column</mat-icon>
+            <i esIcon="view_column"></i>
           </mat-button-toggle>
           <mat-button-toggle
             value="compact"
@@ -63,7 +64,7 @@
             i18n-matTooltip
             matTooltip="Compact view"
           >
-            <mat-icon>view_module</mat-icon>
+            <i esIcon="view_module"></i>
           </mat-button-toggle>
         </mat-button-toggle-group>
       </ng-container>
@@ -104,8 +105,9 @@
       [routerLinkActiveOptions]="{ exact: true }"
       #linkAllResults="routerLinkActive"
       [active]="linkAllResults.isActive"
-      >All search results</a
     >
+      All search results
+    </a>
     <a
       mat-tab-link
       i18n
@@ -114,8 +116,9 @@
       routerLinkActive
       #linkCategories="routerLinkActive"
       [active]="linkCategories.isActive"
-      >Search results by content type</a
     >
+      Search results by content type
+    </a>
   </nav>
   <mat-tab-nav-panel #tabPanel>
     <router-outlet *ngIf="results?.pagination.total > 0"></router-outlet>

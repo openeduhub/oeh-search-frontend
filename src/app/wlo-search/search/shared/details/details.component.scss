@@ -28,10 +28,10 @@
 }
 
 .app-preview-panel-info-bar {
+    padding: 5px 50px;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    padding: 5px 50px;
 }
 
 .app-preview-panel-info-bar-item {
@@ -43,27 +43,28 @@
         margin-right: 25px;
     }
 
-    > mat-icon {
+    > .mat-icon,
+    > .mat-mdc-icon {
         margin-right: 8px;
         min-width: 28px;
     }
 }
 
 .app-preview-panel-body {
+    padding: 28px 44px;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    padding: 28px 44px;
 
     &:not(:last-child) {
-        padding-bottom: 58px;
         margin-bottom: -30px;
+        padding-bottom: 58px;
     }
 
     .badges {
+        margin-top: -10px;
         position: absolute;
         right: 50px;
-        margin-top: -10px;
     }
 
     .mat-mdc-progress-spinner {
@@ -79,14 +80,13 @@
     .report-problem-link {
         margin-top: 10px;
         margin-left: auto;
-        color: var(--primary);
 
-        mat-icon,
         .mat-icon,
         .mat-mdc-icon {
             margin-left: 5px;
             height: 20px;
             width: 20px;
+            // TODO: Typography
             font-size: 20px;
         }
     }
@@ -108,12 +108,12 @@
 }
 
 .app-preview-panel-expand-description-button {
+    margin-left: 15px;
+    padding: 0 6px;
     display: inline-flex;
     align-items: center;
     border: unset;
     background: unset;
-    margin-left: 15px;
-    padding: 0 6px;
     cursor: pointer;
 
     &:hover > span {
@@ -122,17 +122,16 @@
 }
 
 .app-preview-panel-buttons {
+    margin: 30px 0;
     display: flex;
     flex-wrap: wrap;
     gap: 20px 15px;
-    margin: 30px 0;
 
     .app-preview-panel-button {
         height: 30px;
         line-height: 30px;
         border-radius: 15px;
 
-        mat-icon,
         .mat-icon,
         .mat-mdc-icon {
             margin-left: 10px;
@@ -148,24 +147,22 @@
 }
 
 .app-details-report-problem-state {
+    margin: 10px 0;
+    padding: 12px 18px;
     display: flex;
     align-items: center;
     flex-direction: column;
     gap: 5px;
-    margin: 10px 0;
-    padding: 12px 18px;
     border-width: 2px;
     border-style: solid;
     text-align: center;
 
-    &.app-details-report-problem-state-loading {
-        border-color: #0000;
-    }
-
     .mat-mdc-progress-spinner,
-    .mat-icon {
+    .mat-icon,
+    .mat-mdc-icon {
         width: 32px;
         height: 32px;
+        // TODO: Typography
         font-size: 32px;
     }
 
@@ -191,10 +188,12 @@
         padding-bottom: 10px;
     }
 
-    > mat-icon {
+    > .mat-icon,
+    > .mat-mdc-icon {
         margin-right: 8px;
         min-width: 28px;
         height: 22px;
+        // TODO: Typography
         font-size: 22px;
     }
 
@@ -203,15 +202,15 @@
         // white-space: nowrap; // causes overflow of long words like URLs
 
         &:not(:last-child)::after {
-            content: ',';
             margin-right: 0.4em;
+            content: ',';
         }
     }
 }
 
 .app-preview-related-items {
-    border-radius: inherit;
     padding: 20px 40px;
+    border-radius: inherit;
 
     .app-preview-related-items-heading {
         margin-top: 2px;
@@ -256,20 +255,4 @@
             margin: 10px 15px 15px;
         }
     }
-}
-
-.icon-green {
-    color: #11612d;
-}
-
-.icon-orange {
-    color: #fab835;
-}
-
-.icon-red {
-    color: #e73446;
-}
-
-.icon-gray {
-    color: #383838;
 }

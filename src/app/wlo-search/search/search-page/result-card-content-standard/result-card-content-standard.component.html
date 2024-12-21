@@ -25,14 +25,14 @@
       {{ description | trim | truncate: 65 }}
     </p>
     <div class="metadata" *ngIf="hit | nodeProperty: 'oehLrtAggregated' as lrts">
-      <mat-icon i18n-matTooltip matTooltip="Learning resource type">perm_media</mat-icon>
+      <i esIcon="perm_media" i18n-matTooltip matTooltip="Learning resource type"></i>
       <span class="cdk-visually-hidden" i18n>Learning resource type</span>
       <div>
         <span *ngFor="let lrt of lrts">{{ lrt.displayName }}</span>
       </div>
     </div>
     <div class="metadata" *ngIf="hit | nodeProperty: 'discipline' as disciplines">
-      <mat-icon i18n-matTooltip matTooltip="Discipline">book_icon</mat-icon>
+      <i esIcon="book_icon" i18n-matTooltip matTooltip="Discipline"></i>
       <span class="cdk-visually-hidden" i18n>Discipline</span>
       <div>
         <span *ngFor="let discipline of disciplines | slice: 0:5">
@@ -41,7 +41,7 @@
       </div>
     </div>
     <div class="metadata" *ngIf="hit | nodeProperty: 'educationalContext' as educationalContexts">
-      <mat-icon i18n-matTooltip matTooltip="Educational level">school</mat-icon>
+      <i esIcon="school" i18n-matTooltip matTooltip="Educational level"></i>
       <span class="cdk-visually-hidden" i18n>Educational level</span>
       <div>
         <span *ngFor="let context of educationalContexts">

@@ -1,53 +1,102 @@
 @use '@angular/material' as mat;
 @import '../../../functions';
+@import '../../../../../additional-colors';
 
 @mixin details-theme($theme) {
-    $foreground: map-get($theme, foreground);
-    $background: map-get($theme, background);
-    $primary: map-get($theme, primary);
-    $warn: map-get($theme, warn);
-    $is-dark-theme: map-get($theme, is-dark);
-    $custom-accent: map-get($theme, custom-accent);
-    $primary-foreground-color: primary-foreground-color($theme);
-
-    $body-background-dark: lighten(mat.m2-get-color-from-palette($background, background), 10%);
-    $body-background-light: darken(mat.m2-get-color-from-palette($background, background), 5%);
-    $body-background: if($is-dark-theme, $body-background-dark, $body-background-light);
-
     app-details {
         .app-preview-panel-close-button {
-            background-color: mat.m2-get-color-from-palette($background, background, 0.75);
+            background-color: mat.get-theme-color($theme, surface-container-high);
         }
-        .app-preview-panel-info-bar {
-            background-color: mat.m2-get-color-from-palette($primary, 50);
+        .app-preview-panel-info-bar,
+        .app-preview-related-items {
+            background-color: mat.get-theme-color($theme, surface-variant);
         }
         .app-preview-panel-body {
-            background-color: $body-background;
+            background-color: mat.get-theme-color($theme, surface-container-high);
         }
+        // source link above large title
         .app-preview-panel-source {
-            color: mat.m2-get-color-from-palette($foreground, secondary-text);
+            @if mat.get-theme-type($theme) == light {
+                color: mat.get-theme-color($theme, neutral, 35);
+            } @else {
+                color: mat.get-theme-color($theme, neutral, 99);
+            }
         }
-        .app-preview-panel-report-problem-button {
-            // important is currently necessary to overwrite the default color
-            color: mat.m2-get-color-from-palette($foreground, secondary-text) !important;
+        // more button
+        .app-preview-panel-expand-description-button {
+            color: mat.get-theme-color($theme, primary);
         }
+        .report-problem-link {
+            color: mat.get-theme-color($theme, primary);
+        }
+        // success + error states
         .app-details-report-problem-state-success {
-            color: mat.m2-get-color-from-palette(mat.$m2-green-palette, 600);
-            border-color: mat.m2-get-color-from-palette(mat.$m2-green-palette, 600);
-            background-color: mat.m2-get-color-from-palette(mat.$m2-green-palette, 50);
+            color: $green-dark;
+            border-color: $green-dark;
+            background-color: $green-light;
         }
         .app-details-report-problem-state-error {
-            color: mat.m2-get-color-from-palette($warn);
-            border-color: mat.m2-get-color-from-palette($warn);
-            background-color: mat.m2-get-color-from-palette($warn, 50);
+            color: mat.get-theme-color($theme, error);
+            border-color: mat.get-theme-color($theme, error);
+            background-color: mat.get-theme-color($theme, error-container);
         }
-        .app-preview-related-items {
-            background-color: mat.m2-get-color-from-palette($primary, 50);
-        }
+        // slick buttons for related topic pages
         .app-preview-slick-next,
         .app-preview-slick-prev {
-            background-color: $body-background;
-            color: $primary-foreground-color;
+            color: mat.get-theme-color($theme, primary);
+            background-color: mat.get-theme-color($theme, surface);
+        }
+        // outline buttons (primary + warn)
+        .mdc-button--outlined.btn-outline-primary:not(:disabled) {
+            color: mat.get-theme-color($theme, primary);
+            border: 1.5px solid mat.get-theme-color($theme, primary);
+
+            .mat-icon,
+            .mat-mdc-icon {
+                margin-left: 6px !important;
+                margin-right: -3px !important;
+                font-size: 20px;
+                width: 20px;
+                height: 20px;
+            }
+
+            &:hover {
+                color: mat.get-theme-color($theme, on-primary);
+                background: mat.get-theme-color($theme, primary);
+            }
+        }
+        .mdc-button--outlined.btn-outline-warn:not(:disabled) {
+            color: mat.get-theme-color($theme, error);
+            border: 1.5px solid mat.get-theme-color($theme, error);
+
+            .mat-icon,
+            .mat-mdc-icon {
+                margin-left: 6px !important;
+                margin-right: -3px !important;
+                font-size: 20px;
+                width: 20px;
+                height: 20px;
+            }
+
+            &:hover {
+                color: mat.get-theme-color($theme, on-error);
+                background: mat.get-theme-color($theme, error);
+            }
+        }
+        .icon-green {
+            color: $icon-green;
+        }
+
+        .icon-orange {
+            color: $icon-orange;
+        }
+
+        .icon-red {
+            color: $icon-red;
+        }
+
+        .icon-gray {
+            color: $icon-gray;
         }
     }
 }

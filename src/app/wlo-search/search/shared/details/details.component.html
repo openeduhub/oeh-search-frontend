@@ -6,7 +6,7 @@
   i18n-aria-label
   aria-label="Hide preview panel"
 >
-  <mat-icon>close</mat-icon>
+  <i esIcon="close"></i>
 </button>
 <div class="app-preview-panel-content-wrapper">
   <app-preview-image
@@ -23,7 +23,7 @@
       class="app-preview-panel-info-bar-item"
       *ngIf="hit | nodeProperty: 'oehLrtAggregated' as lrts; else externalType"
     >
-      <mat-icon matTooltip="Inhaltetyp">perm_media</mat-icon>
+      <i esIcon="perm_media" matTooltip="Inhaltetyp"></i>
       <span>
         <ng-container *ngFor="let lrt of lrts; let last = last">
           {{ lrt.displayName }}<ng-container *ngIf="!last">,</ng-container>
@@ -35,7 +35,7 @@
         class="app-preview-panel-info-bar-item"
         *ngIf="hit | nodeProperty: 'isExternal'; else mimeType"
       >
-        <mat-icon matTooltip="Inhaltetyp">photo_library</mat-icon>
+        <i esIcon="photo_library" matTooltip="Inhaltetyp"></i>
         <span i18n>Website</span>
       </span>
     </ng-template>
@@ -44,7 +44,7 @@
         class="app-preview-panel-info-bar-item"
         *ngIf="hit | nodeProperty: 'mimeType' as mimeType"
       >
-        <mat-icon matTooltip="Inhaltetyp">photo_library</mat-icon>
+        <i esIcon="photo_library" matTooltip="Inhaltetyp"></i>
         <span>
           {{ mimeType }}
         </span>
@@ -56,7 +56,7 @@
       class="app-preview-panel-info-bar-item"
       *ngIf="hit | nodeProperty: 'duration' as duration"
     >
-      <mat-icon matTooltip="Dauer">alarm</mat-icon>
+      <i esIcon="alarm" matTooltip="Dauer"></i>
       <span>{{ duration | duration }}</span>
     </span>
 
@@ -65,7 +65,7 @@
       class="app-preview-panel-info-bar-item"
       *ngIf="hit | nodeProperty: 'language' as languages"
     >
-      <mat-icon matTooltip="Sprache(n)">question_answer</mat-icon>
+      <i esIcon="question_answer" matTooltip="Sprache(n)"></i>
       <span>
         <ng-container *ngFor="let language of languages; let last = last">
           <ng-container
@@ -110,11 +110,11 @@
       >
         <ng-container *ngIf="!descriptionExpanded">
           <span i18n>more</span>
-          <mat-icon>keyboard_arrow_down</mat-icon>
+          <i esIcon="keyboard_arrow_down"></i>
         </ng-container>
         <ng-container *ngIf="descriptionExpanded">
           <span i18n>less</span>
-          <mat-icon>keyboard_arrow_up</mat-icon>
+          <i esIcon="keyboard_arrow_up"></i>
         </ng-container>
       </button>
     </p>
@@ -128,7 +128,7 @@
       >
         <span class="app-preview-panel-button-wrapper">
           <span i18n>Go to original page</span>
-          <mat-icon>open_in_new</mat-icon>
+          <i esIcon="open_in_new"></i>
         </span>
       </a>
       <a
@@ -166,7 +166,7 @@
       class="app-preview-panel-metadata app-preview-panel-metadata-icon"
       *ngIf="hit | nodeProperty: 'discipline' as disciplines"
     >
-      <mat-icon i18n-matTooltip matTooltip="Discipline" class="icon-gray">book_icon</mat-icon>
+      <i esIcon="book_icon" i18n-matTooltip matTooltip="Discipline" class="icon-gray"></i>
       <span class="cdk-visually-hidden" i18n>Discipline</span>
       <div>
         <span *ngFor="let discipline of disciplines">
@@ -178,7 +178,7 @@
       class="app-preview-panel-metadata app-preview-panel-metadata-icon"
       *ngIf="hit | nodeProperty: 'educationalContext' as educationalContexts"
     >
-      <mat-icon i18n-matTooltip matTooltip="Educational level" class="icon-gray">school</mat-icon>
+      <i esIcon="school" i18n-matTooltip matTooltip="Educational level" class="icon-gray"></i>
       <span class="cdk-visually-hidden" i18n>Educational level</span>
       <div>
         <span *ngFor="let context of educationalContexts">
@@ -200,7 +200,7 @@
       class="app-preview-panel-metadata app-preview-panel-metadata-icon"
       *ngIf="hit | nodeProperty: 'license' as license"
     >
-      <mat-icon i18n-matTooltip matTooltip="License" class="icon-gray">lock</mat-icon>
+      <i esIcon="lock" i18n-matTooltip matTooltip="License" class="icon-gray"></i>
       <span class="cdk-visually-hidden" i18n>License</span>
       <div>
         <span>
@@ -309,8 +309,8 @@
         value="100"
         diameter="30"
       ></mat-progress-spinner>
-      <mat-icon *ngIf="result.state === 'success'">sentiment_satisfied_alt</mat-icon>
-      <mat-icon *ngIf="result.state === 'error'">sentiment_very_dissatisfied</mat-icon>
+      <i esIcon="sentiment_satisfied_alt" *ngIf="result.state === 'success'"></i>
+      <i esIcon="sentiment_very_dissatisfied" *ngIf="result.state === 'error'"></i>
       <span *ngIf="result.state === 'success'">
         Deine Meldung ist erfolgreich bei uns eingegangen. Vielen Dank für deine Hilfe!
       </span>
@@ -329,7 +329,7 @@
     <a href="javascript:void(0)" (click)="reportProblem()" class="report-problem-link">
       <span class="app-preview-panel-button-wrapper">
         <span i18n>Report problem</span>
-        <mat-icon>announcement</mat-icon>
+        <i esIcon="announcement"></i>
       </span>
     </a>
   </div>
@@ -337,7 +337,7 @@
     <h3 class="app-preview-related-items-heading" i18n>Related Subject Pages</h3>
     <div class="app-preview-related-items-carousel-container">
       <button class="app-slick-button app-preview-slick-prev" i18n-aria-label aria-label="previous">
-        <mat-icon>arrow_back</mat-icon>
+        <i esIcon="arrow_back"></i>
       </button>
       <ngx-slick-carousel
         #slickModal="slick-carousel"
@@ -353,7 +353,7 @@
         </ng-container>
       </ngx-slick-carousel>
       <button class="app-slick-button app-preview-slick-next" i18n-aria-label aria-label="next">
-        <mat-icon>arrow_forward</mat-icon>
+        <i esIcon="arrow_forward"></i>
       </button>
     </div>
   </div>

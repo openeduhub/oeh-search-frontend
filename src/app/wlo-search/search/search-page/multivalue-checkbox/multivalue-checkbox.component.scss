@@ -10,17 +10,21 @@
             padding-left: 0;
         }
 
+        ::ng-deep .mat-mdc-checkbox-ripple.mat-mdc-focus-indicator::before {
+            display: none;
+        }
+
         span {
             &.label {
+                margin-right: 1em;
                 flex-grow: 1;
                 overflow: hidden;
                 text-overflow: ellipsis;
-                margin-right: 1em;
             }
 
             &.count {
-                border-radius: 20px;
                 padding: 0 6px;
+                border-radius: 20px;
             }
         }
     }

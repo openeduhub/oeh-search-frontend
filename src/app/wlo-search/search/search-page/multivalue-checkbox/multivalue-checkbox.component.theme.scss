@@ -1,46 +1,38 @@
 @use '@angular/material' as mat;
+@import '../../../../../additional-colors';
 @import '../../../functions';
 
 @mixin multivalue-checkbox-theme($theme) {
-    $foreground: map-get($theme, foreground);
-    $background: map-get($theme, background);
-    $customAccent: map-get($theme, custom-accent);
-    $primary-foreground-color: primary-foreground-color($theme);
-
     app-multivalue-checkbox {
         mat-checkbox {
-            .mat-checkbox-frame {
-                border-color: mat.m2-get-color-from-palette($foreground, disabled);
-            }
-            .mat-mdc-checkbox-ripple.mat-mdc-focus-indicator::before {
-                display: none;
-            }
             &:not(.checked) {
+                .mdc-checkbox__background {
+                    border-color: mat.get-theme-color($theme, on-surface-variant) !important;
+                }
                 span.label {
-                    color: mat.m2-get-color-from-palette($foreground, secondary-text);
+                    color: mat.get-theme-color($theme, on-surface-variant);
                 }
                 span.count {
-                    background-color: mat.m2-get-color-from-palette($background, unselected-chip);
-                    color: mat.m2-get-color-from-palette($foreground, secondary-text);
-                }
-                .mat-checkbox-inner-container {
-                    background-color: mat.m2-get-color-from-palette($background, card);
+                    color: mat.get-theme-color($theme, on-surface-variant);
+                    @if mat.get-theme-type($theme) == light {
+                        background-color: mat.get-theme-color($theme, surface-dim);
+                    } @else {
+                        background-color: mat.get-theme-color($theme, neutral, 35);
+                    }
                 }
             }
             &.checked {
-                span.label {
-                    color: mat.m2-get-color-from-palette($foreground, text);
-                }
                 span.count {
-                    background-color: mat.m2-get-color-from-palette($customAccent, accent2);
-                    color: mat.m2-get-color-from-palette($customAccent, accent2-contrast);
+                    color: mat.get-theme-color($theme, neutral, 99);
+                    background-color: $pink-default;
                 }
                 &.mat-accent .mdc-checkbox__background {
-                    border-color: $primary-foreground-color !important;
-                    background-color: $primary-foreground-color !important;
-
-                    .mdc-checkbox__checkmark .mdc-checkbox__checkmark-path {
-                        stroke: #fff;
+                    @if mat.get-theme-type($theme) == light {
+                        border-color: mat.get-theme-color($theme, primary, 25) !important;
+                        background-color: mat.get-theme-color($theme, primary, 25) !important;
+                    } @else {
+                        border-color: mat.get-theme-color($theme, primary) !important;
+                        background-color: mat.get-theme-color($theme, primary) !important;
                     }
                 }
             }
