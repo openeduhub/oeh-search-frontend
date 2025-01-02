@@ -51,10 +51,12 @@ $material-icons-font-path: 'material-icons/iconfont/';
     // in future versions, system variables might replace this: https://material.angular.io/guide/system-variables
     --inverse-surface: #{mat.get-theme-color($selected-theme, inverse-surface)};
     --on-primary: #{mat.get-theme-color($selected-theme, on-primary)};
+    --on-surface: #{mat.get-theme-color($selected-theme, on-surface)};
     --outline: #{mat.get-theme-color($selected-theme, outline-variant)};
     --primary: #{mat.get-theme-color($selected-theme, primary)};
     --primary-container: #{mat.get-theme-color($selected-theme, primary-container)};
     --secondary: #{mat.get-theme-color($selected-theme, secondary)};
+    --surface: #{mat.get-theme-color($selected-theme, surface)};
     --surface-container-highest: #{mat.get-theme-color($selected-theme, surface-container-highest)};
     --surface-container-low: #{mat.get-theme-color($selected-theme, surface-container-low)};
 
