@@ -21,9 +21,8 @@
           [queryParams]="{ filters: null, oer: 'NONE' }"
           queryParamsHandling="merge"
           i18n
+          >Search without filters</a
         >
-          Search without filters
-        </a>
       </div>
     </div>
     <ng-container *ngIf="results?.pagination.total > 0 && resultPageNumbers">
@@ -105,9 +104,8 @@
       [routerLinkActiveOptions]="{ exact: true }"
       #linkAllResults="routerLinkActive"
       [active]="linkAllResults.isActive"
+      >All search results</a
     >
-      All search results
-    </a>
     <a
       mat-tab-link
       i18n
@@ -116,9 +114,8 @@
       routerLinkActive
       #linkCategories="routerLinkActive"
       [active]="linkCategories.isActive"
+      >Search results by content type</a
     >
-      Search results by content type
-    </a>
   </nav>
   <mat-tab-nav-panel #tabPanel>
     <router-outlet *ngIf="results?.pagination.total > 0"></router-outlet>
