@@ -118,9 +118,7 @@
               *ngIf="swimlane.grid?.length > 0 || swimlane.type === 'spacer' || editMode"
               class="wlo-swimlane"
               [class.swimlane-edit-mode]="editMode"
-              [style.background-color]="
-                swimlane.backgroundColor ? swimlane.backgroundColor : '#f4f4f4'
-              "
+              [style.background-color]="swimlane.backgroundColor ?? swimlane.backgroundColor"
             >
               <!-- edit privileges -->
               <ng-container *ngIf="userHasEditRights()">

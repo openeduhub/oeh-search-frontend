@@ -1,4 +1,12 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+    AfterViewChecked,
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    EventEmitter,
+    Input,
+    Output,
+} from '@angular/core';
 import { MdsValue, MdsWidget, Node, NodeEntries } from 'ngx-edu-sharing-api';
 import { SharedModule } from '../../shared/shared.module';
 import { widgetTypeOptions, workspaceSpacesStorePrefix } from '../custom-definitions';
@@ -13,17 +21,8 @@ import { SelectOption } from './swimlane-settings-dialog/select-option';
     styleUrls: ['./swimlane.component.scss'],
     standalone: true,
 })
-export class SwimlaneComponent {
-    // https://stackoverflow.com/a/56006046
-    private _backgroundColor = '#f4f4f4';
-    @Input() get backgroundColor() {
-        return this._backgroundColor;
-    }
-
-    set backgroundColor(value) {
-        this._backgroundColor = value ?? '#f4f4f4';
-    }
-
+export class SwimlaneComponent implements AfterViewChecked {
+    @Input() backgroundColor?: string;
     @Input() contextNodeId: string;
     @Input() editMode: boolean;
     @Input() grid: GridTile[] = [];
@@ -37,6 +36,10 @@ export class SwimlaneComponent {
     @Output() gridTileAdded: EventEmitter<GridTile> = new EventEmitter<GridTile>();
     @Output() nodeClicked: EventEmitter<Node> = new EventEmitter<Node>();
 
+    swimlaneColor: string;
+
+    constructor(private cdr: ChangeDetectorRef, private elementRef: ElementRef) {}
+
     clickedNode(node: Node): void {
         this.nodeClicked.emit(node);
     }
@@ -48,6 +51,20 @@ export class SwimlaneComponent {
             cols: 3,
         };
         this.gridTileAdded.emit(gridTile);
+    }
+
+    ngAfterViewChecked(): void {
+        const swimlaneParent = this.elementRef.nativeElement?.offsetParent;
+        if (
+            swimlaneParent &&
+            getComputedStyle(swimlaneParent).getPropertyValue('background-color')
+        ) {
+            this.swimlaneColor =
+                getComputedStyle(swimlaneParent).getPropertyValue('background-color');
+        }
+        // it seems like the change detection is not happening automatically
+        // related issue: https://stackoverflow.com/a/45300527
+        this.cdr.detectChanges();
     }
 
     protected readonly widgetTypeOptions: SelectOption[] = widgetTypeOptions;

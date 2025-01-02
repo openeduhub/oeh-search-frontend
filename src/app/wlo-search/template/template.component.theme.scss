@@ -32,6 +32,10 @@
             background: mat.get-theme-color($theme, surface);
         }
 
+        .wlo-swimlane {
+            background-color: mat.get-theme-color($theme, surface-container-low);
+        }
+
         .alert-warning {
             border: 1px solid $accent-warning;
             background: $accent-warning-20;

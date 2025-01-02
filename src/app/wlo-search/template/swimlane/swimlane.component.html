@@ -18,7 +18,7 @@
       *ngFor="let gridItem of grid; let i = index"
     >
       <app-grid-widget
-        [backgroundColor]="backgroundColor"
+        [backgroundColor]="backgroundColor ?? swimlaneColor"
         [contextNodeId]="contextNodeId"
         [editMode]="editMode"
         [gridIndex]="i"

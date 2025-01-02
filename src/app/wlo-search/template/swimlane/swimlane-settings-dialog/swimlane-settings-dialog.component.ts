@@ -68,6 +68,7 @@ export class SwimlaneSettingsDialogComponent implements OnInit {
      * @param colorString
      */
     private initializeBackgroundColor(colorString: string) {
+        // TODO: Input default value based on theme type
         if (!colorString || colorString === '') {
             return '#f4f4f4';
         }

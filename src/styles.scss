@@ -32,9 +32,39 @@ $material-icons-font-path: 'material-icons/iconfont/';
 }
 
 :root {
-    @include apply-theme(custom-theme.$light-theme);
+    $selected-theme: custom-theme.$light-theme;
+    @include apply-theme($selected-theme);
     // make CSS variable accessible for further applications
-    --primary: #{mat.get-theme-color(custom-theme.$light-theme, primary)};
+    // valid role names: background, error, error-container, inverse-on-surface, inverse-primary,
+    //                   inverse-surface, on-background, on-error, on-error-container, on-primary,
+    //                   on-primary-container, on-primary-fixed, on-primary-fixed-variant,
+    //                   on-secondary, on-secondary-container, on-secondary-fixed,
+    //                   on-secondary-fixed-variant, on-surface, on-surface-variant, on-tertiary,
+    //                   on-tertiary-container, on-tertiary-fixed, on-tertiary-fixed-variant,
+    //                   outline, outline-variant, primary, primary-container, primary-fixed,
+    //                   primary-fixed-dim, scrim, secondary, secondary-container, secondary-fixed,
+    //                   secondary-fixed-dim, shadow, surface, surface-bright, surface-container,
+    //                   surface-container-high, surface-container-highest, surface-container-low,
+    //                   surface-container-lowest, surface-dim, surface-tint, surface-variant,
+    //                   tertiary, tertiary-container, tertiary-fixed, tertiary-fixed-dim
+    // currently, only selected roles are made available globally
+    // in future versions, system variables might replace this: https://material.angular.io/guide/system-variables
+    --inverse-surface: #{mat.get-theme-color($selected-theme, inverse-surface)};
+    --on-primary: #{mat.get-theme-color($selected-theme, on-primary)};
+    --outline: #{mat.get-theme-color($selected-theme, outline-variant)};
+    --primary: #{mat.get-theme-color($selected-theme, primary)};
+    --primary-container: #{mat.get-theme-color($selected-theme, primary-container)};
+    --secondary: #{mat.get-theme-color($selected-theme, secondary)};
+    --surface-container-highest: #{mat.get-theme-color($selected-theme, surface-container-highest)};
+    --surface-container-low: #{mat.get-theme-color($selected-theme, surface-container-low)};
+
+    @if mat.get-theme-type($selected-theme) == light {
+        --sidebar-button: #{mat.get-theme-color($selected-theme, neutral, 99)};
+        --secondary-text: #{mat.get-theme-color($selected-theme, neutral, 35)};
+    } @else {
+        --sidebar-button: #{mat.get-theme-color($selected-theme, secondary, 25)};
+        --secondary-text: #{mat.get-theme-color($selected-theme, neutral, 99)};
+    }
 }
 
 // TODO: This will enable dark mode, if selected by the system

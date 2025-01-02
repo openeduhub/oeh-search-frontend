@@ -33,7 +33,7 @@ import {
     styleUrl: './grid-widget.component.scss',
 })
 export class GridWidgetComponent {
-    @Input() backgroundColor: string;
+    @Input() backgroundColor?: string;
     @Input() contextNodeId: string;
     @Input() editMode: boolean;
     @Input() gridIndex: number;

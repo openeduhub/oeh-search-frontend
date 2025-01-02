@@ -32,7 +32,7 @@ export class OerSliderComponent implements OnInit, OnDestroy {
                 } else {
                     this.show = false;
                 }
-                // seems like the change detection is not happening automatically
+                // it seems like the change detection is not happening automatically
                 // related issue: https://stackoverflow.com/a/45300527
                 this.cdr.detectChanges();
             }),
