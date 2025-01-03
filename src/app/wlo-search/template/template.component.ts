@@ -537,21 +537,30 @@ export class TemplateComponent implements OnInit {
                     validSwimlaneIndex &&
                     validWidgetNodeId
                 ) {
-                    const pageNodeCreated: boolean = await this.checkForCustomPageNodeExistence();
-                    console.log('DEBUG: change necessary', pageNodeCreated);
-                    const pageVariant: PageVariantConfig = this.retrievePageVariant();
-                    if (this.swimlanes?.[swimlaneIndex]?.grid?.[gridIndex] && pageVariant) {
-                        this.swimlanes[swimlaneIndex].grid[gridIndex].nodeId =
-                            widgetNodeId.includes(workspaceSpacesStorePrefix)
-                                ? widgetNodeId
-                                : workspaceSpacesStorePrefix + widgetNodeId;
-                        pageVariant.structure.swimlanes = this.swimlanes;
-                        await this.setProperty(
-                            this.pageVariantNode.ref.id,
-                            pageVariantConfigType,
-                            JSON.stringify(pageVariant),
-                        );
-                        addedSuccessfully = true;
+                    // if no page configuration exists yet, a config has to be created and a reload of the page is necessary
+                    // TODO: we currently assume that adding is successfully, when creating a new page node.
+                    //       This might be improved by inputting validWidgetNodeId and deleting internally.
+                    addedSuccessfully = await this.checkForCustomPageNodeExistence(
+                        swimlaneIndex,
+                        gridIndex,
+                        widgetNodeId,
+                    );
+                    // if no page node was created, the adding is not yet successfully, so updating is necessary
+                    if (!addedSuccessfully) {
+                        const pageVariant: PageVariantConfig = this.retrievePageVariant();
+                        if (this.swimlanes?.[swimlaneIndex]?.grid?.[gridIndex] && pageVariant) {
+                            this.swimlanes[swimlaneIndex].grid[gridIndex].nodeId =
+                                widgetNodeId.includes(workspaceSpacesStorePrefix)
+                                    ? widgetNodeId
+                                    : workspaceSpacesStorePrefix + widgetNodeId;
+                            pageVariant.structure.swimlanes = this.swimlanes;
+                            await this.setProperty(
+                                this.pageVariantNode.ref.id,
+                                pageVariantConfigType,
+                                JSON.stringify(pageVariant),
+                            );
+                            addedSuccessfully = true;
+                        }
                     }
                 }
                 // note: if it exists, but cannot be added in the grid, we might want to delete the node again
@@ -791,7 +800,11 @@ export class TemplateComponent implements OnInit {
     /**
      * Helper function to add a possible non-existing page config node.
      */
-    private async checkForCustomPageNodeExistence(): Promise<boolean> {
+    private async checkForCustomPageNodeExistence(
+        swimlaneIndex?: number,
+        gridIndex?: number,
+        widgetNodeId?: string,
+    ): Promise<boolean> {
         console.log('checkForCustomPageNodeExistence');
         if (!this.collectionNodeHasPageConfig) {
             console.log('checkForCustomPageNodeExistence no page config');
@@ -803,7 +816,7 @@ export class TemplateComponent implements OnInit {
                 pageConfigAspect,
             );
             const pageVariants: string[] = [];
-            // iterate variant config nodes and create ccm:io child nodes for it
+            // iterate variant config nodes (of template) and create ccm:io child nodes for it
             if (this.pageVariantConfigs.nodes?.length > 0) {
                 for (const variantNode of this.pageVariantConfigs.nodes) {
                     let pageConfigVariantNode: Node = await this.createChild(
@@ -819,6 +832,12 @@ export class TemplateComponent implements OnInit {
                         ? JSON.parse(variantNode.properties[pageVariantConfigType][0])
                         : {};
                     this.removeNodeIdsFromPageVariantConfig(variantConfig);
+                    this.updatePageVariantConfig(
+                        variantConfig,
+                        swimlaneIndex,
+                        gridIndex,
+                        widgetNodeId,
+                    );
                     await this.setProperty(
                         pageConfigVariantNode.ref.id,
                         pageVariantConfigType,
@@ -1076,6 +1095,20 @@ export class TemplateComponent implements OnInit {
                 }
             });
         });
+    }
+
+    /**
+     * Helper function to update the nodeId of given indexes within the structure of a page variant config.
+     */
+    private updatePageVariantConfig(
+        pageVariant: PageVariantConfig,
+        swimlaneIndex?: number,
+        gridIndex?: number,
+        widgetNodeId?: string,
+    ): void {
+        if (pageVariant.structure?.swimlanes?.[swimlaneIndex]?.grid?.[gridIndex] && widgetNodeId) {
+            pageVariant.structure.swimlanes[swimlaneIndex].grid[gridIndex].nodeId = widgetNodeId;
+        }
     }
 
     /**
