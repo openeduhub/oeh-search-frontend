@@ -789,28 +789,6 @@ export class TemplateComponent implements OnInit {
     }
 
     /**
-     * Helper function to set the correct permissions for a given node.
-     */
-    private async setPermissions(nodeId: string): Promise<void> {
-        return await firstValueFrom(
-            this.nodeApi.setPermissions(nodeId, {
-                inherited: true,
-                permissions: [
-                    {
-                        authority: {
-                            properties: null,
-                            editable: false,
-                            authorityName: 'GROUP_EVERYONE',
-                            authorityType: 'EVERYONE',
-                        },
-                        permissions: ['Consumer', 'CCPublish'],
-                    },
-                ],
-            }),
-        );
-    }
-
-    /**
      * Helper function to add a possible non-existing page config node.
      */
     private async checkForCustomPageNodeExistence(): Promise<boolean> {
@@ -824,8 +802,6 @@ export class TemplateComponent implements OnInit {
                 pageConfigPrefix + uuidv4(),
                 pageConfigAspect,
             );
-            // TODO: remove, if not necessary
-            await this.setPermissions(this.pageConfigNode.ref.id);
             const pageVariants: string[] = [];
             // iterate variant config nodes and create ccm:io child nodes for it
             if (this.pageVariantConfigs.nodes?.length > 0) {
@@ -836,8 +812,6 @@ export class TemplateComponent implements OnInit {
                         pageVariantConfigPrefix + uuidv4(),
                         pageVariantConfigAspect,
                     );
-                    // TODO: remove, if not necessary
-                    await this.setPermissions(pageConfigVariantNode.ref.id);
                     pageVariants.push(workspaceSpacesStorePrefix + pageConfigVariantNode.ref.id);
                     const variantConfig: PageVariantConfig = variantNode.properties[
                         pageVariantConfigType
