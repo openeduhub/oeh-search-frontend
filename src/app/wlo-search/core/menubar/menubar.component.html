@@ -86,7 +86,6 @@
                 data-events="mutate"
                 data-mutate="agglvg-responsive-menu"
                 data-responsive-menu="drilldown large-dropdown"
-                aria-multiselectable="false"
               >
                 <!-- WLO (dropdown menu) -->
                 <li
@@ -106,7 +105,6 @@
                       : 'is-drilldown-submenu-parent'
                   "
                   role="none"
-                  [attr.aria-expanded]="wloSubMenuOpen()"
                   (mouseenter)="changeWloMenuOpen(true)"
                   (mouseleave)="changeWloMenuOpen(false)"
                 >
@@ -114,6 +112,7 @@
                     href="{{ wordpressUrl }}"
                     role="menuitem"
                     aria-haspopup="true"
+                    [attr.aria-expanded]="wloSubMenuOpen()"
                     [attr.tabindex]="wloSubMenuOpen() || newsSubMenuOpen() ? -1 : 0"
                     (click)="onWloLinkClicked($event)"
                   >
@@ -279,7 +278,6 @@
                       : 'is-drilldown-submenu-parent'
                   "
                   role="none"
-                  [attr.aria-expanded]="newsSubMenuOpen()"
                   (mouseenter)="changeNewsMenuOpen(true)"
                   (mouseleave)="changeNewsMenuOpen(false)"
                 >
@@ -287,6 +285,7 @@
                     href="{{ wordpressUrl }}/news/"
                     role="menuitem"
                     aria-haspopup="true"
+                    [attr.aria-expanded]="newsSubMenuOpen()"
                     [attr.tabindex]="wloSubMenuOpen() || newsSubMenuOpen() ? -1 : 0"
                     (click)="onNewsLinkClicked($event)"
                   >
