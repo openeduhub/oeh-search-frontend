@@ -115,7 +115,7 @@
           <!-- note: do not show empty swimlanes to users -->
           <ng-container *ngFor="let swimlane of swimlanes; let i = index">
             <div
-              *ngIf="swimlane.grid?.length > 0 || swimlane.type === 'spacer' || editMode"
+              *ngIf="swimlane.grid?.length > 0 || editMode"
               class="wlo-swimlane"
               [class.swimlane-edit-mode]="editMode"
               [style.background-color]="swimlane.backgroundColor ?? swimlane.backgroundColor"
@@ -162,7 +162,6 @@
                   <button
                     mat-mini-fab
                     class="action-btn btn-modify"
-                    *ngIf="swimlane.type !== 'spacer'"
                     [disabled]="requestInProgress"
                     (click)="editSwimlane(swimlane, i)"
                     aria-label="Edit swimlane"
@@ -181,7 +180,7 @@
                 </div>
               </ng-container>
               <!-- type: collapse -->
-              <cdk-accordion class="wlo-accordion" *ngIf="swimlane.type === 'collapse'">
+              <cdk-accordion class="wlo-accordion" *ngIf="swimlane.type === 'accordion'">
                 <cdk-accordion-item
                   #accordionItem="cdkAccordionItem"
                   class="wlo-accordion-item"
@@ -228,14 +227,11 @@
                 </cdk-accordion-item>
               </cdk-accordion>
 
-              <!-- type: jumbotron, text, container -->
-              <div
-                [class.wlo-container]="swimlane.type === 'container'"
-                [class.wlo-jumbotron]="swimlane.type === 'jumbotron'"
-                [class.wlo-text]="swimlane.type === 'text'"
-                *ngIf="['container', 'jumbotron', 'text'].includes(swimlane.type)"
-              >
-                <h2 *ngIf="swimlane.heading">{{ swimlane.heading }}</h2>
+              <!-- type: container -->
+              <div class="wlo-container" *ngIf="swimlane.type === 'container'">
+                <h2 *ngIf="swimlane.heading">
+                  {{ swimlane.heading }}
+                </h2>
                 <p class="wlo-description" *ngIf="swimlane.description">
                   {{ swimlane.description }}
                 </p>
@@ -254,10 +250,6 @@
                   (nodeClicked)="handleNodeChange($event)"
                 ></app-swimlane>
               </div>
-
-              <ng-container *ngIf="swimlane.type === 'spacer'">
-                <hr class="wlo-spacer" />
-              </ng-container>
             </div>
           </ng-container>
         </ng-container>

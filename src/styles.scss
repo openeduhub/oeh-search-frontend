@@ -139,6 +139,18 @@ body {
     opacity: 0;
 }
 
+// overrides for mat-mdc-menu-content of mat-menu
+.mat-mdc-menu-content {
+    .mat-menu-header-container {
+        padding: 8px 12px 12px 12px;
+        text-align: center;
+    }
+    .mat-mdc-menu-item-text {
+        display: flex;
+        align-items: center;
+    }
+}
+
 // fix opening mat-dialog moves elements with position: sticky
 // related answer: https://stackoverflow.com/a/49067665
 html.cdk-global-scrollblock {

@@ -106,10 +106,21 @@
     //.mat-mdc-dialog-actions {
     //    --mat-dialog-actions-padding: var(--mat-dialog-content-padding);
     //}
+    .mat-menu-header-container {
+        @if mat.get-theme-type($theme) == light {
+            color: mat.get-theme-color($theme, neutral, 35);
+        } @else {
+            color: mat.get-theme-color($theme, neutral, 99);
+        }
+    }
 }
 
 @mixin angular-material-typography-overrides($typography) {
     .mat-mdc-chip {
         @include mat.m2-typography-level($typography, body-2);
+    }
+
+    .mat-menu-header-container {
+        font-weight: bold;
     }
 }

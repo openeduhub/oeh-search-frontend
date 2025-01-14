@@ -203,34 +203,17 @@
                     }
                 }
 
-                /* type: jumbotron */
-                .wlo-jumbotron {
+                /* type: container */
+                .wlo-container {
                     padding: 16px 24px;
                     height: 100%;
                     box-sizing: border-box;
                     overflow-y: scroll;
-                }
 
-                .wlo-jumbotron,
-                .wlo-container {
                     h2,
                     .wlo-description {
                         text-align: center;
                     }
-                }
-
-                /* type: text */
-                .wlo-text {
-                    padding: 8px;
-                }
-
-                /* type: spacer */
-                // TODO: Remove wlo-spacer style, if not used anymore
-                .wlo-spacer {
-                    margin: 1.5em auto;
-                    width: 100%;
-                    border: none;
-                    border-top: 3px solid #e0e0e0;
                 }
 
                 /* overwrites for edit mode */

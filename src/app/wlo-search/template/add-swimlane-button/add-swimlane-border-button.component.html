@@ -5,13 +5,15 @@
   </button>
   <div class="container-border"></div>
   <mat-menu #addComponentMenu="matMenu">
+    <div class="mat-menu-header-container">Inhaltselement hinzufügen</div>
     <button
       mat-menu-item
       *ngFor="let option of swimlaneTypeOptions"
       [disabled]="requestInProgress"
       (click)="addSwimlane(option.value)"
     >
-      {{ option.viewValue }}
+      <i class="material-icons-outlined" *ngIf="!!option.icon" [esIcon]="option.icon"></i>
+      <span>{{ option.viewValue }}</span>
     </button>
   </mat-menu>
 </div>

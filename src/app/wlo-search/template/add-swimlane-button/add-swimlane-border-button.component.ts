@@ -15,9 +15,7 @@ export class AddSwimlaneBorderButtonComponent {
     @Input() requestInProgress: boolean = false;
     @Output() addSwimlaneTriggered: EventEmitter<string> = new EventEmitter<string>();
 
-    protected readonly swimlaneTypeOptions: SelectOption[] = swimlaneTypeOptions.concat([
-        { value: 'spacer', viewValue: 'Trennlinie' },
-    ]);
+    protected readonly swimlaneTypeOptions: SelectOption[] = swimlaneTypeOptions;
 
     addSwimlane(type: string): void {
         this.addSwimlaneTriggered.emit(type);

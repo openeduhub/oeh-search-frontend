@@ -122,20 +122,19 @@ export const retrieveCustomUrl = (node: Node): string => {
 
 export const swimlaneTypeOptions: SelectOption[] = [
     {
-        value: 'collapse',
-        viewValue: 'Accordion',
-    },
-    {
+        icon: 'rectangle',
         value: 'container',
-        viewValue: 'Einfacher Wrapper',
+        viewValue: 'Bereichselement',
     },
     {
-        value: 'jumbotron',
-        viewValue: 'Wrapper mit Padding',
+        icon: 'storage',
+        value: 'accordion',
+        viewValue: 'Akkordeonelement',
     },
     {
-        value: 'text',
-        viewValue: 'Text-Inhalt',
+        icon: 'anchor',
+        value: 'anchor',
+        viewValue: 'Ankermenü',
     },
 ];
 
