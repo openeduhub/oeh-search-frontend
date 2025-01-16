@@ -1,5 +1,5 @@
 <div class="wlo-grid wlo-grid-cols-6 wlo-gap">
-  <ng-container *ngIf="grid?.length >= 1; else configGrid">
+  <ng-container *ngIf="grid?.length >= 1; else configureGridDialog">
     <div
       class="wlo-grid-content"
       [class.wlo-col-span-2]="gridItem.cols === 2"
@@ -9,6 +9,7 @@
       *ngFor="let gridItem of grid; let i = index"
     >
       <app-grid-widget
+        *ngIf="supportedWidgetTypes.includes(gridItem.item); else selectWidgetTypeDialog"
         [backgroundColor]="backgroundColor ?? swimlaneColor"
         [contextNodeId]="contextNodeId"
         [editMode]="editMode"
@@ -22,12 +23,35 @@
         [widgetNodeId]="gridItem.nodeId?.includes(workspaceSpacesStorePrefix) ? gridItem.nodeId.split('/')?.[gridItem.nodeId.split('/').length - 1] : gridItem.nodeId"
         [widgetType]="gridItem.item"
         (nodeClicked)="clickedNode($event)"
-        (widgetTypeUpdated)="updateWidgetType($event, i)"
       >
       </app-grid-widget>
+      <!-- no (valid) widget type has been selected yet -->
+      <ng-template #selectWidgetTypeDialog>
+        <!-- display a form to select it when being in edit mode -->
+        <div *ngIf="editMode" class="grid-border-container">
+          <button
+            class="btn-accent"
+            mat-flat-button
+            color="primary"
+            [matMenuTriggerFor]="selectWidgetTypeMenu"
+          >
+            <i esIcon="add"></i> Widget hinzufügen
+          </button>
+          <mat-menu #selectWidgetTypeMenu="matMenu">
+            <button
+              mat-menu-item
+              *ngFor="let option of widgetTypeOptions"
+              (click)="selectWidgetType(option.value, i)"
+            >
+              {{ option.viewValue }}
+            </button>
+          </mat-menu>
+        </div>
+      </ng-template>
     </div>
   </ng-container>
-  <ng-template #configGrid>
+  <!-- no grid has been defined yet -->
+  <ng-template #configureGridDialog>
     <div class="grid-border-container wlo-col-span-6">
       <button
         class="btn-accent"

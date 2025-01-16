@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MdsValue, MdsWidget, Node } from 'ngx-edu-sharing-api';
 import {
     AiTextWidgetComponent,
@@ -14,13 +14,10 @@ import {
     defaultUserConfigurableNodeId,
     parentWidgetConfigNodeId,
     retrieveCustomUrl,
-    widgetTypeOptions,
 } from '../../custom-definitions';
-import { SelectOption } from '../swimlane-settings-dialog/select-option';
 
 @Component({
     selector: 'app-grid-widget',
-    encapsulation: ViewEncapsulation.None,
     standalone: true,
     imports: [
         AiTextWidgetComponent,
@@ -46,7 +43,6 @@ export class GridWidgetComponent {
     @Input() widgetNodeId: string;
     @Input() widgetType: string;
     @Output() nodeClicked: EventEmitter<Node> = new EventEmitter<Node>();
-    @Output() widgetTypeUpdated: EventEmitter<string> = new EventEmitter<string>();
 
     readonly defaultAiTextWidgetNodeId: string = defaultAiTextWidgetNodeId;
     readonly defaultCollectionChipsNodeId: string = defaultCollectionChipsNodeId;
@@ -55,15 +51,6 @@ export class GridWidgetComponent {
     readonly parentWidgetConfigNodeId: string = parentWidgetConfigNodeId;
 
     constructor() {}
-
-    /**
-     * Selects a widget type for the grid tile by emitting an update.
-     *
-     * @param widgetItemName
-     */
-    selectWidgetType(widgetItemName: string): void {
-        this.widgetTypeUpdated.emit(widgetItemName);
-    }
 
     /**
      * Pass through custom retrieveCustomUrl function to be input to the widgets.
@@ -82,6 +69,4 @@ export class GridWidgetComponent {
     clickedItem(node: any): void {
         this.nodeClicked.emit(node as Node);
     }
-
-    protected readonly widgetTypeOptions: SelectOption[] = widgetTypeOptions;
 }

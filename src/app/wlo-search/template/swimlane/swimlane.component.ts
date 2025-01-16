@@ -9,7 +9,11 @@ import {
 } from '@angular/core';
 import { MdsValue, MdsWidget, Node, NodeEntries } from 'ngx-edu-sharing-api';
 import { SharedModule } from '../../shared/shared.module';
-import { swimlaneGridOptions, workspaceSpacesStorePrefix } from '../custom-definitions';
+import {
+    swimlaneGridOptions,
+    widgetTypeOptions,
+    workspaceSpacesStorePrefix,
+} from '../custom-definitions';
 import { GridTile } from './grid-tile';
 import { GridWidgetComponent } from './grid-widget/grid-widget.component';
 import { SelectOption } from './swimlane-settings-dialog/select-option';
@@ -101,18 +105,21 @@ export class SwimlaneComponent implements AfterViewChecked {
     }
 
     /**
-     * Called by app-grid-widget widgetTypeUpdated output event.
-     * Handles the update of the type of the grid tile of a given index.
+     * Selects the widget type for a grid tile at a given index.
      *
      * @param widgetType
      * @param gridTileIndex
      */
-    updateWidgetType(widgetType: string, gridTileIndex: number): void {
+    selectWidgetType(widgetType: string, gridTileIndex: number): void {
         const gridCopy: GridTile[] = JSON.parse(JSON.stringify(this.grid));
         gridCopy[gridTileIndex].item = widgetType;
         this.gridUpdated.emit(gridCopy);
     }
 
+    protected readonly supportedWidgetTypes: string[] = widgetTypeOptions.map(
+        (option) => option.value,
+    );
     protected readonly swimlaneGridOptions: SelectOption[] = swimlaneGridOptions;
+    protected readonly widgetTypeOptions: SelectOption[] = widgetTypeOptions;
     protected readonly workspaceSpacesStorePrefix: string = workspaceSpacesStorePrefix;
 }
