@@ -8,7 +8,7 @@
 $material-icons-font-path: 'material-icons/iconfont/';
 @import 'material-icons/iconfont/material-icons';
 @import 'ngx-edu-sharing-ui/assets/scss/variables';
-@import 'angular-material-overrides.theme';
+@import 'global-overrides.theme';
 
 // Include the common styles for Angular Material
 // The core mixin that includes prerequisite styles for common features used by multiple components
@@ -172,6 +172,17 @@ button.btn-accent {
         display: flex;
         align-items: center;
     }
+}
+
+// further style definitions
+.alert-warning {
+    padding: 16px;
+    text-align: center;
+    // TODO: Typography
+    font-size: 16px;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 4px;
 }
 
 // fix opening mat-dialog moves elements with position: sticky

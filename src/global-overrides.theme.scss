@@ -59,53 +59,18 @@
         }
     }
 
-    //--mdc-switch-unselected-icon-color: #EC4A70;
-
-    // use roles to retrieve colors, i.e., primary or on-primary
-    // reference for roles: https://material-foundation.github.io/material-theme-builder/
-
-    // set color depending on the theme: https://v18.material.angular.io/guide/theming#theme-your-own-components-using-a-material-3-theme
-    //.mat-mdc-button-base {
-    //    //@if mat.get-theme-type($theme) == dark {
-    //    //    color: mat.get-theme-color($theme, secondary, 0) !important;
-    //    //    background: mat.get-theme-color($theme, secondary, 80) !important;
-    //    //} @else {
-    //    //    color: mat.get-theme-color($theme, secondary, 100) !important;
-    //    //    background: mat.get-theme-color($theme, secondary, 40) !important;
-    //    //}
-    //
-    //    // Try out system variables
-    //    //color: var(--mat-sys-on-primary-container) !important;
-    //    //background: var(--mat-sys-on-primary-container) !important;
-    //
-    //
-    //    color: mat.get-theme-color($theme, on-secondary) !important;
-    //    background: mat.get-theme-color($theme, secondary) !important;
-    //}
-
-    //$background: map-get($theme, background);
-    //$foreground: map-get($theme, foreground);
-    //$primary: map-get($theme, primary);
-    //
-    //.mat-mdc-tooltip {
-    //    background: mat.m2-get-color-from-palette($background, tooltip);
-    //    border-radius: 3px;
-    //}
-    //
+    // override slick arrow color
     .slick-prev::before,
     .slick-next::before {
-        //color: mat.m2-get-color-from-palette($foreground, text);
-        color: mat.get-theme-color($theme, inverse-surface);
+        @if mat.get-theme-type($theme) == light {
+            color: mat.get-theme-color($theme, neutral, 35);
+        } @else {
+            color: mat.get-theme-color($theme, neutral, 99);
+        }
     }
-    //
-    //.app-backdrop {
-    //    background: mat.m2-get-color-from-palette($background, background, 0.9);
-    //}
-    //
-    //// the padding of the mat-mdc-dialog-actions is not set properly
-    //.mat-mdc-dialog-actions {
-    //    --mat-dialog-actions-padding: var(--mat-dialog-content-padding);
-    //}
+
+    // global styles for custom elements
+    // custom mat-menu-header-container theme
     .mat-menu-header-container {
         @if mat.get-theme-type($theme) == light {
             color: mat.get-theme-color($theme, neutral, 35);
@@ -113,6 +78,8 @@
             color: mat.get-theme-color($theme, neutral, 99);
         }
     }
+
+    // custom button accent theme
     button.btn-accent {
         color: mat.get-theme-color($theme, primary, 40);
         background: $neon-default;
@@ -120,6 +87,12 @@
         &:hover {
             background: $neon-medium;
         }
+    }
+
+    // custom alert warning theme
+    .alert-warning {
+        border: 1px solid $accent-warning;
+        background: $accent-warning-20;
     }
 }
 
