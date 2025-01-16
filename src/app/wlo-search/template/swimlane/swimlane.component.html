@@ -1,20 +1,11 @@
-<div
-  class="wlo-grid"
-  [class.wlo-grid-cols-1]="grid.length < 2"
-  [class.wlo-grid-cols-2]="grid.length === 2"
-  [class.wlo-grid-cols-3]="grid.length > 2"
-  [class.wlo-gap-0]="gridType === 'noGutter'"
-  [class.wlo-gap-2]="gridType === 'smallGutter'"
-  [class.wlo-gap-4]="gridType === 'mediumGutter'"
-  [class.wlo-gap-6]="gridType === 'largeGutter'"
->
-  <ng-container *ngIf="grid?.length >= 1; else addWidgetView">
+<div class="wlo-grid wlo-grid-cols-6 wlo-gap">
+  <ng-container *ngIf="grid?.length >= 1; else configGrid">
     <div
       class="wlo-grid-content"
-      [class.wlo-col-span-2]="grid.length >= 2 && gridItem.cols === 2"
-      [class.wlo-col-span-3]="grid.length >= 3 && gridItem.cols === 3"
-      [class.wlo-row-span-2]="gridItem.rows === 2"
-      [class.wlo-row-span-3]="gridItem.rows === 3"
+      [class.wlo-col-span-2]="gridItem.cols === 2"
+      [class.wlo-col-span-3]="gridItem.cols === 3"
+      [class.wlo-col-span-4]="gridItem.cols === 4"
+      [class.wlo-col-span-6]="gridItem.cols === 6 || grid.length === 1"
       *ngFor="let gridItem of grid; let i = index"
     >
       <app-grid-widget
@@ -31,26 +22,35 @@
         [widgetNodeId]="gridItem.nodeId?.includes(workspaceSpacesStorePrefix) ? gridItem.nodeId.split('/')?.[gridItem.nodeId.split('/').length - 1] : gridItem.nodeId"
         [widgetType]="gridItem.item"
         (nodeClicked)="clickedNode($event)"
+        (widgetTypeUpdated)="updateWidgetType($event, i)"
       >
       </app-grid-widget>
     </div>
   </ng-container>
-  <ng-template #addWidgetView>
-    <div class="add-widget-container">
+  <ng-template #configGrid>
+    <div class="grid-border-container wlo-col-span-6">
       <button
-        class="add-widget-btn"
+        class="btn-accent"
         mat-flat-button
         color="primary"
-        [matMenuTriggerFor]="addWidgetMenu"
+        [matMenuTriggerFor]="configureGridMenu"
       >
-        <i esIcon="add"></i> Widget hinzufügen
+        <i esIcon="settings"></i> Grid konfigurieren
       </button>
-      <mat-menu #addWidgetMenu="matMenu">
+      <mat-menu #configureGridMenu="matMenu">
         <button
           mat-menu-item
-          *ngFor="let option of widgetTypeOptions"
-          (click)="addGridTile(option.value)"
+          *ngFor="let option of swimlaneGridOptions"
+          (click)="configureSwimlaneGrid(option.value)"
         >
+          <i
+            class="material-icons-outlined"
+            *ngIf="!!option.icon; else checkSvgIcon"
+            [esIcon]="option.icon"
+          ></i>
+          <ng-template #checkSvgIcon>
+            <mat-icon *ngIf="!!option.svgIcon" [svgIcon]="option.svgIcon"></mat-icon>
+          </ng-template>
           {{ option.viewValue }}
         </button>
       </mat-menu>

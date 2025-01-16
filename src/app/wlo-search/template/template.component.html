@@ -213,14 +213,13 @@
                       [contextNodeId]="topicCollectionID()"
                       [editMode]="editMode"
                       [grid]="swimlane.grid"
-                      [gridType]="swimlane.gridType"
                       [pageVariantNode]="pageVariantNode"
                       [selectDimensions]="selectDimensions"
                       [selectedDimensionValues]="selectedDimensionValues"
                       [swimlaneIndex]="i"
                       [topic]="topic()"
                       [topicWidgets]="topicWidgets"
-                      (gridTileAdded)="handleAddGridTile($event, i)"
+                      (gridUpdated)="handleGridUpdate($event, i)"
                       (nodeClicked)="handleNodeChange($event)"
                     ></app-swimlane>
                   </div>
@@ -246,7 +245,7 @@
                   [swimlaneIndex]="i"
                   [topic]="topic()"
                   [topicWidgets]="topicWidgets"
-                  (gridTileAdded)="handleAddGridTile($event, i)"
+                  (gridUpdated)="handleGridUpdate($event, i)"
                   (nodeClicked)="handleNodeChange($event)"
                 ></app-swimlane>
               </div>

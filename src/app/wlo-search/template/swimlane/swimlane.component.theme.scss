@@ -7,17 +7,8 @@
         .text-widget {
             background: mat.get-theme-color($theme, surface-container-low);
         }
-        .add-widget-container {
+        .grid-container {
             border-color: rgba(mat.get-theme-color($theme, outline), 0.7);
-
-            .add-widget-btn {
-                color: mat.get-theme-color($theme, primary, 40);
-                background: $neon-default;
-
-                &:hover {
-                    background: $neon-medium;
-                }
-            }
         }
     }
 }

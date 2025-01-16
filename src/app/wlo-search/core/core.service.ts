@@ -30,7 +30,17 @@ export class CoreService {
         //
         // When adding new icons, make sure to use a plain SVG format, e.g., when working with
         // Inkscape.
-        for (const icon of ['advertisement', 'author', 'login', 'price', 'editorial', 'oer']) {
+        for (const icon of [
+            'advertisement',
+            'author',
+            'editorial',
+            'left_side_panel',
+            'login',
+            'oer',
+            'price',
+            'right_side_panel',
+            'two_columns',
+        ]) {
             this.matIconRegistry.addSvgIcon(
                 icon,
                 this.domSanitizer.bypassSecurityTrustResourceUrl(

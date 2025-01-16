@@ -647,15 +647,12 @@ export class TemplateComponent implements OnInit {
     // REACT TO OUTPUT EVENTS //
 
     /**
-     * Called by app-swimlane gridTileAdded output event.
-     * Handles the addition of a tile to the grid of a specified swimlane.
+     * Called by app-swimlane gridUpdated output event.
+     * Handles the update of the grid of a given swimlane.
      */
-    async handleAddGridTile(gridTile: GridTile, swimlaneIndex: number): Promise<void> {
-        // change the swimlane first
-        if (!this.swimlanes[swimlaneIndex].grid) {
-            this.swimlanes[swimlaneIndex].grid = [];
-        }
-        this.swimlanes[swimlaneIndex].grid.push(gridTile);
+    async handleGridUpdate(grid: GridTile[], swimlaneIndex: number): Promise<void> {
+        // overwrite swimlane grid
+        this.swimlanes[swimlaneIndex].grid = grid;
 
         // persist the state afterward
         await this.checkForCustomPageNodeExistence();

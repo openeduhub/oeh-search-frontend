@@ -22,14 +22,6 @@
     </mat-select>
   </mat-form-field>
   <mat-form-field appearance="outline">
-    <mat-label i18n>Grid-Type</mat-label>
-    <mat-select formControlName="gridType">
-      <mat-option [value]="option.value" *ngFor="let option of gridTypeOptions">
-        {{ option.viewValue }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field appearance="outline">
     <mat-label i18n>Background-Color</mat-label>
     <input matInput type="color" formControlName="backgroundColor" />
   </mat-form-field>

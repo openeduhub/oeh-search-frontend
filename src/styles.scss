@@ -139,6 +139,29 @@ body {
     opacity: 0;
 }
 
+// overrides for btn-accent
+button.btn-accent {
+    padding: 8px 18px;
+    border-radius: 50px;
+    // TODO: Typography
+    font-family: 'Montserrat-Bold', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
+
+    .mdc-button__label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        i {
+            margin-right: 5px;
+            height: 20px;
+            width: 20px;
+            // TODO: Typography
+            font-size: 20px;
+            font-weight: 800;
+        }
+    }
+}
+
 // overrides for mat-mdc-menu-content of mat-menu
 .mat-mdc-menu-content {
     .mat-menu-header-container {

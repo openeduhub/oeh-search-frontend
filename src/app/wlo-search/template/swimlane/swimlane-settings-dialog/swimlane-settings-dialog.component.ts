@@ -6,7 +6,6 @@ import { NodeService } from 'ngx-edu-sharing-api';
 import { firstValueFrom } from 'rxjs';
 import { SharedModule } from '../../../shared/shared.module';
 import {
-    gridTypeOptions,
     swimlaneTypeOptions,
     widgetTypeOptions,
     workspaceSpacesStorePrefix,
@@ -26,7 +25,6 @@ import { TileDimension } from './tile-dimension';
 export class SwimlaneSettingsDialogComponent implements OnInit {
     form: UntypedFormGroup;
     swimlaneTypeOptions: SelectOption[] = swimlaneTypeOptions;
-    gridTypeOptions: SelectOption[] = gridTypeOptions;
     widgetTypeOptions: SelectOption[] = widgetTypeOptions;
     gridItems: GridTile[];
     tileDimensions: TileDimension[] = [
@@ -51,7 +49,6 @@ export class SwimlaneSettingsDialogComponent implements OnInit {
             type: new UntypedFormControl(this.data.swimlane.type),
             heading: new UntypedFormControl(this.data.swimlane.heading),
             description: new UntypedFormControl(this.data.swimlane.description),
-            gridType: new UntypedFormControl(this.data.swimlane.gridType),
             backgroundColor: new UntypedFormControl(
                 this.initializeBackgroundColor(this.data.swimlane.backgroundColor),
             ),

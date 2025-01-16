@@ -8,28 +8,8 @@ export const defaultMds: string = 'mds_oeh';
 export const defaultAiTextWidgetNodeId: string = '10d5ec39-907a-43f6-a024-344300e6a4c8';
 export const defaultCollectionChipsNodeId: string = 'd43cfd0e-ce5a-4428-a3bb-2c37a155bf32';
 export const defaultTopicsColumnBrowserNodeId: string = '4f46b4cd-19df-4139-bbb1-bfc3aea08d39';
-export const defaultTopicsTreeTableNodeId: string = '14f7e010-ef67-4976-9655-c61b82dcf954';
 export const defaultTopicTextNodeId: string = '2340e5cf-4e9d-4b42-b6df-e64087be7961';
 export const defaultUserConfigurableNodeId: string = '89653b20-516c-43a2-9042-382aef5ae087';
-
-export const gridTypeOptions: SelectOption[] = [
-    {
-        value: 'noGutter',
-        viewValue: 'Kein Abstand zwischen Elementen',
-    },
-    {
-        value: 'smallGutter',
-        viewValue: 'Kleiner Abstand zwischen Elementen',
-    },
-    {
-        value: 'mediumGutter',
-        viewValue: 'Mittlerer Abstand zwischen Elementen',
-    },
-    {
-        value: 'largeGutter',
-        viewValue: 'Großer Abstand zwischen Elementen',
-    },
-];
 
 export const initialLocaleString: string = 'de_DE';
 
@@ -120,6 +100,34 @@ export const retrieveCustomUrl = (node: Node): string => {
     return '';
 };
 
+export const swimlaneGridOptions: SelectOption[] = [
+    {
+        icon: 'rectangle',
+        value: 'one_column',
+        viewValue: 'Eine Spalte',
+    },
+    {
+        svgIcon: 'two_columns',
+        value: 'two_columns',
+        viewValue: 'Zwei Spalten',
+    },
+    {
+        icon: 'view_column',
+        value: 'three_columns',
+        viewValue: 'Drei Spalten',
+    },
+    {
+        svgIcon: 'left_side_panel',
+        value: 'left_side_panel',
+        viewValue: 'Linke Seitenleiste',
+    },
+    {
+        svgIcon: 'right_side_panel',
+        value: 'right_side_panel',
+        viewValue: 'Rechte Seitenleiste',
+    },
+];
+
 export const swimlaneTypeOptions: SelectOption[] = [
     {
         icon: 'rectangle',
@@ -149,36 +157,20 @@ export const widgetConfigType: string = 'ccm:widget_config';
 
 export const widgetTypeOptions: SelectOption[] = [
     {
-        value: 'wlo-user-configurable',
-        viewValue: 'Inhalte-Teaser',
-    },
-    {
-        value: 'wlo-ai-text-widget',
-        viewValue: 'KI-Widget',
-    },
-    {
         value: 'wlo-collection-chips',
-        viewValue: 'Themenbaum',
+        viewValue: 'Navigationspillen',
     },
     {
         value: 'wlo-topics-column-browser',
         viewValue: 'Themenbaum (ausklappbar)',
     },
     {
-        value: 'wlo-topics-tree-table',
-        viewValue: 'Themenbaum (Tabelle)',
+        value: 'wlo-user-configurable',
+        viewValue: 'Inhalte-Teaser',
     },
     {
-        value: 'wlo-card',
-        viewValue: 'Karte',
-    },
-    {
-        value: 'wlo-image',
-        viewValue: 'Bild',
-    },
-    {
-        value: 'wlo-text',
-        viewValue: 'Text',
+        value: 'wlo-ai-text-widget',
+        viewValue: 'KI-Widget',
     },
 ];
 

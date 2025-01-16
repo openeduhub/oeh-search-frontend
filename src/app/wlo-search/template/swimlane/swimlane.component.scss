@@ -3,16 +3,30 @@
     place-items: center;
     overflow: hidden;
 
-    @for $i from 1 through 3 {
-        &.wlo-grid-cols-#{$i} {
-            grid-template-columns: repeat($i, minmax(0, 1fr));
-        }
+    // grid column definition
+    &.wlo-grid-cols-6 {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
     }
 
-    @for $i from 0 through 6 {
-        &.wlo-gap-#{$i} {
-            gap: 0.25rem * $i;
-        }
+    // col span definition
+    .wlo-col-span-2 {
+        grid-column: span 2 / span 2;
+    }
+
+    .wlo-col-span-3 {
+        grid-column: span 3 / span 3;
+    }
+
+    .wlo-col-span-4 {
+        grid-column: span 4 / span 4;
+    }
+
+    .wlo-col-span-6 {
+        grid-column: span 6 / span 6;
+    }
+
+    &.wlo-gap {
+        gap: 0.5rem;
     }
 
     .wlo-grid-content {
@@ -27,61 +41,10 @@
             vertical-align: middle;
         }
 
-        &.wlo-col-span-2 {
-            grid-column: span 2 / span 2;
-        }
-
-        &.wlo-col-span-3 {
-            grid-column: span 3 / span 3;
-        }
-
-        &.wlo-row-span-2 {
-            grid-row: span 2 / span 2;
-        }
-
-        &.wlo-row-span-3 {
-            grid-row: span 3 / span 3;
-        }
-
         .text-widget {
             padding: 10px;
             height: 100%;
             box-sizing: border-box;
-        }
-    }
-
-    .add-widget-container {
-        padding: 16px 24px;
-        width: 100%;
-        height: 100%;
-        border-width: 1px;
-        border-style: solid;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        box-sizing: border-box;
-
-        .add-widget-btn {
-            padding: 8px 18px;
-            border-radius: 50px;
-            // TODO: Typography
-            font-family: 'Montserrat-Bold', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
-
-            ::ng-deep .mdc-button__label {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-
-                i {
-                    margin-right: 5px;
-                    height: 20px;
-                    width: 20px;
-                    // TODO: Typography
-                    font-size: 20px;
-                    font-weight: 800;
-                }
-            }
         }
     }
 }
