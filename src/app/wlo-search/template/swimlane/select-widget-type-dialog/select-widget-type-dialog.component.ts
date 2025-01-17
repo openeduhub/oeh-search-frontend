@@ -21,11 +21,30 @@ export class SelectWidgetTypeDialogComponent {
      * Selects the widget type for a grid tile at a given index.
      *
      * @param widgetType
-     * @param gridTileIndex
+     * @param tileIndex
      */
-    selectWidgetType(widgetType: string, gridTileIndex: number): void {
+    selectWidgetType(widgetType: string, tileIndex: number): void {
+        // change copy of grid to avoid overwriting input
         const gridCopy: GridTile[] = JSON.parse(JSON.stringify(this.grid));
-        gridCopy[gridTileIndex].item = widgetType;
+        const gridTile: GridTile = gridCopy[tileIndex];
+        const changeType = (): void => {
+            if (!!gridTile.nodeId) {
+                delete gridTile.nodeId;
+            }
+            gridTile.item = widgetType;
+        };
+        // nodeId does already exist, confirm overwrite
+        if (!!gridTile.nodeId) {
+            if (
+                confirm(
+                    'Wollen Sie wirklich ein bereits konfiguriertes Widget austauschen? Die Konfiguration dieses Widgets geht dabei verloren.',
+                )
+            ) {
+                changeType();
+            }
+        } else {
+            changeType();
+        }
         this.gridUpdated.emit(gridCopy);
     }
 

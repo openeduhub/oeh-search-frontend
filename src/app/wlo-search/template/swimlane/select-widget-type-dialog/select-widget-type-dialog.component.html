@@ -1,19 +1,22 @@
-<div class="grid-border-container">
-  <button
-    class="btn-accent"
-    mat-flat-button
-    color="primary"
-    [matMenuTriggerFor]="selectWidgetTypeMenu"
+<button
+  class="btn-accent"
+  mat-flat-button
+  color="primary"
+  [matMenuTriggerFor]="selectWidgetTypeMenu"
+>
+  <ng-container
+    *ngIf="!grid[tileIndex].item || grid[tileIndex].item === ''; else changeExistingTypeTemplate"
   >
     <i esIcon="add"></i> Widget hinzufügen
+  </ng-container>
+  <ng-template #changeExistingTypeTemplate> <i esIcon="edit"></i> Widget-Typ ändern </ng-template>
+</button>
+<mat-menu #selectWidgetTypeMenu="matMenu">
+  <button
+    mat-menu-item
+    *ngFor="let option of widgetTypeOptions"
+    (click)="selectWidgetType(option.value, tileIndex)"
+  >
+    {{ option.viewValue }}
   </button>
-  <mat-menu #selectWidgetTypeMenu="matMenu">
-    <button
-      mat-menu-item
-      *ngFor="let option of widgetTypeOptions"
-      (click)="selectWidgetType(option.value, tileIndex)"
-    >
-      {{ option.viewValue }}
-    </button>
-  </mat-menu>
-</div>
+</mat-menu>

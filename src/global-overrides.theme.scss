@@ -69,6 +69,11 @@
         }
     }
 
+    // override .grid-border-container background when being dragged
+    .cdk-drag .grid-border-container {
+        background: mat.get-theme-color($theme, surface);
+    }
+
     // global styles for custom elements
     // custom mat-menu-header-container theme
     .mat-menu-header-container {

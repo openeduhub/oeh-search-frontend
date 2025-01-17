@@ -26,105 +26,93 @@
     <input matInput type="color" formControlName="backgroundColor" />
   </mat-form-field>
   <mat-label i18n>Grid-Definition</mat-label>
-  <mat-accordion
-    multi="true"
-    hideToggle="true"
-    class="grid-definition"
-    *ngIf="gridItems?.length > 0; else noGridTiles"
+  <div
+    cdkDropList
+    cdkDropListOrientation="mixed"
+    (cdkDropListDropped)="drop($event)"
+    class="wlo-grid wlo-gap wlo-grid-cols-6"
   >
-    <mat-expansion-panel
-      #panelItem="matExpansionPanel"
-      *ngFor="let gridTile of gridItems; let i = index"
-    >
-      <mat-expansion-panel-header>
-        <div class="wlo-move-buttons">
-          <button
-            [disabled]="i === 0"
-            (click)="$event.stopPropagation(); moveGridTilePosition(i, i - 1)"
-          >
-            <i esIcon="arrow_upward"></i>
-          </button>
-          <button
-            [disabled]="i === gridItems.length - 1"
-            (click)="$event.stopPropagation(); moveGridTilePosition(i, i + 1)"
-          >
-            <i esIcon="arrow_downward"></i>
-          </button>
+    <ng-container *ngIf="gridItems?.length >= 1; else configureGridDialog">
+      <div
+        cdkDrag
+        class="wlo-grid-content"
+        [class.wlo-col-span-2]="gridItem.cols === 2"
+        [class.wlo-col-span-3]="gridItem.cols === 3"
+        [class.wlo-col-span-4]="gridItem.cols === 4"
+        [class.wlo-col-span-6]="gridItem.cols === 6 || gridItems.length === 1"
+        *ngFor="let gridItem of gridItems; let i = index"
+      >
+        <!-- drag handle (retrieved from official example) -->
+        <div class="drag-handle" cdkDragHandle>
+          <svg width="24px" fill="currentColor" viewBox="0 0 24 24">
+            <path
+              d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"
+            ></path>
+            <path d="M0 0h24v24H0z" fill="none"></path>
+          </svg>
         </div>
-        <mat-panel-title>
-          {{ gridTile.item }}
-        </mat-panel-title>
-        <mat-panel-description>
-          Klicke zum {{ panelItem.expanded ? 'Schließen' : 'Konfigurieren' }}
-        </mat-panel-description>
-        <button mat-button class="delete-btn" (click)="$event.stopPropagation(); removeGridTile(i)">
-          &times;
-        </button>
-      </mat-expansion-panel-header>
-      <mat-label>General settings</mat-label>
-      <div class="dimensions">
-        <ng-container *ngFor="let dim of tileDimensions">
-          <!-- TODO: currently, no suitable solution for including different button types exist -->
-          <button
-            *ngIf="
-              gridTile.rows === dim.numberOfRows && gridTile.cols === dim.numberOfCols;
-              else nonMatchingDimensions
-            "
-            mat-button
-            mat-flat-button
-            color="primary"
-            [style.height]="dim.numberOfRows * 35 + 'px'"
-            [style.width]="dim.numberOfCols * 35 + 'px'"
-            (click)="setDimensions(i, dim.numberOfRows, dim.numberOfCols)"
-          >
-            {{ dim.numberOfRows }}x{{ dim.numberOfCols }}
-          </button>
-          <ng-template #nonMatchingDimensions>
-            <button
-              mat-button
-              mat-stroked-button
-              color="primary"
-              [style.height]="dim.numberOfRows * 35 + 'px'"
-              [style.width]="dim.numberOfCols * 35 + 'px'"
-              (click)="setDimensions(i, dim.numberOfRows, dim.numberOfCols)"
-            >
-              {{ dim.numberOfRows }}x{{ dim.numberOfCols }}
-            </button>
-          </ng-template>
-          <div *ngIf="dim.numberOfCols === 3" class="line-break"></div>
-        </ng-container>
+        <div
+          *ngIf="gridItem.item && gridItem.item !== ''; else selectWidgetTypeDialog"
+          class="grid-border-container flex-direction-column"
+        >
+          <div class="grid-label">
+            Aktueller Widget-Typ:
+            <strong>
+              {{ widgetTypeToTextMap.get(gridItem.item) }}
+            </strong>
+            <ng-container *ngIf="!!gridItem.nodeId"> (angepasst) </ng-container>
+          </div>
+          <app-select-widget-type-dialog
+            [grid]="gridItems"
+            [tileIndex]="i"
+            (gridUpdated)="updatedGrid($event)"
+          ></app-select-widget-type-dialog>
+        </div>
+        <ng-template #selectWidgetTypeDialog>
+          <!-- display a form to select it when being in edit mode -->
+          <div class="grid-border-container flex-direction-column">
+            <div class="grid-label">Noch kein Widget vorhanden</div>
+            <app-select-widget-type-dialog
+              [grid]="gridItems"
+              [tileIndex]="i"
+              (gridUpdated)="updatedGrid($event)"
+            ></app-select-widget-type-dialog>
+          </div>
+        </ng-template>
       </div>
-      <mat-form-field appearance="outline">
-        <mat-label>CSS class names</mat-label>
-        <input
-          matInput
-          type="text"
-          placeholder="CSS classes set to the widget (use spaces between multiple class names)"
-          [ngModel]="gridTile.classNames"
-          (ngModelChange)="gridTile.classNames = $event; syncGridItemsWithFormData()"
-          [ngModelOptions]="{ standalone: true }"
-        />
-      </mat-form-field>
-    </mat-expansion-panel>
-  </mat-accordion>
-  <ng-template #noGridTiles>
-    <div class="no-grid-tiles">Bisher wurden noch keine Grid-Elemente hinzugefügt.</div>
+      <ng-container *ngTemplateOutlet="reconfigureGridDialog"></ng-container>
+    </ng-container>
+  </div>
+
+  <!-- no grid has been defined yet -->
+  <ng-template #configureGridDialog>
+    <div class="grid-border-container wlo-col-span-6">
+      <!-- configure grid dialog for initial data -->
+      <app-configure-grid-dialog
+        [grid]="gridItems"
+        (gridUpdated)="updatedGrid($event)"
+      ></app-configure-grid-dialog>
+    </div>
   </ng-template>
-  <button mat-stroked-button class="add-button" color="primary" [matMenuTriggerFor]="addWidgetMenu">
-    <mat-icon>add</mat-icon>
-    Widget hinzufügen
-  </button>
-  <mat-menu #addWidgetMenu="matMenu">
-    <button
-      mat-menu-item
-      *ngFor="let option of widgetTypeOptions"
-      (click)="addGridTile(option.value)"
-    >
-      {{ option.viewValue }}
-    </button>
-  </mat-menu>
+
+  <ng-template #reconfigureGridDialog>
+    <div class="wlo-col-span-6 text-center">
+      <hr />
+      <div class="alert-warning grid-label">
+        <strong>Achtung:</strong> Wenn Sie den Grid-Typ ändern, können Widgets, die auf später
+        nichtmehr vorhandenen Positionen am Ende des Grids hinzugefügt wurden, verloren gehen.
+        Verschieben Sie daher bitte zuerst die jeweiligen Widgets, bevor Sie mit der Grid-Anpassung
+        fortfahren.
+      </div>
+      <!-- reconfigure grid dialog -->
+      <app-configure-grid-dialog
+        [grid]="gridItems"
+        (gridUpdated)="updatedGrid($event)"
+      ></app-configure-grid-dialog>
+    </div>
+  </ng-template>
 </div>
 <div mat-dialog-actions align="end">
-  <button mat-flat-button color="primary" mat-dialog-close>Close</button>
-  <button mat-flat-button color="primary" [mat-dialog-close]="form" i18n>Apply</button>
+  <button mat-flat-button color="primary" mat-dialog-close>Abbrechen</button>
+  <button mat-flat-button color="primary" [mat-dialog-close]="form">Anwenden</button>
 </div>

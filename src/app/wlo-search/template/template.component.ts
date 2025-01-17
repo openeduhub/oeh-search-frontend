@@ -1015,7 +1015,22 @@ export class TemplateComponent implements OnInit {
                     this.requestInProgress = false;
                 }
                 // create a copy of the swimlanes
-                const swimlanesCopy = JSON.parse(JSON.stringify(this.swimlanes ?? []));
+                const stringifiedSwimlanes: string = JSON.stringify(this.swimlanes ?? []);
+                const swimlanesCopy = JSON.parse(stringifiedSwimlanes);
+                // retrieve deleted widget node IDs (previously existing node IDs must still exist)
+                const deletedWidgetNodeIds: string[] = [];
+                const stringifiedEditedSwimlane: string = JSON.stringify(editedSwimlane);
+                // iterate swimlane and detect potentially deleted node IDs
+                swimlane?.grid?.forEach((gridItem: GridTile): void => {
+                    // nodeId exists, but is no longer included in the edited swimlane
+                    if (
+                        !!gridItem.nodeId &&
+                        gridItem.nodeId !== '' &&
+                        !stringifiedEditedSwimlane.includes(gridItem.nodeId)
+                    ) {
+                        deletedWidgetNodeIds.push(gridItem.nodeId);
+                    }
+                });
                 // store updated swimlane in config
                 swimlanesCopy[index] = editedSwimlane;
                 // overwrite swimlanes
@@ -1025,6 +1040,14 @@ export class TemplateComponent implements OnInit {
                     pageVariantConfigType,
                     JSON.stringify(pageVariant),
                 );
+                // afterward, delete config nodes of removed widgets
+                for (const nodeId of deletedWidgetNodeIds) {
+                    // retrieve correct nodeId
+                    const widgetNodeId: string = nodeId.includes(workspaceSpacesStorePrefix)
+                        ? nodeId.split('/')?.[nodeId.split('/').length - 1]
+                        : nodeId;
+                    await firstValueFrom(this.nodeApi.deleteNode(widgetNodeId));
+                }
                 // visually change swimlanes
                 console.log('DEBUG: Overwrite swimlanes', pageVariant.structure.swimlanes);
                 this.swimlanes = pageVariant.structure.swimlanes;

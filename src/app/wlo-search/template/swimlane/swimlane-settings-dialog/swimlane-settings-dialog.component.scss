@@ -8,112 +8,22 @@
     mat-form-field {
         width: 100%;
     }
+}
 
-    .grid-definition {
-        margin-top: 10px;
-        margin-bottom: 10px;
-        display: block;
+.drag-handle {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    cursor: move;
+    width: 24px;
+    height: 24px;
+}
 
-        // TODO: Typography
-        --mat-expansion-header-text-font: Montserrat-SemiBold, serif;
-        --mat-expansion-header-text-weight: 400;
-        // overwrite border-radius of dimension selection buttons
-        --mdc-filled-button-container-shape: 4px !important;
-        --mdc-outlined-button-container-shape: 4px !important;
+.grid-label {
+    margin-bottom: 16px;
+}
 
-        .mat-expansion-panel-header-title {
-            margin-left: 70px;
-        }
-
-        .mat-expansion-panel-header-description {
-            // TODO: Typography
-            font-size: 13px;
-        }
-
-        .wlo-move-buttons {
-            position: absolute;
-            left: 5px;
-            top: 5px;
-            z-index: 10;
-
-            button {
-                min-width: inherit;
-                line-height: 10px;
-                padding: 5px 5px 2px 5px;
-                border-width: 1px;
-                border-style: solid;
-                cursor: pointer;
-
-                &:first-child {
-                    border-radius: 8px 0 0 8px;
-                }
-
-                &:last-child {
-                    border-radius: 0 8px 8px 0;
-                }
-
-                &:disabled,
-                &[disabled] {
-                    cursor: not-allowed;
-                }
-
-                .mat-icon,
-                .mat-mdc-icon {
-                    // TODO: Typography
-                    font-size: 20px;
-                }
-            }
-        }
-
-        .delete-btn {
-            // TODO: Typography
-            font-size: 20px;
-            float: right;
-        }
-
-        .dimensions {
-            margin-top: 5px;
-            margin-bottom: 15px;
-
-            .tile-dimension {
-                button {
-                    margin-right: 0.5rem;
-                    padding: 0;
-                    min-width: inherit;
-                }
-
-                .line-break {
-                    margin-top: 0.5rem;
-                    display: block;
-                }
-            }
-        }
-
-        .grid-config {
-            margin-top: 5px;
-
-            .extended-margin-bottom {
-                margin-bottom: 10px;
-            }
-
-            .config-label {
-                margin-bottom: 5px;
-                display: block;
-            }
-
-            .config-note {
-                margin-bottom: 20px;
-                padding-left: 10px;
-                // TODO: Typography
-                font-size: 13px;
-            }
-        }
-    }
-
-    .no-grid-tiles {
-        padding: 10px;
-        text-align: center;
-        // TODO: Typography
-        font-size: 16px;
-    }
+hr {
+    margin-top: 16px;
+    margin-bottom: 16px;
 }

@@ -139,6 +139,15 @@ body {
     opacity: 0;
 }
 
+// global utility classes
+.text-center {
+    text-align: center;
+}
+
+.flex-direction-column {
+    flex-direction: column;
+}
+
 // overrides for btn-accent
 button.btn-accent {
     padding: 8px 18px;

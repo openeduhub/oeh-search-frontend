@@ -1,50 +1,35 @@
-import { moveItemInArray } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, Inject, OnInit } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { NodeService } from 'ngx-edu-sharing-api';
-import { firstValueFrom } from 'rxjs';
 import { SharedModule } from '../../../shared/shared.module';
-import {
-    swimlaneTypeOptions,
-    widgetTypeOptions,
-    workspaceSpacesStorePrefix,
-} from '../../custom-definitions';
+import { swimlaneTypeOptions, widgetTypeOptions } from '../../custom-definitions';
+import { ConfigureGridDialogComponent } from '../configure-grid-dialog/configure-grid-dialog.component';
 import { GridTile } from '../grid-tile';
-import { Swimlane } from '../swimlane';
 import { SelectOption } from './select-option';
-import { TileDimension } from './tile-dimension';
+import { SelectWidgetTypeDialogComponent } from '../select-widget-type-dialog/select-widget-type-dialog.component';
+import { Swimlane } from '../swimlane';
 
 @Component({
     selector: 'app-swimlane-settings-dialog',
+    standalone: true,
+    imports: [
+        ConfigureGridDialogComponent,
+        DragDropModule,
+        SelectWidgetTypeDialogComponent,
+        SharedModule,
+    ],
     templateUrl: './swimlane-settings-dialog.component.html',
     styleUrls: ['./swimlane-settings-dialog.component.scss'],
-    standalone: true,
-    imports: [SharedModule],
 })
 export class SwimlaneSettingsDialogComponent implements OnInit {
     form: UntypedFormGroup;
-    swimlaneTypeOptions: SelectOption[] = swimlaneTypeOptions;
-    widgetTypeOptions: SelectOption[] = widgetTypeOptions;
     gridItems: GridTile[];
-    tileDimensions: TileDimension[] = [
-        new TileDimension(1, 1),
-        new TileDimension(1, 2),
-        new TileDimension(1, 3),
-        new TileDimension(2, 1),
-        new TileDimension(2, 2),
-        new TileDimension(2, 3),
-        new TileDimension(3, 1),
-        new TileDimension(3, 2),
-        new TileDimension(3, 3),
-    ];
+    widgetTypeToTextMap: Map<string, string> = new Map<string, string>();
 
-    constructor(
-        @Inject(MAT_DIALOG_DATA) public data: { swimlane: Swimlane },
-        private nodeApi: NodeService,
-    ) {}
+    constructor(@Inject(MAT_DIALOG_DATA) public data: { swimlane: Swimlane }) {}
 
-    ngOnInit() {
+    ngOnInit(): void {
         this.form = new UntypedFormGroup({
             type: new UntypedFormControl(this.data.swimlane.type),
             heading: new UntypedFormControl(this.data.swimlane.heading),
@@ -57,6 +42,12 @@ export class SwimlaneSettingsDialogComponent implements OnInit {
         // note: using a copy is essentially at the point to not overwrite the parent data
         this.gridItems = JSON.parse(JSON.stringify(this.data.swimlane.grid ?? '[]'));
         this.syncGridItemsWithFormData();
+        // store matching between widget type and its text
+        this.widgetTypeOptions.forEach((option: SelectOption): void => {
+            if (!this.widgetTypeToTextMap.get(option.value)) {
+                this.widgetTypeToTextMap.set(option.value, option.viewValue);
+            }
+        });
     }
 
     /**
@@ -94,54 +85,34 @@ export class SwimlaneSettingsDialogComponent implements OnInit {
         return '#' + this.componentToHex(r) + this.componentToHex(g) + this.componentToHex(b);
     }
 
-    addGridTile(widgetItemName: string) {
-        const gridTile: GridTile = {
-            item: widgetItemName,
-            rows: 1,
-            cols: 3,
-        };
-        this.gridItems.push(gridTile);
+    /**
+     * Handles the drop event by moving a grid item from one to another position.
+     *
+     * @param event
+     */
+    drop(event: CdkDragDrop<string[]>): void {
+        moveItemInArray(this.gridItems, event.previousIndex, event.currentIndex);
         this.syncGridItemsWithFormData();
     }
 
-    async moveGridTilePosition(oldIndex: number, newIndex: number) {
-        if (newIndex >= 0 && newIndex <= this.gridItems.length - 1) {
-            moveItemInArray(this.gridItems, oldIndex, newIndex);
-            this.syncGridItemsWithFormData();
-        }
-    }
-
-    async removeGridTile(index: number) {
-        // Only ask for elements with nodeId, as those will result in lost configs
-        // use randomId assignment in order to track movements of elements
-        if (
-            !this.gridItems[index].nodeId ||
-            confirm(
-                'Wollen Sie dieses Element wirklich löschen? Damit geht die gespeicherte Konfiguration des Widgets verloren.',
-            ) === true
-        ) {
-            if (this.gridItems[index].nodeId) {
-                const nodeId: string = this.gridItems[index].nodeId.includes(
-                    workspaceSpacesStorePrefix,
-                )
-                    ? this.gridItems[index].nodeId.split('/')?.[
-                          this.gridItems[index].nodeId.split('/').length - 1
-                      ]
-                    : this.gridItems[index].nodeId;
-                await firstValueFrom(this.nodeApi.deleteNode(nodeId));
-            }
-            this.gridItems.splice(index, 1);
-            this.syncGridItemsWithFormData();
-        }
-    }
-
-    setDimensions(index: number, rows: number, cols: number) {
-        this.gridItems[index].rows = rows;
-        this.gridItems[index].cols = cols;
+    /**
+     * Called by app-configure-grid-dialog and app-select-widget-type-dialog gridUpdated output event.
+     * Updates the grid items and sync them with the form data.
+     *
+     * @param grid
+     */
+    updatedGrid(grid: GridTile[]): void {
+        this.gridItems = grid;
         this.syncGridItemsWithFormData();
     }
 
-    syncGridItemsWithFormData() {
+    /**
+     * Helper function to sync the grid items with the grid form data.
+     */
+    private syncGridItemsWithFormData(): void {
         this.form.get('grid').setValue(JSON.stringify(this.gridItems));
     }
+
+    protected readonly swimlaneTypeOptions: SelectOption[] = swimlaneTypeOptions;
+    protected readonly widgetTypeOptions: SelectOption[] = widgetTypeOptions;
 }

@@ -4,13 +4,16 @@
 
 @mixin swimlane-settings-dialog-theme($theme) {
     app-swimlane-settings-dialog {
-        .wlo-move-buttons {
-            button {
-                border-color: $gray-light-alt;
-                background: $gray-light;
+        // adjust color of drag handle
+        .drag-handle {
+            @if mat.get-theme-type($theme) == light {
+                color: mat.get-theme-color($theme, neutral, 35);
+            } @else {
+                color: mat.get-theme-color($theme, neutral, 99);
             }
         }
-        .grid-definition .mdc-button--outlined {
+        // adjust border-color of horizontal line
+        hr {
             border-color: mat.get-theme-color($theme, outline);
         }
     }
