@@ -1,0 +1,19 @@
+<div class="grid-border-container">
+  <button
+    class="btn-accent"
+    mat-flat-button
+    color="primary"
+    [matMenuTriggerFor]="selectWidgetTypeMenu"
+  >
+    <i esIcon="add"></i> Widget hinzufügen
+  </button>
+  <mat-menu #selectWidgetTypeMenu="matMenu">
+    <button
+      mat-menu-item
+      *ngFor="let option of widgetTypeOptions"
+      (click)="selectWidgetType(option.value, tileIndex)"
+    >
+      {{ option.viewValue }}
+    </button>
+  </mat-menu>
+</div>

@@ -9,19 +9,22 @@ import {
 } from '@angular/core';
 import { MdsValue, MdsWidget, Node, NodeEntries } from 'ngx-edu-sharing-api';
 import { SharedModule } from '../../shared/shared.module';
-import {
-    swimlaneGridOptions,
-    widgetTypeOptions,
-    workspaceSpacesStorePrefix,
-} from '../custom-definitions';
+import { widgetTypeOptions, workspaceSpacesStorePrefix } from '../custom-definitions';
+import { ConfigureGridDialogComponent } from './configure-grid-dialog/configure-grid-dialog.component';
 import { GridTile } from './grid-tile';
 import { GridWidgetComponent } from './grid-widget/grid-widget.component';
+import { SelectWidgetTypeDialogComponent } from './select-widget-type-dialog/select-widget-type-dialog.component';
 import { SelectOption } from './swimlane-settings-dialog/select-option';
 
 @Component({
     selector: 'app-swimlane',
     standalone: true,
-    imports: [GridWidgetComponent, SharedModule],
+    imports: [
+        ConfigureGridDialogComponent,
+        GridWidgetComponent,
+        SelectWidgetTypeDialogComponent,
+        SharedModule,
+    ],
     templateUrl: './swimlane.component.html',
     styleUrls: ['./swimlane.component.scss'],
 })
@@ -72,54 +75,17 @@ export class SwimlaneComponent implements AfterViewChecked {
     }
 
     /**
-     * Configures the swimlane grid based a selected grid option value.
+     * Called by app-configure-grid-dialog and app-select-widget-type-dialog gridUpdated output event.
+     * Emits the updated grid.
      *
-     * @param gridOptionValue
+     * @param grid
      */
-    configureSwimlaneGrid(gridOptionValue: string): void {
-        // return, if grid already defined
-        if (this.grid.length > 0) {
-            return;
-        }
-        // add tiles depending on the grid option value
-        // note: we use a 6 column grid in order to display all possible options
-        switch (gridOptionValue) {
-            case 'one_column':
-                this.gridUpdated.emit([new GridTile(6, 1)]);
-                break;
-            case 'two_columns':
-                this.gridUpdated.emit([new GridTile(3, 1), new GridTile(3, 1)]);
-                break;
-            case 'three_columns':
-                this.gridUpdated.emit([new GridTile(2, 1), new GridTile(2, 1), new GridTile(2, 1)]);
-                break;
-            case 'left_side_panel':
-                this.gridUpdated.emit([new GridTile(2, 1), new GridTile(4, 1)]);
-                break;
-            case 'right_side_panel':
-                this.gridUpdated.emit([new GridTile(4, 1), new GridTile(2, 1)]);
-                break;
-            default:
-                this.gridUpdated.emit([new GridTile(6, 1)]);
-        }
-    }
-
-    /**
-     * Selects the widget type for a grid tile at a given index.
-     *
-     * @param widgetType
-     * @param gridTileIndex
-     */
-    selectWidgetType(widgetType: string, gridTileIndex: number): void {
-        const gridCopy: GridTile[] = JSON.parse(JSON.stringify(this.grid));
-        gridCopy[gridTileIndex].item = widgetType;
-        this.gridUpdated.emit(gridCopy);
+    updatedGrid(grid: GridTile[]): void {
+        this.gridUpdated.emit(grid);
     }
 
     protected readonly supportedWidgetTypes: string[] = widgetTypeOptions.map(
-        (option) => option.value,
+        (option: SelectOption) => option.value,
     );
-    protected readonly swimlaneGridOptions: SelectOption[] = swimlaneGridOptions;
-    protected readonly widgetTypeOptions: SelectOption[] = widgetTypeOptions;
     protected readonly workspaceSpacesStorePrefix: string = workspaceSpacesStorePrefix;
 }

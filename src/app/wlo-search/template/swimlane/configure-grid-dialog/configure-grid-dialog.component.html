@@ -1,0 +1,27 @@
+<div class="grid-border-container">
+  <button
+    class="btn-accent"
+    mat-flat-button
+    color="primary"
+    [matMenuTriggerFor]="configureGridMenu"
+  >
+    <i esIcon="settings"></i> Grid konfigurieren
+  </button>
+  <mat-menu #configureGridMenu="matMenu">
+    <button
+      mat-menu-item
+      *ngFor="let option of swimlaneGridOptions"
+      (click)="configureSwimlaneGrid(option.value)"
+    >
+      <i
+        class="material-icons-outlined"
+        *ngIf="!!option.icon; else checkSvgIcon"
+        [esIcon]="option.icon"
+      ></i>
+      <ng-template #checkSvgIcon>
+        <mat-icon *ngIf="!!option.svgIcon" [svgIcon]="option.svgIcon"></mat-icon>
+      </ng-template>
+      {{ option.viewValue }}
+    </button>
+  </mat-menu>
+</div>

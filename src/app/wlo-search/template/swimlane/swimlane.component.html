@@ -28,56 +28,20 @@
       <!-- no (valid) widget type has been selected yet -->
       <ng-template #selectWidgetTypeDialog>
         <!-- display a form to select it when being in edit mode -->
-        <div *ngIf="editMode" class="grid-border-container">
-          <button
-            class="btn-accent"
-            mat-flat-button
-            color="primary"
-            [matMenuTriggerFor]="selectWidgetTypeMenu"
-          >
-            <i esIcon="add"></i> Widget hinzufügen
-          </button>
-          <mat-menu #selectWidgetTypeMenu="matMenu">
-            <button
-              mat-menu-item
-              *ngFor="let option of widgetTypeOptions"
-              (click)="selectWidgetType(option.value, i)"
-            >
-              {{ option.viewValue }}
-            </button>
-          </mat-menu>
-        </div>
+        <app-select-widget-type-dialog
+          *ngIf="editMode"
+          [grid]="grid"
+          [tileIndex]="i"
+          (gridUpdated)="updatedGrid($event)"
+        ></app-select-widget-type-dialog>
       </ng-template>
     </div>
   </ng-container>
   <!-- no grid has been defined yet -->
   <ng-template #configureGridDialog>
-    <div class="grid-border-container wlo-col-span-6">
-      <button
-        class="btn-accent"
-        mat-flat-button
-        color="primary"
-        [matMenuTriggerFor]="configureGridMenu"
-      >
-        <i esIcon="settings"></i> Grid konfigurieren
-      </button>
-      <mat-menu #configureGridMenu="matMenu">
-        <button
-          mat-menu-item
-          *ngFor="let option of swimlaneGridOptions"
-          (click)="configureSwimlaneGrid(option.value)"
-        >
-          <i
-            class="material-icons-outlined"
-            *ngIf="!!option.icon; else checkSvgIcon"
-            [esIcon]="option.icon"
-          ></i>
-          <ng-template #checkSvgIcon>
-            <mat-icon *ngIf="!!option.svgIcon" [svgIcon]="option.svgIcon"></mat-icon>
-          </ng-template>
-          {{ option.viewValue }}
-        </button>
-      </mat-menu>
-    </div>
+    <app-configure-grid-dialog
+      [grid]="grid"
+      (gridUpdated)="updatedGrid($event)"
+    ></app-configure-grid-dialog>
   </ng-template>
 </div>
