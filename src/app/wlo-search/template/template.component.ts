@@ -857,6 +857,10 @@ export class TemplateComponent implements OnInit {
             if (defaultVariant) {
                 pageConfig.default = defaultVariant;
             }
+            // for debugging purposes, hold the collection ID as well
+            if (this.topicCollectionID()) {
+                pageConfig.collectionId = workspaceSpacesStorePrefix + this.topicCollectionID();
+            }
             // update ccm:page_config of page config node
             this.pageConfigNode = await this.setPropertyAndRetrieveUpdatedNode(
                 this.pageConfigNode.ref.id,
