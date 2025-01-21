@@ -115,10 +115,7 @@ export class TemplateComponent implements OnInit {
         private route: ActivatedRoute,
         private searchService: SearchService,
         private viewService: ViewService,
-    ) {
-        // Subscribe early, so required data will be fetched with search requests.
-        this.facets$.subscribe();
-    }
+    ) {}
 
     @HostBinding('style.--topic-color') topicColor: string = initialTopicColor;
 
@@ -353,6 +350,8 @@ export class TemplateComponent implements OnInit {
                                 ?.length ?? 0;
                     });
 
+                    // subscribe to facets right before performing the search request to avoid conflicts with the user-configurable
+                    this.facets$.subscribe();
                     // perform search to retrieve the number of search results
                     const searchResult: SearchResultNode = await this.performSearch(this.topic());
                     this.searchResultCount = searchResult.pagination.total;
