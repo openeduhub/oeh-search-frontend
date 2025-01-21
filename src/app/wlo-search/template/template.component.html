@@ -8,12 +8,16 @@
 </div>
 <ng-container *ngIf="!pageConfigCheckFailed; else pageConfigCheckFailedMessage">
   <!-- TOPIC HERO HEADER -->
-  <header class="template-header">
+  <!-- wait until the initial load is successfully do retrieve the correct nodeID for the header -->
+  <header class="template-header" *ngIf="initialLoadSuccessfully">
     <div class="template-header-wrapper">
       <div class="template-header-container">
         <wlo-topic-header
           [contextNodeId]="topicCollectionID()"
           [defaultNodeId]="defaultTopicTextNodeId"
+          [editMode]="editMode"
+          [nodeId]="headerNodeId?.includes(workspaceSpacesStorePrefix) ? headerNodeId.split('/')?.[headerNodeId.split('/').length - 1] : headerNodeId"
+          [pageVariantNode]="pageVariantNode"
           [topic]="topic()"
         ></wlo-topic-header>
       </div>

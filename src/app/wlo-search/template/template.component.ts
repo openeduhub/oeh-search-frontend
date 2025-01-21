@@ -69,7 +69,6 @@ import {
     pageVariantConfigAspect,
     pageVariantIsTemplateType,
     profilingFilterbarDimensionKeys,
-    verticalFilterbarDimensionKeys,
     widgetConfigAspect,
     workspaceSpacesStorePrefix,
 } from './custom-definitions';
@@ -131,6 +130,7 @@ export class TemplateComponent implements OnInit {
 
     private collectionNode: Node;
     private collectionNodeHasPageConfig: boolean = false;
+    headerNodeId: string;
     private pageConfigNode: Node;
     pageConfigCheckFailed: boolean = false;
     private pageVariantConfigs: NodeEntries;
@@ -314,7 +314,8 @@ export class TemplateComponent implements OnInit {
                     if (!this.collectionNode.properties[pageConfigRefType]?.[0]) {
                         this.removeNodeIdsFromPageVariantConfig(pageVariant);
                     }
-                    // 5) set the swimlanes
+                    // 5) set the headerNodeId + swimlanes
+                    this.headerNodeId = pageVariant.structure.headerNodeId;
                     this.swimlanes = pageVariant.structure.swimlanes ?? [];
                     // 6) initial load finished (page structure loaded)
                     this.initialLoadSuccessfully = true;
@@ -522,36 +523,55 @@ export class TemplateComponent implements OnInit {
                 const swimlaneIndex: number = widgetNodeDetails?.swimlaneIndex ?? -1;
                 const gridIndex: number = widgetNodeDetails?.gridIndex ?? -1;
                 const widgetNodeId: string = widgetNodeDetails?.widgetNodeId ?? '';
+                const isHeaderNode: boolean = widgetNodeDetails?.isHeaderNode ?? false;
 
+                const validWidgetNodeId: boolean = widgetNodeId && widgetNodeId !== '';
                 const validParentVariant: boolean =
                     pageVariantNode && pageVariantNode.ref.id === this.pageVariantNode.ref.id;
                 const validSwimlaneIndex: boolean = swimlaneIndex > -1;
                 const validGridIndex: boolean = gridIndex > -1;
-                const validWidgetNodeId: boolean = widgetNodeId && widgetNodeId !== '';
+
+                const validInputs: boolean = validGridIndex && validSwimlaneIndex;
 
                 let addedSuccessfully: boolean = false;
-                if (
-                    validParentVariant &&
-                    validGridIndex &&
-                    validSwimlaneIndex &&
-                    validWidgetNodeId
-                ) {
+                if (validWidgetNodeId && validParentVariant && (validInputs || isHeaderNode)) {
+                    // convert widget node ID, if necessary
+                    const convertedWidgetNodeId: string = widgetNodeId.includes(
+                        workspaceSpacesStorePrefix,
+                    )
+                        ? widgetNodeId
+                        : workspaceSpacesStorePrefix + widgetNodeId;
                     // if no page configuration exists yet, a config has to be created and a reload of the page is necessary
                     // TODO: we currently assume that adding is successfully, when creating a new page node.
                     //       This might be improved by inputting validWidgetNodeId and deleting internally.
                     addedSuccessfully = await this.checkForCustomPageNodeExistence(
                         swimlaneIndex,
                         gridIndex,
-                        widgetNodeId,
+                        convertedWidgetNodeId,
+                        isHeaderNode,
                     );
                     // if no page node was created, the adding is not yet successfully, so updating is necessary
                     if (!addedSuccessfully) {
+                        // TODO: reuse updatePageVariantConfig function, if possible
                         const pageVariant: PageVariantConfig = this.retrievePageVariant();
-                        if (this.swimlanes?.[swimlaneIndex]?.grid?.[gridIndex] && pageVariant) {
+                        // modify header nodeId
+                        if (isHeaderNode) {
+                            pageVariant.structure.headerNodeId = convertedWidgetNodeId;
+                            this.headerNodeId = pageVariant.structure.headerNodeId;
+                            await this.setProperty(
+                                this.pageVariantNode.ref.id,
+                                pageVariantConfigType,
+                                JSON.stringify(pageVariant),
+                            );
+                            addedSuccessfully = true;
+                        }
+                        // modify nodeId of swimlane grid tile
+                        else if (
+                            this.swimlanes?.[swimlaneIndex]?.grid?.[gridIndex] &&
+                            pageVariant
+                        ) {
                             this.swimlanes[swimlaneIndex].grid[gridIndex].nodeId =
-                                widgetNodeId.includes(workspaceSpacesStorePrefix)
-                                    ? widgetNodeId
-                                    : workspaceSpacesStorePrefix + widgetNodeId;
+                                convertedWidgetNodeId;
                             pageVariant.structure.swimlanes = this.swimlanes;
                             await this.setProperty(
                                 this.pageVariantNode.ref.id,
@@ -609,7 +629,7 @@ export class TemplateComponent implements OnInit {
 
     private async retrievePageConfigNode(node: Node): Promise<Node> {
         // check, whether the node itself has a pageConfigRef
-        let pageRef = node.properties[pageConfigRefType]?.[0];
+        let pageRef: string = node.properties[pageConfigRefType]?.[0];
         this.collectionNodeHasPageConfig = !!pageRef;
         // otherwise, iterate the parents to retrieve the pageConfigRef, if pageConfigPropagate is set
         if (!pageRef) {
@@ -800,6 +820,7 @@ export class TemplateComponent implements OnInit {
         swimlaneIndex?: number,
         gridIndex?: number,
         widgetNodeId?: string,
+        isHeaderNode?: boolean,
     ): Promise<boolean> {
         console.log('checkForCustomPageNodeExistence');
         if (!this.collectionNodeHasPageConfig) {
@@ -833,6 +854,7 @@ export class TemplateComponent implements OnInit {
                         swimlaneIndex,
                         gridIndex,
                         widgetNodeId,
+                        isHeaderNode,
                     );
                     await this.setProperty(
                         pageConfigVariantNode.ref.id,
@@ -870,6 +892,7 @@ export class TemplateComponent implements OnInit {
             this.pageVariantConfigs = await this.getNodeChildren(this.pageConfigNode.ref.id);
             // parse the page config ref again
             const pageVariant: PageVariantConfig = this.retrievePageVariant();
+            this.headerNodeId = pageVariant.structure.headerNodeId;
             this.swimlanes = pageVariant.structure.swimlanes ?? [];
             // set ccm:page_config_ref in collection
             await firstValueFrom(
@@ -1121,15 +1144,24 @@ export class TemplateComponent implements OnInit {
     }
 
     /**
-     * Helper function to update the nodeId of given indexes within the structure of a page variant config.
+     * Helper function to update the nodeId of given indexes or of the header within the structure of a page variant config.
      */
     private updatePageVariantConfig(
         pageVariant: PageVariantConfig,
         swimlaneIndex?: number,
         gridIndex?: number,
         widgetNodeId?: string,
+        isHeaderNode?: boolean,
     ): void {
-        if (pageVariant.structure?.swimlanes?.[swimlaneIndex]?.grid?.[gridIndex] && widgetNodeId) {
+        // modify header nodeId
+        if (isHeaderNode) {
+            pageVariant.structure.headerNodeId = widgetNodeId;
+        }
+        // modify nodeId of swimlane grid tile
+        else if (
+            pageVariant.structure?.swimlanes?.[swimlaneIndex]?.grid?.[gridIndex] &&
+            widgetNodeId
+        ) {
             pageVariant.structure.swimlanes[swimlaneIndex].grid[gridIndex].nodeId = widgetNodeId;
         }
     }
@@ -1189,5 +1221,5 @@ export class TemplateComponent implements OnInit {
     protected readonly defaultTopicsColumnBrowserNodeId: string = defaultTopicsColumnBrowserNodeId;
     protected readonly profilingFilterbarDimensionKeys: string[] = profilingFilterbarDimensionKeys;
     protected readonly retrieveCustomUrl = retrieveCustomUrl;
-    protected readonly verticalFilterbarDimensionKeys: string[] = verticalFilterbarDimensionKeys;
+    protected readonly workspaceSpacesStorePrefix: string = workspaceSpacesStorePrefix;
 }

@@ -146,14 +146,7 @@ export const swimlaneTypeOptions: SelectOption[] = [
     },
 ];
 
-export const verticalFilterbarDimensionKeys: string[] = [
-    'virtual:ai_text_widget_intendedenduserrole',
-    'virtual:ai_text_widget_target_language',
-];
-
 export const widgetConfigAspect: string = 'ccm:widget';
-
-export const widgetConfigType: string = 'ccm:widget_config';
 
 export const widgetTypeOptions: SelectOption[] = [
     {
