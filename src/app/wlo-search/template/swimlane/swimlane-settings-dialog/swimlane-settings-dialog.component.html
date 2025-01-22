@@ -8,7 +8,11 @@
   <mat-form-field appearance="outline">
     <mat-label i18n>Type</mat-label>
     <mat-select formControlName="type">
-      <mat-option [value]="option.value" *ngFor="let option of swimlaneTypeOptions">
+      <mat-option
+        [disabled]="option.isDisabled"
+        [value]="option.value"
+        *ngFor="let option of swimlaneTypeOptions"
+      >
         {{ option.viewValue }}
       </mat-option>
     </mat-select>

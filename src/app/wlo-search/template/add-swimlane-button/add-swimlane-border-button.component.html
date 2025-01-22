@@ -9,7 +9,7 @@
     <button
       mat-menu-item
       *ngFor="let option of swimlaneTypeOptions"
-      [disabled]="requestInProgress"
+      [disabled]="option.isDisabled || requestInProgress"
       (click)="addSwimlane(option.value)"
     >
       <i class="material-icons-outlined" *ngIf="!!option.icon" [esIcon]="option.icon"></i>

@@ -141,6 +141,7 @@ export const swimlaneTypeOptions: SelectOption[] = [
     },
     {
         icon: 'anchor',
+        isDisabled: true,
         value: 'anchor',
         viewValue: 'Ankermenü',
     },
