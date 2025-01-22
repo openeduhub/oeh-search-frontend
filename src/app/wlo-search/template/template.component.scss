@@ -150,7 +150,8 @@
                             justify-content: space-between;
                             position: relative;
 
-                            h2 {
+                            h2,
+                            h3 {
                                 margin: 0 7.5% 0 7.5%;
                                 width: 85%;
                                 text-align: center;
@@ -199,7 +200,8 @@
                     box-sizing: border-box;
                     overflow-y: scroll;
 
-                    h2 {
+                    h2,
+                    h3 {
                         text-align: center;
                     }
                 }
