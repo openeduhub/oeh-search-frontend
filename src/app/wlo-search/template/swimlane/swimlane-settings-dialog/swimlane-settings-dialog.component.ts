@@ -33,7 +33,6 @@ export class SwimlaneSettingsDialogComponent implements OnInit {
         this.form = new UntypedFormGroup({
             type: new UntypedFormControl(this.data.swimlane.type),
             heading: new UntypedFormControl(this.data.swimlane.heading),
-            description: new UntypedFormControl(this.data.swimlane.description),
             backgroundColor: new UntypedFormControl(
                 this.initializeBackgroundColor(this.data.swimlane.backgroundColor),
             ),

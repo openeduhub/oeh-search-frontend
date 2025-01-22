@@ -6,14 +6,6 @@
     <input matInput type="text" placeholder="Heading of the swimlane" formControlName="heading" />
   </mat-form-field>
   <mat-form-field appearance="outline">
-    <mat-label i18n>Description</mat-label>
-    <textarea
-      matInput
-      placeholder="Description of the swimlane"
-      formControlName="description"
-    ></textarea>
-  </mat-form-field>
-  <mat-form-field appearance="outline">
     <mat-label i18n>Type</mat-label>
     <mat-select formControlName="type">
       <mat-option [value]="option.value" *ngFor="let option of swimlaneTypeOptions">

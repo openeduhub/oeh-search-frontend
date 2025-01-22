@@ -209,9 +209,6 @@
                     [attr.id]="'accordion-body-' + i"
                     [attr.aria-labelledby]="'accordion-header-' + i"
                   >
-                    <p class="wlo-description" *ngIf="swimlane.description">
-                      {{ swimlane.description }}
-                    </p>
                     <app-swimlane
                       [backgroundColor]="swimlane.backgroundColor"
                       [contextNodeId]="topicCollectionID()"
@@ -235,9 +232,6 @@
                 <h2 *ngIf="swimlane.heading">
                   {{ swimlane.heading }}
                 </h2>
-                <p class="wlo-description" *ngIf="swimlane.description">
-                  {{ swimlane.description }}
-                </p>
                 <app-swimlane
                   [backgroundColor]="swimlane.backgroundColor"
                   [contextNodeId]="topicCollectionID()"
