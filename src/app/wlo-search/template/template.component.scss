@@ -31,6 +31,13 @@
     z-index: 100;
 }
 
+// add margin-bottom to editable text component
+wlo-editable-text {
+    margin-bottom: 8px;
+    // this is necessary for accordions to work properly
+    width: 100%;
+}
+
 .template-header {
     background-color: var(--topic-color);
 
@@ -154,7 +161,8 @@
 
                             .wlo-accordion-item-description {
                                 position: absolute;
-                                right: 25px;
+                                top: calc(12px + 5px);
+                                right: calc(24px + 5px);
                             }
                         }
 
@@ -199,10 +207,6 @@
                 &.swimlane-edit-mode {
                     h2 {
                         margin: 0 7.5% 16px 7.5%;
-                    }
-
-                    .wlo-accordion-item-description {
-                        right: 95px !important;
                     }
                 }
             }

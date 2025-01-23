@@ -188,7 +188,9 @@
                   expanded="true"
                 >
                   <div class="wlo-accordion-item-header" (click)="accordionItem.toggle()">
-                    <h2>{{ swimlane.heading ?? 'Accordion Header' }}</h2>
+                    <ng-container
+                      *ngTemplateOutlet="swimlaneHeading; context: { swimlane }"
+                    ></ng-container>
                     <span class="wlo-accordion-item-description">
                       <mat-icon *ngIf="accordionItem.expanded">expand_less</mat-icon>
                       <mat-icon *ngIf="!accordionItem.expanded">expand_more</mat-icon>
@@ -221,9 +223,9 @@
 
               <!-- type: container -->
               <div class="wlo-container" *ngIf="swimlane.type === 'container'">
-                <h2 *ngIf="swimlane.heading">
-                  {{ swimlane.heading }}
-                </h2>
+                <ng-container
+                  *ngTemplateOutlet="swimlaneHeading; context: { swimlane }"
+                ></ng-container>
                 <app-swimlane
                   [backgroundColor]="swimlane.backgroundColor"
                   [contextNodeId]="topicCollectionID()"
@@ -242,6 +244,18 @@
             </div>
           </ng-container>
         </ng-container>
+        <ng-template #swimlaneHeading let-swimlane="swimlane">
+          <wlo-editable-text
+            [alignCenter]="true"
+            [applyTextareaPadding]="false"
+            [editable]="editMode"
+            [headerElement]="'h2'"
+            [label]="'Überschrift'"
+            [nonEditText]="swimlane.heading"
+            [text]="swimlane.heading"
+            (textChange)="swimlaneTitleChanged($event, swimlane)"
+          ></wlo-editable-text>
+        </ng-template>
         <ng-template #noSwimlanesCreatedYet>
           <p class="no-swimlanes">Bisher wurden noch keine Swimlanes mit Inhalten erstellt.</p>
         </ng-template>

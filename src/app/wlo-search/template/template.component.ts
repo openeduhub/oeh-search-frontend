@@ -24,6 +24,7 @@ import { Value } from 'ngx-edu-sharing-api/lib/api/models/value';
 import { SpinnerComponent } from 'ngx-edu-sharing-ui';
 import {
     ColorChangeEvent,
+    EditableTextComponent,
     FilterBarComponent,
     SideMenuItemComponent,
     SideMenuWrapperComponent,
@@ -84,6 +85,7 @@ import { SwimlaneSettingsDialogComponent } from './swimlane/swimlane-settings-di
     imports: [
         AddSwimlaneBorderButtonComponent,
         CdkDragHandle,
+        EditableTextComponent,
         FilterBarComponent,
         SearchModule,
         SharedModule,
@@ -1005,6 +1007,29 @@ export class TemplateComponent implements OnInit {
             moveItemInArray(this.swimlanes, oldIndex, newIndex);
             this.requestInProgress = false;
         }
+    }
+
+    /**
+     * Reacts to wlo-editable-text textChange output event by persisting the changes in the page config.
+     *
+     * @param title
+     * @param swimlane
+     */
+    async swimlaneTitleChanged(title: string, swimlane: Swimlane) {
+        this.requestInProgress = true;
+        await this.checkForCustomPageNodeExistence();
+        const pageVariant: PageVariantConfig = this.retrievePageVariant();
+        if (!pageVariant) {
+            this.requestInProgress = false;
+        }
+        swimlane.heading = title;
+        pageVariant.structure.swimlanes = this.swimlanes;
+        await this.setProperty(
+            this.pageVariantNode.ref.id,
+            pageVariantConfigType,
+            JSON.stringify(pageVariant),
+        );
+        this.requestInProgress = false;
     }
 
     editSwimlane(swimlane: Swimlane, index: number) {
