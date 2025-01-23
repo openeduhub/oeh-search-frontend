@@ -28,23 +28,27 @@
       <!-- no (valid) widget type has been selected yet -->
       <ng-template #selectWidgetTypeDialog>
         <!-- display a form to select it when being in edit mode -->
-        <div *ngIf="editMode" class="grid-border-container">
-          <app-select-widget-type-dialog
-            [grid]="grid"
-            [tileIndex]="i"
-            (gridUpdated)="updatedGrid($event)"
-          ></app-select-widget-type-dialog>
+        <div *ngIf="editMode" class="w-100">
+          <div class="grid-border-container mt-8">
+            <app-select-widget-type-dialog
+              [grid]="grid"
+              [tileIndex]="i"
+              (gridUpdated)="updatedGrid($event)"
+            ></app-select-widget-type-dialog>
+          </div>
         </div>
       </ng-template>
     </div>
   </ng-container>
   <!-- no grid has been defined yet -->
   <ng-template #configureGridDialog>
-    <div class="grid-border-container wlo-col-span-6">
-      <app-configure-grid-dialog
-        [grid]="grid"
-        (gridUpdated)="updatedGrid($event)"
-      ></app-configure-grid-dialog>
+    <div class="wlo-col-span-6 w-100">
+      <div class="grid-border-container mt-8">
+        <app-configure-grid-dialog
+          [grid]="grid"
+          (gridUpdated)="updatedGrid($event)"
+        ></app-configure-grid-dialog>
+      </div>
     </div>
   </ng-template>
 </div>
