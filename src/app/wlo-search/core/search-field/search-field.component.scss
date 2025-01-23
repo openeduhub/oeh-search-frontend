@@ -82,11 +82,6 @@ form {
 .suggestion-mat-chip-listbox ::ng-deep {
     .mdc-evolution-chip-set__chips .mat-mdc-standard-chip {
         min-height: 30px;
-        .mdc-evolution-chip__text-label {
-            // TODO: Typography
-            font-family: 'Montserrat-Bold', serif;
-            font-weight: 700;
-        }
     }
     .mdc-evolution-chip-set__chips .category-chip:last-of-type {
         margin-right: 8px;
@@ -120,20 +115,10 @@ form {
         .label-container {
             display: flex;
         }
-        // TODO: Typography
-        // .what-is-oer-link {
-        //     padding-left: 10px;
-        //     font-size: 90%;
-        //     text-decoration: underline;
-        //     cursor: pointer;
-        // }
         .category-label {
             padding-bottom: 6px;
             display: block;
-            // TODO: Typography
             text-transform: uppercase;
-            font-weight: 500;
-            font-size: 90%;
         }
         .suggestion-chip {
             cursor: pointer;

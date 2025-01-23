@@ -81,13 +81,11 @@
         margin-top: 10px;
         margin-left: auto;
 
-        .mat-icon,
-        .mat-mdc-icon {
-            margin-left: 5px;
-            height: 20px;
-            width: 20px;
-            // TODO: Typography
-            font-size: 20px;
+        .app-preview-panel-button-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
         }
     }
 }
@@ -162,8 +160,6 @@
     .mat-mdc-icon {
         width: 32px;
         height: 32px;
-        // TODO: Typography
-        font-size: 32px;
     }
 
     .app-details-contact-support-btn {
@@ -193,8 +189,6 @@
         margin-right: 8px;
         min-width: 28px;
         height: 22px;
-        // TODO: Typography
-        font-size: 22px;
     }
 
     span {

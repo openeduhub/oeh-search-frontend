@@ -31,6 +31,18 @@
 }
 
 @mixin search-field-typography($typography) {
+    // this has to be placed outside, as is it opened within a cdk-overlay
+    .suggestion-group {
+        // slightly decrease font-size of category-label
+        .category-label {
+            font-size: var(--sys-body-medium-size);
+        }
+        // adjust font-family + font-weight of chips
+        .suggestion-mat-chip-listbox .mdc-evolution-chip__text-label {
+            font-family: var(--sys-headline-large-font);
+            font-weight: var(--sys-label-large-weight-prominent);
+        }
+    }
     app-search-field {
         // increase the font-size of the search field
         // adjusting the selector is currently necessary to overwrite the default font-size:

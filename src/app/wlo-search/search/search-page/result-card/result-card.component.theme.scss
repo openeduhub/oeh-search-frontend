@@ -54,6 +54,10 @@
         .source {
             font-size: var(--sys-body-small-size);
             line-height: var(--sys-body-small-line-height);
+            .mat-icon,
+            .mat-mdc-icon {
+                font-size: var(--sys-body-small-size);
+            }
         }
     }
     app-result-card-content-compact {

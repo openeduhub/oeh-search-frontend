@@ -59,20 +59,3 @@
         display: none;
     }
 }
-
-// TODO: Typography
-$help-button-size: 18px;
-
-.help-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    .mat-icon,
-    .mat-mdc-icon {
-        width: $help-button-size;
-        height: $help-button-size;
-        line-height: $help-button-size;
-        font-size: $help-button-size;
-    }
-}

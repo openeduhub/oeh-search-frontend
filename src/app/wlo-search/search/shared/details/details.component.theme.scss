@@ -107,5 +107,20 @@
             // slightly increase the font-size of the title
             font-size: 1.75rem;
         }
+        .app-preview-panel-metadata {
+            // adjust the font-size of the metadata icons
+            > .mat-icon,
+            > .mat-mdc-icon {
+                font-size: var(--sys-title-large-size);
+            }
+        }
+        .app-details-report-problem-state {
+            // increase the font-size of the icons
+            .mat-mdc-progress-spinner,
+            .mat-icon,
+            .mat-mdc-icon {
+                font-size: 2rem;
+            }
+        }
     }
 }

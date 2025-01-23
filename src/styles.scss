@@ -40,7 +40,7 @@ $material-icons-font-path: 'material-icons/iconfont/';
         letter-spacing: 0;
         // change font-family of buttons
         button,
-        .mat-mdc-button-base {
+        .mat-mdc-button {
             font-family: 'Montserrat-SemiBold', sans-serif;
         }
     }
@@ -152,8 +152,8 @@ body {
     flex-direction: column;
 }
 
-// overrides for btn-accent
-button {
+button,
+.mat-mdc-button {
     // global adjustment for button label
     &:not(.c-widget-color-picker) .mdc-button__label {
         display: flex;
@@ -161,6 +161,7 @@ button {
         justify-content: center;
         gap: 8px;
     }
+    // overrides for btn-accent
     &.btn-accent {
         padding: 8px 18px;
         border-radius: 50px;
@@ -182,9 +183,8 @@ button {
 // further style definitions
 .alert-warning {
     padding: 16px;
+    font-size: var(--sys-body-large-size);
     text-align: center;
-    // TODO: Typography
-    font-size: 16px;
     border-width: 1px;
     border-style: solid;
     border-radius: 4px;

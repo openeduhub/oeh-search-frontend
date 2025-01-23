@@ -26,6 +26,10 @@
         // decrease font-size for metadata
         .app-collection-card-metadata-item {
             font-size: var(--sys-body-medium-size);
+            .mat-icon,
+            .mat-mdc-icon {
+                font-size: var(--sys-body-small-size);
+            }
         }
     }
 }
