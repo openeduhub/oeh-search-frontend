@@ -17,12 +17,15 @@
 
 @mixin collection-card-typography($typography) {
     app-collection-card {
-        .app-collection-card-title {
-            @include mat.m2-typography-level($typography, body-1);
-            font-family: 'Montserrat-SemiBold', serif;
+        // bold font-weight for title
+        h4.app-collection-card-title {
+            font-family: var(--sys-headline-large-font);
+            font-size: var(--sys-body-large-size);
+            font-weight: var(--sys-label-large-weight-prominent);
         }
+        // decrease font-size for metadata
         .app-collection-card-metadata-item {
-            @include mat.m2-typography-level($typography, caption);
+            font-size: var(--sys-body-medium-size);
         }
     }
 }

@@ -48,10 +48,9 @@
     @include details-typography($typography);
     @include headerbar-typography($typography);
     @include multivalue-checkbox-typography($typography);
-    @include oer-slider-typography($typography);
-    @include paginator-typography($typography);
     @include result-card-typography($typography);
     @include search-field-typography($typography);
     @include search-filterbar-typography($typography);
     @include search-page-typography($typography);
+    @include template-page-typography($typography);
 }

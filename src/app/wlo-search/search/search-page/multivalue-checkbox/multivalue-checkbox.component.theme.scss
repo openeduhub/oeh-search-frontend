@@ -43,13 +43,10 @@
 @mixin multivalue-checkbox-typography($typography) {
     app-multivalue-checkbox {
         mat-checkbox {
-            .label {
-                @include mat.m2-typography-level($typography, body-2);
-            }
+            // change font-family + font-weight of filter count
             .count {
-                @include mat.m2-typography-level($typography, body-2);
-                font-weight: 700;
-                font-family: Montserrat-Bold, serif;
+                font-family: var(--sys-headline-large-font);
+                font-weight: var(--sys-label-large-weight-prominent);
             }
         }
     }

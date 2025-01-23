@@ -40,9 +40,9 @@
 
 @mixin headerbar-typography($typography) {
     app-headerbar {
-        // TODO: Replace typography
+        // increase font-size of filter button
         .filter-button {
-            font-size: 16px;
+            font-size: var(--sys-body-large-size);
         }
     }
 }

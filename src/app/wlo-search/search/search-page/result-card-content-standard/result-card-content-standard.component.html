@@ -15,7 +15,7 @@
     </span>
     <app-badges class="badges" [hit]="hit" orientation="horizontal"></app-badges>
   </div>
-  <h2 class="app-result-card-title">
+  <h2 class="app-result-card-title mat-display-small">
     <button (click)="onClick()" #cardButton>
       {{ hit | nodeProperty: 'title' | truncate: 42 }}
     </button>

@@ -64,17 +64,13 @@
 
 @mixin search-page-typography($typography) {
     app-search {
+        // use system variable to overwrite: https://github.com/angular/components/issues/30055#issuecomment-2492003358
         .did-you-mean em,
         .summary em {
-            font-weight: mat.m2-font-weight($typography, subtitle-2);
+            font-weight: var(--sys-label-large-weight-prominent);
         }
-        .did-you-mean,
-        .summary {
-            font-size: mat.m2-font-size($typography, body-1);
-        }
-        // TODO: Replace static font-weight
         .participate-button {
-            font-weight: 700;
+            font-weight: var(--sys-label-large-weight-prominent);
         }
     }
 }

@@ -218,9 +218,18 @@ $light-theme: mat.define-theme(
             theme-type: light,
             primary: $primary-palette,
             tertiary: $tertiary-palette,
+            use-system-variables: true,
         ),
         density: (
             scale: -1,
+        ),
+        typography: (
+            plain-family: 'Source-Sans-Pro-Regular',
+            brand-family: 'Montserrat-Medium',
+            bold-weight: 700,
+            medium-weight: 600,
+            regular-weight: 400,
+            use-system-variables: true,
         ),
     )
 );

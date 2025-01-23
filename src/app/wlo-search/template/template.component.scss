@@ -9,9 +9,9 @@
     --sidebar-offset: 16px;
     --offcanvas-menu-width: 48px;
     --offcanvas-offset: 8px;
+    margin: auto;
     display: flex;
     flex-direction: column;
-    margin: auto;
 }
 
 .alert-warning {
@@ -35,13 +35,13 @@
     background-color: var(--topic-color);
 
     .template-header-wrapper {
+        margin: 0 auto;
+        padding: 24px 36px 0;
         display: flex;
         justify-content: flex-start;
         position: relative;
         box-sizing: border-box;
         max-width: var(--maximal-width);
-        margin: 0 auto;
-        padding: 24px 36px 0;
         transition: 0.3s;
 
         .template-header-container {
@@ -63,11 +63,6 @@
             width: 72%;
         }
     }
-}
-
-.side-menu-header {
-    // TODO: Typography
-    font-size: 18px;
 }
 
 .portal-outer-wrapper {
@@ -160,12 +155,6 @@
                             .wlo-accordion-item-description {
                                 position: absolute;
                                 right: 25px;
-
-                                .mat-icon,
-                                .mat-mdc-icon {
-                                    // TODO: Typography
-                                    font-size: 30px;
-                                }
                             }
                         }
 
@@ -218,13 +207,6 @@
                 }
             }
 
-            .fachportal-new-content-inner {
-                h2 {
-                    // TODO: Typography
-                    font-size: 20px;
-                }
-            }
-
             .mat-grid-tile {
                 .drop-list,
                 .component-wrapper {
@@ -240,8 +222,6 @@
 
             .no-swimlanes {
                 padding: 16px 24px;
-                // TODO: Typography
-                font-size: 16px;
                 text-align: center;
             }
         }

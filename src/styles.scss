@@ -12,7 +12,6 @@ $material-icons-font-path: 'material-icons/iconfont/';
 
 // Include the common styles for Angular Material
 // The core mixin that includes prerequisite styles for common features used by multiple components
-@include mat.all-component-typographies();
 @include mat.core();
 // TODO: Comment out due to ugly focus indicators on click
 //@include mat.strong-focus-indicators();
@@ -29,6 +28,55 @@ $material-icons-font-path: 'material-icons/iconfont/';
     @include angular-material-theme-overrides($theme);
     // include search component themes
     @include wlo-search.components-themes($theme);
+    @include mat.all-component-typographies($theme);
+    @include mat.typography-hierarchy($theme);
+    @include wlo-search.components-typographies($theme);
+    // system variables: --sys-<pre_typescale_level>-<variation>-<property_token>
+    @include mat.system-level-colors($theme);
+    @include mat.system-level-typography($theme);
+    // custom overrides
+    .mat-typography {
+        // reset letter-spacing
+        letter-spacing: 0;
+        // change font-family of buttons
+        button,
+        .mat-mdc-button-base {
+            font-family: 'Montserrat-SemiBold', sans-serif;
+        }
+    }
+    // change font-size + line-height of display and header elements by modifying system variables
+    // h1: --sys-display-large: 400 3.562rem / 4rem Montserrat-Medium
+    --sys-display-large-size: 2.125rem;
+    --sys-display-large-line-height: 124%;
+    // h1 and mat-display-large use --sys-display-large, hence we also need to update that variable to see the changes
+    --sys-display-large: var(--sys-display-large-weight) var(--sys-display-large-size) /
+        var(--sys-display-large-line-height) var(--sys-display-large-font);
+    // h2: --sys-display-medium: 400 2.812rem / 3.25rem Montserrat-Medium
+    --sys-display-medium-size: 1.625rem;
+    --sys-display-medium-line-height: 124%;
+    // h2 and mat-display-medium use --sys-display-medium, hence we also need to update that variable to see the changes
+    --sys-display-medium: var(--sys-display-medium-weight) var(--sys-display-medium-size) /
+        var(--sys-display-medium-line-height) var(--sys-display-medium-font);
+    // h3: --sys-display-small: 400 2.25rem / 2.75rem Montserrat-Medium
+    --sys-display-small-font: 'Montserrat-SemiBold', sans-serif;
+    --sys-display-small-size: 1.25rem;
+    --sys-display-small-line-height: 124%;
+    // h3 and mat-display-small use --sys-display-small, hence we also need to update that variable to see the changes
+    --sys-display-small: var(--sys-display-small-weight) var(--sys-display-small-size) /
+        var(--sys-display-small-line-height) var(--sys-display-small-font);
+    // h4: --sys-headline-large: 400 2rem / 2.5rem Montserrat-Medium
+    --sys-headline-large-font: 'Montserrat-Bold', sans-serif;
+    --sys-headline-large-size: 1.125rem;
+    --sys-headline-large-line-height: 124%;
+    // h4 and mat-headline-large use --sys-headline-large, hence we also need to update that variable to see the changes
+    --sys-headline-large: var(--sys-headline-large-weight) var(--sys-headline-large-size) /
+        var(--sys-headline-large-line-height) var(--sys-headline-large-font);
+
+    // overwrite material CSS variables
+    // increase font-size of switch labels, e.g., OER switch button
+    --mat-switch-label-text-size: var(--sys-body-large-size);
+    // increase font-size of tab headers, e.g., the tabs for all search results and search results sorted by content type
+    --mat-tab-header-label-text-size: var(--sys-body-large-size);
 }
 
 :root {
@@ -77,46 +125,6 @@ $material-icons-font-path: 'material-icons/iconfont/';
 //    }
 //}
 
-// TODO: Convert to Material 3
-// Typography
-//
-// See @angular/material/core/typography/_typography.scss for defaults.
-$app-typography: mat.m2-define-typography-config(
-    $font-family: 'Source-Sans-Pro-Regular',
-    $headline-4: mat.m2-define-typography-level(32px, 40px, 500, 'Montserrat-Medium'),
-    $headline-5: mat.m2-define-typography-level(24px, 32px, 700, 'Montserrat-Bold'),
-    $headline-6: mat.m2-define-typography-level(20px, 30px, 600, 'Montserrat-SemiBold'),
-    $subtitle-1: mat.m2-define-typography-level(18px, 27px, 600, 'Montserrat-SemiBold'),
-    $body-1: mat.m2-define-typography-level(16px, 21px, 400, 'Source-Sans-Pro-Regular'),
-    $subtitle-2: mat.m2-define-typography-level(14px, 24px, 700, 'Montserrat-Bold'),
-    $body-2: mat.m2-define-typography-level(14px, 21px, 400, 'Source-Sans-Pro-Regular'),
-    $caption: mat.m2-define-typography-level(11px, 15px, 500, 'Montserrat-Medium'),
-    $button: mat.m2-define-typography-level(14px, 20px, 500, 'Montserrat-Medium'),
-);
-@include mat.all-component-typographies($app-typography);
-@include angular-material-typography-overrides($app-typography);
-// custom adjustment for tooltips: https://stackoverflow.com/a/78298799
-$tooltip-typography: mat.m2-define-typography-config(
-    $caption: mat.m2-define-typography-level(12px, 18px, 400, 'Montserrat-Medium'),
-);
-@include mat.tooltip-typography($tooltip-typography);
-// custom adjustment for form types
-$form-typography: mat.m2-define-typography-config(
-    $body-1: mat.m2-define-typography-level(14px, 21px, 400, 'Source-Sans-Pro-Regular'),
-    $body-2: mat.m2-define-typography-level(14px, 21px, 400, 'Source-Sans-Pro-Regular'),
-);
-@include mat.checkbox-typography($form-typography);
-@include mat.form-field-typography($form-typography);
-@include mat.input-typography($form-typography);
-@include mat.menu-typography($form-typography);
-@include mat.option-typography($form-typography);
-@include mat.radio-typography($form-typography);
-@include mat.select-typography($form-typography);
-// also overwrite the dialog typography
-@include mat.dialog-typography($form-typography);
-// adjustments by the wlo-search components
-@include wlo-search.components-typographies($app-typography);
-
 // CUSTOM GLOBAL STYLES
 html,
 body {
@@ -125,10 +133,6 @@ body {
 
 body {
     margin: 0;
-    // TODO: Replace
-    font-family: mat.m2-font-family($app-typography);
-    font-size: mat.m2-font-size($app-typography, body-1);
-    line-height: mat.m2-line-height($app-typography, body-1);
 }
 
 // Copied from Edu-Sharing Core-UI
@@ -149,25 +153,17 @@ body {
 }
 
 // overrides for btn-accent
-button.btn-accent {
-    padding: 8px 18px;
-    border-radius: 50px;
-    // TODO: Typography
-    font-family: 'Montserrat-Bold', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
-
-    .mdc-button__label {
+button {
+    // global adjustment for button label
+    &:not(.c-widget-color-picker) .mdc-button__label {
         display: flex;
         align-items: center;
         justify-content: center;
-
-        i {
-            margin-right: 5px;
-            height: 20px;
-            width: 20px;
-            // TODO: Typography
-            font-size: 20px;
-            font-weight: 800;
-        }
+        gap: 8px;
+    }
+    &.btn-accent {
+        padding: 8px 18px;
+        border-radius: 50px;
     }
 }
 

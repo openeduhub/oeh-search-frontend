@@ -40,17 +40,26 @@
 
 @mixin result-card-typography($typography) {
     app-result-card {
-        .app-result-card-title {
-            @include mat.m2-typography-level($typography, subtitle-1);
+        // even though the h3 style is already applied to h2 through classes, further decrease the font-size
+        h2.app-result-card-title {
+            font-size: var(--sys-headline-large-size) !important;
         }
+        // decrease font-size + line-height of description
+        .description {
+            font-size: var(--sys-body-medium-size);
+            line-height: var(--sys-body-medium-line-height);
+        }
+        // decrease font-size + line-height of metadata
         .metadata,
         .source {
-            @include mat.m2-typography-level($typography, caption);
+            font-size: var(--sys-body-small-size);
+            line-height: var(--sys-body-small-line-height);
         }
     }
     app-result-card-content-compact {
+        // decrease font-size of card-content
         .mat-mdc-card-content {
-            @include mat.m2-typography-level($typography, caption);
+            font-size: var(--sys-body-medium-size);
         }
     }
 }

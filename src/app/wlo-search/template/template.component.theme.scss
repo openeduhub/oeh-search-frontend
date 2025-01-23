@@ -37,3 +37,13 @@
         }
     }
 }
+
+@mixin template-page-typography($theme) {
+    // increase size of accordion caret icon
+    .wlo-accordion-item-description {
+        .mat-icon,
+        .mat-mdc-icon {
+            font-size: 1.875rem;
+        }
+    }
+}

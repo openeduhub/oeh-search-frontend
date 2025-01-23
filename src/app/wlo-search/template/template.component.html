@@ -71,7 +71,7 @@
       <!-- * use *ngIf to delay the initialization -->
       <!-- * use [hidden] to still load it in the background -->
       <div [hidden]="selectedMenuItem !== menuItems.profiling" *ngIf="initialLoadSuccessfully">
-        <h2 class="side-menu-header">Wer bist du?</h2>
+        <h2 class="side-menu-header mat-display-small">Wer bist du?</h2>
         <wlo-filter-bar
           alignment="vertical"
           [requestInProgress]="requestInProgress"
@@ -84,7 +84,7 @@
         ></wlo-filter-bar>
       </div>
       <ng-container *ngIf="selectedMenuItem === menuItems.topicTree">
-        <h2 class="side-menu-header">Themenbaum von {{ topic() }}</h2>
+        <h2 class="side-menu-header mat-display-small">Themenbaum von {{ topic() }}</h2>
         <wlo-topics-column-browser
           *ngIf="topicCollectionID(); else loadingIndicator"
           [contextNodeId]="topicCollectionID()"
@@ -94,7 +94,7 @@
         ></wlo-topics-column-browser>
       </ng-container>
       <ng-container *ngIf="selectedMenuItem === menuItems.statistics">
-        <h2 class="side-menu-header">Inhalte von {{ topic() }}</h2>
+        <h2 class="side-menu-header mat-display-small">Inhalte von {{ topic() }}</h2>
         <wlo-statistics-summary
           *ngIf="statisticsLoaded; else loadingIndicator"
           [searchResultCount]="searchResultCount"

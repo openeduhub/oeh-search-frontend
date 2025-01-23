@@ -32,12 +32,3 @@
         }
     }
 }
-
-@mixin oer-slider-typography($typography) {
-    app-oer-slider {
-        .mdc-label {
-            font-weight: 500;
-            font-family: 'Montserrat-Medium', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
-        }
-    }
-}

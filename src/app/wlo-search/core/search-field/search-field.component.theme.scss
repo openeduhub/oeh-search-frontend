@@ -32,14 +32,16 @@
 
 @mixin search-field-typography($typography) {
     app-search-field {
+        // increase the font-size of the search field
         // adjusting the selector is currently necessary to overwrite the default font-size:
-        // https://stackoverflow.com/a/43273285/3623608
+        // https://stackoverflow.com/a/43273285
         .mat-mdc-form-field,
         .mat-mdc-form-field.mat-mdc-form-field {
-            font-size: mat.m2-font-size($typography, body-1);
+            font-size: 1.075rem;
         }
+        // slightly increase the font-size of the submit-button
         .submit-button {
-            font-size: 17px;
+            font-size: 0.95rem;
         }
     }
 }

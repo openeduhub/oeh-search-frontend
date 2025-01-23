@@ -21,12 +21,3 @@
         }
     }
 }
-
-@mixin paginator-typography($typography) {
-    app-paginator {
-        .page-number,
-        .ellipsis {
-            @include mat.m2-typography-level($typography, button);
-        }
-    }
-}

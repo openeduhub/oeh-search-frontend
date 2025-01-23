@@ -59,24 +59,15 @@
 
 @mixin search-filterbar-typography($typography) {
     app-search-filterbar {
-        .type > mat-label {
-            @include mat.m2-typography-level($typography, body-1);
-        }
-
+        // change font of panel title
         mat-panel-title {
-            font-size: 16px;
-            font-family: Montserrat-SemiBold, serif;
-            font-weight: 600;
+            font-family: var(--sys-display-small-font);
         }
-
+        // adjust font-family + font-size + font-weight of reset button
         .reset-button {
-            @include mat.m2-typography-level($typography, button);
-            .mat-icon,
-            .mat-mdc-icon {
-                font-size: 24px;
-                width: 24px;
-                height: 24px;
-            }
+            font-family: var(--sys-body-large-font) !important;
+            font-size: var(--sys-body-large-size);
+            font-weight: var(--sys-body-large-weight);
         }
     }
 }
