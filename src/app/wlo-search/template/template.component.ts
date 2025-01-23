@@ -955,21 +955,14 @@ export class TemplateComponent implements OnInit {
     }
 
     /**
-     * Add a new swimlane to the page and persist it in the config.
+     * Adds a new swimlane to the page and persist it in the config.
      */
-    async addSwimlane(type: string, positionToAdd: number): Promise<void> {
+    async addSwimlane(newSwimlane: Swimlane, positionToAdd: number): Promise<void> {
         this.requestInProgress = true;
         await this.checkForCustomPageNodeExistence();
         const pageVariant: PageVariantConfig = this.retrievePageVariant();
         if (!pageVariant) {
             this.requestInProgress = false;
-        }
-        const newSwimlane: Swimlane = {
-            type,
-        };
-        if (type !== 'spacer') {
-            newSwimlane.heading = 'Eine beispielhafte Überschrift';
-            newSwimlane.grid = [];
         }
         const swimlanesCopy = JSON.parse(JSON.stringify(this.swimlanes ?? []));
         swimlanesCopy.splice(positionToAdd, 0, newSwimlane);
