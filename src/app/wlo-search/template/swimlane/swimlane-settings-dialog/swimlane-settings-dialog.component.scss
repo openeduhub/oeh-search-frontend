@@ -12,11 +12,22 @@
 
 .drag-handle {
     position: absolute;
-    top: 10px;
-    left: 10px;
+    top: 8px;
+    left: 8px;
     cursor: move;
     width: 24px;
     height: 24px;
+}
+
+.delete-tile {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 24px;
+    height: 24px;
+    // TODO: Typography
+    font-size: 24px;
+    cursor: pointer;
 }
 
 .grid-label {

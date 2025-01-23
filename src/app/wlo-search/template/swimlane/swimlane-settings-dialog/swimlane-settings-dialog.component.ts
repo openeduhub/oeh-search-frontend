@@ -106,6 +106,41 @@ export class SwimlaneSettingsDialogComponent implements OnInit {
     }
 
     /**
+     * Removes a grid tile at a given index.
+     *
+     * @tileIndex
+     */
+    removeGridTile(tileIndex: number): void {
+        const gridTile: GridTile = this.gridItems[tileIndex];
+        const removeGridTile = (): void => {
+            this.gridItems.splice(tileIndex, 1);
+            // adjust grid accordingly
+            // possible cases:
+            // * 3 -> 2 (cols: 3)
+            // * 2 -> 1 (cols: 6)
+            this.gridItems?.forEach((tile: GridTile): void => {
+                if (this.gridItems.length === 2) {
+                    tile.cols = 3;
+                } else {
+                    tile.cols = 6;
+                }
+            });
+            this.syncGridItemsWithFormData();
+        };
+        if (!!gridTile.nodeId) {
+            if (
+                confirm(
+                    'Wollen Sie wirklich ein bereits konfiguriertes Widget löschen? Die Konfiguration dieses Widgets geht dabei verloren.',
+                )
+            ) {
+                removeGridTile();
+            }
+        } else {
+            removeGridTile();
+        }
+    }
+
+    /**
      * Helper function to sync the grid items with the grid form data.
      */
     private syncGridItemsWithFormData(): void {

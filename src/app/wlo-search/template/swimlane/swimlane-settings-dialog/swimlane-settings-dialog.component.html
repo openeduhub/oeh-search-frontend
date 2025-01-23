@@ -47,6 +47,9 @@
             <path d="M0 0h24v24H0z" fill="none"></path>
           </svg>
         </div>
+        <div role="button" class="delete-tile" (click)="removeGridTile(i)">
+          <i esIcon="remove_circle_outline"></i>
+        </div>
         <div
           *ngIf="gridItem.item && gridItem.item !== ''; else selectWidgetTypeDialog"
           class="grid-border-container flex-direction-column"
@@ -56,7 +59,7 @@
             <strong>
               {{ widgetTypeToTextMap.get(gridItem.item) }}
             </strong>
-            <ng-container *ngIf="!!gridItem.nodeId"> (angepasst) </ng-container>
+            <ng-container *ngIf="!!gridItem.nodeId"> (bereits konfiguriert) </ng-container>
           </div>
           <app-select-widget-type-dialog
             [grid]="gridItems"
