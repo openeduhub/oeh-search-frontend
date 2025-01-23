@@ -34,49 +34,7 @@ $material-icons-font-path: 'material-icons/iconfont/';
     // system variables: --sys-<pre_typescale_level>-<variation>-<property_token>
     @include mat.system-level-colors($theme);
     @include mat.system-level-typography($theme);
-    // custom overrides
-    .mat-typography {
-        // reset letter-spacing
-        letter-spacing: 0;
-        // change font-family of buttons
-        button,
-        .mat-mdc-button {
-            font-family: 'Montserrat-SemiBold', sans-serif;
-        }
-    }
-    // change font-size + line-height of display and header elements by modifying system variables
-    // h1: --sys-display-large: 400 3.562rem / 4rem Montserrat-Medium
-    --sys-display-large-size: 2.125rem;
-    --sys-display-large-line-height: 124%;
-    // h1 and mat-display-large use --sys-display-large, hence we also need to update that variable to see the changes
-    --sys-display-large: var(--sys-display-large-weight) var(--sys-display-large-size) /
-        var(--sys-display-large-line-height) var(--sys-display-large-font);
-    // h2: --sys-display-medium: 400 2.812rem / 3.25rem Montserrat-Medium
-    --sys-display-medium-size: 1.625rem;
-    --sys-display-medium-line-height: 124%;
-    // h2 and mat-display-medium use --sys-display-medium, hence we also need to update that variable to see the changes
-    --sys-display-medium: var(--sys-display-medium-weight) var(--sys-display-medium-size) /
-        var(--sys-display-medium-line-height) var(--sys-display-medium-font);
-    // h3: --sys-display-small: 400 2.25rem / 2.75rem Montserrat-Medium
-    --sys-display-small-font: 'Montserrat-SemiBold', sans-serif;
-    --sys-display-small-size: 1.25rem;
-    --sys-display-small-line-height: 124%;
-    // h3 and mat-display-small use --sys-display-small, hence we also need to update that variable to see the changes
-    --sys-display-small: var(--sys-display-small-weight) var(--sys-display-small-size) /
-        var(--sys-display-small-line-height) var(--sys-display-small-font);
-    // h4: --sys-headline-large: 400 2rem / 2.5rem Montserrat-Medium
-    --sys-headline-large-font: 'Montserrat-Bold', sans-serif;
-    --sys-headline-large-size: 1.125rem;
-    --sys-headline-large-line-height: 124%;
-    // h4 and mat-headline-large use --sys-headline-large, hence we also need to update that variable to see the changes
-    --sys-headline-large: var(--sys-headline-large-weight) var(--sys-headline-large-size) /
-        var(--sys-headline-large-line-height) var(--sys-headline-large-font);
-
-    // overwrite material CSS variables
-    // increase font-size of switch labels, e.g., OER switch button
-    --mat-switch-label-text-size: var(--sys-body-large-size);
-    // increase font-size of tab headers, e.g., the tabs for all search results and search results sorted by content type
-    --mat-tab-header-label-text-size: var(--sys-body-large-size);
+    @include angular-material-typography-overrides($theme);
 }
 
 :root {
