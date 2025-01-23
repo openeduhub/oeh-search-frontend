@@ -59,11 +59,6 @@
         [title]="menuItems.statistics"
         (itemClicked)="collapsibleItemClicked($event)"
       ></wlo-side-menu-item>
-      <wlo-side-menu-item
-        [selectedMenuItem]="selectedMenuItem"
-        [title]="menuItems.feedback"
-        (itemClicked)="collapsibleItemClicked($event)"
-      ></wlo-side-menu-item>
     </ng-container>
     <ng-container slot="content">
       <!-- Note: Multiple wlo-filter-bar items will overwrite each other -->
@@ -102,9 +97,6 @@
           [statistics]="statistics"
           [topic]="topic()"
         ></wlo-statistics-summary>
-      </ng-container>
-      <ng-container *ngIf="selectedMenuItem === menuItems.feedback">
-        Inhalt von {{ menuItems.feedback }} folgt.
       </ng-container>
       <ng-template #loadingIndicator>
         <es-spinner></es-spinner>
