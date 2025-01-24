@@ -1,3 +1,4 @@
+/* src/global.scss */
 :root {
     --dark-primary-text-no-rgb: 0, 0, 0, 0.87;
     --dark-secondary-text-no-rgb: 0, 0, 0, 0.54;
@@ -302,7 +303,9 @@
     transform: scale3d(0, 0, 0);
     background-color: var(--mat-ripple-color, rgba(0, 0, 0, 0.1));
 }
-.cdk-high-contrast-active .mat-ripple-element,
+.cdk-high-contrast-active .mat-ripple-element {
+    display: none;
+}
 .cdk-drag-preview .mat-ripple-element,
 .cdk-drag-placeholder .mat-ripple-element {
     display: none;
@@ -357,11 +360,14 @@
 }
 .cdk-overlay-backdrop {
     position: absolute;
-    inset: 0;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
     z-index: 1000;
     pointer-events: auto;
     -webkit-tap-highlight-color: transparent;
-    transition: opacity 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition: opacity 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
     opacity: 0;
 }
 .cdk-overlay-backdrop.cdk-overlay-backdrop-showing {
@@ -371,7 +377,7 @@
     opacity: 0.6;
 }
 .cdk-overlay-dark-backdrop {
-    background: #00000052;
+    background: rgba(0, 0, 0, 0.32);
 }
 .cdk-overlay-transparent-backdrop {
     transition: visibility 1ms linear, opacity 1ms linear;
@@ -425,8 +431,11 @@ textarea.cdk-textarea-autosize-measuring-firefox {
 .mat-focus-indicator {
     position: relative;
 }
-.mat-focus-indicator:before {
-    inset: 0;
+.mat-focus-indicator::before {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     position: absolute;
     box-sizing: border-box;
     pointer-events: none;
@@ -436,7 +445,7 @@ textarea.cdk-textarea-autosize-measuring-firefox {
         var(--mat-focus-indicator-border-color, transparent);
     border-radius: var(--mat-focus-indicator-border-radius, 4px);
 }
-.mat-focus-indicator:focus:before {
+.mat-focus-indicator:focus::before {
     content: '';
 }
 .cdk-high-contrast-active {
@@ -445,8 +454,11 @@ textarea.cdk-textarea-autosize-measuring-firefox {
 .mat-mdc-focus-indicator {
     position: relative;
 }
-.mat-mdc-focus-indicator:before {
-    inset: 0;
+.mat-mdc-focus-indicator::before {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     position: absolute;
     box-sizing: border-box;
     pointer-events: none;
@@ -456,7 +468,7 @@ textarea.cdk-textarea-autosize-measuring-firefox {
         var(--mat-mdc-focus-indicator-border-color, transparent);
     border-radius: var(--mat-mdc-focus-indicator-border-radius, 4px);
 }
-.mat-mdc-focus-indicator:focus:before {
+.mat-mdc-focus-indicator:focus::before {
     content: '';
 }
 .cdk-high-contrast-active {
@@ -606,7 +618,16 @@ html {
     --mat-minimal-pseudo-checkbox-selected-checkmark-color: var(--palette-primary-500);
     --mat-minimal-pseudo-checkbox-disabled-selected-checkmark-color: #b0b0b0;
 }
-html,
+html {
+    --mat-full-pseudo-checkbox-selected-icon-color: var(--palette-accent-500);
+    --mat-full-pseudo-checkbox-selected-checkmark-color: #fafafa;
+    --mat-full-pseudo-checkbox-unselected-icon-color: rgba(0, 0, 0, 0.54);
+    --mat-full-pseudo-checkbox-disabled-selected-checkmark-color: #fafafa;
+    --mat-full-pseudo-checkbox-disabled-unselected-icon-color: #b0b0b0;
+    --mat-full-pseudo-checkbox-disabled-selected-icon-color: #b0b0b0;
+    --mat-minimal-pseudo-checkbox-selected-checkmark-color: var(--palette-accent-500);
+    --mat-minimal-pseudo-checkbox-disabled-selected-checkmark-color: #b0b0b0;
+}
 .mat-accent {
     --mat-full-pseudo-checkbox-selected-icon-color: var(--palette-accent-500);
     --mat-full-pseudo-checkbox-selected-checkmark-color: #fafafa;
@@ -1536,7 +1557,7 @@ html {
     --mdc-list-list-item-trailing-supporting-text-weight: 400;
 }
 .mdc-list-group__subheader {
-    font: 400 16px/28px Roboto, sans-serif;
+    font: 400 16px / 28px Roboto, sans-serif;
     letter-spacing: 0.009375em;
 }
 html {
@@ -2465,7 +2486,7 @@ html {
 .mat-typography .mat-h1,
 .mat-typography .mat-headline-5,
 .mat-typography h1 {
-    font: 400 24px/32px Roboto, sans-serif;
+    font: 400 24px / 32px Roboto, sans-serif;
     letter-spacing: normal;
     margin: 0 0 16px;
 }
@@ -2474,7 +2495,7 @@ html {
 .mat-typography .mat-h2,
 .mat-typography .mat-headline-6,
 .mat-typography h2 {
-    font: 500 20px/32px Roboto, sans-serif;
+    font: 500 20px / 32px Roboto, sans-serif;
     letter-spacing: 0.0125em;
     margin: 0 0 16px;
 }
@@ -2483,7 +2504,7 @@ html {
 .mat-typography .mat-h3,
 .mat-typography .mat-subtitle-1,
 .mat-typography h3 {
-    font: 400 16px/28px Roboto, sans-serif;
+    font: 400 16px / 28px Roboto, sans-serif;
     letter-spacing: 0.009375em;
     margin: 0 0 16px;
 }
@@ -2492,27 +2513,27 @@ html {
 .mat-typography .mat-h4,
 .mat-typography .mat-body-1,
 .mat-typography h4 {
-    font: 400 16px/24px Roboto, sans-serif;
+    font: 400 16px / 24px Roboto, sans-serif;
     letter-spacing: 0.03125em;
     margin: 0 0 16px;
 }
 .mat-h5,
 .mat-typography .mat-h5,
 .mat-typography h5 {
-    font: 400 11.62px/20px Roboto, sans-serif;
+    font: 400 calc(14px * 0.83) / 20px Roboto, sans-serif;
     margin: 0 0 12px;
 }
 .mat-h6,
 .mat-typography .mat-h6,
 .mat-typography h6 {
-    font: 400 9.38px/20px Roboto, sans-serif;
+    font: 400 calc(14px * 0.67) / 20px Roboto, sans-serif;
     margin: 0 0 12px;
 }
 .mat-body-strong,
 .mat-subtitle-2,
 .mat-typography .mat-body-strong,
 .mat-typography .mat-subtitle-2 {
-    font: 500 14px/22px Roboto, sans-serif;
+    font: 500 14px / 22px Roboto, sans-serif;
     letter-spacing: 0.0071428571em;
 }
 .mat-body,
@@ -2520,7 +2541,7 @@ html {
 .mat-typography .mat-body,
 .mat-typography .mat-body-2,
 .mat-typography {
-    font: 400 14px/20px Roboto, sans-serif;
+    font: 400 14px / 20px Roboto, sans-serif;
     letter-spacing: 0.0178571429em;
 }
 .mat-body p,
@@ -2534,30 +2555,30 @@ html {
 .mat-caption,
 .mat-typography .mat-small,
 .mat-typography .mat-caption {
-    font: 400 12px/20px Roboto, sans-serif;
+    font: 400 12px / 20px Roboto, sans-serif;
     letter-spacing: 0.0333333333em;
 }
 .mat-headline-1,
 .mat-typography .mat-headline-1 {
-    font: 300 96px/96px Roboto, sans-serif;
+    font: 300 96px / 96px Roboto, sans-serif;
     letter-spacing: -0.015625em;
     margin: 0 0 56px;
 }
 .mat-headline-2,
 .mat-typography .mat-headline-2 {
-    font: 300 60px/60px Roboto, sans-serif;
+    font: 300 60px / 60px Roboto, sans-serif;
     letter-spacing: -0.0083333333em;
     margin: 0 0 64px;
 }
 .mat-headline-3,
 .mat-typography .mat-headline-3 {
-    font: 400 48px/50px Roboto, sans-serif;
+    font: 400 48px / 50px Roboto, sans-serif;
     letter-spacing: normal;
     margin: 0 0 64px;
 }
 .mat-headline-4,
 .mat-typography .mat-headline-4 {
-    font: 400 34px/40px Roboto, sans-serif;
+    font: 400 34px / 40px Roboto, sans-serif;
     letter-spacing: 0.0073529412em;
     margin: 0 0 64px;
 }
@@ -4101,7 +4122,7 @@ html .mat-mdc-icon-button.mat-warn,
 .isDarkTheme .mat-mdc-checkbox.mat-warn {
     --mdc-checkbox-selected-checkmark-color: var(--palette-warn-contrast-500);
 }
-.mat-datepicker-content.mat-primary .mat-calendar-body-in-range:before {
+.mat-datepicker-content.mat-primary .mat-calendar-body-in-range::before {
     background: rgba(var(--palette-primary-500-no-rgb), 0.2);
 }
 .mat-datepicker-content.mat-primary
@@ -4114,7 +4135,7 @@ html .mat-mdc-icon-button.mat-warn,
     > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical) {
     background: rgba(var(--palette-primary-500-no-rgb), 0.3);
 }
-.mat-datepicker-content.mat-accent .mat-calendar-body-in-range:before {
+.mat-datepicker-content.mat-accent .mat-calendar-body-in-range::before {
     background: rgba(var(--palette-accent-500-no-rgb), 0.2);
 }
 .mat-datepicker-content.mat-accent
@@ -4127,7 +4148,7 @@ html .mat-mdc-icon-button.mat-warn,
     > .mat-calendar-body-cell-content:not(.mat-calendar-body-selected):not(.mat-calendar-body-comparison-identical) {
     background: rgba(var(--palette-accent-500-no-rgb), 0.3);
 }
-.mat-datepicker-content.mat-warn .mat-calendar-body-in-range:before {
+.mat-datepicker-content.mat-warn .mat-calendar-body-in-range::before {
     background: rgba(var(--palette-warn-500-no-rgb), 0.2);
 }
 .mat-datepicker-content.mat-warn
@@ -4167,27 +4188,7 @@ body {
 }
 body {
     margin: 0;
-    font-family: open_sansregular, sans-serif;
-}
-@font-face {
-    font-family: open_sansregular;
-    src: url('./media/OpenSans-Regular-webfont.eot');
-    src: url('./media/OpenSans-Regular-webfont.eot?#iefix') format('embedded-opentype'),
-        url('./media/OpenSans-Regular-webfont.woff') format('woff'),
-        url('./media/OpenSans-Regular-webfont.ttf') format('truetype'),
-        url('./media/OpenSans-Regular-webfont.svg#open_sansregular') format('svg');
-    font-weight: 400;
-    font-style: normal;
-}
-@font-face {
-    font-family: open_sansbold;
-    src: url('./media/OpenSans-Bold-webfont.eot');
-    src: url('./media/OpenSans-Bold-webfont.eot?#iefix') format('embedded-opentype'),
-        url('./media/OpenSans-Bold-webfont.woff') format('woff'),
-        url('./media/OpenSans-Bold-webfont.ttf') format('truetype'),
-        url('./media/OpenSans-Bold-webfont.svg#open_sansbold') format('svg');
-    font-weight: 400;
-    font-style: normal;
+    font-family: 'open_sansregular', sans-serif;
 }
 :root {
     --primary: var(--palette-primary-500);
@@ -4280,8 +4281,129 @@ body {
     --primary: var(--dark-blue---darkblue);
     --cardWidth: 300px;
 }
+
+/* src/assets/fonts/opensans_regular/stylesheet.css */
 @font-face {
-    font-family: Material Icons;
+    font-family: 'open_sansregular';
+    src: url('./media/OpenSans-Regular-webfont.eot');
+    src: url('./media/OpenSans-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+        url('./media/OpenSans-Regular-webfont.woff') format('woff'),
+        url('./media/OpenSans-Regular-webfont.ttf') format('truetype'),
+        url('./media/OpenSans-Regular-webfont.svg#open_sansregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* src/assets/fonts/opensans_bold/stylesheet.css */
+@font-face {
+    font-family: 'open_sansbold';
+    src: url('./media/OpenSans-Bold-webfont.eot');
+    src: url('./media/OpenSans-Bold-webfont.eot?#iefix') format('embedded-opentype'),
+        url('./media/OpenSans-Bold-webfont.woff') format('woff'),
+        url('./media/OpenSans-Bold-webfont.ttf') format('truetype'),
+        url('./media/OpenSans-Bold-webfont.svg#open_sansbold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* src/fonts.scss */
+
+/* src/variables.scss */
+:root {
+    --primary: var(--palette-primary-500);
+    --warning: #cd2457;
+    --tableIconSize: 38px;
+    --textLight: #585858;
+    --textMediumLight: #888;
+    --textMain: #383838;
+    --cardWidth: 240px;
+    --colorStatusPositive: #40bf8e;
+    --colorStatusNegative: var(--warning);
+    --colorStarActive: #ba7c00;
+    --nodeVirtualColor: #42ca8d;
+    --nodeVirtualColorLight: #b8fcdd;
+    --transitionNormal: 0.2s;
+    --focusWidth: 2px;
+    --fontSizeXSmall: 85%;
+    --mobileWidth: $mobileWidth;
+    --mobileStage: 100px;
+    --itemSelectedTextColor: var(--palette-primary-700);
+    --listItemSelectedBackground: var(--palette-primary-50);
+    --listItemSelectedBackgroundEffect: linear-gradient(
+            to right,
+            var(--primary) 0,
+            var(--primary) 5px,
+            var(--palette-primary-50) 5px,
+            var(--palette-primary-50) 5px
+        )
+        no-repeat;
+}
+:root {
+    --black: #000000;
+    --lila: #7f6fee;
+    --red---red: #e73445;
+    --red---red_80: #ec5d6a;
+    --red---red_60: #f1858f;
+    --red---red_40: #f5aeb5;
+    --red---red_20: #fad6da;
+    --red---red_15: #fbe1e3;
+    --dark-blue---darkblue: #003b7c;
+    --dark-blue---dark-blue_80: #336296;
+    --dark-blue---dark-blue_60: #6689b0;
+    --dark-blue---dark-blue_40: #99b1cb;
+    --dark-blue---dark-blue_20: #ccd8e5;
+    --dark-blue---dark-blue_15: #d9e2eb;
+    --blue---blue: #3da6ee;
+    --blue---blue_80: #64b8f1;
+    --blue---blue-60: #8bcaf5;
+    --blue---blue_40: #b1dbf8;
+    --blue---blue_20: #d8edfc;
+    --blue---blue_15: #e2f2fc;
+    --dark-green---dark-green: #106029;
+    --dark-green---dark-green_80: #408054;
+    --dark-green---dark-green_60: #70a07f;
+    --dark-green---dark-green_40: #9fbfa9;
+    --dark-green---dark-green_20: #cfdfd4;
+    --dark-green---dark-green_15: #dbe7df;
+    --green---green: #b4da1c;
+    --green---green_80: #c3e149;
+    --green---green_60: #d2e977;
+    --green---green_40: #e1f0a4;
+    --green---green_20: #f0f8d2;
+    --green---green_15: #f4f9dd;
+    --pink---pink: #ec4a70;
+    --pink---pink_80: #f06e8d;
+    --pink---pink_60: #f492a9;
+    --pink---pink_40: #f7b7c6;
+    --pink---pink_20: #fbdbe2;
+    --pink---pink_15: #fce4ea;
+    --rose---rose: #ef809a;
+    --rose---rose_80: #f299ae;
+    --rose---rose_60: #f5b3c2;
+    --rose---rose_40: #f9ccd7;
+    --rose---rose_20: #fce6eb;
+    --rose---rose_15: #fdecf0;
+    --orange---orange: #ffb930;
+    --orange---orange_80: #ffc759;
+    --orange---orange_60: #ffd583;
+    --orange---orange_40: #ffe3ac;
+    --orange---orange_20: #fff1d6;
+    --orange---orange_15: #fff4e0;
+    --lila---lila: #7f6fee;
+    --lila---lila_80: #998cf1;
+    --lila---lila_60: #b2a9f5;
+    --lila---lila_40: #ccc5f8;
+    --lila---lila_20: #e5e2fc;
+    --lila---lila_15: #ece9fc;
+}
+:root {
+    --primary: var(--dark-blue---darkblue);
+    --cardWidth: 300px;
+}
+
+/* node_modules/material-design-icons/iconfont/material-icons.css */
+@font-face {
+    font-family: 'Material Icons';
     font-style: normal;
     font-weight: 400;
     src: url('./media/MaterialIcons-Regular.eot');
@@ -4291,8 +4413,8 @@ body {
         url('./media/MaterialIcons-Regular.ttf') format('truetype');
 }
 .material-icons {
-    font-family: Material Icons;
-    font-weight: 400;
+    font-family: 'Material Icons';
+    font-weight: normal;
     font-style: normal;
     font-size: 24px;
     display: inline-block;
@@ -4307,3 +4429,6 @@ body {
     -moz-osx-font-smoothing: grayscale;
     font-feature-settings: 'liga';
 }
+
+/* angular:styles/global:styles */
+/*# sourceMappingURL=styles.css.map */

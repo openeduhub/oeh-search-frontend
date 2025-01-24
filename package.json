@@ -11,19 +11,19 @@
     "clean": "rm -rf dist",
     "clean-cache-install": "npm cache clean --force && npm i",
     "prebuild": "npm run generate",
-    "build": "ng build --localize --base-href /search/",
-    "build:web-components": "ng build web-components --output-hashing none",
+    "build": "ng output --localize --base-href /search/",
+    "build:web-components": "ng output web-components --output-hashing none",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "cypress:local:open": "cd e2e-cypress && npm run cypress:local:open",
     "format": "prettier --write src",
-    "docker-build": "docker build . --tag openeduhub/oeh-search-frontend:local",
+    "docker-build": "docker output . --tag openeduhub/oeh-search-frontend:local",
     "docker-run": "docker run --name oeh-search-frontend --rm -p 8080:80 --env EDU_SHARING_API_URL=https://repository.staging.openeduhub.net/edu-sharing/rest openeduhub/oeh-search-frontend:local",
     "extract-i18n": "ng extract-i18n oeh-search-frontend --output-path src/locale",
     "generate": "graphql-codegen",
     "postgenerate": "prettier --write src/generated/*",
-    "analyze-bundle": "ng build --stats-json && webpack-bundle-analyzer ./dist/oeh-search-frontend/stats.json"
+    "analyze-bundle": "ng output --stats-json && webpack-bundle-analyzer ./dist/oeh-search-frontend/stats.json"
   },
   "private": true,
   "dependencies": {
