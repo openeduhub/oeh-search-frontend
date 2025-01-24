@@ -149,7 +149,7 @@ export class TemplateComponent implements OnInit {
     headerNodeId: string;
     private pageConfigNode: Node;
     pageConfigCheckFailed: boolean = false;
-    private pageVariantConfigs: NodeEntries;
+    pageVariantConfigs: NodeEntries;
     private pageVariantDefaultPosition: number = -1;
     pageVariantNode: Node;
     private selectedVariantPosition: number = -1;
