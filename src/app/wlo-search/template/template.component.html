@@ -32,7 +32,7 @@
         color="primary"
         position="left"
         [title]="editMode ? actionItems.previewMode : actionItems.editMode"
-        (itemClicked)="editMode = !editMode"
+        (itemClicked)="toggleEditMode()"
       ></wlo-side-menu-item>
     </ng-container>
   </wlo-side-menu-wrapper>
@@ -176,7 +176,11 @@
                 </div>
               </ng-container>
               <!-- type: collapse -->
-              <cdk-accordion class="wlo-accordion" *ngIf="swimlane.type === 'accordion'">
+              <cdk-accordion
+                class="wlo-accordion"
+                [class.edit-mode]="editMode"
+                *ngIf="swimlane.type === 'accordion'"
+              >
                 <cdk-accordion-item
                   #accordionItem="cdkAccordionItem"
                   class="wlo-accordion-item"
@@ -187,7 +191,10 @@
                   [attr.aria-controls]="'accordion-body-' + i"
                   expanded="true"
                 >
-                  <div class="wlo-accordion-item-header" (click)="accordionItem.toggle()">
+                  <div
+                    class="wlo-accordion-item-header"
+                    (click)="!editMode ? accordionItem.toggle() : ''"
+                  >
                     <ng-container
                       *ngTemplateOutlet="swimlaneHeading; context: { swimlane }"
                     ></ng-container>

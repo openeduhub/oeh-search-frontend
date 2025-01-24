@@ -1,5 +1,14 @@
+import { CdkAccordionItem } from '@angular/cdk/accordion';
 import { CdkDragHandle, moveItemInArray } from '@angular/cdk/drag-drop';
-import { Component, HostBinding, OnInit, signal, WritableSignal } from '@angular/core';
+import {
+    Component,
+    HostBinding,
+    OnInit,
+    QueryList,
+    signal,
+    ViewChildren,
+    WritableSignal,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Params } from '@angular/router';
 import {
@@ -119,6 +128,7 @@ export class TemplateComponent implements OnInit {
     ) {}
 
     @HostBinding('style.--topic-color') topicColor: string = initialTopicColor;
+    @ViewChildren('accordionItem') accordions: QueryList<CdkAccordionItem>;
 
     initialLoadSuccessfully: boolean = false;
     requestInProgress: boolean = false;
@@ -1185,9 +1195,9 @@ export class TemplateComponent implements OnInit {
     }
 
     /**
-     * Function to call on wlo-side-menu-item itemClicked output.
+     * Function to call on right wlo-side-menu-item itemClicked output.
      */
-    collapsibleItemClicked(item: string) {
+    collapsibleItemClicked(item: string): void {
         if (this.selectedMenuItem === item) {
             this.selectedMenuItem = '';
         } else {
@@ -1195,8 +1205,21 @@ export class TemplateComponent implements OnInit {
         }
     }
 
+    /**
+     * Function to call on left wlo-side-menu-item itemClicked output.
+     */
+    toggleEditMode(): void {
+        this.editMode = !this.editMode;
+        if (this.editMode) {
+            // when switching into edit mode, open all accordions
+            this.accordions?.forEach((accordion: CdkAccordionItem): void => {
+                accordion.open();
+            });
+        }
+    }
+
     // https://stackoverflow.com/a/16348977
-    stringToColour(str: string) {
+    stringToColour(str: string): string {
         let hash = 0;
         str.split('').forEach((char) => {
             hash = char.charCodeAt(0) + ((hash << 5) - hash);

@@ -187,6 +187,20 @@ wlo-editable-text {
                             border-bottom-right-radius: 10px;
                         }
                     }
+
+                    &.edit-mode {
+                        .wlo-accordion-item {
+                            .wlo-accordion-item-header {
+                                padding-bottom: 0;
+                                .wlo-accordion-item-description {
+                                    display: none;
+                                }
+                            }
+                            .wlo-accordion-item-body {
+                                padding-top: 0;
+                            }
+                        }
+                    }
                 }
 
                 /* type: container */
