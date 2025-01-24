@@ -10,6 +10,7 @@ import {
     WritableSignal,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar, MatSnackBarRef, TextOnlySnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Params } from '@angular/router';
 import {
     ApiRequestConfiguration,
@@ -115,6 +116,8 @@ export class TemplateComponent implements OnInit {
     private readonly facets$: Observable<FacetsDict> = this.searchService
         .observeFacets([defaultLrt], { includeActiveFilters: true })
         .pipe(shareReplay(1));
+    private readonly SAVE_CONFIG_ACTION: string = 'Schließen';
+    private readonly SAVE_CONFIG_MESSAGE: string = 'Ihre Änderungen werden gespeichert.';
 
     constructor(
         private apiRequestConfig: ApiRequestConfiguration,
@@ -124,6 +127,7 @@ export class TemplateComponent implements OnInit {
         private nodeApi: NodeService,
         private route: ActivatedRoute,
         private searchService: SearchService,
+        private snackbar: MatSnackBar,
         private viewService: ViewService,
     ) {}
 
@@ -969,9 +973,11 @@ export class TemplateComponent implements OnInit {
      */
     async addSwimlane(newSwimlane: Swimlane, positionToAdd: number): Promise<void> {
         this.requestInProgress = true;
+        const toastContainer: MatSnackBarRef<TextOnlySnackBar> = this.openSaveConfigToast();
         await this.checkForCustomPageNodeExistence();
         const pageVariant: PageVariantConfig = this.retrievePageVariant();
         if (!pageVariant) {
+            this.closeToastWithDelay(toastContainer);
             this.requestInProgress = false;
         }
         const swimlanesCopy = JSON.parse(JSON.stringify(this.swimlanes ?? []));
@@ -984,6 +990,7 @@ export class TemplateComponent implements OnInit {
         );
         // add swimlane visually as soon as the requests are done
         this.swimlanes.splice(positionToAdd, 0, newSwimlane);
+        this.closeToastWithDelay(toastContainer);
         this.requestInProgress = false;
     }
 
@@ -993,9 +1000,11 @@ export class TemplateComponent implements OnInit {
     async moveSwimlanePosition(oldIndex: number, newIndex: number) {
         if (newIndex >= 0 && newIndex <= this.swimlanes.length - 1) {
             this.requestInProgress = true;
+            const toastContainer: MatSnackBarRef<TextOnlySnackBar> = this.openSaveConfigToast();
             await this.checkForCustomPageNodeExistence();
             const pageVariant: PageVariantConfig = this.retrievePageVariant();
             if (!pageVariant) {
+                this.closeToastWithDelay(toastContainer);
                 this.requestInProgress = false;
             }
             const swimlanesCopy = JSON.parse(JSON.stringify(this.swimlanes ?? []));
@@ -1008,6 +1017,7 @@ export class TemplateComponent implements OnInit {
             );
             // move swimlane position visually as soon as the requests are done
             moveItemInArray(this.swimlanes, oldIndex, newIndex);
+            this.closeToastWithDelay(toastContainer);
             this.requestInProgress = false;
         }
     }
@@ -1020,9 +1030,11 @@ export class TemplateComponent implements OnInit {
      */
     async swimlaneTitleChanged(title: string, swimlane: Swimlane) {
         this.requestInProgress = true;
+        const toastContainer: MatSnackBarRef<TextOnlySnackBar> = this.openSaveConfigToast();
         await this.checkForCustomPageNodeExistence();
         const pageVariant: PageVariantConfig = this.retrievePageVariant();
         if (!pageVariant) {
+            this.closeToastWithDelay(toastContainer);
             this.requestInProgress = false;
         }
         swimlane.heading = title;
@@ -1032,6 +1044,7 @@ export class TemplateComponent implements OnInit {
             pageVariantConfigType,
             JSON.stringify(pageVariant),
         );
+        this.closeToastWithDelay(toastContainer);
         this.requestInProgress = false;
     }
 
@@ -1063,9 +1076,11 @@ export class TemplateComponent implements OnInit {
                     return;
                 }
                 this.requestInProgress = true;
+                const toastContainer: MatSnackBarRef<TextOnlySnackBar> = this.openSaveConfigToast();
                 await this.checkForCustomPageNodeExistence();
                 const pageVariant: PageVariantConfig = this.retrievePageVariant();
                 if (!pageVariant) {
+                    this.closeToastWithDelay(toastContainer);
                     this.requestInProgress = false;
                 }
                 // create a copy of the swimlanes
@@ -1105,6 +1120,7 @@ export class TemplateComponent implements OnInit {
                 // visually change swimlanes
                 console.log('DEBUG: Overwrite swimlanes', pageVariant.structure.swimlanes);
                 this.swimlanes = pageVariant.structure.swimlanes;
+                this.closeToastWithDelay(toastContainer);
                 this.requestInProgress = false;
             }
             console.log('Closed', result?.value);
@@ -1120,9 +1136,11 @@ export class TemplateComponent implements OnInit {
             confirm('Wollen Sie dieses Element wirklich löschen?') === true
         ) {
             this.requestInProgress = true;
+            const toastContainer: MatSnackBarRef<TextOnlySnackBar> = this.openSaveConfigToast();
             await this.checkForCustomPageNodeExistence();
             const pageVariant: PageVariantConfig = this.retrievePageVariant();
             if (!pageVariant) {
+                this.closeToastWithDelay(toastContainer);
                 this.requestInProgress = false;
             }
             // delete possible nodes defined in the swimlane
@@ -1154,6 +1172,7 @@ export class TemplateComponent implements OnInit {
             );
             // delete swimlane visually as soon as the requests are done
             this.swimlanes.splice(index, 1);
+            this.closeToastWithDelay(toastContainer);
             this.requestInProgress = false;
         }
     }
@@ -1216,6 +1235,24 @@ export class TemplateComponent implements OnInit {
                 accordion.open();
             });
         }
+    }
+
+    /**
+     * Helper function to open a toast for indicating that the config is being saved.
+     */
+    openSaveConfigToast(): MatSnackBarRef<TextOnlySnackBar> {
+        return this.snackbar?.open(this.SAVE_CONFIG_MESSAGE, this.SAVE_CONFIG_ACTION);
+    }
+
+    /**
+     * Helper function to close a given toast container with a delay.
+     *
+     * @param toastContainer
+     */
+    closeToastWithDelay(toastContainer: MatSnackBarRef<TextOnlySnackBar>): void {
+        setTimeout((): void => {
+            toastContainer.dismiss();
+        }, 1000);
     }
 
     // https://stackoverflow.com/a/16348977
