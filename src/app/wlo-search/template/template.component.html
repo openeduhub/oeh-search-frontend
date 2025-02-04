@@ -1,14 +1,14 @@
 <div
   class="reloading-indicator-bg"
-  [class.transparent-bg]="requestInProgress"
-  *ngIf="!pageConfigCheckFailed && (!initialLoadSuccessfully || requestInProgress)"
+  [class.transparent-bg]="requestInProgress()"
+  *ngIf="showLoadingScreen()"
 >
   <!-- for requestInProgress the page might be too large to display a visible spinner -->
-  <es-spinner *ngIf="!initialLoadSuccessfully"></es-spinner>
+  <es-spinner *ngIf="!initialLoadSuccessfully()"></es-spinner>
 </div>
-<ng-container *ngIf="!pageConfigCheckFailed; else pageConfigCheckFailedMessage">
+<ng-container *ngIf="!pageConfigCheckFailed(); else pageConfigCheckFailedMessage">
   <!-- TOPIC HERO HEADER -->
-  <!-- wait until the initial load is successfully do retrieve the correct nodeID for the header -->
+  <!-- wait until the initial load is successfully to retrieve the correct nodeID for the header -->
   <header class="template-header" *ngIf="initialLoadSuccessfully">
     <div class="template-header-wrapper">
       <div class="template-header-container">
@@ -16,7 +16,7 @@
           [contextNodeId]="topicCollectionID()"
           [defaultNodeId]="defaultTopicTextNodeId"
           [editMode]="editMode"
-          [nodeId]="headerNodeId?.includes(workspaceSpacesStorePrefix) ? headerNodeId.split('/')?.[headerNodeId.split('/').length - 1] : headerNodeId"
+          [nodeId]="headerNodeId()?.includes(workspaceSpacesStorePrefix) ? headerNodeId().split('/')?.[headerNodeId().split('/').length - 1] : headerNodeId()"
           [pageVariantNode]="pageVariantNode"
           [topic]="topic()"
         ></wlo-topic-header>
@@ -28,13 +28,40 @@
   <wlo-side-menu-wrapper position="left" *ngIf="userHasEditRights()">
     <ng-container slot="menu">
       <wlo-side-menu-item
+        *ngIf="pageVariantConfigs?.nodes?.length > 1"
+        position="left"
+        [icon]="'layers'"
+        [title]="'Switch variant'"
+        [matMenuTriggerFor]="menu"
+      ></wlo-side-menu-item>
+      <wlo-side-menu-item
         [attr.aria-label]="editMode ? 'Switch into preview mode' : 'Switch into edit mode'"
         color="primary"
         position="left"
         [title]="editMode ? actionItems.previewMode : actionItems.editMode"
         (itemClicked)="toggleEditMode()"
       ></wlo-side-menu-item>
+      <wlo-side-menu-item
+        *ngIf="collectionNodeHasPageConfig"
+        position="left"
+        [title]="'Neu'"
+        (itemClicked)="createPageVariant()"
+      ></wlo-side-menu-item>
     </ng-container>
+    <!-- Note: [xPosition]="'after'" might not work due to absolute positioning of the side-menu -->
+    <mat-menu #menu="matMenu">
+      <ng-container *ngIf="pageVariantConfigs?.nodes?.length > 0">
+        <button
+          *ngFor="let variant of pageVariantConfigs.nodes; let i = index"
+          mat-menu-item
+          [disabled]="variant.ref.id === pageVariantNode.ref.id"
+          (click)="navigateToVariant(variant.ref.id)"
+        >
+          <i esIcon="check" *ngIf="variant.ref.id === pageVariantNode.ref.id"></i>
+          Seiten-Variante {{ i + 1 }}
+        </button>
+      </ng-container>
+    </mat-menu>
   </wlo-side-menu-wrapper>
 
   <!-- RIGHT SIDE MENU WITH MULTIPLE COLLAPSIBLE ITEMS -->
@@ -61,15 +88,16 @@
       ></wlo-side-menu-item>
     </ng-container>
     <ng-container slot="content">
-      <!-- Note: Multiple wlo-filter-bar items will overwrite each other -->
-      <!-- Workaround: -->
-      <!-- * use *ngIf to delay the initialization -->
-      <!-- * use [hidden] to still load it in the background -->
-      <div [hidden]="selectedMenuItem !== menuItems.profiling" *ngIf="initialLoadSuccessfully">
+      <!-- Note: Multiple wlo-filter-bar items would overwrite each other, -->
+      <!--       so either avoid adding multiple instances or find a suitable solution -->
+      <!--       A workaround using a delay conflicts with the variant selection -->
+      <!-- [hidden] is used to load the component, even when the menu item is not selected -->
+      <!-- This is important to successfully read the selectedDimensionValueIds -->
+      <div [hidden]="selectedMenuItem !== menuItems.profiling">
         <h2 class="side-menu-header mat-display-small">Wer bist du?</h2>
         <wlo-filter-bar
           alignment="vertical"
-          [requestInProgress]="requestInProgress"
+          [requestInProgress]="requestInProgress()"
           [manualApplyAndResetButtons]="true"
           [metadataSetName]="defaultMds"
           [selectDimensionKeysOfInterest]="profilingFilterbarDimensionKeys"
@@ -120,14 +148,14 @@
               <ng-container *ngIf="userHasEditRights()">
                 <!-- border with button to add a swimlane -->
                 <app-add-swimlane-border-button
-                  [requestInProgress]="requestInProgress"
+                  [requestInProgress]="requestInProgress()"
                   (addSwimlaneTriggered)="addSwimlane($event, i)"
                   *ngIf="editMode"
                 ></app-add-swimlane-border-button>
                 <!-- special case for last element -->
                 <app-add-swimlane-border-button
                   position="bottom"
-                  [requestInProgress]="requestInProgress"
+                  [requestInProgress]="requestInProgress()"
                   (addSwimlaneTriggered)="addSwimlane($event, i + 1)"
                   *ngIf="editMode && i === swimlanes.length - 1"
                 ></app-add-swimlane-border-button>
@@ -137,7 +165,7 @@
                   <button
                     mat-mini-fab
                     class="action-btn"
-                    [disabled]="i === 0 || requestInProgress"
+                    [disabled]="i === 0 || requestInProgress()"
                     (click)="moveSwimlanePosition(i, i - 1)"
                     aria-label="Move swimlane upwards"
                   >
@@ -146,7 +174,7 @@
                   <button
                     mat-mini-fab
                     class="action-btn"
-                    [disabled]="i === swimlanes.length - 1 || requestInProgress"
+                    [disabled]="i === swimlanes.length - 1 || requestInProgress()"
                     (click)="moveSwimlanePosition(i, i + 1)"
                     aria-label="Move swimlane downwards"
                   >
@@ -158,7 +186,7 @@
                   <button
                     mat-mini-fab
                     class="action-btn btn-modify"
-                    [disabled]="requestInProgress"
+                    [disabled]="requestInProgress()"
                     (click)="editSwimlane(swimlane, i)"
                     aria-label="Edit swimlane"
                   >
@@ -167,7 +195,7 @@
                   <button
                     mat-mini-fab
                     class="action-btn"
-                    [disabled]="requestInProgress"
+                    [disabled]="requestInProgress()"
                     (click)="deleteSwimlane(i)"
                     aria-label="Delete swimlane"
                   >

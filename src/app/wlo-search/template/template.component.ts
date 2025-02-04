@@ -2,16 +2,18 @@ import { CdkAccordionItem } from '@angular/cdk/accordion';
 import { CdkDragHandle, moveItemInArray } from '@angular/cdk/drag-drop';
 import {
     Component,
+    computed,
     HostBinding,
     OnInit,
     QueryList,
+    Signal,
     signal,
     ViewChildren,
     WritableSignal,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarRef, TextOnlySnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
     ApiRequestConfiguration,
     AuthenticationService,
@@ -126,6 +128,7 @@ export class TemplateComponent implements OnInit {
         private dialog: MatDialog,
         private nodeApi: NodeService,
         private route: ActivatedRoute,
+        private router: Router,
         private searchService: SearchService,
         private snackbar: MatSnackBar,
         private viewService: ViewService,
@@ -134,8 +137,8 @@ export class TemplateComponent implements OnInit {
     @HostBinding('style.--topic-color') topicColor: string = initialTopicColor;
     @ViewChildren('accordionItem') accordions: QueryList<CdkAccordionItem>;
 
-    initialLoadSuccessfully: boolean = false;
-    requestInProgress: boolean = false;
+    initialLoadSuccessfully: WritableSignal<boolean> = signal(false);
+    requestInProgress: WritableSignal<boolean> = signal(false);
     private initializedWithParams: boolean = false;
 
     userHasEditRights: WritableSignal<boolean> = signal(false);
@@ -145,16 +148,21 @@ export class TemplateComponent implements OnInit {
     topicCollectionID: WritableSignal<string> = signal(null);
 
     private collectionNode: Node;
-    private collectionNodeHasPageConfig: boolean = false;
-    headerNodeId: string;
+    collectionNodeHasPageConfig: boolean = false;
+    headerNodeId: WritableSignal<string> = signal(null);
     private pageConfigNode: Node;
-    pageConfigCheckFailed: boolean = false;
-    private pageVariantConfigs: NodeEntries;
+    pageConfigCheckFailed: WritableSignal<boolean> = signal(false);
+    pageVariantConfigs: NodeEntries;
     private pageVariantDefaultPosition: number = -1;
     pageVariantNode: Node;
     private selectedVariantPosition: number = -1;
-    topicWidgets: NodeEntries;
+    showLoadingScreen: Signal<boolean> = computed(
+        (): boolean =>
+            !this.pageConfigCheckFailed() &&
+            (!this.initialLoadSuccessfully() || this.requestInProgress()),
+    );
     swimlanes: Swimlane[] = [];
+    topicWidgets: NodeEntries;
 
     latestParams: Params;
     selectDimensions: Map<string, MdsWidget> = new Map<string, MdsWidget>();
@@ -163,7 +171,7 @@ export class TemplateComponent implements OnInit {
 
     selectedMenuItem: string = '';
     actionItems = {
-        editMode: 'Bearbeitungsmodus',
+        editMode: 'Seite bearbeiten',
         previewMode: 'Zurück zur Vorschau',
     };
 
@@ -204,22 +212,22 @@ export class TemplateComponent implements OnInit {
         this.apiRequestConfig.setLocale(initialLocaleString);
         // set the topic based on the query param "collectionID"
         this.route.queryParams
-            .pipe(filter((params) => params.topic || params.collectionId))
-            .subscribe(async (params) => {
+            .pipe(filter((params: Params) => params.collectionId))
+            .subscribe(async (params: Params): Promise<void> => {
                 this.latestParams = params;
-                // due to reconnect with queryParams, this might be called twice, thus, initializedWithParams is important
+                // due to reload with queryParams, this might be called twice, thus, initializedWithParams is important
                 if (params.collectionId && !this.initializedWithParams) {
                     // set the topicCollectionID
                     this.topicCollectionID.set(params.collectionId);
                     this.initializedWithParams = true;
-                    // 0) login for local development
+                    // login for local development
                     const username = environment?.eduSharingUsername;
                     const password = environment?.eduSharingPassword;
                     // TODO: This fix for local development currently only works in Firefox
                     if (username && password) {
                         await firstValueFrom(this.authService.login(username, password));
                     }
-                    // 1) fetch the collection node to set the topic name, color and check the user access
+                    // fetch the collection node to set the topic name, color and check the user access
                     this.collectionNode = await firstValueFrom(
                         this.nodeApi.getNode(params.collectionId),
                     );
@@ -231,169 +239,196 @@ export class TemplateComponent implements OnInit {
                     }
                     // TODO: use a color from the palette defined in the collection
                     // set the background to some random (but deterministic) color, just for visuals
-                    let topicColor: string = this.stringToColour(this.topic());
+                    this.setTopicColor();
 
-                    // TODO: later, this will be stored as variable that can be changed by the user
-                    // check, if dark mode is preferred (https://stackoverflow.com/a/57795495)
-                    if (
-                        window.matchMedia &&
-                        window.matchMedia('(prefers-color-scheme: dark)').matches
-                    ) {
-                        // check, if the color is too light
-                        // https://stackoverflow.com/a/12043228
-                        const c: string = topicColor.substring(1); // strip #
-                        const rgb: number = parseInt(c, 16); // convert rrggbb to decimal
-                        const r: number = (rgb >> 16) & 0xff; // extract red
-                        const g: number = (rgb >> 8) & 0xff; // extract green
-                        const b: number = (rgb >> 0) & 0xff; // extract blue
+                    // retrieve the page config node and select the proper variant to define the headerNodeId + swimlanes
+                    await this.retrievePageConfigAndSelectVariant(params.variantId);
 
-                        const luma: number = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
-                        if (luma > 100) {
-                            // darken the color (https://stackoverflow.com/a/13532993)
-                            topicColor = this.shadeColor(topicColor, -60);
-                        }
-                    }
-                    this.topicColor = topicColor;
+                    // initial load finished (page structure loaded)
+                    this.initialLoadSuccessfully.set(true);
 
-                    // 2) retrieve the page config node either by checking the node itself or by iterating the parents of the collectionNode
-                    this.pageConfigNode = await this.retrievePageConfigNode(this.collectionNode);
-                    if (!this.pageConfigNode) {
-                        return;
-                    }
-                    // parse the page config from the properties
-                    const pageConfig: PageConfig = this.pageConfigNode.properties[
-                        pageConfigType
-                    ]?.[0]
-                        ? JSON.parse(this.pageConfigNode.properties[pageConfigType][0])
-                        : {};
-                    if (!pageConfig.variants) {
-                        console.error('pageConfig does not include variants', pageConfig);
-                        return;
-                    }
-                    this.pageVariantConfigs = await this.getNodeChildren(
-                        this.pageConfigNode.ref.id,
-                    );
-                    // default the ID with the default or the first occurrence
-                    this.pageVariantDefaultPosition = pageConfig.variants.indexOf(
-                        pageConfig.default,
-                    );
-                    let selectedVariantId = pageConfig.default ?? pageConfig.variants[0];
-                    selectedVariantId =
-                        selectedVariantId.split('/')?.[selectedVariantId.split('/').length - 1];
-                    // iterate variant configs and check, whether the variables of one occurrence match
-                    let highestNumberOfMatches: number = 0;
-                    this.pageVariantConfigs.nodes?.forEach((variantNode: Node) => {
-                        const variantConfig: PageVariantConfig = variantNode.properties[
-                            pageVariantConfigType
-                        ]?.[0]
-                            ? JSON.parse(variantNode.properties[pageVariantConfigType][0])
-                            : {};
-                        if (variantConfig.variables) {
-                            let matchesCount: number = 0;
-                            Object.keys(variantConfig.variables)?.forEach((key: string) => {
-                                // TODO: Replace by a more consistent check of both key and value
-                                if (
-                                    this.selectedDimensionValueIds.includes(
-                                        variantConfig.variables[key],
-                                    )
-                                ) {
-                                    matchesCount += 1;
-                                }
-                            });
-                            // select the variant with the most matches
-                            if (matchesCount > highestNumberOfMatches) {
-                                selectedVariantId = variantNode.ref.id;
-                            }
-                        }
-                    });
-                    this.selectedVariantPosition = pageConfig.variants.indexOf(
-                        workspaceSpacesStorePrefix + selectedVariantId,
-                    );
-                    // 3) retrieve the variant config node of the page
-                    this.pageVariantNode = this.pageVariantConfigs.nodes?.find(
-                        (node: Node) => node.ref.id === selectedVariantId,
-                    );
-                    const pageVariant: PageVariantConfig = this.pageVariantNode.properties[
-                        pageVariantConfigType
-                    ]?.[0]
-                        ? JSON.parse(this.pageVariantNode.properties[pageVariantConfigType][0])
-                        : {};
-                    if (!pageVariant.structure) {
-                        console.error(
-                            'No structure was found in pageVariant',
-                            this.pageVariantNode,
-                        );
-                        return;
-                    }
-                    // 4) if page config was retrieved from parent,
-                    //    remove possible existing nodeIds from swimlane grids
-                    if (!this.collectionNode.properties[pageConfigRefType]?.[0]) {
-                        this.removeNodeIdsFromPageVariantConfig(pageVariant);
-                    }
-                    // 5) set the headerNodeId + swimlanes
-                    this.headerNodeId = pageVariant.structure.headerNodeId;
-                    this.swimlanes = pageVariant.structure.swimlanes ?? [];
-                    // 6) initial load finished (page structure loaded)
-                    this.initialLoadSuccessfully = true;
-
-                    // (7) post-load the statistics
-                    // retrieve the learning resource types for the statistics
-                    for (const statistic of this.statistics) {
-                        await this.retrieveAndSetLrtVocab(statistic);
-                    }
-                    // request the references of the collection (retrieved from wirlernenonline-theme/page-templates/template_themenseite.php L.135)
-                    const referenceEntries: ReferenceEntries = await firstValueFrom(
-                        this.collectionService.getReferences({
-                            repository: HOME_REPOSITORY,
-                            collection: params.collectionId,
-                            sortProperties: ['ccm:collection_ordered_position'],
-                            sortAscending: [true],
-                        }),
-                    );
-                    // filter out deleted references
-                    const nonDeletedReferences: CollectionReference[] =
-                        referenceEntries.references.filter(
-                            (ref: CollectionReference) => !!ref.originalId,
-                        );
-                    // post process those
-                    this.statistics.forEach((statistic: StatisticChart) => {
-                        const filteredReferences: CollectionReference[] = this.filterContents(
-                            nonDeletedReferences,
-                            statistic.vocab,
-                        );
-                        statistic.data.editorialCount = filteredReferences.length;
-                        statistic.data.oerCount =
-                            filteredReferences.filter((ref: CollectionReference) => this.isOer(ref))
-                                ?.length ?? 0;
-                    });
-
-                    // subscribe to facets right before performing the search request to avoid conflicts with the user-configurable
-                    this.facets$.subscribe();
-                    // perform search to retrieve the number of search results
-                    const searchResult: SearchResultNode = await this.performSearch(this.topic());
-                    this.searchResultCount = searchResult.pagination.total;
-
-                    // use facets to retrieve the number of items for different learning resource types
-                    const facets: Value[] =
-                        searchResult.facets?.find((facet: Facet) => facet.property === defaultLrt)
-                            ?.values ?? [];
-                    this.statistics.forEach((statistic: StatisticChart) => {
-                        let count: number = 0;
-                        facets.forEach((facet: Value) => {
-                            if (statistic.vocab.includes(facet.value)) {
-                                count += facet.count;
-                            }
-                        });
-                        statistic.data.totalCount = count;
-                        // TODO: This is caused by the use of different methods to calculate these counts.
-                        //       This workaround should not be necessary, if a reliable solution does exist.
-                        if (statistic.data.totalCount < statistic.data.editorialCount) {
-                            statistic.data.totalCount = statistic.data.editorialCount;
-                        }
-                    });
-                    this.statisticsLoaded = true;
+                    // post-load the statistics
+                    await this.postLoadStatistics(params.collectionId);
                 }
             });
+    }
+
+    /**
+     * Helper function to retrieve a background color for the topic (and invert it for dark mode, if necessary).
+     */
+    private setTopicColor(): void {
+        let topicColor: string = this.stringToColour(this.topic());
+
+        // TODO: later, this will be stored as variable that can be changed by the user
+        // check, if dark mode is preferred (https://stackoverflow.com/a/57795495)
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            // check, if the color is too light
+            // https://stackoverflow.com/a/12043228
+            const c: string = topicColor.substring(1); // strip #
+            const rgb: number = parseInt(c, 16); // convert rrggbb to decimal
+            const r: number = (rgb >> 16) & 0xff; // extract red
+            const g: number = (rgb >> 8) & 0xff; // extract green
+            const b: number = (rgb >> 0) & 0xff; // extract blue
+
+            const luma: number = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
+            if (luma > 100) {
+                // darken the color (https://stackoverflow.com/a/13532993)
+                topicColor = this.shadeColor(topicColor, -60);
+            }
+        }
+        this.topicColor = topicColor;
+    }
+
+    /**
+     * Helper function to retrieve the page config node, select the proper variant and define the headerNodeId + swimlanes.
+     *
+     * @param variantId
+     */
+    private async retrievePageConfigAndSelectVariant(variantId?: string): Promise<void> {
+        // retrieve the page config node either by checking the node itself or by iterating the parents of the collectionNode
+        if (!this.pageConfigNode?.ref.id) {
+            this.pageConfigNode = await this.retrievePageConfigNode(this.collectionNode);
+            if (!this.pageConfigNode) {
+                return;
+            }
+        }
+        // parse the page config from the properties
+        const pageConfig: PageConfig = this.pageConfigNode.properties[pageConfigType]?.[0]
+            ? JSON.parse(this.pageConfigNode.properties[pageConfigType][0])
+            : {};
+        if (!pageConfig.variants) {
+            console.error('pageConfig does not include variants', pageConfig);
+            return;
+        }
+        // retrieve the page variant configs
+        if (!this.pageVariantConfigs) {
+            this.pageVariantConfigs = await this.getNodeChildren(this.pageConfigNode.ref.id);
+        }
+        // default the ID with the default or the first occurrence
+        this.pageVariantDefaultPosition = pageConfig.variants.indexOf(pageConfig.default);
+        // select the proper variant (initialize with default or first variant)
+        let selectedVariantId: string = pageConfig.default ?? pageConfig.variants[0];
+        selectedVariantId = selectedVariantId.split('/')?.[selectedVariantId.split('/').length - 1];
+        // if a variantId is provided, override it
+        if (variantId) {
+            selectedVariantId = variantId;
+        }
+        // otherwise, iterate the variant configs and select the one with the most matching variables
+        else {
+            let highestNumberOfMatches: number = 0;
+            this.pageVariantConfigs.nodes?.forEach((variantNode: Node) => {
+                const variantConfig: PageVariantConfig = variantNode.properties[
+                    pageVariantConfigType
+                ]?.[0]
+                    ? JSON.parse(variantNode.properties[pageVariantConfigType][0])
+                    : {};
+                if (variantConfig.variables) {
+                    let matchesCount: number = 0;
+                    Object.keys(variantConfig.variables)?.forEach((key: string) => {
+                        // TODO: Replace by a more consistent check of both key and value
+                        if (this.selectedDimensionValueIds.includes(variantConfig.variables[key])) {
+                            matchesCount += 1;
+                        }
+                    });
+                    // select the variant with the most matches
+                    if (matchesCount > highestNumberOfMatches) {
+                        selectedVariantId = variantNode.ref.id;
+                    }
+                }
+            });
+        }
+        // hold the position of the selected variant for later retrieval
+        const newSelectedVariantPosition: number = pageConfig.variants.indexOf(
+            workspaceSpacesStorePrefix + selectedVariantId,
+        );
+        const initialLoad: boolean = this.selectedVariantPosition === -1;
+        const pageVariantChanged: boolean =
+            !initialLoad && newSelectedVariantPosition !== this.selectedVariantPosition;
+        // if the variant was not selected yet or was changed, reload the page structure
+        if (initialLoad || pageVariantChanged) {
+            this.selectedVariantPosition = newSelectedVariantPosition;
+            // retrieve the variant config node of the page
+            this.pageVariantNode = this.pageVariantConfigs.nodes?.find(
+                (node: Node) => node.ref.id === selectedVariantId,
+            );
+            const pageVariant: PageVariantConfig = this.pageVariantNode.properties[
+                pageVariantConfigType
+            ]?.[0]
+                ? JSON.parse(this.pageVariantNode.properties[pageVariantConfigType][0])
+                : {};
+            if (!pageVariant.structure) {
+                console.error('No structure was found in pageVariant', this.pageVariantNode);
+                return;
+            }
+            // if page config was retrieved from parent,
+            // remove possible existing nodeIds from swimlane grids
+            if (!this.collectionNode.properties[pageConfigRefType]?.[0]) {
+                this.removeNodeIdsFromPageVariantConfig(pageVariant);
+            }
+            // set the headerNodeId + swimlanes
+            this.headerNodeId.set(pageVariant.structure.headerNodeId);
+            this.swimlanes = pageVariant.structure.swimlanes ?? [];
+        }
+    }
+
+    /**
+     * Helper function to post-load the statistics for a given collection ID.
+     */
+    private async postLoadStatistics(collectionId: string): Promise<void> {
+        // retrieve the learning resource types for the statistics
+        for (const statistic of this.statistics) {
+            await this.retrieveAndSetLrtVocab(statistic);
+        }
+        // request the references of the collection (retrieved from wirlernenonline-theme/page-templates/template_themenseite.php L.135)
+        const referenceEntries: ReferenceEntries = await firstValueFrom(
+            this.collectionService.getReferences({
+                repository: HOME_REPOSITORY,
+                collection: collectionId,
+                sortProperties: ['ccm:collection_ordered_position'],
+                sortAscending: [true],
+            }),
+        );
+        // filter out deleted references
+        const nonDeletedReferences: CollectionReference[] = referenceEntries.references.filter(
+            (ref: CollectionReference) => !!ref.originalId,
+        );
+        // post process those
+        this.statistics.forEach((statistic: StatisticChart) => {
+            const filteredReferences: CollectionReference[] = this.filterContents(
+                nonDeletedReferences,
+                statistic.vocab,
+            );
+            statistic.data.editorialCount = filteredReferences.length;
+            statistic.data.oerCount =
+                filteredReferences.filter((ref: CollectionReference) => this.isOer(ref))?.length ??
+                0;
+        });
+
+        // subscribe to facets right before performing the search request to avoid conflicts with the user-configurable
+        this.facets$.subscribe();
+        // perform search to retrieve the number of search results
+        const searchResult: SearchResultNode = await this.performSearch(this.topic());
+        this.searchResultCount = searchResult.pagination.total;
+
+        // use facets to retrieve the number of items for different learning resource types
+        const facets: Value[] =
+            searchResult.facets?.find((facet: Facet) => facet.property === defaultLrt)?.values ??
+            [];
+        this.statistics.forEach((statistic: StatisticChart) => {
+            let count: number = 0;
+            facets.forEach((facet: Value) => {
+                if (statistic.vocab.includes(facet.value)) {
+                    count += facet.count;
+                }
+            });
+            statistic.data.totalCount = count;
+            // TODO: This is caused by the use of different methods to calculate these counts.
+            //       This workaround should not be necessary, if a reliable solution does exist.
+            if (statistic.data.totalCount < statistic.data.editorialCount) {
+                statistic.data.totalCount = statistic.data.editorialCount;
+            }
+        });
+        this.statisticsLoaded = true;
     }
 
     /**
@@ -573,7 +608,7 @@ export class TemplateComponent implements OnInit {
                         // modify header nodeId
                         if (isHeaderNode) {
                             pageVariant.structure.headerNodeId = convertedWidgetNodeId;
-                            this.headerNodeId = pageVariant.structure.headerNodeId;
+                            this.headerNodeId.set(pageVariant.structure.headerNodeId);
                             await this.setProperty(
                                 this.pageVariantNode.ref.id,
                                 pageVariantConfigType,
@@ -663,11 +698,11 @@ export class TemplateComponent implements OnInit {
             // workspace://SpacesStore/UUID -> UUID
             const pageNodeId: string = pageRef.split('/')?.[pageRef.split('/').length - 1];
             if (pageNodeId) {
-                this.pageConfigCheckFailed = false;
+                this.pageConfigCheckFailed.set(false);
                 return await firstValueFrom(this.nodeApi.getNode(pageNodeId));
             }
         }
-        this.pageConfigCheckFailed = true;
+        this.pageConfigCheckFailed.set(true);
         return null;
     }
 
@@ -784,6 +819,10 @@ export class TemplateComponent implements OnInit {
             }
         });
         this.selectedDimensionValues = selectedDimensionValues;
+        // if necessary, reload the pageVariants
+        if (this.initialLoadSuccessfully()) {
+            void this.retrievePageConfigAndSelectVariant(this.latestParams.variantId);
+        }
     }
 
     // MODIFICATIONS OF THE PAGE //
@@ -908,7 +947,7 @@ export class TemplateComponent implements OnInit {
             this.pageVariantConfigs = await this.getNodeChildren(this.pageConfigNode.ref.id);
             // parse the page config ref again
             const pageVariant: PageVariantConfig = this.retrievePageVariant();
-            this.headerNodeId = pageVariant.structure.headerNodeId;
+            this.headerNodeId.set(pageVariant.structure.headerNodeId);
             this.swimlanes = pageVariant.structure.swimlanes ?? [];
             // set ccm:page_config_ref in collection
             await firstValueFrom(
@@ -972,13 +1011,14 @@ export class TemplateComponent implements OnInit {
      * Adds a new swimlane to the page and persist it in the config.
      */
     async addSwimlane(newSwimlane: Swimlane, positionToAdd: number): Promise<void> {
-        this.requestInProgress = true;
+        // TODO: Move into shared function
+        this.requestInProgress.set(true);
         const toastContainer: MatSnackBarRef<TextOnlySnackBar> = this.openSaveConfigToast();
         await this.checkForCustomPageNodeExistence();
         const pageVariant: PageVariantConfig = this.retrievePageVariant();
         if (!pageVariant) {
             this.closeToastWithDelay(toastContainer);
-            this.requestInProgress = false;
+            this.requestInProgress.set(false);
         }
         const swimlanesCopy = JSON.parse(JSON.stringify(this.swimlanes ?? []));
         swimlanesCopy.splice(positionToAdd, 0, newSwimlane);
@@ -991,7 +1031,7 @@ export class TemplateComponent implements OnInit {
         // add swimlane visually as soon as the requests are done
         this.swimlanes.splice(positionToAdd, 0, newSwimlane);
         this.closeToastWithDelay(toastContainer);
-        this.requestInProgress = false;
+        this.requestInProgress.set(false);
     }
 
     /**
@@ -999,13 +1039,13 @@ export class TemplateComponent implements OnInit {
      */
     async moveSwimlanePosition(oldIndex: number, newIndex: number) {
         if (newIndex >= 0 && newIndex <= this.swimlanes.length - 1) {
-            this.requestInProgress = true;
+            this.requestInProgress.set(true);
             const toastContainer: MatSnackBarRef<TextOnlySnackBar> = this.openSaveConfigToast();
             await this.checkForCustomPageNodeExistence();
             const pageVariant: PageVariantConfig = this.retrievePageVariant();
             if (!pageVariant) {
                 this.closeToastWithDelay(toastContainer);
-                this.requestInProgress = false;
+                this.requestInProgress.set(false);
             }
             const swimlanesCopy = JSON.parse(JSON.stringify(this.swimlanes ?? []));
             moveItemInArray(swimlanesCopy, oldIndex, newIndex);
@@ -1018,7 +1058,7 @@ export class TemplateComponent implements OnInit {
             // move swimlane position visually as soon as the requests are done
             moveItemInArray(this.swimlanes, oldIndex, newIndex);
             this.closeToastWithDelay(toastContainer);
-            this.requestInProgress = false;
+            this.requestInProgress.set(false);
         }
     }
 
@@ -1029,13 +1069,13 @@ export class TemplateComponent implements OnInit {
      * @param swimlane
      */
     async swimlaneTitleChanged(title: string, swimlane: Swimlane) {
-        this.requestInProgress = true;
+        this.requestInProgress.set(true);
         const toastContainer: MatSnackBarRef<TextOnlySnackBar> = this.openSaveConfigToast();
         await this.checkForCustomPageNodeExistence();
         const pageVariant: PageVariantConfig = this.retrievePageVariant();
         if (!pageVariant) {
             this.closeToastWithDelay(toastContainer);
-            this.requestInProgress = false;
+            this.requestInProgress.set(false);
         }
         swimlane.heading = title;
         pageVariant.structure.swimlanes = this.swimlanes;
@@ -1045,7 +1085,7 @@ export class TemplateComponent implements OnInit {
             JSON.stringify(pageVariant),
         );
         this.closeToastWithDelay(toastContainer);
-        this.requestInProgress = false;
+        this.requestInProgress.set(false);
     }
 
     editSwimlane(swimlane: Swimlane, index: number) {
@@ -1075,13 +1115,13 @@ export class TemplateComponent implements OnInit {
                     console.log('DEBUG: Return, because no change was made.');
                     return;
                 }
-                this.requestInProgress = true;
+                this.requestInProgress.set(true);
                 const toastContainer: MatSnackBarRef<TextOnlySnackBar> = this.openSaveConfigToast();
                 await this.checkForCustomPageNodeExistence();
                 const pageVariant: PageVariantConfig = this.retrievePageVariant();
                 if (!pageVariant) {
                     this.closeToastWithDelay(toastContainer);
-                    this.requestInProgress = false;
+                    this.requestInProgress.set(false);
                 }
                 // create a copy of the swimlanes
                 const stringifiedSwimlanes: string = JSON.stringify(this.swimlanes ?? []);
@@ -1121,7 +1161,7 @@ export class TemplateComponent implements OnInit {
                 console.log('DEBUG: Overwrite swimlanes', pageVariant.structure.swimlanes);
                 this.swimlanes = pageVariant.structure.swimlanes;
                 this.closeToastWithDelay(toastContainer);
-                this.requestInProgress = false;
+                this.requestInProgress.set(false);
             }
             console.log('Closed', result?.value);
         });
@@ -1135,13 +1175,13 @@ export class TemplateComponent implements OnInit {
             this.swimlanes?.[index] &&
             confirm('Wollen Sie dieses Element wirklich löschen?') === true
         ) {
-            this.requestInProgress = true;
+            this.requestInProgress.set(true);
             const toastContainer: MatSnackBarRef<TextOnlySnackBar> = this.openSaveConfigToast();
             await this.checkForCustomPageNodeExistence();
             const pageVariant: PageVariantConfig = this.retrievePageVariant();
             if (!pageVariant) {
                 this.closeToastWithDelay(toastContainer);
-                this.requestInProgress = false;
+                this.requestInProgress.set(false);
             }
             // delete possible nodes defined in the swimlane
             // forEach does not support async / await
@@ -1173,12 +1213,106 @@ export class TemplateComponent implements OnInit {
             // delete swimlane visually as soon as the requests are done
             this.swimlanes.splice(index, 1);
             this.closeToastWithDelay(toastContainer);
-            this.requestInProgress = false;
+            this.requestInProgress.set(false);
         }
     }
 
     /**
-     * Helper function to remove possible existing nodeIds from page variant config.
+     * Creates a new page variant by cloning the currently selected one (without the node definitions) and navigates to it.
+     */
+    async createPageVariant(): Promise<void> {
+        if (
+            confirm(
+                'Wollen Sie wirklich auf Grundlage der Seiten-Struktur der aktuell gewählten Variante eine neue Seiten-Variante erstellen?',
+            )
+        ) {
+            // check for pageConfigNode existence
+            if (!this.pageConfigNode?.ref.id) {
+                return;
+            }
+            // parse the page config from the properties
+            const pageConfig: PageConfig = this.pageConfigNode.properties[pageConfigType]?.[0]
+                ? JSON.parse(this.pageConfigNode.properties[pageConfigType][0])
+                : {};
+            // check for pageConfig variant existence
+            if (!pageConfig.variants) {
+                console.error('pageConfig does not include variants', pageConfig);
+                return;
+            }
+            // retrieve variant node
+            const currentPageVariantId: string = pageConfig.variants[this.selectedVariantPosition];
+            const variantNode: Node = this.pageVariantConfigs.nodes?.find((node) =>
+                currentPageVariantId.includes(node.ref.id),
+            );
+            if (!variantNode) {
+                return;
+            }
+            // create child for variant node
+            this.requestInProgress.set(true);
+            const toastContainer: MatSnackBarRef<TextOnlySnackBar> = this.openSaveConfigToast(
+                'Eine neue Seiten-Variante wird erstellt und geladen.',
+            );
+            let pageConfigVariantNode: Node = await this.createChild(
+                this.pageConfigNode.ref.id,
+                ioType,
+                pageVariantConfigPrefix + uuidv4(),
+                pageVariantConfigAspect,
+            );
+            // push it to the existing variants
+            pageConfig.variants.push(workspaceSpacesStorePrefix + pageConfigVariantNode.ref.id);
+            // parse variant config and remove node IDs
+            const variantConfig: PageVariantConfig = variantNode.properties[
+                pageVariantConfigType
+            ]?.[0]
+                ? JSON.parse(variantNode.properties[pageVariantConfigType][0])
+                : {};
+            this.removeNodeIdsFromPageVariantConfig(variantConfig);
+            // set properties of the created child
+            await this.setProperty(
+                pageConfigVariantNode.ref.id,
+                pageVariantConfigType,
+                JSON.stringify(variantConfig),
+            );
+            await this.setProperty(
+                pageConfigVariantNode.ref.id,
+                pageVariantIsTemplateType,
+                'false',
+            );
+            // update ccm:page_config of page config node
+            this.pageConfigNode = await this.setPropertyAndRetrieveUpdatedNode(
+                this.pageConfigNode.ref.id,
+                pageConfigType,
+                JSON.stringify(pageConfig),
+            );
+            // reload page variant configs
+            this.pageVariantConfigs = await this.getNodeChildren(this.pageConfigNode.ref.id);
+            // navigate to the newly created variant
+            await this.navigateToVariant(pageConfigVariantNode.ref.id);
+            this.closeToastWithDelay(toastContainer);
+            this.requestInProgress.set(false);
+        }
+    }
+
+    /**
+     * Navigates to a given variantId and reload the page structure accordingly.
+     *
+     * @param variantId
+     */
+    async navigateToVariant(variantId: string): Promise<void> {
+        const queryParamsToAddOrOverwrite: Params = {
+            variantId: variantId,
+        };
+        await this.router.navigate([], {
+            relativeTo: this.route,
+            queryParams: queryParamsToAddOrOverwrite,
+            queryParamsHandling: 'merge',
+        });
+        // retrieve the page config node and select the proper variant to define the headerNodeId + swimlanes
+        await this.retrievePageConfigAndSelectVariant(variantId);
+    }
+
+    /**
+     * Helper function to remove possible existing headerNodeId + nodeIds from page variant config.
      */
     private removeNodeIdsFromPageVariantConfig(pageVariant: PageVariantConfig): void {
         pageVariant.structure.swimlanes?.forEach((swimlane: Swimlane) => {
@@ -1188,6 +1322,9 @@ export class TemplateComponent implements OnInit {
                 }
             });
         });
+        if (pageVariant.structure.headerNodeId) {
+            delete pageVariant.structure.headerNodeId;
+        }
     }
 
     /**
@@ -1240,8 +1377,9 @@ export class TemplateComponent implements OnInit {
     /**
      * Helper function to open a toast for indicating that the config is being saved.
      */
-    openSaveConfigToast(): MatSnackBarRef<TextOnlySnackBar> {
-        return this.snackbar?.open(this.SAVE_CONFIG_MESSAGE, this.SAVE_CONFIG_ACTION);
+    openSaveConfigToast(message?: string): MatSnackBarRef<TextOnlySnackBar> {
+        const toastMessage: string = message ? message : this.SAVE_CONFIG_MESSAGE;
+        return this.snackbar?.open(toastMessage, this.SAVE_CONFIG_ACTION);
     }
 
     /**
