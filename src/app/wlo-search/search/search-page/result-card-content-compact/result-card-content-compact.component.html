@@ -10,10 +10,12 @@
 </mat-card-header>
 <mat-card-content>
   <div class="main-content-row">
+    <!-- second onClick() call is currently necessary in compact result card to work properly -->
     <app-preview-image
       class="thumbnail"
       [previewImage]="hit.preview"
       objectFit="cover"
+      (click)="onClick()"
     ></app-preview-image>
     <p class="editorial-hint" *ngIf="hit | inCollectionWithType: 'EDITORIAL'">
       <ng-container i18n>Recommended by editorial team</ng-container>
