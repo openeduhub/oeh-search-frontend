@@ -119,7 +119,7 @@
       <ng-container *ngIf="selectedMenuItem === menuItems.statistics">
         <h2 class="side-menu-header mat-display-small">Inhalte von {{ topic() }}</h2>
         <wlo-statistics-summary
-          *ngIf="statisticsLoaded; else loadingIndicator"
+          *ngIf="statisticsLoaded(); else loadingIndicator"
           [searchResultCount]="searchResultCount"
           [searchUrl]="searchUrl"
           [statistics]="statistics"

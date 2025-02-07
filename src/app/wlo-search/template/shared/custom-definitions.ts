@@ -1,4 +1,5 @@
 import type { Node } from 'ngx-edu-sharing-api';
+import { StatisticChart } from 'ngx-edu-sharing-wlo-pages';
 import { SelectOption } from './types/select-option';
 
 export const defaultLrt: string = 'ccm:oeh_lrt';
@@ -52,6 +53,10 @@ export const lrtIdsTools: string[] = [
 
 export const mapType: string = 'ccm:map';
 
+export const nodeLicenseKey: string = 'ccm:commonlicense_key';
+
+export const oerLicenses: string[] = ['CC_0', 'CC_BY', 'CC_BY_SA', 'PDM'];
+
 export const pageConfigAspect: string = 'ccm:page';
 
 export const pageConfigPrefix: string = 'PAGE_';
@@ -99,6 +104,16 @@ export const retrieveCustomUrl = (node: Node): string => {
     }
     return '';
 };
+
+// TODO: find better option for line breaks than <br>
+export const statistics: StatisticChart[] = [
+    new StatisticChart('Medien', 'collections', lrtIdsMedia),
+    new StatisticChart('Unterrichts<br>planung', 'import_contacts', lrtIdsLessonPlanning),
+    new StatisticChart('Praxis<br>materialien', 'sentiment_satisfied_alt', lrtIdsPracticeMaterials),
+    new StatisticChart('Quellen', 'language', lrtIdsSources),
+    new StatisticChart('Tools', 'home_repair_service', lrtIdsTools),
+    new StatisticChart('Bildungs<br>angebote', 'school', lrtIdsEvents),
+];
 
 export const swimlaneGridOptions: SelectOption[] = [
     {
