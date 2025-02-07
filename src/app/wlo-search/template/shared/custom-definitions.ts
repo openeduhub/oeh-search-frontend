@@ -1,5 +1,5 @@
-import { SelectOption } from './swimlane/swimlane-settings-dialog/select-option';
 import type { Node } from 'ngx-edu-sharing-api';
+import { SelectOption } from './types/select-option';
 
 export const defaultLrt: string = 'ccm:oeh_lrt';
 

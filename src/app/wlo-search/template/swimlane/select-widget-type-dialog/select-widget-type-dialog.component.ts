@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { EduSharingUiCommonModule } from 'ngx-edu-sharing-ui';
 import { SharedModule } from '../../../shared/shared.module';
-import { widgetTypeOptions } from '../../custom-definitions';
-import { GridTile } from '../grid-tile';
-import { SelectOption } from '../swimlane-settings-dialog/select-option';
+import { widgetTypeOptions } from '../../shared/custom-definitions';
+import { GridTile } from '../../shared/types/grid-tile';
+import { SelectOption } from '../../shared/types/select-option';
 
 @Component({
     selector: 'app-select-widget-type-dialog',

@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { v4 as uuidv4 } from 'uuid';
 import { SharedModule } from '../../shared/shared.module';
-import { swimlaneGridOptions, swimlaneTypeOptions } from '../custom-definitions';
-import { GridTile } from '../swimlane/grid-tile';
-import { SelectOption } from '../swimlane/swimlane-settings-dialog/select-option';
-import { Swimlane } from '../swimlane/swimlane';
+import { swimlaneGridOptions, swimlaneTypeOptions } from '../shared/custom-definitions';
+import { GridTile } from '../shared/types/grid-tile';
+import { SelectOption } from '../shared/types/select-option';
+import { Swimlane } from '../shared/types/swimlane';
 
 @Component({
     standalone: true,

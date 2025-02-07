@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
-import { Collection } from '../../../core/edu-sharing.service';
-import { retrieveCustomUrl } from '../../../template/custom-definitions';
 import { Node } from 'ngx-edu-sharing-api';
+import { Collection } from '../../../core/edu-sharing.service';
+import { retrieveCustomUrl } from '../../../template/shared/custom-definitions';
 
 @Component({
     selector: 'app-collection-card',

@@ -5,7 +5,7 @@ import { Node } from 'ngx-edu-sharing-api';
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { environment } from '../../../../../environments/environment';
-import { reportProblemItemKey } from '../../../template/custom-definitions';
+import { reportProblemItemKey } from '../../../template/shared/custom-definitions';
 import { WrappedResponse, wrapResponse } from '../wrap-observable.pipe';
 import { ReportProblemComponent } from './report-problem.component';
 

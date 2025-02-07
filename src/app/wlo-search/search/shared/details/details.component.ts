@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ConfigService } from '../../../core/config.service';
 import { PageModeService } from '../../../core/page-mode.service';
-import { reportProblemItemKey } from '../../../template/custom-definitions';
+import { reportProblemItemKey } from '../../../template/shared/custom-definitions';
 import { getCollectionProperty } from '../collection-property.pipe';
 import {
     ReportProblemService,

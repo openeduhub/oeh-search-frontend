@@ -9,12 +9,12 @@ import {
 } from '@angular/core';
 import { MdsValue, MdsWidget, Node, NodeEntries } from 'ngx-edu-sharing-api';
 import { SharedModule } from '../../shared/shared.module';
-import { widgetTypeOptions, workspaceSpacesStorePrefix } from '../custom-definitions';
+import { widgetTypeOptions, workspaceSpacesStorePrefix } from '../shared/custom-definitions';
+import { GridTile } from '../shared/types/grid-tile';
+import { SelectOption } from '../shared/types/select-option';
 import { ConfigureGridDialogComponent } from './configure-grid-dialog/configure-grid-dialog.component';
-import { GridTile } from './grid-tile';
 import { GridWidgetComponent } from './grid-widget/grid-widget.component';
 import { SelectWidgetTypeDialogComponent } from './select-widget-type-dialog/select-widget-type-dialog.component';
-import { SelectOption } from './swimlane-settings-dialog/select-option';
 
 @Component({
     selector: 'app-swimlane',

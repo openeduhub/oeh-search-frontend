@@ -1,4 +1,4 @@
-import { Swimlane } from './swimlane/swimlane';
+import { Swimlane } from './swimlane';
 
 export interface PageStructure {
     headerNodeId?: string;

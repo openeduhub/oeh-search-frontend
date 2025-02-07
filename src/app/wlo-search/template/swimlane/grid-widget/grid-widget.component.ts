@@ -14,7 +14,7 @@ import {
     defaultUserConfigurableNodeId,
     parentWidgetConfigNodeId,
     retrieveCustomUrl,
-} from '../../custom-definitions';
+} from '../../shared/custom-definitions';
 
 @Component({
     selector: 'app-grid-widget',

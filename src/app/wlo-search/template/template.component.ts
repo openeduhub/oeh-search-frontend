@@ -12,7 +12,12 @@ import {
     WritableSignal,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar, MatSnackBarRef, TextOnlySnackBar } from '@angular/material/snack-bar';
+import {
+    MatSnackBar,
+    MatSnackBarConfig,
+    MatSnackBarRef,
+    TextOnlySnackBar,
+} from '@angular/material/snack-bar';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
     ApiRequestConfiguration,
@@ -84,11 +89,12 @@ import {
     profilingFilterbarDimensionKeys,
     widgetConfigAspect,
     workspaceSpacesStorePrefix,
-} from './custom-definitions';
-import { PageConfig } from './page-config';
-import { PageVariantConfig } from './page-variant-config';
-import { GridTile } from './swimlane/grid-tile';
-import { Swimlane } from './swimlane/swimlane';
+} from './shared/custom-definitions';
+import { GridTile } from './shared/types/grid-tile';
+import { PageConfig } from './shared/types/page-config';
+import { PageVariantConfig } from './shared/types/page-variant-config';
+import { Swimlane } from './shared/types/swimlane';
+import { getTopicColor } from './shared/utils/template-util';
 import { SwimlaneComponent } from './swimlane/swimlane.component';
 import { SwimlaneSettingsDialogComponent } from './swimlane/swimlane-settings-dialog/swimlane-settings-dialog.component';
 
@@ -120,6 +126,9 @@ export class TemplateComponent implements OnInit {
         .pipe(shareReplay(1));
     private readonly SAVE_CONFIG_ACTION: string = 'Schließen';
     private readonly SAVE_CONFIG_MESSAGE: string = 'Ihre Änderungen werden gespeichert.';
+    private readonly SAVE_CONFIG_ERROR_ACTION: string = 'Seite neuladen';
+    private readonly SAVE_CONFIG_ERROR_MESSAGE: string =
+        'Beim Laden einer Ressource ist ein Fehler aufgetreten. Bitte laden Sie die Seite neu.';
 
     constructor(
         private apiRequestConfig: ApiRequestConfiguration,
@@ -201,10 +210,17 @@ export class TemplateComponent implements OnInit {
     ];
     statisticsLoaded: boolean = false;
 
+    /**
+     * Returns an array of IDs of currently selected dimension values (output by wlo-filter-bar).
+     */
     private get selectedDimensionValueIds(): string[] {
         return this.selectedDimensionValues.map((value: MdsValue) => value.id);
     }
 
+    /**
+     * Initializes the component by setting general defaults and retrieving the collection node,
+     * page config and statistics.
+     */
     async ngOnInit(): Promise<void> {
         // retrieve the search URL
         this.searchUrl = this.retrieveSearchUrl();
@@ -227,58 +243,37 @@ export class TemplateComponent implements OnInit {
                     if (username && password) {
                         await firstValueFrom(this.authService.login(username, password));
                     }
-                    // fetch the collection node to set the topic name, color and check the user access
-                    this.collectionNode = await firstValueFrom(
-                        this.nodeApi.getNode(params.collectionId),
-                    );
-                    this.topic.set(this.collectionNode.title);
-                    // check the user privileges for the collection node and initialize custom listeners
-                    this.checkUserAccess(this.collectionNode);
-                    if (this.userHasEditRights()) {
-                        this.initializeCustomEventListeners();
+                    try {
+                        // fetch the collection node to set the topic name, color and check the user access
+                        this.collectionNode = await firstValueFrom(
+                            this.nodeApi.getNode(params.collectionId),
+                        );
+                        this.topic.set(this.collectionNode.title);
+                        // check the user privileges for the collection node and initialize custom listeners
+                        this.checkUserAccess(this.collectionNode);
+                        if (this.userHasEditRights()) {
+                            this.initializeCustomEventListeners();
+                        }
+                        // TODO: use a color from the palette defined in the collection
+                        // set the background to some random (but deterministic) color, just for visuals
+                        this.topicColor = getTopicColor(this.topic());
+
+                        // retrieve the page config node and select the proper variant to define the headerNodeId + swimlanes
+                        await this.retrievePageConfigAndSelectVariant(params.variantId);
+
+                        // initial load finished (page structure loaded)
+                        this.initialLoadSuccessfully.set(true);
+
+                        // post-load the statistics
+                        await this.postLoadStatistics(params.collectionId);
+                    } catch (err) {
+                        this.commonCatchFunction();
                     }
-                    // TODO: use a color from the palette defined in the collection
-                    // set the background to some random (but deterministic) color, just for visuals
-                    this.setTopicColor();
-
-                    // retrieve the page config node and select the proper variant to define the headerNodeId + swimlanes
-                    await this.retrievePageConfigAndSelectVariant(params.variantId);
-
-                    // initial load finished (page structure loaded)
-                    this.initialLoadSuccessfully.set(true);
-
-                    // post-load the statistics
-                    await this.postLoadStatistics(params.collectionId);
                 }
             });
     }
 
-    /**
-     * Helper function to retrieve a background color for the topic (and invert it for dark mode, if necessary).
-     */
-    private setTopicColor(): void {
-        let topicColor: string = this.stringToColour(this.topic());
-
-        // TODO: later, this will be stored as variable that can be changed by the user
-        // check, if dark mode is preferred (https://stackoverflow.com/a/57795495)
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-            // check, if the color is too light
-            // https://stackoverflow.com/a/12043228
-            const c: string = topicColor.substring(1); // strip #
-            const rgb: number = parseInt(c, 16); // convert rrggbb to decimal
-            const r: number = (rgb >> 16) & 0xff; // extract red
-            const g: number = (rgb >> 8) & 0xff; // extract green
-            const b: number = (rgb >> 0) & 0xff; // extract blue
-
-            const luma: number = 0.2126 * r + 0.7152 * g + 0.0722 * b; // per ITU-R BT.709
-            if (luma > 100) {
-                // darken the color (https://stackoverflow.com/a/13532993)
-                topicColor = this.shadeColor(topicColor, -60);
-            }
-        }
-        this.topicColor = topicColor;
-    }
-
+    // HELPERS FOR INITIALIZATION
     /**
      * Helper function to retrieve the page config node, select the proper variant and define the headerNodeId + swimlanes.
      *
@@ -678,6 +673,12 @@ export class TemplateComponent implements OnInit {
             .toPromise();
     }
 
+    /**
+     * Parses the page config ref of the collection and returns the proper page config node.
+     * If no page config ref is set, check whether a parent propagates one.
+     *
+     * @param node
+     */
     private async retrievePageConfigNode(node: Node): Promise<Node> {
         // check, whether the node itself has a pageConfigRef
         let pageRef: string = node.properties[pageConfigRefType]?.[0];
@@ -1393,43 +1394,24 @@ export class TemplateComponent implements OnInit {
         }, 1000);
     }
 
-    // https://stackoverflow.com/a/16348977
-    stringToColour(str: string): string {
-        let hash = 0;
-        str.split('').forEach((char) => {
-            hash = char.charCodeAt(0) + ((hash << 5) - hash);
+    /**
+     * Helper function to handle an error by opening a toast container for the error.
+     */
+    commonCatchFunction(): void {
+        // display toast that an error occurred
+        // this has to be done manually to also take the processing time into account
+        const config: MatSnackBarConfig = {
+            duration: 200000,
+            panelClass: 'error-snackbar',
+        };
+        const errorToastContainer: MatSnackBarRef<TextOnlySnackBar> = this.snackbar?.open(
+            this.SAVE_CONFIG_ERROR_MESSAGE,
+            this.SAVE_CONFIG_ERROR_ACTION,
+            config,
+        );
+        errorToastContainer.onAction().subscribe((): void => {
+            window.location.reload();
         });
-        let colour = '#';
-        for (let i = 0; i < 3; i++) {
-            const value = (hash >> (i * 8)) & 0xff;
-            colour += value.toString(16).padStart(2, '0');
-        }
-        return colour;
-    }
-
-    // https://stackoverflow.com/a/13532993
-    shadeColor(color: string, percent: number): string {
-        let r: number = parseInt(color.substring(1, 3), 16);
-        let g: number = parseInt(color.substring(3, 5), 16);
-        let b: number = parseInt(color.substring(5, 7), 16);
-
-        r = Math.round((r * (100 + percent)) / 100);
-        g = Math.round((g * (100 + percent)) / 100);
-        b = Math.round((b * (100 + percent)) / 100);
-
-        r = r < 255 ? r : 255;
-        g = g < 255 ? g : 255;
-        b = b < 255 ? b : 255;
-
-        r = Math.round(r);
-        g = Math.round(g);
-        b = Math.round(b);
-
-        const RR: string = r.toString(16).length == 1 ? '0' + r.toString(16) : r.toString(16);
-        const GG: string = g.toString(16).length == 1 ? '0' + g.toString(16) : g.toString(16);
-        const BB: string = b.toString(16).length == 1 ? '0' + b.toString(16) : b.toString(16);
-
-        return '#' + RR + GG + BB;
     }
 
     protected readonly defaultMds: string = defaultMds;

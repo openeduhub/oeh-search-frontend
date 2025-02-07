@@ -3,12 +3,12 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { SharedModule } from '../../../shared/shared.module';
-import { swimlaneTypeOptions, widgetTypeOptions } from '../../custom-definitions';
+import { swimlaneTypeOptions, widgetTypeOptions } from '../../shared/custom-definitions';
+import { GridTile } from '../../shared/types/grid-tile';
+import { SelectOption } from '../../shared/types/select-option';
+import { Swimlane } from '../../shared/types/swimlane';
 import { ConfigureGridDialogComponent } from '../configure-grid-dialog/configure-grid-dialog.component';
-import { GridTile } from '../grid-tile';
-import { SelectOption } from './select-option';
 import { SelectWidgetTypeDialogComponent } from '../select-widget-type-dialog/select-widget-type-dialog.component';
-import { Swimlane } from '../swimlane';
 
 @Component({
     selector: 'app-swimlane-settings-dialog',
