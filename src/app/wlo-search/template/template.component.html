@@ -140,6 +140,7 @@
           <ng-container *ngFor="let swimlane of swimlanes; let i = index">
             <div
               *ngIf="swimlane.grid?.length > 0 || editMode"
+              [attr.id]="swimlane.id ? 'swimlane-' + swimlane.id : null"
               class="wlo-swimlane"
               [class.swimlane-edit-mode]="editMode"
               [style.background-color]="swimlane.backgroundColor ?? swimlane.backgroundColor"

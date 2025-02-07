@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { v4 as uuidv4 } from 'uuid';
 import { SharedModule } from '../../shared/shared.module';
 import { swimlaneGridOptions, swimlaneTypeOptions } from '../custom-definitions';
 import { GridTile } from '../swimlane/grid-tile';
@@ -29,6 +30,7 @@ export class AddSwimlaneBorderButtonComponent {
             return;
         }
         const newSwimlane: Swimlane = {
+            id: uuidv4(),
             heading: 'Eine beispielhafte Überschrift',
             type: swimlaneType,
             grid: [],
