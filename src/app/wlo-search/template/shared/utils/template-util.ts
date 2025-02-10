@@ -1,4 +1,16 @@
 /**
+ * Helper function to retrieve the search URL.
+ */
+export const retrieveSearchUrl = (): string => {
+    // take into account potential sub-paths, e.g., due to language switch
+    const pathNameArray: string[] = window.location.pathname.split('/');
+    // example pathNameArray = [ "", "de", "template" ]
+    const suffix: string =
+        pathNameArray.length > 2 && pathNameArray[1] !== '' ? '/' + pathNameArray[1] : '';
+    return window.location.origin + suffix + '/search';
+};
+
+/**
  * Retrieves a background color for a given topic name (just for visuals).
  *
  * @param topicName

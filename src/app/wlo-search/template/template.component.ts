@@ -1,5 +1,5 @@
 import { CdkAccordionItem } from '@angular/cdk/accordion';
-import { CdkDragHandle, moveItemInArray } from '@angular/cdk/drag-drop';
+import { moveItemInArray } from '@angular/cdk/drag-drop';
 import {
     Component,
     computed,
@@ -31,6 +31,7 @@ import {
 import { ParentEntries } from 'ngx-edu-sharing-api/lib/api/models/parent-entries';
 import { SpinnerComponent } from 'ngx-edu-sharing-ui';
 import {
+    checkUserAccess,
     ColorChangeEvent,
     EditableTextComponent,
     FilterBarComponent,
@@ -79,7 +80,7 @@ import { GridTile } from './shared/types/grid-tile';
 import { PageConfig } from './shared/types/page-config';
 import { PageVariantConfig } from './shared/types/page-variant-config';
 import { Swimlane } from './shared/types/swimlane';
-import { getTopicColor } from './shared/utils/template-util';
+import { getTopicColor, retrieveSearchUrl } from './shared/utils/template-util';
 import { SwimlaneComponent } from './swimlane/swimlane.component';
 import { SwimlaneSettingsDialogComponent } from './swimlane/swimlane-settings-dialog/swimlane-settings-dialog.component';
 
@@ -87,7 +88,6 @@ import { SwimlaneSettingsDialogComponent } from './swimlane/swimlane-settings-di
     standalone: true,
     imports: [
         AddSwimlaneBorderButtonComponent,
-        CdkDragHandle,
         EditableTextComponent,
         FilterBarComponent,
         SearchModule,
@@ -179,6 +179,16 @@ export class TemplateComponent implements OnInit {
     statisticsLoaded: WritableSignal<boolean> = signal(false);
 
     /**
+     * Returns the current page config.
+     */
+    private get retrieveCurrentPageConfig(): PageConfig {
+        if (this.pageConfigNode.properties[pageConfigType]?.[0]) {
+            return JSON.parse(this.pageConfigNode.properties[pageConfigType][0]);
+        }
+        return {};
+    }
+
+    /**
      * Returns an array of IDs of currently selected dimension values (output by wlo-filter-bar).
      */
     private get selectedDimensionValueIds(): string[] {
@@ -191,7 +201,7 @@ export class TemplateComponent implements OnInit {
      */
     async ngOnInit(): Promise<void> {
         // retrieve the search URL
-        this.searchUrl = this.retrieveSearchUrl();
+        this.searchUrl = retrieveSearchUrl();
         // set the default language for API requests
         this.apiRequestConfig.setLocale(initialLocaleString);
         // set the topic based on the query param "collectionID"
@@ -218,7 +228,7 @@ export class TemplateComponent implements OnInit {
                         );
                         this.topic.set(this.collectionNode.title);
                         // check the user privileges for the collection node and initialize custom listeners
-                        this.checkUserAccess(this.collectionNode);
+                        checkUserAccess(this.collectionNode);
                         if (this.userHasEditRights()) {
                             this.initializeCustomEventListeners();
                         }
@@ -261,9 +271,7 @@ export class TemplateComponent implements OnInit {
             }
         }
         // parse the page config from the properties
-        const pageConfig: PageConfig = this.pageConfigNode.properties[pageConfigType]?.[0]
-            ? JSON.parse(this.pageConfigNode.properties[pageConfigType][0])
-            : {};
+        const pageConfig: PageConfig = this.retrieveCurrentPageConfig;
         if (!pageConfig.variants) {
             console.error('pageConfig does not include variants', pageConfig);
             return;
@@ -337,22 +345,6 @@ export class TemplateComponent implements OnInit {
             this.headerNodeId.set(pageVariant.structure.headerNodeId);
             this.swimlanes = pageVariant.structure.swimlanes ?? [];
         }
-    }
-
-    /**
-     * Helper function to retrieve the search URL.
-     */
-    private retrieveSearchUrl(): string {
-        // take into account potential sub-paths, e.g., due to language switch
-        const pathNameArray: string[] = window.location.pathname.split('/');
-        // example pathNameArray = [ "", "de", "template" ]
-        const suffix: string =
-            pathNameArray.length > 2 && pathNameArray[1] !== '' ? '/' + pathNameArray[1] : '';
-        return window.location.origin + suffix + '/search';
-    }
-
-    private checkUserAccess(node: Node): void {
-        this.userHasEditRights.set(node.access.includes('Write'));
     }
 
     private initializeCustomEventListeners(): void {
@@ -769,9 +761,7 @@ export class TemplateComponent implements OnInit {
      */
     private retrievePageVariant(): PageVariantConfig {
         // parse the page config from the properties
-        const pageConfig: PageConfig = this.pageConfigNode.properties[pageConfigType]?.[0]
-            ? JSON.parse(this.pageConfigNode.properties[pageConfigType][0])
-            : {};
+        const pageConfig: PageConfig = this.retrieveCurrentPageConfig;
         if (!pageConfig.variants) {
             console.error('pageConfig does not include variants.', pageConfig);
             return null;
@@ -1033,9 +1023,7 @@ export class TemplateComponent implements OnInit {
                 return;
             }
             // parse the page config from the properties
-            const pageConfig: PageConfig = this.pageConfigNode.properties[pageConfigType]?.[0]
-                ? JSON.parse(this.pageConfigNode.properties[pageConfigType][0])
-                : {};
+            const pageConfig: PageConfig = this.retrieveCurrentPageConfig;
             // check for pageConfig variant existence
             if (!pageConfig.variants) {
                 console.error('pageConfig does not include variants', pageConfig);
