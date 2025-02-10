@@ -100,12 +100,13 @@ const shadeColor = (color: string, percent: number): string => {
 };
 
 /**
- * Converts a given variant ID including workspace string into the plain ID.
+ * Converts a given page ref including the workspace string into its node ID.
+ * Example: workspace://SpacesStore/UUID -> UUID
  *
- * @param fullWorkspaceId
+ * @param pageRef
  */
-export const convertVariantId = (fullWorkspaceId: string): string => {
-    return fullWorkspaceId.split('/')?.[fullWorkspaceId.split('/').length - 1];
+export const convertPageRefIntoNodeId = (pageRef: string): string => {
+    return pageRef.split('/')?.[pageRef.split('/').length - 1];
 };
 
 /**

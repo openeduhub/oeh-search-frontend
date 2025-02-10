@@ -78,7 +78,7 @@ import { Swimlane } from './shared/types/swimlane';
 import {
     checkPageConfigPropagate,
     closeToastWithDelay,
-    convertVariantId,
+    convertPageRefIntoNodeId,
     getTopicColor,
     removeNodeIdsFromPageVariantConfig,
     retrievePageConfigRef,
@@ -283,7 +283,7 @@ export class TemplateComponent implements OnInit {
         this.pageVariantDefaultPosition = pageConfig.variants.indexOf(pageConfig.default);
         // select the proper variant (initialize with default or first variant)
         let selectedVariantId: string = pageConfig.default ?? pageConfig.variants[0];
-        selectedVariantId = convertVariantId(selectedVariantId);
+        selectedVariantId = convertPageRefIntoNodeId(selectedVariantId);
         // if a variantId is provided, override it
         if (variantId) {
             selectedVariantId = variantId;
@@ -486,8 +486,7 @@ export class TemplateComponent implements OnInit {
             }
         }
         if (pageRef) {
-            // workspace://SpacesStore/UUID -> UUID
-            const pageNodeId: string = pageRef.split('/')?.[pageRef.split('/').length - 1];
+            const pageNodeId: string = convertPageRefIntoNodeId(pageRef);
             if (pageNodeId) {
                 this.pageConfigCheckFailed.set(false);
                 return await firstValueFrom(this.nodeApi.getNode(pageNodeId));
@@ -768,7 +767,7 @@ export class TemplateComponent implements OnInit {
             );
             return null;
         }
-        selectedVariantId = convertVariantId(selectedVariantId);
+        selectedVariantId = convertPageRefIntoNodeId(selectedVariantId);
         this.pageVariantNode = this.pageVariantConfigs.nodes?.find(
             (node: Node) => node.ref.id === selectedVariantId,
         );
