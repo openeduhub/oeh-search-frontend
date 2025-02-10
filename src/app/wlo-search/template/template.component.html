@@ -54,10 +54,10 @@
         <button
           *ngFor="let variant of pageVariantConfigs.nodes; let i = index"
           mat-menu-item
-          [disabled]="variant.ref.id === pageVariantNode.ref.id"
+          [disabled]="variant.ref.id === pageVariantNode?.ref.id"
           (click)="navigateToVariant(variant.ref.id)"
         >
-          <i esIcon="check" *ngIf="variant.ref.id === pageVariantNode.ref.id"></i>
+          <i esIcon="check" *ngIf="variant.ref.id === pageVariantNode?.ref.id"></i>
           Seiten-Variante {{ i + 1 }}
         </button>
       </ng-container>

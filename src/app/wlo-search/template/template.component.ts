@@ -36,12 +36,14 @@ import { SearchModule } from '../search/search.module';
 import { SharedModule } from '../shared/shared.module';
 import { AddSwimlaneBorderButtonComponent } from './add-swimlane-button/add-swimlane-border-button.component';
 import {
+    actionItems,
     defaultMds,
     defaultTopicTextNodeId,
     defaultTopicsColumnBrowserNodeId,
     initialTopicColor,
     ioType,
     mapType,
+    menuItems,
     pageConfigRefType,
     pageConfigType,
     pageVariantConfigType,
@@ -100,6 +102,11 @@ import { SwimlaneSettingsDialogComponent } from './swimlane/swimlane-settings-di
     styleUrls: ['./template.component.scss'],
 })
 export class TemplateComponent implements OnInit {
+    private readonly CONFIRM_CREATE_PAGE_VARIANT: string =
+        'Wollen Sie wirklich auf Grundlage der Seiten-Struktur der aktuell gewählten Variante eine neue Seiten-Variante erstellen?';
+    private readonly PAGE_VARIANT_CREATION_STARTED: string =
+        'Eine neue Seiten-Variante wird erstellt und geladen.';
+
     constructor(
         private dialog: MatDialog,
         private route: ActivatedRoute,
@@ -147,17 +154,8 @@ export class TemplateComponent implements OnInit {
     selectDimensionsLoaded: boolean = false;
 
     selectedMenuItem: string = '';
-    actionItems = {
-        editMode: 'Seite bearbeiten',
-        previewMode: 'Zurück zur Vorschau',
-    };
-
-    menuItems = {
-        feedback: 'Feedback',
-        profiling: 'Profilierung',
-        statistics: 'Statistiken',
-        topicTree: 'Themenbaum',
-    };
+    actionItems = actionItems;
+    menuItems = menuItems;
 
     // statistics related variables
     searchResultCount: number = 0;
@@ -166,7 +164,7 @@ export class TemplateComponent implements OnInit {
     statisticsLoaded: WritableSignal<boolean> = signal(false);
 
     /**
-     * Returns an array of IDs of currently selected dimension values (output by wlo-filter-bar).
+     * Returns an array of IDs of the currently selected dimension values (output by wlo-filter-bar).
      */
     private get selectedDimensionValueIds(): string[] {
         return this.selectedDimensionValues.map((value: MdsValue) => value.id);
@@ -223,6 +221,7 @@ export class TemplateComponent implements OnInit {
                             );
                         this.statisticsLoaded.set(true);
                     } catch (err) {
+                        console.error(err);
                         this.templateHelperService.displayErrorToast();
                     }
                 }
@@ -253,7 +252,7 @@ export class TemplateComponent implements OnInit {
                         this.swimlanes[swimlaneIndex]?.backgroundColor !== color;
                     if (changesNecessary) {
                         try {
-                            // check, whether a new "direct" node has to be created
+                            // check, whether a new page node has to be created
                             const pageNodeCreated: boolean =
                                 await this.checkForCustomPageNodeExistence();
                             console.log('DEBUG: change necessary', pageNodeCreated);
@@ -266,6 +265,7 @@ export class TemplateComponent implements OnInit {
                                 JSON.stringify(pageVariant),
                             );
                         } catch (err) {
+                            console.error(err);
                             this.templateHelperService.displayErrorToast();
                         }
                     }
@@ -301,8 +301,6 @@ export class TemplateComponent implements OnInit {
                     // convert widget node ID, if necessary
                     const convertedWidgetNodeId: string = prependWorkspacePrefix(widgetNodeId);
                     // if no page configuration exists yet, a config has to be created and a reload of the page is necessary
-                    // TODO: we currently assume that adding is successfully, when creating a new page node.
-                    //       This might be improved by inputting validWidgetNodeId and deleting internally.
                     addedSuccessfully = await this.checkForCustomPageNodeExistence(
                         swimlaneIndex,
                         gridIndex,
@@ -389,11 +387,11 @@ export class TemplateComponent implements OnInit {
         // otherwise, iterate the variant configs and select the one with the most matching variables
         else {
             let highestNumberOfMatches: number = 0;
-            this.pageVariantConfigs.nodes?.forEach((variantNode: Node) => {
+            this.pageVariantConfigs.nodes?.forEach((variantNode: Node): void => {
                 const variantConfig: PageVariantConfig = retrievePageVariantConfig(variantNode);
                 if (variantConfig?.variables) {
                     let matchesCount: number = 0;
-                    Object.keys(variantConfig.variables)?.forEach((key: string) => {
+                    Object.keys(variantConfig.variables)?.forEach((key: string): void => {
                         // TODO: Replace by a more consistent check of both key and value
                         if (this.selectedDimensionValueIds.includes(variantConfig.variables[key])) {
                             matchesCount += 1;
@@ -418,8 +416,16 @@ export class TemplateComponent implements OnInit {
             this.selectedVariantPosition = newSelectedVariantPosition;
             // retrieve the variant config node of the page
             this.pageVariantNode = this.pageVariantConfigs.nodes?.find(
-                (node: Node) => retrieveNodeId(node) === selectedVariantId,
+                (node: Node): boolean => retrieveNodeId(node) === selectedVariantId,
             );
+            if (!this.pageVariantNode) {
+                console.error(
+                    'No pageVariantNode was found.',
+                    selectedVariantId,
+                    this.pageVariantConfigs.nodes,
+                );
+                return;
+            }
             const pageVariant: PageVariantConfig = retrievePageVariantConfig(this.pageVariantNode);
             if (!pageVariant || !pageVariant.structure) {
                 console.error(
@@ -443,11 +449,7 @@ export class TemplateComponent implements OnInit {
      * Creates a new page variant by cloning the currently selected one (without the node definitions) and navigates to it.
      */
     async createPageVariant(): Promise<void> {
-        if (
-            confirm(
-                'Wollen Sie wirklich auf Grundlage der Seiten-Struktur der aktuell gewählten Variante eine neue Seiten-Variante erstellen?',
-            )
-        ) {
+        if (confirm(this.CONFIRM_CREATE_PAGE_VARIANT)) {
             // check for pageConfigNode existence
             if (!retrieveNodeId(this.pageConfigNode)) {
                 return;
@@ -461,60 +463,64 @@ export class TemplateComponent implements OnInit {
             }
             // retrieve variant node
             const currentPageVariantId: string = pageConfig.variants[this.selectedVariantPosition];
-            const variantNode: Node = this.pageVariantConfigs.nodes?.find((node) =>
+            const variantNode: Node = this.pageVariantConfigs.nodes?.find((node: Node) =>
                 currentPageVariantId.includes(retrieveNodeId(node)),
             );
             if (!variantNode) {
                 return;
             }
-            // create child for variant node
-            this.requestInProgress.set(true);
-            const toastContainer: MatSnackBarRef<TextOnlySnackBar> =
-                this.templateHelperService.openSaveConfigToast(
-                    'Eine neue Seiten-Variante wird erstellt und geladen.',
+            try {
+                // create child for variant node
+                const toastContainer: MatSnackBarRef<TextOnlySnackBar> = this.startEditing(
+                    this.PAGE_VARIANT_CREATION_STARTED,
                 );
-            let pageConfigVariantNode: Node = await this.templateHelperService.createChild(
-                retrieveNodeId(this.pageConfigNode),
-                ioType,
-                pageVariantConfigPrefix + uuidv4(),
-                pageVariantConfigAspect,
-            );
-            // push it to the existing variants
-            pageConfig.variants.push(prependWorkspacePrefix(retrieveNodeId(pageConfigVariantNode)));
-            // parse variant config and remove node IDs
-            const variantConfig: PageVariantConfig = retrievePageVariantConfig(variantNode);
-            removeNodeIdsFromPageVariantConfig(variantConfig);
-            // set properties of the created child
-            await this.templateHelperService.setProperty(
-                retrieveNodeId(pageConfigVariantNode),
-                pageVariantConfigType,
-                JSON.stringify(variantConfig),
-            );
-            await this.templateHelperService.setProperty(
-                retrieveNodeId(pageConfigVariantNode),
-                pageVariantIsTemplateType,
-                'false',
-            );
-            // update ccm:page_config of page config node
-            this.pageConfigNode =
-                await this.templateHelperService.setPropertyAndRetrieveUpdatedNode(
+                let pageConfigVariantNode: Node = await this.templateHelperService.createChild(
                     retrieveNodeId(this.pageConfigNode),
-                    pageConfigType,
-                    JSON.stringify(pageConfig),
+                    ioType,
+                    pageVariantConfigPrefix + uuidv4(),
+                    pageVariantConfigAspect,
                 );
-            // reload page variant configs
-            this.pageVariantConfigs = await this.templateHelperService.getNodeChildren(
-                retrieveNodeId(this.pageConfigNode),
-            );
-            // navigate to the newly created variant
-            await this.navigateToVariant(retrieveNodeId(pageConfigVariantNode));
-            closeToastWithDelay(toastContainer);
-            this.requestInProgress.set(false);
+                // push it to the existing variants
+                pageConfig.variants.push(
+                    prependWorkspacePrefix(retrieveNodeId(pageConfigVariantNode)),
+                );
+                // parse variant config and remove node IDs
+                const variantConfig: PageVariantConfig = retrievePageVariantConfig(variantNode);
+                removeNodeIdsFromPageVariantConfig(variantConfig);
+                // set properties of the created child
+                await this.templateHelperService.setProperty(
+                    retrieveNodeId(pageConfigVariantNode),
+                    pageVariantConfigType,
+                    JSON.stringify(variantConfig),
+                );
+                await this.templateHelperService.setProperty(
+                    retrieveNodeId(pageConfigVariantNode),
+                    pageVariantIsTemplateType,
+                    'false',
+                );
+                // update ccm:page_config of page config node
+                this.pageConfigNode =
+                    await this.templateHelperService.setPropertyAndRetrieveUpdatedNode(
+                        retrieveNodeId(this.pageConfigNode),
+                        pageConfigType,
+                        JSON.stringify(pageConfig),
+                    );
+                // reload page variant configs
+                this.pageVariantConfigs = await this.templateHelperService.getNodeChildren(
+                    retrieveNodeId(this.pageConfigNode),
+                );
+                // navigate to the newly created variant
+                await this.navigateToVariant(retrieveNodeId(pageConfigVariantNode));
+                this.endEditing(toastContainer);
+            } catch (err) {
+                console.error(err);
+                this.templateHelperService.displayErrorToast();
+            }
         }
     }
 
     /**
-     * Navigates to a given variantId and reload the page structure accordingly.
+     * Navigates to a given variantId and reloads the page structure accordingly.
      *
      * @param variantId
      */
@@ -528,66 +534,74 @@ export class TemplateComponent implements OnInit {
             queryParamsHandling: 'merge',
         });
         // retrieve the page config node and select the proper variant to define the headerNodeId + swimlanes
-        await this.retrievePageConfigAndSelectVariant(variantId);
+        try {
+            await this.retrievePageConfigAndSelectVariant(variantId);
+        } catch (err) {
+            console.error(err);
+            this.templateHelperService.displayErrorToast();
+        }
     }
 
     // SWIMLANE SPECIFIC FUNCTIONS
     /**
-     * Adds a new swimlane to the page and persist it in the config.
+     * Adds a new swimlane to the page and persists it in the config.
      */
     async addSwimlane(newSwimlane: Swimlane, positionToAdd: number): Promise<void> {
-        // TODO: Move into shared function
-        this.requestInProgress.set(true);
-        const toastContainer: MatSnackBarRef<TextOnlySnackBar> =
-            this.templateHelperService.openSaveConfigToast();
-        await this.checkForCustomPageNodeExistence();
-        const pageVariant: PageVariantConfig = this.retrievePageVariant();
-        if (!pageVariant) {
-            closeToastWithDelay(toastContainer);
-            this.requestInProgress.set(false);
-            return;
-        }
-        const swimlanesCopy = JSON.parse(JSON.stringify(this.swimlanes ?? []));
-        swimlanesCopy.splice(positionToAdd, 0, newSwimlane);
-        pageVariant.structure.swimlanes = swimlanesCopy;
-        await this.templateHelperService.setProperty(
-            retrieveNodeId(this.pageVariantNode),
-            pageVariantConfigType,
-            JSON.stringify(pageVariant),
-        );
-        // add swimlane visually as soon as the requests are done
-        this.swimlanes.splice(positionToAdd, 0, newSwimlane);
-        closeToastWithDelay(toastContainer);
-        this.requestInProgress.set(false);
-    }
-
-    /**
-     * Move the position of a swimlane on the page and persist it in the config.
-     */
-    async moveSwimlanePosition(oldIndex: number, newIndex: number): Promise<void> {
-        if (newIndex >= 0 && newIndex <= this.swimlanes.length - 1) {
-            this.requestInProgress.set(true);
-            const toastContainer: MatSnackBarRef<TextOnlySnackBar> =
-                this.templateHelperService.openSaveConfigToast();
+        const toastContainer: MatSnackBarRef<TextOnlySnackBar> = this.startEditing();
+        try {
             await this.checkForCustomPageNodeExistence();
             const pageVariant: PageVariantConfig = this.retrievePageVariant();
             if (!pageVariant) {
-                closeToastWithDelay(toastContainer);
-                this.requestInProgress.set(false);
+                this.endEditing(toastContainer);
                 return;
             }
             const swimlanesCopy = JSON.parse(JSON.stringify(this.swimlanes ?? []));
-            moveItemInArray(swimlanesCopy, oldIndex, newIndex);
+            swimlanesCopy.splice(positionToAdd, 0, newSwimlane);
             pageVariant.structure.swimlanes = swimlanesCopy;
             await this.templateHelperService.setProperty(
                 retrieveNodeId(this.pageVariantNode),
                 pageVariantConfigType,
                 JSON.stringify(pageVariant),
             );
-            // move swimlane position visually as soon as the requests are done
-            moveItemInArray(this.swimlanes, oldIndex, newIndex);
-            closeToastWithDelay(toastContainer);
-            this.requestInProgress.set(false);
+            // add swimlane visually as soon as the requests are done
+            this.swimlanes.splice(positionToAdd, 0, newSwimlane);
+            this.endEditing(toastContainer);
+        } catch (err) {
+            console.error(err);
+            this.endEditing(toastContainer);
+            this.templateHelperService.displayErrorToast();
+        }
+    }
+
+    /**
+     * Moves the position of a swimlane on the page and persists it in the config.
+     */
+    async moveSwimlanePosition(oldIndex: number, newIndex: number): Promise<void> {
+        if (newIndex >= 0 && newIndex <= this.swimlanes.length - 1) {
+            const toastContainer: MatSnackBarRef<TextOnlySnackBar> = this.startEditing();
+            try {
+                await this.checkForCustomPageNodeExistence();
+                const pageVariant: PageVariantConfig = this.retrievePageVariant();
+                if (!pageVariant) {
+                    this.endEditing(toastContainer);
+                    return;
+                }
+                const swimlanesCopy = JSON.parse(JSON.stringify(this.swimlanes ?? []));
+                moveItemInArray(swimlanesCopy, oldIndex, newIndex);
+                pageVariant.structure.swimlanes = swimlanesCopy;
+                await this.templateHelperService.setProperty(
+                    retrieveNodeId(this.pageVariantNode),
+                    pageVariantConfigType,
+                    JSON.stringify(pageVariant),
+                );
+                // move swimlane position visually as soon as the requests are done
+                moveItemInArray(this.swimlanes, oldIndex, newIndex);
+                this.endEditing(toastContainer);
+            } catch (err) {
+                console.error(err);
+                this.endEditing(toastContainer);
+                this.templateHelperService.displayErrorToast();
+            }
         }
     }
 
@@ -598,32 +612,39 @@ export class TemplateComponent implements OnInit {
      * @param swimlane
      */
     async swimlaneTitleChanged(title: string, swimlane: Swimlane): Promise<void> {
-        this.requestInProgress.set(true);
-        const toastContainer: MatSnackBarRef<TextOnlySnackBar> =
-            this.templateHelperService.openSaveConfigToast();
-        await this.checkForCustomPageNodeExistence();
-        const pageVariant: PageVariantConfig = this.retrievePageVariant();
-        if (!pageVariant) {
-            closeToastWithDelay(toastContainer);
-            this.requestInProgress.set(false);
-            return;
+        const toastContainer: MatSnackBarRef<TextOnlySnackBar> = this.startEditing();
+        try {
+            await this.checkForCustomPageNodeExistence();
+            const pageVariant: PageVariantConfig = this.retrievePageVariant();
+            if (!pageVariant) {
+                this.endEditing(toastContainer);
+                return;
+            }
+            swimlane.heading = title;
+            pageVariant.structure.swimlanes = this.swimlanes;
+            await this.templateHelperService.setProperty(
+                retrieveNodeId(this.pageVariantNode),
+                pageVariantConfigType,
+                JSON.stringify(pageVariant),
+            );
+            this.endEditing(toastContainer);
+        } catch (err) {
+            console.error(err);
+            this.endEditing(toastContainer);
+            this.templateHelperService.displayErrorToast();
         }
-        swimlane.heading = title;
-        pageVariant.structure.swimlanes = this.swimlanes;
-        await this.templateHelperService.setProperty(
-            retrieveNodeId(this.pageVariantNode),
-            pageVariantConfigType,
-            JSON.stringify(pageVariant),
-        );
-        closeToastWithDelay(toastContainer);
-        this.requestInProgress.set(false);
     }
 
+    /**
+     * Starts editing a swimlane by opening a dialog and handling the result status.
+     *
+     * @param swimlane
+     * @param index
+     */
     editSwimlane(swimlane: Swimlane, index: number): void {
         const dialogRef = this.dialog.open(SwimlaneSettingsDialogComponent, {
             data: {
                 swimlane,
-                // widgets: this.topicWidgets,
             },
             minWidth: '700px',
             maxWidth: '100%',
@@ -646,132 +667,134 @@ export class TemplateComponent implements OnInit {
                     console.log('DEBUG: Return, because no change was made.');
                     return;
                 }
-                this.requestInProgress.set(true);
-                const toastContainer: MatSnackBarRef<TextOnlySnackBar> =
-                    this.templateHelperService.openSaveConfigToast();
-                await this.checkForCustomPageNodeExistence();
-                const pageVariant: PageVariantConfig = this.retrievePageVariant();
-                if (!pageVariant) {
-                    closeToastWithDelay(toastContainer);
-                    this.requestInProgress.set(false);
-                    return;
-                }
-                // create a copy of the swimlanes
-                const stringifiedSwimlanes: string = JSON.stringify(this.swimlanes ?? []);
-                const swimlanesCopy = JSON.parse(stringifiedSwimlanes);
-                // retrieve deleted widget node IDs (previously existing node IDs must still exist)
-                const deletedWidgetNodeIds: string[] = [];
-                const stringifiedEditedSwimlane: string = JSON.stringify(editedSwimlane);
-                // iterate swimlane and detect potentially deleted node IDs
-                swimlane?.grid?.forEach((gridItem: GridTile): void => {
-                    // nodeId exists, but is no longer included in the edited swimlane
-                    if (
-                        !!gridItem.nodeId &&
-                        gridItem.nodeId !== '' &&
-                        !stringifiedEditedSwimlane.includes(gridItem.nodeId)
-                    ) {
-                        deletedWidgetNodeIds.push(gridItem.nodeId);
+                const toastContainer: MatSnackBarRef<TextOnlySnackBar> = this.startEditing();
+                try {
+                    await this.checkForCustomPageNodeExistence();
+                    const pageVariant: PageVariantConfig = this.retrievePageVariant();
+                    if (!pageVariant) {
+                        this.endEditing(toastContainer);
+                        return;
                     }
-                });
-                // store updated swimlane in config
-                swimlanesCopy[index] = editedSwimlane;
-                // overwrite swimlanes
-                pageVariant.structure.swimlanes = swimlanesCopy;
-                await this.templateHelperService.setProperty(
-                    retrieveNodeId(this.pageVariantNode),
-                    pageVariantConfigType,
-                    JSON.stringify(pageVariant),
-                );
-                // afterward, delete config nodes of removed widgets
-                for (const nodeId of deletedWidgetNodeIds) {
-                    // retrieve correct nodeId
-                    const widgetNodeId: string = convertNodeRefIntoNodeId(nodeId);
-                    await this.templateHelperService.deleteNode(widgetNodeId);
+                    // create a copy of the swimlanes
+                    const stringifiedSwimlanes: string = JSON.stringify(this.swimlanes ?? []);
+                    const swimlanesCopy = JSON.parse(stringifiedSwimlanes);
+                    // retrieve deleted widget node IDs (previously existing node IDs must still exist)
+                    const deletedWidgetNodeIds: string[] = [];
+                    const stringifiedEditedSwimlane: string = JSON.stringify(editedSwimlane);
+                    // iterate swimlane and detect potentially deleted node IDs
+                    swimlane?.grid?.forEach((gridItem: GridTile): void => {
+                        // nodeId exists, but is no longer included in the edited swimlane
+                        if (
+                            !!gridItem.nodeId &&
+                            gridItem.nodeId !== '' &&
+                            !stringifiedEditedSwimlane.includes(gridItem.nodeId)
+                        ) {
+                            deletedWidgetNodeIds.push(gridItem.nodeId);
+                        }
+                    });
+                    // store updated swimlane in config
+                    swimlanesCopy[index] = editedSwimlane;
+                    // overwrite swimlanes
+                    pageVariant.structure.swimlanes = swimlanesCopy;
+                    await this.templateHelperService.setProperty(
+                        retrieveNodeId(this.pageVariantNode),
+                        pageVariantConfigType,
+                        JSON.stringify(pageVariant),
+                    );
+                    // afterward, delete config nodes of removed widgets
+                    for (const nodeId of deletedWidgetNodeIds) {
+                        // retrieve correct nodeId
+                        const widgetNodeId: string = convertNodeRefIntoNodeId(nodeId);
+                        await this.templateHelperService.deleteNode(widgetNodeId);
+                    }
+                    // visually change swimlanes
+                    console.log('DEBUG: Overwrite swimlanes', pageVariant.structure.swimlanes);
+                    this.swimlanes = pageVariant.structure.swimlanes;
+                    this.endEditing(toastContainer);
+                } catch (err) {
+                    console.error(err);
+                    this.endEditing(toastContainer);
+                    this.templateHelperService.displayErrorToast();
                 }
-                // visually change swimlanes
-                console.log('DEBUG: Overwrite swimlanes', pageVariant.structure.swimlanes);
-                this.swimlanes = pageVariant.structure.swimlanes;
-                closeToastWithDelay(toastContainer);
-                this.requestInProgress.set(false);
             }
             console.log('Closed', result?.value);
         });
     }
 
     /**
-     * Delete a swimlane from the page with possible widget nodes and persist it in the config.
+     * Deletes a swimlane from the page with possible widget nodes and persists it in the config.
      */
     async deleteSwimlane(index: number): Promise<void> {
         if (
             this.swimlanes?.[index] &&
             confirm('Wollen Sie dieses Element wirklich löschen?') === true
         ) {
-            this.requestInProgress.set(true);
-            const toastContainer: MatSnackBarRef<TextOnlySnackBar> =
-                this.templateHelperService.openSaveConfigToast();
-            await this.checkForCustomPageNodeExistence();
-            const pageVariant: PageVariantConfig = this.retrievePageVariant();
-            if (!pageVariant) {
-                closeToastWithDelay(toastContainer);
-                this.requestInProgress.set(false);
-                return;
-            }
-            // delete possible nodes defined in the swimlane
-            // forEach does not support async / await
-            // -> for ... of ... (https://stackoverflow.com/a/37576787)
-            if (this.swimlanes[index].grid) {
-                for (const widget of this.swimlanes[index].grid) {
-                    if (widget.nodeId) {
-                        const nodeId: string =
-                            widget.nodeId.split('/')?.[widget.nodeId.split('/').length - 1];
-                        await this.templateHelperService.deleteNode(nodeId).then(
-                            () => {
-                                console.log('Deleted child node');
-                            },
-                            () => {
-                                console.log('Error deleting node');
-                            },
-                        );
+            const toastContainer: MatSnackBarRef<TextOnlySnackBar> = this.startEditing();
+            try {
+                await this.checkForCustomPageNodeExistence();
+                const pageVariant: PageVariantConfig = this.retrievePageVariant();
+                if (!pageVariant) {
+                    this.endEditing(toastContainer);
+                    return;
+                }
+                // delete possible nodes defined in the swimlane
+                // forEach does not support async / await
+                // -> for ... of ... (https://stackoverflow.com/a/37576787)
+                if (this.swimlanes[index].grid) {
+                    for (const widget of this.swimlanes[index].grid) {
+                        if (widget.nodeId) {
+                            const nodeId: string =
+                                widget.nodeId.split('/')?.[widget.nodeId.split('/').length - 1];
+                            await this.templateHelperService.deleteNode(nodeId);
+                        }
                     }
                 }
+                const swimlanesCopy = JSON.parse(JSON.stringify(this.swimlanes ?? []));
+                swimlanesCopy.splice(index, 1);
+                pageVariant.structure.swimlanes = swimlanesCopy;
+                await this.templateHelperService.setProperty(
+                    retrieveNodeId(this.pageVariantNode),
+                    pageVariantConfigType,
+                    JSON.stringify(pageVariant),
+                );
+                // delete swimlane visually as soon as the requests are done
+                this.swimlanes.splice(index, 1);
+                this.endEditing(toastContainer);
+            } catch (err) {
+                console.error(err);
+                this.endEditing(toastContainer);
+                this.templateHelperService.displayErrorToast();
             }
-            const swimlanesCopy = JSON.parse(JSON.stringify(this.swimlanes ?? []));
-            swimlanesCopy.splice(index, 1);
-            pageVariant.structure.swimlanes = swimlanesCopy;
-            await this.templateHelperService.setProperty(
-                retrieveNodeId(this.pageVariantNode),
-                pageVariantConfigType,
-                JSON.stringify(pageVariant),
-            );
-            // delete swimlane visually as soon as the requests are done
-            this.swimlanes.splice(index, 1);
-            closeToastWithDelay(toastContainer);
-            this.requestInProgress.set(false);
         }
     }
 
-    // REACT TO OUTPUT EVENTS
+    // REACT TO FURTHER OUTPUT EVENTS
     /**
      * Called by app-swimlane gridUpdated output event.
      * Handles the update of the grid of a given swimlane.
      */
     async handleGridUpdate(grid: GridTile[], swimlaneIndex: number): Promise<void> {
-        // overwrite swimlane grid
-        this.swimlanes[swimlaneIndex].grid = grid;
+        try {
+            // overwrite swimlane grid
+            this.swimlanes[swimlaneIndex].grid = grid;
 
-        // persist the state afterward
-        await this.checkForCustomPageNodeExistence();
-        const pageVariant: PageVariantConfig = this.retrievePageVariant();
-        if (!pageVariant) {
-            // TODO: rollback necessary
+            // persist the state afterward
+            await this.checkForCustomPageNodeExistence();
+            const pageVariant: PageVariantConfig = this.retrievePageVariant();
+            if (!pageVariant) {
+                // TODO: rollback necessary
+            }
+            pageVariant.structure.swimlanes = this.swimlanes;
+            await this.templateHelperService.setProperty(
+                retrieveNodeId(this.pageVariantNode),
+                pageVariantConfigType,
+                JSON.stringify(pageVariant),
+            );
+            // TODO: rollback necessary, if the request is not successful
+        } catch (err) {
+            console.error(err);
+            this.templateHelperService.displayErrorToast();
         }
-        pageVariant.structure.swimlanes = this.swimlanes;
-        await this.templateHelperService.setProperty(
-            retrieveNodeId(this.pageVariantNode),
-            pageVariantConfigType,
-            JSON.stringify(pageVariant),
-        );
-        // TODO: rollback necessary, if the request is not successful
     }
 
     /**
@@ -827,7 +850,12 @@ export class TemplateComponent implements OnInit {
         this.selectedDimensionValues = selectedDimensionValues;
         // if necessary, reload the pageVariants
         if (this.initialLoadSuccessfully()) {
-            void this.retrievePageConfigAndSelectVariant(this.latestParams.variantId);
+            try {
+                void this.retrievePageConfigAndSelectVariant(this.latestParams.variantId);
+            } catch (err) {
+                console.error(err);
+                this.templateHelperService.displayErrorToast();
+            }
         }
     }
 
@@ -1020,6 +1048,26 @@ export class TemplateComponent implements OnInit {
             return null;
         }
         return pageVariant;
+    }
+
+    /**
+     * Helper function to start an editing process by setting requestInProgress to true and opening a toast to inform the user about it.
+     *
+     * @param msg
+     */
+    private startEditing(msg?: string): MatSnackBarRef<TextOnlySnackBar> {
+        this.requestInProgress.set(true);
+        return this.templateHelperService.openSaveConfigToast(msg);
+    }
+
+    /**
+     * Helper function to end an editing process by closing a toast and setting requestInProgress to false.
+     *
+     * @param toastContainer
+     */
+    private endEditing(toastContainer: MatSnackBarRef<TextOnlySnackBar>): void {
+        closeToastWithDelay(toastContainer);
+        this.requestInProgress.set(false);
     }
 
     protected readonly defaultMds: string = defaultMds;

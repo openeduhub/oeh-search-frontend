@@ -2,6 +2,11 @@ import type { Node } from 'ngx-edu-sharing-api';
 import { StatisticChart } from 'ngx-edu-sharing-wlo-pages';
 import { SelectOption } from './types/select-option';
 
+export const actionItems = {
+    editMode: 'Seite bearbeiten',
+    previewMode: 'Zurück zur Vorschau',
+};
+
 export const defaultLrt: string = 'ccm:oeh_lrt';
 
 export const defaultMds: string = 'mds_oeh';
@@ -52,6 +57,13 @@ export const lrtIdsTools: string[] = [
 ];
 
 export const mapType: string = 'ccm:map';
+
+export const menuItems = {
+    feedback: 'Feedback',
+    profiling: 'Profilierung',
+    statistics: 'Statistiken',
+    topicTree: 'Themenbaum',
+};
 
 export const nodeLicenseKey: string = 'ccm:commonlicense_key';
 
