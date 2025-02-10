@@ -12,12 +12,7 @@ import {
     WritableSignal,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import {
-    MatSnackBar,
-    MatSnackBarConfig,
-    MatSnackBarRef,
-    TextOnlySnackBar,
-} from '@angular/material/snack-bar';
+import { MatSnackBar, MatSnackBarRef, TextOnlySnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
     ApiRequestConfiguration,
@@ -76,6 +71,7 @@ import {
     workspaceSpacesStorePrefix,
 } from './shared/custom-definitions';
 import { StatisticsHelperService } from './shared/services/statistics-helper.service';
+import { TemplateHelperService } from './shared/services/template-helper.service';
 import { GridTile } from './shared/types/grid-tile';
 import { PageConfig } from './shared/types/page-config';
 import { PageVariantConfig } from './shared/types/page-variant-config';
@@ -108,9 +104,6 @@ import { SwimlaneSettingsDialogComponent } from './swimlane/swimlane-settings-di
 export class TemplateComponent implements OnInit {
     private readonly SAVE_CONFIG_ACTION: string = 'Schließen';
     private readonly SAVE_CONFIG_MESSAGE: string = 'Ihre Änderungen werden gespeichert.';
-    private readonly SAVE_CONFIG_ERROR_ACTION: string = 'Seite neuladen';
-    private readonly SAVE_CONFIG_ERROR_MESSAGE: string =
-        'Beim Laden einer Ressource ist ein Fehler aufgetreten. Bitte laden Sie die Seite neu.';
 
     constructor(
         private apiRequestConfig: ApiRequestConfiguration,
@@ -121,6 +114,7 @@ export class TemplateComponent implements OnInit {
         private router: Router,
         private snackbar: MatSnackBar,
         private statisticsHelperService: StatisticsHelperService,
+        private templateHelperService: TemplateHelperService,
         private viewService: ViewService,
     ) {}
 
@@ -251,7 +245,7 @@ export class TemplateComponent implements OnInit {
                             );
                         this.statisticsLoaded.set(true);
                     } catch (err) {
-                        this.commonCatchFunction();
+                        this.templateHelperService.commonCatchFunction();
                     }
                 }
             });
@@ -1181,26 +1175,6 @@ export class TemplateComponent implements OnInit {
         setTimeout((): void => {
             toastContainer.dismiss();
         }, 1000);
-    }
-
-    /**
-     * Helper function to handle an error by opening a toast container for the error.
-     */
-    commonCatchFunction(): void {
-        // display toast that an error occurred
-        // this has to be done manually to also take the processing time into account
-        const config: MatSnackBarConfig = {
-            duration: 200000,
-            panelClass: 'error-snackbar',
-        };
-        const errorToastContainer: MatSnackBarRef<TextOnlySnackBar> = this.snackbar?.open(
-            this.SAVE_CONFIG_ERROR_MESSAGE,
-            this.SAVE_CONFIG_ERROR_ACTION,
-            config,
-        );
-        errorToastContainer.onAction().subscribe((): void => {
-            window.location.reload();
-        });
     }
 
     protected readonly defaultMds: string = defaultMds;
