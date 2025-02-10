@@ -5,9 +5,11 @@ import {
     MatSnackBarRef,
     TextOnlySnackBar,
 } from '@angular/material/snack-bar';
-import { Node, NodeEntries, NodeService } from 'ngx-edu-sharing-api';
+import { AuthenticationService, Node, NodeEntries, NodeService } from 'ngx-edu-sharing-api';
 import { ParentEntries } from 'ngx-edu-sharing-api/lib/api/models/parent-entries';
 import { firstValueFrom } from 'rxjs';
+import { environment } from '../../../../../environments/environment';
+import { ViewService } from '../../../core/view.service';
 import { widgetConfigAspect } from '../custom-definitions';
 
 @Injectable({
@@ -20,34 +22,23 @@ export class TemplateHelperService {
     private readonly SAVE_CONFIG_ERROR_MESSAGE: string =
         'Beim Laden einer Ressource ist ein Fehler aufgetreten. Bitte laden Sie die Seite neu.';
 
-    constructor(private nodeApi: NodeService, private snackbar: MatSnackBar) {}
+    constructor(
+        private authService: AuthenticationService,
+        private nodeApi: NodeService,
+        private snackbar: MatSnackBar,
+        private viewService: ViewService,
+    ) {}
 
     /**
-     * Helper function to handle an error by opening a toast container for the error.
+     * Helper function to handle login for local development.
      */
-    commonCatchFunction(): void {
-        // display toast that an error occurred
-        // this has to be done manually to also take the processing time into account
-        const config: MatSnackBarConfig = {
-            duration: 200000,
-            panelClass: 'error-snackbar',
-        };
-        const errorToastContainer: MatSnackBarRef<TextOnlySnackBar> = this.snackbar?.open(
-            this.SAVE_CONFIG_ERROR_MESSAGE,
-            this.SAVE_CONFIG_ERROR_ACTION,
-            config,
-        );
-        errorToastContainer.onAction().subscribe((): void => {
-            window.location.reload();
-        });
-    }
-
-    /**
-     * Helper function to open a toast for indicating that the config is being saved.
-     */
-    openSaveConfigToast(message?: string): MatSnackBarRef<TextOnlySnackBar> {
-        const toastMessage: string = message ? message : this.SAVE_CONFIG_MESSAGE;
-        return this.snackbar?.open(toastMessage, this.SAVE_CONFIG_ACTION);
+    async localLogin(): Promise<void> {
+        const username = environment?.eduSharingUsername;
+        const password = environment?.eduSharingPassword;
+        // TODO: This fix for local development currently only works in Firefox
+        if (username && password) {
+            await firstValueFrom(this.authService.login(username, password));
+        }
     }
 
     /**
@@ -124,5 +115,70 @@ export class TemplateHelperService {
      */
     async deleteNode(nodeId: string): Promise<void> {
         return firstValueFrom(this.nodeApi.deleteNode(nodeId));
+    }
+
+    /**
+     * Helper function to handle the unselection of the current node and the selection of the clicked node.
+     *
+     * @param node
+     */
+    handleNodeChange(node: Node): void {
+        // TODO: there might be better ways to work with the Observable, however, using
+        //       subscribe resulted in circulation
+        firstValueFrom(this.viewService.getSelectedItem()).then((currentNode: Node): void => {
+            let selectedNode: Node;
+            // no node was selected yet
+            if (!currentNode) {
+                this.viewService.selectItem(node);
+                selectedNode = node;
+            }
+            // another node was selected
+            else if (currentNode !== node) {
+                this.viewService.unselectItem();
+                this.viewService.selectItem(node);
+                selectedNode = node;
+            }
+            // the same node was selected again
+            else {
+                this.viewService.unselectItem();
+                selectedNode = null;
+            }
+            // send CustomEvent back as acknowledgement
+            const customEvent = new CustomEvent('selectedNodeUpdated', {
+                detail: {
+                    selectedNode,
+                },
+            });
+            // dispatch the event
+            document.getElementsByTagName('body')[0].dispatchEvent(customEvent);
+        });
+    }
+
+    /**
+     * Helper function to handle an error by opening a toast container for the error.
+     */
+    commonCatchFunction(): void {
+        // display toast that an error occurred
+        // this has to be done manually to also take the processing time into account
+        const config: MatSnackBarConfig = {
+            duration: 200000,
+            panelClass: 'error-snackbar',
+        };
+        const errorToastContainer: MatSnackBarRef<TextOnlySnackBar> = this.snackbar?.open(
+            this.SAVE_CONFIG_ERROR_MESSAGE,
+            this.SAVE_CONFIG_ERROR_ACTION,
+            config,
+        );
+        errorToastContainer.onAction().subscribe((): void => {
+            window.location.reload();
+        });
+    }
+
+    /**
+     * Helper function to open a toast for indicating that the config is being saved.
+     */
+    openSaveConfigToast(message?: string): MatSnackBarRef<TextOnlySnackBar> {
+        const toastMessage: string = message ? message : this.SAVE_CONFIG_MESSAGE;
+        return this.snackbar?.open(toastMessage, this.SAVE_CONFIG_ACTION);
     }
 }

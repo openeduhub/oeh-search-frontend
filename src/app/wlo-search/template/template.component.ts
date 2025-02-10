@@ -16,7 +16,6 @@ import { MatSnackBarRef, TextOnlySnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
     ApiRequestConfiguration,
-    AuthenticationService,
     MdsValue,
     MdsWidget,
     Node,
@@ -37,11 +36,8 @@ import {
     TopicsColumnBrowserComponent,
     WidgetNodeAddedEvent,
 } from 'ngx-edu-sharing-wlo-pages';
-import { firstValueFrom } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
 import { v4 as uuidv4 } from 'uuid';
-import { ViewService } from '../core/view.service';
 import { SearchModule } from '../search/search.module';
 import { SharedModule } from '../shared/shared.module';
 import { AddSwimlaneBorderButtonComponent } from './add-swimlane-button/add-swimlane-border-button.component';
@@ -113,13 +109,11 @@ import { SwimlaneSettingsDialogComponent } from './swimlane/swimlane-settings-di
 export class TemplateComponent implements OnInit {
     constructor(
         private apiRequestConfig: ApiRequestConfiguration,
-        private authService: AuthenticationService,
         private dialog: MatDialog,
         private route: ActivatedRoute,
         private router: Router,
         private statisticsHelperService: StatisticsHelperService,
         private templateHelperService: TemplateHelperService,
-        private viewService: ViewService,
     ) {}
 
     @HostBinding('style.--topic-color') topicColor: string = initialTopicColor;
@@ -206,12 +200,7 @@ export class TemplateComponent implements OnInit {
                     this.topicCollectionID.set(params.collectionId);
                     this.initializedWithParams = true;
                     // login for local development
-                    const username = environment?.eduSharingUsername;
-                    const password = environment?.eduSharingPassword;
-                    // TODO: This fix for local development currently only works in Firefox
-                    if (username && password) {
-                        await firstValueFrom(this.authService.login(username, password));
-                    }
+                    await this.templateHelperService.localLogin();
                     try {
                         // fetch the collection node to set the topic name, color and check the user access
                         this.collectionNode = await this.templateHelperService.getNode(
@@ -507,38 +496,9 @@ export class TemplateComponent implements OnInit {
 
     /**
      * Called by app-swimlane nodeClicked output event.
-     * Handles the unselection of the current node and the selection of the clicked node.
      */
     handleNodeChange(node: Node): void {
-        // TODO: there might be better ways to work with the Observable, however, using
-        //       subscribe resulted in circulation
-        firstValueFrom(this.viewService.getSelectedItem()).then((currentNode: Node) => {
-            let selectedNode: Node;
-            // no node was selected yet
-            if (!currentNode) {
-                this.viewService.selectItem(node);
-                selectedNode = node;
-            }
-            // another node was selected
-            else if (currentNode !== node) {
-                this.viewService.unselectItem();
-                this.viewService.selectItem(node);
-                selectedNode = node;
-            }
-            // the same node was selected again
-            else {
-                this.viewService.unselectItem();
-                selectedNode = null;
-            }
-            // send CustomEvent back as acknowledgement
-            const customEvent = new CustomEvent('selectedNodeUpdated', {
-                detail: {
-                    selectedNode,
-                },
-            });
-            // dispatch the event
-            document.getElementsByTagName('body')[0].dispatchEvent(customEvent);
-        });
+        this.templateHelperService.handleNodeChange(node);
     }
 
     /**
