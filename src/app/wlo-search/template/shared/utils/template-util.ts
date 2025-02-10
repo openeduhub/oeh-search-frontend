@@ -1,3 +1,5 @@
+import { MatSnackBarRef, TextOnlySnackBar } from '@angular/material/snack-bar';
+
 /**
  * Helper function to retrieve the search URL.
  */
@@ -95,4 +97,15 @@ const shadeColor = (color: string, percent: number): string => {
  */
 export const convertVariantId = (fullWorkspaceId: string): string => {
     return fullWorkspaceId.split('/')?.[fullWorkspaceId.split('/').length - 1];
+};
+
+/**
+ * Helper function to close a given toast container with a delay.
+ *
+ * @param toastContainer
+ */
+export const closeToastWithDelay = (toastContainer: MatSnackBarRef<TextOnlySnackBar>): void => {
+    setTimeout((): void => {
+        toastContainer.dismiss();
+    }, 1000);
 };

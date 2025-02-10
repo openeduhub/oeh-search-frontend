@@ -76,7 +76,12 @@ import { GridTile } from './shared/types/grid-tile';
 import { PageConfig } from './shared/types/page-config';
 import { PageVariantConfig } from './shared/types/page-variant-config';
 import { Swimlane } from './shared/types/swimlane';
-import { convertVariantId, getTopicColor, retrieveSearchUrl } from './shared/utils/template-util';
+import {
+    closeToastWithDelay,
+    convertVariantId,
+    getTopicColor,
+    retrieveSearchUrl,
+} from './shared/utils/template-util';
 import { SwimlaneComponent } from './swimlane/swimlane.component';
 import { SwimlaneSettingsDialogComponent } from './swimlane/swimlane-settings-dialog/swimlane-settings-dialog.component';
 
@@ -808,7 +813,7 @@ export class TemplateComponent implements OnInit {
         await this.checkForCustomPageNodeExistence();
         const pageVariant: PageVariantConfig = this.retrievePageVariant();
         if (!pageVariant) {
-            this.closeToastWithDelay(toastContainer);
+            closeToastWithDelay(toastContainer);
             this.requestInProgress.set(false);
         }
         const swimlanesCopy = JSON.parse(JSON.stringify(this.swimlanes ?? []));
@@ -821,7 +826,7 @@ export class TemplateComponent implements OnInit {
         );
         // add swimlane visually as soon as the requests are done
         this.swimlanes.splice(positionToAdd, 0, newSwimlane);
-        this.closeToastWithDelay(toastContainer);
+        closeToastWithDelay(toastContainer);
         this.requestInProgress.set(false);
     }
 
@@ -835,7 +840,7 @@ export class TemplateComponent implements OnInit {
             await this.checkForCustomPageNodeExistence();
             const pageVariant: PageVariantConfig = this.retrievePageVariant();
             if (!pageVariant) {
-                this.closeToastWithDelay(toastContainer);
+                closeToastWithDelay(toastContainer);
                 this.requestInProgress.set(false);
             }
             const swimlanesCopy = JSON.parse(JSON.stringify(this.swimlanes ?? []));
@@ -848,7 +853,7 @@ export class TemplateComponent implements OnInit {
             );
             // move swimlane position visually as soon as the requests are done
             moveItemInArray(this.swimlanes, oldIndex, newIndex);
-            this.closeToastWithDelay(toastContainer);
+            closeToastWithDelay(toastContainer);
             this.requestInProgress.set(false);
         }
     }
@@ -865,7 +870,7 @@ export class TemplateComponent implements OnInit {
         await this.checkForCustomPageNodeExistence();
         const pageVariant: PageVariantConfig = this.retrievePageVariant();
         if (!pageVariant) {
-            this.closeToastWithDelay(toastContainer);
+            closeToastWithDelay(toastContainer);
             this.requestInProgress.set(false);
         }
         swimlane.heading = title;
@@ -875,7 +880,7 @@ export class TemplateComponent implements OnInit {
             pageVariantConfigType,
             JSON.stringify(pageVariant),
         );
-        this.closeToastWithDelay(toastContainer);
+        closeToastWithDelay(toastContainer);
         this.requestInProgress.set(false);
     }
 
@@ -911,7 +916,7 @@ export class TemplateComponent implements OnInit {
                 await this.checkForCustomPageNodeExistence();
                 const pageVariant: PageVariantConfig = this.retrievePageVariant();
                 if (!pageVariant) {
-                    this.closeToastWithDelay(toastContainer);
+                    closeToastWithDelay(toastContainer);
                     this.requestInProgress.set(false);
                 }
                 // create a copy of the swimlanes
@@ -951,7 +956,7 @@ export class TemplateComponent implements OnInit {
                 // visually change swimlanes
                 console.log('DEBUG: Overwrite swimlanes', pageVariant.structure.swimlanes);
                 this.swimlanes = pageVariant.structure.swimlanes;
-                this.closeToastWithDelay(toastContainer);
+                closeToastWithDelay(toastContainer);
                 this.requestInProgress.set(false);
             }
             console.log('Closed', result?.value);
@@ -971,7 +976,7 @@ export class TemplateComponent implements OnInit {
             await this.checkForCustomPageNodeExistence();
             const pageVariant: PageVariantConfig = this.retrievePageVariant();
             if (!pageVariant) {
-                this.closeToastWithDelay(toastContainer);
+                closeToastWithDelay(toastContainer);
                 this.requestInProgress.set(false);
             }
             // delete possible nodes defined in the swimlane
@@ -1003,7 +1008,7 @@ export class TemplateComponent implements OnInit {
             );
             // delete swimlane visually as soon as the requests are done
             this.swimlanes.splice(index, 1);
-            this.closeToastWithDelay(toastContainer);
+            closeToastWithDelay(toastContainer);
             this.requestInProgress.set(false);
         }
     }
@@ -1077,7 +1082,7 @@ export class TemplateComponent implements OnInit {
             this.pageVariantConfigs = await this.getNodeChildren(this.pageConfigNode.ref.id);
             // navigate to the newly created variant
             await this.navigateToVariant(pageConfigVariantNode.ref.id);
-            this.closeToastWithDelay(toastContainer);
+            closeToastWithDelay(toastContainer);
             this.requestInProgress.set(false);
         }
     }
@@ -1169,17 +1174,6 @@ export class TemplateComponent implements OnInit {
     openSaveConfigToast(message?: string): MatSnackBarRef<TextOnlySnackBar> {
         const toastMessage: string = message ? message : this.SAVE_CONFIG_MESSAGE;
         return this.snackbar?.open(toastMessage, this.SAVE_CONFIG_ACTION);
-    }
-
-    /**
-     * Helper function to close a given toast container with a delay.
-     *
-     * @param toastContainer
-     */
-    closeToastWithDelay(toastContainer: MatSnackBarRef<TextOnlySnackBar>): void {
-        setTimeout((): void => {
-            toastContainer.dismiss();
-        }, 1000);
     }
 
     protected readonly defaultMds: string = defaultMds;
