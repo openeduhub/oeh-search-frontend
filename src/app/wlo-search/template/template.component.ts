@@ -226,7 +226,7 @@ export class TemplateComponent implements OnInit {
                         );
                         this.topic.set(this.collectionNode.title);
                         // check the user privileges for the collection node and initialize custom listeners
-                        checkUserAccess(this.collectionNode);
+                        this.userHasEditRights.set(checkUserAccess(this.collectionNode));
                         if (this.userHasEditRights()) {
                             this.initializeCustomEventListeners();
                         }
