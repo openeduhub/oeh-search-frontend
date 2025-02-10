@@ -81,6 +81,7 @@ import {
     getTopicColor,
     prependWorkspacePrefix,
     removeNodeIdsFromPageVariantConfig,
+    retrieveNodeId,
     retrievePageConfig,
     retrievePageConfigRef,
     retrievePageVariantConfig,
@@ -257,7 +258,7 @@ export class TemplateComponent implements OnInit {
      */
     private async retrievePageConfigAndSelectVariant(variantId?: string): Promise<void> {
         // retrieve the page config node either by checking the node itself or by iterating the parents of the collectionNode
-        if (!this.pageConfigNode?.ref.id) {
+        if (!retrieveNodeId(this.pageConfigNode)) {
             this.pageConfigNode = await this.retrievePageConfigNode(this.collectionNode);
             if (!this.pageConfigNode) {
                 return;
@@ -271,7 +272,9 @@ export class TemplateComponent implements OnInit {
         }
         // retrieve the page variant configs
         if (!this.pageVariantConfigs) {
-            this.pageVariantConfigs = await this.getNodeChildren(this.pageConfigNode.ref.id);
+            this.pageVariantConfigs = await this.getNodeChildren(
+                retrieveNodeId(this.pageConfigNode),
+            );
         }
         // default the ID with the default or the first occurrence
         this.pageVariantDefaultPosition = pageConfig.variants.indexOf(pageConfig.default);
@@ -297,7 +300,7 @@ export class TemplateComponent implements OnInit {
                     });
                     // select the variant with the most matches
                     if (matchesCount > highestNumberOfMatches) {
-                        selectedVariantId = variantNode.ref.id;
+                        selectedVariantId = retrieveNodeId(variantNode);
                     }
                 }
             });
@@ -314,7 +317,7 @@ export class TemplateComponent implements OnInit {
             this.selectedVariantPosition = newSelectedVariantPosition;
             // retrieve the variant config node of the page
             this.pageVariantNode = this.pageVariantConfigs.nodes?.find(
-                (node: Node) => node.ref.id === selectedVariantId,
+                (node: Node) => retrieveNodeId(node) === selectedVariantId,
             );
             const pageVariant: PageVariantConfig = retrievePageVariantConfig(this.pageVariantNode);
             if (!pageVariant || !pageVariant.structure) {
@@ -349,7 +352,7 @@ export class TemplateComponent implements OnInit {
                 if (
                     color !== '' &&
                     pageVariantNode &&
-                    pageVariantNode.ref.id === this.pageVariantNode.ref.id &&
+                    retrieveNodeId(pageVariantNode) === retrieveNodeId(this.pageVariantNode) &&
                     swimlaneIndex > -1
                 ) {
                     let changesNecessary: boolean =
@@ -363,7 +366,7 @@ export class TemplateComponent implements OnInit {
                         this.swimlanes[swimlaneIndex].backgroundColor = color;
                         pageVariant.structure.swimlanes = this.swimlanes;
                         await this.setProperty(
-                            this.pageVariantNode.ref.id,
+                            retrieveNodeId(this.pageVariantNode),
                             pageVariantConfigType,
                             JSON.stringify(pageVariant),
                         );
@@ -387,7 +390,8 @@ export class TemplateComponent implements OnInit {
 
                 const validWidgetNodeId: boolean = widgetNodeId && widgetNodeId !== '';
                 const validParentVariant: boolean =
-                    pageVariantNode && pageVariantNode.ref.id === this.pageVariantNode.ref.id;
+                    pageVariantNode &&
+                    retrieveNodeId(pageVariantNode) === retrieveNodeId(this.pageVariantNode);
                 const validSwimlaneIndex: boolean = swimlaneIndex > -1;
                 const validGridIndex: boolean = gridIndex > -1;
 
@@ -415,7 +419,7 @@ export class TemplateComponent implements OnInit {
                             pageVariant.structure.headerNodeId = convertedWidgetNodeId;
                             this.headerNodeId.set(pageVariant.structure.headerNodeId);
                             await this.setProperty(
-                                this.pageVariantNode.ref.id,
+                                retrieveNodeId(this.pageVariantNode),
                                 pageVariantConfigType,
                                 JSON.stringify(pageVariant),
                             );
@@ -430,7 +434,7 @@ export class TemplateComponent implements OnInit {
                                 convertedWidgetNodeId;
                             pageVariant.structure.swimlanes = this.swimlanes;
                             await this.setProperty(
-                                this.pageVariantNode.ref.id,
+                                retrieveNodeId(this.pageVariantNode),
                                 pageVariantConfigType,
                                 JSON.stringify(pageVariant),
                             );
@@ -461,7 +465,7 @@ export class TemplateComponent implements OnInit {
         // otherwise, iterate the parents to retrieve the pageConfigRef, if pageConfigPropagate is set
         if (!pageRef) {
             const parents: ParentEntries = await firstValueFrom(
-                this.nodeApi.getParents(node.ref.id, {
+                this.nodeApi.getParents(retrieveNodeId(node), {
                     propertyFilter: ['-all-'],
                     fullPath: false,
                 }),
@@ -510,7 +514,7 @@ export class TemplateComponent implements OnInit {
         }
         pageVariant.structure.swimlanes = this.swimlanes;
         await this.setProperty(
-            this.pageVariantNode.ref.id,
+            retrieveNodeId(this.pageVariantNode),
             pageVariantConfigType,
             JSON.stringify(pageVariant),
         );
@@ -670,12 +674,14 @@ export class TemplateComponent implements OnInit {
             if (this.pageVariantConfigs.nodes?.length > 0) {
                 for (const variantNode of this.pageVariantConfigs.nodes) {
                     let pageConfigVariantNode: Node = await this.createChild(
-                        this.pageConfigNode.ref.id,
+                        retrieveNodeId(this.pageConfigNode),
                         ioType,
                         pageVariantConfigPrefix + uuidv4(),
                         pageVariantConfigAspect,
                     );
-                    pageVariants.push(prependWorkspacePrefix(pageConfigVariantNode.ref.id));
+                    pageVariants.push(
+                        prependWorkspacePrefix(retrieveNodeId(pageConfigVariantNode)),
+                    );
                     const variantConfig: PageVariantConfig = retrievePageVariantConfig(variantNode);
                     removeNodeIdsFromPageVariantConfig(variantConfig);
                     updatePageVariantConfig(
@@ -686,12 +692,12 @@ export class TemplateComponent implements OnInit {
                         isHeaderNode,
                     );
                     await this.setProperty(
-                        pageConfigVariantNode.ref.id,
+                        retrieveNodeId(pageConfigVariantNode),
                         pageVariantConfigType,
                         JSON.stringify(variantConfig),
                     );
                     await this.setProperty(
-                        pageConfigVariantNode.ref.id,
+                        retrieveNodeId(pageConfigVariantNode),
                         pageVariantIsTemplateType,
                         'false',
                     );
@@ -713,21 +719,26 @@ export class TemplateComponent implements OnInit {
             }
             // update ccm:page_config of page config node
             this.pageConfigNode = await this.setPropertyAndRetrieveUpdatedNode(
-                this.pageConfigNode.ref.id,
+                retrieveNodeId(this.pageConfigNode),
                 pageConfigType,
                 JSON.stringify(pageConfig),
             );
             // get page variant configs
-            this.pageVariantConfigs = await this.getNodeChildren(this.pageConfigNode.ref.id);
+            this.pageVariantConfigs = await this.getNodeChildren(
+                retrieveNodeId(this.pageConfigNode),
+            );
             // parse the page config ref again
             const pageVariant: PageVariantConfig = this.retrievePageVariant();
             this.headerNodeId.set(pageVariant.structure.headerNodeId);
             this.swimlanes = pageVariant.structure.swimlanes ?? [];
             // set ccm:page_config_ref in collection
             await firstValueFrom(
-                this.nodeApi.setProperty('-home-', this.collectionNode.ref.id, pageConfigRefType, [
-                    prependWorkspacePrefix(this.pageConfigNode.ref.id),
-                ]),
+                this.nodeApi.setProperty(
+                    '-home-',
+                    retrieveNodeId(this.collectionNode),
+                    pageConfigRefType,
+                    [prependWorkspacePrefix(retrieveNodeId(this.pageConfigNode))],
+                ),
             );
             // set this.collectionNodeHasPageConfig to true
             this.collectionNodeHasPageConfig = true;
@@ -757,7 +768,7 @@ export class TemplateComponent implements OnInit {
         }
         selectedVariantId = convertNodeRefIntoNodeId(selectedVariantId);
         this.pageVariantNode = this.pageVariantConfigs.nodes?.find(
-            (node: Node) => node.ref.id === selectedVariantId,
+            (node: Node) => retrieveNodeId(node) === selectedVariantId,
         );
         if (!this.pageVariantNode) {
             console.error(
@@ -793,7 +804,7 @@ export class TemplateComponent implements OnInit {
         swimlanesCopy.splice(positionToAdd, 0, newSwimlane);
         pageVariant.structure.swimlanes = swimlanesCopy;
         await this.setProperty(
-            this.pageVariantNode.ref.id,
+            retrieveNodeId(this.pageVariantNode),
             pageVariantConfigType,
             JSON.stringify(pageVariant),
         );
@@ -821,7 +832,7 @@ export class TemplateComponent implements OnInit {
             moveItemInArray(swimlanesCopy, oldIndex, newIndex);
             pageVariant.structure.swimlanes = swimlanesCopy;
             await this.setProperty(
-                this.pageVariantNode.ref.id,
+                retrieveNodeId(this.pageVariantNode),
                 pageVariantConfigType,
                 JSON.stringify(pageVariant),
             );
@@ -851,7 +862,7 @@ export class TemplateComponent implements OnInit {
         swimlane.heading = title;
         pageVariant.structure.swimlanes = this.swimlanes;
         await this.setProperty(
-            this.pageVariantNode.ref.id,
+            retrieveNodeId(this.pageVariantNode),
             pageVariantConfigType,
             JSON.stringify(pageVariant),
         );
@@ -917,7 +928,7 @@ export class TemplateComponent implements OnInit {
                 // overwrite swimlanes
                 pageVariant.structure.swimlanes = swimlanesCopy;
                 await this.setProperty(
-                    this.pageVariantNode.ref.id,
+                    retrieveNodeId(this.pageVariantNode),
                     pageVariantConfigType,
                     JSON.stringify(pageVariant),
                 );
@@ -977,7 +988,7 @@ export class TemplateComponent implements OnInit {
             swimlanesCopy.splice(index, 1);
             pageVariant.structure.swimlanes = swimlanesCopy;
             await this.setProperty(
-                this.pageVariantNode.ref.id,
+                retrieveNodeId(this.pageVariantNode),
                 pageVariantConfigType,
                 JSON.stringify(pageVariant),
             );
@@ -998,7 +1009,7 @@ export class TemplateComponent implements OnInit {
             )
         ) {
             // check for pageConfigNode existence
-            if (!this.pageConfigNode?.ref.id) {
+            if (!retrieveNodeId(this.pageConfigNode)) {
                 return;
             }
             // parse the page config from the properties
@@ -1011,7 +1022,7 @@ export class TemplateComponent implements OnInit {
             // retrieve variant node
             const currentPageVariantId: string = pageConfig.variants[this.selectedVariantPosition];
             const variantNode: Node = this.pageVariantConfigs.nodes?.find((node) =>
-                currentPageVariantId.includes(node.ref.id),
+                currentPageVariantId.includes(retrieveNodeId(node)),
             );
             if (!variantNode) {
                 return;
@@ -1023,37 +1034,39 @@ export class TemplateComponent implements OnInit {
                     'Eine neue Seiten-Variante wird erstellt und geladen.',
                 );
             let pageConfigVariantNode: Node = await this.createChild(
-                this.pageConfigNode.ref.id,
+                retrieveNodeId(this.pageConfigNode),
                 ioType,
                 pageVariantConfigPrefix + uuidv4(),
                 pageVariantConfigAspect,
             );
             // push it to the existing variants
-            pageConfig.variants.push(prependWorkspacePrefix(pageConfigVariantNode.ref.id));
+            pageConfig.variants.push(prependWorkspacePrefix(retrieveNodeId(pageConfigVariantNode)));
             // parse variant config and remove node IDs
             const variantConfig: PageVariantConfig = retrievePageVariantConfig(variantNode);
             removeNodeIdsFromPageVariantConfig(variantConfig);
             // set properties of the created child
             await this.setProperty(
-                pageConfigVariantNode.ref.id,
+                retrieveNodeId(pageConfigVariantNode),
                 pageVariantConfigType,
                 JSON.stringify(variantConfig),
             );
             await this.setProperty(
-                pageConfigVariantNode.ref.id,
+                retrieveNodeId(pageConfigVariantNode),
                 pageVariantIsTemplateType,
                 'false',
             );
             // update ccm:page_config of page config node
             this.pageConfigNode = await this.setPropertyAndRetrieveUpdatedNode(
-                this.pageConfigNode.ref.id,
+                retrieveNodeId(this.pageConfigNode),
                 pageConfigType,
                 JSON.stringify(pageConfig),
             );
             // reload page variant configs
-            this.pageVariantConfigs = await this.getNodeChildren(this.pageConfigNode.ref.id);
+            this.pageVariantConfigs = await this.getNodeChildren(
+                retrieveNodeId(this.pageConfigNode),
+            );
             // navigate to the newly created variant
-            await this.navigateToVariant(pageConfigVariantNode.ref.id);
+            await this.navigateToVariant(retrieveNodeId(pageConfigVariantNode));
             closeToastWithDelay(toastContainer);
             this.requestInProgress.set(false);
         }

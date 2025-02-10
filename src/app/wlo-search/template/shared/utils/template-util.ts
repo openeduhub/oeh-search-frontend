@@ -103,6 +103,15 @@ const shadeColor = (color: string, percent: number): string => {
 };
 
 /**
+ * Retrieves the ID from a given node.
+ *
+ * @param node
+ */
+export const retrieveNodeId = (node: Node): string => {
+    return node?.ref.id;
+};
+
+/**
  * Prepends the workspace spaces store prefix to a given node ID.
  *
  * @param nodeId
