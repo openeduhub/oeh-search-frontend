@@ -6,6 +6,7 @@ import {
     TextOnlySnackBar,
 } from '@angular/material/snack-bar';
 import { Node, NodeEntries, NodeService } from 'ngx-edu-sharing-api';
+import { ParentEntries } from 'ngx-edu-sharing-api/lib/api/models/parent-entries';
 import { firstValueFrom } from 'rxjs';
 import { widgetConfigAspect } from '../custom-definitions';
 
@@ -50,6 +51,33 @@ export class TemplateHelperService {
     }
 
     /**
+     * Helper function to retrieve a node with a given ID.
+     */
+    async getNode(nodeId: string): Promise<Node> {
+        return firstValueFrom(this.nodeApi.getNode(nodeId));
+    }
+
+    /**
+     * Helper function to retrieve the parents of a given node ID.
+     */
+    async getNodeParents(nodeId: string): Promise<ParentEntries> {
+        return firstValueFrom(
+            this.nodeApi.getParents(nodeId, {
+                propertyFilter: ['-all-'],
+                fullPath: false,
+            }),
+        );
+    }
+
+    /**
+     * Helper function to retrieve the children of a given node ID.
+     */
+    async getNodeChildren(nodeId: string): Promise<NodeEntries> {
+        // TODO: Pagination vs. large maxItems number
+        return firstValueFrom(this.nodeApi.getChildren(nodeId, { maxItems: 500 }));
+    }
+
+    /**
      * Helper function to create a child for an existing node.
      */
     async createChild(
@@ -88,14 +116,13 @@ export class TemplateHelperService {
         value: string,
     ): Promise<Node> {
         await this.setProperty(nodeId, propertyName, value);
-        return firstValueFrom(this.nodeApi.getNode(nodeId));
+        return this.getNode(nodeId);
     }
 
     /**
-     * Helper function to retrieve the children of a given node.
+     * Helper function to delete a node with a given ID.
      */
-    async getNodeChildren(nodeId: string): Promise<NodeEntries> {
-        // TODO: Pagination vs. large maxItems number
-        return firstValueFrom(this.nodeApi.getChildren(nodeId, { maxItems: 500 }));
+    async deleteNode(nodeId: string): Promise<void> {
+        return firstValueFrom(this.nodeApi.deleteNode(nodeId));
     }
 }

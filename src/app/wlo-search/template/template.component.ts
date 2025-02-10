@@ -21,7 +21,6 @@ import {
     MdsWidget,
     Node,
     NodeEntries,
-    NodeService,
 } from 'ngx-edu-sharing-api';
 import { ParentEntries } from 'ngx-edu-sharing-api/lib/api/models/parent-entries';
 import { SpinnerComponent } from 'ngx-edu-sharing-ui';
@@ -66,7 +65,6 @@ import {
     profilingFilterbarDimensionKeys,
     retrieveCustomUrl,
     statistics,
-    widgetConfigAspect,
 } from './shared/custom-definitions';
 import { StatisticsHelperService } from './shared/services/statistics-helper.service';
 import { TemplateHelperService } from './shared/services/template-helper.service';
@@ -117,7 +115,6 @@ export class TemplateComponent implements OnInit {
         private apiRequestConfig: ApiRequestConfiguration,
         private authService: AuthenticationService,
         private dialog: MatDialog,
-        private nodeApi: NodeService,
         private route: ActivatedRoute,
         private router: Router,
         private statisticsHelperService: StatisticsHelperService,
@@ -217,8 +214,8 @@ export class TemplateComponent implements OnInit {
                     }
                     try {
                         // fetch the collection node to set the topic name, color and check the user access
-                        this.collectionNode = await firstValueFrom(
-                            this.nodeApi.getNode(params.collectionId),
+                        this.collectionNode = await this.templateHelperService.getNode(
+                            params.collectionId,
                         );
                         this.topic.set(this.collectionNode.title);
                         // check the user privileges for the collection node and initialize custom listeners
@@ -444,7 +441,7 @@ export class TemplateComponent implements OnInit {
                 // note: if it exists, but cannot be added in the grid, we might want to delete the node again
                 if (validWidgetNodeId && !addedSuccessfully) {
                     const nodeIdToDelete: string = convertNodeRefIntoNodeId(widgetNodeId);
-                    await firstValueFrom(this.nodeApi.deleteNode(nodeIdToDelete));
+                    await this.templateHelperService.deleteNode(nodeIdToDelete);
                 }
             },
             false,
@@ -463,11 +460,8 @@ export class TemplateComponent implements OnInit {
         this.collectionNodeHasPageConfig = !!pageRef;
         // otherwise, iterate the parents to retrieve the pageConfigRef, if pageConfigPropagate is set
         if (!pageRef) {
-            const parents: ParentEntries = await firstValueFrom(
-                this.nodeApi.getParents(retrieveNodeId(node), {
-                    propertyFilter: ['-all-'],
-                    fullPath: false,
-                }),
+            const parents: ParentEntries = await this.templateHelperService.getNodeParents(
+                retrieveNodeId(node),
             );
             const propagatingParent: Node = parents.nodes.find((parent: Node) =>
                 checkPageConfigPropagate(parent),
@@ -480,7 +474,7 @@ export class TemplateComponent implements OnInit {
             const pageNodeId: string = convertNodeRefIntoNodeId(pageRef);
             if (pageNodeId) {
                 this.pageConfigCheckFailed.set(false);
-                return await firstValueFrom(this.nodeApi.getNode(pageNodeId));
+                return await this.templateHelperService.getNode(pageNodeId);
             }
         }
         this.pageConfigCheckFailed.set(true);
@@ -880,7 +874,7 @@ export class TemplateComponent implements OnInit {
                 for (const nodeId of deletedWidgetNodeIds) {
                     // retrieve correct nodeId
                     const widgetNodeId: string = convertNodeRefIntoNodeId(nodeId);
-                    await firstValueFrom(this.nodeApi.deleteNode(widgetNodeId));
+                    await this.templateHelperService.deleteNode(widgetNodeId);
                 }
                 // visually change swimlanes
                 console.log('DEBUG: Overwrite swimlanes', pageVariant.structure.swimlanes);
@@ -917,7 +911,7 @@ export class TemplateComponent implements OnInit {
                     if (widget.nodeId) {
                         const nodeId: string =
                             widget.nodeId.split('/')?.[widget.nodeId.split('/').length - 1];
-                        await firstValueFrom(this.nodeApi.deleteNode(nodeId)).then(
+                        await this.templateHelperService.deleteNode(nodeId).then(
                             () => {
                                 console.log('Deleted child node');
                             },
