@@ -12,7 +12,7 @@ import {
     WritableSignal,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar, MatSnackBarRef, TextOnlySnackBar } from '@angular/material/snack-bar';
+import { MatSnackBarRef, TextOnlySnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
     ApiRequestConfiguration,
@@ -107,9 +107,6 @@ import { SwimlaneSettingsDialogComponent } from './swimlane/swimlane-settings-di
     styleUrls: ['./template.component.scss'],
 })
 export class TemplateComponent implements OnInit {
-    private readonly SAVE_CONFIG_ACTION: string = 'Schließen';
-    private readonly SAVE_CONFIG_MESSAGE: string = 'Ihre Änderungen werden gespeichert.';
-
     constructor(
         private apiRequestConfig: ApiRequestConfiguration,
         private authService: AuthenticationService,
@@ -117,7 +114,6 @@ export class TemplateComponent implements OnInit {
         private nodeApi: NodeService,
         private route: ActivatedRoute,
         private router: Router,
-        private snackbar: MatSnackBar,
         private statisticsHelperService: StatisticsHelperService,
         private templateHelperService: TemplateHelperService,
         private viewService: ViewService,
@@ -809,7 +805,8 @@ export class TemplateComponent implements OnInit {
     async addSwimlane(newSwimlane: Swimlane, positionToAdd: number): Promise<void> {
         // TODO: Move into shared function
         this.requestInProgress.set(true);
-        const toastContainer: MatSnackBarRef<TextOnlySnackBar> = this.openSaveConfigToast();
+        const toastContainer: MatSnackBarRef<TextOnlySnackBar> =
+            this.templateHelperService.openSaveConfigToast();
         await this.checkForCustomPageNodeExistence();
         const pageVariant: PageVariantConfig = this.retrievePageVariant();
         if (!pageVariant) {
@@ -836,7 +833,8 @@ export class TemplateComponent implements OnInit {
     async moveSwimlanePosition(oldIndex: number, newIndex: number) {
         if (newIndex >= 0 && newIndex <= this.swimlanes.length - 1) {
             this.requestInProgress.set(true);
-            const toastContainer: MatSnackBarRef<TextOnlySnackBar> = this.openSaveConfigToast();
+            const toastContainer: MatSnackBarRef<TextOnlySnackBar> =
+                this.templateHelperService.openSaveConfigToast();
             await this.checkForCustomPageNodeExistence();
             const pageVariant: PageVariantConfig = this.retrievePageVariant();
             if (!pageVariant) {
@@ -866,7 +864,8 @@ export class TemplateComponent implements OnInit {
      */
     async swimlaneTitleChanged(title: string, swimlane: Swimlane) {
         this.requestInProgress.set(true);
-        const toastContainer: MatSnackBarRef<TextOnlySnackBar> = this.openSaveConfigToast();
+        const toastContainer: MatSnackBarRef<TextOnlySnackBar> =
+            this.templateHelperService.openSaveConfigToast();
         await this.checkForCustomPageNodeExistence();
         const pageVariant: PageVariantConfig = this.retrievePageVariant();
         if (!pageVariant) {
@@ -912,7 +911,8 @@ export class TemplateComponent implements OnInit {
                     return;
                 }
                 this.requestInProgress.set(true);
-                const toastContainer: MatSnackBarRef<TextOnlySnackBar> = this.openSaveConfigToast();
+                const toastContainer: MatSnackBarRef<TextOnlySnackBar> =
+                    this.templateHelperService.openSaveConfigToast();
                 await this.checkForCustomPageNodeExistence();
                 const pageVariant: PageVariantConfig = this.retrievePageVariant();
                 if (!pageVariant) {
@@ -972,7 +972,8 @@ export class TemplateComponent implements OnInit {
             confirm('Wollen Sie dieses Element wirklich löschen?') === true
         ) {
             this.requestInProgress.set(true);
-            const toastContainer: MatSnackBarRef<TextOnlySnackBar> = this.openSaveConfigToast();
+            const toastContainer: MatSnackBarRef<TextOnlySnackBar> =
+                this.templateHelperService.openSaveConfigToast();
             await this.checkForCustomPageNodeExistence();
             const pageVariant: PageVariantConfig = this.retrievePageVariant();
             if (!pageVariant) {
@@ -1043,9 +1044,10 @@ export class TemplateComponent implements OnInit {
             }
             // create child for variant node
             this.requestInProgress.set(true);
-            const toastContainer: MatSnackBarRef<TextOnlySnackBar> = this.openSaveConfigToast(
-                'Eine neue Seiten-Variante wird erstellt und geladen.',
-            );
+            const toastContainer: MatSnackBarRef<TextOnlySnackBar> =
+                this.templateHelperService.openSaveConfigToast(
+                    'Eine neue Seiten-Variante wird erstellt und geladen.',
+                );
             let pageConfigVariantNode: Node = await this.createChild(
                 this.pageConfigNode.ref.id,
                 ioType,
@@ -1166,14 +1168,6 @@ export class TemplateComponent implements OnInit {
                 accordion.open();
             });
         }
-    }
-
-    /**
-     * Helper function to open a toast for indicating that the config is being saved.
-     */
-    openSaveConfigToast(message?: string): MatSnackBarRef<TextOnlySnackBar> {
-        const toastMessage: string = message ? message : this.SAVE_CONFIG_MESSAGE;
-        return this.snackbar?.open(toastMessage, this.SAVE_CONFIG_ACTION);
     }
 
     protected readonly defaultMds: string = defaultMds;

@@ -10,6 +10,8 @@ import {
     providedIn: 'root',
 })
 export class TemplateHelperService {
+    private readonly SAVE_CONFIG_ACTION: string = 'Schließen';
+    private readonly SAVE_CONFIG_MESSAGE: string = 'Ihre Änderungen werden gespeichert.';
     private readonly SAVE_CONFIG_ERROR_ACTION: string = 'Seite neuladen';
     private readonly SAVE_CONFIG_ERROR_MESSAGE: string =
         'Beim Laden einer Ressource ist ein Fehler aufgetreten. Bitte laden Sie die Seite neu.';
@@ -34,5 +36,13 @@ export class TemplateHelperService {
         errorToastContainer.onAction().subscribe((): void => {
             window.location.reload();
         });
+    }
+
+    /**
+     * Helper function to open a toast for indicating that the config is being saved.
+     */
+    openSaveConfigToast(message?: string): MatSnackBarRef<TextOnlySnackBar> {
+        const toastMessage: string = message ? message : this.SAVE_CONFIG_MESSAGE;
+        return this.snackbar?.open(toastMessage, this.SAVE_CONFIG_ACTION);
     }
 }
