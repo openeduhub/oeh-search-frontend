@@ -54,7 +54,6 @@ import {
     initialTopicColor,
     ioType,
     mapType,
-    pageConfigPropagateType,
     pageConfigRefType,
     pageConfigType,
     pageVariantConfigType,
@@ -77,10 +76,12 @@ import { PageConfig } from './shared/types/page-config';
 import { PageVariantConfig } from './shared/types/page-variant-config';
 import { Swimlane } from './shared/types/swimlane';
 import {
+    checkPageConfigPropagate,
     closeToastWithDelay,
     convertVariantId,
     getTopicColor,
     removeNodeIdsFromPageVariantConfig,
+    retrievePageConfigRef,
     retrievePageVariantConfig,
     retrieveSearchUrl,
     updatePageVariantConfig,
@@ -331,7 +332,7 @@ export class TemplateComponent implements OnInit {
             }
             // if page config was retrieved from parent,
             // remove possible existing nodeIds from swimlane grids
-            if (!this.collectionNode.properties[pageConfigRefType]?.[0]) {
+            if (!retrievePageConfigRef(this.collectionNode)) {
                 removeNodeIdsFromPageVariantConfig(pageVariant);
             }
             // set the headerNodeId + swimlanes
@@ -467,7 +468,7 @@ export class TemplateComponent implements OnInit {
      */
     private async retrievePageConfigNode(node: Node): Promise<Node> {
         // check, whether the node itself has a pageConfigRef
-        let pageRef: string = node.properties[pageConfigRefType]?.[0];
+        let pageRef: string = retrievePageConfigRef(node);
         this.collectionNodeHasPageConfig = !!pageRef;
         // otherwise, iterate the parents to retrieve the pageConfigRef, if pageConfigPropagate is set
         if (!pageRef) {
@@ -477,9 +478,12 @@ export class TemplateComponent implements OnInit {
                     fullPath: false,
                 }),
             );
-            pageRef = parents.nodes.find(
-                (parent: Node) => !!parent.properties[pageConfigPropagateType]?.[0],
-            )?.properties[pageConfigRefType]?.[0];
+            const propagatingParent: Node = parents.nodes.find((parent: Node) =>
+                checkPageConfigPropagate(parent),
+            );
+            if (propagatingParent) {
+                pageRef = retrievePageConfigRef(propagatingParent);
+            }
         }
         if (pageRef) {
             // workspace://SpacesStore/UUID -> UUID

@@ -1,6 +1,10 @@
 import { MatSnackBarRef, TextOnlySnackBar } from '@angular/material/snack-bar';
 import { Node } from 'ngx-edu-sharing-api';
-import { pageVariantConfigType } from '../custom-definitions';
+import {
+    pageConfigPropagateType,
+    pageConfigRefType,
+    pageVariantConfigType,
+} from '../custom-definitions';
 import { GridTile } from '../types/grid-tile';
 import { PageVariantConfig } from '../types/page-variant-config';
 import { Swimlane } from '../types/swimlane';
@@ -102,6 +106,24 @@ const shadeColor = (color: string, percent: number): string => {
  */
 export const convertVariantId = (fullWorkspaceId: string): string => {
     return fullWorkspaceId.split('/')?.[fullWorkspaceId.split('/').length - 1];
+};
+
+/**
+ * Retrieves the page config ref from a given (collection) node.
+ *
+ * @param node
+ */
+export const retrievePageConfigRef = (node: Node): string => {
+    return node.properties?.[pageConfigRefType]?.[0];
+};
+
+/**
+ * Checks, whether a given (collection) node propagates its config to the children.
+ *
+ * @param node
+ */
+export const checkPageConfigPropagate = (node: Node): boolean => {
+    return node.properties?.[pageConfigPropagateType]?.[0] === 'true';
 };
 
 /**
