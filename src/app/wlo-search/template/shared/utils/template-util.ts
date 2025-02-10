@@ -87,3 +87,12 @@ const shadeColor = (color: string, percent: number): string => {
 
     return '#' + RR + GG + BB;
 };
+
+/**
+ * Converts a given variant ID including workspace string into the plain ID.
+ *
+ * @param fullWorkspaceId
+ */
+export const convertVariantId = (fullWorkspaceId: string): string => {
+    return fullWorkspaceId.split('/')?.[fullWorkspaceId.split('/').length - 1];
+};

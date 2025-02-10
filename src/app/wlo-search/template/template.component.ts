@@ -76,7 +76,7 @@ import { GridTile } from './shared/types/grid-tile';
 import { PageConfig } from './shared/types/page-config';
 import { PageVariantConfig } from './shared/types/page-variant-config';
 import { Swimlane } from './shared/types/swimlane';
-import { getTopicColor, retrieveSearchUrl } from './shared/utils/template-util';
+import { convertVariantId, getTopicColor, retrieveSearchUrl } from './shared/utils/template-util';
 import { SwimlaneComponent } from './swimlane/swimlane.component';
 import { SwimlaneSettingsDialogComponent } from './swimlane/swimlane-settings-dialog/swimlane-settings-dialog.component';
 
@@ -183,6 +183,16 @@ export class TemplateComponent implements OnInit {
     }
 
     /**
+     * Returns the page variant.
+     */
+    private get retrievePageVariantConfig(): PageVariantConfig {
+        if (this.pageVariantNode.properties[pageVariantConfigType]?.[0]) {
+            return JSON.parse(this.pageVariantNode.properties[pageVariantConfigType][0]);
+        }
+        return null;
+    }
+
+    /**
      * Returns an array of IDs of currently selected dimension values (output by wlo-filter-bar).
      */
     private get selectedDimensionValueIds(): string[] {
@@ -278,7 +288,7 @@ export class TemplateComponent implements OnInit {
         this.pageVariantDefaultPosition = pageConfig.variants.indexOf(pageConfig.default);
         // select the proper variant (initialize with default or first variant)
         let selectedVariantId: string = pageConfig.default ?? pageConfig.variants[0];
-        selectedVariantId = selectedVariantId.split('/')?.[selectedVariantId.split('/').length - 1];
+        selectedVariantId = convertVariantId(selectedVariantId);
         // if a variantId is provided, override it
         if (variantId) {
             selectedVariantId = variantId;
@@ -321,13 +331,12 @@ export class TemplateComponent implements OnInit {
             this.pageVariantNode = this.pageVariantConfigs.nodes?.find(
                 (node: Node) => node.ref.id === selectedVariantId,
             );
-            const pageVariant: PageVariantConfig = this.pageVariantNode.properties[
-                pageVariantConfigType
-            ]?.[0]
-                ? JSON.parse(this.pageVariantNode.properties[pageVariantConfigType][0])
-                : {};
-            if (!pageVariant.structure) {
-                console.error('No structure was found in pageVariant', this.pageVariantNode);
+            const pageVariant: PageVariantConfig = this.retrievePageVariantConfig;
+            if (!pageVariant || !pageVariant.structure) {
+                console.error(
+                    'Either no pageVariant or no structure in it was found.',
+                    pageVariant,
+                );
                 return;
             }
             // if page config was retrieved from parent,
@@ -769,7 +778,7 @@ export class TemplateComponent implements OnInit {
             );
             return null;
         }
-        selectedVariantId = selectedVariantId.split('/')?.[selectedVariantId.split('/').length - 1];
+        selectedVariantId = convertVariantId(selectedVariantId);
         this.pageVariantNode = this.pageVariantConfigs.nodes?.find(
             (node: Node) => node.ref.id === selectedVariantId,
         );
@@ -781,11 +790,7 @@ export class TemplateComponent implements OnInit {
             );
             return null;
         }
-        const pageVariant: PageVariantConfig = this.pageVariantNode.properties[
-            pageVariantConfigType
-        ]?.[0]
-            ? JSON.parse(this.pageVariantNode.properties[pageVariantConfigType][0])
-            : null;
+        const pageVariant: PageVariantConfig = this.retrievePageVariantConfig;
         if (!pageVariant || !pageVariant.structure) {
             console.error('Either no pageVariant or no structure in it was found.', pageVariant);
             return null;
