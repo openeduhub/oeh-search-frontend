@@ -81,6 +81,7 @@ import {
     convertPageRefIntoNodeId,
     getTopicColor,
     removeNodeIdsFromPageVariantConfig,
+    retrievePageConfig,
     retrievePageConfigRef,
     retrievePageVariantConfig,
     retrieveSearchUrl,
@@ -178,16 +179,6 @@ export class TemplateComponent implements OnInit {
     statisticsLoaded: WritableSignal<boolean> = signal(false);
 
     /**
-     * Returns the current page config.
-     */
-    private get retrieveCurrentPageConfig(): PageConfig {
-        if (this.pageConfigNode.properties[pageConfigType]?.[0]) {
-            return JSON.parse(this.pageConfigNode.properties[pageConfigType][0]);
-        }
-        return {};
-    }
-
-    /**
      * Returns an array of IDs of currently selected dimension values (output by wlo-filter-bar).
      */
     private get selectedDimensionValueIds(): string[] {
@@ -270,7 +261,7 @@ export class TemplateComponent implements OnInit {
             }
         }
         // parse the page config from the properties
-        const pageConfig: PageConfig = this.retrieveCurrentPageConfig;
+        const pageConfig: PageConfig = retrievePageConfig(this.pageConfigNode);
         if (!pageConfig.variants) {
             console.error('pageConfig does not include variants', pageConfig);
             return;
@@ -753,7 +744,7 @@ export class TemplateComponent implements OnInit {
      */
     private retrievePageVariant(): PageVariantConfig {
         // parse the page config from the properties
-        const pageConfig: PageConfig = this.retrieveCurrentPageConfig;
+        const pageConfig: PageConfig = retrievePageConfig(this.pageConfigNode);
         if (!pageConfig.variants) {
             console.error('pageConfig does not include variants.', pageConfig);
             return null;
@@ -1016,7 +1007,7 @@ export class TemplateComponent implements OnInit {
                 return;
             }
             // parse the page config from the properties
-            const pageConfig: PageConfig = this.retrieveCurrentPageConfig;
+            const pageConfig: PageConfig = retrievePageConfig(this.pageConfigNode);
             // check for pageConfig variant existence
             if (!pageConfig.variants) {
                 console.error('pageConfig does not include variants', pageConfig);

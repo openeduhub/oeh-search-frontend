@@ -3,9 +3,11 @@ import { Node } from 'ngx-edu-sharing-api';
 import {
     pageConfigPropagateType,
     pageConfigRefType,
+    pageConfigType,
     pageVariantConfigType,
 } from '../custom-definitions';
 import { GridTile } from '../types/grid-tile';
+import { PageConfig } from '../types/page-config';
 import { PageVariantConfig } from '../types/page-variant-config';
 import { Swimlane } from '../types/swimlane';
 
@@ -119,12 +121,36 @@ export const retrievePageConfigRef = (node: Node): string => {
 };
 
 /**
+ * Retrieves the page config from a given page config node.
+ *
+ * @param node
+ */
+export const retrievePageConfig = (node: Node): PageConfig => {
+    if (node.properties?.[pageConfigType]?.[0]) {
+        return JSON.parse(node.properties[pageConfigType][0]);
+    }
+    return {};
+};
+
+/**
  * Checks, whether a given (collection) node propagates its config to the children.
  *
  * @param node
  */
 export const checkPageConfigPropagate = (node: Node): boolean => {
     return node.properties?.[pageConfigPropagateType]?.[0] === 'true';
+};
+
+/**
+ * Retrieves the variant config from a given variant node.
+ *
+ * @param variantNode
+ */
+export const retrievePageVariantConfig = (variantNode: Node): PageVariantConfig => {
+    if (variantNode.properties[pageVariantConfigType]?.[0]) {
+        return JSON.parse(variantNode.properties[pageVariantConfigType][0]);
+    }
+    return null;
 };
 
 /**
@@ -141,18 +167,6 @@ export const removeNodeIdsFromPageVariantConfig = (pageVariant: PageVariantConfi
     if (pageVariant.structure.headerNodeId) {
         delete pageVariant.structure.headerNodeId;
     }
-};
-
-/**
- * Retrieves the variant config from a given variant node.
- *
- * @param variantNode
- */
-export const retrievePageVariantConfig = (variantNode: Node): PageVariantConfig => {
-    if (variantNode.properties[pageVariantConfigType]?.[0]) {
-        return JSON.parse(variantNode.properties[pageVariantConfigType][0]);
-    }
-    return null;
 };
 
 /**
