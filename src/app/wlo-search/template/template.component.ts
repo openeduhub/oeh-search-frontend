@@ -78,8 +78,9 @@ import { Swimlane } from './shared/types/swimlane';
 import {
     checkPageConfigPropagate,
     closeToastWithDelay,
-    convertPageRefIntoNodeId,
+    convertNodeRefIntoNodeId,
     getTopicColor,
+    prependWorkspacePrefix,
     removeNodeIdsFromPageVariantConfig,
     retrievePageConfig,
     retrievePageConfigRef,
@@ -274,7 +275,7 @@ export class TemplateComponent implements OnInit {
         this.pageVariantDefaultPosition = pageConfig.variants.indexOf(pageConfig.default);
         // select the proper variant (initialize with default or first variant)
         let selectedVariantId: string = pageConfig.default ?? pageConfig.variants[0];
-        selectedVariantId = convertPageRefIntoNodeId(selectedVariantId);
+        selectedVariantId = convertNodeRefIntoNodeId(selectedVariantId);
         // if a variantId is provided, override it
         if (variantId) {
             selectedVariantId = variantId;
@@ -301,7 +302,7 @@ export class TemplateComponent implements OnInit {
         }
         // hold the position of the selected variant for later retrieval
         const newSelectedVariantPosition: number = pageConfig.variants.indexOf(
-            workspaceSpacesStorePrefix + selectedVariantId,
+            prependWorkspacePrefix(selectedVariantId),
         );
         const initialLoad: boolean = this.selectedVariantPosition === -1;
         const pageVariantChanged: boolean =
@@ -393,11 +394,7 @@ export class TemplateComponent implements OnInit {
                 let addedSuccessfully: boolean = false;
                 if (validWidgetNodeId && validParentVariant && (validInputs || isHeaderNode)) {
                     // convert widget node ID, if necessary
-                    const convertedWidgetNodeId: string = widgetNodeId.includes(
-                        workspaceSpacesStorePrefix,
-                    )
-                        ? widgetNodeId
-                        : workspaceSpacesStorePrefix + widgetNodeId;
+                    const convertedWidgetNodeId: string = prependWorkspacePrefix(widgetNodeId);
                     // if no page configuration exists yet, a config has to be created and a reload of the page is necessary
                     // TODO: we currently assume that adding is successfully, when creating a new page node.
                     //       This might be improved by inputting validWidgetNodeId and deleting internally.
@@ -441,9 +438,7 @@ export class TemplateComponent implements OnInit {
                 }
                 // note: if it exists, but cannot be added in the grid, we might want to delete the node again
                 if (validWidgetNodeId && !addedSuccessfully) {
-                    const nodeIdToDelete: string = widgetNodeId.includes(workspaceSpacesStorePrefix)
-                        ? widgetNodeId.split('/')?.[widgetNodeId.split('/').length - 1]
-                        : widgetNodeId;
+                    const nodeIdToDelete: string = convertNodeRefIntoNodeId(widgetNodeId);
                     await firstValueFrom(this.nodeApi.deleteNode(nodeIdToDelete));
                 }
             },
@@ -477,7 +472,7 @@ export class TemplateComponent implements OnInit {
             }
         }
         if (pageRef) {
-            const pageNodeId: string = convertPageRefIntoNodeId(pageRef);
+            const pageNodeId: string = convertNodeRefIntoNodeId(pageRef);
             if (pageNodeId) {
                 this.pageConfigCheckFailed.set(false);
                 return await firstValueFrom(this.nodeApi.getNode(pageNodeId));
@@ -678,7 +673,7 @@ export class TemplateComponent implements OnInit {
                         pageVariantConfigPrefix + uuidv4(),
                         pageVariantConfigAspect,
                     );
-                    pageVariants.push(workspaceSpacesStorePrefix + pageConfigVariantNode.ref.id);
+                    pageVariants.push(prependWorkspacePrefix(pageConfigVariantNode.ref.id));
                     const variantConfig: PageVariantConfig = retrievePageVariantConfig(variantNode);
                     removeNodeIdsFromPageVariantConfig(variantConfig);
                     updatePageVariantConfig(
@@ -712,7 +707,7 @@ export class TemplateComponent implements OnInit {
             }
             // for debugging purposes, hold the collection ID as well
             if (this.topicCollectionID()) {
-                pageConfig.collectionId = workspaceSpacesStorePrefix + this.topicCollectionID();
+                pageConfig.collectionId = prependWorkspacePrefix(this.topicCollectionID());
             }
             // update ccm:page_config of page config node
             this.pageConfigNode = await this.setPropertyAndRetrieveUpdatedNode(
@@ -729,7 +724,7 @@ export class TemplateComponent implements OnInit {
             // set ccm:page_config_ref in collection
             await firstValueFrom(
                 this.nodeApi.setProperty('-home-', this.collectionNode.ref.id, pageConfigRefType, [
-                    workspaceSpacesStorePrefix + this.pageConfigNode.ref.id,
+                    prependWorkspacePrefix(this.pageConfigNode.ref.id),
                 ]),
             );
             // set this.collectionNodeHasPageConfig to true
@@ -758,7 +753,7 @@ export class TemplateComponent implements OnInit {
             );
             return null;
         }
-        selectedVariantId = convertPageRefIntoNodeId(selectedVariantId);
+        selectedVariantId = convertNodeRefIntoNodeId(selectedVariantId);
         this.pageVariantNode = this.pageVariantConfigs.nodes?.find(
             (node: Node) => node.ref.id === selectedVariantId,
         );
@@ -927,9 +922,7 @@ export class TemplateComponent implements OnInit {
                 // afterward, delete config nodes of removed widgets
                 for (const nodeId of deletedWidgetNodeIds) {
                     // retrieve correct nodeId
-                    const widgetNodeId: string = nodeId.includes(workspaceSpacesStorePrefix)
-                        ? nodeId.split('/')?.[nodeId.split('/').length - 1]
-                        : nodeId;
+                    const widgetNodeId: string = convertNodeRefIntoNodeId(nodeId);
                     await firstValueFrom(this.nodeApi.deleteNode(widgetNodeId));
                 }
                 // visually change swimlanes
@@ -1034,7 +1027,7 @@ export class TemplateComponent implements OnInit {
                 pageVariantConfigAspect,
             );
             // push it to the existing variants
-            pageConfig.variants.push(workspaceSpacesStorePrefix + pageConfigVariantNode.ref.id);
+            pageConfig.variants.push(prependWorkspacePrefix(pageConfigVariantNode.ref.id));
             // parse variant config and remove node IDs
             const variantConfig: PageVariantConfig = retrievePageVariantConfig(variantNode);
             removeNodeIdsFromPageVariantConfig(variantConfig);

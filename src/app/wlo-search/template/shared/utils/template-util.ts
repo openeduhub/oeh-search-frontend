@@ -5,6 +5,7 @@ import {
     pageConfigRefType,
     pageConfigType,
     pageVariantConfigType,
+    workspaceSpacesStorePrefix,
 } from '../custom-definitions';
 import { GridTile } from '../types/grid-tile';
 import { PageConfig } from '../types/page-config';
@@ -102,13 +103,28 @@ const shadeColor = (color: string, percent: number): string => {
 };
 
 /**
- * Converts a given page ref including the workspace string into its node ID.
+ * Prepends the workspace spaces store prefix to a given node ID.
+ *
+ * @param nodeId
+ */
+export const prependWorkspacePrefix = (nodeId: string): string => {
+    if (!nodeId.includes(workspaceSpacesStorePrefix)) {
+        return workspaceSpacesStorePrefix + nodeId;
+    }
+    return nodeId;
+};
+
+/**
+ * Converts a given node ref including the workspace prefix into its node ID.
  * Example: workspace://SpacesStore/UUID -> UUID
  *
- * @param pageRef
+ * @param nodeRef
  */
-export const convertPageRefIntoNodeId = (pageRef: string): string => {
-    return pageRef.split('/')?.[pageRef.split('/').length - 1];
+export const convertNodeRefIntoNodeId = (nodeRef: string): string => {
+    if (nodeRef.includes(workspaceSpacesStorePrefix)) {
+        return nodeRef.split('/')?.[nodeRef.split('/').length - 1];
+    }
+    return nodeRef;
 };
 
 /**
