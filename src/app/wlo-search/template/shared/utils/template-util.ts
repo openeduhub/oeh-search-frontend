@@ -1,4 +1,5 @@
 import { MatSnackBarRef, TextOnlySnackBar } from '@angular/material/snack-bar';
+import { PageVariantConfig } from '../types/page-variant-config';
 
 /**
  * Helper function to retrieve the search URL.
@@ -97,6 +98,26 @@ const shadeColor = (color: string, percent: number): string => {
  */
 export const convertVariantId = (fullWorkspaceId: string): string => {
     return fullWorkspaceId.split('/')?.[fullWorkspaceId.split('/').length - 1];
+};
+
+/**
+ * Helper function to update the nodeId of given indexes or of the header within the structure of a page variant config.
+ */
+export const updatePageVariantConfig = (
+    pageVariant: PageVariantConfig,
+    swimlaneIndex?: number,
+    gridIndex?: number,
+    widgetNodeId?: string,
+    isHeaderNode?: boolean,
+): void => {
+    // modify header nodeId
+    if (isHeaderNode) {
+        pageVariant.structure.headerNodeId = widgetNodeId;
+    }
+    // modify nodeId of swimlane grid tile
+    else if (pageVariant.structure?.swimlanes?.[swimlaneIndex]?.grid?.[gridIndex] && widgetNodeId) {
+        pageVariant.structure.swimlanes[swimlaneIndex].grid[gridIndex].nodeId = widgetNodeId;
+    }
 };
 
 /**

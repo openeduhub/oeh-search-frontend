@@ -81,6 +81,7 @@ import {
     convertVariantId,
     getTopicColor,
     retrieveSearchUrl,
+    updatePageVariantConfig,
 } from './shared/utils/template-util';
 import { SwimlaneComponent } from './swimlane/swimlane.component';
 import { SwimlaneSettingsDialogComponent } from './swimlane/swimlane-settings-dialog/swimlane-settings-dialog.component';
@@ -702,7 +703,7 @@ export class TemplateComponent implements OnInit {
                         ? JSON.parse(variantNode.properties[pageVariantConfigType][0])
                         : {};
                     this.removeNodeIdsFromPageVariantConfig(variantConfig);
-                    this.updatePageVariantConfig(
+                    updatePageVariantConfig(
                         variantConfig,
                         swimlaneIndex,
                         gridIndex,
@@ -1120,29 +1121,6 @@ export class TemplateComponent implements OnInit {
         });
         if (pageVariant.structure.headerNodeId) {
             delete pageVariant.structure.headerNodeId;
-        }
-    }
-
-    /**
-     * Helper function to update the nodeId of given indexes or of the header within the structure of a page variant config.
-     */
-    private updatePageVariantConfig(
-        pageVariant: PageVariantConfig,
-        swimlaneIndex?: number,
-        gridIndex?: number,
-        widgetNodeId?: string,
-        isHeaderNode?: boolean,
-    ): void {
-        // modify header nodeId
-        if (isHeaderNode) {
-            pageVariant.structure.headerNodeId = widgetNodeId;
-        }
-        // modify nodeId of swimlane grid tile
-        else if (
-            pageVariant.structure?.swimlanes?.[swimlaneIndex]?.grid?.[gridIndex] &&
-            widgetNodeId
-        ) {
-            pageVariant.structure.swimlanes[swimlaneIndex].grid[gridIndex].nodeId = widgetNodeId;
         }
     }
 
