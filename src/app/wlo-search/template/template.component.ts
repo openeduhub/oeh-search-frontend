@@ -80,6 +80,7 @@ import {
     closeToastWithDelay,
     convertVariantId,
     getTopicColor,
+    removeNodeIdsFromPageVariantConfig,
     retrievePageVariantConfig,
     retrieveSearchUrl,
     updatePageVariantConfig,
@@ -331,7 +332,7 @@ export class TemplateComponent implements OnInit {
             // if page config was retrieved from parent,
             // remove possible existing nodeIds from swimlane grids
             if (!this.collectionNode.properties[pageConfigRefType]?.[0]) {
-                this.removeNodeIdsFromPageVariantConfig(pageVariant);
+                removeNodeIdsFromPageVariantConfig(pageVariant);
             }
             // set the headerNodeId + swimlanes
             this.headerNodeId.set(pageVariant.structure.headerNodeId);
@@ -685,7 +686,7 @@ export class TemplateComponent implements OnInit {
                     );
                     pageVariants.push(workspaceSpacesStorePrefix + pageConfigVariantNode.ref.id);
                     const variantConfig: PageVariantConfig = retrievePageVariantConfig(variantNode);
-                    this.removeNodeIdsFromPageVariantConfig(variantConfig);
+                    removeNodeIdsFromPageVariantConfig(variantConfig);
                     updatePageVariantConfig(
                         variantConfig,
                         swimlaneIndex,
@@ -1042,7 +1043,7 @@ export class TemplateComponent implements OnInit {
             pageConfig.variants.push(workspaceSpacesStorePrefix + pageConfigVariantNode.ref.id);
             // parse variant config and remove node IDs
             const variantConfig: PageVariantConfig = retrievePageVariantConfig(variantNode);
-            this.removeNodeIdsFromPageVariantConfig(variantConfig);
+            removeNodeIdsFromPageVariantConfig(variantConfig);
             // set properties of the created child
             await this.setProperty(
                 pageConfigVariantNode.ref.id,
@@ -1085,22 +1086,6 @@ export class TemplateComponent implements OnInit {
         });
         // retrieve the page config node and select the proper variant to define the headerNodeId + swimlanes
         await this.retrievePageConfigAndSelectVariant(variantId);
-    }
-
-    /**
-     * Helper function to remove possible existing headerNodeId + nodeIds from page variant config.
-     */
-    private removeNodeIdsFromPageVariantConfig(pageVariant: PageVariantConfig): void {
-        pageVariant.structure.swimlanes?.forEach((swimlane: Swimlane) => {
-            swimlane.grid?.forEach((gridItem: GridTile) => {
-                if (gridItem.nodeId) {
-                    delete gridItem.nodeId;
-                }
-            });
-        });
-        if (pageVariant.structure.headerNodeId) {
-            delete pageVariant.structure.headerNodeId;
-        }
     }
 
     /**

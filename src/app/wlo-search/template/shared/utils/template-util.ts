@@ -1,7 +1,9 @@
 import { MatSnackBarRef, TextOnlySnackBar } from '@angular/material/snack-bar';
 import { Node } from 'ngx-edu-sharing-api';
 import { pageVariantConfigType } from '../custom-definitions';
+import { GridTile } from '../types/grid-tile';
 import { PageVariantConfig } from '../types/page-variant-config';
+import { Swimlane } from '../types/swimlane';
 
 /**
  * Helper function to retrieve the search URL.
@@ -100,6 +102,22 @@ const shadeColor = (color: string, percent: number): string => {
  */
 export const convertVariantId = (fullWorkspaceId: string): string => {
     return fullWorkspaceId.split('/')?.[fullWorkspaceId.split('/').length - 1];
+};
+
+/**
+ * Helper function to remove possible existing headerNodeId + nodeIds from page variant config.
+ */
+export const removeNodeIdsFromPageVariantConfig = (pageVariant: PageVariantConfig): void => {
+    pageVariant.structure.swimlanes?.forEach((swimlane: Swimlane): void => {
+        swimlane.grid?.forEach((gridItem: GridTile): void => {
+            if (gridItem.nodeId) {
+                delete gridItem.nodeId;
+            }
+        });
+    });
+    if (pageVariant.structure.headerNodeId) {
+        delete pageVariant.structure.headerNodeId;
+    }
 };
 
 /**
