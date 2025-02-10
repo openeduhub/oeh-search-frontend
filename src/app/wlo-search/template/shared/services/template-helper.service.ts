@@ -5,12 +5,18 @@ import {
     MatSnackBarRef,
     TextOnlySnackBar,
 } from '@angular/material/snack-bar';
-import { AuthenticationService, Node, NodeEntries, NodeService } from 'ngx-edu-sharing-api';
+import {
+    ApiRequestConfiguration,
+    AuthenticationService,
+    Node,
+    NodeEntries,
+    NodeService,
+} from 'ngx-edu-sharing-api';
 import { ParentEntries } from 'ngx-edu-sharing-api/lib/api/models/parent-entries';
 import { firstValueFrom } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
 import { ViewService } from '../../../core/view.service';
-import { widgetConfigAspect } from '../custom-definitions';
+import { initialLocaleString, widgetConfigAspect } from '../custom-definitions';
 
 @Injectable({
     providedIn: 'root',
@@ -23,6 +29,7 @@ export class TemplateHelperService {
         'Beim Laden einer Ressource ist ein Fehler aufgetreten. Bitte laden Sie die Seite neu.';
 
     constructor(
+        private apiRequestConfig: ApiRequestConfiguration,
         private authService: AuthenticationService,
         private nodeApi: NodeService,
         private snackbar: MatSnackBar,
@@ -39,6 +46,13 @@ export class TemplateHelperService {
         if (username && password) {
             await firstValueFrom(this.authService.login(username, password));
         }
+    }
+
+    /**
+     * Helper function to set the locale for API requests.
+     */
+    setDefaultLocale(): void {
+        this.apiRequestConfig.setLocale(initialLocaleString);
     }
 
     /**
@@ -157,7 +171,7 @@ export class TemplateHelperService {
     /**
      * Helper function to handle an error by opening a toast container for the error.
      */
-    commonCatchFunction(): void {
+    displayErrorToast(): void {
         // display toast that an error occurred
         // this has to be done manually to also take the processing time into account
         const config: MatSnackBarConfig = {

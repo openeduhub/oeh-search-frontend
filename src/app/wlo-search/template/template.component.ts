@@ -14,13 +14,7 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBarRef, TextOnlySnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import {
-    ApiRequestConfiguration,
-    MdsValue,
-    MdsWidget,
-    Node,
-    NodeEntries,
-} from 'ngx-edu-sharing-api';
+import { MdsValue, MdsWidget, Node, NodeEntries } from 'ngx-edu-sharing-api';
 import { ParentEntries } from 'ngx-edu-sharing-api/lib/api/models/parent-entries';
 import { SpinnerComponent } from 'ngx-edu-sharing-ui';
 import {
@@ -45,7 +39,6 @@ import {
     defaultMds,
     defaultTopicTextNodeId,
     defaultTopicsColumnBrowserNodeId,
-    initialLocaleString,
     initialTopicColor,
     ioType,
     mapType,
@@ -108,7 +101,6 @@ import { SwimlaneSettingsDialogComponent } from './swimlane/swimlane-settings-di
 })
 export class TemplateComponent implements OnInit {
     constructor(
-        private apiRequestConfig: ApiRequestConfiguration,
         private dialog: MatDialog,
         private route: ActivatedRoute,
         private router: Router,
@@ -188,7 +180,7 @@ export class TemplateComponent implements OnInit {
         // retrieve the search URL
         this.searchUrl = retrieveSearchUrl();
         // set the default language for API requests
-        this.apiRequestConfig.setLocale(initialLocaleString);
+        this.templateHelperService.setDefaultLocale();
         // set the topic based on the query param "collectionID"
         this.route.queryParams
             .pipe(filter((params: Params) => params.collectionId))
@@ -231,14 +223,137 @@ export class TemplateComponent implements OnInit {
                             );
                         this.statisticsLoaded.set(true);
                     } catch (err) {
-                        this.templateHelperService.commonCatchFunction();
+                        this.templateHelperService.displayErrorToast();
                     }
                 }
             });
     }
 
     /**
-     * Helper function to retrieve the page config node, select the proper variant and define the headerNodeId + swimlanes.
+     * Initializes custom event listeners to react to events sent by the widgets (color change, widget node added).
+     */
+    private initializeCustomEventListeners(): void {
+        // listen to custom colorChange event dispatched by wlo-user-configurable
+        document.getElementsByTagName('body')[0].addEventListener(
+            'colorChange',
+            async (e: CustomEvent<ColorChangeEvent>): Promise<void> => {
+                console.log('DEBUG: colorChange event', e);
+                const colorChangeDetails: ColorChangeEvent = e.detail;
+                const color: string = colorChangeDetails?.color ?? '';
+                const pageVariantNode: Node = colorChangeDetails?.pageVariantNode ?? null;
+                const swimlaneIndex: number = colorChangeDetails?.swimlaneIndex ?? -1;
+
+                if (
+                    color !== '' &&
+                    pageVariantNode &&
+                    retrieveNodeId(pageVariantNode) === retrieveNodeId(this.pageVariantNode) &&
+                    swimlaneIndex > -1
+                ) {
+                    let changesNecessary: boolean =
+                        this.swimlanes[swimlaneIndex]?.backgroundColor !== color;
+                    if (changesNecessary) {
+                        try {
+                            // check, whether a new "direct" node has to be created
+                            const pageNodeCreated: boolean =
+                                await this.checkForCustomPageNodeExistence();
+                            console.log('DEBUG: change necessary', pageNodeCreated);
+                            const pageVariant: PageVariantConfig = this.retrievePageVariant();
+                            this.swimlanes[swimlaneIndex].backgroundColor = color;
+                            pageVariant.structure.swimlanes = this.swimlanes;
+                            await this.templateHelperService.setProperty(
+                                retrieveNodeId(this.pageVariantNode),
+                                pageVariantConfigType,
+                                JSON.stringify(pageVariant),
+                            );
+                        } catch (err) {
+                            this.templateHelperService.displayErrorToast();
+                        }
+                    }
+                }
+            },
+            false,
+        );
+
+        // listen to custom colorChange event dispatched by wlo-user-configurable
+        // note: do not use try catch to be able to revert changes
+        document.getElementsByTagName('body')[0].addEventListener(
+            'widgetNodeAdded',
+            async (e: CustomEvent<WidgetNodeAddedEvent>): Promise<void> => {
+                console.log('DEBUG: widgetNodeAdded event', e);
+                const widgetNodeDetails: WidgetNodeAddedEvent = e.detail;
+                const pageVariantNode: Node = widgetNodeDetails?.pageVariantNode ?? null;
+                const swimlaneIndex: number = widgetNodeDetails?.swimlaneIndex ?? -1;
+                const gridIndex: number = widgetNodeDetails?.gridIndex ?? -1;
+                const widgetNodeId: string = widgetNodeDetails?.widgetNodeId ?? '';
+                const isHeaderNode: boolean = widgetNodeDetails?.isHeaderNode ?? false;
+
+                const validWidgetNodeId: boolean = widgetNodeId && widgetNodeId !== '';
+                const validParentVariant: boolean =
+                    pageVariantNode &&
+                    retrieveNodeId(pageVariantNode) === retrieveNodeId(this.pageVariantNode);
+                const validSwimlaneIndex: boolean = swimlaneIndex > -1;
+                const validGridIndex: boolean = gridIndex > -1;
+
+                const validInputs: boolean = validGridIndex && validSwimlaneIndex;
+
+                let addedSuccessfully: boolean = false;
+                if (validWidgetNodeId && validParentVariant && (validInputs || isHeaderNode)) {
+                    // convert widget node ID, if necessary
+                    const convertedWidgetNodeId: string = prependWorkspacePrefix(widgetNodeId);
+                    // if no page configuration exists yet, a config has to be created and a reload of the page is necessary
+                    // TODO: we currently assume that adding is successfully, when creating a new page node.
+                    //       This might be improved by inputting validWidgetNodeId and deleting internally.
+                    addedSuccessfully = await this.checkForCustomPageNodeExistence(
+                        swimlaneIndex,
+                        gridIndex,
+                        convertedWidgetNodeId,
+                        isHeaderNode,
+                    );
+                    // if no page node was created, the adding is not yet successfully, so updating is necessary
+                    if (!addedSuccessfully) {
+                        const pageVariant: PageVariantConfig = this.retrievePageVariant();
+                        // modify header nodeId
+                        if (isHeaderNode) {
+                            pageVariant.structure.headerNodeId = convertedWidgetNodeId;
+                            this.headerNodeId.set(pageVariant.structure.headerNodeId);
+                            await this.templateHelperService.setProperty(
+                                retrieveNodeId(this.pageVariantNode),
+                                pageVariantConfigType,
+                                JSON.stringify(pageVariant),
+                            );
+                            addedSuccessfully = true;
+                        }
+                        // modify nodeId of swimlane grid tile
+                        else if (
+                            this.swimlanes?.[swimlaneIndex]?.grid?.[gridIndex] &&
+                            pageVariant
+                        ) {
+                            this.swimlanes[swimlaneIndex].grid[gridIndex].nodeId =
+                                convertedWidgetNodeId;
+                            pageVariant.structure.swimlanes = this.swimlanes;
+                            await this.templateHelperService.setProperty(
+                                retrieveNodeId(this.pageVariantNode),
+                                pageVariantConfigType,
+                                JSON.stringify(pageVariant),
+                            );
+                            addedSuccessfully = true;
+                        }
+                    }
+                }
+                // note: if it exists, but cannot be added in the grid, we might want to delete the node again
+                if (validWidgetNodeId && !addedSuccessfully) {
+                    const nodeIdToDelete: string = convertNodeRefIntoNodeId(widgetNodeId);
+                    await this.templateHelperService.deleteNode(nodeIdToDelete);
+                    this.templateHelperService.displayErrorToast();
+                }
+            },
+            false,
+        );
+    }
+
+    // PAGE CONFIG + VARIANT SPECIFIC FUNCTIONS
+    /**
+     * Retrieves the page config node, selects the proper variant and defines the headerNodeId + swimlanes.
      *
      * @param variantId
      */
@@ -324,300 +439,62 @@ export class TemplateComponent implements OnInit {
         }
     }
 
-    private initializeCustomEventListeners(): void {
-        // listen to custom colorChange event dispatched by wlo-user-configurable
-        document.getElementsByTagName('body')[0].addEventListener(
-            'colorChange',
-            async (e: CustomEvent<ColorChangeEvent>): Promise<void> => {
-                console.log('DEBUG: colorChange event', e);
-                const colorChangeDetails: ColorChangeEvent = e.detail;
-                const color: string = colorChangeDetails?.color ?? '';
-                const pageVariantNode: Node = colorChangeDetails?.pageVariantNode ?? null;
-                const swimlaneIndex: number = colorChangeDetails?.swimlaneIndex ?? -1;
-
-                if (
-                    color !== '' &&
-                    pageVariantNode &&
-                    retrieveNodeId(pageVariantNode) === retrieveNodeId(this.pageVariantNode) &&
-                    swimlaneIndex > -1
-                ) {
-                    let changesNecessary: boolean =
-                        this.swimlanes[swimlaneIndex]?.backgroundColor !== color;
-                    if (changesNecessary) {
-                        // check, whether a new "direct" node has to be created
-                        const pageNodeCreated: boolean =
-                            await this.checkForCustomPageNodeExistence();
-                        console.log('DEBUG: change necessary', pageNodeCreated);
-                        const pageVariant: PageVariantConfig = this.retrievePageVariant();
-                        this.swimlanes[swimlaneIndex].backgroundColor = color;
-                        pageVariant.structure.swimlanes = this.swimlanes;
-                        await this.templateHelperService.setProperty(
-                            retrieveNodeId(this.pageVariantNode),
-                            pageVariantConfigType,
-                            JSON.stringify(pageVariant),
-                        );
-                    }
-                }
-            },
-            false,
-        );
-
-        // listen to custom colorChange event dispatched by wlo-user-configurable
-        document.getElementsByTagName('body')[0].addEventListener(
-            'widgetNodeAdded',
-            async (e: CustomEvent<WidgetNodeAddedEvent>): Promise<void> => {
-                console.log('DEBUG: widgetNodeAdded event', e);
-                const widgetNodeDetails: WidgetNodeAddedEvent = e.detail;
-                const pageVariantNode: Node = widgetNodeDetails?.pageVariantNode ?? null;
-                const swimlaneIndex: number = widgetNodeDetails?.swimlaneIndex ?? -1;
-                const gridIndex: number = widgetNodeDetails?.gridIndex ?? -1;
-                const widgetNodeId: string = widgetNodeDetails?.widgetNodeId ?? '';
-                const isHeaderNode: boolean = widgetNodeDetails?.isHeaderNode ?? false;
-
-                const validWidgetNodeId: boolean = widgetNodeId && widgetNodeId !== '';
-                const validParentVariant: boolean =
-                    pageVariantNode &&
-                    retrieveNodeId(pageVariantNode) === retrieveNodeId(this.pageVariantNode);
-                const validSwimlaneIndex: boolean = swimlaneIndex > -1;
-                const validGridIndex: boolean = gridIndex > -1;
-
-                const validInputs: boolean = validGridIndex && validSwimlaneIndex;
-
-                let addedSuccessfully: boolean = false;
-                if (validWidgetNodeId && validParentVariant && (validInputs || isHeaderNode)) {
-                    // convert widget node ID, if necessary
-                    const convertedWidgetNodeId: string = prependWorkspacePrefix(widgetNodeId);
-                    // if no page configuration exists yet, a config has to be created and a reload of the page is necessary
-                    // TODO: we currently assume that adding is successfully, when creating a new page node.
-                    //       This might be improved by inputting validWidgetNodeId and deleting internally.
-                    addedSuccessfully = await this.checkForCustomPageNodeExistence(
-                        swimlaneIndex,
-                        gridIndex,
-                        convertedWidgetNodeId,
-                        isHeaderNode,
-                    );
-                    // if no page node was created, the adding is not yet successfully, so updating is necessary
-                    if (!addedSuccessfully) {
-                        const pageVariant: PageVariantConfig = this.retrievePageVariant();
-                        // modify header nodeId
-                        if (isHeaderNode) {
-                            pageVariant.structure.headerNodeId = convertedWidgetNodeId;
-                            this.headerNodeId.set(pageVariant.structure.headerNodeId);
-                            await this.templateHelperService.setProperty(
-                                retrieveNodeId(this.pageVariantNode),
-                                pageVariantConfigType,
-                                JSON.stringify(pageVariant),
-                            );
-                            addedSuccessfully = true;
-                        }
-                        // modify nodeId of swimlane grid tile
-                        else if (
-                            this.swimlanes?.[swimlaneIndex]?.grid?.[gridIndex] &&
-                            pageVariant
-                        ) {
-                            this.swimlanes[swimlaneIndex].grid[gridIndex].nodeId =
-                                convertedWidgetNodeId;
-                            pageVariant.structure.swimlanes = this.swimlanes;
-                            await this.templateHelperService.setProperty(
-                                retrieveNodeId(this.pageVariantNode),
-                                pageVariantConfigType,
-                                JSON.stringify(pageVariant),
-                            );
-                            addedSuccessfully = true;
-                        }
-                    }
-                }
-                // note: if it exists, but cannot be added in the grid, we might want to delete the node again
-                if (validWidgetNodeId && !addedSuccessfully) {
-                    const nodeIdToDelete: string = convertNodeRefIntoNodeId(widgetNodeId);
-                    await this.templateHelperService.deleteNode(nodeIdToDelete);
-                }
-            },
-            false,
-        );
-    }
-
     /**
-     * Parses the page config ref of the collection and returns the proper page config node.
-     * If no page config ref is set, check whether a parent propagates one.
-     *
-     * @param node
+     * Creates a new page variant by cloning the currently selected one (without the node definitions) and navigates to it.
      */
-    private async retrievePageConfigNode(node: Node): Promise<Node> {
-        // check, whether the node itself has a pageConfigRef
-        let pageRef: string = retrievePageConfigRef(node);
-        this.collectionNodeHasPageConfig = !!pageRef;
-        // otherwise, iterate the parents to retrieve the pageConfigRef, if pageConfigPropagate is set
-        if (!pageRef) {
-            const parents: ParentEntries = await this.templateHelperService.getNodeParents(
-                retrieveNodeId(node),
-            );
-            const propagatingParent: Node = parents.nodes.find((parent: Node) =>
-                checkPageConfigPropagate(parent),
-            );
-            if (propagatingParent) {
-                pageRef = retrievePageConfigRef(propagatingParent);
+    async createPageVariant(): Promise<void> {
+        if (
+            confirm(
+                'Wollen Sie wirklich auf Grundlage der Seiten-Struktur der aktuell gewählten Variante eine neue Seiten-Variante erstellen?',
+            )
+        ) {
+            // check for pageConfigNode existence
+            if (!retrieveNodeId(this.pageConfigNode)) {
+                return;
             }
-        }
-        if (pageRef) {
-            const pageNodeId: string = convertNodeRefIntoNodeId(pageRef);
-            if (pageNodeId) {
-                this.pageConfigCheckFailed.set(false);
-                return await this.templateHelperService.getNode(pageNodeId);
+            // parse the page config from the properties
+            const pageConfig: PageConfig = retrievePageConfig(this.pageConfigNode);
+            // check for pageConfig variant existence
+            if (!pageConfig.variants) {
+                console.error('pageConfig does not include variants', pageConfig);
+                return;
             }
-        }
-        this.pageConfigCheckFailed.set(true);
-        return null;
-    }
-
-    // REACT TO OUTPUT EVENTS //
-    /**
-     * Called by app-swimlane gridUpdated output event.
-     * Handles the update of the grid of a given swimlane.
-     */
-    async handleGridUpdate(grid: GridTile[], swimlaneIndex: number): Promise<void> {
-        // overwrite swimlane grid
-        this.swimlanes[swimlaneIndex].grid = grid;
-
-        // persist the state afterward
-        await this.checkForCustomPageNodeExistence();
-        const pageVariant: PageVariantConfig = this.retrievePageVariant();
-        if (!pageVariant) {
-            // TODO: rollback necessary
-        }
-        pageVariant.structure.swimlanes = this.swimlanes;
-        await this.templateHelperService.setProperty(
-            retrieveNodeId(this.pageVariantNode),
-            pageVariantConfigType,
-            JSON.stringify(pageVariant),
-        );
-        // TODO: rollback necessary, if the request is not successful
-    }
-
-    /**
-     * Called by app-swimlane nodeClicked output event.
-     */
-    handleNodeChange(node: Node): void {
-        this.templateHelperService.handleNodeChange(node);
-    }
-
-    /**
-     * Called by wlo-filter-bar selectDimensionsChanged output event.
-     */
-    selectDimensionsChanged(event: Map<string, MdsWidget>): void {
-        // iterate incoming select dimensions and insert new or overwrite existing ones
-        event.forEach((value: MdsWidget, key: string): void => {
-            this.selectDimensions.set(key, value);
-        });
-        this.selectDimensionsLoaded = true;
-    }
-
-    /**
-     * Called by wlo-filter-bar selectValuesChanged output event.
-     */
-    selectValuesChanged(): void {
-        if (!this.latestParams) {
-            return;
-        }
-        // changes are detected using the URL params to also include values of different filterbars
-        // convert both select dimension keys and params into the same format
-        // Map<$virtual:key$, ...> => [key, ...]
-        const convertedSelectDimensionKeys: string[] = Array.from(this.selectDimensions.keys())
-            .map((key: string) => key.split('$')?.[1] ?? key)
-            .map((key: string) => key.split('virtual:')?.[1] ?? key);
-        const latestParamKeys: string[] = Object.keys(this.latestParams);
-        const selectedDimensionValues: MdsValue[] = [];
-        // iterate over select dimension keys to ensure correct positioning
-        convertedSelectDimensionKeys.forEach((dimensionKey) => {
-            if (latestParamKeys.includes(dimensionKey)) {
-                selectedDimensionValues.push({
-                    id: this.latestParams[dimensionKey],
-                });
-            } else {
-                console.log(
-                    'DEBUGGING: Not included in params -> push empty string',
-                    this.latestParams,
-                    dimensionKey,
+            // retrieve variant node
+            const currentPageVariantId: string = pageConfig.variants[this.selectedVariantPosition];
+            const variantNode: Node = this.pageVariantConfigs.nodes?.find((node) =>
+                currentPageVariantId.includes(retrieveNodeId(node)),
+            );
+            if (!variantNode) {
+                return;
+            }
+            // create child for variant node
+            this.requestInProgress.set(true);
+            const toastContainer: MatSnackBarRef<TextOnlySnackBar> =
+                this.templateHelperService.openSaveConfigToast(
+                    'Eine neue Seiten-Variante wird erstellt und geladen.',
                 );
-                selectedDimensionValues.push({
-                    id: '',
-                });
-            }
-        });
-        this.selectedDimensionValues = selectedDimensionValues;
-        // if necessary, reload the pageVariants
-        if (this.initialLoadSuccessfully()) {
-            void this.retrievePageConfigAndSelectVariant(this.latestParams.variantId);
-        }
-    }
-
-    /**
-     * Helper function to add a possible non-existing page config node.
-     */
-    private async checkForCustomPageNodeExistence(
-        swimlaneIndex?: number,
-        gridIndex?: number,
-        widgetNodeId?: string,
-        isHeaderNode?: boolean,
-    ): Promise<boolean> {
-        console.log('checkForCustomPageNodeExistence');
-        if (!this.collectionNodeHasPageConfig) {
-            console.log('checkForCustomPageNodeExistence no page config');
-            // page ccm:map for page config node
-            this.pageConfigNode = await this.templateHelperService.createChild(
-                parentPageConfigNodeId,
-                mapType,
-                pageConfigPrefix + uuidv4(),
-                pageConfigAspect,
+            let pageConfigVariantNode: Node = await this.templateHelperService.createChild(
+                retrieveNodeId(this.pageConfigNode),
+                ioType,
+                pageVariantConfigPrefix + uuidv4(),
+                pageVariantConfigAspect,
             );
-            const pageVariants: string[] = [];
-            // iterate variant config nodes (of template) and create ccm:io child nodes for it
-            if (this.pageVariantConfigs.nodes?.length > 0) {
-                for (const variantNode of this.pageVariantConfigs.nodes) {
-                    let pageConfigVariantNode: Node = await this.templateHelperService.createChild(
-                        retrieveNodeId(this.pageConfigNode),
-                        ioType,
-                        pageVariantConfigPrefix + uuidv4(),
-                        pageVariantConfigAspect,
-                    );
-                    pageVariants.push(
-                        prependWorkspacePrefix(retrieveNodeId(pageConfigVariantNode)),
-                    );
-                    const variantConfig: PageVariantConfig = retrievePageVariantConfig(variantNode);
-                    removeNodeIdsFromPageVariantConfig(variantConfig);
-                    updatePageVariantConfig(
-                        variantConfig,
-                        swimlaneIndex,
-                        gridIndex,
-                        widgetNodeId,
-                        isHeaderNode,
-                    );
-                    await this.templateHelperService.setProperty(
-                        retrieveNodeId(pageConfigVariantNode),
-                        pageVariantConfigType,
-                        JSON.stringify(variantConfig),
-                    );
-                    await this.templateHelperService.setProperty(
-                        retrieveNodeId(pageConfigVariantNode),
-                        pageVariantIsTemplateType,
-                        'false',
-                    );
-                }
-            }
-            const defaultVariant: string =
-                this.pageVariantDefaultPosition >= 0
-                    ? pageVariants?.[this.pageVariantDefaultPosition] ?? pageVariants[0]
-                    : undefined;
-            const pageConfig: PageConfig = {
-                variants: pageVariants,
-            };
-            if (defaultVariant) {
-                pageConfig.default = defaultVariant;
-            }
-            // for debugging purposes, hold the collection ID as well
-            if (this.topicCollectionID()) {
-                pageConfig.collectionId = prependWorkspacePrefix(this.topicCollectionID());
-            }
+            // push it to the existing variants
+            pageConfig.variants.push(prependWorkspacePrefix(retrieveNodeId(pageConfigVariantNode)));
+            // parse variant config and remove node IDs
+            const variantConfig: PageVariantConfig = retrievePageVariantConfig(variantNode);
+            removeNodeIdsFromPageVariantConfig(variantConfig);
+            // set properties of the created child
+            await this.templateHelperService.setProperty(
+                retrieveNodeId(pageConfigVariantNode),
+                pageVariantConfigType,
+                JSON.stringify(variantConfig),
+            );
+            await this.templateHelperService.setProperty(
+                retrieveNodeId(pageConfigVariantNode),
+                pageVariantIsTemplateType,
+                'false',
+            );
             // update ccm:page_config of page config node
             this.pageConfigNode =
                 await this.templateHelperService.setPropertyAndRetrieveUpdatedNode(
@@ -625,65 +502,36 @@ export class TemplateComponent implements OnInit {
                     pageConfigType,
                     JSON.stringify(pageConfig),
                 );
-            // get page variant configs
+            // reload page variant configs
             this.pageVariantConfigs = await this.templateHelperService.getNodeChildren(
                 retrieveNodeId(this.pageConfigNode),
             );
-            // parse the page config ref again
-            const pageVariant: PageVariantConfig = this.retrievePageVariant();
-            this.headerNodeId.set(pageVariant.structure.headerNodeId);
-            this.swimlanes = pageVariant.structure.swimlanes ?? [];
-            // set ccm:page_config_ref in collection
-            await this.templateHelperService.setProperty(
-                retrieveNodeId(this.collectionNode),
-                pageConfigRefType,
-                prependWorkspacePrefix(retrieveNodeId(this.pageConfigNode)),
-            );
-            this.collectionNodeHasPageConfig = true;
-            return true;
+            // navigate to the newly created variant
+            await this.navigateToVariant(retrieveNodeId(pageConfigVariantNode));
+            closeToastWithDelay(toastContainer);
+            this.requestInProgress.set(false);
         }
-        return false;
     }
 
     /**
-     * Helper function to retrieve the page variant of an existing page config node.
+     * Navigates to a given variantId and reload the page structure accordingly.
+     *
+     * @param variantId
      */
-    private retrievePageVariant(): PageVariantConfig {
-        // parse the page config from the properties
-        const pageConfig: PageConfig = retrievePageConfig(this.pageConfigNode);
-        if (!pageConfig.variants) {
-            console.error('pageConfig does not include variants.', pageConfig);
-            return null;
-        }
-        let selectedVariantId: string = pageConfig.variants?.[this.selectedVariantPosition];
-        if (!selectedVariantId) {
-            console.error(
-                'No selectedVariantId was found.',
-                pageConfig.variants,
-                this.selectedVariantPosition,
-            );
-            return null;
-        }
-        selectedVariantId = convertNodeRefIntoNodeId(selectedVariantId);
-        this.pageVariantNode = this.pageVariantConfigs.nodes?.find(
-            (node: Node) => retrieveNodeId(node) === selectedVariantId,
-        );
-        if (!this.pageVariantNode) {
-            console.error(
-                'No pageVariantNode was found.',
-                selectedVariantId,
-                this.pageVariantConfigs.nodes,
-            );
-            return null;
-        }
-        const pageVariant: PageVariantConfig = retrievePageVariantConfig(this.pageVariantNode);
-        if (!pageVariant || !pageVariant.structure) {
-            console.error('Either no pageVariant or no structure in it was found.', pageVariant);
-            return null;
-        }
-        return pageVariant;
+    async navigateToVariant(variantId: string): Promise<void> {
+        const queryParamsToAddOrOverwrite: Params = {
+            variantId: variantId,
+        };
+        await this.router.navigate([], {
+            relativeTo: this.route,
+            queryParams: queryParamsToAddOrOverwrite,
+            queryParamsHandling: 'merge',
+        });
+        // retrieve the page config node and select the proper variant to define the headerNodeId + swimlanes
+        await this.retrievePageConfigAndSelectVariant(variantId);
     }
 
+    // SWIMLANE SPECIFIC FUNCTIONS
     /**
      * Adds a new swimlane to the page and persist it in the config.
      */
@@ -897,100 +745,89 @@ export class TemplateComponent implements OnInit {
         }
     }
 
+    // REACT TO OUTPUT EVENTS
     /**
-     * Creates a new page variant by cloning the currently selected one (without the node definitions) and navigates to it.
+     * Called by app-swimlane gridUpdated output event.
+     * Handles the update of the grid of a given swimlane.
      */
-    async createPageVariant(): Promise<void> {
-        if (
-            confirm(
-                'Wollen Sie wirklich auf Grundlage der Seiten-Struktur der aktuell gewählten Variante eine neue Seiten-Variante erstellen?',
-            )
-        ) {
-            // check for pageConfigNode existence
-            if (!retrieveNodeId(this.pageConfigNode)) {
-                return;
-            }
-            // parse the page config from the properties
-            const pageConfig: PageConfig = retrievePageConfig(this.pageConfigNode);
-            // check for pageConfig variant existence
-            if (!pageConfig.variants) {
-                console.error('pageConfig does not include variants', pageConfig);
-                return;
-            }
-            // retrieve variant node
-            const currentPageVariantId: string = pageConfig.variants[this.selectedVariantPosition];
-            const variantNode: Node = this.pageVariantConfigs.nodes?.find((node) =>
-                currentPageVariantId.includes(retrieveNodeId(node)),
-            );
-            if (!variantNode) {
-                return;
-            }
-            // create child for variant node
-            this.requestInProgress.set(true);
-            const toastContainer: MatSnackBarRef<TextOnlySnackBar> =
-                this.templateHelperService.openSaveConfigToast(
-                    'Eine neue Seiten-Variante wird erstellt und geladen.',
+    async handleGridUpdate(grid: GridTile[], swimlaneIndex: number): Promise<void> {
+        // overwrite swimlane grid
+        this.swimlanes[swimlaneIndex].grid = grid;
+
+        // persist the state afterward
+        await this.checkForCustomPageNodeExistence();
+        const pageVariant: PageVariantConfig = this.retrievePageVariant();
+        if (!pageVariant) {
+            // TODO: rollback necessary
+        }
+        pageVariant.structure.swimlanes = this.swimlanes;
+        await this.templateHelperService.setProperty(
+            retrieveNodeId(this.pageVariantNode),
+            pageVariantConfigType,
+            JSON.stringify(pageVariant),
+        );
+        // TODO: rollback necessary, if the request is not successful
+    }
+
+    /**
+     * Called by app-swimlane nodeClicked output event.
+     */
+    handleNodeChange(node: Node): void {
+        this.templateHelperService.handleNodeChange(node);
+    }
+
+    /**
+     * Called by wlo-filter-bar selectDimensionsChanged output event.
+     */
+    selectDimensionsChanged(event: Map<string, MdsWidget>): void {
+        // iterate incoming select dimensions and insert new or overwrite existing ones
+        event.forEach((value: MdsWidget, key: string): void => {
+            this.selectDimensions.set(key, value);
+        });
+        this.selectDimensionsLoaded = true;
+    }
+
+    /**
+     * Called by wlo-filter-bar selectValuesChanged output event.
+     */
+    selectValuesChanged(): void {
+        if (!this.latestParams) {
+            return;
+        }
+        // changes are detected using the URL params to also include values of different filterbars
+        // convert both select dimension keys and params into the same format
+        // Map<$virtual:key$, ...> => [key, ...]
+        const convertedSelectDimensionKeys: string[] = Array.from(this.selectDimensions.keys())
+            .map((key: string) => key.split('$')?.[1] ?? key)
+            .map((key: string) => key.split('virtual:')?.[1] ?? key);
+        const latestParamKeys: string[] = Object.keys(this.latestParams);
+        const selectedDimensionValues: MdsValue[] = [];
+        // iterate over select dimension keys to ensure correct positioning
+        convertedSelectDimensionKeys.forEach((dimensionKey) => {
+            if (latestParamKeys.includes(dimensionKey)) {
+                selectedDimensionValues.push({
+                    id: this.latestParams[dimensionKey],
+                });
+            } else {
+                console.log(
+                    'DEBUGGING: Not included in params -> push empty string',
+                    this.latestParams,
+                    dimensionKey,
                 );
-            let pageConfigVariantNode: Node = await this.templateHelperService.createChild(
-                retrieveNodeId(this.pageConfigNode),
-                ioType,
-                pageVariantConfigPrefix + uuidv4(),
-                pageVariantConfigAspect,
-            );
-            // push it to the existing variants
-            pageConfig.variants.push(prependWorkspacePrefix(retrieveNodeId(pageConfigVariantNode)));
-            // parse variant config and remove node IDs
-            const variantConfig: PageVariantConfig = retrievePageVariantConfig(variantNode);
-            removeNodeIdsFromPageVariantConfig(variantConfig);
-            // set properties of the created child
-            await this.templateHelperService.setProperty(
-                retrieveNodeId(pageConfigVariantNode),
-                pageVariantConfigType,
-                JSON.stringify(variantConfig),
-            );
-            await this.templateHelperService.setProperty(
-                retrieveNodeId(pageConfigVariantNode),
-                pageVariantIsTemplateType,
-                'false',
-            );
-            // update ccm:page_config of page config node
-            this.pageConfigNode =
-                await this.templateHelperService.setPropertyAndRetrieveUpdatedNode(
-                    retrieveNodeId(this.pageConfigNode),
-                    pageConfigType,
-                    JSON.stringify(pageConfig),
-                );
-            // reload page variant configs
-            this.pageVariantConfigs = await this.templateHelperService.getNodeChildren(
-                retrieveNodeId(this.pageConfigNode),
-            );
-            // navigate to the newly created variant
-            await this.navigateToVariant(retrieveNodeId(pageConfigVariantNode));
-            closeToastWithDelay(toastContainer);
-            this.requestInProgress.set(false);
+                selectedDimensionValues.push({
+                    id: '',
+                });
+            }
+        });
+        this.selectedDimensionValues = selectedDimensionValues;
+        // if necessary, reload the pageVariants
+        if (this.initialLoadSuccessfully()) {
+            void this.retrievePageConfigAndSelectVariant(this.latestParams.variantId);
         }
     }
 
     /**
-     * Navigates to a given variantId and reload the page structure accordingly.
-     *
-     * @param variantId
-     */
-    async navigateToVariant(variantId: string): Promise<void> {
-        const queryParamsToAddOrOverwrite: Params = {
-            variantId: variantId,
-        };
-        await this.router.navigate([], {
-            relativeTo: this.route,
-            queryParams: queryParamsToAddOrOverwrite,
-            queryParamsHandling: 'merge',
-        });
-        // retrieve the page config node and select the proper variant to define the headerNodeId + swimlanes
-        await this.retrievePageConfigAndSelectVariant(variantId);
-    }
-
-    /**
-     * Function to call on right wlo-side-menu-item itemClicked output.
+     * Called by right wlo-side-menu-item itemClicked output event.
      */
     collapsibleItemClicked(item: string): void {
         if (this.selectedMenuItem === item) {
@@ -1001,7 +838,7 @@ export class TemplateComponent implements OnInit {
     }
 
     /**
-     * Function to call on left wlo-side-menu-item itemClicked output.
+     * Called by left wlo-side-menu-item itemClicked output event.
      */
     toggleEditMode(): void {
         this.editMode = !this.editMode;
@@ -1011,6 +848,173 @@ export class TemplateComponent implements OnInit {
                 accordion.open();
             });
         }
+    }
+
+    // HELPER FUNCTIONS
+    /**
+     * Helper function to parse the page config ref of the collection and return the proper page config node.
+     * If no page config ref is set, check whether a parent propagates one.
+     *
+     * @param node
+     */
+    private async retrievePageConfigNode(node: Node): Promise<Node> {
+        // check, whether the node itself has a pageConfigRef
+        let pageRef: string = retrievePageConfigRef(node);
+        this.collectionNodeHasPageConfig = !!pageRef;
+        // otherwise, iterate the parents to retrieve the pageConfigRef, if pageConfigPropagate is set
+        if (!pageRef) {
+            const parents: ParentEntries = await this.templateHelperService.getNodeParents(
+                retrieveNodeId(node),
+            );
+            const propagatingParent: Node = parents.nodes.find((parent: Node) =>
+                checkPageConfigPropagate(parent),
+            );
+            if (propagatingParent) {
+                pageRef = retrievePageConfigRef(propagatingParent);
+            }
+        }
+        if (pageRef) {
+            const pageNodeId: string = convertNodeRefIntoNodeId(pageRef);
+            if (pageNodeId) {
+                this.pageConfigCheckFailed.set(false);
+                return await this.templateHelperService.getNode(pageNodeId);
+            }
+        }
+        this.pageConfigCheckFailed.set(true);
+        return null;
+    }
+
+    /**
+     * Helper function to add a possible non-existing page config node.
+     */
+    private async checkForCustomPageNodeExistence(
+        swimlaneIndex?: number,
+        gridIndex?: number,
+        widgetNodeId?: string,
+        isHeaderNode?: boolean,
+    ): Promise<boolean> {
+        console.log('checkForCustomPageNodeExistence');
+        if (!this.collectionNodeHasPageConfig) {
+            console.log('checkForCustomPageNodeExistence no page config');
+            // page ccm:map for page config node
+            this.pageConfigNode = await this.templateHelperService.createChild(
+                parentPageConfigNodeId,
+                mapType,
+                pageConfigPrefix + uuidv4(),
+                pageConfigAspect,
+            );
+            const pageVariants: string[] = [];
+            // iterate variant config nodes (of template) and create ccm:io child nodes for it
+            if (this.pageVariantConfigs.nodes?.length > 0) {
+                for (const variantNode of this.pageVariantConfigs.nodes) {
+                    let pageConfigVariantNode: Node = await this.templateHelperService.createChild(
+                        retrieveNodeId(this.pageConfigNode),
+                        ioType,
+                        pageVariantConfigPrefix + uuidv4(),
+                        pageVariantConfigAspect,
+                    );
+                    pageVariants.push(
+                        prependWorkspacePrefix(retrieveNodeId(pageConfigVariantNode)),
+                    );
+                    const variantConfig: PageVariantConfig = retrievePageVariantConfig(variantNode);
+                    removeNodeIdsFromPageVariantConfig(variantConfig);
+                    updatePageVariantConfig(
+                        variantConfig,
+                        swimlaneIndex,
+                        gridIndex,
+                        widgetNodeId,
+                        isHeaderNode,
+                    );
+                    await this.templateHelperService.setProperty(
+                        retrieveNodeId(pageConfigVariantNode),
+                        pageVariantConfigType,
+                        JSON.stringify(variantConfig),
+                    );
+                    await this.templateHelperService.setProperty(
+                        retrieveNodeId(pageConfigVariantNode),
+                        pageVariantIsTemplateType,
+                        'false',
+                    );
+                }
+            }
+            const defaultVariant: string =
+                this.pageVariantDefaultPosition >= 0
+                    ? pageVariants?.[this.pageVariantDefaultPosition] ?? pageVariants[0]
+                    : undefined;
+            const pageConfig: PageConfig = {
+                variants: pageVariants,
+            };
+            if (defaultVariant) {
+                pageConfig.default = defaultVariant;
+            }
+            // for debugging purposes, hold the collection ID as well
+            if (this.topicCollectionID()) {
+                pageConfig.collectionId = prependWorkspacePrefix(this.topicCollectionID());
+            }
+            // update ccm:page_config of page config node
+            this.pageConfigNode =
+                await this.templateHelperService.setPropertyAndRetrieveUpdatedNode(
+                    retrieveNodeId(this.pageConfigNode),
+                    pageConfigType,
+                    JSON.stringify(pageConfig),
+                );
+            // get page variant configs
+            this.pageVariantConfigs = await this.templateHelperService.getNodeChildren(
+                retrieveNodeId(this.pageConfigNode),
+            );
+            // parse the page config ref again
+            const pageVariant: PageVariantConfig = this.retrievePageVariant();
+            this.headerNodeId.set(pageVariant.structure.headerNodeId);
+            this.swimlanes = pageVariant.structure.swimlanes ?? [];
+            // set ccm:page_config_ref in collection
+            await this.templateHelperService.setProperty(
+                retrieveNodeId(this.collectionNode),
+                pageConfigRefType,
+                prependWorkspacePrefix(retrieveNodeId(this.pageConfigNode)),
+            );
+            this.collectionNodeHasPageConfig = true;
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Helper function to retrieve the page variant of an existing page config node.
+     */
+    private retrievePageVariant(): PageVariantConfig {
+        // parse the page config from the properties
+        const pageConfig: PageConfig = retrievePageConfig(this.pageConfigNode);
+        if (!pageConfig.variants) {
+            console.error('pageConfig does not include variants.', pageConfig);
+            return null;
+        }
+        let selectedVariantId: string = pageConfig.variants?.[this.selectedVariantPosition];
+        if (!selectedVariantId) {
+            console.error(
+                'No selectedVariantId was found.',
+                pageConfig.variants,
+                this.selectedVariantPosition,
+            );
+            return null;
+        }
+        selectedVariantId = convertNodeRefIntoNodeId(selectedVariantId);
+        this.pageVariantNode = this.pageVariantConfigs.nodes?.find(
+            (node: Node) => retrieveNodeId(node) === selectedVariantId,
+        );
+        if (!this.pageVariantNode) {
+            console.error(
+                'No pageVariantNode was found.',
+                selectedVariantId,
+                this.pageVariantConfigs.nodes,
+            );
+            return null;
+        }
+        const pageVariant: PageVariantConfig = retrievePageVariantConfig(this.pageVariantNode);
+        if (!pageVariant || !pageVariant.structure) {
+            console.error('Either no pageVariant or no structure in it was found.', pageVariant);
+            return null;
+        }
+        return pageVariant;
     }
 
     protected readonly defaultMds: string = defaultMds;
