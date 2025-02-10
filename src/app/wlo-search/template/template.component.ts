@@ -545,6 +545,7 @@ export class TemplateComponent implements OnInit {
         if (!pageVariant) {
             closeToastWithDelay(toastContainer);
             this.requestInProgress.set(false);
+            return;
         }
         const swimlanesCopy = JSON.parse(JSON.stringify(this.swimlanes ?? []));
         swimlanesCopy.splice(positionToAdd, 0, newSwimlane);
@@ -563,7 +564,7 @@ export class TemplateComponent implements OnInit {
     /**
      * Move the position of a swimlane on the page and persist it in the config.
      */
-    async moveSwimlanePosition(oldIndex: number, newIndex: number) {
+    async moveSwimlanePosition(oldIndex: number, newIndex: number): Promise<void> {
         if (newIndex >= 0 && newIndex <= this.swimlanes.length - 1) {
             this.requestInProgress.set(true);
             const toastContainer: MatSnackBarRef<TextOnlySnackBar> =
@@ -573,6 +574,7 @@ export class TemplateComponent implements OnInit {
             if (!pageVariant) {
                 closeToastWithDelay(toastContainer);
                 this.requestInProgress.set(false);
+                return;
             }
             const swimlanesCopy = JSON.parse(JSON.stringify(this.swimlanes ?? []));
             moveItemInArray(swimlanesCopy, oldIndex, newIndex);
@@ -595,7 +597,7 @@ export class TemplateComponent implements OnInit {
      * @param title
      * @param swimlane
      */
-    async swimlaneTitleChanged(title: string, swimlane: Swimlane) {
+    async swimlaneTitleChanged(title: string, swimlane: Swimlane): Promise<void> {
         this.requestInProgress.set(true);
         const toastContainer: MatSnackBarRef<TextOnlySnackBar> =
             this.templateHelperService.openSaveConfigToast();
@@ -604,6 +606,7 @@ export class TemplateComponent implements OnInit {
         if (!pageVariant) {
             closeToastWithDelay(toastContainer);
             this.requestInProgress.set(false);
+            return;
         }
         swimlane.heading = title;
         pageVariant.structure.swimlanes = this.swimlanes;
@@ -616,7 +619,7 @@ export class TemplateComponent implements OnInit {
         this.requestInProgress.set(false);
     }
 
-    editSwimlane(swimlane: Swimlane, index: number) {
+    editSwimlane(swimlane: Swimlane, index: number): void {
         const dialogRef = this.dialog.open(SwimlaneSettingsDialogComponent, {
             data: {
                 swimlane,
@@ -628,7 +631,7 @@ export class TemplateComponent implements OnInit {
 
         // TODO: fix error when closing (ERROR TypeError: Cannot set properties of null (setting '_closeInteractionType'))
         // seems to be a known issue as of May 2023: https://stackoverflow.com/a/76273326
-        dialogRef.afterClosed().subscribe(async (result) => {
+        dialogRef.afterClosed().subscribe(async (result): Promise<void> => {
             if (result?.status === 'VALID') {
                 const editedSwimlane = result.value;
                 if (!editedSwimlane) {
@@ -651,6 +654,7 @@ export class TemplateComponent implements OnInit {
                 if (!pageVariant) {
                     closeToastWithDelay(toastContainer);
                     this.requestInProgress.set(false);
+                    return;
                 }
                 // create a copy of the swimlanes
                 const stringifiedSwimlanes: string = JSON.stringify(this.swimlanes ?? []);
@@ -697,7 +701,7 @@ export class TemplateComponent implements OnInit {
     /**
      * Delete a swimlane from the page with possible widget nodes and persist it in the config.
      */
-    async deleteSwimlane(index: number) {
+    async deleteSwimlane(index: number): Promise<void> {
         if (
             this.swimlanes?.[index] &&
             confirm('Wollen Sie dieses Element wirklich löschen?') === true
@@ -710,6 +714,7 @@ export class TemplateComponent implements OnInit {
             if (!pageVariant) {
                 closeToastWithDelay(toastContainer);
                 this.requestInProgress.set(false);
+                return;
             }
             // delete possible nodes defined in the swimlane
             // forEach does not support async / await
