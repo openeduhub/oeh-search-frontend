@@ -80,6 +80,7 @@ import {
     closeToastWithDelay,
     convertVariantId,
     getTopicColor,
+    retrievePageVariantConfig,
     retrieveSearchUrl,
     updatePageVariantConfig,
 } from './shared/utils/template-util';
@@ -182,16 +183,6 @@ export class TemplateComponent implements OnInit {
             return JSON.parse(this.pageConfigNode.properties[pageConfigType][0]);
         }
         return {};
-    }
-
-    /**
-     * Returns the page variant.
-     */
-    private get retrievePageVariantConfig(): PageVariantConfig {
-        if (this.pageVariantNode.properties[pageVariantConfigType]?.[0]) {
-            return JSON.parse(this.pageVariantNode.properties[pageVariantConfigType][0]);
-        }
-        return null;
     }
 
     /**
@@ -299,12 +290,8 @@ export class TemplateComponent implements OnInit {
         else {
             let highestNumberOfMatches: number = 0;
             this.pageVariantConfigs.nodes?.forEach((variantNode: Node) => {
-                const variantConfig: PageVariantConfig = variantNode.properties[
-                    pageVariantConfigType
-                ]?.[0]
-                    ? JSON.parse(variantNode.properties[pageVariantConfigType][0])
-                    : {};
-                if (variantConfig.variables) {
+                const variantConfig: PageVariantConfig = retrievePageVariantConfig(variantNode);
+                if (variantConfig?.variables) {
                     let matchesCount: number = 0;
                     Object.keys(variantConfig.variables)?.forEach((key: string) => {
                         // TODO: Replace by a more consistent check of both key and value
@@ -333,7 +320,7 @@ export class TemplateComponent implements OnInit {
             this.pageVariantNode = this.pageVariantConfigs.nodes?.find(
                 (node: Node) => node.ref.id === selectedVariantId,
             );
-            const pageVariant: PageVariantConfig = this.retrievePageVariantConfig;
+            const pageVariant: PageVariantConfig = retrievePageVariantConfig(this.pageVariantNode);
             if (!pageVariant || !pageVariant.structure) {
                 console.error(
                     'Either no pageVariant or no structure in it was found.',
@@ -697,11 +684,7 @@ export class TemplateComponent implements OnInit {
                         pageVariantConfigAspect,
                     );
                     pageVariants.push(workspaceSpacesStorePrefix + pageConfigVariantNode.ref.id);
-                    const variantConfig: PageVariantConfig = variantNode.properties[
-                        pageVariantConfigType
-                    ]?.[0]
-                        ? JSON.parse(variantNode.properties[pageVariantConfigType][0])
-                        : {};
+                    const variantConfig: PageVariantConfig = retrievePageVariantConfig(variantNode);
                     this.removeNodeIdsFromPageVariantConfig(variantConfig);
                     updatePageVariantConfig(
                         variantConfig,
@@ -792,7 +775,7 @@ export class TemplateComponent implements OnInit {
             );
             return null;
         }
-        const pageVariant: PageVariantConfig = this.retrievePageVariantConfig;
+        const pageVariant: PageVariantConfig = retrievePageVariantConfig(this.pageVariantNode);
         if (!pageVariant || !pageVariant.structure) {
             console.error('Either no pageVariant or no structure in it was found.', pageVariant);
             return null;
@@ -1058,11 +1041,7 @@ export class TemplateComponent implements OnInit {
             // push it to the existing variants
             pageConfig.variants.push(workspaceSpacesStorePrefix + pageConfigVariantNode.ref.id);
             // parse variant config and remove node IDs
-            const variantConfig: PageVariantConfig = variantNode.properties[
-                pageVariantConfigType
-            ]?.[0]
-                ? JSON.parse(variantNode.properties[pageVariantConfigType][0])
-                : {};
+            const variantConfig: PageVariantConfig = retrievePageVariantConfig(variantNode);
             this.removeNodeIdsFromPageVariantConfig(variantConfig);
             // set properties of the created child
             await this.setProperty(

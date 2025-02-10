@@ -1,4 +1,6 @@
 import { MatSnackBarRef, TextOnlySnackBar } from '@angular/material/snack-bar';
+import { Node } from 'ngx-edu-sharing-api';
+import { pageVariantConfigType } from '../custom-definitions';
 import { PageVariantConfig } from '../types/page-variant-config';
 
 /**
@@ -98,6 +100,18 @@ const shadeColor = (color: string, percent: number): string => {
  */
 export const convertVariantId = (fullWorkspaceId: string): string => {
     return fullWorkspaceId.split('/')?.[fullWorkspaceId.split('/').length - 1];
+};
+
+/**
+ * Retrieves the variant config from a given variant node.
+ *
+ * @param variantNode
+ */
+export const retrievePageVariantConfig = (variantNode: Node): PageVariantConfig => {
+    if (variantNode.properties[pageVariantConfigType]?.[0]) {
+        return JSON.parse(variantNode.properties[pageVariantConfigType][0]);
+    }
+    return null;
 };
 
 /**
