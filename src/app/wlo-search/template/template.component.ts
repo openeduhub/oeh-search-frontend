@@ -67,7 +67,6 @@ import {
     retrieveCustomUrl,
     statistics,
     widgetConfigAspect,
-    workspaceSpacesStorePrefix,
 } from './shared/custom-definitions';
 import { StatisticsHelperService } from './shared/services/statistics-helper.service';
 import { TemplateHelperService } from './shared/services/template-helper.service';
@@ -140,6 +139,9 @@ export class TemplateComponent implements OnInit {
 
     private collectionNode: Node;
     collectionNodeHasPageConfig: boolean = false;
+    convertedHeaderNodeId: Signal<string> = computed((): string =>
+        convertNodeRefIntoNodeId(this.headerNodeId()),
+    );
     headerNodeId: WritableSignal<string> = signal(null);
     private pageConfigNode: Node;
     pageConfigCheckFailed: WritableSignal<boolean> = signal(false);
@@ -1104,5 +1106,4 @@ export class TemplateComponent implements OnInit {
     protected readonly defaultTopicsColumnBrowserNodeId: string = defaultTopicsColumnBrowserNodeId;
     protected readonly profilingFilterbarDimensionKeys: string[] = profilingFilterbarDimensionKeys;
     protected readonly retrieveCustomUrl = retrieveCustomUrl;
-    protected readonly workspaceSpacesStorePrefix: string = workspaceSpacesStorePrefix;
 }

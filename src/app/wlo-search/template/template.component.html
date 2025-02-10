@@ -16,7 +16,7 @@
           [contextNodeId]="topicCollectionID()"
           [defaultNodeId]="defaultTopicTextNodeId"
           [editMode]="editMode"
-          [nodeId]="headerNodeId()?.includes(workspaceSpacesStorePrefix) ? headerNodeId().split('/')?.[headerNodeId().split('/').length - 1] : headerNodeId()"
+          [nodeId]="convertedHeaderNodeId()"
           [pageVariantNode]="pageVariantNode"
           [topic]="topic()"
         ></wlo-topic-header>

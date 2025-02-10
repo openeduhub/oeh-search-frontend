@@ -121,7 +121,7 @@ export const prependWorkspacePrefix = (nodeId: string): string => {
  * @param nodeRef
  */
 export const convertNodeRefIntoNodeId = (nodeRef: string): string => {
-    if (nodeRef.includes(workspaceSpacesStorePrefix)) {
+    if (nodeRef?.includes(workspaceSpacesStorePrefix)) {
         return nodeRef.split('/')?.[nodeRef.split('/').length - 1];
     }
     return nodeRef;
