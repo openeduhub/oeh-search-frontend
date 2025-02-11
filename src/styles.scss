@@ -40,7 +40,7 @@ $material-icons-font-path: 'material-icons/iconfont/';
 :root {
     $selected-theme: custom-theme.$light-theme;
     @include apply-theme($selected-theme);
-    // make CSS variable accessible for further applications
+    // make CSS variable accessable for further applications
     // valid role names: background, error, error-container, inverse-on-surface, inverse-primary,
     //                   inverse-surface, on-background, on-error, on-error-container, on-primary,
     //                   on-primary-container, on-primary-fixed, on-primary-fixed-variant,
@@ -55,6 +55,7 @@ $material-icons-font-path: 'material-icons/iconfont/';
     //                   tertiary, tertiary-container, tertiary-fixed, tertiary-fixed-dim
     // currently, only selected roles are made available globally
     // in future versions, system variables might replace this: https://material.angular.io/guide/system-variables
+    // theming color roles
     --inverse-surface: #{mat.get-theme-color($selected-theme, inverse-surface)};
     --on-primary: #{mat.get-theme-color($selected-theme, on-primary)};
     --on-surface: #{mat.get-theme-color($selected-theme, on-surface)};
@@ -73,6 +74,34 @@ $material-icons-font-path: 'material-icons/iconfont/';
         --sidebar-button: #{mat.get-theme-color($selected-theme, secondary, 25)};
         --secondary-text: #{mat.get-theme-color($selected-theme, neutral, 99)};
     }
+    // theming typography
+    // note: using #{mat.get-theme-typography($selected-theme, body-medium)} did not worked,
+    //       so the system variables are used
+    // valid typescales are: display-large, display-medium, display-small, headline-large,
+    //                       headline-medium, headline-small, title-large, title-medium,
+    //                       title-small, label-large, label-medium, label-small, body-large,
+    //                       body-medium, body-small.
+    // font-size
+    --display-small-size: #{var(--sys-display-small-size)};
+    --headline-large-size: #{var(--sys-headline-large-size)};
+    --headline-medium-size: #{var(--sys-headline-medium-size)};
+    --headline-small-size: #{var(--sys-headline-small-size)};
+    --body-large-size: #{var(--sys-body-large-size)};
+    --body-medium-size: #{var(--sys-body-medium-size)};
+    --body-small-size: #{var(--sys-body-small-size)};
+    --body-extra-small-size: 0.625rem;
+    // font-family
+    --body-large-font: #{var(--sys-body-large-font)};
+    --display-small-font: #{var(--sys-display-small-font)};
+    --headline-large-font: #{var(--sys-headline-large-font)};
+    // font-weight
+    --body-large-weight: #{var(--sys-body-large-weight)};
+    --label-large-weight: #{var(--sys-label-large-weight)};
+    --label-large-weight-prominent: #{var(--sys-label-large-weight-prominent)};
+    // line-height
+    --body-large-line-height: #{var(--sys-body-large-line-height)};
+    --body-medium-line-height: #{var(--sys-body-medium-line-height)};
+    --body-small-line-height: #{var(--sys-body-small-line-height)};
 }
 
 // TODO: This will enable dark mode, if selected by the system
