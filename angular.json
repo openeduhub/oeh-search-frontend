@@ -41,8 +41,8 @@
               "src/env.js",
               {
                 "glob": "**/*",
-                "input": "node_modules/ngx-edu-sharing-wlo-pages/images",
-                "output": "/assets/images/"
+                "input": "node_modules/ngx-edu-sharing-wlo-pages/assets",
+                "output": "/assets/"
               }
             ],
             "styles": [
@@ -139,8 +139,8 @@
               "src/env.js",
               {
                 "glob": "**/*",
-                "input": "node_modules/ngx-edu-sharing-wlo-pages/images",
-                "output": "/assets/images/"
+                "input": "node_modules/ngx-edu-sharing-wlo-pages/assets",
+                "output": "/assets/"
               }
             ],
             "styles": [
