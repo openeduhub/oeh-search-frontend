@@ -609,9 +609,9 @@ export class TemplateComponent implements OnInit {
      * Reacts to wlo-editable-text textChange output event by persisting the changes in the page config.
      *
      * @param title
-     * @param swimlane
+     * @param index
      */
-    async swimlaneTitleChanged(title: string, swimlane: Swimlane): Promise<void> {
+    async swimlaneTitleChanged(title: string, index: number): Promise<void> {
         const toastContainer: MatSnackBarRef<TextOnlySnackBar> = this.startEditing();
         try {
             await this.checkForCustomPageNodeExistence();
@@ -620,7 +620,7 @@ export class TemplateComponent implements OnInit {
                 this.endEditing(toastContainer);
                 return;
             }
-            swimlane.heading = title;
+            this.swimlanes[index].heading = title;
             pageVariant.structure.swimlanes = this.swimlanes;
             await this.templateHelperService.setProperty(
                 retrieveNodeId(this.pageVariantNode),

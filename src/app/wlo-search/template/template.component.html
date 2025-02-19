@@ -225,7 +225,7 @@
                     (click)="!editMode ? accordionItem.toggle() : ''"
                   >
                     <ng-container
-                      *ngTemplateOutlet="swimlaneHeading; context: { swimlane }"
+                      *ngTemplateOutlet="swimlaneHeading; context: { swimlane, index: i }"
                     ></ng-container>
                     <span class="wlo-accordion-item-description">
                       <mat-icon *ngIf="accordionItem.expanded">expand_less</mat-icon>
@@ -260,7 +260,7 @@
               <!-- type: container -->
               <div class="wlo-container" *ngIf="swimlane.type === 'container'">
                 <ng-container
-                  *ngTemplateOutlet="swimlaneHeading; context: { swimlane }"
+                  *ngTemplateOutlet="swimlaneHeading; context: { swimlane, index: i }"
                 ></ng-container>
                 <app-swimlane
                   [backgroundColor]="swimlane.backgroundColor"
@@ -280,7 +280,7 @@
             </div>
           </ng-container>
         </ng-container>
-        <ng-template #swimlaneHeading let-swimlane="swimlane">
+        <ng-template #swimlaneHeading let-swimlane="swimlane" let-index="index">
           <wlo-editable-text
             [alignCenter]="true"
             [applyTextareaPadding]="false"
@@ -289,7 +289,7 @@
             [label]="'Überschrift'"
             [nonEditText]="swimlane.heading"
             [text]="swimlane.heading"
-            (textChange)="swimlaneTitleChanged($event, swimlane)"
+            (textChange)="swimlaneTitleChanged($event, index)"
           ></wlo-editable-text>
         </ng-template>
         <ng-template #noSwimlanesCreatedYet>
