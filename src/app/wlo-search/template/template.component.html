@@ -9,7 +9,7 @@
 <ng-container *ngIf="!pageConfigCheckFailed(); else pageConfigCheckFailedMessage">
   <!-- TOPIC HERO HEADER -->
   <!-- wait until the initial load is successfully to retrieve the correct nodeID for the header -->
-  <header class="template-header" *ngIf="initialLoadSuccessfully">
+  <header class="template-header" *ngIf="initialLoadSuccessfully()">
     <div class="template-header-wrapper">
       <div class="template-header-container">
         <wlo-topic-header
