@@ -70,9 +70,11 @@ $material-icons-font-path: 'material-icons/iconfont/';
     @if mat.get-theme-type($selected-theme) == light {
         --sidebar-button: #{mat.get-theme-color($selected-theme, neutral, 99)};
         --secondary-text: #{mat.get-theme-color($selected-theme, neutral, 35)};
+        --tile-text: #333;
     } @else {
         --sidebar-button: #{mat.get-theme-color($selected-theme, secondary, 25)};
         --secondary-text: #{mat.get-theme-color($selected-theme, neutral, 99)};
+        --tile-text: #f7f7f7;
     }
     // theming typography
     // note: using #{mat.get-theme-typography($selected-theme, body-medium)} did not worked,
