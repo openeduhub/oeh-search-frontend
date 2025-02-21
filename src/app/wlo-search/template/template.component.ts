@@ -369,12 +369,10 @@ export class TemplateComponent implements OnInit {
             console.error('pageConfig does not include variants', pageConfig);
             return;
         }
-        // retrieve the page variant configs
-        if (!this.pageVariantConfigs) {
-            this.pageVariantConfigs = await this.templateHelperService.getNodeChildren(
-                retrieveNodeId(this.pageConfigNode),
-            );
-        }
+        // retrieve the (potentially updated) page variant configs
+        this.pageVariantConfigs = await this.templateHelperService.getNodeChildren(
+            retrieveNodeId(this.pageConfigNode),
+        );
         // default the ID with the default or the first occurrence
         this.pageVariantDefaultPosition = pageConfig.variants.indexOf(pageConfig.default);
         // select the proper variant (initialize with default or first variant)
