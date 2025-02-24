@@ -196,7 +196,7 @@ export class TemplateComponent implements OnInit {
                         this.collectionNode = await this.templateHelperService.getNode(
                             params.collectionId,
                         );
-                        this.topic.set(this.collectionNode.title);
+                        this.topic.set(this.collectionNode.title ?? 'No topic defined');
                         // check the user privileges for the collection node and initialize custom listeners
                         this.userHasEditRights.set(checkUserAccess(this.collectionNode));
                         if (this.userHasEditRights()) {
@@ -356,8 +356,13 @@ export class TemplateComponent implements OnInit {
      * @param variantId
      */
     private async retrievePageConfigAndSelectVariant(variantId?: string): Promise<void> {
+        // idea: if "collectionNode" already has a page config, there is no need to search further
+        if (this.collectionNode.properties['ccm:page_config']) {
+            this.pageConfigNode = this.collectionNode;
+            this.collectionNodeHasPageConfig = true;
+        }
         // retrieve the page config node either by checking the node itself or by iterating the parents of the collectionNode
-        if (!retrieveNodeId(this.pageConfigNode)) {
+        else if (!retrieveNodeId(this.pageConfigNode)) {
             this.pageConfigNode = await this.retrievePageConfigNode(this.collectionNode);
             if (!this.pageConfigNode) {
                 return;
