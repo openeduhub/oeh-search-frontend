@@ -1,6 +1,6 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Injectable } from '@angular/core';
-import { NavigationStart, Router } from '@angular/router';
+import { NavigationStart, NavigationEnd, Router } from '@angular/router';
 import { Node } from 'ngx-edu-sharing-api';
 import * as rxjs from 'rxjs';
 import { BehaviorSubject, Observable } from 'rxjs';
@@ -43,9 +43,15 @@ export class ViewService {
 
     constructor(
         private breakpointObserver: BreakpointObserver,
-        private router: Router,
         private pageMode: PageModeService,
+        private router: Router,
     ) {
+        // reference: https://stackoverflow.com/a/52697630
+        this.router.events
+            .pipe(filter((event) => event instanceof NavigationEnd))
+            .subscribe((event: NavigationEnd): void => {
+                this.isTemplate.next(event.url?.includes('/template') ?? false);
+            });
         this.registerStoredItems();
         this.registerBehaviorHooks();
     }
@@ -176,4 +182,6 @@ export class ViewService {
     getIsLoading(): Observable<boolean> {
         return this.isLoadingCounter.pipe(map((counter) => counter > 0));
     }
+
+    isTemplate = new BehaviorSubject<boolean>(false);
 }

@@ -1,27 +1,45 @@
-:host ::ng-deep mat-slide-toggle {
-    .mat-slide-toggle-bar {
-        width: 46px;
-        height: 17px;
-        margin-right: 15px;
-    }
-    &.mat-slide-toggle.mat-checked .mat-slide-toggle-thumb-container {
-        transform: translate3d(26px, 0, 0);
-    }
-    .mat-slide-toggle-thumb-container {
-        top: -7px;
-        left: -5px;
-        height: 30px;
-        width: 30px;
-    }
-    .mat-slide-toggle-thumb {
-        height: 30px;
-        width: 30px;
-    }
-}
-
 :host {
     display: flex;
     min-width: 0;
+}
+
+// custom adjustments for the slide-toggle
+:host ::ng-deep mat-slide-toggle {
+    // add spacing between the toggle and its label
+    .mdc-label {
+        margin-left: 15px !important;
+    }
+    // change height and width of the toggle button background
+    .mdc-switch {
+        width: 46px;
+        height: 17px;
+
+        .mdc-switch__track {
+            height: 17px;
+            border-radius: 8px;
+
+            // remove border from switch track
+            &::before {
+                border: none;
+            }
+        }
+
+        // fix position of switch button
+        &.mdc-switch--unselected .mdc-switch__handle {
+            margin-left: -5px !important;
+            border-radius: 15px;
+        }
+    }
+    // change height and width of the toggle button itself
+    .mdc-switch__handle {
+        height: 30px !important;
+        width: 30px !important;
+    }
+    // remove icons from toggle
+    // TODO: This is also a setting, but will change several selectors used above
+    .mdc-switch__icons {
+        display: none !important;
+    }
 }
 
 .slider-container {
@@ -39,18 +57,5 @@
 @media screen and (min-width: 450px) {
     .label-compact {
         display: none;
-    }
-}
-
-$help-button-size: 18px;
-
-.help-button {
-    margin: -5px;
-    margin-top: -9px;
-    mat-icon {
-        width: $help-button-size;
-        height: $help-button-size;
-        line-height: $help-button-size;
-        font-size: $help-button-size;
     }
 }

@@ -7,12 +7,11 @@ form {
     display: flex;
     width: 100%;
     .search-field-wrapper {
+        padding: 5px 7px;
         display: flex;
         flex-grow: 1;
         border-radius: 27px;
         align-items: center;
-        align-items: center;
-        padding: 5px 7px;
         min-height: 40px;
         &.multi-line {
             border-radius: 20px;
@@ -23,28 +22,30 @@ form {
             border-radius: 22px;
             align-items: center;
             height: 43px;
-            margin: 4px;
             min-width: 0;
             .search-icon {
+                margin-top: -1px;
+                margin-right: 6px;
+                margin-left: 16px;
                 width: 22px;
                 height: 22px;
-                margin-left: 16px;
             }
             input {
+                margin: 4px;
                 height: 43px;
-                margin: 0;
-                margin-left: 8px;
-                flex-shrink: 1;
                 min-width: 0;
+                flex-shrink: 1;
                 // Placeholder
                 text-overflow: ellipsis;
             }
             .submit-button {
+                margin: 6px;
+                padding-left: 16px;
+                padding-right: 16px;
+                height: 32px;
+                border-radius: 16px;
                 display: flex;
                 align-items: center;
-                line-height: 30px;
-                border-radius: 15px;
-                margin: 6px;
                 flex-shrink: 0;
             }
         }
@@ -52,21 +53,50 @@ form {
 }
 
 :host mat-form-field.search-field ::ng-deep {
-    .mat-form-field-wrapper {
-        padding-bottom: 0;
+    .mat-mdc-text-field-wrapper {
+        padding: 0;
+        background: none;
     }
-    .mat-form-field-underline {
+    .mat-mdc-form-field-underline {
         display: none;
     }
-    .mat-form-field-infix {
+    .mat-mdc-form-field-infix {
         padding: 0;
         border: none;
+        min-height: unset;
+    }
+    .mdc-line-ripple,
+    .mat-mdc-form-field-focus-overlay {
+        display: none;
+    }
+    .mdc-evolution-chip-set .mdc-evolution-chip-set__chips {
+        margin: 0;
+        align-items: center;
     }
 }
 
-:host mat-chip-list ::ng-deep {
-    .mat-chip-list-wrapper .mat-standard-chip {
+// second selector without :host, as it is added at the bottom of the body
+// used a custom class instead
+:host mat-chip-grid ::ng-deep,
+:host mat-chip-listbox ::ng-deep,
+.suggestion-mat-chip-listbox ::ng-deep {
+    .mdc-evolution-chip-set__chips .mat-mdc-standard-chip {
         min-height: 30px;
+    }
+    .mdc-evolution-chip-set__chips .category-chip:last-of-type {
+        margin-right: 8px;
+    }
+    .mdc-evolution-chip__action {
+        // do not signal that the button is clickable
+        cursor: default;
+        &::before {
+            border: none;
+        }
+    }
+    // suggestion chips and remove chip buttons should be marked as being clickable
+    .suggestion-chip .mdc-evolution-chip__action,
+    .mat-mdc-chip-remove {
+        cursor: pointer;
     }
 }
 
@@ -75,10 +105,9 @@ form {
 }
 
 .suggestion-card {
-    width: 100%;
-    background-color: white;
-    border-radius: 20px;
     padding: 10px;
+    width: 100%;
+    border-radius: 20px;
     .suggestion-group {
         &:not(:last-of-type) {
             padding-bottom: 20px;
@@ -86,43 +115,13 @@ form {
         .label-container {
             display: flex;
         }
-        // .what-is-oer-link {
-        //     padding-left: 10px;
-        //     font-size: 90%;
-        //     text-decoration: underline;
-        //     cursor: pointer;
-        // }
         .category-label {
+            padding-bottom: 6px;
             display: block;
             text-transform: uppercase;
-            font-weight: 500;
-            font-size: 90%;
-            color: #666;
-            padding-bottom: 6px;
         }
         .suggestion-chip {
             cursor: pointer;
         }
     }
-}
-.mat-chip.chip-group-oer {
-    background-color: rgb(214, 166, 214);
-}
-.mat-chip.chip-group-type {
-    background-color: rgb(166, 192, 214);
-}
-.mat-chip.chip-group-discipline {
-    background-color: rgb(166, 214, 174);
-}
-.mat-chip.chip-group-educationalContext {
-    background-color: rgb(214, 166, 166);
-}
-.mat-chip.chip-group-intendedEndUserRole {
-    background-color: rgb(211, 214, 166);
-}
-.mat-chip.chip-group-learningResourceType {
-    background-color: rgb(214, 193, 166);
-}
-.mat-chip.chip-group-source {
-    background-color: rgb(208, 166, 214);
 }

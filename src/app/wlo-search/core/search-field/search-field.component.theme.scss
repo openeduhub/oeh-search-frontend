@@ -1,23 +1,29 @@
 @use '@angular/material' as mat;
 
 @mixin search-field-theme($theme) {
-    $foreground: map-get($theme, foreground);
-    $background: map-get($theme, background);
-    $primary: map-get($theme, primary);
-    $custom: map-get($theme, custom-accent);
-
     app-search-field {
-        form {
-            .search-field-wrapper {
-                background-color: mat.get-color-from-palette($background, dialog);
-                .search-field-input-wrapper {
-                    background-color: mat.get-color-from-palette($primary, 50);
-                    input {
-                        color: mat.get-color-from-palette($primary, text);
+        form .search-field-wrapper {
+            background-color: mat.get-theme-color($theme, surface);
+
+            .search-field-input-wrapper {
+                @if mat.get-theme-type($theme) == light {
+                    background-color: rgba(mat.get-theme-color($theme, secondary, 60), 0.3);
+                } @else {
+                    background-color: mat.get-theme-color($theme, surface-container);
+                }
+                input {
+                    @if mat.get-theme-type($theme) == light {
+                        color: mat.get-theme-color($theme, primary, 25);
+                    } @else {
+                        color: mat.get-theme-color($theme, primary);
+                    }
+
+                    &::placeholder {
+                        color: mat.get-theme-color($theme, secondary);
                     }
                 }
-                mat-icon {
-                    color: mat.get-color-from-palette($foreground, icon);
+                .search-icon {
+                    color: mat.get-theme-color($theme, primary);
                 }
             }
         }
@@ -25,10 +31,29 @@
 }
 
 @mixin search-field-typography($typography) {
+    // this has to be placed outside, as is it opened within a cdk-overlay
+    .suggestion-group {
+        // slightly decrease font-size of category-label
+        .category-label {
+            font-size: var(--sys-body-medium-size);
+        }
+        // adjust font-family + font-weight of chips
+        .suggestion-mat-chip-listbox .mdc-evolution-chip__text-label {
+            font-family: var(--sys-headline-large-font);
+            font-weight: var(--sys-label-large-weight-prominent);
+        }
+    }
     app-search-field {
-        .submit-button,
-        .mat-form-field {
-            font-size: mat.font-size($typography, subheading-1);
+        // increase the font-size of the search field
+        // adjusting the selector is currently necessary to overwrite the default font-size:
+        // https://stackoverflow.com/a/43273285
+        .mat-mdc-form-field,
+        .mat-mdc-form-field.mat-mdc-form-field {
+            font-size: 1.075rem;
+        }
+        // slightly increase the font-size of the submit-button
+        .submit-button {
+            font-size: 0.95rem;
         }
     }
 }

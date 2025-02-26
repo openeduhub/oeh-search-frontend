@@ -19,14 +19,21 @@
   </div>
 
   <h4 class="app-collection-card-title">
-    <a #link [href]="collection | collectionProperty: 'url'" target="_blank">{{
-      collection | collectionProperty: 'title'
-    }}</a>
+    <a
+      #link
+      [href]="
+        retrieveCustomUrl && retrieveCustomUrl(collection)
+          ? retrieveCustomUrl(collection)
+          : (collection | collectionProperty: 'url')
+      "
+    >
+      {{ collection | collectionProperty: 'title' }}
+    </a>
   </h4>
 
   <div class="app-collection-card-metadata-row">
     <span class="app-collection-card-metadata-item">
-      <mat-icon>photo_library</mat-icon>
+      <i esIcon="photo_library"></i>
       <span class="cdk-visually-hidden">
         <ng-container i18n>Number of elements</ng-container>:
       </span>

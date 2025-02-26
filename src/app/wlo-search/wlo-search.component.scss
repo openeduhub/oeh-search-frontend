@@ -23,6 +23,8 @@ app-headerbar {
 }
 
 .main {
+    position: relative;
+    z-index: 0;
     flex-grow: 1;
 }
 

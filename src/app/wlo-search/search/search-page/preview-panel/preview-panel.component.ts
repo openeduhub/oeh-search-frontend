@@ -1,5 +1,5 @@
 import { ViewportScroller } from '@angular/common';
-import { Component, OnDestroy, TemplateRef, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, Output, TemplateRef, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { NavigationStart, Router } from '@angular/router';
 import { combineLatest, ReplaySubject } from 'rxjs';
@@ -21,6 +21,8 @@ export class PreviewPanelComponent implements OnDestroy {
     showSidebar$ = combineLatest([this.view.getSelectedItem(), this.mode$]).pipe(
         map(([selectedItem, mode]) => !!selectedItem && mode === 'sidebar'),
     );
+
+    @Output() dialogClosed: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     private dialogRef: MatDialogRef<PreviewPanelComponent>;
     private destroyed$ = new ReplaySubject<void>(1);
@@ -128,6 +130,7 @@ export class PreviewPanelComponent implements OnDestroy {
     close(): void {
         this.closeDialog();
         this.view.unselectItem();
+        this.dialogClosed.emit(true);
     }
 
     private closeDialog(dialogResult?: any): void {

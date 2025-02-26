@@ -1,0 +1,49 @@
+@use '@angular/material' as mat;
+@import '../../../additional-colors';
+@import '../functions';
+
+@mixin template-page-theme($theme) {
+    app-template {
+        .action-btn {
+            @if mat.get-theme-type($theme) == light {
+                color: mat.get-theme-color($theme, neutral, 35);
+                background: mat.get-theme-color($theme, neutral, 99);
+            } @else {
+                color: mat.get-theme-color($theme, neutral, 99);
+                background: mat.get-theme-color($theme, neutral, 35);
+            }
+
+            &.btn-modify {
+                color: mat.get-theme-color($theme, on-primary);
+                background: mat.get-theme-color($theme, primary);
+            }
+        }
+
+        .reloading-indicator-bg {
+            background: mat.get-theme-color($theme, surface);
+
+            &.transparent-bg {
+                background: rgba(mat.get-theme-color($theme, inverse-surface), 0.5);
+            }
+        }
+
+        .template-header-container,
+        .portal-wrapper-left {
+            background: mat.get-theme-color($theme, surface);
+        }
+
+        .wlo-swimlane {
+            background-color: mat.get-theme-color($theme, surface-container-low);
+        }
+    }
+}
+
+@mixin template-page-typography($theme) {
+    // increase size of accordion caret icon
+    .wlo-accordion-item-description {
+        .mat-icon,
+        .mat-mdc-icon {
+            font-size: 1.875rem;
+        }
+    }
+}

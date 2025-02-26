@@ -43,6 +43,7 @@
           class="style-toggle"
           [value]="resultCardStyle"
           (change)="setResultCardStyle($event.value)"
+          hideSingleSelectionIndicator="true"
           aria-label="Result view"
           i18n-aria-label
         >
@@ -53,7 +54,7 @@
             i18n-matTooltip
             matTooltip="Standard view"
           >
-            <mat-icon>view_column</mat-icon>
+            <i esIcon="view_column"></i>
           </mat-button-toggle>
           <mat-button-toggle
             value="compact"
@@ -62,7 +63,7 @@
             i18n-matTooltip
             matTooltip="Compact view"
           >
-            <mat-icon>view_module</mat-icon>
+            <i esIcon="view_module"></i>
           </mat-button-toggle>
         </mat-button-toggle-group>
       </ng-container>
@@ -89,6 +90,9 @@
   </div>
   <nav
     mat-tab-nav-bar
+    mat-stretch-tabs="false"
+    class="search-result-options"
+    [tabPanel]="tabPanel"
     *ngIf="results?.pagination.total > 0 && (searchResultsStyle$ | async) === 'standard'"
   >
     <a
@@ -113,7 +117,9 @@
       >Search results by content type</a
     >
   </nav>
-  <router-outlet *ngIf="results?.pagination.total > 0"></router-outlet>
+  <mat-tab-nav-panel #tabPanel>
+    <router-outlet *ngIf="results?.pagination.total > 0"></router-outlet>
+  </mat-tab-nav-panel>
 </div>
 
 <app-preview-panel></app-preview-panel>

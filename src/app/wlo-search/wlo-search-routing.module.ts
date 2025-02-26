@@ -10,6 +10,7 @@ import { SearchResultsComponent } from './search/search-page/search-results/sear
 import { SubjectsPortalResolverService } from './search/search-page/subjects-portal/subjects-portal-resolver.service';
 import { SubjectsPortalComponent } from './search/search-page/subjects-portal/subjects-portal.component';
 import { WloSearchComponent } from './wlo-search.component';
+import { TemplateComponent } from './template/template.component';
 
 const routes: Routes = [
     {
@@ -44,6 +45,7 @@ const routes: Routes = [
                 resolve: { entry: DetailsPageResolverService },
             },
             { path: 'experiments', component: ExperimentsTogglesComponent },
+            { path: 'template', component: TemplateComponent },
             { path: '', redirectTo: 'search', pathMatch: 'full' },
             { path: 'error', component: ErrorPageComponent },
         ],

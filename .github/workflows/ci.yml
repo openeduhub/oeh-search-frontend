@@ -4,7 +4,7 @@ on: push
 
 env:
   IMAGE_NAME: ${{ github.repository }}
-  NODE_VERSION: '16'
+  NODE_VERSION: '20.12.2'
 
 jobs:
   check-image:
@@ -110,7 +110,7 @@ jobs:
       frontend:
         image: ${{ github.repository }}:${{ github.sha }}
         env:
-          EDU_SHARING_API_URL: https://redaktion.openeduhub.net/edu-sharing/rest
+          EDU_SHARING_API_URL: https://repository.staging.openeduhub.net/edu-sharing/rest
         ports:
           - 8080:80
     steps:
@@ -121,13 +121,13 @@ jobs:
       - name: Cypress run
         uses: cypress-io/github-action@v4
         env:
-          CYPRESS_baseUrl: http://localhost:8080
+          CYPRESS_baseUrl: http://localhost:8080/search
           # We cannot guarantee that the given Edu-Sharing instance allows localhost with
           # 'Access-Control-Allow-Origin'.
           CYPRESS_chromeWebSecurity: false
         with:
           working-directory: e2e-cypress
-      - uses: actions/upload-artifact@v1
+      - uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: cypress-screenshots
@@ -152,7 +152,7 @@ jobs:
         run: npm ci
       - name: Build web components
         run: npm run build:web-components
-      - uses: actions/upload-artifact@v1
+      - uses: actions/upload-artifact@v4
         with:
           name: web-components
           path: dist/web-components

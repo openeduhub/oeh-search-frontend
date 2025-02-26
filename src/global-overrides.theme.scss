@@ -1,0 +1,160 @@
+@use '@angular/material' as mat;
+@import 'additional-colors';
+
+// global overrides
+@mixin angular-material-theme-overrides($theme) {
+    // overwrite variables
+    // badge background-color
+    --mat-badge-background-color: #{$pink-default};
+
+    // overwrite border radius for template page
+    app-template {
+        --mdc-fab-small-container-shape: 4px;
+    }
+
+    // overwrite chips default color, background-color + radius for search-field component + suggestion-card dropdown
+    app-search-field,
+    .suggestion-card {
+        // neutral-variant, 30 is equal to on-surface-variant that is used as the chip text color
+        // the color should not change in dark mode
+        --mdc-chip-label-text-color: #{mat.get-theme-color($theme, neutral-variant, 30)};
+        --mdc-chip-with-trailing-icon-trailing-icon-color: #{mat.get-theme-color(
+                $theme,
+                neutral-variant,
+                30
+            )};
+        --mdc-chip-elevated-container-color: #{$gray-light-alt};
+        --mdc-chip-container-shape-radius: 16px;
+
+        // TODO: Replace static colors
+        .mat-mdc-chip.chip-group-oer {
+            background-color: #{$chip-group-oer};
+        }
+        .mat-mdc-chip.chip-group-type {
+            background-color: #{$chip-group-type};
+        }
+        .mat-mdc-chip.chip-group-discipline {
+            background-color: #{$chip-group-discipline};
+        }
+        .mat-mdc-chip.chip-group-educationalContext {
+            background-color: #{$chip-group-educationalContext};
+        }
+        .mat-mdc-chip.chip-group-intendedEndUserRole {
+            background-color: #{$chip-group-intendedEndUserRole};
+        }
+        .mat-mdc-chip.chip-group-learningResourceType {
+            background-color: #{$chip-group-learningResourceType};
+        }
+        .mat-mdc-chip.chip-group-source {
+            background-color: #{$chip-group-source};
+        }
+    }
+
+    // overwrite suggestion dropdown background-color
+    .suggestion-card {
+        @if mat.get-theme-type($theme) == light {
+            background-color: mat.get-theme-color($theme, surface);
+        } @else {
+            background-color: mat.get-theme-color($theme, surface-container);
+        }
+    }
+
+    // override slick arrow color
+    .slick-prev::before,
+    .slick-next::before {
+        @if mat.get-theme-type($theme) == light {
+            color: mat.get-theme-color($theme, neutral, 35);
+        } @else {
+            color: mat.get-theme-color($theme, neutral, 99);
+        }
+    }
+
+    // override .grid-border-container background when being dragged
+    .cdk-drag .grid-border-container {
+        background: mat.get-theme-color($theme, surface);
+    }
+
+    // global styles for custom elements
+    // custom mat-menu-header-container theme
+    .mat-menu-header-container {
+        @if mat.get-theme-type($theme) == light {
+            color: mat.get-theme-color($theme, neutral, 35);
+        } @else {
+            color: mat.get-theme-color($theme, neutral, 99);
+        }
+    }
+
+    // custom button accent theme
+    button.btn-accent {
+        color: mat.get-theme-color($theme, primary, 40);
+        background: $neon-default;
+
+        &:hover {
+            background: $neon-medium;
+        }
+    }
+
+    // custom alert warning theme
+    .alert-warning {
+        border: 1px solid $accent-warning;
+        background: $accent-warning-20;
+    }
+}
+
+@mixin angular-material-typography-overrides($typography) {
+    // custom overrides
+    .mat-typography {
+        // reset letter-spacing
+        letter-spacing: 0;
+        // change font-family of buttons
+        button,
+        .mat-mdc-button {
+            &:not(.mat-button-toggle-button) {
+                font-family: 'Montserrat-SemiBold', sans-serif;
+            }
+        }
+    }
+    // change font-size + line-height of display and header elements by modifying system variables
+    // h1: --sys-display-large: 400 3.562rem / 4rem Montserrat-Medium
+    --sys-display-large-size: 2.125rem;
+    --sys-display-large-line-height: 124%;
+    // h1 and mat-display-large use --sys-display-large, hence we also need to update that variable to see the changes
+    --sys-display-large: var(--sys-display-large-weight) var(--sys-display-large-size) /
+        var(--sys-display-large-line-height) var(--sys-display-large-font);
+    // h2: --sys-display-medium: 400 2.812rem / 3.25rem Montserrat-Medium
+    --sys-display-medium-size: 1.625rem;
+    --sys-display-medium-line-height: 124%;
+    // h2 and mat-display-medium use --sys-display-medium, hence we also need to update that variable to see the changes
+    --sys-display-medium: var(--sys-display-medium-weight) var(--sys-display-medium-size) /
+        var(--sys-display-medium-line-height) var(--sys-display-medium-font);
+    // h3: --sys-display-small: 400 2.25rem / 2.75rem Montserrat-Medium
+    --sys-display-small-font: 'Montserrat-SemiBold', sans-serif;
+    --sys-display-small-size: 1.25rem;
+    --sys-display-small-line-height: 124%;
+    // h3 and mat-display-small use --sys-display-small, hence we also need to update that variable to see the changes
+    --sys-display-small: var(--sys-display-small-weight) var(--sys-display-small-size) /
+        var(--sys-display-small-line-height) var(--sys-display-small-font);
+    // h4: --sys-headline-large: 400 2rem / 2.5rem Montserrat-Medium
+    --sys-headline-large-font: 'Montserrat-Bold', sans-serif;
+    --sys-headline-large-size: 1.125rem;
+    --sys-headline-large-line-height: 124%;
+    // h4 and mat-headline-large use --sys-headline-large, hence we also need to update that variable to see the changes
+    --sys-headline-large: var(--sys-headline-large-weight) var(--sys-headline-large-size) /
+        var(--sys-headline-large-line-height) var(--sys-headline-large-font);
+
+    // overwrite material CSS variables
+    // increase font-size of switch labels, e.g., OER switch button
+    --mat-switch-label-text-size: var(--sys-body-large-size);
+    // increase font-size of tab headers, e.g., the tabs for all search results and search results sorted by content type
+    --mat-tab-header-label-text-size: var(--sys-body-large-size);
+
+    // custom menu-header weight
+    .mat-menu-header-container {
+        font-weight: var(--sys-display-small-weight);
+    }
+
+    // override mat-toggle-button font-weight
+    .mat-button-toggle-button {
+        font-weight: var(--sys-body-small-weight);
+    }
+}

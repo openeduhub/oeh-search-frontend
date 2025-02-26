@@ -1,26 +1,32 @@
 $sidePadding: 20px;
 
 mat-card {
+    padding: 0;
     height: 100%;
     display: flex;
     flex-direction: column;
-    padding: 0;
     border-radius: 20px 20px 0 0;
     > .header {
+        padding: 10px $sidePadding 10px $sidePadding;
         border-radius: 20px 20px 0 0;
         height: 40px;
-        padding: 10px $sidePadding 10px $sidePadding;
         display: flex;
         align-items: center;
         border-bottom-width: 1px;
         border-bottom-style: solid;
         h2 {
-            flex-grow: 1;
             margin: 0 10px;
+            flex-grow: 1;
         }
         .reset-button {
-            mat-icon {
+            .mat-icon,
+            .mat-mdc-icon {
                 margin-right: 0.3em;
+            }
+            &::ng-deep .mdc-button__label {
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
         }
     }
@@ -31,19 +37,28 @@ mat-card {
             padding: 10px;
         }
         > .type {
+            padding: 10px $sidePadding;
             border-bottom-width: 1px;
             border-bottom-style: solid;
-            padding: 10px $sidePadding;
             > mat-label {
+                margin: 10px 0;
                 display: flex;
                 align-items: center;
-                margin: 10px 0;
-                > mat-icon {
+                > .mat-icon,
+                > .mat-mdc-icon {
                     margin-right: 10px;
                 }
             }
         }
         > .mat-accordion .mat-expansion-panel {
+            &:first-of-type {
+                border-top-right-radius: 0;
+                border-top-left-radius: 0;
+            }
+            &:last-of-type {
+                border-bottom-right-radius: 0;
+                border-bottom-left-radius: 0;
+            }
             &[hidden] {
                 display: none;
             }
@@ -56,8 +71,8 @@ mat-card {
                 }
             }
             .show-more-button {
-                margin-top: 4px;
-                margin-left: -10px;
+                margin-top: 8px;
+                margin-left: -8px;
             }
         }
     }

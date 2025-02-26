@@ -24,15 +24,27 @@
       },
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/oeh-search-frontend",
+            "outputPath": {
+              "base": "dist/oeh-search-frontend"
+            },
             "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
+            "polyfills": [
+              "src/polyfills.ts"
+            ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": ["src/favicon.ico", "src/assets", "src/env.js"],
+            "assets": [
+              "src/favicon.ico",
+              "src/assets",
+              "src/env.js",
+              {
+                "glob": "**/*",
+                "input": "node_modules/ngx-edu-sharing-wlo-pages/assets",
+                "output": "/assets/"
+              }
+            ],
             "styles": [
               "node_modules/slick-carousel/slick/slick.scss",
               "node_modules/slick-carousel/slick/slick-theme.scss",
@@ -41,7 +53,8 @@
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/slick-carousel/slick/slick.min.js"
-            ]
+            ],
+            "browser": "src/main.ts"
           },
           "configurations": {
             "production": {
@@ -50,12 +63,12 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kb",
-                  "maximumError": "2mb"
+                  "maximumError": "3000kb"
                 },
                 {
                   "type": "anyComponentStyle",
                   "maximumWarning": "2kb",
-                  "maximumError": "10kb"
+                  "maximumError": "12kb"
                 }
               ],
               "fileReplacements": [
@@ -67,9 +80,7 @@
               "outputHashing": "all"
             },
             "development": {
-              "buildOptimizer": false,
               "optimization": false,
-              "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true,
@@ -77,6 +88,9 @@
             },
             "de": {
               "localize": ["de"]
+            },
+            "lib-dev": {
+              "tsConfig": "tsconfig.lib-dev.json"
             }
           },
           "defaultConfiguration": "production"
@@ -88,13 +102,19 @@
           },
           "configurations": {
             "production": {
-              "browserTarget": "oeh-search-frontend:build:production"
+              "buildTarget": "oeh-search-frontend:build:production"
             },
             "development": {
-              "browserTarget": "oeh-search-frontend:build:development"
+              "buildTarget": "oeh-search-frontend:build:development"
             },
             "de": {
-              "browserTarget": "oeh-search-frontend:build:development,de"
+              "buildTarget": "oeh-search-frontend:build:development,de"
+            },
+            "lib-dev": {
+              "buildTarget": "oeh-search-frontend:build:development,lib-dev"
+            },
+            "lib-dev-de": {
+              "buildTarget": "oeh-search-frontend:build:development,de,lib-dev"
             }
           },
           "defaultConfiguration": "development"
@@ -102,7 +122,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "oeh-search-frontend:build"
+            "buildTarget": "oeh-search-frontend:build"
           }
         },
         "test": {
@@ -113,7 +133,16 @@
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "inlineStyleLanguage": "scss",
-            "assets": ["src/favicon.ico", "src/assets", "src/env.js"],
+            "assets": [
+              "src/favicon.ico",
+              "src/assets",
+              "src/env.js",
+              {
+                "glob": "**/*",
+                "input": "node_modules/ngx-edu-sharing-wlo-pages/assets",
+                "output": "/assets/"
+              }
+            ],
             "styles": [
               "node_modules/slick-carousel/slick/slick.scss",
               "node_modules/slick-carousel/slick/slick-theme.scss",
@@ -153,12 +182,15 @@
       },
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/web-components",
+            "outputPath": {
+              "base": "dist/web-components"
+            },
             "index": "projects/web-components/src/index.html",
-            "main": "projects/web-components/src/main.ts",
-            "polyfills": "projects/web-components/src/polyfills.ts",
+            "polyfills": [
+              "projects/web-components/src/polyfills.ts"
+            ],
             "tsConfig": "projects/web-components/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -174,7 +206,8 @@
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/slick-carousel/slick/slick.min.js"
-            ]
+            ],
+            "browser": "projects/web-components/src/main.ts"
           },
           "configurations": {
             "production": {
@@ -183,12 +216,12 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kb",
-                  "maximumError": "2mb"
+                  "maximumError": "3000kb"
                 },
                 {
                   "type": "anyComponentStyle",
                   "maximumWarning": "2kb",
-                  "maximumError": "10kb"
+                  "maximumError": "12kb"
                 }
               ],
               "fileReplacements": [
@@ -200,10 +233,10 @@
               "outputHashing": "all"
             },
             "development": {
-              "localize": ["de"],
-              "buildOptimizer": false,
+              "localize": [
+                "de"
+              ],
               "optimization": false,
-              "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
@@ -215,10 +248,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "web-components:build:production"
+              "buildTarget": "web-components:build:production"
             },
             "development": {
-              "browserTarget": "web-components:build:development"
+              "buildTarget": "web-components:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -226,7 +259,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "web-components:build"
+            "buildTarget": "web-components:build"
           }
         },
         "test": {
@@ -258,6 +291,9 @@
   },
   "cli": {
     "analytics": false,
+    "cache": {
+      "enabled": false
+    },
     "schematicCollections": ["@angular-eslint/schematics"]
   }
 }

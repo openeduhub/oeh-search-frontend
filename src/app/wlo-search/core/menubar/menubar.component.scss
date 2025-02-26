@@ -2,6 +2,7 @@ $rem: 20px;
 
 :host {
     box-sizing: border-box;
+    // TODO: Typography
     font-size: $rem;
 }
 
@@ -9,8 +10,14 @@ $rem: 20px;
     position: relative !important;
 }
 
-.menu-item-suche {
-    text-decoration: underline;
+// Note: this class is important for Tab navigation working properly
+.invisible {
+    visibility: hidden;
+}
+
+// Note: the search item should be visually marked as active item
+.menu-item-suche a {
+    text-decoration: underline !important;
 }
 
 @media screen and (max-width: 1023px) {
@@ -26,9 +33,7 @@ $rem: 20px;
     .top-bar {
         position: absolute;
         padding-bottom: 30px !important;
-        background-color: #ececec !important;
         width: 100%;
-        box-shadow: 0 8px 12px -2px rgb(0 0 0 / 40%);
     }
 }
 
@@ -45,13 +50,11 @@ $rem: 20px;
 
 /*! CSS Used from: https://dev.wirlernenonline.de/wp-content/themes/wir-lernen-online/dist/assets/scss/app.css?ver=20200821 ; media=all */
 @media all {
-    a {
-        background-color: transparent;
-    }
     img {
         border-style: none;
     }
     button {
+        // TODO: Typography
         font-family: inherit;
         font-size: 100%;
         line-height: 1.15;
@@ -72,10 +75,6 @@ $rem: 20px;
         border-style: none;
         padding: 0;
     }
-    button:-moz-focusring,
-    [type='button']:-moz-focusring {
-        outline: 1px dotted ButtonText;
-    }
     *,
     *::before,
     *::after {
@@ -95,11 +94,11 @@ $rem: 20px;
         appearance: none;
         border: 0;
         border-radius: 5px;
-        background: transparent;
         line-height: 1;
         cursor: auto;
     }
     button {
+        // TODO: Typography
         font-family: inherit;
     }
     [type='button'] {
@@ -107,18 +106,6 @@ $rem: 20px;
         -moz-appearance: none;
         appearance: none;
         border-radius: 5px;
-    }
-    ::-moz-placeholder {
-        color: #313131;
-    }
-    :-ms-input-placeholder {
-        color: #313131;
-    }
-    ::-ms-input-placeholder {
-        color: #313131;
-    }
-    ::placeholder {
-        color: #313131;
     }
     div,
     ul,
@@ -128,13 +115,8 @@ $rem: 20px;
     }
     a {
         line-height: inherit;
-        color: #003e82;
         text-decoration: none;
         cursor: pointer;
-    }
-    a:hover,
-    a:focus {
-        color: #003570;
     }
     a img {
         border: 0;
@@ -145,6 +127,7 @@ $rem: 20px;
         line-height: 1.4;
     }
     li {
+        // TODO: Typography
         font-size: inherit;
     }
     ul {
@@ -156,13 +139,6 @@ $rem: 20px;
         margin-bottom: 0;
     }
     @media print {
-        * {
-            background: transparent !important;
-            color: black !important;
-            print-color-adjust: economy;
-            box-shadow: none !important;
-            text-shadow: none !important;
-        }
         a,
         a:visited {
             text-decoration: underline;
@@ -181,16 +157,16 @@ $rem: 20px;
         }
     }
     .grid-container {
-        padding-right: #{0.75 * $rem};
-        padding-left: #{0.75 * $rem};
-        max-width: #{60 * $rem};
         margin-left: auto;
         margin-right: auto;
+        padding-left: #{0.75 * $rem};
+        padding-right: #{0.75 * $rem};
+        max-width: #{60 * $rem};
     }
     @media print, screen and (min-width: 40em) {
         .grid-container {
-            padding-right: #{1 * $rem};
             padding-left: #{1 * $rem};
+            padding-right: #{1 * $rem};
         }
     }
     .grid-x {
@@ -199,12 +175,12 @@ $rem: 20px;
     }
     .cell {
         flex: 0 0 auto;
-        min-height: 0px;
-        min-width: 0px;
+        min-height: 0;
+        min-width: 0;
         width: 100%;
     }
     .cell.auto {
-        flex: 1 1 0px;
+        flex: 1 1 0;
     }
     .grid-x > .auto {
         width: auto;
@@ -225,7 +201,7 @@ $rem: 20px;
     }
     @media print, screen and (min-width: 64em) {
         .grid-x > .large-auto {
-            flex: 1 1 0px;
+            flex: 1 1 0;
             width: auto;
         }
         .grid-x > .large-shrink {
@@ -287,18 +263,18 @@ $rem: 20px;
         max-width: 100%;
     }
     .menu {
-        padding: 0;
         margin: 0;
+        padding: 0;
         list-style: none;
         position: relative;
         display: flex;
         flex-wrap: wrap;
     }
     .menu a {
+        padding: #{0.7 * $rem} #{1 * $rem};
         line-height: 1;
         text-decoration: none;
         display: block;
-        padding: #{0.7 * $rem} #{1 * $rem};
     }
     .menu a {
         margin-bottom: 0;
@@ -336,13 +312,7 @@ $rem: 20px;
         display: block;
         width: 100%;
         height: 2px;
-        background: #003e82;
-        box-shadow: 0 7px 0 #003e82, 0 14px 0 #003e82;
         content: '';
-    }
-    .menu-icon:hover::after {
-        background: #003e82;
-        box-shadow: 0 7px 0 #003e82, 0 14px 0 #003e82;
     }
     .dropdown.menu > li.opens-right > .is-dropdown-submenu {
         top: 100%;
@@ -350,10 +320,11 @@ $rem: 20px;
         left: 0;
     }
     .dropdown.menu > li.is-dropdown-submenu-parent > a {
-        position: relative;
         padding-right: #{1.5 * $rem};
+        position: relative;
     }
     .dropdown.menu > li.is-dropdown-submenu-parent > a::after {
+        margin-top: -3px;
         display: block;
         width: 0;
         height: 0;
@@ -361,20 +332,19 @@ $rem: 20px;
         content: '';
         border-bottom-width: 0;
         border-top-style: solid;
-        border-color: #003e82 transparent transparent;
         right: 5px;
         left: auto;
-        margin-top: -3px;
     }
     .dropdown.menu > li > a {
         padding: #{0.7 * $rem} #{1 * $rem};
     }
     .dropdown.menu.vertical > li .is-dropdown-submenu {
+        margin-left: 0;
         top: 0;
     }
     .dropdown.menu.vertical > li.opens-right > .is-dropdown-submenu {
-        right: auto;
         left: 100%;
+        right: auto;
     }
     .dropdown.menu.vertical > li > a::after {
         right: 14px;
@@ -387,7 +357,6 @@ $rem: 20px;
         content: '';
         border-right-width: 0;
         border-left-style: solid;
-        border-color: transparent transparent transparent #003e82;
     }
     @media print, screen and (min-width: 64em) {
         .dropdown.menu.large-horizontal > li.opens-right > .is-dropdown-submenu {
@@ -396,10 +365,11 @@ $rem: 20px;
             left: 0;
         }
         .dropdown.menu.large-horizontal > li.is-dropdown-submenu-parent > a {
-            position: relative;
             padding-right: #{1.5 * $rem};
+            position: relative;
         }
         .dropdown.menu.large-horizontal > li.is-dropdown-submenu-parent > a::after {
+            margin-top: -3px;
             display: block;
             width: 0;
             height: 0;
@@ -407,21 +377,19 @@ $rem: 20px;
             content: '';
             border-bottom-width: 0;
             border-top-style: solid;
-            border-color: #003e82 transparent transparent;
             right: 5px;
             left: auto;
-            margin-top: -3px;
         }
     }
     .is-dropdown-submenu-parent {
         position: relative;
     }
     .is-dropdown-submenu-parent a::after {
+        margin-top: -6px;
         position: absolute;
         top: 50%;
         right: 5px;
         left: auto;
-        margin-top: -6px;
     }
     .is-dropdown-submenu-parent.opens-right > .is-dropdown-submenu {
         right: auto;
@@ -434,8 +402,6 @@ $rem: 20px;
         z-index: 1;
         display: none;
         min-width: 200px;
-        border: 1px solid #d8d8d8;
-        background: #fefefe;
     }
     .dropdown .is-dropdown-submenu a {
         padding: #{0.7 * $rem} #{1 * $rem};
@@ -445,8 +411,6 @@ $rem: 20px;
     }
     .title-bar {
         padding: #{1 * $rem};
-        background: #fefefe;
-        color: #003e82;
         display: flex;
         justify-content: flex-start;
         align-items: center;
@@ -456,16 +420,12 @@ $rem: 20px;
         margin-right: #{0.25 * $rem};
     }
     .top-bar {
+        padding: 0;
         display: flex;
         flex-wrap: nowrap;
         justify-content: space-between;
         align-items: center;
-        padding: 0;
         flex-wrap: wrap;
-    }
-    .top-bar,
-    .top-bar ul {
-        background-color: transparent;
     }
     .top-bar .top-bar-left {
         flex: 0 0 100%;
@@ -476,8 +436,8 @@ $rem: 20px;
             flex-wrap: nowrap;
         }
         .top-bar .top-bar-left {
-            flex: 1 1 auto;
             margin-right: auto;
+            flex: 1 1 auto;
         }
     }
     .top-bar-left {
@@ -498,6 +458,7 @@ $rem: 20px;
         position: relative !important;
     }
     .menu li a {
+        // TODO: Typography
         font-family: 'Montserrat-Bold', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
     }
     a:active,
@@ -510,14 +471,11 @@ $rem: 20px;
     .position-relative {
         position: relative;
     }
-    *:focus {
-        outline: 1px dotted #003e82;
-    }
     .site-header {
         z-index: 999;
         min-height: 63px;
-        background-color: #fefefe;
-        border-bottom: 1px solid #ececec;
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
         position: fixed;
         top: 0;
         left: 0;
@@ -526,7 +484,6 @@ $rem: 20px;
     }
     @media print, screen and (max-width: 39.99875em) {
         .site-header .top-bar {
-            background-color: #ececec;
             padding-bottom: calc(2 * 15px);
         }
         .site-header .top-bar .menu {
@@ -535,7 +492,6 @@ $rem: 20px;
     }
     @media print, screen and (min-width: 40em) and (max-width: 63.99875em) {
         .site-header .top-bar {
-            background-color: #ececec;
             padding-bottom: calc(2 * 15px);
         }
         .site-header .top-bar .menu {
@@ -557,24 +513,19 @@ $rem: 20px;
     .top-call-to-action-menu li a {
         display: flex;
         align-items: center;
-        background-color: #e4f700;
-        color: #032850;
         height: 30px;
+        // TODO: Typography
         font-family: 'Montserrat-Bold', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
         font-size: 16px !important;
         border-radius: 60px;
         transition: 0.3s;
     }
-    .top-call-to-action-menu li a:hover {
-        color: #003b7c;
-        background: #b4da1c;
-    }
     .menu li a {
+        // TODO: Typography
         font-family: 'Montserrat-Bold', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
         font-size: 20px;
     }
     .is-dropdown-submenu {
-        background-color: #fefefe !important;
         border-radius: 24px;
         border: none;
         text-align: left;
@@ -585,6 +536,7 @@ $rem: 20px;
         width: fit-content;
     }
     .is-dropdown-submenu li a {
+        // TODO: Typography
         font-family: 'Montserrat-Medium', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
         font-size: 20px;
     }
@@ -595,18 +547,15 @@ $rem: 20px;
         border-radius: 0 0 24px 24px;
     }
     .is-dropdown-submenu-item:hover {
-        background-color: #d9e2eb;
         cursor: pointer;
     }
 }
 /*! CSS Used from: https://dev.wirlernenonline.de/wp-content/themes/wir-lernen-online/dist/assets/scss/wlo.css?ver=20200821 ; media=all */
 @media all {
     .skip-link {
+        padding: 15px 23px 14px;
         position: absolute;
         top: -100px;
-        background-color: #f1f1f1;
-        box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.6);
-        color: #21759b;
         display: block;
         font-family: 'Open Sans', sans-serif;
         font-size: 14px;
@@ -614,23 +563,147 @@ $rem: 20px;
         height: auto;
         left: 6px;
         line-height: normal;
-        padding: 15px 23px 14px;
         text-decoration: none;
         width: auto;
         z-index: 100000;
         transition: top 0.75s ease-out;
     }
     .skip-link:focus {
-        color: #21759b;
         top: 7px;
         transition: top 0s;
     }
 }
-/*! CSS Used from: https://dev.wirlernenonline.de/wp-content/themes/wir-lernen-online/style.css?ver=20200821 ; media=all */
-@media all {
-    @media screen and (max-width: 1024px) {
-        #main-menu {
-            box-shadow: 0 8px 12px -2px rgba(0, 0, 0, 0.4);
-        }
-    }
+
+// The following styles were extracted from wirlernenonline.de
+// in order to make the animations working properly
+.linear {
+    transition-timing-function: linear !important;
+}
+
+.fade-in.mui-enter {
+    transition-duration: 500ms;
+    transition-timing-function: linear;
+    opacity: 0;
+    transition-property: opacity;
+}
+
+.fade-in.mui-enter.mui-enter-active {
+    opacity: 1;
+}
+
+.fade-out.mui-leave {
+    transition-duration: 500ms;
+    transition-timing-function: linear;
+    opacity: 1;
+    transition-property: opacity;
+}
+
+.fade-out.mui-leave.mui-leave-active {
+    opacity: 0;
+}
+
+// The following styles were extracted from wirlernenonline.de
+// in order to make the mobile view working properly
+.menu.is-drilldown-submenu {
+    margin: 0;
+}
+
+.is-drilldown {
+    min-height: 288px;
+    max-width: 100%;
+}
+
+.is-drilldown {
+    position: relative;
+    overflow: hidden;
+}
+.is-drilldown li {
+    display: block;
+}
+.is-drilldown.animate-height {
+    transition: height 0.5s;
+}
+
+.drilldown a {
+    padding: #{0.7 * $rem} #{1 * $rem};
+}
+
+.drilldown .is-drilldown-submenu {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    z-index: -1;
+    width: 100%;
+    transition: transform 0.15s linear;
+}
+.drilldown .is-drilldown-submenu.is-active {
+    z-index: 1;
+    display: block;
+    transform: translateX(-100%);
+}
+.drilldown .is-drilldown-submenu.is-closing {
+    transform: translateX(100%);
+}
+
+.drilldown .nested.is-drilldown-submenu {
+    margin-right: 0;
+    margin-left: 0;
+}
+
+.drilldown .drilldown-submenu-cover-previous {
+    min-height: 100%;
+}
+
+.drilldown .is-drilldown-submenu-parent > a {
+    position: relative;
+}
+.drilldown .is-drilldown-submenu-parent > a::after {
+    margin-top: -6px;
+    display: block;
+    width: 0;
+    height: 0;
+    border: inset 6px;
+    content: '';
+    border-right-width: 0;
+    border-left-style: solid;
+    position: absolute;
+    top: 50%;
+    right: #{1 * $rem};
+}
+
+.drilldown.align-left .is-drilldown-submenu-parent > a::after {
+    display: block;
+    width: 0;
+    height: 0;
+    border: inset 6px;
+    content: '';
+    border-right-width: 0;
+    border-left-style: solid;
+    right: #{1 * $rem};
+    left: auto;
+}
+
+.drilldown.align-right .is-drilldown-submenu-parent > a::after {
+    display: block;
+    width: 0;
+    height: 0;
+    border: inset 6px;
+    content: '';
+    border-left-width: 0;
+    border-right-style: solid;
+    right: auto;
+    left: #{1 * $rem};
+}
+
+.drilldown .js-drilldown-back > a::before {
+    margin-right: #{0.75 * $rem};
+    display: block;
+    width: 0;
+    height: 0;
+    border: inset 6px;
+    content: '';
+    border-left-width: 0;
+    border-right-style: solid;
+    display: inline-block;
+    vertical-align: middle;
 }

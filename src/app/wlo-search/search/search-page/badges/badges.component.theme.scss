@@ -1,18 +1,19 @@
 @use '@angular/material' as mat;
+@import '../../../../../additional-colors';
 @import '../../../functions';
 
 @mixin badges-theme($theme) {
-    $foreground: map-get($theme, foreground);
-    $background: map-get($theme, background);
-    // $custom-accent: map-get($theme, custom-accent);
     app-badges {
         .app-badges-badge {
-            background-color: mat.get-color-from-palette($background, card);
+            // neutral, 98 is equivalent to surface, but does not change in dark mode
+            background: mat.get-theme-color($theme, neutral, 98);
+
             > .icon {
-                color: mat.get-color-from-palette($foreground, secondary-text);
+                // neutral-variant, 30 is equivalent to on-surface-variant, but does not change in dark mode
+                color: mat.get-theme-color($theme, neutral-variant, 30);
             }
             > .editorial-icon {
-                color: #106029;
+                color: $neon-dark;
             }
         }
     }

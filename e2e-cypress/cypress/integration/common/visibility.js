@@ -70,7 +70,7 @@ Then('I see the search button', () => {
 Then('I see the search button label {string}', (label) => {
     cy.get('app-search-field')
         .find('button[class*="submit-button"]')
-        .find('span[class*="mat-button-wrapper"]')
+        .find('span[class*="mdc-button__label"]')
         .should('have.text', label);
 });
 
@@ -81,7 +81,7 @@ Then('I see the filter button', () => {
 Then('I see the filter button label {string}', (filter) => {
     cy.get('app-headerbar')
         .find('button[class*="filter-button"]')
-        .find('span[class*="mat-button-wrapper"]')
+        .find('span[class*="mdc-button__label"]')
         .find('span[class*="button-wrapper"]')
         .find('span')
         .should('have.text', filter);
@@ -92,13 +92,13 @@ Then('I see the paginator', () => {
     cy.get('app-paginator').find('a[aria-label="Vorherige Seite"]').should('be.visible');
     cy.get('app-paginator')
         .find('a[aria-label="Vorherige Seite"]')
-        .find('mat-icon[class*="mat-icon"]')
+        .find('i[class*="mat-icon"]')
         .should('have.text', 'arrow_back');
 
     cy.get('app-paginator').find('a[aria-label="Nächste Seite"]').should('be.visible');
     cy.get('app-paginator')
         .find('a[aria-label="Nächste Seite"]')
-        .find('mat-icon[class*="mat-icon"]')
+        .find('i[class*="mat-icon"]')
         .should('have.text', 'arrow_forward');
 
     cy.get('app-paginator').find('span[class*="page-number"]').should('be.visible');

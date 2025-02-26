@@ -30,7 +30,7 @@ export type Filters = {
     providedIn: 'root',
 })
 export class EduSharingService {
-    static readonly repository = 'local';
+    static readonly repository = '-home-';
     static readonly metadataSet = 'mds_oeh';
     private static readonly searchQuery = 'ngsearch';
 

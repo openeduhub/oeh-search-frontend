@@ -2,27 +2,22 @@
 @import '../../../functions';
 
 @mixin paginator-theme($theme) {
-    $primary-foreground-color: primary-foreground-color($theme);
-    $primary: map-get($theme, primary);
-
     app-paginator {
-        .ellipsis {
-            color: mat.get-color-from-palette($primary);
-        }
-        .page-number {
-            color: mat.get-color-from-palette($primary);
-            &.active {
-                background-color: mat.get-color-from-palette($primary, 70);
+        .ellipsis,
+        .page-number,
+        .arrow:not(.mat-mdc-button-disabled) {
+            @if mat.get-theme-type($theme) == light {
+                color: mat.get-theme-color($theme, primary, 25);
+            } @else {
+                color: mat.get-theme-color($theme, primary);
             }
         }
-    }
-}
-
-@mixin paginator-typography($typography) {
-    app-paginator {
-        .page-number,
-        .ellipsis {
-            @include mat.typography-level($typography, button);
+        .page-number.active {
+            @if mat.get-theme-type($theme) == light {
+                background-color: rgba(mat.get-theme-color($theme, secondary, 70), 0.5);
+            } @else {
+                background-color: mat.get-theme-color($theme, neutral, 30);
+            }
         }
     }
 }

@@ -21,11 +21,12 @@
   [style.objectFit]="objectFit"
 ></canvas>
 
+<!-- TODO: According to the comments above, the black background currently seems to be intended -->
 <img
   class="main-image"
+  [class.hidden]="replacedWithStatic && !playAnimation"
   (load)="onImageLoad($event)"
   #image
   [appPreviewImageInner]="previewImage"
-  [class.hidden]="replacedWithStatic && !playAnimation"
   [style.objectFit]="objectFit"
 />

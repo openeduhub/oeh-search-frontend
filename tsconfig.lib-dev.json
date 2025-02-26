@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "paths": {
+      "ngx-edu-sharing-wlo-pages": [
+        "projects/wlo-pages-lib/src/lib",
+      ],
+      "ngx-edu-sharing-wlo-pages/*": [
+        "projects/wlo-pages-lib/src/lib/*",
+      ]
+    }
+  }
+}

@@ -1,0 +1,63 @@
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { v4 as uuidv4 } from 'uuid';
+import { SharedModule } from '../../shared/shared.module';
+import { swimlaneGridOptions, swimlaneTypeOptions } from '../shared/custom-definitions';
+import { GridTile } from '../shared/types/grid-tile';
+import { SelectOption } from '../shared/types/select-option';
+import { Swimlane } from '../shared/types/swimlane';
+
+@Component({
+    standalone: true,
+    imports: [SharedModule],
+    selector: 'app-add-swimlane-border-button',
+    templateUrl: './add-swimlane-border-button.component.html',
+    styleUrls: ['./add-swimlane-border-button.component.scss'],
+})
+export class AddSwimlaneBorderButtonComponent {
+    @Input() position: string = 'top';
+    @Input() requestInProgress: boolean = false;
+    @Output() addSwimlaneTriggered: EventEmitter<Swimlane> = new EventEmitter<Swimlane>();
+    supportedSwimlaneTypes: string[] = swimlaneTypeOptions.map((type: SelectOption) => type.value);
+
+    /**
+     * Configures the swimlane and grid by emitting a newly created swimlane.
+     *
+     * @param swimlaneType
+     * @param gridType
+     */
+    configureSwimlaneAndGrid(swimlaneType: string, gridType: string): void {
+        if (!this.supportedSwimlaneTypes.includes(swimlaneType)) {
+            return;
+        }
+        const newSwimlane: Swimlane = {
+            id: uuidv4(),
+            heading: 'Eine beispielhafte Überschrift',
+            type: swimlaneType,
+            grid: [],
+        };
+        // add tiles depending on the grid option value
+        // note: we use a 6 column grid in order to display all possible options
+        switch (gridType) {
+            case 'one_column':
+                newSwimlane.grid = [new GridTile(6, 1)];
+                break;
+            case 'two_columns':
+                newSwimlane.grid = [new GridTile(3, 1), new GridTile(3, 1)];
+                break;
+            case 'three_columns':
+                newSwimlane.grid = [new GridTile(2, 1), new GridTile(2, 1), new GridTile(2, 1)];
+                break;
+            case 'left_side_panel':
+                newSwimlane.grid = [new GridTile(2, 1), new GridTile(4, 1)];
+                break;
+            case 'right_side_panel':
+                newSwimlane.grid = [new GridTile(4, 1), new GridTile(2, 1)];
+                break;
+            default:
+                newSwimlane.grid = [new GridTile(6, 1)];
+        }
+        this.addSwimlaneTriggered.emit(newSwimlane);
+    }
+
+    protected readonly swimlaneGridOptions: SelectOption[] = swimlaneGridOptions;
+}
