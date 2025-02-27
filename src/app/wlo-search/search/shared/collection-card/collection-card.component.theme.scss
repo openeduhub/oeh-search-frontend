@@ -2,31 +2,34 @@
 @import '../../../functions';
 
 @mixin collection-card-theme($theme) {
-    $primary: map-get($theme, primary);
-
     app-collection-card {
         .app-collection-card-container {
-            background-color: mat.get-color-from-palette($primary, 400);
-            color: mat.get-contrast-color-from-palette($primary, 400);
-            // Background image, not compatible with background colors.
-            //
-            // &.app-collection-card-container-background-light {
-            //     color: mat.get-color-from-palette($app-light-theme-foreground, text);
-            // }
-            // &.app-collection-card-container-background-dark {
-            //     color: mat.get-color-from-palette($app-dark-theme-foreground, text);
-            // }
+            color: mat.get-theme-color($theme, on-primary);
+            background: mat.get-theme-color($theme, primary);
+            transition: box-shadow 0.3s, transform 0.3s;
+            &:hover {
+                transform: translate(0, -4px);
+                box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25);
+            }
         }
     }
 }
 
 @mixin collection-card-typography($typography) {
     app-collection-card {
-        .app-collection-card-title {
-            @include mat.typography-level($typography, subheading-1);
+        // bold font-weight for title
+        h4.app-collection-card-title {
+            font-family: var(--sys-headline-large-font);
+            font-size: var(--sys-body-large-size);
+            font-weight: var(--sys-label-large-weight-prominent);
         }
+        // decrease font-size for metadata
         .app-collection-card-metadata-item {
-            @include mat.typography-level($typography, caption);
+            font-size: var(--sys-body-medium-size);
+            .mat-icon,
+            .mat-mdc-icon {
+                font-size: var(--sys-body-small-size);
+            }
         }
     }
 }

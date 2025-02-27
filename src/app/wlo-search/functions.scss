@@ -4,8 +4,8 @@
 @function primary-foreground-color($theme) {
     $primary: map-get($theme, primary);
     @if map-get($theme, is-dark) {
-        @return mat.get-color-from-palette($primary, A100);
+        @return mat.m2-get-color-from-palette($primary, A100);
     } @else {
-        @return mat.get-color-from-palette($primary);
+        @return mat.m2-get-color-from-palette($primary);
     }
 }

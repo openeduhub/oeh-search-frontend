@@ -1,0 +1,63 @@
+<ng-container [ngSwitch]="widgetType">
+  <ng-container *ngSwitchCase="'wlo-ai-text-widget'">
+    <wlo-ai-text-widget
+      [class]="widgetClasses ? widgetClasses : ''"
+      [contextNodeId]="contextNodeId"
+      [defaultNodeId]="defaultAiTextWidgetNodeId"
+      [editMode]="editMode"
+      [gridIndex]="gridIndex"
+      [nodeId]="widgetNodeId"
+      [pageVariantNode]="pageVariantNode"
+      [parentWidgetConfigNodeId]="parentWidgetConfigNodeId"
+      [selectDimensions]="selectDimensions"
+      [selectedDimensionValues]="selectedDimensionValues"
+      [swimlaneIndex]="swimlaneIndex"
+    ></wlo-ai-text-widget>
+  </ng-container>
+  <ng-container *ngSwitchCase="'wlo-collection-chips'">
+    <wlo-collection-chips
+      *ngIf="contextNodeId"
+      [class]="widgetClasses ? widgetClasses : ''"
+      [contextNodeId]="contextNodeId"
+      [customUrl]="retrieveCustomUrl"
+      [defaultNodeId]="defaultCollectionChipsNodeId"
+      [editMode]="editMode"
+      [editModeIsInput]="true"
+      [gridIndex]="gridIndex"
+      [nodeId]="widgetNodeId"
+      [pageVariantNode]="pageVariantNode"
+      [parentWidgetConfigNodeId]="parentWidgetConfigNodeId"
+      [swimlaneColor]="backgroundColor"
+      [swimlaneIndex]="swimlaneIndex"
+    ></wlo-collection-chips>
+  </ng-container>
+  <ng-container *ngSwitchCase="'wlo-topics-column-browser'">
+    <wlo-topics-column-browser
+      *ngIf="contextNodeId"
+      [class]="widgetClasses ? widgetClasses : ''"
+      [contextNodeId]="contextNodeId"
+      [customUrl]="retrieveCustomUrl"
+      [defaultNodeId]="defaultTopicsColumnBrowserNodeId"
+      [height]="'400'"
+    ></wlo-topics-column-browser>
+  </ng-container>
+  <ng-container *ngSwitchCase="'wlo-user-configurable'">
+    <wlo-user-configurable
+      class="user-configurable"
+      [class]="widgetClasses ? widgetClasses : ''"
+      [contextNodeId]="contextNodeId"
+      [defaultNodeId]="defaultUserConfigurableNodeId"
+      [editMode]="editMode"
+      [editModeIsInput]="true"
+      [gridIndex]="gridIndex"
+      [nodeId]="widgetNodeId"
+      [pageVariantNode]="pageVariantNode"
+      [parentWidgetConfigNodeId]="parentWidgetConfigNodeId"
+      [searchText]="topic"
+      [swimlaneColor]="backgroundColor"
+      [swimlaneIndex]="swimlaneIndex"
+      (itemClickedEvent)="clickedItem($event)"
+    >
+    </wlo-user-configurable>
+  </ng-container>
+</ng-container>

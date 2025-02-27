@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRoute, Resolve, Router } from '@angular/router';
+import { ActivatedRoute, Router, ResolveFn } from '@angular/router';
 import { combineLatest, Observable, throwError } from 'rxjs';
 import { catchError, finalize, switchMap, tap } from 'rxjs/operators';
 import { ErrorService } from './error-page/error.service';
@@ -17,7 +17,12 @@ export class ResolveService {
      *
      * @param resolver has to to return an Observable that will emit once and then complete
      */
-    resolve<T>(resolver: Resolve<T>, route: ActivatedRoute): Observable<T> {
+    resolve<T>(
+        resolver: {
+            resolve: ResolveFn<T>;
+        },
+        route: ActivatedRoute,
+    ): Observable<T> {
         return combineLatest([route.params, route.queryParams]).pipe(
             tap(() => Promise.resolve().then(() => this.view.setIsLoading())),
             switchMap(() =>

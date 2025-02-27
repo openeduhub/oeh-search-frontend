@@ -1,4 +1,3 @@
-// import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { NavigationError, Router } from '@angular/router';
 import { ConfigService } from '../config.service';
@@ -9,11 +8,7 @@ import { ConfigService } from '../config.service';
 export class ErrorService {
     private error: NavigationError;
 
-    constructor(
-        private config: ConfigService,
-        // private location: Location,
-        private router: Router,
-    ) {}
+    constructor(private config: ConfigService, private router: Router) {}
 
     goToErrorPage(error: NavigationError) {
         this.error = error;

@@ -30,9 +30,9 @@
     }
 }
 .card-container {
+    margin: 10px 30px 30px 10px;
     display: flex;
     justify-content: center;
-    margin: 10px 30px 30px 10px;
     .slick-initialized &.slick-slide {
         display: flex;
         height: unset;

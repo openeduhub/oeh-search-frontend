@@ -1,11 +1,16 @@
 import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
+import { Node } from 'ngx-edu-sharing-api';
 import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ConfigService } from '../../../core/config.service';
-import { Node } from 'ngx-edu-sharing-api';
 import { PageModeService } from '../../../core/page-mode.service';
+import { reportProblemItemKey } from '../../../template/shared/custom-definitions';
 import { getCollectionProperty } from '../collection-property.pipe';
-import { ReportProblemService } from '../report-problem/report-problem.service';
+import {
+    ReportProblemService,
+    ResultData,
+    problemKinds,
+} from '../report-problem/report-problem.service';
 import { WrappedResponse } from '../wrap-observable.pipe';
 
 @Component({
@@ -28,7 +33,11 @@ export class DetailsComponent implements OnDestroy {
 
     readonly usedInCollections$ = this.hit$.pipe(
         map((hit) =>
-            hit.usedInCollections?.filter((collection) => getCollectionProperty(collection, 'url')),
+            hit.usedInCollections?.filter(
+                (collection) =>
+                    getCollectionProperty(collection, 'url') &&
+                    getCollectionProperty(collection, 'editorialState') === 'activated',
+            ),
         ),
         map((collections) => (collections?.length === 0 ? null : collections)),
     );
@@ -69,6 +78,35 @@ export class DetailsComponent implements OnDestroy {
 
     reportProblem(): void {
         this.reportProblemResult$ = this.reportProblemService.openDialog(this.hit);
+    }
+
+    contactSupport(): void {
+        let mailText: string = 'mailto:WLO Support<portal@jointly.info>?subject=Problem melden';
+        // TODO: there might be better options than using localStorage
+        const latestReportData: { element: Node; data: ResultData } = localStorage.getItem(
+            reportProblemItemKey,
+        )
+            ? JSON.parse(localStorage.getItem(reportProblemItemKey))
+            : {};
+
+        if (latestReportData.element && latestReportData.data) {
+            const element: Node = latestReportData.element;
+            const resultData: ResultData = latestReportData.data;
+            // https://stackoverflow.com/a/22765878
+            const br: string = '%0D%0A';
+            mailText +=
+                `&body=` +
+                `Ich möchte ein Problem mit dem Element "${element.name}" melden.${br}${br}${br}` +
+                `----- Die nachfolgenden Informationen dienen zum Debugging.` +
+                ` Bitte nicht löschen. -----${br}${br}` +
+                `Primäre ID: ${element.ref.id}${br}${br}` +
+                `Die Begründung der Meldung: ${problemKinds[resultData.problemKind]}` +
+                ` (${resultData.problemKind})${br}${br}` +
+                `Weitere Informationen vom Nutzer:${br}` +
+                resultData.message;
+        }
+
+        window.location.href = mailText;
     }
 
     private reset(): void {

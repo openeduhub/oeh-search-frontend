@@ -2,6 +2,7 @@ $rem: 20px;
 
 :host {
     box-sizing: border-box;
+    // TODO: Typography
     font-size: $rem;
 }
 
@@ -27,9 +28,6 @@ $rem: 20px;
 // - Replace all `((-?[\d\.])+)rem` with `#{$1 * $rem}`
 /*! CSS Used from: https://pre.wirlernenonline.de/wp-content/themes/wir-lernen-online/dist/assets/scss/app.css?ver=20200821 ; media=all */
 @media all {
-    a {
-        background-color: transparent;
-    }
     img {
         border-style: none;
     }
@@ -45,18 +43,6 @@ $rem: 20px;
         height: auto;
         -ms-interpolation-mode: bicubic;
     }
-    ::-moz-placeholder {
-        color: #313131;
-    }
-    :-ms-input-placeholder {
-        color: #313131;
-    }
-    ::-ms-input-placeholder {
-        color: #313131;
-    }
-    ::placeholder {
-        color: #313131;
-    }
     div,
     ul,
     li,
@@ -66,19 +52,15 @@ $rem: 20px;
     }
     p {
         margin-bottom: #{1 * $rem};
+        // TODO: Typography
         font-size: inherit;
         line-height: 1.4;
         text-rendering: optimizeLegibility;
     }
     a {
         line-height: inherit;
-        color: #003e82;
         text-decoration: none;
         cursor: pointer;
-    }
-    a:hover,
-    a:focus {
-        color: #003570;
     }
     a img {
         border: 0;
@@ -89,6 +71,7 @@ $rem: 20px;
         line-height: 1.4;
     }
     li {
+        // TODO: Typography
         font-size: inherit;
     }
     ul {
@@ -96,13 +79,6 @@ $rem: 20px;
         list-style-type: disc;
     }
     @media print {
-        * {
-            background: transparent !important;
-            color: black !important;
-            print-color-adjust: economy;
-            box-shadow: none !important;
-            text-shadow: none !important;
-        }
         a,
         a:visited {
             text-decoration: underline;
@@ -122,18 +98,18 @@ $rem: 20px;
         }
     }
     .menu {
-        padding: 0;
         margin: 0;
+        padding: 0;
         list-style: none;
         position: relative;
         display: flex;
         flex-wrap: wrap;
     }
     .menu a {
+        padding: #{0.7 * $rem} #{1 * $rem};
         line-height: 1;
         text-decoration: none;
         display: block;
-        padding: #{0.7 * $rem} #{1 * $rem};
     }
     .menu a {
         margin-bottom: 0;
@@ -146,6 +122,7 @@ $rem: 20px;
         padding: #{0.7 * $rem} #{1 * $rem};
     }
     .menu li a {
+        // TODO: Typography
         font-family: 'Montserrat-Bold', 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
     }
     a:active,
@@ -154,24 +131,20 @@ $rem: 20px;
         outline: 0;
         outline: none;
     }
-    *:focus {
-        outline: 1px dotted #003e82;
-    }
     .site-footer {
         overflow: hidden;
-        color: white;
-        background-color: #032850;
+        // TODO: Typography
         font-family: 'Source-Sans-Pro-Regular', sans-serif;
     }
     .site-footer .footer-wrapper {
-        display: flex;
-        max-width: 1200px;
         margin: 0 auto;
         padding-bottom: 2em;
+        display: flex;
+        max-width: 1200px;
     }
     .site-footer .footer-wrapper .footer-main {
-        width: 70%;
         margin-top: 3em;
+        width: 70%;
     }
     .site-footer .footer-wrapper .footer-main .footer-buttons {
         display: flex;
@@ -190,19 +163,16 @@ $rem: 20px;
         transform: translate(0, -4px);
     }
     .site-footer .footer-wrapper .footer-main .footer-menu {
-        display: flex;
         margin-top: 0.5em;
+        display: flex;
     }
     .site-footer .footer-wrapper .footer-main .footer-menu a {
-        color: white;
-        font-family: 'Montserrat-Medium', Helvetica, Roboto, Arial, sans-serif;
-        font-size: 16px;
         padding-left: 0;
         padding-right: 1.15em;
+        // TODO: Typography
+        font-family: 'Montserrat-Medium', Helvetica, Roboto, Arial, sans-serif;
+        font-size: 16px;
         transition: 0.3s;
-    }
-    .site-footer .footer-wrapper .footer-main .footer-menu a:hover {
-        color: #e4f700;
     }
     .site-footer .footer-wrapper .footer-right {
         display: flex;
@@ -213,47 +183,40 @@ $rem: 20px;
         display: flex;
         align-items: center;
         width: 40%;
-        background: white;
     }
     .site-footer .footer-wrapper .footer-right .footer-license {
+        padding: 1em;
         display: flex;
         align-items: center;
         width: 52%;
-        padding: 1em;
+        // TODO: Typography
         font-size: 14px;
     }
     .site-footer .footer-wrapper .footer-right .footer-license p {
         margin: 0;
     }
     .site-footer .footer-wrapper .footer-right .footer-license a {
-        color: white;
+        // TODO: Typography
         font-family: 'Source-Sans-Pro-Bold', sans-serif;
         transition: 0.3s;
         text-decoration: underline;
     }
-    .site-footer .footer-wrapper .footer-right .footer-license a:hover {
-        color: #e4f700;
-    }
     .site-footer .footer-wrapper .footer-btn {
+        margin: 0.5em 1em 0.5em 0;
+        padding: 8px 16px;
         display: flex;
         align-items: center;
         justify-content: center;
-        color: #032850;
+        // TODO: Typography
         font-family: 'Montserrat-Bold', Helvetica, Roboto, Arial, sans-serif;
         font-size: 14px;
         height: 30px;
         width: -webkit-fit-content;
         width: -moz-fit-content;
         width: fit-content;
-        margin: 0.5em 1em 0.5em 0;
-        padding: 8px 16px;
-        background: #e4f700;
         cursor: pointer;
         border-radius: 50px;
         transition: 0.3s;
-    }
-    .site-footer .footer-wrapper .footer-btn:hover {
-        background: #b4da1c;
     }
     @media (max-width: 900px) {
         .site-footer .footer-wrapper {
@@ -270,9 +233,9 @@ $rem: 20px;
             justify-content: center;
         }
         .site-footer .footer-wrapper .footer-right {
+            margin-top: 2em;
             width: 100%;
             justify-content: space-between;
-            margin-top: 2em;
         }
     }
 }

@@ -1,0 +1,295 @@
+@import '../../../additional-colors';
+
+:host {
+    // this CSS variable is overwritten by the component
+    --topic-color: $primary-dark;
+    --border-radius: 24px;
+    --maximal-width: 1200px;
+    --sidebar-height: 89px;
+    --sidebar-offset: 16px;
+    --offcanvas-menu-width: 48px;
+    --offcanvas-offset: 8px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.alert-warning {
+    margin: 24px 24px 0 24px !important;
+}
+
+.reloading-indicator-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: wait;
+    z-index: 100;
+}
+
+// add margin-bottom to editable text component
+wlo-editable-text {
+    // this is necessary for accordions to work properly
+    width: 100%;
+}
+
+.template-header {
+    background-color: var(--topic-color);
+
+    .template-header-wrapper {
+        margin: 0 auto;
+        padding: 1.5rem 2.25rem 0;
+        display: flex;
+        justify-content: flex-start;
+        position: relative;
+        box-sizing: border-box;
+        max-width: var(--maximal-width);
+        transition: 0.3s;
+
+        .template-header-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            width: 100%;
+        }
+    }
+}
+
+// extra small devices (portrait phones, less than 576px)
+// retrieved from Bootstrap
+@media (max-width: 575.98px) {
+    .template-header .template-header-wrapper {
+        padding: 1rem 1rem 0;
+    }
+}
+
+@media only screen and (min-width: 901px) {
+    .template-header {
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+
+        .template-header-container {
+            width: 72%;
+        }
+    }
+}
+
+.portal-outer-wrapper {
+    margin-top: -20px;
+    margin-bottom: 30px;
+    padding-right: calc(var(--offcanvas-menu-width) + var(--offcanvas-offset));
+    display: block;
+    border-radius: var(--border-radius);
+    z-index: 10;
+
+    &.reserve-space-left {
+        padding-left: calc(var(--offcanvas-menu-width) + var(--offcanvas-offset));
+    }
+
+    .portal-wrapper {
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        max-width: initial;
+        transition: 0.3s;
+
+        .portal-wrapper-left {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            width: 100%;
+            max-width: var(--maximal-width);
+            border-radius: var(--border-radius);
+
+            .wlo-swimlane {
+                position: relative;
+                border-top-left-radius: var(--border-radius);
+                border-top-right-radius: var(--border-radius);
+
+                &:last-child {
+                    border-bottom-left-radius: var(--border-radius);
+                    border-bottom-right-radius: var(--border-radius);
+                }
+
+                padding-top: 8px;
+                /* Simple hack for overflowing containers as it was done in Wordpress */
+                padding-bottom: 38px;
+
+                &:not(:first-child) {
+                    margin-top: -25px;
+                }
+
+                .wlo-edit-buttons,
+                .wlo-move-buttons {
+                    position: absolute;
+                    top: 24px;
+                    z-index: 10;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 8px;
+                }
+
+                // width of button (40px) + space between (4px)
+                --action-btn-position: -44px;
+
+                .wlo-edit-buttons {
+                    right: var(--action-btn-position);
+                }
+
+                .wlo-move-buttons {
+                    left: var(--action-btn-position);
+                }
+
+                /* type: collapse */
+                .wlo-accordion {
+                    display: block;
+                    width: 100%;
+
+                    .wlo-accordion-item {
+                        display: block;
+
+                        .wlo-accordion-item-header {
+                            display: flex;
+                            align-content: center;
+                            justify-content: space-between;
+                            position: relative;
+
+                            h2,
+                            h3 {
+                                margin: 0 7.5% 0 7.5%;
+                                width: 85%;
+                                text-align: center;
+                            }
+
+                            .wlo-accordion-item-description {
+                                position: absolute;
+                                top: calc(12px + 5px);
+                                right: calc(24px + 5px);
+                            }
+                        }
+
+                        .wlo-accordion-item-header,
+                        .wlo-accordion-item-body {
+                            padding: 12px 24px;
+                        }
+
+                        .wlo-accordion-item-header:hover {
+                            cursor: pointer;
+                        }
+
+                        .wlo-accordion-item:first-child,
+                        .wlo-accordion-item-header {
+                            border-top-left-radius: 10px;
+                            border-top-right-radius: 10px;
+                        }
+
+                        .wlo-accordion-item:last-child,
+                        .wlo-accordion-item-body,
+                        .wlo-accordion-item[aria-expanded='false'] .wlo-accordion-item-header {
+                            border-bottom-left-radius: 10px;
+                            border-bottom-right-radius: 10px;
+                        }
+                    }
+
+                    &.edit-mode {
+                        .wlo-accordion-item {
+                            .wlo-accordion-item-header {
+                                padding-bottom: 0;
+                                .wlo-accordion-item-description {
+                                    display: none;
+                                }
+                            }
+                            .wlo-accordion-item-body {
+                                padding-top: 0;
+                            }
+                        }
+                    }
+                }
+
+                /* type: container */
+                .wlo-container {
+                    padding: 16px 24px;
+                    height: 100%;
+                    box-sizing: border-box;
+                    overflow-y: scroll;
+
+                    h2,
+                    h3 {
+                        text-align: center;
+                    }
+                }
+
+                /* overwrites for edit mode */
+                &.swimlane-edit-mode {
+                    h2 {
+                        margin: 0 7.5% 16px 7.5%;
+                    }
+                }
+            }
+
+            .mat-grid-tile {
+                .drop-list,
+                .component-wrapper {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+
+            /* this is required to avoid the duplication effect on dragging */
+            .cdk-drag-placeholder {
+                display: none;
+            }
+
+            .no-swimlanes {
+                padding: 16px 24px;
+                text-align: center;
+            }
+        }
+    }
+
+    /* grabbing into the node-entry to avoid unappealingly thin cards */
+    ::ng-deep .grid-card {
+        min-width: 220px;
+    }
+}
+
+:host mat-grid-list ::ng-deep {
+    .mat-grid-tile .mat-grid-tile-content {
+        position: relative;
+        display: block;
+    }
+}
+
+// adjust style of app-preview-panel for topic page
+:host app-preview-panel ::ng-deep .app-preview-panel-sidebar {
+    max-height: calc(100vh - var(--sidebar-height) - 2 * var(--sidebar-offset));
+    display: flex;
+    width: 450px;
+    top: calc(var(--sidebar-height) + var(--sidebar-offset));
+    position: sticky;
+
+    @media screen and (max-width: 800px) {
+        position: relative;
+        top: unset;
+        height: 100%;
+        overscroll-behavior: contain;
+        overflow-y: auto;
+    }
+
+    @media screen and (min-width: 801px) {
+        margin-left: var(--sidebar-offset);
+        // the offset is already set by the topic page
+        margin-right: 0;
+    }
+
+    @media screen and (min-width: 1201px) {
+        // half the offset is enough due to padding-right of the topic page
+        margin-right: calc(var(--sidebar-offset) / 2);
+    }
+}

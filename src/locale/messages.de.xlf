@@ -1,104 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<xliff version="1.2"
-  xmlns="urn:oasis:names:tc:xliff:document:1.2">
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="en-US" datatype="plaintext" original="ng2.template" target-language="de">
     <body>
-      <trans-unit id="8398233202919865612" datatype="html">
-        <source>h</source>
-        <target state="final">h</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/shared/duration.pipe.ts</context>
-          <context context-type="linenumber">19</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="3901733599428143571" datatype="html">
-        <source>min</source>
-        <target state="final">Min</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/shared/duration.pipe.ts</context>
-          <context context-type="linenumber">21</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="5233556562218171082" datatype="html">
-        <source>Recommended by editorial team</source>
-        <target state="final">Empfehlung der Redaktion</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/search-page/badges/badges.component.html</context>
-          <context context-type="linenumber">7</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/search-page/result-card-content-compact/result-card-content-compact.component.html</context>
-          <context context-type="linenumber">15</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="1618543482751060617" datatype="html">
-        <source>Discipline</source>
-        <target state="final">Fachgebiet</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/core/search-field/search-field.component.html</context>
-          <context context-type="linenumber">79</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/search-page/result-card-content-standard/result-card-content-standard.component.html</context>
-          <context context-type="linenumber">28</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/search-page/result-card-content-standard/result-card-content-standard.component.html</context>
-          <context context-type="linenumber">29</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/search-page/search-filterbar/search-filterbar.component.html</context>
-          <context context-type="linenumber">42</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
-          <context context-type="linenumber">177</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
-          <context context-type="linenumber">178</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="7770415765844381821" datatype="html">
-        <source>Educational Level</source>
-        <target state="final">Bildungsstufe</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/search-page/search-filterbar/search-filterbar.component.html</context>
-          <context context-type="linenumber">46</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="8734585011091785402" datatype="html">
-        <source>Intended End User Role</source>
-        <target state="final">Zielgruppe</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/core/search-field/search-field.component.html</context>
-          <context context-type="linenumber">82</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/search-page/search-filterbar/search-filterbar.component.html</context>
-          <context context-type="linenumber">54</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="7915395256458209638" datatype="html">
-        <source>Learning Resource Type</source>
-        <target state="final">Medienart</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/core/search-field/search-field.component.html</context>
-          <context context-type="linenumber">85</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/search-page/search-filterbar/search-filterbar.component.html</context>
-          <context context-type="linenumber">50</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="1604795977599078115" datatype="html">
-        <source>Keywords</source>
-        <target state="final">Schlagwörter</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/search-page/search-filterbar/search-filterbar.component.html</context>
-          <context context-type="linenumber">62</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="843997273077620376" datatype="html">
         <source>Oops, something went wrong.</source>
         <target state="final">Da ist etwas schiefgelaufen.</target>
@@ -113,14 +16,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/wlo-search/core/error-page/error-page.component.html</context>
           <context context-type="linenumber">5</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="3789062473839221073" datatype="html">
-        <source>Experiments</source>
-        <target state="final">Experimente</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/preferences/experiments-toggles/experiments-toggles.component.html</context>
-          <context context-type="linenumber">1</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4163272119298020373" datatype="html">
@@ -151,14 +46,6 @@
           <context context-type="linenumber">27</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="9155608366859514313" datatype="html">
-        <source>Source</source>
-        <target state="final">Quelle</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/core/search-field/search-field.component.html</context>
-          <context context-type="linenumber">87</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="5795316453144024552" datatype="html">
         <source>show me only OER</source>
         <target state="final">zeige mir nur OER</target>
@@ -175,16 +62,40 @@
           <context context-type="linenumber">5</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="3504101142377977466" datatype="html">
+        <source>help</source>
+        <target state="final">Hilfe</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/core/oer-slider/oer-slider.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1027716064948075071" datatype="html">
+        <source>What is OER?</source>
+        <target state="final">Was ist OER?</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/core/oer-slider/oer-slider.component.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8188039613438296957" datatype="html">
+        <source>Find suitable content, tools, and sources for teaching...</source>
+        <target state="final">Finde die passenden Inhalte, Tools und Quellen für deinen Unterricht...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/core/search-field/search-field.component.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="8700121026680200191" datatype="html">
         <source>Clear</source>
         <target state="final">Zurücksetzen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/wlo-search/core/search-field/search-field.component.html</context>
-          <context context-type="linenumber">43</context>
+          <context context-type="linenumber">44</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/wlo-search/core/search-field/search-field.component.html</context>
-          <context context-type="linenumber">45</context>
+          <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2212695292809375179" datatype="html">
@@ -192,7 +103,7 @@
         <target state="final"> Suche </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/wlo-search/core/search-field/search-field.component.html</context>
-          <context context-type="linenumber">52</context>
+          <context context-type="linenumber">52,54</context>
         </context-group>
       </trans-unit>
       <trans-unit id="8650499415827640724" datatype="html">
@@ -200,7 +111,11 @@
         <target state="final">Typ</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/wlo-search/core/search-field/search-field.component.html</context>
-          <context context-type="linenumber">75</context>
+          <context context-type="linenumber">77</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/template/column-settings-dialog/column-settings-dialog.component.html</context>
+          <context context-type="linenumber">19</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3029609593829675670" datatype="html">
@@ -220,111 +135,51 @@
         <target state="final">Bildungsstufe</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/wlo-search/core/search-field/search-field.component.html</context>
-          <context context-type="linenumber">77</context>
+          <context context-type="linenumber">79</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/wlo-search/search/search-page/result-card-content-standard/result-card-content-standard.component.html</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/search-page/result-card-content-standard/result-card-content-standard.component.html</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
+          <context context-type="linenumber">199</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
+          <context context-type="linenumber">200</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1618543482751060617" datatype="html">
+        <source>Discipline</source>
+        <target state="final">Fachgebiet</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/core/search-field/search-field.component.html</context>
+          <context context-type="linenumber">80</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/search-page/result-card-content-standard/result-card-content-standard.component.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/search-page/result-card-content-standard/result-card-content-standard.component.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/search-page/search-filterbar/search-filterbar.component.html</context>
           <context context-type="linenumber">37</context>
         </context-group>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/search-page/result-card-content-standard/result-card-content-standard.component.html</context>
-          <context context-type="linenumber">38</context>
+          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
+          <context context-type="linenumber">187</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
-          <context context-type="linenumber">189</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
-          <context context-type="linenumber">190</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="6877113876835666202" datatype="html">
-        <source>License</source>
-        <target state="final">Lizenz</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
-          <context context-type="linenumber">201</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
-          <context context-type="linenumber">202</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="5900917461189959721" datatype="html">
-        <source>Free of charge</source>
-        <target state="final">Kostenlos verfügbar</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
-          <context context-type="linenumber">241</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="2867378116323222782" datatype="html">
-        <source>Paid content</source>
-        <target state="final">Kostenpflichtig</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
-          <context context-type="linenumber">245</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="8894377483833272091" datatype="html">
-        <source>Price</source>
-        <target state="final">Preis</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
-          <context context-type="linenumber">253</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="7872707632667569994" datatype="html">
-        <source>No advertisement</source>
-        <target state="final">Werbefrei</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
-          <context context-type="linenumber">263</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="3305536323100138359" datatype="html">
-        <source>Contains advertisement</source>
-        <target state="final">Enthält Werbung</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
-          <context context-type="linenumber">267</context>
-        </context-group>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
-          <context context-type="linenumber">272</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="7071470734400948493" datatype="html">
-        <source>Author</source>
-        <target state="final">Autor*innen</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
-          <context context-type="linenumber">278</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="6610096682273827778" datatype="html">
-        <source>Related Subject Pages</source>
-        <target state="final">Verwandte Themenseiten</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
-          <context context-type="linenumber">282</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="6095534740119293938" datatype="html">
-        <source>previous</source>
-        <target state="final">zurück</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
-          <context context-type="linenumber">284</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="5736512712252459867" datatype="html">
-        <source>next</source>
-        <target state="final">vor</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
-          <context context-type="linenumber">300</context>
+          <context context-type="linenumber">188</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5206272431542421762" datatype="html">
@@ -332,23 +187,63 @@
         <target state="final">Schlagwort</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/wlo-search/core/search-field/search-field.component.html</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">81</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="3504101142377977466" datatype="html">
-        <source>help</source>
-        <target state="final">Hilfe</target>
+      <trans-unit id="8734585011091785402" datatype="html">
+        <source>Intended End User Role</source>
+        <target state="final">Zielgruppe</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/core/oer-slider/oer-slider.component.html</context>
-          <context context-type="linenumber">11</context>
+          <context context-type="sourcefile">src/app/wlo-search/core/search-field/search-field.component.html</context>
+          <context context-type="linenumber">83</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/search-page/search-filterbar/search-filterbar.component.html</context>
+          <context context-type="linenumber">45</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="1027716064948075071" datatype="html">
-        <source>What is OER?</source>
-        <target state="final">Was ist OER?</target>
+      <trans-unit id="7915395256458209638" datatype="html">
+        <source>Learning Resource Type</source>
+        <target state="final">Medienart</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/core/oer-slider/oer-slider.component.html</context>
-          <context context-type="linenumber">14</context>
+          <context context-type="sourcefile">src/app/wlo-search/core/search-field/search-field.component.html</context>
+          <context context-type="linenumber">86</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="9155608366859514313" datatype="html">
+        <source>Source</source>
+        <target state="final">Quelle</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/core/search-field/search-field.component.html</context>
+          <context context-type="linenumber">88</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3789062473839221073" datatype="html">
+        <source>Experiments</source>
+        <target state="final">Experimente</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/preferences/experiments-toggles/experiments-toggles.component.html</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5233556562218171082" datatype="html">
+        <source>Recommended by editorial team</source>
+        <target state="final">Empfehlung der Redaktion</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/search-page/badges/badges.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/search-page/result-card-content-compact/result-card-content-compact.component.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6406388975129356546" datatype="html">
+        <source>Open Educational Resources</source>
+        <target state="final">Open Educational Resources</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/search-page/badges/badges.component.html</context>
+          <context context-type="linenumber">16</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3629960544875360046" datatype="html">
@@ -375,220 +270,16 @@
           <context context-type="linenumber">6</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="4348655378330177357" datatype="html">
-        <source>Report Problem</source>
-        <target state="final">Problem melden</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/shared/report-problem/report-problem.component.html</context>
-          <context context-type="linenumber">1</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="228342338316248946" datatype="html">
-        <source>Report a problem with "<x id="INTERPOLATION" equiv-text="{{ data.element.lom.general.title }}"/>
-".</source>
-        <target state="final">Ein Problem mit "<x id="INTERPOLATION" equiv-text="{{ data.element.lom.general.title }}"/>
-" melden.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/shared/report-problem/report-problem.component.html</context>
-          <context context-type="linenumber">3</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="898393690620275216" datatype="html">
-        <source>Problem kind</source>
-        <target state="final">Art des Problems</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/shared/report-problem/report-problem.component.html</context>
-          <context context-type="linenumber">7</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="2824462541582778458" datatype="html">
-        <source>Describe what's wrong</source>
-        <target state="final">Beschreibe, was nicht stimmt</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/shared/report-problem/report-problem.component.html</context>
-          <context context-type="linenumber">19</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="4188990062023929868" datatype="html">
-        <source>Your e-mail address (optional)</source>
-        <target state="final">Deine E-Mail-Adresse (optional)</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/shared/report-problem/report-problem.component.html</context>
-          <context context-type="linenumber">28</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="2159130950882492111" datatype="html">
-        <source>Cancel</source>
-        <target state="final">Abbrechen</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/shared/report-problem/report-problem.component.html</context>
-          <context context-type="linenumber">33</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="5945359866777111462" datatype="html">
-        <source> Report </source>
-        <target state="final"> Melden </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/shared/report-problem/report-problem.component.html</context>
-          <context context-type="linenumber">41</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="7029468596528926676" datatype="html">
-        <source>Object not available</source>
-        <target state="final">Medium nicht verfügbar</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/shared/report-problem/report-problem.service.ts</context>
-          <context context-type="linenumber">16</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="4495826282799419405" datatype="html">
-        <source>Problematic content</source>
-        <target state="final">Problematischer Inhalt</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/shared/report-problem/report-problem.service.ts</context>
-          <context context-type="linenumber">17</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="643050525478655020" datatype="html">
-        <source>Incorrect description</source>
-        <target state="final">Fehlerhafte Beschreibung</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/shared/report-problem/report-problem.service.ts</context>
-          <context context-type="linenumber">18</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="6185035155992471587" datatype="html">
-        <source>Something else</source>
-        <target state="final">Anderer Fehler</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/shared/report-problem/report-problem.service.ts</context>
-          <context context-type="linenumber">19</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="3041226815123232447" datatype="html">
-        <source>Hide preview panel</source>
-        <target state="final">Vorschauleiste ausblenden</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
-          <context context-type="linenumber">7</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="5481284030283031915" datatype="html">
-        <source>Website</source>
-        <target state="final">Webseite</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
-          <context context-type="linenumber">45</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="7011425206383801543" datatype="html">
-        <source>more</source>
-        <target state="final">mehr</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
-          <context context-type="linenumber">106</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="998897361974558493" datatype="html">
-        <source>less</source>
-        <target state="final">weniger</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
-          <context context-type="linenumber">110</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="4243968081572863947" datatype="html">
-        <source>Go to original page</source>
-        <target state="final">Zur Originalseite</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
-          <context context-type="linenumber">124</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="2864011924078117443" datatype="html">
-        <source>Embed element</source>
-        <target state="final">Element einbetten</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
-          <context context-type="linenumber">143</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="8349119323063730895" datatype="html">
-        <source>All details</source>
-        <target state="final">Alle Details</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
-          <context context-type="linenumber">137</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="4550038034596861126" datatype="html">
-        <source>Report problem</source>
-        <target state="final">Problem melden</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
-          <context context-type="linenumber">151</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="7194565934448991542" datatype="html">
-        <source>We received your report. Thank you for your help!</source>
-        <target state="final">Wir haben deine Meldung bekommen. Danke für deine Hilfe!</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
-          <context context-type="linenumber">167</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="2981904450852489829" datatype="html">
-        <source>Sorry, we couldn't send your report: <x id="INTERPOLATION" equiv-text="{{ result.error.message }}"/>
-        </source>
-        <target state="final">Entschuldige, wir konnten deine Meldung nicht abschicken: <x id="INTERPOLATION" equiv-text="{{ result.error.message }}"/>
-        </target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
-          <context context-type="linenumber">170</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="7068413777951670430" datatype="html">
         <source>Learning resource type</source>
         <target state="final">Medienart</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/wlo-search/search/search-page/result-card-content-standard/result-card-content-standard.component.html</context>
-          <context context-type="linenumber">21</context>
+          <context context-type="linenumber">25</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/wlo-search/search/search-page/result-card-content-standard/result-card-content-standard.component.html</context>
-          <context context-type="linenumber">22</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="6406388975129356546" datatype="html">
-        <source>Open Educational Resources</source>
-        <target state="final">Open Educational Resources</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/search-page/badges/badges.component.html</context>
-          <context context-type="linenumber">16</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="1632247578204543569" datatype="html">
-        <source>There are no results with content-type information available for the current search.</source>
-        <target>Für die aktuelle Suche konnten keine Ergebnisse mit Informationen zum Inhaltetyp finden.</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/search-page/subjects-portal/subjects-portal.component.html</context>
-          <context context-type="linenumber">9</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="2715055948117230928" datatype="html">
-        <source>Number of elements</source>
-        <target state="final">Anzahl der Inhalte</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/shared/collection-card/collection-card.component.html</context>
-          <context context-type="linenumber">32</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="8188039613438296957" datatype="html">
-        <source>Find suitable content, tools, and sources for teaching...</source>
-        <target state="final">Finde die passenden Inhalte, Tools und Quellen für deinen Unterricht...</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/core/search-field/search-field.component.html</context>
-          <context context-type="linenumber">33</context>
+          <context context-type="linenumber">26</context>
         </context-group>
       </trans-unit>
       <trans-unit id="7808756054397155068" datatype="html">
@@ -612,7 +303,15 @@
         <target state="final"> Es gibt gerade keine anwendbaren Filter. Versuche einen anderen Suchbegriff um mehr Ergebnisse zu bekommen. </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/wlo-search/search/search-page/search-filterbar/search-filterbar.component.html</context>
-          <context context-type="linenumber">21</context>
+          <context context-type="linenumber">20,22</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7770415765844381821" datatype="html">
+        <source>Educational Level</source>
+        <target state="final">Bildungsstufe</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/search-page/search-filterbar/search-filterbar.component.html</context>
+          <context context-type="linenumber">41</context>
         </context-group>
       </trans-unit>
       <trans-unit id="4348920359154187664" datatype="html">
@@ -620,7 +319,15 @@
         <target state="final">Bezugsquelle</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/wlo-search/search/search-page/search-filterbar/search-filterbar.component.html</context>
-          <context context-type="linenumber">58</context>
+          <context context-type="linenumber">49</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1604795977599078115" datatype="html">
+        <source>Keywords</source>
+        <target state="final">Schlagwörter</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/search-page/search-filterbar/search-filterbar.component.html</context>
+          <context context-type="linenumber">53</context>
         </context-group>
       </trans-unit>
       <trans-unit id="3729837124858655210" datatype="html">
@@ -628,11 +335,15 @@
         <target state="final">mehr zeigen</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/wlo-search/search/search-page/search-filterbar/search-filterbar.component.html</context>
-          <context context-type="linenumber">79</context>
+          <context context-type="linenumber">70</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/wlo-search/search/search-page/subjects-portal-section/subjects-portal-section.component.html</context>
-          <context context-type="linenumber">16</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/search-page/subjects-portal/subjects-portal.component.html</context>
+          <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5120743112006725492" datatype="html">
@@ -674,7 +385,7 @@
         </target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/wlo-search/search/search-page/search-page.component.html</context>
-          <context context-type="linenumber">35</context>
+          <context context-type="linenumber">35,36</context>
         </context-group>
       </trans-unit>
       <trans-unit id="5881876145178332550" datatype="html">
@@ -683,22 +394,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/wlo-search/search/search-page/search-page.component.html</context>
           <context context-type="linenumber">39</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="3148804384763272950" datatype="html">
-        <source>{VAR_PLURAL, plural, =1 {result} other {results}}</source>
-        <target state="final">{VAR_PLURAL, plural, =1 {Ergebnis} other {Ergebnisse}}</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/search-page/search-page.component.html</context>
-          <context context-type="linenumber">74</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="5177271580930771415" datatype="html">
-        <source>Participate</source>
-        <target state="final">Mitmachen</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/search-page/search-page.component.html</context>
-          <context context-type="linenumber">83</context>
         </context-group>
       </trans-unit>
       <trans-unit id="6885816366638230628" datatype="html">
@@ -733,12 +428,32 @@
           <context context-type="linenumber">63</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="3148804384763272950" datatype="html">
+        <source>{VAR_PLURAL, plural, =1 {result} other {results}}</source>
+        <target state="final">{VAR_PLURAL, plural, =1 {Ergebnis} other {Ergebnisse}}</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/search-page/search-page.component.html</context>
+          <context context-type="linenumber">74</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5177271580930771415" datatype="html">
+        <source>Participate</source>
+        <target state="final">Mitmachen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/search-page/search-page.component.html</context>
+          <context context-type="linenumber">83</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="7031141507741382342" datatype="html">
         <source>All search results</source>
         <target state="final">Alle Suchergebnisse</target>
         <context-group purpose="location">
           <context context-type="sourcefile">src/app/wlo-search/search/search-page/search-page.component.html</context>
           <context context-type="linenumber">103</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/search-page/subjects-portal/subjects-portal.component.html</context>
+          <context context-type="linenumber">17</context>
         </context-group>
       </trans-unit>
       <trans-unit id="2415524455366590864" datatype="html">
@@ -749,45 +464,350 @@
           <context context-type="linenumber">113</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="3871356154402153903" datatype="html">
-        <source>Contents</source>
-        <target state="final">Inhalte</target>
+      <trans-unit id="1632247578204543569" datatype="html">
+        <source>We couldn&apos;t find any results with content-type information for the current search.</source>
+        <target>Für die aktuelle Suche konnten keine Ergebnisse mit Informationen zum Inhaltetyp finden.</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/search-page/subjects-portal-section/subjects-portal-section.component.html</context>
+          <context context-type="sourcefile">src/app/wlo-search/search/search-page/subjects-portal/subjects-portal.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2715055948117230928" datatype="html">
+        <source>Number of elements</source>
+        <target state="final">Anzahl der Inhalte</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/shared/collection-card/collection-card.component.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3041226815123232447" datatype="html">
+        <source>Hide preview panel</source>
+        <target state="final">Vorschauleiste ausblenden</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5481284030283031915" datatype="html">
+        <source>Website</source>
+        <target state="final">Webseite</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7011425206383801543" datatype="html">
+        <source>more</source>
+        <target state="final">mehr</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
+          <context context-type="linenumber">100</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="998897361974558493" datatype="html">
+        <source>less</source>
+        <target state="final">weniger</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
+          <context context-type="linenumber">104</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4243968081572863947" datatype="html">
+        <source>Go to original page</source>
+        <target state="final">Zur Originalseite</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
+          <context context-type="linenumber">119</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8349119323063730895" datatype="html">
+        <source>All details</source>
+        <target state="final">Alle Details</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
+          <context context-type="linenumber">131</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2864011924078117443" datatype="html">
+        <source>Embed element</source>
+        <target state="final">Element einbetten</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
+          <context context-type="linenumber">150</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4550038034596861126" datatype="html">
+        <source>Report problem</source>
+        <target state="final">Problem melden</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
+          <context context-type="linenumber">158</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7194565934448991542" datatype="html">
+        <source>We received your report. Thank you for your help!</source>
+        <target state="final">Wir haben deine Meldung bekommen. Danke für deine Hilfe!</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
+          <context context-type="linenumber">177</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2981904450852489829" datatype="html">
+        <source>Sorry, we couldn&apos;t send your report: <x id="INTERPOLATION" equiv-text="{{ result.error.message }}"/>
+        </source>
+        <target state="final">Entschuldige, wir konnten deine Meldung nicht abschicken: <x id="INTERPOLATION" equiv-text="{{ result.error.message }}"/>
+        </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
+          <context context-type="linenumber">180,182</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6877113876835666202" datatype="html">
+        <source>License</source>
+        <target state="final">Lizenz</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
+          <context context-type="linenumber">211</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
+          <context context-type="linenumber">212</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5900917461189959721" datatype="html">
+        <source>Free of charge</source>
+        <target state="final">Kostenlos verfügbar</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
+          <context context-type="linenumber">251</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2867378116323222782" datatype="html">
+        <source>Paid content</source>
+        <target state="final">Kostenpflichtig</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
+          <context context-type="linenumber">255</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8894377483833272091" datatype="html">
+        <source>Price</source>
+        <target state="final">Preis</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
+          <context context-type="linenumber">263</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7872707632667569994" datatype="html">
+        <source>No advertisement</source>
+        <target state="final">Werbefrei</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
+          <context context-type="linenumber">273</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3305536323100138359" datatype="html">
+        <source>Contains advertisement</source>
+        <target state="final">Enthält Werbung</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
+          <context context-type="linenumber">277</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
+          <context context-type="linenumber">282</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7071470734400948493" datatype="html">
+        <source>Author</source>
+        <target state="final">Autor*innen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
+          <context context-type="linenumber">288</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6610096682273827778" datatype="html">
+        <source>Related Subject Pages</source>
+        <target state="final">Verwandte Themenseiten</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
+          <context context-type="linenumber">292</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6095534740119293938" datatype="html">
+        <source>previous</source>
+        <target state="final">zurück</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
+          <context context-type="linenumber">294</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5736512712252459867" datatype="html">
+        <source>next</source>
+        <target state="final">vor</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/shared/details/details.component.html</context>
+          <context context-type="linenumber">310</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="8398233202919865612" datatype="html">
+        <source>h</source>
+        <target state="final">h</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/shared/duration.pipe.ts</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3901733599428143571" datatype="html">
+        <source>min</source>
+        <target state="final">Min</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/shared/duration.pipe.ts</context>
+          <context context-type="linenumber">21</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4348655378330177357" datatype="html">
+        <source>Report Problem</source>
+        <target state="final">Problem melden</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/shared/report-problem/report-problem.component.html</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="228342338316248946" datatype="html">
+        <source>Report a problem with &quot;<x id="INTERPOLATION" equiv-text="{{ data.element | nodeProperty: &apos;title&apos; }}"/>&quot;.</source>
+        <target state="final">Ein Problem mit &quot;<x id="INTERPOLATION" equiv-text="{{ data.element.lom.general.title }}"/>&quot; melden.</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/shared/report-problem/report-problem.component.html</context>
           <context context-type="linenumber">3</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="8123397297408825515" datatype="html">
-        <source>Lesson Planning</source>
-        <target state="final">Unterrichtsideen</target>
-        <note priority="1" from="meaning">plural</note>
+      <trans-unit id="898393690620275216" datatype="html">
+        <source>Problem kind</source>
+        <target state="final">Art des Problems</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/search-page/subjects-portal-section/subjects-portal-section.component.html</context>
-          <context context-type="linenumber">4</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="1684734235599362204" datatype="html">
-        <source>Tools</source>
-        <target state="final">Tools</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/search-page/subjects-portal-section/subjects-portal-section.component.html</context>
-          <context context-type="linenumber">5</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="3998597663055219440" datatype="html">
-        <source>Sources</source>
-        <target state="final">Quellen</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/search-page/subjects-portal-section/subjects-portal-section.component.html</context>
-          <context context-type="linenumber">6</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="563272627948836175" datatype="html">
-        <source>Methods</source>
-        <target state="final">Methoden</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">src/app/wlo-search/search/search-page/subjects-portal-section/subjects-portal-section.component.html</context>
+          <context context-type="sourcefile">src/app/wlo-search/search/shared/report-problem/report-problem.component.html</context>
           <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2824462541582778458" datatype="html">
+        <source>Describe what&apos;s wrong</source>
+        <target state="final">Beschreibe, was nicht stimmt</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/shared/report-problem/report-problem.component.html</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4188990062023929868" datatype="html">
+        <source>Your e-mail address (optional)</source>
+        <target state="final">Deine E-Mail-Adresse (optional)</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/shared/report-problem/report-problem.component.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2159130950882492111" datatype="html">
+        <source>Cancel</source>
+        <target state="final">Abbrechen</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/shared/report-problem/report-problem.component.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5945359866777111462" datatype="html">
+        <source> Report </source>
+        <target state="final"> Melden </target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/shared/report-problem/report-problem.component.html</context>
+          <context context-type="linenumber">40,42</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7029468596528926676" datatype="html">
+        <source>Object not available</source>
+        <target state="final">Medium nicht verfügbar</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/shared/report-problem/report-problem.service.ts</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4495826282799419405" datatype="html">
+        <source>Problematic content</source>
+        <target state="final">Problematischer Inhalt</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/shared/report-problem/report-problem.service.ts</context>
+          <context context-type="linenumber">17</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="643050525478655020" datatype="html">
+        <source>Incorrect description</source>
+        <target state="final">Fehlerhafte Beschreibung</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/shared/report-problem/report-problem.service.ts</context>
+          <context context-type="linenumber">18</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6185035155992471587" datatype="html">
+        <source>Something else</source>
+        <target state="final">Anderer Fehler</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/search/shared/report-problem/report-problem.service.ts</context>
+          <context context-type="linenumber">19</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5479133824073842793" datatype="html">
+        <source>Configure</source>
+        <target state="final">Konfiguriere</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/template/column-settings-dialog/column-settings-dialog.component.html</context>
+          <context context-type="linenumber">2</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6317126528752584322" datatype="html">
+        <source>Heading</source>
+        <target state="final">Überschrift</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/template/column-settings-dialog/column-settings-dialog.component.html</context>
+          <context context-type="linenumber">7</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4902817035128594900" datatype="html">
+        <source>Description</source>
+        <target state="final">Beschreibung</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/template/column-settings-dialog/column-settings-dialog.component.html</context>
+          <context context-type="linenumber">11</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6847358993313341722" datatype="html">
+        <source>Background-Color</source>
+        <target state="final">Hintergrund-Farbe</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/template/column-settings-dialog/column-settings-dialog.component.html</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4304887393085264206" datatype="html">
+        <source>Grid-Definition</source>
+        <target state="final">Grid-Definition</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/template/column-settings-dialog/column-settings-dialog.component.html</context>
+          <context context-type="linenumber">39</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4391289919356861627" datatype="html">
+        <source>Apply</source>
+        <target state="final">Anwenden</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/template/column-settings-dialog/column-settings-dialog.component.html</context>
+          <context context-type="linenumber">44</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5153255704166086946" datatype="html">
+        <source>Topic page for <x id="INTERPOLATION" equiv-text="{{ topic() }}"/></source>
+        <target state="final">Themenseite für <x id="INTERPOLATION" equiv-text="{{ topic() }}"/></target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/wlo-search/template/template.component.html</context>
+          <context context-type="linenumber">5</context>
         </context-group>
       </trans-unit>
     </body>

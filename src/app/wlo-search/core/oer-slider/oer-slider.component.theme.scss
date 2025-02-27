@@ -1,34 +1,34 @@
 @use '@angular/material' as mat;
 @import '../../functions';
+@import '../../../../additional-colors';
 
 @mixin oer-slider-theme($theme) {
-    $custom-accent: map-get($theme, custom-accent);
-    $background: map-get($theme, background);
-    $primary: map-get($theme, primary);
-
+    // custom theme created for the oer-slider
+    // Note: the colors should not change, even when being in dark mode
     app-oer-slider {
-        .mat-slide-toggle-content {
-            color: mat.get-color-from-palette($primary, default-contrast);
+        // use a variant of the neutral palette
+        .mdc-label,
+        .help-button .mat-icon,
+        .help-button .mat-mdc-icon {
+            color: mat.get-theme-color($theme, neutral, 99);
         }
-        .help-button mat-icon {
-            color: mat.get-color-from-palette($primary, default-contrast);
+        // change background color of switch track
+        .mat-mdc-slide-toggle .mdc-switch__track {
+            &::before {
+                background: rgba(mat.get-theme-color($theme, secondary, 70), 0.6) !important;
+            }
+            &::after {
+                background: mat.get-theme-color($theme, neutral, 99) !important;
+            }
         }
-        .mat-slide-toggle-bar {
-            background-color: mat.get-color-from-palette($primary, default-contrast, 0.38);
+        // change color of the toggle button
+        .mat-mdc-slide-toggle.mat-mdc-slide-toggle-checked .mdc-switch__handle::after {
+            background: $pink-default !important;
         }
-        .mat-slide-toggle.mat-checked .mat-slide-toggle-bar {
-            background-color: mat.get-color-from-palette($primary, default-contrast);
-        }
-        .mat-slide-toggle.mat-checked .mat-slide-toggle-thumb {
-            background-color: mat.get-color-from-palette($custom-accent, accent2);
-        }
-    }
-}
-
-@mixin oer-slider-typography($typography) {
-    app-oer-slider {
-        .mat-slide-toggle-content {
-            @include mat.typography-level($typography, button);
+        .mat-mdc-slide-toggle
+            .mdc-switch.mdc-switch--unselected:enabled
+            .mdc-switch__handle::after {
+            background: mat.get-theme-color($theme, neutral, 99) !important;
         }
     }
 }

@@ -1,4 +1,4 @@
-<h1 mat-dialog-title i18n>Report Problem</h1>
+<h2 mat-dialog-title i18n>Report Problem</h2>
 <div mat-dialog-content [formGroup]="form" class="content">
   <p i18n>Report a problem with "{{ data.element | nodeProperty: 'title' }}".</p>
   <mat-radio-group
@@ -12,8 +12,9 @@
       class="problem-kind-radio-button"
       color="primary"
       [value]="kind.key"
-      >{{ kind.value }}</mat-radio-button
     >
+      {{ kind.value }}
+    </mat-radio-button>
   </mat-radio-group>
   <mat-form-field appearance="outline">
     <mat-label i18n>Describe what's wrong</mat-label>

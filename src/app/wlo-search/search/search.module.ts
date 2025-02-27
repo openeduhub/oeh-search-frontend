@@ -65,7 +65,7 @@ import { PreviewImageComponent } from './shared/preview-image/preview-image.comp
         PreviewImageComponent,
     ],
     imports: [SharedModule],
-    exports: [DetailsComponent],
+    exports: [DetailsComponent, PreviewPanelComponent],
     providers: [
         SearchResultsService,
         SearchPageResolverService,

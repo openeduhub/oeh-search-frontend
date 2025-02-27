@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Resolve } from '@angular/router';
+
 import { FacetAggregation, Node } from 'ngx-edu-sharing-api';
 import * as rxjs from 'rxjs';
 import { forkJoin, Observable } from 'rxjs';
@@ -17,7 +17,7 @@ const INITIAL_NUMBER_OF_GROUPS = 5;
 const NUMBER_OF_RESULTS_PER_GROUP = 10;
 
 @Injectable()
-export class SubjectsPortalResolverService implements Resolve<SubjectsPortalResults> {
+export class SubjectsPortalResolverService {
     /** Number of requested groups to fetch. */
     private numberOfGroups = INITIAL_NUMBER_OF_GROUPS;
 

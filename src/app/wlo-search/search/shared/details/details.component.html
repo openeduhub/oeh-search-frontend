@@ -6,7 +6,7 @@
   i18n-aria-label
   aria-label="Hide preview panel"
 >
-  <mat-icon>close</mat-icon>
+  <i esIcon="close"></i>
 </button>
 <div class="app-preview-panel-content-wrapper">
   <app-preview-image
@@ -15,12 +15,15 @@
     [playAnimation]="true"
   ></app-preview-image>
 
+  <!-- TODO: Add i18n to tooltips -->
+  <!-- information bar under preview image -->
   <div class="app-preview-panel-info-bar">
+    <!-- content type -->
     <span
       class="app-preview-panel-info-bar-item"
       *ngIf="hit | nodeProperty: 'oehLrtAggregated' as lrts; else externalType"
     >
-      <mat-icon>perm_media</mat-icon>
+      <i esIcon="perm_media" matTooltip="Inhaltetyp"></i>
       <span>
         <ng-container *ngFor="let lrt of lrts; let last = last">
           {{ lrt.displayName }}<ng-container *ngIf="!last">,</ng-container>
@@ -32,7 +35,7 @@
         class="app-preview-panel-info-bar-item"
         *ngIf="hit | nodeProperty: 'isExternal'; else mimeType"
       >
-        <mat-icon>photo_library</mat-icon>
+        <i esIcon="photo_library" matTooltip="Inhaltetyp"></i>
         <span i18n>Website</span>
       </span>
     </ng-template>
@@ -41,27 +44,36 @@
         class="app-preview-panel-info-bar-item"
         *ngIf="hit | nodeProperty: 'mimeType' as mimeType"
       >
-        <mat-icon>photo_library</mat-icon>
+        <i esIcon="photo_library" matTooltip="Inhaltetyp"></i>
         <span>
           {{ mimeType }}
         </span>
       </span>
     </ng-template>
+
+    <!-- duration -->
     <span
       class="app-preview-panel-info-bar-item"
       *ngIf="hit | nodeProperty: 'duration' as duration"
     >
-      <mat-icon>alarm</mat-icon>
+      <i esIcon="alarm" matTooltip="Dauer"></i>
       <span>{{ duration | duration }}</span>
     </span>
+
+    <!-- language -->
     <span
       class="app-preview-panel-info-bar-item"
       *ngIf="hit | nodeProperty: 'language' as languages"
     >
-      <mat-icon>question_answer</mat-icon>
+      <i esIcon="question_answer" matTooltip="Sprache(n)"></i>
       <span>
         <ng-container *ngFor="let language of languages; let last = last">
-          {{ language.displayName }}<ng-container *ngIf="!last">,</ng-container>
+          <ng-container
+            *ngIf="(language.displayName || language.id) !== ''; else noLanguageDefined"
+          >
+            {{ language.displayName || language.id }}<ng-container *ngIf="!last">,</ng-container>
+          </ng-container>
+          <ng-template #noLanguageDefined> - </ng-template>
         </ng-container>
       </span>
     </span>
@@ -98,38 +110,37 @@
       >
         <ng-container *ngIf="!descriptionExpanded">
           <span i18n>more</span>
-          <mat-icon>keyboard_arrow_down</mat-icon>
+          <i esIcon="keyboard_arrow_down"></i>
         </ng-container>
         <ng-container *ngIf="descriptionExpanded">
           <span i18n>less</span>
-          <mat-icon>keyboard_arrow_up</mat-icon>
+          <i esIcon="keyboard_arrow_up"></i>
         </ng-container>
       </button>
     </p>
     <div class="app-preview-panel-buttons">
       <a
-        mat-flat-button
-        color="primary"
-        class="app-preview-panel-button"
+        mat-stroked-button
+        class="app-preview-panel-button btn-outline-primary"
         [href]="hit | nodeProperty: 'url'"
         target="_blank"
         [appReportClick]="hit"
       >
         <span class="app-preview-panel-button-wrapper">
           <span i18n>Go to original page</span>
-          <mat-icon>arrow_forward</mat-icon>
+          <i esIcon="open_in_new"></i>
         </span>
       </a>
       <a
         *ngIf="(hit | nodeProperty: 'url') !== (hit | nodeProperty: 'detailsUrl')"
         mat-flat-button
+        color="primary"
         class="app-preview-panel-button"
         [href]="hit | nodeProperty: 'detailsUrl'"
         target="_blank"
       >
         <span class="app-preview-panel-button-wrapper">
           <span i18n>All details</span>
-          <mat-icon>arrow_forward</mat-icon>
         </span>
       </a>
       <!-- <a
@@ -149,42 +160,13 @@
       >
         <ng-container i18n>Embed element</ng-container>
       </button>
-      <button
-        mat-button
-        class="app-preview-panel-button app-preview-panel-report-problem-button"
-        (click)="reportProblem()"
-      >
-        <span class="app-preview-panel-button-wrapper">
-          <ng-container i18n>Report problem</ng-container>
-          <mat-icon>flag</mat-icon>
-        </span>
-      </button>
     </div>
-    <div
-      *ngIf="reportProblemResult$ | async as result"
-      class="app-details-report-problem-state app-details-report-problem-state-{{ result.state }}"
-    >
-      <mat-progress-spinner
-        *ngIf="!['success', 'error'].includes(result.state)"
-        [color]="result.state === 'error' ? 'warn' : 'primary'"
-        [mode]="result.state === 'loading' ? 'indeterminate' : 'determinate'"
-        value="100"
-        diameter="30"
-      ></mat-progress-spinner>
-      <mat-icon *ngIf="result.state === 'success'">check_circle</mat-icon>
-      <mat-icon *ngIf="result.state === 'error'">error</mat-icon>
-      <span *ngIf="result.state === 'success'" i18n
-        >We received your report. Thank you for your help!</span
-      >
-      <span *ngIf="result.state === 'error'" i18n
-        >Sorry, we couldn't send your report: {{ result.error.message }}</span
-      >
-    </div>
+    <!-- metadata listing -->
     <div
       class="app-preview-panel-metadata app-preview-panel-metadata-icon"
       *ngIf="hit | nodeProperty: 'discipline' as disciplines"
     >
-      <mat-icon i18n-matTooltip matTooltip="Discipline">book_icon</mat-icon>
+      <i esIcon="school" i18n-matTooltip matTooltip="Discipline" class="icon-gray"></i>
       <span class="cdk-visually-hidden" i18n>Discipline</span>
       <div>
         <span *ngFor="let discipline of disciplines">
@@ -196,7 +178,7 @@
       class="app-preview-panel-metadata app-preview-panel-metadata-icon"
       *ngIf="hit | nodeProperty: 'educationalContext' as educationalContexts"
     >
-      <mat-icon i18n-matTooltip matTooltip="Educational level">school</mat-icon>
+      <i esIcon="group" i18n-matTooltip matTooltip="Educational level" class="icon-gray"></i>
       <span class="cdk-visually-hidden" i18n>Educational level</span>
       <div>
         <span *ngFor="let context of educationalContexts">
@@ -206,9 +188,19 @@
     </div>
     <div
       class="app-preview-panel-metadata app-preview-panel-metadata-icon"
+      *ngIf="hit | nodeProperty: 'author'"
+    >
+      <mat-icon i18n-matTooltip matTooltip="Author" svgIcon="author" class="icon-gray"></mat-icon>
+      <span>
+        <ng-container i18n>Author</ng-container>:
+        {{ hit | nodeProperty: 'author' }}
+      </span>
+    </div>
+    <div
+      class="app-preview-panel-metadata app-preview-panel-metadata-icon"
       *ngIf="hit | nodeProperty: 'license' as license"
     >
-      <mat-icon i18n-matTooltip matTooltip="License">lock</mat-icon>
+      <i esIcon="lock" i18n-matTooltip matTooltip="License" class="icon-gray"></i>
       <span class="cdk-visually-hidden" i18n>License</span>
       <div>
         <span>
@@ -216,6 +208,7 @@
         </span>
       </div>
     </div>
+    <!-- TODO: Add i18n to tooltips -->
     <div
       class="app-preview-panel-metadata app-preview-panel-metadata-icon"
       *ngIf="hit | nodeProperty: 'conditionsOfAccess' as conditionsOfAccess"
@@ -225,6 +218,7 @@
         *ngSwitchCase="'http://w3id.org/openeduhub/vocabs/conditionsOfAccess/no_login'"
         svgIcon="login"
         class="icon-green"
+        matTooltip="Zugangsvoraussetzungen"
       ></mat-icon>
       <mat-icon
         *ngSwitchCase="
@@ -232,13 +226,20 @@
         "
         svgIcon="login"
         class="icon-orange"
+        matTooltip="Zugangsvoraussetzungen"
       ></mat-icon>
       <mat-icon
         *ngSwitchCase="'http://w3id.org/openeduhub/vocabs/conditionsOfAccess/login'"
         svgIcon="login"
         class="icon-red"
+        matTooltip="Zugangsvoraussetzungen"
       ></mat-icon>
-      <mat-icon *ngSwitchDefault svgIcon="login" class="icon-gray"></mat-icon>
+      <mat-icon
+        *ngSwitchDefault
+        svgIcon="login"
+        class="icon-gray"
+        matTooltip="Zugangsvoraussetzungen"
+      ></mat-icon>
       <span>{{ conditionsOfAccess.displayName | capitalizeFirstLetter }}</span>
     </div>
     <div
@@ -247,19 +248,19 @@
       [ngSwitch]="price.id"
     >
       <ng-container *ngSwitchCase="'http://w3id.org/openeduhub/vocabs/price/no'">
-        <mat-icon svgIcon="price" class="icon-green"></mat-icon>
+        <mat-icon svgIcon="price" class="icon-green" matTooltip="Kosten"></mat-icon>
         <span i18n>Free of charge</span>
       </ng-container>
       <ng-container *ngSwitchCase="'http://w3id.org/openeduhub/vocabs/price/yes'">
-        <mat-icon svgIcon="price" class="icon-red"></mat-icon>
+        <mat-icon svgIcon="price" class="icon-red" matTooltip="Kosten"></mat-icon>
         <span i18n>Paid content</span>
       </ng-container>
       <ng-container *ngSwitchCase="'http://w3id.org/openeduhub/vocabs/price/yes_for_additional'">
-        <mat-icon svgIcon="price" class="icon-orange"></mat-icon>
+        <mat-icon svgIcon="price" class="icon-orange" matTooltip="Kosten"></mat-icon>
         <span>{{ price.displayName }}</span>
       </ng-container>
       <ng-container *ngSwitchDefault>
-        <mat-icon svgIcon="price" class="icon-gray"></mat-icon>
+        <mat-icon svgIcon="price" class="icon-gray" matTooltip="Kosten"></mat-icon>
         <span><ng-container i18n>Price</ng-container>: {{ price.displayName }}</span>
       </ng-container>
     </div>
@@ -269,30 +270,74 @@
       [ngSwitch]="containsAdvertisement.id"
     >
       <ng-container *ngSwitchCase="'http://w3id.org/openeduhub/vocabs/containsAdvertisement/no'">
-        <mat-icon svgIcon="advertisement" class="icon-green"></mat-icon>
+        <mat-icon
+          svgIcon="advertisement"
+          class="icon-green"
+          matTooltip="Werbung enthalten?"
+        ></mat-icon>
         <span i18n>No advertisement</span>
       </ng-container>
       <ng-container *ngSwitchCase="'http://w3id.org/openeduhub/vocabs/containsAdvertisement/yes'">
-        <mat-icon svgIcon="advertisement" class="icon-red"></mat-icon>
+        <mat-icon
+          svgIcon="advertisement"
+          class="icon-red"
+          matTooltip="Werbung enthalten?"
+        ></mat-icon>
         <span i18n>Contains advertisement</span>
       </ng-container>
       <ng-container *ngSwitchDefault>
-        <mat-icon svgIcon="advertisement" class="icon-gray"></mat-icon>
+        <mat-icon
+          svgIcon="advertisement"
+          class="icon-gray"
+          matTooltip="Werbung enthalten?"
+        ></mat-icon>
         <span>
           <ng-container i18n>Contains advertisement</ng-container>:
           {{ containsAdvertisement.displayName }}
         </span>
       </ng-container>
     </div>
-    <div class="app-preview-panel-metadata" *ngIf="hit | nodeProperty: 'author'">
-      <span><ng-container i18n>Author</ng-container>: {{ hit | nodeProperty: 'author' }}</span>
+    <!-- TODO: Add i18n to textes -->
+    <div
+      *ngIf="reportProblemResult$ | async as result"
+      class="app-details-report-problem-state app-details-report-problem-state-{{ result.state }}"
+    >
+      <mat-progress-spinner
+        *ngIf="!['success', 'error'].includes(result.state)"
+        [color]="result.state === 'error' ? 'warn' : 'primary'"
+        [mode]="result.state === 'loading' ? 'indeterminate' : 'determinate'"
+        value="100"
+        diameter="30"
+      ></mat-progress-spinner>
+      <i esIcon="sentiment_satisfied_alt" *ngIf="result.state === 'success'"></i>
+      <i esIcon="sentiment_very_dissatisfied" *ngIf="result.state === 'error'"></i>
+      <span *ngIf="result.state === 'success'">
+        Deine Meldung ist erfolgreich bei uns eingegangen. Vielen Dank für deine Hilfe!
+      </span>
+      <span *ngIf="result.state === 'error'">
+        Entschuldige, wir konnten deine Meldung leider nicht abschicken.
+        <br />
+        <button
+          mat-stroked-button
+          class="btn-outline-warn app-details-contact-support-btn"
+          (click)="contactSupport()"
+        >
+          Support kontaktieren
+        </button>
+      </span>
     </div>
+    <a href="javascript:void(0)" (click)="reportProblem()" class="report-problem-link">
+      <span class="app-preview-panel-button-wrapper">
+        <span i18n>Report problem</span>
+        <i esIcon="announcement"></i>
+      </span>
+    </a>
   </div>
   <div class="app-preview-related-items" *ngIf="usedInCollections$ | async as usedInCollections">
     <h3 class="app-preview-related-items-heading" i18n>Related Subject Pages</h3>
     <div class="app-preview-related-items-carousel-container">
       <button class="app-slick-button app-preview-slick-prev" i18n-aria-label aria-label="previous">
-        <mat-icon>arrow_back</mat-icon>
+        <i esIcon="arrow_back"></i>
       </button>
       <ngx-slick-carousel
         #slickModal="slick-carousel"
@@ -308,7 +353,7 @@
         </ng-container>
       </ngx-slick-carousel>
       <button class="app-slick-button app-preview-slick-next" i18n-aria-label aria-label="next">
-        <mat-icon>arrow_forward</mat-icon>
+        <i esIcon="arrow_forward"></i>
       </button>
     </div>
   </div>

@@ -25,7 +25,10 @@ export class CachingInterceptor implements HttpInterceptor {
 }
 
 function isCacheable(req: HttpRequest<any>): boolean {
-    return true;
+    return (
+        !req.url?.includes('/edu-sharing/rest/node/v1/nodes/') &&
+        !req.url?.includes('/ai/prompt/text/public/')
+    );
 }
 
 /**

@@ -1,41 +1,48 @@
-.header {
+.mat-mdc-card-header {
     margin-bottom: 5px;
     padding-bottom: 5px;
-}
+    flex-wrap: wrap;
 
-.app-result-card-title {
-    margin-bottom: 0;
-}
+    .source {
+        flex: 1 1 100%;
+    }
 
-.app-result-card-title button {
-    cursor: pointer;
-    background: unset;
-    border: unset;
-    text-align: unset;
-    font: unset;
-    &::after {
-        content: '';
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
+    .app-result-card-title {
+        margin-bottom: 0;
+        flex: 1 1 100%;
+
+        button {
+            padding: 0;
+            cursor: pointer;
+            background: unset;
+            border: unset;
+            text-align: unset;
+            font: unset;
+            &::after {
+                content: '';
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+            }
+        }
     }
 }
 
-.mat-card-content {
-    flex-grow: 1;
+.mat-mdc-card-content {
     margin-bottom: 0;
+    flex-grow: 1;
     .main-content-row {
         min-height: 99px;
         .thumbnail {
+            margin-top: 2px;
+            margin-left: 20px;
             overflow: hidden;
             float: right;
             height: 90px;
             width: 90px;
             border-radius: 15px;
-            margin-top: 2px;
-            margin-left: 20px;
         }
         .description {
             margin-bottom: 0.7em;

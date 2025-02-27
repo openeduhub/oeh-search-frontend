@@ -1,30 +1,48 @@
 @use '@angular/material' as mat;
 @import '../../functions';
+@import '../../../../additional-colors';
 
 @mixin headerbar-theme($theme) {
-    $primary: map-get($theme, primary);
-    $primary-foreground-color: primary-foreground-color($theme);
-    $customAccent: map-get($theme, custom-accent);
-
     app-headerbar {
-        border-color: mat.get-color-from-palette($primary);
+        // Note: this should not change, even when being in dark mode
+        border-color: mat.get-theme-color($theme, primary, 25);
+        // Compact mode for the headerbar
         &[data-style='compact'] {
-            background-color: mat.get-color-from-palette($primary, 400);
+            // Note: this should not change, even when being in dark mode
+            background-color: mat.get-theme-color($theme, primary, 40);
         }
         .filter-button {
-            color: $primary-foreground-color;
+            color: mat.get-theme-color($theme, primary);
+            background-color: mat.get-theme-color($theme, on-primary);
+            &:hover,
+            &:active,
+            &:focus {
+                @if mat.get-theme-type($theme) == light {
+                    background-color: mat.get-theme-color($theme, secondary, 95);
+                } @else {
+                    background-color: mat.get-theme-color($theme, primary, 10);
+                }
+            }
             .mat-badge-content {
-                background-color: mat.get-color-from-palette($customAccent, accent2);
+                color: mat.get-theme-color($theme, primary, 100);
+                background-color: $pink-default;
             }
         }
         .experiments {
             &,
             > a {
-                color: mat.get-color-from-palette($primary, default-contrast);
+                // Note: this should not change, even when being in dark mode
+                color: mat.get-theme-color($theme, primary, 95);
             }
         }
     }
 }
 
 @mixin headerbar-typography($typography) {
+    app-headerbar {
+        // increase font-size of filter button
+        .filter-button {
+            font-size: var(--sys-body-large-size);
+        }
+    }
 }

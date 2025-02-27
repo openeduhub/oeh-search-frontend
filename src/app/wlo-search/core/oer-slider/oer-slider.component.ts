@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ConfigService } from '../config.service';
@@ -17,6 +17,7 @@ export class OerSliderComponent implements OnInit, OnDestroy {
     private subscriptions: Subscription[] = [];
 
     constructor(
+        private cdr: ChangeDetectorRef,
         private config: ConfigService,
         private searchParameters: SearchParametersService,
         private router: Router,
@@ -31,6 +32,9 @@ export class OerSliderComponent implements OnInit, OnDestroy {
                 } else {
                     this.show = false;
                 }
+                // it seems like the change detection is not happening automatically
+                // related issue: https://stackoverflow.com/a/45300527
+                this.cdr.detectChanges();
             }),
         );
     }

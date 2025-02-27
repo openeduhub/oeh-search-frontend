@@ -5,28 +5,22 @@
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
-    // "strict": true,
-    "noImplicitAny": true,
+    "noImplicitAny": false,
+    "esModuleInterop": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
     "declaration": false,
-    "downlevelIteration": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "es2020",
+    "target": "ES2022",
     "module": "es2020",
     "lib": [
       "es2020",
       "dom"
     ],
     "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true,
-    // We need to point peer dependencies of the `edu-sharing-api` library to our local
-    // `node_modules` folder when using a local version via `npm link`.
-    //
-    // See https://angular.io/guide/creating-libraries#use-typescript-path-mapping-for-peer-dependencies.
     "paths": {
       "rxjs": [
         "./node_modules/rxjs"
@@ -37,7 +31,8 @@
       "@angular/*": [
         "./node_modules/@angular/*"
       ]
-    }
+    },
+    "useDefineForClassFields": false
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

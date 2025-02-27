@@ -3,6 +3,8 @@ export interface Env {
     WORDPRESS_URL?: string;
     SHOW_EXPERIMENTS?: string;
     ANALYTICS_URL?: string;
+    EDU_SHARING_USERNAME?: string;
+    EDU_SHARING_PASSWORD?: string;
 }
 
 export interface ExtendedWindow extends Window {

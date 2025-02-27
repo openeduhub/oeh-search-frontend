@@ -19,11 +19,11 @@ export class PageConfig {
     /** The compact style removes most links, 'none' removes the entire footer. */
     footerStyle: 'standard' | 'compact' | 'none' = 'standard';
     /** Page body background becomes transparent. */
-    transparentBackground = false;
+    transparentBackground: boolean = false;
     /** Number of search results per page. */
-    numberOfResults = 12;
+    numberOfResults: number = 12;
     /** An additional button in the details view to trigger an iFrame message. */
-    showEmbedButton = false;
+    showEmbedButton: boolean = false;
 }
 
 /**

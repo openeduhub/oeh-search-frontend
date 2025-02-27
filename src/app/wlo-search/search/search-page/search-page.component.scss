@@ -7,8 +7,8 @@
 $filterBarSpanScreenThreshold: 650px;
 
 app-search-filterbar {
-    height: 100%;
     margin-bottom: 20px;
+    height: 100%;
     @media screen and (min-width: $filterBarSpanScreenThreshold) {
         flex-grow: 1;
         flex-basis: 350px;
@@ -43,18 +43,25 @@ app-search-filterbar {
             text-decoration: none;
         }
     }
+    .search-result-options {
+        .mat-mdc-tab-link {
+            height: 48px;
+        }
+    }
 }
 
 .summary {
+    margin-bottom: 8px;
     display: flex;
     flex-direction: column;
     em {
         font-style: normal;
     }
     .no-results {
+        margin-top: 5px;
+        margin-bottom: 16px;
         display: flex;
         flex-direction: column;
-        margin-top: 5px;
         a {
             margin-top: 10px;
         }
@@ -62,21 +69,21 @@ app-search-filterbar {
 }
 
 .summary-row {
+    margin-bottom: 12px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 12px;
     p {
         margin: 0;
     }
 }
 
 .participate-button {
+    padding: 0 20px;
     display: flex;
     align-items: center;
     height: 30px;
     border-radius: 15px;
-    padding: 0 20px;
 }
 
 .summary-divider {
@@ -88,7 +95,7 @@ app-search-filterbar {
     flex-shrink: 0;
     border-radius: 10px;
     @media (min-width: 1000px) {
-        margin-bottom: -40px;
+        margin-bottom: -48px;
         z-index: 2;
     }
     :host & ::ng-deep .mat-button-toggle-label-content {

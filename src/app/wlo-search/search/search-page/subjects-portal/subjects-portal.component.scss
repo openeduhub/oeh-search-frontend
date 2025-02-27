@@ -11,9 +11,9 @@ app-subjects-portal-section {
 }
 
 .no-results {
+    margin-top: 10px;
     display: flex;
     flex-direction: column;
-    margin-top: 10px;
     a {
         margin-top: 10px;
     }
@@ -31,7 +31,9 @@ app-subjects-portal-section {
 .show-more-button-content {
     display: flex;
     align-items: center;
-    mat-progress-spinner {
-        margin-left: 10px;
+    mat-progress-spinner,
+    .mat-icon,
+    .mat-mdc-icon {
+        margin-left: 8px;
     }
 }

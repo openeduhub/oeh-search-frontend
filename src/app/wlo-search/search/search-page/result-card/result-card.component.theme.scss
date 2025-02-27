@@ -2,27 +2,36 @@
 @import '../../../functions';
 
 @mixin result-card-theme($theme) {
-    $foreground: map-get($theme, foreground);
-    $background: map-get($theme, background);
-    $primary: map-get($theme, primary);
-    $custom-accent: map-get($theme, custom-accent);
-    $primary-foreground-color: primary-foreground-color($theme);
-
     app-result-card {
-        .app-result-card-selected::after {
-            border-color: mat.get-color-from-palette($primary, 400);
-        }
-        .body {
-            mat-icon {
-                color: mat.get-color-from-palette($foreground, secondary-text);
+        mat-card {
+            // surface-container-lowest is equal to #fff in light mode
+            background: mat.get-theme-color($theme, surface-container-lowest);
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25) !important;
+            transition: box-shadow 0.3s, transform 0.3s;
+            &:hover {
+                transform: translate(0, -4px);
+                box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.25) !important;
             }
         }
+        .app-result-card-selected::after {
+            border-color: mat.get-theme-color($theme, primary);
+        }
+        .app-result-card-title button {
+            color: mat.get-theme-color($theme, on-surface);
+        }
+        // TODO: neutral, 35 might be replaced by on-surface-variant
+        .body mat-icon,
         .metadata,
         .source {
-            color: mat.get-color-from-palette($foreground, secondary-text);
+            @if mat.get-theme-type($theme) == light {
+                color: mat.get-theme-color($theme, neutral, 35);
+            } @else {
+                color: mat.get-theme-color($theme, neutral, 99);
+            }
         }
     }
     app-result-card-content-compact {
+        // TODO: Change static color
         .editorial-hint {
             color: #106029;
         }
@@ -31,17 +40,30 @@
 
 @mixin result-card-typography($typography) {
     app-result-card {
-        .app-result-card-title {
-            @include mat.typography-level($typography, subheading-2);
+        // even though the h3 style is already applied to h2 through classes, further decrease the font-size
+        h2.app-result-card-title {
+            font-size: var(--sys-headline-large-size) !important;
         }
+        // decrease font-size + line-height of description
+        .description {
+            font-size: var(--sys-body-medium-size);
+            line-height: var(--sys-body-medium-line-height);
+        }
+        // decrease font-size + line-height of metadata
         .metadata,
         .source {
-            @include mat.typography-level($typography, caption);
+            font-size: var(--sys-body-small-size);
+            line-height: var(--sys-body-small-line-height);
+            .mat-icon,
+            .mat-mdc-icon {
+                font-size: var(--sys-body-small-size);
+            }
         }
     }
     app-result-card-content-compact {
-        .mat-card-content {
-            @include mat.typography-level($typography, caption);
+        // decrease font-size of card-content
+        .mat-mdc-card-content {
+            font-size: var(--sys-body-medium-size);
         }
     }
 }

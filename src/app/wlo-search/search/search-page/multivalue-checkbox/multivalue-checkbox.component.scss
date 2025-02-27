@@ -1,37 +1,45 @@
 :host > div {
     display: grid;
     > mat-checkbox {
-        padding: 3px 4px;
+        // TODO: could not yet reproduce the old style without spacing on the left
+        padding: 3px 4px 3px 0;
         min-width: 0;
+        height: 24px;
+
+        ::ng-deep .mdc-label {
+            padding-left: 0;
+        }
+
+        ::ng-deep .mat-mdc-checkbox-ripple.mat-mdc-focus-indicator::before {
+            display: none;
+        }
+
         span {
             &.label {
+                margin-right: 1em;
                 flex-grow: 1;
                 overflow: hidden;
                 text-overflow: ellipsis;
-                margin-right: 1em;
             }
 
             &.count {
-                border-radius: 20px;
                 padding: 0 6px;
+                border-radius: 20px;
             }
         }
     }
 }
 
 :host ::ng-deep mat-checkbox {
-    .mat-checkbox-layout {
+    .mdc-form-field {
         display: flex;
         width: 100%;
         align-items: center;
     }
-    .mat-checkbox-label {
+    .mdc-label {
         display: flex;
         width: 100%;
         min-width: 0;
         align-items: center;
-    }
-    .mat-checkbox-frame {
-        border-width: 1px;
     }
 }

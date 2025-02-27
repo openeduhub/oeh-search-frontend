@@ -6,23 +6,23 @@
     cdkOverlayOrigin
     #trigger="cdkOverlayOrigin"
   >
-    <mat-form-field class="search-field" floatLabel="always">
+    <mat-form-field class="search-field" subscriptSizing="dynamic" floatLabel="always">
       <mat-label></mat-label>
-      <mat-chip-list #chipList>
+      <mat-chip-grid #chipList>
         <ng-container *ngFor="let category of categories">
-          <mat-chip
-            *ngFor="let filter of filters[category]"
-            class="chip-group-{{ category }}"
+          <mat-chip-row
+            *ngFor="let filter of filters[category]; index as i"
+            class="category-chip chip-group-{{ category }}"
             [removable]="true"
             (removed)="removeFilter(category, filter)"
             cdkMonitorElementFocus
           >
             {{ filter | displayName: category }}
             <mat-icon matChipRemove>cancel</mat-icon>
-          </mat-chip>
+          </mat-chip-row>
         </ng-container>
         <div class="search-field-input-wrapper">
-          <img class="search-icon" src="./assets/wlo-search/icons/icon_search.svg" alt="" />
+          <i class="search-icon" esIcon="search" aria-hidden="true"></i>
           <input
             #searchInput
             matInput
@@ -38,7 +38,6 @@
           />
           <button
             *ngIf="searchField.value"
-            mat-button
             mat-icon-button
             i18n-aria-label
             aria-label="Clear"
@@ -53,7 +52,7 @@
             Search
           </button>
         </div>
-      </mat-chip-list>
+      </mat-chip-grid>
     </mat-form-field>
   </div>
 </form>
@@ -88,8 +87,8 @@
             <ng-container *ngSwitchCase="'source'" i18n>Source</ng-container>
           </label>
         </div>
-        <mat-chip-list>
-          <mat-chip
+        <mat-chip-listbox class="suggestion-mat-chip-listbox">
+          <mat-chip-option
             *ngFor="let suggestion of suggestions[category]"
             #suggestionChip
             class="suggestion-chip chip-group-{{ category }}"
@@ -98,8 +97,8 @@
             [selectable]="false"
           >
             {{ suggestion | displayName: category }}
-          </mat-chip>
-        </mat-chip-list>
+          </mat-chip-option>
+        </mat-chip-listbox>
       </div>
     </ng-container>
   </div>

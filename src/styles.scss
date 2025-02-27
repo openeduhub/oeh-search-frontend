@@ -1,117 +1,255 @@
 @use '@angular/material' as mat;
 @use 'app/wlo-search';
-@import './fonts.scss';
-$material-icons-font-path: '~material-icons/iconfont/';
-@import 'material-icons/iconfont/material-icons.scss';
+@use 'custom-theme' as custom-theme;
 
-// App color palette
-@import 'material';
+@import './additional-colors';
+@import './fonts';
+// TODO: Remove, as those are the incorrect styles
+$material-icons-font-path: 'material-icons/iconfont/';
+@import 'material-icons/iconfont/material-icons';
+@import 'ngx-edu-sharing-ui/assets/scss/variables';
+@import 'global-overrides.theme';
 
-// Plus imports for other components in your app.
-@import 'angular-material-overrides.theme.scss';
-
-// Overrides
-//
-// Redefine or introduce new properties here.
-// mat.$light-theme-background-palette: map_merge(
-//     mat.$light-theme-background-palette,
-//     (
-//         // tooltip: map_get(mat.$grey-palette, 100),
-//     )
-// );
-// mat.$light-theme-foreground-palette: map_merge(
-//     mat.$light-theme-foreground-palette,
-//     (
-//         // tooltip: $dark-secondary-text,
-//     )
-// );
-
-@mixin apply-theme($theme, $foreground-theme) {
-    $theme: map_merge(
-        $theme,
-        (
-            custom-accent: $app-custom-accent,
-            foreground: $foreground-theme,
-        )
-    );
-    // Include theme styles for core and each component used in your app.
-    // Alternatively, you can import and @include the theme mixins for each component
-    // that you are using.
-    @include mat.all-component-themes($theme);
-    @include mat.strong-focus-indicators-theme($theme);
-    @include angular-material-theme-overrides($theme);
-    @include wlo-search.components-themes($theme);
-    body {
-        color: mat.get-color-from-palette(map-get($theme, foreground), text);
-        background-color: mat.get-color-from-palette(map-get($theme, background), background);
-    }
-}
-
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
+// Include the common styles for Angular Material
+// The core mixin that includes prerequisite styles for common features used by multiple components
 @include mat.core();
-@include mat.strong-focus-indicators();
+// TODO: Comment out due to ugly focus indicators on click
+//@include mat.strong-focus-indicators();
 
-// Create the theme object (a Sass map containing all of the palettes).
-$app-theme-light: mat.define-light-theme($app-primary, $app-accent, $app-warn);
-$app-theme-dark: mat.define-dark-theme($app-primary, $app-accent, $app-warn);
-
-/*
-@media not all and (prefers-color-scheme: dark) {
-    @include apply-theme($app-theme-light);
+@mixin apply-theme($theme) {
+    // Emit styles for color, typography and density to all components.
+    // Alternatives: all-component-colors, all-component-typographies, all-component-densities
+    //
+    // You might reduce size by only including the styles used in the application,
+    // e.g. mat.core-theme and mat.button-theme instead of mat.all-component-theme
+    @include mat.all-component-themes($theme);
+    //@include mat.strong-focus-indicators-theme($theme);
+    // include global material overrides
+    @include angular-material-theme-overrides($theme);
+    // include search component themes
+    @include wlo-search.components-themes($theme);
+    @include mat.all-component-typographies($theme);
+    @include mat.typography-hierarchy($theme);
+    @include wlo-search.components-typographies($theme);
+    // system variables: --sys-<pre_typescale_level>-<variation>-<property_token>
+    @include mat.system-level-colors($theme);
+    @include mat.system-level-typography($theme);
+    @include angular-material-typography-overrides($theme);
 }
-@media all and (prefers-color-scheme: dark) {
-    @include apply-theme($app-theme-dark);
+
+:root {
+    $selected-theme: custom-theme.$light-theme;
+    @include apply-theme($selected-theme);
+    // make CSS variable accessable for further applications
+    // valid role names: background, error, error-container, inverse-on-surface, inverse-primary,
+    //                   inverse-surface, on-background, on-error, on-error-container, on-primary,
+    //                   on-primary-container, on-primary-fixed, on-primary-fixed-variant,
+    //                   on-secondary, on-secondary-container, on-secondary-fixed,
+    //                   on-secondary-fixed-variant, on-surface, on-surface-variant, on-tertiary,
+    //                   on-tertiary-container, on-tertiary-fixed, on-tertiary-fixed-variant,
+    //                   outline, outline-variant, primary, primary-container, primary-fixed,
+    //                   primary-fixed-dim, scrim, secondary, secondary-container, secondary-fixed,
+    //                   secondary-fixed-dim, shadow, surface, surface-bright, surface-container,
+    //                   surface-container-high, surface-container-highest, surface-container-low,
+    //                   surface-container-lowest, surface-dim, surface-tint, surface-variant,
+    //                   tertiary, tertiary-container, tertiary-fixed, tertiary-fixed-dim
+    // currently, only selected roles are made available globally
+    // in future versions, system variables might replace this: https://material.angular.io/guide/system-variables
+    // theming color roles
+    --inverse-surface: #{mat.get-theme-color($selected-theme, inverse-surface)};
+    --on-primary: #{mat.get-theme-color($selected-theme, on-primary)};
+    --on-surface: #{mat.get-theme-color($selected-theme, on-surface)};
+    --outline: #{mat.get-theme-color($selected-theme, outline-variant)};
+    --primary: #{mat.get-theme-color($selected-theme, primary)};
+    --primary-container: #{mat.get-theme-color($selected-theme, primary-container)};
+    --secondary: #{mat.get-theme-color($selected-theme, secondary)};
+    --surface: #{mat.get-theme-color($selected-theme, surface)};
+    --surface-container-highest: #{mat.get-theme-color($selected-theme, surface-container-highest)};
+    --surface-container-low: #{mat.get-theme-color($selected-theme, surface-container-low)};
+
+    @if mat.get-theme-type($selected-theme) == light {
+        --sidebar-button: #{mat.get-theme-color($selected-theme, neutral, 99)};
+        --secondary-text: #{mat.get-theme-color($selected-theme, neutral, 35)};
+        --tile-text: #333;
+    } @else {
+        --sidebar-button: #{mat.get-theme-color($selected-theme, secondary, 25)};
+        --secondary-text: #{mat.get-theme-color($selected-theme, neutral, 99)};
+        --tile-text: #f7f7f7;
+    }
+    // theming typography
+    // note: using #{mat.get-theme-typography($selected-theme, body-medium)} did not worked,
+    //       so the system variables are used
+    // valid typescales are: display-large, display-medium, display-small, headline-large,
+    //                       headline-medium, headline-small, title-large, title-medium,
+    //                       title-small, label-large, label-medium, label-small, body-large,
+    //                       body-medium, body-small.
+    // font-size
+    --display-small-size: #{var(--sys-display-small-size)};
+    --headline-large-size: #{var(--sys-headline-large-size)};
+    --headline-medium-size: #{var(--sys-headline-medium-size)};
+    --headline-small-size: #{var(--sys-headline-small-size)};
+    --body-large-size: #{var(--sys-body-large-size)};
+    --body-medium-size: #{var(--sys-body-medium-size)};
+    --body-small-size: #{var(--sys-body-small-size)};
+    --body-extra-small-size: 0.625rem;
+    // font-family
+    --body-large-font: #{var(--sys-body-large-font)};
+    --display-small-font: #{var(--sys-display-small-font)};
+    --headline-large-font: #{var(--sys-headline-large-font)};
+    // font-weight
+    --body-large-weight: #{var(--sys-body-large-weight)};
+    --label-large-weight: #{var(--sys-label-large-weight)};
+    --label-large-weight-prominent: #{var(--sys-label-large-weight-prominent)};
+    // line-height
+    --body-large-line-height: #{var(--sys-body-large-line-height)};
+    --body-medium-line-height: #{var(--sys-body-medium-line-height)};
+    --body-small-line-height: #{var(--sys-body-small-line-height)};
 }
-*/
-@include apply-theme($app-theme-light, $app-light-theme-foreground);
 
-// Typography
-//
-// See @angular/material/core/typography/_typography.scss for defaults.
-$app-typography: mat.define-typography-config(
-    $font-family: 'Source-Sans-Pro-Regular',
-    $display-1: mat.define-typography-level(32px, 40px, 500, 'Montserrat-Medium'),
-    $headline: mat.define-typography-level(24px, 32px, 700, 'Montserrat-Bold'),
-    $title: mat.define-typography-level(20px, 30px, 600, 'Montserrat-SemiBold'),
-    $subheading-2: mat.define-typography-level(18px, 27px, 600, 'Montserrat-SemiBold'),
-    $subheading-1: mat.define-typography-level(16px, 24px, 600, 'Montserrat-SemiBold'),
-    $body-2: mat.define-typography-level(14px, 24px, 700, 'Montserrat-Bold'),
-    $body-1: mat.define-typography-level(14px, 21px, 400),
-    $caption: mat.define-typography-level(11px, 15px, 500, 'Montserrat-Medium'),
-    $button: mat.define-typography-level(14px, 20px, 500, 'Montserrat-Medium'),
-    $input: mat.define-typography-level(inherit, 1.125, 400),
-);
-// Custom fields
-$app-typography: map_merge(
-    $app-typography,
-    (
-        tooltip: mat.define-typography-level(14px, 20px, 500),
-    )
-);
-@include mat.all-component-typographies($app-typography);
-@include angular-material-typography-overrides($app-typography);
-@include wlo-search.components-typographies($app-typography);
+// TODO: This will enable dark mode, if selected by the system
+// for dark mode, we only want to swap the colors and every other style should remain the same
+//@media (prefers-color-scheme: dark) {
+//    :root {
+//        @include mat.all-component-colors(custom-theme.$dark-theme);
+//    }
+//}
 
+// CUSTOM GLOBAL STYLES
 html,
 body {
     height: 100%;
 }
+
 body {
     margin: 0;
-    font-family: mat.font-family($app-typography);
-    font-size: mat.font-size($app-typography, body-1);
-    line-height: mat.line-height($app-typography, body-1);
-}
-:focus-visible {
-    outline-style: solid;
-    outline-offset: 2px;
-    outline-width: 3px;
-    outline-color: currentcolor;
 }
 
-.cdk-focused:not(.cdk-keyboard-focused) .mat-focus-indicator::before,
-.cdk-focused.mat-focus-indicator:not(.cdk-keyboard-focused)::before {
-    display: none;
+// Copied from Edu-Sharing Core-UI
+.display-none {
+    display: none !important;
+}
+.opacity-invisible {
+    opacity: 0;
+}
+
+// global utility classes
+.text-center {
+    text-align: center;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.flex-direction-column {
+    flex-direction: column;
+}
+
+button,
+.mat-mdc-button {
+    // global adjustment for button label
+    &:not(.c-widget-color-picker) .mdc-button__label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+    // overrides for btn-accent
+    &.btn-accent {
+        padding: 8px 18px;
+        border-radius: 50px;
+    }
+}
+
+// overrides for mat-mdc-menu-content of mat-menu
+.mat-mdc-menu-content {
+    .mat-menu-header-container {
+        padding: 8px 12px 12px 12px;
+        text-align: center;
+    }
+    .mat-mdc-menu-item-text {
+        display: flex;
+        align-items: center;
+    }
+}
+
+// further style definitions
+.alert-warning {
+    padding: 16px;
+    font-size: var(--sys-body-large-size);
+    text-align: center;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 4px;
+}
+
+// grid classes
+.wlo-grid {
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+
+    // grid column definition
+    &.wlo-grid-cols-6 {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+
+    // col span definition
+    .wlo-col-span-2 {
+        grid-column: span 2 / span 2;
+    }
+
+    .wlo-col-span-3 {
+        grid-column: span 3 / span 3;
+    }
+
+    .wlo-col-span-4 {
+        grid-column: span 4 / span 4;
+    }
+
+    .wlo-col-span-6 {
+        grid-column: span 6 / span 6;
+    }
+
+    &.wlo-gap {
+        gap: 0.5rem;
+    }
+
+    .wlo-grid-content {
+        width: 100%;
+        max-width: 100%;
+        height: 100%;
+        position: relative;
+
+        &.wlo-flex-center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}
+
+.grid-border-container {
+    padding: 16px 24px;
+    width: 100%;
+    height: 100%;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+// fix opening mat-dialog moves elements with position: sticky
+// related answer: https://stackoverflow.com/a/49067665
+html.cdk-global-scrollblock {
+    position: static !important;
+    overflow-y: hidden !important;
+}
+
+:focus-visible {
+    outline-offset: 2px;
+    outline: currentcolor solid 3px;
 }

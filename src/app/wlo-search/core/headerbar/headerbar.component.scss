@@ -4,10 +4,10 @@
 }
 
 :host {
+    margin-bottom: 20px;
     position: relative;
     display: flex;
     background-position: center;
-    margin-bottom: 20px;
     justify-content: center;
     align-items: center;
     &[data-style='standard'] {
@@ -19,23 +19,23 @@
 }
 
 .content {
-    width: 100%;
-    flex-direction: column;
-    display: flex;
     margin: 20px;
+    width: 100%;
     max-width: 1060px;
+    display: flex;
+    flex-direction: column;
 }
 
 .logo {
-    align-self: flex-start;
-    margin-bottom: 16px;
     margin-top: 2px;
+    margin-bottom: 16px;
     height: 35px;
+    align-self: flex-start;
 }
 
 .filter-row {
-    display: flex;
     margin-top: 20px;
+    display: flex;
     align-items: center;
     @media screen and (max-width: 450px) {
         justify-content: space-between;
@@ -43,10 +43,11 @@
 }
 
 .filter-button {
+    margin-right: 30px;
+    padding: 0 18px;
     height: 30px;
     line-height: 30px;
     border-radius: 15px;
-    margin-right: 30px;
     .button-wrapper {
         display: flex;
         align-items: center;
@@ -58,6 +59,8 @@
             }
         }
     }
+    // slightly adjust padding of badge container
+    --mat-badge-container-padding: 3px 8px;
 }
 
 .experiments {

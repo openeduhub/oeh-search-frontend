@@ -1,0 +1,54 @@
+<div class="wlo-grid wlo-grid-cols-6 wlo-gap">
+  <ng-container *ngIf="grid?.length >= 1; else configureGridDialog">
+    <div
+      class="wlo-grid-content"
+      [class.wlo-col-span-2]="gridItem.cols === 2"
+      [class.wlo-col-span-3]="gridItem.cols === 3"
+      [class.wlo-col-span-4]="gridItem.cols === 4"
+      [class.wlo-col-span-6]="gridItem.cols === 6 || grid.length === 1"
+      *ngFor="let gridItem of grid; let i = index"
+    >
+      <app-grid-widget
+        *ngIf="supportedWidgetTypes.includes(gridItem.item); else selectWidgetTypeDialog"
+        [backgroundColor]="backgroundColor ?? swimlaneColor"
+        [contextNodeId]="contextNodeId"
+        [editMode]="editMode"
+        [gridIndex]="i"
+        [pageVariantNode]="pageVariantNode"
+        [selectDimensions]="selectDimensions"
+        [selectedDimensionValues]="selectedDimensionValues"
+        [swimlaneIndex]="swimlaneIndex"
+        [topic]="topic"
+        [widgetClasses]="gridItem.classNames"
+        [widgetNodeId]="gridItem.nodeId?.includes(workspaceSpacesStorePrefix) ? gridItem.nodeId.split('/')?.[gridItem.nodeId.split('/').length - 1] : gridItem.nodeId"
+        [widgetType]="gridItem.item"
+        (nodeClicked)="clickedNode($event)"
+      >
+      </app-grid-widget>
+      <!-- no (valid) widget type has been selected yet -->
+      <ng-template #selectWidgetTypeDialog>
+        <!-- display a form to select it when being in edit mode -->
+        <div *ngIf="editMode" class="w-100">
+          <div class="grid-border-container mt-8">
+            <app-select-widget-type-dialog
+              [grid]="grid"
+              [tileIndex]="i"
+              (gridUpdated)="updatedGrid($event)"
+            ></app-select-widget-type-dialog>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </ng-container>
+  <!-- no grid has been defined yet -->
+  <ng-template #configureGridDialog>
+    <div class="wlo-col-span-6 w-100">
+      <div class="grid-border-container mt-8">
+        <app-configure-grid-dialog
+          [grid]="grid"
+          (gridUpdated)="updatedGrid($event)"
+        ></app-configure-grid-dialog>
+      </div>
+    </div>
+  </ng-template>
+</div>

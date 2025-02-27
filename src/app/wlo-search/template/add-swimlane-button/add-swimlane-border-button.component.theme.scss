@@ -1,0 +1,10 @@
+@use '@angular/material' as mat;
+@import '../../functions';
+
+@mixin add-swimlane-border-theme($theme) {
+    app-add-swimlane-border-button {
+        .container-border {
+            border-color: mat.get-theme-color($theme, neutral, 80);
+        }
+    }
+}

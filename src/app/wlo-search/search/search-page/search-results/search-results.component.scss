@@ -7,8 +7,8 @@
     display: grid;
     justify-content: space-evenly;
     &[data-search-results-style='standard'] {
-        gap: 30px;
         margin-top: 20px;
+        gap: 30px;
     }
     &[data-search-results-style='compact'] {
         gap: 30px 14px;
@@ -22,6 +22,6 @@
 }
 
 app-paginator {
-    align-self: center;
     margin: 50px 0;
+    align-self: center;
 }

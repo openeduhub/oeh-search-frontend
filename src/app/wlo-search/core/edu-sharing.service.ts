@@ -30,7 +30,7 @@ export type Filters = {
     providedIn: 'root',
 })
 export class EduSharingService {
-    static readonly repository = 'local';
+    static readonly repository = '-home-';
     static readonly metadataSet = 'mds_oeh';
     private static readonly searchQuery = 'ngsearch';
 
@@ -155,6 +155,8 @@ export class EduSharingService {
         oer: ParsedParams['oer'],
     ): SearchRequestParams['body']['criteria'] {
         return [
+            // set the default parameter so this filter gets obeyed by the backend (for wlo elements)
+            { property: 'virtual:kita_search', values: [''] },
             ...this.mapSearchString(searchString),
             ...this.mapFilters(filters),
             ...this.mapOer(oer),
