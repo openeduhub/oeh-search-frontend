@@ -36,7 +36,7 @@ export class DisplayNamePipe implements PipeTransform {
                 ),
             )
             .subscribe((displayName) => {
-                this.displayName = displayName;
+                this.displayName = displayName.label;
                 this.ref.markForCheck();
             });
     }
