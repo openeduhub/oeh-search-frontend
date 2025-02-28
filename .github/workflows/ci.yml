@@ -110,7 +110,7 @@ jobs:
       frontend:
         image: ${{ github.repository }}:${{ github.sha }}
         env:
-          EDU_SHARING_API_URL: https://repository.staging.openeduhub.net/edu-sharing/rest
+          EDU_SHARING_API_URL: https://suche.staging.openeduhub.net/edu-sharing/rest
         ports:
           - 8080:80
     steps:
