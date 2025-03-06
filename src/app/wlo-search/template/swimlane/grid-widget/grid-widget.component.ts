@@ -3,6 +3,7 @@ import { MdsValue, MdsWidget, Node } from 'ngx-edu-sharing-api';
 import {
     AiTextWidgetComponent,
     CollectionChipsComponent,
+    MediaRenderingComponent,
     TopicsColumnBrowserComponent,
     UserConfigurableComponent,
 } from 'ngx-edu-sharing-wlo-pages';
@@ -10,6 +11,7 @@ import { SharedModule } from '../../../shared/shared.module';
 import {
     defaultAiTextWidgetNodeId,
     defaultCollectionChipsNodeId,
+    defaultMediaRenderingNodeId,
     defaultTopicsColumnBrowserNodeId,
     defaultUserConfigurableNodeId,
     parentWidgetConfigNodeId,
@@ -20,9 +22,10 @@ import {
     selector: 'app-grid-widget',
     standalone: true,
     imports: [
+        SharedModule,
         AiTextWidgetComponent,
         CollectionChipsComponent,
-        SharedModule,
+        MediaRenderingComponent,
         TopicsColumnBrowserComponent,
         UserConfigurableComponent,
     ],
@@ -46,6 +49,7 @@ export class GridWidgetComponent {
 
     readonly defaultAiTextWidgetNodeId: string = defaultAiTextWidgetNodeId;
     readonly defaultCollectionChipsNodeId: string = defaultCollectionChipsNodeId;
+    readonly defaultMediaRenderingNodeId: string = defaultMediaRenderingNodeId;
     readonly defaultTopicsColumnBrowserNodeId: string = defaultTopicsColumnBrowserNodeId;
     readonly defaultUserConfigurableNodeId: string = defaultUserConfigurableNodeId;
     readonly parentWidgetConfigNodeId: string = parentWidgetConfigNodeId;

@@ -60,4 +60,20 @@
     >
     </wlo-user-configurable>
   </ng-container>
+  <ng-container *ngSwitchCase="'wlo-media-rendering'">
+    <wlo-media-rendering
+      class="media-rendering"
+      [contextNodeId]="contextNodeId"
+      [defaultNodeId]="defaultMediaRenderingNodeId"
+      [editMode]="editMode"
+      [gridIndex]="gridIndex"
+      [nodeId]="widgetNodeId"
+      [pageVariantNode]="pageVariantNode"
+      [parentWidgetConfigNodeId]="parentWidgetConfigNodeId"
+      [swimlaneColor]="backgroundColor"
+      [swimlaneIndex]="swimlaneIndex"
+      (itemClickedEvent)="clickedItem($event)"
+    >
+    </wlo-media-rendering>
+  </ng-container>
 </ng-container>
