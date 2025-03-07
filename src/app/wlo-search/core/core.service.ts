@@ -32,13 +32,17 @@ export class CoreService {
         // Inkscape.
         for (const icon of [
             'advertisement',
+            'anchor',
             'author',
             'editorial',
             'left_side_panel',
             'login',
+            'one_column',
             'oer',
             'price',
             'right_side_panel',
+            'storage',
+            'three_columns',
             'two_columns',
         ]) {
             this.matIconRegistry.addSvgIcon(

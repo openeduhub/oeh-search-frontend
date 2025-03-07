@@ -130,7 +130,7 @@ export const statistics: StatisticChart[] = [
 
 export const swimlaneGridOptions: SelectOption[] = [
     {
-        icon: 'rectangle',
+        svgIcon: 'one_column',
         value: 'one_column',
         viewValue: 'Eine Spalte',
     },
@@ -140,7 +140,7 @@ export const swimlaneGridOptions: SelectOption[] = [
         viewValue: 'Zwei Spalten',
     },
     {
-        icon: 'view_column',
+        svgIcon: 'three_columns',
         value: 'three_columns',
         viewValue: 'Drei Spalten',
     },
@@ -158,17 +158,17 @@ export const swimlaneGridOptions: SelectOption[] = [
 
 export const swimlaneTypeOptions: SelectOption[] = [
     {
-        icon: 'rectangle',
+        svgIcon: 'one_column',
         value: 'container',
         viewValue: 'Bereichselement',
     },
     {
-        icon: 'storage',
+        svgIcon: 'storage',
         value: 'accordion',
         viewValue: 'Akkordeonelement',
     },
     {
-        icon: 'anchor',
+        svgIcon: 'anchor',
         isDisabled: true,
         value: 'anchor',
         viewValue: 'Ankermenü',

@@ -8,15 +8,15 @@
   <mat-menu #addComponentMenu="matMenu">
     <div class="mat-menu-header-container">Inhaltselement hinzufügen</div>
     <button mat-menu-item [matMenuTriggerFor]="containerGrid">
-      <i class="material-icons-outlined" esIcon="rectangle"></i>
+      <mat-icon svgIcon="one_column"></mat-icon>
       <span>Bereichselement</span>
     </button>
     <button mat-menu-item [matMenuTriggerFor]="accordionGrid">
-      <i class="material-icons-outlined" esIcon="storage"></i>
+      <mat-icon svgIcon="storage"></mat-icon>
       <span>Akkordeonelement</span>
     </button>
     <button mat-menu-item [disabled]="true">
-      <i class="material-icons-outlined" esIcon="anchor"></i>
+      <mat-icon svgIcon="anchor"></mat-icon>
       <span>Ankermenü</span>
     </button>
   </mat-menu>
