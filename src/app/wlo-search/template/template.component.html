@@ -293,7 +293,16 @@
           ></wlo-editable-text>
         </ng-template>
         <ng-template #noSwimlanesCreatedYet>
-          <p class="no-swimlanes">Bisher wurden noch keine Swimlanes mit Inhalten erstellt.</p>
+          <div class="wlo-swimlane is-empty">
+            <app-add-swimlane-border-button
+              [requestInProgress]="requestInProgress()"
+              (addSwimlaneTriggered)="addSwimlane($event, 0)"
+              *ngIf="editMode"
+            ></app-add-swimlane-border-button>
+            <div class="wlo-container">
+              Bisher wurden noch keine Swimlanes mit Inhalten erstellt.
+            </div>
+          </div>
         </ng-template>
       </div>
       <app-preview-panel (dialogClosed)="handleNodeChange(null)"></app-preview-panel>

@@ -125,6 +125,11 @@ wlo-editable-text {
                     margin-top: -25px;
                 }
 
+                &.is-empty {
+                    padding: 16px 24px;
+                    text-align: center;
+                }
+
                 .wlo-edit-buttons,
                 .wlo-move-buttons {
                     position: absolute;
@@ -244,11 +249,6 @@ wlo-editable-text {
             /* this is required to avoid the duplication effect on dragging */
             .cdk-drag-placeholder {
                 display: none;
-            }
-
-            .no-swimlanes {
-                padding: 16px 24px;
-                text-align: center;
             }
         }
     }
