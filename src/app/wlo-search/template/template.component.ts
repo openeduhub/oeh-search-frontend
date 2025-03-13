@@ -150,7 +150,7 @@ export class TemplateComponent implements OnInit {
             !this.pageConfigCheckFailed() &&
             (!this.initialLoadSuccessfully() || this.requestInProgress()),
     );
-    refreshCounter: number = 1;
+    anchorTrigger: number = 1;
     swimlanes: Swimlane[] = [];
     topicWidgets: NodeEntries;
 
@@ -1122,7 +1122,7 @@ export class TemplateComponent implements OnInit {
      */
     private endEditing(toastContainer: MatSnackBarRef<TextOnlySnackBar>): void {
         closeToastWithDelay(toastContainer);
-        this.refreshCounter++;
+        this.anchorTrigger++;
         this.requestInProgress.set(false);
     }
 

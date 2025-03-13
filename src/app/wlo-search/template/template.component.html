@@ -137,7 +137,7 @@
       <div
         class="portal-wrapper-left"
         [class.extra-margin-top]="anchorSwimlanes.length > 0"
-        *ngVar="(swimlanes | filterSwimlaneType: 'anchor':refreshCounter) ?? [] as anchorSwimlanes"
+        *ngVar="(swimlanes | filterSwimlaneType: 'anchor':anchorTrigger) ?? [] as anchorSwimlanes"
       >
         <ng-container *ngIf="anchorSwimlanes.length > 0">
           <div class="anchor-container">
