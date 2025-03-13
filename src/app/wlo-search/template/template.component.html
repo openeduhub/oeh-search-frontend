@@ -134,24 +134,44 @@
 
   <div class="portal-outer-wrapper" [class.reserve-space-left]="userHasEditRights()">
     <div class="portal-wrapper">
-      <div class="portal-wrapper-left">
+      <div
+        class="portal-wrapper-left"
+        [class.extra-margin-top]="anchorSwimlanes.length > 0"
+        *ngVar="(swimlanes | filterSwimlaneType: 'anchor':refreshCounter) ?? [] as anchorSwimlanes"
+      >
+        <ng-container *ngIf="anchorSwimlanes.length > 0">
+          <div class="anchor-container">
+            <div class="anchor-menu">
+              <div
+                (click)="navigateToFragment(SWIMLANE_ID_PREFIX + anchor.id)"
+                role="button"
+                class="anchor-item"
+                *ngFor="let anchor of anchorSwimlanes; let i = index"
+              >
+                {{ anchor.heading ?? 'Swimlane ' + i }}
+              </div>
+            </div>
+          </div>
+        </ng-container>
         <ng-container *ngIf="swimlanes.length > 0; else noSwimlanesCreatedYet">
           <!-- note: do not show empty swimlanes to users -->
           <ng-container *ngFor="let swimlane of swimlanes; let i = index">
             <div
               *ngIf="swimlane.grid?.length > 0 || editMode"
-              [attr.id]="swimlane.id ? 'swimlane-' + swimlane.id : null"
+              [attr.id]="swimlane.id ? SWIMLANE_ID_PREFIX + swimlane.id : null"
               class="wlo-swimlane"
+              [class.extra-padding-top]="anchorSwimlanes.length > 0 && i === 0"
               [class.swimlane-edit-mode]="editMode"
               [style.background-color]="swimlane.backgroundColor ?? swimlane.backgroundColor"
             >
               <!-- edit privileges -->
               <ng-container *ngIf="userHasEditRights()">
                 <!-- border with button to add a swimlane -->
+                <!-- note: adding swimlanes on top of the first element is not possible, when the anchor menu is shown -->
                 <app-add-swimlane-border-button
                   [requestInProgress]="requestInProgress()"
                   (addSwimlaneTriggered)="addSwimlane($event, i)"
-                  *ngIf="editMode"
+                  *ngIf="editMode && (i !== 0 || anchorSwimlanes.length === 0)"
                 ></app-add-swimlane-border-button>
                 <!-- special case for last element -->
                 <app-add-swimlane-border-button
@@ -258,7 +278,10 @@
               </cdk-accordion>
 
               <!-- type: container -->
-              <div class="wlo-container" *ngIf="swimlane.type === 'container'">
+              <div
+                class="wlo-container"
+                *ngIf="swimlane.type === 'container' || swimlane.type === 'anchor'"
+              >
                 <ng-container
                   *ngTemplateOutlet="swimlaneHeading; context: { swimlane, index: i }"
                 ></ng-container>

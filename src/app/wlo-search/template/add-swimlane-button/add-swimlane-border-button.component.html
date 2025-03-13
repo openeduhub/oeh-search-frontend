@@ -15,7 +15,7 @@
       <mat-icon svgIcon="storage"></mat-icon>
       <span>Akkordeonelement</span>
     </button>
-    <button mat-menu-item [disabled]="true">
+    <button mat-menu-item [matMenuTriggerFor]="anchorGrid">
       <mat-icon svgIcon="anchor"></mat-icon>
       <span>Ankermenü</span>
     </button>
@@ -32,6 +32,10 @@
     <ng-container
       *ngTemplateOutlet="gridConfiguration; context: { type: 'accordion' }"
     ></ng-container>
+  </mat-menu>
+
+  <mat-menu #anchorGrid="matMenu">
+    <ng-container *ngTemplateOutlet="gridConfiguration; context: { type: 'anchor' }"></ng-container>
   </mat-menu>
 
   <ng-template #gridConfiguration let-type="type">

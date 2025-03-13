@@ -28,6 +28,7 @@ import {
     StatisticsSummaryComponent,
     TopicHeaderComponent,
     TopicsColumnBrowserComponent,
+    VarDirective,
     WidgetNodeAddedEvent,
 } from 'ngx-edu-sharing-wlo-pages';
 import { filter } from 'rxjs/operators';
@@ -57,6 +58,7 @@ import {
     retrieveCustomUrl,
     statistics,
 } from './shared/custom-definitions';
+import { FilterSwimlaneTypePipe } from './shared/pipes/filter-swimlane-type.pipe';
 import { StatisticsHelperService } from './shared/services/statistics-helper.service';
 import { TemplateHelperService } from './shared/services/template-helper.service';
 import { GridTile } from './shared/types/grid-tile';
@@ -86,6 +88,7 @@ import { SwimlaneSettingsDialogComponent } from './swimlane/swimlane-settings-di
         AddSwimlaneBorderButtonComponent,
         EditableTextComponent,
         FilterBarComponent,
+        FilterSwimlaneTypePipe,
         SearchModule,
         SharedModule,
         SideMenuItemComponent,
@@ -96,6 +99,7 @@ import { SwimlaneSettingsDialogComponent } from './swimlane/swimlane-settings-di
         TemplateComponent,
         TopicHeaderComponent,
         TopicsColumnBrowserComponent,
+        VarDirective,
     ],
     selector: 'app-template',
     templateUrl: './template.component.html',
@@ -106,6 +110,7 @@ export class TemplateComponent implements OnInit {
         'Wollen Sie wirklich auf Grundlage der Seiten-Struktur der aktuell gewählten Variante eine neue Seiten-Variante erstellen?';
     private readonly PAGE_VARIANT_CREATION_STARTED: string =
         'Eine neue Seiten-Variante wird erstellt und geladen.';
+    readonly SWIMLANE_ID_PREFIX: string = 'swimlane-';
 
     constructor(
         private dialog: MatDialog,
@@ -145,10 +150,12 @@ export class TemplateComponent implements OnInit {
             !this.pageConfigCheckFailed() &&
             (!this.initialLoadSuccessfully() || this.requestInProgress()),
     );
+    refreshCounter: number = 1;
     swimlanes: Swimlane[] = [];
     topicWidgets: NodeEntries;
 
     latestParams: Params;
+    latestUrlFragment: string;
     selectDimensions: Map<string, MdsWidget> = new Map<string, MdsWidget>();
     selectedDimensionValues: MdsValue[] = [];
     selectDimensionsLoaded: boolean = false;
@@ -212,6 +219,10 @@ export class TemplateComponent implements OnInit {
                         // initial load finished (page structure loaded)
                         this.initialLoadSuccessfully.set(true);
 
+                        // listen to fragment changes to scroll given swimlane ID into view
+                        // note: setTimeout is necessary for view being loaded first
+                        this.initializeFragmentListener();
+
                         // post-load the statistics
                         this.searchResultCount =
                             await this.statisticsHelperService.postLoadStatistics(
@@ -225,6 +236,11 @@ export class TemplateComponent implements OnInit {
                         this.templateHelperService.displayErrorToast();
                     }
                 }
+                // TODO: The scrolling depends on the widgets being fully loaded, so using setTimeout is only a workaround.
+                //       A better solution would be to wait until all widgets are loaded, which is currently not possible.
+                setTimeout((): void => {
+                    this.scrollElementIntoView();
+                }, 1000);
             });
     }
 
@@ -347,6 +363,30 @@ export class TemplateComponent implements OnInit {
             },
             false,
         );
+    }
+
+    /**
+     * Initializes a listener for the fragment part of the current route.
+     * If the fragment part changes, the corresponding element is scrolled into view.
+     */
+    private initializeFragmentListener(): void {
+        this.route.fragment.subscribe((urlFragment: string): void => {
+            this.latestUrlFragment = urlFragment;
+            this.scrollElementIntoView();
+        });
+    }
+
+    /**
+     * Scrolls the latest URL fragment into view, if it exists.
+     */
+    private scrollElementIntoView(): void {
+        if (!this.latestUrlFragment || this.latestUrlFragment === '') {
+            return;
+        }
+        const element: HTMLElement = document.getElementById(this.latestUrlFragment);
+        if (element) {
+            element.scrollIntoView();
+        }
     }
 
     // PAGE CONFIG + VARIANT SPECIFIC FUNCTIONS
@@ -531,6 +571,7 @@ export class TemplateComponent implements OnInit {
         const queryParamsToAddOrOverwrite: Params = {
             variantId: variantId,
         };
+        // on variant change, do not keep the fragments
         await this.router.navigate([], {
             relativeTo: this.route,
             queryParams: queryParamsToAddOrOverwrite,
@@ -543,6 +584,15 @@ export class TemplateComponent implements OnInit {
             console.error(err);
             this.templateHelperService.displayErrorToast();
         }
+    }
+
+    /**
+     * Navigates to a given fragment by appending it to the url.
+     *
+     * @param fragment
+     */
+    navigateToFragment(fragment: string): void {
+        void this.router.navigate([], { queryParamsHandling: 'merge', fragment });
     }
 
     // SWIMLANE SPECIFIC FUNCTIONS
@@ -1072,6 +1122,7 @@ export class TemplateComponent implements OnInit {
      */
     private endEditing(toastContainer: MatSnackBarRef<TextOnlySnackBar>): void {
         closeToastWithDelay(toastContainer);
+        this.refreshCounter++;
         this.requestInProgress.set(false);
     }
 
