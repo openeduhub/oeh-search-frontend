@@ -46,6 +46,7 @@ export class GridWidgetComponent {
     @Input() widgetNodeId: string;
     @Input() widgetType: string;
     @Output() nodeClicked: EventEmitter<Node> = new EventEmitter<Node>();
+    @Output() totalSearchResultCountChanged: EventEmitter<number> = new EventEmitter<number>();
 
     readonly defaultAiTextWidgetNodeId: string = defaultAiTextWidgetNodeId;
     readonly defaultCollectionChipsNodeId: string = defaultCollectionChipsNodeId;
@@ -72,5 +73,15 @@ export class GridWidgetComponent {
      */
     clickedItem(node: any): void {
         this.nodeClicked.emit(node as Node);
+    }
+
+    /**
+     * Called by wlo-user-configurable totalSearchResultCountChanged output event.
+     * Emits the count.
+     *
+     * @param count
+     */
+    changeTotalSearchResultCount(count: number): void {
+        this.totalSearchResultCountChanged.emit(count);
     }
 }

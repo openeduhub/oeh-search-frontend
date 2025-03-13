@@ -59,8 +59,10 @@ import {
     statistics,
 } from './shared/custom-definitions';
 import { FilterSwimlaneTypePipe } from './shared/pipes/filter-swimlane-type.pipe';
+import { SwimlaneSearchCountPipe } from './shared/pipes/swimlane-search-count.pipe';
 import { StatisticsHelperService } from './shared/services/statistics-helper.service';
 import { TemplateHelperService } from './shared/services/template-helper.service';
+import { GridSearchCount } from './shared/types/grid-search-count';
 import { GridTile } from './shared/types/grid-tile';
 import { PageConfig } from './shared/types/page-config';
 import { PageVariantConfig } from './shared/types/page-variant-config';
@@ -96,6 +98,7 @@ import { SwimlaneSettingsDialogComponent } from './swimlane/swimlane-settings-di
         SpinnerComponent,
         StatisticsSummaryComponent,
         SwimlaneComponent,
+        SwimlaneSearchCountPipe,
         TemplateComponent,
         TopicHeaderComponent,
         TopicsColumnBrowserComponent,
@@ -166,6 +169,7 @@ export class TemplateComponent implements OnInit {
 
     // statistics related variables
     searchResultCount: number = 0;
+    searchCountTrigger: number = 1;
     searchUrl: string = '';
     statistics: StatisticChart[] = statistics;
     statisticsLoaded: WritableSignal<boolean> = signal(false);
@@ -778,6 +782,8 @@ export class TemplateComponent implements OnInit {
 
     /**
      * Deletes a swimlane from the page with possible widget nodes and persists it in the config.
+     *
+     * @param index
      */
     async deleteSwimlane(index: number): Promise<void> {
         if (
@@ -827,6 +833,9 @@ export class TemplateComponent implements OnInit {
     /**
      * Called by app-swimlane gridUpdated output event.
      * Handles the update of the grid of a given swimlane.
+     *
+     * @param grid
+     * @param swimlaneIndex
      */
     async handleGridUpdate(grid: GridTile[], swimlaneIndex: number): Promise<void> {
         try {
@@ -854,13 +863,29 @@ export class TemplateComponent implements OnInit {
 
     /**
      * Called by app-swimlane nodeClicked output event.
+     *
+     * @param node
      */
     handleNodeChange(node: Node): void {
         this.templateHelperService.handleNodeChange(node);
     }
 
     /**
+     * Called by app-swimlane nodeClicked output event.
+     *
+     * @param event
+     * @param swimlaneIndex
+     */
+    updateGridItemSearchCount(event: GridSearchCount, swimlaneIndex: number): void {
+        console.log('updateGridItemSearchCount', event);
+        this.swimlanes[swimlaneIndex].grid[event.gridIndex].searchCount = event.count;
+        this.searchCountTrigger++;
+    }
+
+    /**
      * Called by wlo-filter-bar selectDimensionsChanged output event.
+     *
+     * @param event
      */
     selectDimensionsChanged(event: Map<string, MdsWidget>): void {
         // iterate incoming select dimensions and insert new or overwrite existing ones

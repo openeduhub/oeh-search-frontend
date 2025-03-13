@@ -10,6 +10,7 @@ import {
 import { MdsValue, MdsWidget, Node, NodeEntries } from 'ngx-edu-sharing-api';
 import { SharedModule } from '../../shared/shared.module';
 import { widgetTypeOptions, workspaceSpacesStorePrefix } from '../shared/custom-definitions';
+import { GridSearchCount } from '../shared/types/grid-search-count';
 import { GridTile } from '../shared/types/grid-tile';
 import { SelectOption } from '../shared/types/select-option';
 import { ConfigureGridDialogComponent } from './configure-grid-dialog/configure-grid-dialog.component';
@@ -41,6 +42,8 @@ export class SwimlaneComponent implements AfterViewChecked {
     @Input() topicWidgets: NodeEntries;
     @Output() gridUpdated: EventEmitter<GridTile[]> = new EventEmitter<GridTile[]>();
     @Output() nodeClicked: EventEmitter<Node> = new EventEmitter<Node>();
+    @Output() totalSearchResultCountChanged: EventEmitter<GridSearchCount> =
+        new EventEmitter<GridSearchCount>();
 
     swimlaneColor: string;
 
@@ -72,6 +75,17 @@ export class SwimlaneComponent implements AfterViewChecked {
      */
     clickedNode(node: Node): void {
         this.nodeClicked.emit(node);
+    }
+
+    /**
+     * Called by app-grid-widget totalSearchResultCountChanged output event.
+     * Emits the count.
+     *
+     * @param count
+     * @param gridIndex
+     */
+    changeTotalSearchResultCount(count: number, gridIndex: number): void {
+        this.totalSearchResultCountChanged.emit({ count, gridIndex });
     }
 
     /**

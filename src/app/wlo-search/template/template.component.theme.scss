@@ -37,10 +37,17 @@
         }
 
         .anchor-container .anchor-menu .anchor-item {
-            @if mat.get-theme-type($theme) == light {
-                background: mat.get-theme-color($theme, neutral, 99);
-            } @else {
-                background: mat.get-theme-color($theme, neutral, 35);
+            .item-container {
+                @if mat.get-theme-type($theme) == light {
+                    background: mat.get-theme-color($theme, neutral, 99);
+                } @else {
+                    background: mat.get-theme-color($theme, neutral, 35);
+                }
+            }
+
+            .total-count {
+                color: mat.get-theme-color($theme, primary, 100);
+                background-color: $pink-default;
             }
         }
     }
@@ -57,7 +64,15 @@
 
     // use medium font-size with reduced line-height
     .anchor-container .anchor-menu .anchor-item {
-        font-size: var(--sys-body-medium-size);
-        line-height: var(--body-small-line-height);
+        .item-container {
+            font-size: var(--sys-body-medium-size);
+            line-height: var(--body-small-line-height);
+        }
+
+        .total-count {
+            font-family: var(--sys-display-small-font);
+            font-size: var(--body-extra-small-size);
+            line-height: var(--body-small-line-height);
+        }
     }
 }

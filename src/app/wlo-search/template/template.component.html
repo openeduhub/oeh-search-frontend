@@ -142,13 +142,21 @@
         <ng-container *ngIf="anchorSwimlanes.length > 0">
           <div class="anchor-container">
             <div class="anchor-menu">
-              <div
-                (click)="navigateToFragment(SWIMLANE_ID_PREFIX + anchor.id)"
-                role="button"
-                class="anchor-item"
-                *ngFor="let anchor of anchorSwimlanes; let i = index"
-              >
-                {{ anchor.heading ?? 'Swimlane ' + i }}
+              <div class="anchor-item" *ngFor="let anchor of anchorSwimlanes; let i = index">
+                <div
+                  role="button"
+                  (click)="navigateToFragment(SWIMLANE_ID_PREFIX + anchor.id)"
+                  class="item-container"
+                >
+                  {{ anchor.heading ?? 'Swimlane ' + i }}
+                </div>
+                <ng-container
+                  *ngVar="anchor | swimlaneSearchCount: searchCountTrigger as searchCount"
+                >
+                  <div class="total-count" *ngIf="searchCount > 0">
+                    {{ searchCount }}
+                  </div>
+                </ng-container>
               </div>
             </div>
           </div>
@@ -272,6 +280,7 @@
                       [topicWidgets]="topicWidgets"
                       (gridUpdated)="handleGridUpdate($event, i)"
                       (nodeClicked)="handleNodeChange($event)"
+                      (totalSearchResultCountChanged)="updateGridItemSearchCount($event, i)"
                     ></app-swimlane>
                   </div>
                 </cdk-accordion-item>
@@ -298,6 +307,7 @@
                   [topicWidgets]="topicWidgets"
                   (gridUpdated)="handleGridUpdate($event, i)"
                   (nodeClicked)="handleNodeChange($event)"
+                  (totalSearchResultCountChanged)="updateGridItemSearchCount($event, i)"
                 ></app-swimlane>
               </div>
             </div>
