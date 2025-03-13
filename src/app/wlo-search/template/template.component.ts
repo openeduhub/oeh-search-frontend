@@ -1,4 +1,5 @@
 import { CdkAccordionItem } from '@angular/cdk/accordion';
+import { Clipboard } from '@angular/cdk/clipboard';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
 import {
     Component,
@@ -116,6 +117,7 @@ export class TemplateComponent implements OnInit {
     readonly SWIMLANE_ID_PREFIX: string = 'swimlane-';
 
     constructor(
+        private clipboard: Clipboard,
         private dialog: MatDialog,
         private route: ActivatedRoute,
         private router: Router,
@@ -595,8 +597,8 @@ export class TemplateComponent implements OnInit {
      *
      * @param fragment
      */
-    navigateToFragment(fragment: string): void {
-        void this.router.navigate([], { queryParamsHandling: 'merge', fragment });
+    async navigateToFragment(fragment: string): Promise<void> {
+        await this.router.navigate([], { queryParamsHandling: 'merge', fragment });
     }
 
     // SWIMLANE SPECIFIC FUNCTIONS
@@ -659,6 +661,26 @@ export class TemplateComponent implements OnInit {
                 this.endEditing(toastContainer);
                 this.templateHelperService.displayErrorToast();
             }
+        }
+    }
+
+    /**
+     * Reacts to wlo-editable-text copyClicked output event by saving the link to the swimlane in the clipboard.
+     *
+     * @param copy
+     * @param swimlaneIndex
+     */
+    async copySwimlaneLink(copy: boolean, swimlaneIndex: number): Promise<void> {
+        if (copy) {
+            // similar to copying links in GitHub issues, the target is first set to the URL and then copied
+            await this.navigateToFragment(
+                this.SWIMLANE_ID_PREFIX + this.swimlanes[swimlaneIndex].id,
+            );
+            this.clipboard.copy(window.location.href);
+            // inform user about URL being copied successfully
+            this.templateHelperService.openSaveConfigToast(
+                'Der Link wurde in Ihre Zwischenablage kopiert.',
+            );
         }
     }
 

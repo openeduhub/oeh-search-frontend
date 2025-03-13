@@ -315,6 +315,7 @@
         </ng-container>
         <ng-template #swimlaneHeading let-swimlane="swimlane" let-index="index">
           <wlo-editable-text
+            [addCopyButton]="true"
             [alignCenter]="true"
             [applyTextareaPadding]="false"
             [editable]="editMode"
@@ -322,6 +323,7 @@
             [label]="'Überschrift'"
             [nonEditText]="swimlane.heading"
             [text]="swimlane.heading"
+            (copyClicked)="copySwimlaneLink($event, index)"
             (textChange)="swimlaneTitleChanged($event, index)"
           ></wlo-editable-text>
         </ng-template>
