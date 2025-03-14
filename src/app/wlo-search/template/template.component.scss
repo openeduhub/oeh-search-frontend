@@ -146,7 +146,7 @@ wlo-editable-text {
                         // https://stackoverflow.com/a/68382653
                         flex-shrink: 0 !important;
                         width: var(--menu-height);
-                        height: 100%;
+                        height: var(--menu-height);
                         box-sizing: border-box;
                         text-align: center;
                         vertical-align: middle;
