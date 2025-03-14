@@ -131,14 +131,16 @@ wlo-editable-text {
                 .anchor-menu {
                     padding: var(--menu-padding);
                     height: 100%;
-                    max-width: 100%;
-                    box-sizing: border-box;
+                    // hint: use content-box here to prevent the scrollbar from destroying the layout
+                    //       manually substract the padding set
+                    max-width: calc(100% - 2 * var(--menu-padding));
+                    box-sizing: content-box;
                     display: inline-flex;
                     flex-direction: row;
                     // note: avoid adding "align-items: center" and "justify-content: center",
                     //       as it conflicts with the horizontal scrolling
                     gap: 32px;
-                    overflow: scroll;
+                    overflow-x: auto;
 
                     .anchor-item {
                         // https://stackoverflow.com/a/68382653
