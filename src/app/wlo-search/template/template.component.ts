@@ -40,7 +40,8 @@ import { AddSwimlaneBorderButtonComponent } from './add-swimlane-button/add-swim
 import {
     actionItems,
     defaultMds,
-    defaultTopicTextNodeId,
+    defaultTopicHeaderImageNodeId,
+    defaultTopicHeaderTextNodeId,
     defaultTopicsColumnBrowserNodeId,
     initialTopicColor,
     ioType,
@@ -138,7 +139,7 @@ export class TemplateComponent implements OnInit {
     topic: WritableSignal<string> = signal('$THEMA$');
     topicCollectionID: WritableSignal<string> = signal(null);
 
-    private collectionNode: Node;
+    collectionNode: Node;
     collectionNodeHasPageConfig: boolean = false;
     convertedHeaderNodeId: Signal<string> = computed((): string =>
         convertNodeRefIntoNodeId(this.headerNodeId()),
@@ -1178,7 +1179,8 @@ export class TemplateComponent implements OnInit {
     }
 
     protected readonly defaultMds: string = defaultMds;
-    protected readonly defaultTopicTextNodeId: string = defaultTopicTextNodeId;
+    protected readonly defaultTopicHeaderImageNodeId: string = defaultTopicHeaderImageNodeId;
+    protected readonly defaultTopicHeaderTextNodeId: string = defaultTopicHeaderTextNodeId;
     protected readonly defaultTopicsColumnBrowserNodeId: string = defaultTopicsColumnBrowserNodeId;
     protected readonly profilingFilterbarDimensionKeys: string[] = profilingFilterbarDimensionKeys;
     protected readonly retrieveCustomUrl = retrieveCustomUrl;

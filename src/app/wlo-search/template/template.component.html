@@ -9,12 +9,18 @@
 <ng-container *ngIf="!pageConfigCheckFailed(); else pageConfigCheckFailedMessage">
   <!-- TOPIC HERO HEADER -->
   <!-- wait until the initial load is successfully to retrieve the correct nodeID for the header -->
-  <header class="template-header" *ngIf="initialLoadSuccessfully()">
+  <header
+    *ngIf="initialLoadSuccessfully()"
+    class="template-header"
+    [class.reserve-space-left]="userHasEditRights()"
+  >
     <div class="template-header-wrapper">
       <div class="template-header-container">
         <wlo-topic-header
+          [collectionNode]="collectionNode"
           [contextNodeId]="topicCollectionID()"
-          [defaultNodeId]="defaultTopicTextNodeId"
+          [defaultImageNodeId]="defaultTopicHeaderImageNodeId"
+          [defaultTextNodeId]="defaultTopicHeaderTextNodeId"
           [editMode]="editMode"
           [nodeId]="convertedHeaderNodeId()"
           [pageVariantNode]="pageVariantNode"

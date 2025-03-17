@@ -37,12 +37,18 @@ wlo-editable-text {
     width: 100%;
 }
 
+// styles for the topic header
 .template-header {
+    padding: 2rem calc(var(--offcanvas-menu-width) + var(--offcanvas-offset)) 3rem
+        var(--offcanvas-offset);
     background-color: var(--topic-color);
+
+    &.reserve-space-left {
+        padding-left: calc(var(--offcanvas-menu-width) + var(--offcanvas-offset));
+    }
 
     .template-header-wrapper {
         margin: 0 auto;
-        padding: 1.5rem 2.25rem 0;
         display: flex;
         justify-content: flex-start;
         position: relative;
@@ -52,37 +58,29 @@ wlo-editable-text {
 
         .template-header-container {
             position: relative;
+            width: 100%;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            border-radius: var(--border-radius) var(--border-radius) 0 0;
-            width: 100%;
+            border-radius: var(--border-radius);
+            // use overflow hidden to prevent children from overflowing areas hidden by border-radius
+            overflow: hidden;
         }
     }
 }
 
-// extra small devices (portrait phones, less than 576px)
-// retrieved from Bootstrap
-@media (max-width: 575.98px) {
-    .template-header .template-header-wrapper {
-        padding: 1rem 1rem 0;
-    }
-}
-
-@media only screen and (min-width: 901px) {
+// media query for small devices (breakpoint retrieved from Bootstrap)
+// reduce padding-top of template-header
+@media (max-width: 767.98px) {
     .template-header {
-        margin-left: calc(50% - 50vw);
-        margin-right: calc(50% - 50vw);
-
-        .template-header-container {
-            width: 72%;
-        }
+        padding-top: var(--offcanvas-offset);
     }
 }
 
 .portal-outer-wrapper {
     margin-top: -20px;
     margin-bottom: 30px;
+    padding-left: var(--offcanvas-offset);
     padding-right: calc(var(--offcanvas-menu-width) + var(--offcanvas-offset));
     display: block;
     border-radius: var(--border-radius);
