@@ -160,7 +160,7 @@ export class TemplateComponent implements OnInit {
     topicWidgets: NodeEntries;
 
     latestParams: Params;
-    latestUrlFragment: string;
+    private latestUrlFragment: string;
     selectDimensions: Map<string, MdsWidget> = new Map<string, MdsWidget>();
     selectedDimensionValues: MdsValue[] = [];
     selectDimensionsLoaded: boolean = false;
@@ -385,13 +385,13 @@ export class TemplateComponent implements OnInit {
     /**
      * Scrolls the latest URL fragment into view, if it exists.
      */
-    private scrollElementIntoView(): void {
-        if (!this.latestUrlFragment || this.latestUrlFragment === '') {
+    private scrollElementIntoView(fragment?: string): void {
+        if (!fragment && !this.latestUrlFragment) {
             return;
         }
-        const element: HTMLElement = document.getElementById(this.latestUrlFragment);
+        const element: HTMLElement = document.getElementById(fragment || this.latestUrlFragment);
         if (element) {
-            element.scrollIntoView();
+            element.scrollIntoView({ behavior: 'smooth' });
         }
     }
 
@@ -598,7 +598,11 @@ export class TemplateComponent implements OnInit {
      * @param fragment
      */
     async navigateToFragment(fragment: string): Promise<void> {
-        await this.router.navigate([], { queryParamsHandling: 'merge', fragment });
+        // workaround: scroll into view first and change URL afterward
+        this.scrollElementIntoView(fragment);
+        setTimeout(async (): Promise<void> => {
+            await this.router.navigate([], { queryParamsHandling: 'merge', fragment });
+        }, 250);
     }
 
     // SWIMLANE SPECIFIC FUNCTIONS
