@@ -170,6 +170,13 @@
         <ng-container *ngIf="swimlanes.length > 0; else noSwimlanesCreatedYet">
           <!-- note: do not show empty swimlanes to users -->
           <ng-container *ngFor="let swimlane of swimlanes; let i = index">
+            <!-- border with button to add a swimlane -->
+            <app-add-swimlane-border-button
+              [requestInProgress]="requestInProgress()"
+              (addSwimlaneTriggered)="addSwimlane($event, i)"
+              *ngIf="swimlane.grid?.length > 0 && userHasEditRights() && editMode"
+            ></app-add-swimlane-border-button>
+            <!-- swimlane content -->
             <div
               *ngIf="swimlane.grid?.length > 0 || editMode"
               [attr.id]="swimlane.id ? SWIMLANE_ID_PREFIX + swimlane.id : null"
@@ -180,21 +187,6 @@
             >
               <!-- edit privileges -->
               <ng-container *ngIf="userHasEditRights()">
-                <!-- border with button to add a swimlane -->
-                <!-- note: adding swimlanes on top of the first element is not possible, when the anchor menu is shown -->
-                <app-add-swimlane-border-button
-                  [requestInProgress]="requestInProgress()"
-                  (addSwimlaneTriggered)="addSwimlane($event, i)"
-                  *ngIf="editMode && (i !== 0 || anchorSwimlanes.length === 0)"
-                ></app-add-swimlane-border-button>
-                <!-- special case for last element -->
-                <app-add-swimlane-border-button
-                  position="bottom"
-                  [requestInProgress]="requestInProgress()"
-                  (addSwimlaneTriggered)="addSwimlane($event, i + 1)"
-                  *ngIf="editMode && i === swimlanes.length - 1"
-                ></app-add-swimlane-border-button>
-
                 <!-- action buttons for moving -->
                 <div class="wlo-move-buttons" *ngIf="editMode">
                   <button
@@ -317,6 +309,17 @@
                 ></app-swimlane>
               </div>
             </div>
+            <!-- border with button to add a swimlane (special case for last element) -->
+            <app-add-swimlane-border-button
+              [requestInProgress]="requestInProgress()"
+              (addSwimlaneTriggered)="addSwimlane($event, i + 1)"
+              *ngIf="
+                swimlane.grid?.length > 0 &&
+                userHasEditRights() &&
+                editMode &&
+                i === swimlanes.length - 1
+              "
+            ></app-add-swimlane-border-button>
           </ng-container>
         </ng-container>
         <ng-template #swimlaneHeading let-swimlane="swimlane" let-index="index">
@@ -334,7 +337,7 @@
           ></wlo-editable-text>
         </ng-template>
         <ng-template #noSwimlanesCreatedYet>
-          <div class="wlo-swimlane is-empty">
+          <div class="wlo-swimlane is-empty" [class.swimlane-edit-mode]="editMode">
             <app-add-swimlane-border-button
               [requestInProgress]="requestInProgress()"
               (addSwimlaneTriggered)="addSwimlane($event, 0)"

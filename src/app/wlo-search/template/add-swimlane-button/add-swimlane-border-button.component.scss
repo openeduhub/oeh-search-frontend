@@ -1,26 +1,17 @@
 .add-swimlane-container {
-    --position-left: 24px;
     --button-height: 40px;
 
-    position: absolute;
-    top: calc(-1 * var(--button-height) / 2);
-    left: var(--position-left);
-    width: calc(100% - 2 * var(--position-left));
+    margin: 24px 0 48px 0;
+    width: 100%;
     display: flex;
     align-items: center;
-
-    // if the button should be placed at the bottom of the container
-    &.position-bottom {
-        top: unset;
-        bottom: calc(-1 * var(--button-height) / 2);
-    }
 
     // the borders next to the add button
     .container-border {
         border-bottom-width: 2px;
         border-bottom-style: solid;
         border-radius: 1px;
-        width: calc(50% - var(--position-left));
+        flex: 1;
     }
 
     // add additional space to the left and right of the button

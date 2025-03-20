@@ -14,7 +14,6 @@ import { Swimlane } from '../shared/types/swimlane';
     styleUrls: ['./add-swimlane-border-button.component.scss'],
 })
 export class AddSwimlaneBorderButtonComponent {
-    @Input() position: string = 'top';
     @Input() requestInProgress: boolean = false;
     @Output() addSwimlaneTriggered: EventEmitter<Swimlane> = new EventEmitter<Swimlane>();
     supportedSwimlaneTypes: string[] = swimlaneTypeOptions.map((type: SelectOption) => type.value);

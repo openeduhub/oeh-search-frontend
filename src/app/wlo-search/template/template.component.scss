@@ -192,9 +192,10 @@ wlo-editable-text {
                 }
 
                 padding-top: 8px;
-                /* Simple hack for overflowing containers as it was done in Wordpress */
+                // simple hack for overflowing containers as it was done in Wordpress
                 padding-bottom: 38px;
 
+                // simple hack for overflowing containers as it was done in Wordpress
                 &:not(:first-child) {
                     margin-top: -25px;
                 }
@@ -202,6 +203,16 @@ wlo-editable-text {
                 &.is-empty {
                     padding: 16px 24px;
                     text-align: center;
+
+                    .wlo-container {
+                        height: unset;
+                    }
+
+                    // add a negative margin-top to the wlo-container in edit mode
+                    // due to add-swimlane-border-button being placed above
+                    &.swimlane-edit-mode .wlo-container {
+                        margin-top: -25px;
+                    }
                 }
 
                 &.extra-padding-top {
@@ -309,6 +320,12 @@ wlo-editable-text {
 
                 /* overwrites for edit mode */
                 &.swimlane-edit-mode {
+                    border-bottom-left-radius: var(--border-radius);
+                    border-bottom-right-radius: var(--border-radius);
+
+                    // containers are not overflowing in edit-mode, so adjust padding-bottom accordingly
+                    padding-bottom: 16px;
+
                     h2 {
                         margin: 0 7.5% 16px 7.5%;
                     }
