@@ -181,7 +181,7 @@
               *ngIf="swimlane.grid?.length > 0 || editMode"
               [attr.id]="swimlane.id ? SWIMLANE_ID_PREFIX + swimlane.id : null"
               class="wlo-swimlane"
-              [class.extra-padding-top]="anchorSwimlanes.length > 0 && i === 0"
+              [class.extra-padding-top]="anchorSwimlanes.length > 0 && i === 0 && !editMode"
               [class.swimlane-edit-mode]="editMode"
               [style.background-color]="swimlane.backgroundColor ?? swimlane.backgroundColor"
             >
