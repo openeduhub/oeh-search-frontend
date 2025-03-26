@@ -12,6 +12,10 @@
   <header
     *ngIf="initialLoadSuccessfully()"
     class="template-header"
+    [class.extra-padding-bottom]="
+      (swimlanes | filterSwimlaneType: 'anchor':anchorTrigger)?.length > 0
+    "
+    [class.view-mode]="!editMode"
     [class.reserve-space-left]="userHasEditRights()"
   >
     <div class="template-header-wrapper">
@@ -142,11 +146,11 @@
     <div class="portal-wrapper">
       <div
         class="portal-wrapper-left"
-        [class.extra-margin-top]="anchorSwimlanes.length > 0"
+        [class.extra-padding-top]="anchorSwimlanes.length > 0 && editMode"
         *ngVar="(swimlanes | filterSwimlaneType: 'anchor':anchorTrigger) ?? [] as anchorSwimlanes"
       >
         <ng-container *ngIf="anchorSwimlanes.length > 0">
-          <div class="anchor-container">
+          <div class="anchor-container" [class.edit-mode]="editMode">
             <div class="anchor-menu">
               <div class="anchor-item" *ngFor="let anchor of anchorSwimlanes; let i = index">
                 <div
@@ -181,8 +185,8 @@
               *ngIf="swimlane.grid?.length > 0 || editMode"
               [attr.id]="swimlane.id ? SWIMLANE_ID_PREFIX + swimlane.id : null"
               class="wlo-swimlane"
+              [class.edit-mode]="editMode"
               [class.extra-padding-top]="anchorSwimlanes.length > 0 && i === 0 && !editMode"
-              [class.swimlane-edit-mode]="editMode"
               [style.background-color]="swimlane.backgroundColor ?? swimlane.backgroundColor"
             >
               <!-- edit privileges -->
@@ -337,7 +341,7 @@
           ></wlo-editable-text>
         </ng-template>
         <ng-template #noSwimlanesCreatedYet>
-          <div class="wlo-swimlane is-empty" [class.swimlane-edit-mode]="editMode">
+          <div class="wlo-swimlane is-empty" [class.edit-mode]="editMode">
             <app-add-swimlane-border-button
               [requestInProgress]="requestInProgress()"
               (addSwimlaneTriggered)="addSwimlane($event, 0)"
