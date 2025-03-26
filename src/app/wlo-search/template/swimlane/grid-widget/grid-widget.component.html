@@ -11,6 +11,7 @@
       [parentWidgetConfigNodeId]="parentWidgetConfigNodeId"
       [selectDimensions]="selectDimensions"
       [selectedDimensionValues]="selectedDimensionValues"
+      [swimlaneColor]="backgroundColor"
       [swimlaneIndex]="swimlaneIndex"
     ></wlo-ai-text-widget>
   </ng-container>
@@ -40,6 +41,19 @@
       [defaultNodeId]="defaultTopicsColumnBrowserNodeId"
       [height]="'400'"
     ></wlo-topics-column-browser>
+  </ng-container>
+  <ng-container *ngSwitchCase="'wlo-text-widget'">
+    <wlo-text-widget
+      [class]="widgetClasses ? widgetClasses : ''"
+      [defaultNodeId]="defaultTextWidgetNodeId"
+      [editMode]="editMode"
+      [gridIndex]="gridIndex"
+      [nodeId]="widgetNodeId"
+      [pageVariantNode]="pageVariantNode"
+      [parentWidgetConfigNodeId]="parentWidgetConfigNodeId"
+      [swimlaneColor]="backgroundColor"
+      [swimlaneIndex]="swimlaneIndex"
+    ></wlo-text-widget>
   </ng-container>
   <ng-container *ngSwitchCase="'wlo-user-configurable'">
     <wlo-user-configurable

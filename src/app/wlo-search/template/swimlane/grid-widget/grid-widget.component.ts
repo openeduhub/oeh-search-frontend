@@ -4,6 +4,7 @@ import {
     AiTextWidgetComponent,
     CollectionChipsComponent,
     MediaRenderingComponent,
+    TextWidgetComponent,
     TopicsColumnBrowserComponent,
     UserConfigurableComponent,
 } from 'ngx-edu-sharing-wlo-pages';
@@ -12,6 +13,7 @@ import {
     defaultAiTextWidgetNodeId,
     defaultCollectionChipsNodeId,
     defaultMediaRenderingNodeId,
+    defaultTextWidgetNodeId,
     defaultTopicsColumnBrowserNodeId,
     defaultUserConfigurableNodeId,
     parentWidgetConfigNodeId,
@@ -26,6 +28,7 @@ import {
         AiTextWidgetComponent,
         CollectionChipsComponent,
         MediaRenderingComponent,
+        TextWidgetComponent,
         TopicsColumnBrowserComponent,
         UserConfigurableComponent,
     ],
@@ -51,6 +54,7 @@ export class GridWidgetComponent {
     readonly defaultAiTextWidgetNodeId: string = defaultAiTextWidgetNodeId;
     readonly defaultCollectionChipsNodeId: string = defaultCollectionChipsNodeId;
     readonly defaultMediaRenderingNodeId: string = defaultMediaRenderingNodeId;
+    readonly defaultTextWidgetNodeId: string = defaultTextWidgetNodeId;
     readonly defaultTopicsColumnBrowserNodeId: string = defaultTopicsColumnBrowserNodeId;
     readonly defaultUserConfigurableNodeId: string = defaultUserConfigurableNodeId;
     readonly parentWidgetConfigNodeId: string = parentWidgetConfigNodeId;

@@ -148,7 +148,7 @@ body {
 button,
 .mat-mdc-button {
     // global adjustment for button label
-    &:not(.c-widget-color-picker) .mdc-button__label {
+    &:not(.widget-color-picker) .mdc-button__label {
         display: flex;
         align-items: center;
         justify-content: center;
