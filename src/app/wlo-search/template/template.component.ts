@@ -742,8 +742,11 @@ export class TemplateComponent implements OnInit {
                 if (!editedSwimlane) {
                     return;
                 }
-                // restore swimlane ID
+                // restore swimlane ID + background color
                 editedSwimlane.id = swimlane.id;
+                if (swimlane.backgroundColor) {
+                    editedSwimlane.backgroundColor = swimlane.backgroundColor;
+                }
                 // parse grid string
                 if (editedSwimlane.grid) {
                     editedSwimlane.grid = JSON.parse(editedSwimlane.grid);
