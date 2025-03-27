@@ -4,7 +4,7 @@
 
 export const environment = {
     production: false,
-    eduSharingApiUrl: 'https://suche.staging.openeduhub.net/edu-sharing/rest',
+    eduSharingApiUrl: 'https://repository.staging.openeduhub.net/edu-sharing/rest',
 };
 
 /*

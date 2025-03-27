@@ -19,7 +19,7 @@
     "cypress:local:open": "cd e2e-cypress && npm run cypress:local:open",
     "format": "prettier --write src",
     "docker-build": "docker build . --tag openeduhub/oeh-search-frontend:local",
-    "docker-run": "docker run --name oeh-search-frontend --rm -p 8080:80 --env EDU_SHARING_API_URL=https://suche.staging.openeduhub.net/edu-sharing/rest openeduhub/oeh-search-frontend:local",
+    "docker-run": "docker run --name oeh-search-frontend --rm -p 8080:80 --env EDU_SHARING_API_URL=https://repository.staging.openeduhub.net/edu-sharing/rest openeduhub/oeh-search-frontend:local",
     "extract-i18n": "ng extract-i18n oeh-search-frontend --output-path src/locale",
     "generate": "graphql-codegen",
     "postgenerate": "prettier --write src/generated/*",
