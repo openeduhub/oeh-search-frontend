@@ -5,6 +5,7 @@ import {
     Component,
     computed,
     HostBinding,
+    Input,
     OnInit,
     QueryList,
     Signal,
@@ -126,6 +127,16 @@ export class TemplateComponent implements OnInit {
         private templateHelperService: TemplateHelperService,
     ) {}
 
+    @Input() set collectionId(value: string) {
+        // retrieve the search URL
+        this.searchUrl = retrieveSearchUrl();
+        // set the default language for API requests
+        this.templateHelperService.setDefaultLocale();
+        // set the collection ID
+        this.topicCollectionID.set(value);
+        // initialize the component
+        void this.initializeComponent();
+    }
     @HostBinding('style.--topic-color') topicColor: string = initialTopicColor;
     @ViewChildren('accordionItem') accordions: QueryList<CdkAccordionItem>;
 
@@ -202,46 +213,8 @@ export class TemplateComponent implements OnInit {
                 if (params.collectionId && !this.initializedWithParams) {
                     // set the topicCollectionID
                     this.topicCollectionID.set(params.collectionId);
-                    this.initializedWithParams = true;
-                    // login for local development
-                    await this.templateHelperService.localLogin();
-                    try {
-                        // fetch the collection node to set the topic name, color and check the user access
-                        this.collectionNode = await this.templateHelperService.getNode(
-                            params.collectionId,
-                        );
-                        this.topic.set(this.collectionNode.title ?? 'No topic defined');
-                        // check the user privileges for the collection node and initialize custom listeners
-                        this.userHasEditRights.set(checkUserAccess(this.collectionNode));
-                        if (this.userHasEditRights()) {
-                            this.initializeCustomEventListeners();
-                        }
-                        // TODO: use a color from the palette defined in the collection
-                        // set the background to some random (but deterministic) color, just for visuals
-                        this.topicColor = getTopicColor(this.topic());
-
-                        // retrieve the page config node and select the proper variant to define the headerNodeId + swimlanes
-                        await this.retrievePageConfigAndSelectVariant(params.variantId);
-
-                        // initial load finished (page structure loaded)
-                        this.initialLoadSuccessfully.set(true);
-
-                        // listen to fragment changes to scroll given swimlane ID into view
-                        // note: setTimeout is necessary for view being loaded first
-                        this.initializeFragmentListener();
-
-                        // post-load the statistics
-                        this.searchResultCount =
-                            await this.statisticsHelperService.postLoadStatistics(
-                                params.collectionId,
-                                this.topic(),
-                                this.statistics,
-                            );
-                        this.statisticsLoaded.set(true);
-                    } catch (err) {
-                        console.error(err);
-                        this.templateHelperService.displayErrorToast();
-                    }
+                    // initialize the component
+                    await this.initializeComponent(params.variantId);
                 }
                 // TODO: The scrolling depends on the widgets being fully loaded, so using setTimeout is only a workaround.
                 //       A better solution would be to wait until all widgets are loaded, which is currently not possible.
@@ -249,6 +222,53 @@ export class TemplateComponent implements OnInit {
                     this.scrollElementIntoView();
                 }, 1000);
             });
+    }
+
+    /**
+     * Initializes the component with an optionally given variant ID.
+     *
+     * @param variantId
+     */
+    private async initializeComponent(variantId?: string): Promise<void> {
+        this.initializedWithParams = true;
+        // login for local development
+        await this.templateHelperService.localLogin();
+        try {
+            // fetch the collection node to set the topic name, color and check the user access
+            this.collectionNode = await this.templateHelperService.getNode(
+                this.topicCollectionID(),
+            );
+            this.topic.set(this.collectionNode.title ?? 'No topic defined');
+            // check the user privileges for the collection node and initialize custom listeners
+            this.userHasEditRights.set(checkUserAccess(this.collectionNode));
+            if (this.userHasEditRights()) {
+                this.initializeCustomEventListeners();
+            }
+            // TODO: use a color from the palette defined in the collection
+            // set the background to some random (but deterministic) color, just for visuals
+            this.topicColor = getTopicColor(this.topic());
+
+            // retrieve the page config node and select the proper variant to define the headerNodeId + swimlanes
+            await this.retrievePageConfigAndSelectVariant(variantId);
+
+            // initial load finished (page structure loaded)
+            this.initialLoadSuccessfully.set(true);
+
+            // listen to fragment changes to scroll given swimlane ID into view
+            // note: setTimeout is necessary for view being loaded first
+            this.initializeFragmentListener();
+
+            // post-load the statistics
+            this.searchResultCount = await this.statisticsHelperService.postLoadStatistics(
+                this.topicCollectionID(),
+                this.topic(),
+                this.statistics,
+            );
+            this.statisticsLoaded.set(true);
+        } catch (err) {
+            console.error(err);
+            this.templateHelperService.displayErrorToast();
+        }
     }
 
     /**
