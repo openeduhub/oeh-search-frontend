@@ -48,11 +48,17 @@ import {
     OptionsHelperService as OptionsHelperServiceAbstract,
 } from 'ngx-edu-sharing-ui';
 import {
+    GlobalWidgetConfigService,
     OptionsHelperService,
     TicketAuthInterceptor,
     TicketService,
     ToastService,
 } from 'ngx-edu-sharing-wlo-pages';
+import {
+    cdnLink,
+    eduSharingUrl,
+    parentWidgetConfigNodeId,
+} from './wlo-search/template/shared/custom-definitions';
 
 const wloSearchConfig: WloSearchConfig = {
     routerPath: ROOT_PATH + WLO_SEARCH_PATH_COMPONENT,
@@ -162,6 +168,11 @@ const eduSharingApiModuleWithProviders = EduSharingApiModule.forRoot({
             }
         })(),
         // from here on dependencies of wlo-pages (edu-sharing web-components)
+        // global configurations
+        { provide: 'CDN_LINK', useValue: cdnLink },
+        { provide: 'EDU_REPO_URL', useValue: eduSharingUrl },
+        { provide: 'PARENT_WIDGET_CONFIG_NODE_ID', useValue: parentWidgetConfigNodeId },
+        GlobalWidgetConfigService,
         eduSharingApiModuleWithProviders.providers,
         EduSharingUiModule.forRoot({
             production: true,

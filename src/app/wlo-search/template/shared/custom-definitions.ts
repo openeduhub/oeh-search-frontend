@@ -7,6 +7,9 @@ export const actionItems = {
     previewMode: 'Zurück zur Vorschau',
 };
 
+export const cdnLink: string =
+    'https://cdn.jsdelivr.net/gh/openeduhub/oeh-search-frontend@feature/embedding/output/wlo-pages/20250124/';
+
 export const defaultLrt: string = 'ccm:oeh_lrt';
 
 export const defaultMds: string = 'mds_oeh';
@@ -19,6 +22,8 @@ export const defaultTopicsColumnBrowserNodeId: string = '4f46b4cd-19df-4139-bbb1
 export const defaultTopicHeaderTextNodeId: string = '2340e5cf-4e9d-4b42-b6df-e64087be7961';
 export const defaultTopicHeaderImageNodeId: string = 'f5e62bb7-6c84-4ede-a62b-b76c845ede88';
 export const defaultUserConfigurableNodeId: string = '89653b20-516c-43a2-9042-382aef5ae087';
+
+export const eduSharingUrl: string = 'https://repository.staging.openeduhub.net/edu-sharing/';
 
 export const initialLocaleString: string = 'de_DE';
 

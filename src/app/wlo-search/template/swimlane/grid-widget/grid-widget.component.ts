@@ -16,7 +16,6 @@ import {
     defaultTextWidgetNodeId,
     defaultTopicsColumnBrowserNodeId,
     defaultUserConfigurableNodeId,
-    parentWidgetConfigNodeId,
     retrieveCustomUrl,
 } from '../../shared/custom-definitions';
 
@@ -57,7 +56,6 @@ export class GridWidgetComponent {
     readonly defaultTextWidgetNodeId: string = defaultTextWidgetNodeId;
     readonly defaultTopicsColumnBrowserNodeId: string = defaultTopicsColumnBrowserNodeId;
     readonly defaultUserConfigurableNodeId: string = defaultUserConfigurableNodeId;
-    readonly parentWidgetConfigNodeId: string = parentWidgetConfigNodeId;
 
     constructor() {}
 
