@@ -48,7 +48,7 @@
     "ngx-colors": "^3.5.3",
     "ngx-edu-sharing-api": "^10.0.1",
     "ngx-edu-sharing-ui": "^9999.0.4",
-    "ngx-edu-sharing-wlo-pages": "^0.1.69",
+    "ngx-edu-sharing-wlo-pages": "^0.1.70",
     "ngx-slick-carousel": "^17.0.0",
     "rxjs": "^7.0.0",
     "slick-carousel": "^1.8.1",
