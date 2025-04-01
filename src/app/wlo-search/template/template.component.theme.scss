@@ -65,6 +65,7 @@
     // use medium font-size with reduced line-height
     .anchor-container .anchor-menu .anchor-item {
         .item-container {
+            font-family: var(--sys-body-large-font);
             font-size: var(--sys-body-medium-size);
             line-height: var(--body-small-line-height);
         }

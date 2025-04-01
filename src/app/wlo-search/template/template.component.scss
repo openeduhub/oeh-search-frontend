@@ -204,6 +204,8 @@ wlo-editable-text {
                             box-shadow: 0 4px 4px 0 #00000040;
                             overflow: hidden;
                             cursor: pointer;
+                            // fix style of button to match design
+                            border: none;
                         }
 
                         .total-count {
