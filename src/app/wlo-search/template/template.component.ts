@@ -701,11 +701,14 @@ export class TemplateComponent implements OnInit {
             await this.navigateToFragment(
                 this.SWIMLANE_ID_PREFIX + this.swimlanes[swimlaneIndex].id,
             );
-            this.clipboard.copy(window.location.href);
-            // inform user about URL being copied successfully
-            this.templateHelperService.openSaveConfigToast(
-                'Der Link wurde in Ihre Zwischenablage kopiert.',
-            );
+            // workaround: setTimeout is necessary, as navigateToFragment  includes a delay
+            setTimeout((): void => {
+                this.clipboard.copy(window.location.href);
+                // inform user about URL being copied successfully
+                this.templateHelperService.openSaveConfigToast(
+                    'Der Link wurde in Ihre Zwischenablage kopiert.',
+                );
+            }, 300);
         }
     }
 
