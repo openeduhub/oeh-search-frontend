@@ -113,7 +113,7 @@
           [selectDimensionKeysOfInterest]="profilingFilterbarDimensionKeys"
           [viewModes]="['radio', 'checkbox']"
           (selectDimensionsChanged)="selectDimensionsChanged($event)"
-          (selectValuesChanged)="selectValuesChanged()"
+          (selectValuesChanged)="selectValuesChanged($event)"
         ></wlo-filter-bar>
       </div>
       <ng-container *ngIf="selectedMenuItem === menuItems.topicTree">

@@ -24,6 +24,7 @@ import {
     ColorChangeEvent,
     EditableTextComponent,
     FilterBarComponent,
+    GlobalWidgetConfigService,
     SideMenuItemComponent,
     SideMenuWrapperComponent,
     StatisticChart,
@@ -121,6 +122,7 @@ export class TemplateComponent implements OnInit {
     constructor(
         private clipboard: Clipboard,
         private dialog: MatDialog,
+        private globalWidgetConfigService: GlobalWidgetConfigService,
         private route: ActivatedRoute,
         private router: Router,
         private statisticsHelperService: StatisticsHelperService,
@@ -950,9 +952,12 @@ export class TemplateComponent implements OnInit {
 
     /**
      * Called by wlo-filter-bar selectValuesChanged output event.
+     *
+     * @param latestSelectValues
      */
-    selectValuesChanged(): void {
-        if (!this.latestParams) {
+    selectValuesChanged(latestSelectValues: MdsValue[]): void {
+        const persistFilters: boolean = this.globalWidgetConfigService.persistFilters;
+        if (!this.latestParams && persistFilters) {
             return;
         }
         // changes are detected using the URL params to also include values of different filterbars
@@ -961,25 +966,77 @@ export class TemplateComponent implements OnInit {
         const convertedSelectDimensionKeys: string[] = Array.from(this.selectDimensions.keys())
             .map((key: string) => key.split('$')?.[1] ?? key)
             .map((key: string) => key.split('virtual:')?.[1] ?? key);
-        const latestParamKeys: string[] = Object.keys(this.latestParams);
         const selectedDimensionValues: MdsValue[] = [];
-        // iterate over select dimension keys to ensure correct positioning
-        convertedSelectDimensionKeys.forEach((dimensionKey) => {
-            if (latestParamKeys.includes(dimensionKey)) {
-                selectedDimensionValues.push({
-                    id: this.latestParams[dimensionKey],
+        if (persistFilters) {
+            const latestParamKeys: string[] = Object.keys(this.latestParams);
+            // iterate over select dimension keys to ensure correct positioning
+            convertedSelectDimensionKeys.forEach((dimensionKey) => {
+                if (latestParamKeys.includes(dimensionKey)) {
+                    selectedDimensionValues.push({
+                        id: this.latestParams[dimensionKey],
+                    });
+                } else {
+                    console.log(
+                        'DEBUGGING: Not included in params -> push empty string',
+                        this.latestParams,
+                        dimensionKey,
+                    );
+                    selectedDimensionValues.push({
+                        id: '',
+                    });
+                }
+            });
+        }
+        // without params, it is not guaranteed that the input of multiple filter bars works properly
+        else {
+            // iterate over (unconverted) select dimension keys to ensure correct positioning
+            Array.from(this.selectDimensions.keys()).forEach((dimensionKey: string): void => {
+                // we use both selectDimensions and latestSelectValues to find the matching values
+                const dimensionValueIds: string[] = this.selectDimensions
+                    .get(dimensionKey)
+                    ?.values?.map((val: MdsValue) => val.id);
+                // iterate over latestSelectValues and find a matching value
+                const matchingValue: MdsValue = latestSelectValues.find((selectValue: MdsValue) => {
+                    let selectedIds: string[];
+                    if (Array.isArray(selectValue)) {
+                        selectedIds = selectValue.filter((val) => val.checked).map((val) => val.id);
+                    } else {
+                        selectedIds = [selectValue.id];
+                    }
+                    // check, if a matching value is found (at least one selected ID and all selected IDs are included in the dimension value IDs)
+                    // reference: https://stackoverflow.com/a/53606357
+                    return (
+                        selectedIds.length > 0 &&
+                        selectedIds.every((v: string) => dimensionValueIds.includes(v))
+                    );
                 });
-            } else {
-                console.log(
-                    'DEBUGGING: Not included in params -> push empty string',
-                    this.latestParams,
-                    dimensionKey,
-                );
-                selectedDimensionValues.push({
-                    id: '',
-                });
-            }
-        });
+                if (matchingValue) {
+                    const id: string = Array.isArray(matchingValue)
+                        ? matchingValue
+                              .filter((val) => val.checked)
+                              .map((val) => val.id)
+                              .join(',')
+                        : matchingValue.id;
+                    selectedDimensionValues.push({
+                        id,
+                    });
+                } else {
+                    console.log('DEBUGGING: No matching value found', matchingValue, dimensionKey);
+                    selectedDimensionValues.push({
+                        id: '',
+                    });
+                }
+            });
+        }
+        // Expected format of selectedDimensionValues:
+        // [
+        //   {
+        //     "id": "http://w3id.org/openeduhub/vocabs/educationalContext/elementarbereich,http://w3id.org/openeduhub/vocabs/educationalContext/grundschule"
+        //   },
+        //   {
+        //     "id": "learn"
+        //   }
+        // ]
         this.selectedDimensionValues = selectedDimensionValues;
         // if necessary, reload the pageVariants
         if (this.initialLoadSuccessfully()) {
