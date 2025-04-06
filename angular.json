@@ -177,7 +177,10 @@
       "prefix": "app",
       "i18n": {
         "locales": {
-          "de": "src/locale/messages.de.xlf"
+          "de": {
+            "baseHref": "",
+            "translation": "src/locale/messages.de.xlf"
+          }
         }
       },
       "architect": {
@@ -195,7 +198,17 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "projects/web-components/src/favicon.ico",
-              "projects/web-components/src/assets"
+              "projects/web-components/src/assets",
+              {
+                "glob": "*",
+                "input": "src/assets/wlo-search/icons",
+                "output": "assets/icons/"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/ngx-edu-sharing-wlo-pages/assets",
+                "output": "/assets/"
+              }
             ],
             "styles": [
               "node_modules/slick-carousel/slick/slick.scss",

@@ -2,27 +2,29 @@ import { Injectable } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { GlobalTemplateConfigService } from '../template/shared/services/global-template-config.service';
 
 @Injectable({
     providedIn: 'root',
 })
 export class CoreService {
+    private iconPath: string;
+
     constructor(
-        private router: Router,
-        private matIconRegistry: MatIconRegistry,
         private domSanitizer: DomSanitizer,
-    ) {
+        private globalTemplateConfigService: GlobalTemplateConfigService,
+        private matIconRegistry: MatIconRegistry,
+        private router: Router,
+    ) {}
+
+    /**
+     * Handles the initialization of this service.
+     * This is not done in the constructor to be able to call the icon registration at a later time.
+     */
+    setUp(): void {
+        this.iconPath = this.globalTemplateConfigService.iconPath;
         this.registerCustomIcons();
         this.registerMessageHandler();
-    }
-
-    setUp(): void {
-        // Dummy function.
-        //
-        // We do the setup once the service is injected because we want to do it only once in the
-        // application lifetime. To achieve this, we set this service to `providedIn: 'root'`, but we
-        // need to make sure it will be injected for the setup to happen as a side effect. This method
-        // exists, so the service will not be removed by accident or optimized out of the application.
     }
 
     private registerCustomIcons(): void {
@@ -47,9 +49,7 @@ export class CoreService {
         ]) {
             this.matIconRegistry.addSvgIcon(
                 icon,
-                this.domSanitizer.bypassSecurityTrustResourceUrl(
-                    'assets/wlo-search/icons/' + icon + '.svg',
-                ),
+                this.domSanitizer.bypassSecurityTrustResourceUrl(this.iconPath + icon + '.svg'),
             );
         }
     }

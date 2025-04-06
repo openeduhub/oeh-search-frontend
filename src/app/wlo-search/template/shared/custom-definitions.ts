@@ -10,6 +10,8 @@ export const actionItems = {
 export const cdnLink: string =
     'https://cdn.jsdelivr.net/gh/openeduhub/oeh-search-frontend@feature/embedding/output/wlo-pages/20250124/';
 
+export const defaultIconPath: string = 'assets/wlo-search/icons/';
+
 export const defaultLrt: string = 'ccm:oeh_lrt';
 
 export const defaultMds: string = 'mds_oeh';
