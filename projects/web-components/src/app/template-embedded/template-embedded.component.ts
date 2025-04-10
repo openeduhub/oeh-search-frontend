@@ -25,6 +25,7 @@ export class TemplateEmbeddedComponent implements OnInit {
     @Input() imagePath?: string;
     @Input() parentPageConfigNodeId?: string;
     @Input() parentWidgetConfigNodeId?: string;
+    @Input() persistFilters?: boolean;
 
     constructor(
         private coreService: CoreService,
@@ -85,6 +86,9 @@ export class TemplateEmbeddedComponent implements OnInit {
         }
         if (this.parentWidgetConfigNodeId) {
             this.globalWidgetConfigService.parentWidgetConfigNodeId = this.parentWidgetConfigNodeId;
+        }
+        if (this.persistFilters !== undefined) {
+            this.globalWidgetConfigService.persistFilters = this.persistFilters;
         }
         // call the core service setup
         this.coreService.setUp();
