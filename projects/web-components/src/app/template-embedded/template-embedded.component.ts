@@ -10,11 +10,20 @@ import { GlobalTemplateConfigService } from '../../../../../src/app/wlo-search/t
 })
 export class TemplateEmbeddedComponent implements OnInit {
     @Input() collectionId: string;
-    // global widget configuration
+    // global template + widget configuration
     @Input() cdnLink?: string;
+    @Input() defaultAiTextWidgetNodeId?: string;
+    @Input() defaultCollectionChipsWidgetNodeId?: string;
+    @Input() defaultMediaRenderingWidgetNodeId?: string;
+    @Input() defaultTextWidgetNodeId?: string;
+    @Input() defaultTopicHeaderImageWidgetNodeId?: string;
+    @Input() defaultTopicHeaderTextWidgetNodeId?: string;
+    @Input() defaultTopicsColumnBrowserWidgetNodeId?: string;
+    @Input() defaultUserConfigurableWidgetNodeId?: string;
     @Input() eduRepoUrl?: string;
     @Input() iconPath?: string;
     @Input() imagePath?: string;
+    @Input() parentPageConfigNodeId?: string;
     @Input() parentWidgetConfigNodeId?: string;
 
     constructor(
@@ -30,6 +39,37 @@ export class TemplateEmbeddedComponent implements OnInit {
         if (this.cdnLink) {
             this.globalWidgetConfigService.cdnLink = this.cdnLink;
         }
+        if (this.defaultAiTextWidgetNodeId) {
+            this.globalWidgetConfigService.defaultAiTextWidgetNodeId =
+                this.defaultAiTextWidgetNodeId;
+        }
+        if (this.defaultCollectionChipsWidgetNodeId) {
+            this.globalWidgetConfigService.defaultCollectionChipsWidgetNodeId =
+                this.defaultCollectionChipsWidgetNodeId;
+        }
+        if (this.defaultMediaRenderingWidgetNodeId) {
+            this.globalWidgetConfigService.defaultMediaRenderingWidgetNodeId =
+                this.defaultMediaRenderingWidgetNodeId;
+        }
+        if (this.defaultTextWidgetNodeId) {
+            this.globalWidgetConfigService.defaultTextWidgetNodeId = this.defaultTextWidgetNodeId;
+        }
+        if (this.defaultTopicHeaderImageWidgetNodeId) {
+            this.globalWidgetConfigService.defaultTopicHeaderImageWidgetNodeId =
+                this.defaultTopicHeaderImageWidgetNodeId;
+        }
+        if (this.defaultTopicHeaderTextWidgetNodeId) {
+            this.globalWidgetConfigService.defaultTopicHeaderTextWidgetNodeId =
+                this.defaultTopicHeaderTextWidgetNodeId;
+        }
+        if (this.defaultTopicsColumnBrowserWidgetNodeId) {
+            this.globalWidgetConfigService.defaultTopicsColumnBrowserWidgetNodeId =
+                this.defaultTopicsColumnBrowserWidgetNodeId;
+        }
+        if (this.defaultUserConfigurableWidgetNodeId) {
+            this.globalWidgetConfigService.defaultUserConfigurableWidgetNodeId =
+                this.defaultUserConfigurableWidgetNodeId;
+        }
         if (this.eduRepoUrl) {
             this.globalWidgetConfigService.eduRepoUrl = this.eduRepoUrl;
         }
@@ -39,6 +79,9 @@ export class TemplateEmbeddedComponent implements OnInit {
         }
         if (this.imagePath) {
             this.globalWidgetConfigService.imagePath = this.imagePath;
+        }
+        if (this.parentPageConfigNodeId) {
+            this.globalTemplateConfigService.parentPageConfigNodeId = this.parentPageConfigNodeId;
         }
         if (this.parentWidgetConfigNodeId) {
             this.globalWidgetConfigService.parentWidgetConfigNodeId = this.parentWidgetConfigNodeId;

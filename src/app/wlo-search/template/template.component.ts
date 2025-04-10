@@ -52,7 +52,6 @@ import {
     pageConfigRefType,
     pageConfigType,
     pageVariantConfigType,
-    parentPageConfigNodeId,
     pageConfigPrefix,
     pageConfigAspect,
     pageVariantConfigPrefix,
@@ -64,6 +63,7 @@ import {
 } from './shared/custom-definitions';
 import { FilterSwimlaneTypePipe } from './shared/pipes/filter-swimlane-type.pipe';
 import { SwimlaneSearchCountPipe } from './shared/pipes/swimlane-search-count.pipe';
+import { GlobalTemplateConfigService } from './shared/services/global-template-config.service';
 import { StatisticsHelperService } from './shared/services/statistics-helper.service';
 import { TemplateHelperService } from './shared/services/template-helper.service';
 import { GridSearchCount } from './shared/types/grid-search-count';
@@ -122,6 +122,7 @@ export class TemplateComponent implements OnInit {
     constructor(
         private clipboard: Clipboard,
         private dialog: MatDialog,
+        private globalTemplateConfigService: GlobalTemplateConfigService,
         private globalWidgetConfigService: GlobalWidgetConfigService,
         private route: ActivatedRoute,
         private router: Router,
@@ -1121,7 +1122,7 @@ export class TemplateComponent implements OnInit {
             console.log('checkForCustomPageNodeExistence no page config');
             // page ccm:map for page config node
             this.pageConfigNode = await this.templateHelperService.createChild(
-                parentPageConfigNodeId,
+                this.globalTemplateConfigService.parentPageConfigNodeId,
                 mapType,
                 pageConfigPrefix + uuidv4(),
                 pageConfigAspect,

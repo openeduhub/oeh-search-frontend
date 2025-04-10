@@ -9,15 +9,7 @@ import {
     UserConfigurableComponent,
 } from 'ngx-edu-sharing-wlo-pages';
 import { SharedModule } from '../../../shared/shared.module';
-import {
-    defaultAiTextWidgetNodeId,
-    defaultCollectionChipsNodeId,
-    defaultMediaRenderingNodeId,
-    defaultTextWidgetNodeId,
-    defaultTopicsColumnBrowserNodeId,
-    defaultUserConfigurableNodeId,
-    retrieveCustomUrl,
-} from '../../shared/custom-definitions';
+import { retrieveCustomUrl } from '../../shared/custom-definitions';
 
 @Component({
     selector: 'app-grid-widget',
@@ -49,13 +41,6 @@ export class GridWidgetComponent {
     @Input() widgetType: string;
     @Output() nodeClicked: EventEmitter<Node> = new EventEmitter<Node>();
     @Output() totalSearchResultCountChanged: EventEmitter<number> = new EventEmitter<number>();
-
-    readonly defaultAiTextWidgetNodeId: string = defaultAiTextWidgetNodeId;
-    readonly defaultCollectionChipsNodeId: string = defaultCollectionChipsNodeId;
-    readonly defaultMediaRenderingNodeId: string = defaultMediaRenderingNodeId;
-    readonly defaultTextWidgetNodeId: string = defaultTextWidgetNodeId;
-    readonly defaultTopicsColumnBrowserNodeId: string = defaultTopicsColumnBrowserNodeId;
-    readonly defaultUserConfigurableNodeId: string = defaultUserConfigurableNodeId;
 
     constructor() {}
 

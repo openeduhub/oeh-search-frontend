@@ -3,7 +3,6 @@
     <wlo-ai-text-widget
       [class]="widgetClasses ? widgetClasses : ''"
       [contextNodeId]="contextNodeId"
-      [defaultNodeId]="defaultAiTextWidgetNodeId"
       [editMode]="editMode"
       [gridIndex]="gridIndex"
       [nodeId]="widgetNodeId"
@@ -20,7 +19,6 @@
       [class]="widgetClasses ? widgetClasses : ''"
       [contextNodeId]="contextNodeId"
       [customUrl]="retrieveCustomUrl"
-      [defaultNodeId]="defaultCollectionChipsNodeId"
       [editMode]="editMode"
       [editModeIsInput]="true"
       [gridIndex]="gridIndex"
@@ -30,13 +28,37 @@
       [swimlaneIndex]="swimlaneIndex"
     ></wlo-collection-chips>
   </ng-container>
+  <ng-container *ngSwitchCase="'wlo-media-rendering'">
+    <wlo-media-rendering
+      class="media-rendering"
+      [contextNodeId]="contextNodeId"
+      [editMode]="editMode"
+      [gridIndex]="gridIndex"
+      [nodeId]="widgetNodeId"
+      [pageVariantNode]="pageVariantNode"
+      [swimlaneColor]="backgroundColor"
+      [swimlaneIndex]="swimlaneIndex"
+      (itemClickedEvent)="clickedItem($event)"
+    >
+    </wlo-media-rendering>
+  </ng-container>
+  <ng-container *ngSwitchCase="'wlo-text-widget'">
+    <wlo-text-widget
+      [class]="widgetClasses ? widgetClasses : ''"
+      [editMode]="editMode"
+      [gridIndex]="gridIndex"
+      [nodeId]="widgetNodeId"
+      [pageVariantNode]="pageVariantNode"
+      [swimlaneColor]="backgroundColor"
+      [swimlaneIndex]="swimlaneIndex"
+    ></wlo-text-widget>
+  </ng-container>
   <ng-container *ngSwitchCase="'wlo-topics-column-browser'">
     <wlo-topics-column-browser
       *ngIf="contextNodeId"
       [class]="widgetClasses ? widgetClasses : ''"
       [contextNodeId]="contextNodeId"
       [customUrl]="retrieveCustomUrl"
-      [defaultNodeId]="defaultTopicsColumnBrowserNodeId"
       [editMode]="editMode"
       [gridIndex]="gridIndex"
       [nodeId]="widgetNodeId"
@@ -46,24 +68,11 @@
       [height]="'400'"
     ></wlo-topics-column-browser>
   </ng-container>
-  <ng-container *ngSwitchCase="'wlo-text-widget'">
-    <wlo-text-widget
-      [class]="widgetClasses ? widgetClasses : ''"
-      [defaultNodeId]="defaultTextWidgetNodeId"
-      [editMode]="editMode"
-      [gridIndex]="gridIndex"
-      [nodeId]="widgetNodeId"
-      [pageVariantNode]="pageVariantNode"
-      [swimlaneColor]="backgroundColor"
-      [swimlaneIndex]="swimlaneIndex"
-    ></wlo-text-widget>
-  </ng-container>
   <ng-container *ngSwitchCase="'wlo-user-configurable'">
     <wlo-user-configurable
       class="user-configurable"
       [class]="widgetClasses ? widgetClasses : ''"
       [contextNodeId]="contextNodeId"
-      [defaultNodeId]="defaultUserConfigurableNodeId"
       [editMode]="editMode"
       [editModeIsInput]="true"
       [gridIndex]="gridIndex"
@@ -76,20 +85,5 @@
       (totalSearchResultCountChanged)="changeTotalSearchResultCount($event)"
     >
     </wlo-user-configurable>
-  </ng-container>
-  <ng-container *ngSwitchCase="'wlo-media-rendering'">
-    <wlo-media-rendering
-      class="media-rendering"
-      [contextNodeId]="contextNodeId"
-      [defaultNodeId]="defaultMediaRenderingNodeId"
-      [editMode]="editMode"
-      [gridIndex]="gridIndex"
-      [nodeId]="widgetNodeId"
-      [pageVariantNode]="pageVariantNode"
-      [swimlaneColor]="backgroundColor"
-      [swimlaneIndex]="swimlaneIndex"
-      (itemClickedEvent)="clickedItem($event)"
-    >
-    </wlo-media-rendering>
   </ng-container>
 </ng-container>

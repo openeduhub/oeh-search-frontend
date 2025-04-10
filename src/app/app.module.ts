@@ -56,8 +56,17 @@ import {
 } from 'ngx-edu-sharing-wlo-pages';
 import {
     cdnLink,
+    defaultAiTextWidgetNodeId,
+    defaultCollectionChipsNodeId,
+    defaultMediaRenderingNodeId,
+    defaultParentPageConfigNodeId,
+    defaultParentWidgetConfigNodeId,
+    defaultTextWidgetNodeId,
+    defaultTopicHeaderImageNodeId,
+    defaultTopicHeaderTextNodeId,
+    defaultTopicsColumnBrowserNodeId,
+    defaultUserConfigurableNodeId,
     eduSharingUrl,
-    parentWidgetConfigNodeId,
 } from './wlo-search/template/shared/custom-definitions';
 
 const wloSearchConfig: WloSearchConfig = {
@@ -171,7 +180,34 @@ const eduSharingApiModuleWithProviders = EduSharingApiModule.forRoot({
         // global configurations
         { provide: 'CDN_LINK', useValue: cdnLink },
         { provide: 'EDU_REPO_URL', useValue: eduSharingUrl },
-        { provide: 'PARENT_WIDGET_CONFIG_NODE_ID', useValue: parentWidgetConfigNodeId },
+        { provide: 'PARENT_PAGE_CONFIG_NODE_ID', useValue: defaultParentPageConfigNodeId },
+        { provide: 'PARENT_WIDGET_CONFIG_NODE_ID', useValue: defaultParentWidgetConfigNodeId },
+        { provide: 'DEFAULT_AI_TEXT_WIDGET_NODE_ID', useValue: defaultAiTextWidgetNodeId },
+        {
+            provide: 'DEFAULT_COLLECTION_CHIPS_WIDGET_NODE_ID',
+            useValue: defaultCollectionChipsNodeId,
+        },
+        {
+            provide: 'DEFAULT_MEDIA_RENDERING_WIDGET_NODE_ID',
+            useValue: defaultMediaRenderingNodeId,
+        },
+        { provide: 'DEFAULT_TEXT_WIDGET_NODE_ID', useValue: defaultTextWidgetNodeId },
+        {
+            provide: 'DEFAULT_TOPIC_HEADER_IMAGE_WIDGET_NODE_ID',
+            useValue: defaultTopicHeaderImageNodeId,
+        },
+        {
+            provide: 'DEFAULT_TOPIC_HEADER_TEXT_WIDGET_NODE_ID',
+            useValue: defaultTopicHeaderTextNodeId,
+        },
+        {
+            provide: 'DEFAULT_TOPICS_COLUMN_BROWSER_WIDGET_NODE_ID',
+            useValue: defaultTopicsColumnBrowserNodeId,
+        },
+        {
+            provide: 'DEFAULT_USER_CONFIGURABLE_WIDGET_NODE_ID',
+            useValue: defaultUserConfigurableNodeId,
+        },
         GlobalWidgetConfigService,
         eduSharingApiModuleWithProviders.providers,
         EduSharingUiModule.forRoot({
