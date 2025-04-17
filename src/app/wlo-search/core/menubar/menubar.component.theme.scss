@@ -116,15 +116,6 @@
                 outline: 1px dotted mat.get-theme-color($theme, primary);
             }
 
-            .site-header {
-                // TODO: Replace (border-bottom-color: #ececec;)
-                @if mat.get-theme-type($theme) == light {
-                    border-bottom-color: mat.get-theme-color($theme, neutral, 95);
-                } @else {
-                    border-bottom-color: mat.get-theme-color($theme, neutral, 0);
-                }
-            }
-
             @media print, screen and (max-width: 39.99875em) {
                 .site-header .top-bar {
                     @if mat.get-theme-type($theme) == light {

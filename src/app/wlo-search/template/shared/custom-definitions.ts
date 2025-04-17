@@ -17,6 +17,7 @@ export const defaultLrt: string = 'ccm:oeh_lrt';
 export const defaultMds: string = 'mds_oeh';
 
 export const defaultAiTextWidgetNodeId: string = '10d5ec39-907a-43f6-a024-344300e6a4c8';
+export const defaultBreadcrumbWidgetNodeId: string = '5fa2c8a5-aa05-4828-a2c8-a5aa05d8281f';
 export const defaultCollectionChipsNodeId: string = 'd43cfd0e-ce5a-4428-a3bb-2c37a155bf32';
 export const defaultMediaRenderingNodeId: string = '23919818-2e20-415c-9198-182e20415ce7';
 export const defaultTextWidgetNodeId: string = '34540708-5743-4259-9407-085743725957';

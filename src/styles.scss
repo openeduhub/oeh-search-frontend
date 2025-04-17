@@ -76,6 +76,10 @@ $material-icons-font-path: 'material-icons/iconfont/';
         --secondary-text: #{mat.get-theme-color($selected-theme, neutral, 99)};
         --tile-text: #f7f7f7;
     }
+
+    --neon-default: #{$neon-default};
+    --neon-medium: #{$neon-medium};
+
     // theming typography
     // note: using #{mat.get-theme-typography($selected-theme, body-medium)} did not worked,
     //       so the system variables are used

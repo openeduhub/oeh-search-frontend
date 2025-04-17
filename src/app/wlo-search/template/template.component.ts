@@ -20,6 +20,7 @@ import { MdsValue, MdsWidget, Node, NodeEntries } from 'ngx-edu-sharing-api';
 import { ParentEntries } from 'ngx-edu-sharing-api/lib/api/models/parent-entries';
 import { SpinnerComponent } from 'ngx-edu-sharing-ui';
 import {
+    BreadcrumbComponent,
     checkUserAccess,
     ColorChangeEvent,
     EditableTextComponent,
@@ -36,14 +37,13 @@ import {
 } from 'ngx-edu-sharing-wlo-pages';
 import { filter } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
+import { ConfigService } from '../core/config.service';
 import { SearchModule } from '../search/search.module';
 import { SharedModule } from '../shared/shared.module';
 import { AddSwimlaneBorderButtonComponent } from './add-swimlane-button/add-swimlane-border-button.component';
 import {
     actionItems,
     defaultMds,
-    defaultTopicHeaderImageNodeId,
-    defaultTopicHeaderTextNodeId,
     defaultTopicsColumnBrowserNodeId,
     initialTopicColor,
     ioType,
@@ -92,6 +92,7 @@ import { SwimlaneSettingsDialogComponent } from './swimlane/swimlane-settings-di
     standalone: true,
     imports: [
         AddSwimlaneBorderButtonComponent,
+        BreadcrumbComponent,
         EditableTextComponent,
         FilterBarComponent,
         FilterSwimlaneTypePipe,
@@ -121,6 +122,7 @@ export class TemplateComponent implements OnInit {
 
     constructor(
         private clipboard: Clipboard,
+        private config: ConfigService,
         private dialog: MatDialog,
         private globalTemplateConfigService: GlobalTemplateConfigService,
         private globalWidgetConfigService: GlobalWidgetConfigService,
@@ -155,9 +157,13 @@ export class TemplateComponent implements OnInit {
 
     collectionNode: Node;
     collectionNodeHasPageConfig: boolean = false;
+    convertedBreadcrumbNodeId: Signal<string> = computed((): string =>
+        convertNodeRefIntoNodeId(this.breadcrumbNodeId()),
+    );
     convertedHeaderNodeId: Signal<string> = computed((): string =>
         convertNodeRefIntoNodeId(this.headerNodeId()),
     );
+    breadcrumbNodeId: WritableSignal<string> = signal(null);
     headerNodeId: WritableSignal<string> = signal(null);
     private pageConfigNode: Node;
     pageConfigCheckFailed: WritableSignal<boolean> = signal(false);
@@ -251,7 +257,7 @@ export class TemplateComponent implements OnInit {
             // set the background to some random (but deterministic) color, just for visuals
             this.topicColor = getTopicColor(this.topic());
 
-            // retrieve the page config node and select the proper variant to define the headerNodeId + swimlanes
+            // retrieve the page config node and select the proper variant to define the breadcrumbNodeId, headerNodeId + swimlanes
             await this.retrievePageConfigAndSelectVariant(variantId);
 
             // initial load finished (page structure loaded)
@@ -331,6 +337,7 @@ export class TemplateComponent implements OnInit {
                 const swimlaneIndex: number = widgetNodeDetails?.swimlaneIndex ?? -1;
                 const gridIndex: number = widgetNodeDetails?.gridIndex ?? -1;
                 const widgetNodeId: string = widgetNodeDetails?.widgetNodeId ?? '';
+                const isBreadcrumbNode: boolean = widgetNodeDetails?.isBreadcrumbNode ?? false;
                 const isHeaderNode: boolean = widgetNodeDetails?.isHeaderNode ?? false;
 
                 const validWidgetNodeId: boolean = widgetNodeId && widgetNodeId !== '';
@@ -343,7 +350,11 @@ export class TemplateComponent implements OnInit {
                 const validInputs: boolean = validGridIndex && validSwimlaneIndex;
 
                 let addedSuccessfully: boolean = false;
-                if (validWidgetNodeId && validParentVariant && (validInputs || isHeaderNode)) {
+                if (
+                    validWidgetNodeId &&
+                    validParentVariant &&
+                    (validInputs || isBreadcrumbNode || isHeaderNode)
+                ) {
                     // convert widget node ID, if necessary
                     const convertedWidgetNodeId: string = prependWorkspacePrefix(widgetNodeId);
                     // if no page configuration exists yet, a config has to be created and a reload of the page is necessary
@@ -356,8 +367,19 @@ export class TemplateComponent implements OnInit {
                     // if no page node was created, the adding is not yet successfully, so updating is necessary
                     if (!addedSuccessfully) {
                         const pageVariant: PageVariantConfig = this.retrievePageVariant();
+                        // modify breadcrumb nodeId
+                        if (isBreadcrumbNode) {
+                            pageVariant.structure.breadcrumbNodeId = convertedWidgetNodeId;
+                            this.breadcrumbNodeId.set(pageVariant.structure.breadcrumbNodeId);
+                            await this.templateHelperService.setProperty(
+                                retrieveNodeId(this.pageVariantNode),
+                                pageVariantConfigType,
+                                JSON.stringify(pageVariant),
+                            );
+                            addedSuccessfully = true;
+                        }
                         // modify header nodeId
-                        if (isHeaderNode) {
+                        else if (isHeaderNode) {
                             pageVariant.structure.headerNodeId = convertedWidgetNodeId;
                             this.headerNodeId.set(pageVariant.structure.headerNodeId);
                             await this.templateHelperService.setProperty(
@@ -421,7 +443,7 @@ export class TemplateComponent implements OnInit {
 
     // PAGE CONFIG + VARIANT SPECIFIC FUNCTIONS
     /**
-     * Retrieves the page config node, selects the proper variant and defines the headerNodeId + swimlanes.
+     * Retrieves the page config node, selects the proper variant and defines the breadcrumbNodeId, headerNodeId + swimlanes.
      *
      * @param variantId
      */
@@ -512,7 +534,8 @@ export class TemplateComponent implements OnInit {
             if (!retrievePageConfigRef(this.collectionNode)) {
                 removeNodeIdsFromPageVariantConfig(pageVariant);
             }
-            // set the headerNodeId + swimlanes
+            // set the breadcrumbNodeId, headerNodeId + swimlanes
+            this.breadcrumbNodeId.set(pageVariant.structure.breadcrumbNodeId);
             this.headerNodeId.set(pageVariant.structure.headerNodeId);
             this.swimlanes = pageVariant.structure.swimlanes ?? [];
         }
@@ -607,7 +630,7 @@ export class TemplateComponent implements OnInit {
             queryParams: queryParamsToAddOrOverwrite,
             queryParamsHandling: 'merge',
         });
-        // retrieve the page config node and select the proper variant to define the headerNodeId + swimlanes
+        // retrieve the page config node and select the proper variant to define the breadcrumbNodeId, headerNodeId + swimlanes
         try {
             await this.retrievePageConfigAndSelectVariant(variantId);
         } catch (err) {
@@ -1188,6 +1211,7 @@ export class TemplateComponent implements OnInit {
             );
             // parse the page config ref again
             const pageVariant: PageVariantConfig = this.retrievePageVariant();
+            this.breadcrumbNodeId.set(pageVariant.structure.breadcrumbNodeId);
             this.headerNodeId.set(pageVariant.structure.headerNodeId);
             this.swimlanes = pageVariant.structure.swimlanes ?? [];
             // set ccm:page_config_ref in collection
@@ -1263,9 +1287,8 @@ export class TemplateComponent implements OnInit {
     }
 
     protected readonly defaultMds: string = defaultMds;
-    protected readonly defaultTopicHeaderImageNodeId: string = defaultTopicHeaderImageNodeId;
-    protected readonly defaultTopicHeaderTextNodeId: string = defaultTopicHeaderTextNodeId;
     protected readonly defaultTopicsColumnBrowserNodeId: string = defaultTopicsColumnBrowserNodeId;
     protected readonly profilingFilterbarDimensionKeys: string[] = profilingFilterbarDimensionKeys;
     protected readonly retrieveCustomUrl = retrieveCustomUrl;
+    protected readonly wordpressUrl: string = this.config.get().wordpressUrl;
 }

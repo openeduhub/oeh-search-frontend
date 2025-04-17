@@ -27,6 +27,28 @@
             }
         }
 
+        .breadcrumb-navbar-overflow-container {
+            @if mat.get-theme-type($theme) == light {
+                background: mat.get-theme-color($theme, neutral, 99);
+            } @else {
+                background: mat.get-theme-color($theme, neutral, 0);
+            }
+        }
+
+        .template-breadcrumb {
+            @if mat.get-theme-type($theme) == light {
+                background: mat.get-theme-color($theme, primary, 25);
+            } @else {
+                background: mat.get-theme-color($theme, primary);
+            }
+
+            a,
+            i,
+            p {
+                color: mat.get-theme-color($theme, on-primary) !important;
+            }
+        }
+
         .template-header-container,
         .portal-wrapper-left {
             background: mat.get-theme-color($theme, surface);

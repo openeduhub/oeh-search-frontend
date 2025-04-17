@@ -39,6 +39,37 @@ wlo-editable-text {
     width: 100%;
 }
 
+// additional container for visually overflowing the navbar
+.breadcrumb-navbar-overflow-container {
+    width: 100%;
+    height: 18px;
+}
+
+// styles for the topic breadcrumb
+.template-breadcrumb {
+    padding-right: calc(var(--offcanvas-menu-width) + var(--offcanvas-offset));
+    box-sizing: border-box;
+    width: 100%;
+    position: sticky;
+    top: 0;
+    // overflow contents such as the image of the navbar or the AI labels
+    z-index: 12;
+
+    &.reserve-space-left {
+        padding-left: calc(var(--offcanvas-menu-width) + var(--offcanvas-offset));
+    }
+
+    .template-breadcrumb-wrapper {
+        margin: 0 auto;
+        display: flex;
+        justify-content: flex-start;
+        position: relative;
+        box-sizing: border-box;
+        max-width: var(--maximal-width);
+        transition: 0.3s;
+    }
+}
+
 // styles for the topic header
 .template-header {
     padding: 32px calc(var(--offcanvas-menu-width) + var(--offcanvas-offset)) 32px

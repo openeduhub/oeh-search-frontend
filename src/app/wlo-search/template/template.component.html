@@ -7,30 +7,46 @@
   <es-spinner *ngIf="!initialLoadSuccessfully()"></es-spinner>
 </div>
 <ng-container *ngIf="!pageConfigCheckFailed(); else pageConfigCheckFailedMessage">
-  <!-- TOPIC HERO HEADER -->
-  <!-- wait until the initial load is successfully to retrieve the correct nodeID for the header -->
-  <header
-    *ngIf="initialLoadSuccessfully()"
-    class="template-header"
-    [class.extra-padding-bottom]="
-      (swimlanes | filterSwimlaneType: 'anchor':anchorTrigger)?.length > 0
-    "
-    [class.view-mode]="!editMode"
-    [class.reserve-space-left]="userHasEditRights()"
-  >
-    <div class="template-header-wrapper">
-      <div class="template-header-container">
-        <wlo-topic-header
-          [collectionNode]="collectionNode"
+  <ng-container *ngIf="initialLoadSuccessfully()">
+    <!-- WORKAROUND FOR VISUAL NAVBAR OVERFLOW -->
+    <div class="breadcrumb-navbar-overflow-container"></div>
+    <!-- BREADCRUMBS -->
+    <div class="template-breadcrumb" [class.reserve-space-left]="userHasEditRights()">
+      <div class="template-breadcrumb-wrapper">
+        <wlo-breadcrumb
           [contextNodeId]="topicCollectionID()"
+          [customUrl]="retrieveCustomUrl"
           [editMode]="editMode"
-          [nodeId]="convertedHeaderNodeId()"
+          [nodeId]="convertedBreadcrumbNodeId()"
           [pageVariantNode]="pageVariantNode"
-          [topic]="topic()"
-        ></wlo-topic-header>
+          [rootLink]="wordpressUrl + '/fachportale'"
+        ></wlo-breadcrumb>
       </div>
     </div>
-  </header>
+    <!-- TOPIC HERO HEADER -->
+    <!-- wait until the initial load is successfully to retrieve the correct nodeID for the header -->
+    <div
+      class="template-header"
+      [class.extra-padding-bottom]="
+        (swimlanes | filterSwimlaneType: 'anchor':anchorTrigger)?.length > 0
+      "
+      [class.view-mode]="!editMode"
+      [class.reserve-space-left]="userHasEditRights()"
+    >
+      <div class="template-header-wrapper">
+        <div class="template-header-container">
+          <wlo-topic-header
+            [collectionNode]="collectionNode"
+            [contextNodeId]="topicCollectionID()"
+            [editMode]="editMode"
+            [nodeId]="convertedHeaderNodeId()"
+            [pageVariantNode]="pageVariantNode"
+            [topic]="topic()"
+          ></wlo-topic-header>
+        </div>
+      </div>
+    </div>
+  </ng-container>
 
   <!-- LEFT SIDE MENU WITH ACTION BUTTONS -->
   <wlo-side-menu-wrapper position="left" *ngIf="userHasEditRights()">

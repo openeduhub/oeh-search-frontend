@@ -57,6 +57,7 @@ import {
 import {
     cdnLink,
     defaultAiTextWidgetNodeId,
+    defaultBreadcrumbWidgetNodeId,
     defaultCollectionChipsNodeId,
     defaultMediaRenderingNodeId,
     defaultParentPageConfigNodeId,
@@ -183,6 +184,7 @@ const eduSharingApiModuleWithProviders = EduSharingApiModule.forRoot({
         { provide: 'PARENT_PAGE_CONFIG_NODE_ID', useValue: defaultParentPageConfigNodeId },
         { provide: 'PARENT_WIDGET_CONFIG_NODE_ID', useValue: defaultParentWidgetConfigNodeId },
         { provide: 'DEFAULT_AI_TEXT_WIDGET_NODE_ID', useValue: defaultAiTextWidgetNodeId },
+        { provide: 'DEFAULT_BREADCRUMB_WIDGET_NODE_ID', useValue: defaultBreadcrumbWidgetNodeId },
         {
             provide: 'DEFAULT_COLLECTION_CHIPS_WIDGET_NODE_ID',
             useValue: defaultCollectionChipsNodeId,

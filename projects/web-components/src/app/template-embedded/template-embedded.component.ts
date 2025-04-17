@@ -13,6 +13,7 @@ export class TemplateEmbeddedComponent implements OnInit {
     // global template + widget configuration
     @Input() cdnLink?: string;
     @Input() defaultAiTextWidgetNodeId?: string;
+    @Input() defaultBreadcrumbWidgetNodeId?: string;
     @Input() defaultCollectionChipsWidgetNodeId?: string;
     @Input() defaultMediaRenderingWidgetNodeId?: string;
     @Input() defaultTextWidgetNodeId?: string;
@@ -43,6 +44,10 @@ export class TemplateEmbeddedComponent implements OnInit {
         if (this.defaultAiTextWidgetNodeId) {
             this.globalWidgetConfigService.defaultAiTextWidgetNodeId =
                 this.defaultAiTextWidgetNodeId;
+        }
+        if (this.defaultBreadcrumbWidgetNodeId) {
+            this.globalWidgetConfigService.defaultBreadcrumbWidgetNodeId =
+                this.defaultBreadcrumbWidgetNodeId;
         }
         if (this.defaultCollectionChipsWidgetNodeId) {
             this.globalWidgetConfigService.defaultCollectionChipsWidgetNodeId =
