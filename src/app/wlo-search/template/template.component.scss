@@ -97,7 +97,9 @@ wlo-editable-text {
     .template-header-wrapper {
         margin: 0 auto;
         display: flex;
+        flex-direction: column;
         justify-content: flex-start;
+        gap: 24px;
         position: relative;
         box-sizing: border-box;
         max-width: var(--maximal-width);
@@ -112,6 +114,12 @@ wlo-editable-text {
             border-radius: var(--border-radius);
             // use overflow hidden to prevent children from overflowing areas hidden by border-radius
             overflow: hidden;
+        }
+
+        .template-search-container {
+            h2 {
+                text-align: center;
+            }
         }
     }
 }

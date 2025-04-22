@@ -28,6 +28,7 @@ export const defaultUserConfigurableNodeId: string = '89653b20-516c-43a2-9042-38
 
 export const defaultParentPageConfigNodeId: string = '25e341e1-7058-4210-b0d3-838255884682';
 export const defaultParentWidgetConfigNodeId: string = '80bb0eab-d64f-466b-94c6-2eccc4045c6b';
+export const disciplineKey: string = 'ccm:taxonid';
 
 export const eduSharingUrl: string = 'https://repository.staging.openeduhub.net/edu-sharing/';
 

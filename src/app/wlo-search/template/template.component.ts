@@ -26,6 +26,7 @@ import {
     EditableTextComponent,
     FilterBarComponent,
     GlobalWidgetConfigService,
+    SearchWidgetComponent,
     SideMenuItemComponent,
     SideMenuWrapperComponent,
     StatisticChart,
@@ -38,6 +39,7 @@ import {
 import { filter } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
 import { ConfigService } from '../core/config.service';
+import { Filters } from '../core/edu-sharing.service';
 import { SearchModule } from '../search/search.module';
 import { SharedModule } from '../shared/shared.module';
 import { AddSwimlaneBorderButtonComponent } from './add-swimlane-button/add-swimlane-border-button.component';
@@ -45,6 +47,7 @@ import {
     actionItems,
     defaultMds,
     defaultTopicsColumnBrowserNodeId,
+    disciplineKey,
     initialTopicColor,
     ioType,
     mapType,
@@ -97,6 +100,7 @@ import { SwimlaneSettingsDialogComponent } from './swimlane/swimlane-settings-di
         FilterBarComponent,
         FilterSwimlaneTypePipe,
         SearchModule,
+        SearchWidgetComponent,
         SharedModule,
         SideMenuItemComponent,
         SideMenuWrapperComponent,
@@ -1095,6 +1099,29 @@ export class TemplateComponent implements OnInit {
                 accordion.open();
             });
         }
+    }
+
+    /**
+     * Called by wlo-search-widget searchTermChanged output event.
+     * Opens a new tab with the search results of a given search term and discipline filter of the current collection.
+     *
+     * @param searchString
+     */
+    searchTermChanged(searchString: any): void {
+        const filters: Filters = {};
+        filters.discipline = this.collectionNode.properties[disciplineKey] ?? [];
+        // reference for opening in new tab: https://stackoverflow.com/a/57631718
+        const url: string = this.router.serializeUrl(
+            this.router.createUrlTree([this.config.get().routerPath + '/search'], {
+                queryParams: {
+                    q: searchString,
+                    filters:
+                        Object.entries(filters).length > 0 ? JSON.stringify(filters) : undefined,
+                    pageIndex: undefined,
+                },
+            }),
+        );
+        window.open(url, '_blank');
     }
 
     // HELPER FUNCTIONS

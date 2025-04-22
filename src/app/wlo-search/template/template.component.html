@@ -44,6 +44,10 @@
             [topic]="topic()"
           ></wlo-topic-header>
         </div>
+        <div class="template-search-container">
+          <h2>Im Fachgebiet der Themenseite suchen</h2>
+          <wlo-search-widget (searchTermChanged)="searchTermChanged($event)"></wlo-search-widget>
+        </div>
       </div>
     </div>
   </ng-container>
@@ -164,6 +168,7 @@
         [class.extra-padding-top]="anchorSwimlanes.length > 0 && editMode"
         *ngVar="(swimlanes | filterSwimlaneType: 'anchor':anchorTrigger) ?? [] as anchorSwimlanes"
       >
+        <!-- ANCHOR MENU -->
         <ng-container *ngIf="anchorSwimlanes.length > 0">
           <div class="anchor-container" [class.edit-mode]="editMode">
             <div class="anchor-menu">

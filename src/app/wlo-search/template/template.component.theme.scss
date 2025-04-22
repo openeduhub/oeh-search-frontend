@@ -49,6 +49,10 @@
             }
         }
 
+        .template-search-container h2 {
+            color: mat.get-theme-color($theme, on-primary);
+        }
+
         .template-header-container,
         .portal-wrapper-left {
             background: mat.get-theme-color($theme, surface);
