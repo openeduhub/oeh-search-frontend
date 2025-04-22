@@ -1111,8 +1111,9 @@ export class TemplateComponent implements OnInit {
         const filters: Filters = {};
         filters.discipline = this.collectionNode.properties[disciplineKey] ?? [];
         // reference for opening in new tab: https://stackoverflow.com/a/57631718
+        // note: use base router path instead of /search, as /search is missing the i18n path
         const url: string = this.router.serializeUrl(
-            this.router.createUrlTree([this.config.get().routerPath + '/search'], {
+            this.router.createUrlTree([this.config.get().routerPath], {
                 queryParams: {
                     q: searchString,
                     filters:
