@@ -17,10 +17,18 @@ import { Swimlane } from '../types/swimlane';
  */
 export const retrieveSearchUrl = (): string => {
     // take into account potential sub-paths, e.g., due to language switch
-    const pathNameArray: string[] = window.location.pathname.split('/');
-    // example pathNameArray = [ "", "de", "template" ]
-    const suffix: string =
-        pathNameArray.length > 2 && pathNameArray[1] !== '' ? '/' + pathNameArray[1] : '';
+    // example pathname: /search/de/template
+    const pathNameArray: string[] = window.location.pathname.split('/').filter((p) => p !== '');
+    // remove last element, i.e., the current path
+    if (pathNameArray.length > 0) {
+        pathNameArray.pop();
+    }
+    // join the remaining suffix
+    let suffix: string = '';
+    if (pathNameArray.length > 0) {
+        suffix += '/' + pathNameArray.join('/');
+    }
+    // return the combined search URL
     return window.location.origin + suffix + '/search';
 };
 
