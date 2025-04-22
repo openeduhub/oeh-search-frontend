@@ -1112,15 +1112,21 @@ export class TemplateComponent implements OnInit {
         filters.discipline = this.collectionNode.properties[disciplineKey] ?? [];
         // reference for opening in new tab: https://stackoverflow.com/a/57631718
         // note: use base router path instead of /search, as /search is missing the i18n path
+        console.log('searchTermChanged', this.config.get().routerPath, this.config.get());
         const url: string = this.router.serializeUrl(
-            this.router.createUrlTree([this.config.get().routerPath], {
-                queryParams: {
-                    q: searchString,
-                    filters:
-                        Object.entries(filters).length > 0 ? JSON.stringify(filters) : undefined,
-                    pageIndex: undefined,
+            this.router.createUrlTree(
+                [this.config.get().routerPath + '/search/' + this.config.get().language],
+                {
+                    queryParams: {
+                        q: searchString,
+                        filters:
+                            Object.entries(filters).length > 0
+                                ? JSON.stringify(filters)
+                                : undefined,
+                        pageIndex: undefined,
+                    },
                 },
-            }),
+            ),
         );
         window.open(url, '_blank');
     }
