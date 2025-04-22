@@ -449,7 +449,7 @@ export class TemplateComponent implements OnInit {
      */
     private async retrievePageConfigAndSelectVariant(variantId?: string): Promise<void> {
         // idea: if "collectionNode" already has a page config, there is no need to search further
-        if (this.collectionNode.properties['ccm:page_config']) {
+        if (this.collectionNode.properties[pageConfigType]) {
             this.pageConfigNode = this.collectionNode;
             this.collectionNodeHasPageConfig = true;
         }
