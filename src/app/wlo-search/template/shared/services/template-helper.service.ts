@@ -16,7 +16,14 @@ import { ParentEntries } from 'ngx-edu-sharing-api/lib/api/models/parent-entries
 import { firstValueFrom } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
 import { ViewService } from '../../../core/view.service';
-import { initialLocaleString, widgetConfigAspect } from '../custom-definitions';
+import {
+    initialLocaleString,
+    pageVariantConfigType,
+    widgetConfigAspect,
+} from '../custom-definitions';
+import { PageVariantConfig } from '../types/page-variant-config';
+import { Swimlane } from '../types/swimlane';
+import { GridTile } from '../types/grid-tile';
 
 @Injectable({
     providedIn: 'root',
@@ -109,6 +116,17 @@ export class TemplateHelperService {
      * Helper function to set a property to an existing node.
      */
     async setProperty(nodeId: string, propertyName: string, value: string): Promise<Node> {
+        // workaround to remove temporary properties from the page variant config
+        if (propertyName === pageVariantConfigType) {
+            const blacklistedProperties: string[] = ['searchCount', 'statistics'];
+            const parsedValue: PageVariantConfig = JSON.parse(value);
+            parsedValue.structure?.swimlanes?.forEach((swimlane: Swimlane): void => {
+                swimlane.grid?.forEach((gridItem: GridTile): void => {
+                    blacklistedProperties.forEach((prop) => delete gridItem[prop]);
+                });
+            });
+            value = JSON.stringify(parsedValue);
+        }
         return firstValueFrom(this.nodeApi.setProperty('-home-', nodeId, propertyName, [value]));
     }
 

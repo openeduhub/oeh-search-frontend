@@ -12,8 +12,6 @@ export const cdnLink: string =
 
 export const defaultIconPath: string = 'assets/wlo-search/icons/';
 
-export const defaultLrt: string = 'ccm:oeh_lrt';
-
 export const defaultMds: string = 'mds_oeh';
 
 export const defaultAiTextWidgetNodeId: string = '10d5ec39-907a-43f6-a024-344300e6a4c8';
@@ -40,38 +38,40 @@ export const ioType: string = 'ccm:io';
 
 export const lrtBaseUrl: string =
     'https://vocabs.openeduhub.de/w3id.org/openeduhub/vocabs/new_lrt/';
+export const additionalLrtUrl: string =
+    'https://vocabs.openeduhub.de/w3id.org/openeduhub/vocabs/oehMetadatasets/';
 
-export const lrtIdsEvents: string[] = [
+export const lrtIdsWork: string[] = [];
+export const lrtIdsEducationalOffer: string[] = [
     '03ab835b-c39c-48d1-b5af-7611de2f6464', // educational offer vocab
+];
+export const lrtIdsEvents: string[] = [
     '955590ae-5f06-4513-98e9-91dfa8d5a05e', // event meeting vocab
 ];
-
-export const lrtIdsLessonPlanning: string[] = [
-    '7381f17f-50a6-4ce1-b3a0-9d85a482eec0', // methods vocab
-    '0a79a1d0-583b-47ce-86a7-517ab352d796', // lesson planning vocab
+export const lrtIdsMaterials: string[] = [
+    '1846d876-d8fd-476a-b540-b8ffd713fedb', // materials vocab
 ];
-
-export const lrtIdsMedia: string[] = [
-    'a6d1ac52-c557-4151-bc6f-0d99b0b96fb9', // images vocab
-    '7a6e9608-2554-4981-95dc-47ab9ba924de', // video vocab
-    'ec2682af-08a9-4ab1-a324-9dca5151e99f', // audio vocab
-    '4665caac-99d7-4da3-b9fb-498d8ece034f', // interactive vocab
-];
-
-export const lrtIdsPracticeMaterials: string[] = [
-    'cd625d33-5d7b-4a86-a54a-9a897ded729f', // questionnaire vocab
-    '588efe4f-976f-48eb-84aa-8bcb45679f85', // learning materials vocab
-];
-
 export const lrtIdsSources: string[] = [
     '3869b453-d3c1-4b34-8f25-9127e9d68766', // sources vocab
 ];
-
+export const lrtIdsOrganizations: string[] = [
+    '9aedab42-062c-4e11-aba4-f9accb1a9e9a', // organisations vocab
+];
+export const lrtIdsPeople: string[] = [
+    'a59b2fb1-f22f-4521-a4ec-e2a101dce473', // people vocab
+];
 export const lrtIdsTools: string[] = [
     'cefccf75-cba3-427d-9a0f-35b4fedcbba1', // tools vocab
 ];
+export const lrtIdsPrompts: string[] = [];
+export const lrtIdsFieldsOfAction: string[] = [];
+export const lrtIdsDidacticConcepts: string[] = [
+    '0a79a1d0-583b-47ce-86a7-517ab352d796', // methods vocab
+    '7381f17f-50a6-4ce1-b3a0-9d85a482eec0', // material lesson planning
+];
 
 export const mapType: string = 'ccm:map';
+export const maxNumberOfStatisticItems: number = 8;
 
 export const menuItems = {
     feedback: 'Feedback',
@@ -79,10 +79,6 @@ export const menuItems = {
     statistics: 'Statistiken',
     topicTree: 'Themenbaum',
 };
-
-export const nodeLicenseKey: string = 'ccm:commonlicense_key';
-
-export const oerLicenses: string[] = ['CC_0', 'CC_BY', 'CC_BY_SA', 'PDM'];
 
 export const pageConfigAspect: string = 'ccm:page';
 
@@ -130,12 +126,17 @@ export const retrieveCustomUrl = (node: Node): string => {
 
 // TODO: find better option for line breaks than <br>
 export const statistics: StatisticChart[] = [
-    new StatisticChart('Medien', 'collections', lrtIdsMedia),
-    new StatisticChart('Unterrichts<br>planung', 'import_contacts', lrtIdsLessonPlanning),
-    new StatisticChart('Praxis<br>materialien', 'sentiment_satisfied_alt', lrtIdsPracticeMaterials),
+    new StatisticChart('Berufe', 'work', lrtIdsWork),
+    new StatisticChart('Bildungs-<br>angebote', 'school', lrtIdsEducationalOffer),
+    new StatisticChart('Veranstaltungen', 'theater_comedy', lrtIdsEvents),
+    new StatisticChart('Materialien', 'menu_book', lrtIdsMaterials),
     new StatisticChart('Quellen', 'language', lrtIdsSources),
+    new StatisticChart('Organisa-<br>tionen', 'domain', lrtIdsOrganizations, additionalLrtUrl),
+    new StatisticChart('Personen', 'group', lrtIdsPeople, additionalLrtUrl),
     new StatisticChart('Tools', 'home_repair_service', lrtIdsTools),
-    new StatisticChart('Bildungs<br>angebote', 'school', lrtIdsEvents),
+    new StatisticChart('Prompts', 'terminal', lrtIdsPrompts),
+    new StatisticChart('Handlungs-<br>felder', 'interests', lrtIdsFieldsOfAction),
+    new StatisticChart('Didaktische<br>Konzepte', 'lightbulb', lrtIdsDidacticConcepts),
 ];
 
 export const swimlaneGridOptions: SelectOption[] = [

@@ -39,6 +39,7 @@
       [swimlaneColor]="backgroundColor"
       [swimlaneIndex]="swimlaneIndex"
       (itemClickedEvent)="clickedItem($event)"
+      (nodeStatisticsChanged)="changeNodeStatistics($event)"
     >
     </wlo-media-rendering>
   </ng-container>
@@ -82,6 +83,7 @@
       [swimlaneColor]="backgroundColor"
       [swimlaneIndex]="swimlaneIndex"
       (itemClickedEvent)="clickedItem($event)"
+      (nodeStatisticsChanged)="changeNodeStatistics($event)"
       (totalSearchResultCountChanged)="changeTotalSearchResultCount($event)"
     >
     </wlo-user-configurable>

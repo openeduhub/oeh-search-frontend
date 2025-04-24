@@ -8,9 +8,11 @@ import {
     Output,
 } from '@angular/core';
 import { MdsValue, MdsWidget, Node, NodeEntries } from 'ngx-edu-sharing-api';
+import { StatisticNode } from 'ngx-edu-sharing-wlo-pages';
 import { SharedModule } from '../../shared/shared.module';
 import { widgetTypeOptions, workspaceSpacesStorePrefix } from '../shared/custom-definitions';
 import { GridSearchCount } from '../shared/types/grid-search-count';
+import { GridTileToStatisticsMapping } from '../shared/types/grid-tile-to-statistics-mapping';
 import { GridTile } from '../shared/types/grid-tile';
 import { SelectOption } from '../shared/types/select-option';
 import { ConfigureGridDialogComponent } from './configure-grid-dialog/configure-grid-dialog.component';
@@ -42,6 +44,8 @@ export class SwimlaneComponent implements AfterViewChecked {
     @Input() topicWidgets: NodeEntries;
     @Output() gridUpdated: EventEmitter<GridTile[]> = new EventEmitter<GridTile[]>();
     @Output() nodeClicked: EventEmitter<Node> = new EventEmitter<Node>();
+    @Output() nodeStatisticsChanged: EventEmitter<GridTileToStatisticsMapping> =
+        new EventEmitter<GridTileToStatisticsMapping>();
     @Output() totalSearchResultCountChanged: EventEmitter<GridSearchCount> =
         new EventEmitter<GridSearchCount>();
 
@@ -75,6 +79,17 @@ export class SwimlaneComponent implements AfterViewChecked {
      */
     clickedNode(node: Node): void {
         this.nodeClicked.emit(node);
+    }
+
+    /**
+     * Called by app-grid-widget nodeStatisticsChanged output event.
+     * Emits the statistics.
+     *
+     * @param statistics
+     * @param gridIndex
+     */
+    changeNodeStatistics(statistics: StatisticNode[], gridIndex: number): void {
+        this.nodeStatisticsChanged.emit({ statistics, gridIndex });
     }
 
     /**

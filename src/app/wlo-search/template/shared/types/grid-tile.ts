@@ -1,3 +1,5 @@
+import { StatisticNode } from 'ngx-edu-sharing-wlo-pages';
+
 export class GridTile {
     item?: string;
     classNames?: string;
@@ -5,6 +7,7 @@ export class GridTile {
     rows: number;
     nodeId?: string;
     searchCount?: number;
+    statistics?: StatisticNode[];
 
     constructor(cols: number, rows: number) {
         this.cols = cols;

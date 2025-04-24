@@ -148,10 +148,12 @@
       <ng-container *ngIf="selectedMenuItem === menuItems.statistics">
         <h2 class="side-menu-header mat-display-small">Inhalte von {{ topic() }}</h2>
         <wlo-statistics-summary
-          *ngIf="statisticsLoaded(); else loadingIndicator"
+          *ngIf="statisticsInitiallyLoaded(); else loadingIndicator"
+          [maxNumberOfStatisticItems]="maxNumberOfStatisticItems"
           [searchResultCount]="searchResultCount"
           [searchUrl]="searchUrl"
           [statistics]="statistics"
+          [taxonIds]="collectionTaxonIds"
           [topic]="topic()"
         ></wlo-statistics-summary>
       </ng-container>
@@ -302,6 +304,7 @@
                       [topicWidgets]="topicWidgets"
                       (gridUpdated)="handleGridUpdate($event, i)"
                       (nodeClicked)="handleNodeChange($event)"
+                      (nodeStatisticsChanged)="updateStatistics($event, i)"
                       (totalSearchResultCountChanged)="updateGridItemSearchCount($event, i)"
                     ></app-swimlane>
                   </div>
@@ -329,6 +332,7 @@
                   [topicWidgets]="topicWidgets"
                   (gridUpdated)="handleGridUpdate($event, i)"
                   (nodeClicked)="handleNodeChange($event)"
+                  (nodeStatisticsChanged)="updateStatistics($event, i)"
                   (totalSearchResultCountChanged)="updateGridItemSearchCount($event, i)"
                 ></app-swimlane>
               </div>

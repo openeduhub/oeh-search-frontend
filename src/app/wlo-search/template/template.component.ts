@@ -6,6 +6,7 @@ import {
     computed,
     HostBinding,
     Input,
+    OnDestroy,
     OnInit,
     QueryList,
     Signal,
@@ -37,7 +38,8 @@ import {
     WidgetNodeAddedEvent,
 } from 'ngx-edu-sharing-wlo-pages';
 import * as qs from 'qs';
-import { filter } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { debounceTime, filter } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
 import { ConfigService } from '../core/config.service';
 import { Filters } from '../core/edu-sharing.service';
@@ -52,6 +54,7 @@ import {
     initialTopicColor,
     ioType,
     mapType,
+    maxNumberOfStatisticItems,
     menuItems,
     pageConfigRefType,
     pageConfigType,
@@ -70,6 +73,7 @@ import { SwimlaneSearchCountPipe } from './shared/pipes/swimlane-search-count.pi
 import { GlobalTemplateConfigService } from './shared/services/global-template-config.service';
 import { StatisticsHelperService } from './shared/services/statistics-helper.service';
 import { TemplateHelperService } from './shared/services/template-helper.service';
+import { GridTileToStatisticsMapping } from './shared/types/grid-tile-to-statistics-mapping';
 import { GridSearchCount } from './shared/types/grid-search-count';
 import { GridTile } from './shared/types/grid-tile';
 import { PageConfig } from './shared/types/page-config';
@@ -118,7 +122,7 @@ import { SwimlaneSettingsDialogComponent } from './swimlane/swimlane-settings-di
     templateUrl: './template.component.html',
     styleUrls: ['./template.component.scss'],
 })
-export class TemplateComponent implements OnInit {
+export class TemplateComponent implements OnDestroy, OnInit {
     private readonly CONFIRM_CREATE_PAGE_VARIANT: string =
         'Wollen Sie wirklich auf Grundlage der Seiten-Struktur der aktuell gewählten Variante eine neue Seiten-Variante erstellen?';
     private readonly PAGE_VARIANT_CREATION_STARTED: string =
@@ -162,6 +166,7 @@ export class TemplateComponent implements OnInit {
 
     collectionNode: Node;
     collectionNodeHasPageConfig: boolean = false;
+    collectionTaxonIds: string[];
     convertedBreadcrumbNodeId: Signal<string> = computed((): string =>
         convertNodeRefIntoNodeId(this.breadcrumbNodeId()),
     );
@@ -196,11 +201,14 @@ export class TemplateComponent implements OnInit {
     menuItems = menuItems;
 
     // statistics related variables
+    maxNumberOfStatisticItems: number = maxNumberOfStatisticItems;
     searchResultCount: number = 0;
     searchCountTrigger: number = 1;
     searchUrl: string = '';
     statistics: StatisticChart[] = statistics;
-    statisticsLoaded: WritableSignal<boolean> = signal(false);
+    statisticsInitiallyLoaded: WritableSignal<boolean> = signal(false);
+    private updateStatisticsSubject: Subject<void> = new Subject<void>();
+    private updateStatisticsDueTime: number = 1000;
 
     /**
      * Returns an array of IDs of the currently selected dimension values (output by wlo-filter-bar).
@@ -239,6 +247,13 @@ export class TemplateComponent implements OnInit {
     }
 
     /**
+     * On destroy, complete the statistics subject.
+     */
+    ngOnDestroy(): void {
+        this.updateStatisticsSubject.complete();
+    }
+
+    /**
      * Initializes the component with an optionally given variant ID.
      *
      * @param variantId
@@ -252,7 +267,22 @@ export class TemplateComponent implements OnInit {
             this.collectionNode = await this.templateHelperService.getNode(
                 this.topicCollectionID(),
             );
+            this.collectionTaxonIds = this.collectionNode.properties[disciplineKey] ?? [];
             this.topic.set(this.collectionNode.title ?? 'No topic defined');
+            // update statistics action
+            this.updateStatisticsSubject
+                .pipe(debounceTime(this.updateStatisticsDueTime))
+                .subscribe(async (): Promise<void> => {
+                    this.searchResultCount = await this.statisticsHelperService.updateStatistics(
+                        this.topic(),
+                        this.collectionTaxonIds,
+                        this.statistics,
+                        this.swimlanes,
+                    );
+                    // this is necessary to trigger the change detection of the statistics input
+                    this.statistics = this.statistics.slice();
+                    this.statisticsInitiallyLoaded.set(true);
+                });
             // check the user privileges for the collection node and initialize custom listeners
             this.userHasEditRights.set(checkUserAccess(this.collectionNode));
             if (this.userHasEditRights()) {
@@ -271,14 +301,6 @@ export class TemplateComponent implements OnInit {
             // listen to fragment changes to scroll given swimlane ID into view
             // note: setTimeout is necessary for view being loaded first
             this.initializeFragmentListener();
-
-            // post-load the statistics
-            this.searchResultCount = await this.statisticsHelperService.postLoadStatistics(
-                this.topicCollectionID(),
-                this.topic(),
-                this.statistics,
-            );
-            this.statisticsLoaded.set(true);
         } catch (err) {
             console.error(err);
             this.templateHelperService.displayErrorToast();
@@ -955,13 +977,25 @@ export class TemplateComponent implements OnInit {
     }
 
     /**
-     * Called by app-swimlane nodeClicked output event.
+     * Called by app-swimlane nodeStatisticsChanged output event.
+     *
+     * @param event
+     * @param swimlaneIndex
+     */
+    updateStatistics(event: GridTileToStatisticsMapping, swimlaneIndex: number): void {
+        // update the lrtMap of the grid tile
+        this.swimlanes[swimlaneIndex].grid[event.gridIndex].statistics = event.statistics;
+        // trigger update
+        this.updateStatisticsSubject.next();
+    }
+
+    /**
+     * Called by app-swimlane totalSearchResultCountChanged output event.
      *
      * @param event
      * @param swimlaneIndex
      */
     updateGridItemSearchCount(event: GridSearchCount, swimlaneIndex: number): void {
-        console.log('updateGridItemSearchCount', event);
         this.swimlanes[swimlaneIndex].grid[event.gridIndex].searchCount = event.count;
         this.searchCountTrigger++;
     }
@@ -1110,7 +1144,7 @@ export class TemplateComponent implements OnInit {
      */
     searchTermChanged(searchString: string): void {
         const filters: Filters = {};
-        filters.discipline = this.collectionNode.properties[disciplineKey] ?? [];
+        filters.discipline = this.collectionTaxonIds;
         const params = {
             q: searchString,
             filters: JSON.stringify(filters),

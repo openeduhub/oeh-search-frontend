@@ -5,6 +5,7 @@ import {
     CollectionChipsComponent,
     MediaRenderingComponent,
     TextWidgetComponent,
+    StatisticNode,
     TopicsColumnBrowserComponent,
     UserConfigurableComponent,
 } from 'ngx-edu-sharing-wlo-pages';
@@ -40,6 +41,9 @@ export class GridWidgetComponent {
     @Input() widgetNodeId: string;
     @Input() widgetType: string;
     @Output() nodeClicked: EventEmitter<Node> = new EventEmitter<Node>();
+    @Output() nodeStatisticsChanged: EventEmitter<StatisticNode[]> = new EventEmitter<
+        StatisticNode[]
+    >();
     @Output() totalSearchResultCountChanged: EventEmitter<number> = new EventEmitter<number>();
 
     constructor() {}
@@ -70,5 +74,15 @@ export class GridWidgetComponent {
      */
     changeTotalSearchResultCount(count: number): void {
         this.totalSearchResultCountChanged.emit(count);
+    }
+
+    /**
+     * Called by wlo-media-rendering and wlo-user-configurable nodeStatisticsChanged output event.
+     * Emits the statistics.
+     *
+     * @param statistics
+     */
+    changeNodeStatistics(statistics: StatisticNode[]): void {
+        this.nodeStatisticsChanged.emit(statistics);
     }
 }
