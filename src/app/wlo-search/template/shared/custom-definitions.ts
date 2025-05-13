@@ -14,18 +14,24 @@ export const defaultIconPath: string = 'assets/wlo-search/icons/';
 
 export const defaultMds: string = 'mds_oeh';
 
-export const defaultAiTextWidgetNodeId: string = '10d5ec39-907a-43f6-a024-344300e6a4c8';
-export const defaultBreadcrumbWidgetNodeId: string = '5fa2c8a5-aa05-4828-a2c8-a5aa05d8281f';
-export const defaultCollectionChipsNodeId: string = 'd43cfd0e-ce5a-4428-a3bb-2c37a155bf32';
-export const defaultMediaRenderingNodeId: string = '23919818-2e20-415c-9198-182e20415ce7';
-export const defaultTextWidgetNodeId: string = '34540708-5743-4259-9407-085743725957';
-export const defaultTopicHeaderImageNodeId: string = 'f5e62bb7-6c84-4ede-a62b-b76c845ede88';
-export const defaultTopicHeaderTextNodeId: string = '2340e5cf-4e9d-4b42-b6df-e64087be7961';
-export const defaultTopicsColumnBrowserNodeId: string = '4f46b4cd-19df-4139-bbb1-bfc3aea08d39';
-export const defaultUserConfigurableNodeId: string = '89653b20-516c-43a2-9042-382aef5ae087';
+export const defaultAiConfigNodeId: string = '33a7ad8d-f6e8-4513-a7ad-8df6e8e51369';
+export const defaultAiChatCompletionConfigNodeId: string = 'cdbb6b77-04e8-4b34-bb6b-7704e80b3462';
+export const defaultAiImageCreateConfigNodeId: string = '90bd1548-623d-47b5-bd15-48623df7b51d';
+export const defaultAiClearCacheConfigNodeId: string = '57d231d8-d1c8-4b39-9231-d8d1c89b3904';
 
-export const defaultParentPageConfigNodeId: string = '25e341e1-7058-4210-b0d3-838255884682';
+export const defaultAiTextWidgetNodeId: string = '6ca74816-05ae-48ce-a748-1605aea8ceb4';
+export const defaultBreadcrumbWidgetNodeId: string = '633932ae-98c2-4bf5-b932-ae98c2dbf5c9';
+export const defaultCollectionChipsNodeId: string = 'a5abe6c8-fb9e-4cec-abe6-c8fb9e3cec9f';
+export const defaultMediaRenderingNodeId: string = '1277b281-286f-4251-b7b2-81286fe25122';
+export const defaultTextWidgetNodeId: string = 'ccbd79e3-abaf-494a-bd79-e3abafd94a9e';
+export const defaultTopicHeaderImageNodeId: string = '139bf118-e20d-4165-9bf1-18e20d116542';
+export const defaultTopicHeaderTextNodeId: string = '7fb1c824-9065-4924-b1c8-2490655924b3';
+export const defaultTopicsColumnBrowserNodeId: string = 'd8959cc3-01ff-4136-959c-c301ff71360b';
+export const defaultUserConfigurableNodeId: string = 'adebb9e5-0cc7-40a3-abb9-e50cc7f0a380';
+
+export const defaultParentPageConfigNodeId: string = '26b39094-4a25-4958-b390-944a25e958fc';
 export const defaultParentWidgetConfigNodeId: string = '80bb0eab-d64f-466b-94c6-2eccc4045c6b';
+
 export const disciplineKey: string = 'ccm:taxonid';
 
 export const eduSharingUrl: string = 'https://repository.staging.openeduhub.net/edu-sharing/';

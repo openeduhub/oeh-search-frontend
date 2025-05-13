@@ -17,6 +17,7 @@ import { InMemoryCache } from '@apollo/client/core';
 import { ApolloModule, APOLLO_NAMED_OPTIONS } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { ConfigService, EduSharingApiModule } from 'ngx-edu-sharing-api';
+import { BApiModule } from 'ngx-edu-sharing-b-api';
 import { Observable, of, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import {
@@ -56,6 +57,10 @@ import {
 } from 'ngx-edu-sharing-wlo-pages';
 import {
     cdnLink,
+    defaultAiConfigNodeId,
+    defaultAiChatCompletionConfigNodeId,
+    defaultAiImageCreateConfigNodeId,
+    defaultAiClearCacheConfigNodeId,
     defaultAiTextWidgetNodeId,
     defaultBreadcrumbWidgetNodeId,
     defaultCollectionChipsNodeId,
@@ -150,6 +155,7 @@ const eduSharingApiModuleWithProviders = EduSharingApiModule.forRoot({
         BrowserAnimationsModule,
         BrowserModule,
         eduSharingApiModuleWithProviders,
+        BApiModule.forRoot({ rootUrl: '/edu-sharing/rest/bapi' }),
         ApolloModule,
     ],
     providers: [
@@ -181,6 +187,21 @@ const eduSharingApiModuleWithProviders = EduSharingApiModule.forRoot({
         // global configurations
         { provide: 'CDN_LINK', useValue: cdnLink },
         { provide: 'EDU_REPO_URL', useValue: eduSharingUrl },
+        // global AI configs
+        { provide: 'DEFAULT_AI_CONFIG_NODE_ID', useValue: defaultAiConfigNodeId },
+        {
+            provide: 'DEFAULT_AI_CHAT_COMPLETION_CONFIG_NODE_ID',
+            useValue: defaultAiChatCompletionConfigNodeId,
+        },
+        {
+            provide: 'DEFAULT_AI_IMAGE_CREATE_CONFIG_NODE_ID',
+            useValue: defaultAiImageCreateConfigNodeId,
+        },
+        {
+            provide: 'DEFAULT_AI_CLEAR_CACHE_CONFIG_NODE_ID',
+            useValue: defaultAiClearCacheConfigNodeId,
+        },
+        // global widget configs
         { provide: 'PARENT_PAGE_CONFIG_NODE_ID', useValue: defaultParentPageConfigNodeId },
         { provide: 'PARENT_WIDGET_CONFIG_NODE_ID', useValue: defaultParentWidgetConfigNodeId },
         { provide: 'DEFAULT_AI_TEXT_WIDGET_NODE_ID', useValue: defaultAiTextWidgetNodeId },

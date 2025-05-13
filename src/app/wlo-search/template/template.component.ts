@@ -1025,10 +1025,10 @@ export class TemplateComponent implements OnDestroy, OnInit {
         }
         // changes are detected using the URL params to also include values of different filterbars
         // convert both select dimension keys and params into the same format
-        // Map<$virtual:key$, ...> => [key, ...]
-        const convertedSelectDimensionKeys: string[] = Array.from(this.selectDimensions.keys())
-            .map((key: string) => key.split('$')?.[1] ?? key)
-            .map((key: string) => key.split('virtual:')?.[1] ?? key);
+        // Map<virtual:key, ...> => [key, ...]
+        const convertedSelectDimensionKeys: string[] = Array.from(this.selectDimensions.keys()).map(
+            (key: string) => key.split('virtual:')?.[1] ?? key,
+        );
         const selectedDimensionValues: MdsValue[] = [];
         if (persistFilters) {
             const latestParamKeys: string[] = Object.keys(this.latestParams);

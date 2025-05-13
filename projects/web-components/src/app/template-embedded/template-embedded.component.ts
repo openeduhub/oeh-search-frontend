@@ -12,6 +12,10 @@ export class TemplateEmbeddedComponent implements OnInit {
     @Input() collectionId: string;
     // global template + widget configuration
     @Input() cdnLink?: string;
+    @Input() defaultAiConfigNodeId?: string;
+    @Input() defaultAiChatCompletionConfigNodeId?: string;
+    @Input() defaultAiImageCreateConfigNodeId?: string;
+    @Input() defaultAiClearCacheConfigNodeId?: string;
     @Input() defaultAiTextWidgetNodeId?: string;
     @Input() defaultBreadcrumbWidgetNodeId?: string;
     @Input() defaultCollectionChipsWidgetNodeId?: string;
@@ -40,6 +44,21 @@ export class TemplateEmbeddedComponent implements OnInit {
     ngOnInit(): void {
         if (this.cdnLink) {
             this.globalWidgetConfigService.cdnLink = this.cdnLink;
+        }
+        if (this.defaultAiConfigNodeId) {
+            this.globalWidgetConfigService.defaultAiConfigNodeId = this.defaultAiConfigNodeId;
+        }
+        if (this.defaultAiChatCompletionConfigNodeId) {
+            this.globalWidgetConfigService.defaultAiChatCompletionConfigNodeId =
+                this.defaultAiChatCompletionConfigNodeId;
+        }
+        if (this.defaultAiImageCreateConfigNodeId) {
+            this.globalWidgetConfigService.defaultAiImageCreateConfigNodeId =
+                this.defaultAiImageCreateConfigNodeId;
+        }
+        if (this.defaultAiClearCacheConfigNodeId) {
+            this.globalWidgetConfigService.defaultAiClearCacheConfigNodeId =
+                this.defaultAiClearCacheConfigNodeId;
         }
         if (this.defaultAiTextWidgetNodeId) {
             this.globalWidgetConfigService.defaultAiTextWidgetNodeId =
