@@ -138,9 +138,9 @@ const httpLinkBeacon = (() => {
     return new HttpLink(httpClient);
 })();
 
-const eduSharingApiModuleWithProviders = EduSharingApiModule.forRoot({
-    rootUrl: environment.eduSharingApiUrl,
-});
+const eduSharingApiModuleWithProviders = environment.production
+    ? EduSharingApiModule.forRoot({ rootUrl: environment.eduSharingApiUrl })
+    : EduSharingApiModule.forRoot();
 
 @NgModule({
     declarations: [AppComponent],

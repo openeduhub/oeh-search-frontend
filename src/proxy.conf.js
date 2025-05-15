@@ -20,5 +20,28 @@ if (process.env.EDU_SHARING_API_PROXY_URL) {
         },
     };
 }
+if (process.env.BACKEND_URL) {
+    PROXY_CONFIG['/edu-sharing/rest'] = {
+        target: process.env.BACKEND_URL,
+        secure: false,
+        changeOrigin: true,
+        configure(proxy) {
+            proxy.on('proxyRes', (proxyRes) => {
+                proxyRes.headers['X-Edu-Sharing-Proxy-Target'] = process.env.BACKEND_URL;
+                const cookies = proxyRes.headers['set-cookie'];
+                if (cookies) {
+                    proxyRes.headers['set-cookie'] = cookies.map((cookie) =>
+                        cookie
+                            .replace('; Path=/edu-sharing', '; Path=/')
+                            // We serve on a non-HTTPS connection, so 'Secure' cookies won't work.
+                            .replace('; Secure', '')
+                            // 'SameSite=None' is only allowed on 'Secure' cookies.
+                            .replace('; SameSite=None', ''),
+                    );
+                }
+            });
+        },
+    };
+}
 
 module.exports = PROXY_CONFIG;

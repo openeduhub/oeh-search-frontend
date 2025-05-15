@@ -113,7 +113,6 @@ import { SwimlaneSettingsDialogComponent } from './swimlane/swimlane-settings-di
         StatisticsSummaryComponent,
         SwimlaneComponent,
         SwimlaneSearchCountPipe,
-        TemplateComponent,
         TopicHeaderComponent,
         TopicsColumnBrowserComponent,
         VarDirective,
