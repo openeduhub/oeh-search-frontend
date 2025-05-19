@@ -45,7 +45,9 @@
           ></wlo-topic-header>
         </div>
         <div class="template-search-container">
-          <h2>Im Fachgebiet der Themenseite suchen</h2>
+          <h2>
+            {{ 'TOPIC_PAGE.SEARCH_HEADING' | translate }}
+          </h2>
           <wlo-search-widget (searchTermChanged)="searchTermChanged($event)"></wlo-search-widget>
         </div>
       </div>
@@ -59,20 +61,23 @@
         *ngIf="pageVariantConfigs?.nodes?.length > 1"
         position="left"
         [icon]="'layers'"
-        [title]="'Switch variant'"
+        [title]="'TOPIC_PAGE.SIDE_MENU.SWITCH_VARIANT' | translate"
         [matMenuTriggerFor]="menu"
       ></wlo-side-menu-item>
       <wlo-side-menu-item
-        [attr.aria-label]="editMode ? 'Switch into preview mode' : 'Switch into edit mode'"
         color="primary"
         position="left"
-        [title]="editMode ? actionItems.previewMode : actionItems.editMode"
+        [title]="
+          editMode
+            ? ('TOPIC_PAGE.SIDE_MENU.BACK_TO_PREVIEW' | translate)
+            : ('TOPIC_PAGE.SIDE_MENU.EDIT_PAGE' | translate)
+        "
         (itemClicked)="toggleEditMode()"
       ></wlo-side-menu-item>
       <wlo-side-menu-item
         *ngIf="collectionNodeHasPageConfig"
         position="left"
-        [title]="'Neu'"
+        [title]="'TOPIC_PAGE.SIDE_MENU.NEW' | translate"
         (itemClicked)="createPageVariant()"
       ></wlo-side-menu-item>
     </ng-container>
@@ -86,7 +91,7 @@
           (click)="navigateToVariant(variant.ref.id)"
         >
           <i esIcon="check" *ngIf="variant.ref.id === pageVariantNode?.ref.id"></i>
-          Seiten-Variante {{ i + 1 }}
+          {{ 'TOPIC_PAGE.SIDE_MENU.PAGE_VARIANT' | translate }} {{ i + 1 }}
         </button>
       </ng-container>
     </mat-menu>
@@ -101,17 +106,17 @@
       <wlo-side-menu-item
         [icon]="'person'"
         [selectedMenuItem]="selectedMenuItem"
-        [title]="menuItems.profiling"
+        [title]="'TOPIC_PAGE.SIDE_MENU.PROFILING.LABEL' | translate"
         (itemClicked)="collapsibleItemClicked($event)"
       ></wlo-side-menu-item>
       <wlo-side-menu-item
         [selectedMenuItem]="selectedMenuItem"
-        [title]="menuItems.topicTree"
+        [title]="'TOPIC_PAGE.SIDE_MENU.TOPIC_TREE.LABEL' | translate"
         (itemClicked)="collapsibleItemClicked($event)"
       ></wlo-side-menu-item>
       <wlo-side-menu-item
         [selectedMenuItem]="selectedMenuItem"
-        [title]="menuItems.statistics"
+        [title]="'TOPIC_PAGE.SIDE_MENU.STATISTICS.LABEL' | translate"
         (itemClicked)="collapsibleItemClicked($event)"
       ></wlo-side-menu-item>
     </ng-container>
@@ -121,8 +126,10 @@
       <!--       A workaround using a delay conflicts with the variant selection -->
       <!-- [hidden] is used to load the component, even when the menu item is not selected -->
       <!-- This is important to successfully read the selectedDimensionValueIds -->
-      <div [hidden]="selectedMenuItem !== menuItems.profiling">
-        <h2 class="side-menu-header mat-display-small">Wer bist du?</h2>
+      <div [hidden]="selectedMenuItem !== ('TOPIC_PAGE.SIDE_MENU.PROFILING.LABEL' | translate)">
+        <h2 class="side-menu-header mat-display-small">
+          {{ 'TOPIC_PAGE.SIDE_MENU.PROFILING.HEADING' | translate }}
+        </h2>
         <wlo-filter-bar
           alignment="vertical"
           [requestInProgress]="requestInProgress()"
@@ -134,8 +141,12 @@
           (selectValuesChanged)="selectValuesChanged($event)"
         ></wlo-filter-bar>
       </div>
-      <ng-container *ngIf="selectedMenuItem === menuItems.topicTree">
-        <h2 class="side-menu-header mat-display-small">Themenbaum von {{ topic() }}</h2>
+      <ng-container
+        *ngIf="selectedMenuItem === ('TOPIC_PAGE.SIDE_MENU.TOPIC_TREE.LABEL' | translate)"
+      >
+        <h2 class="side-menu-header mat-display-small">
+          {{ 'TOPIC_PAGE.SIDE_MENU.TOPIC_TREE.HEADING' | translate: { topic: topic() } }}
+        </h2>
         <wlo-topics-column-browser
           *ngIf="topicCollectionID(); else loadingIndicator"
           [contextNodeId]="topicCollectionID()"
@@ -145,8 +156,12 @@
           [sidebarEmbedding]="true"
         ></wlo-topics-column-browser>
       </ng-container>
-      <ng-container *ngIf="selectedMenuItem === menuItems.statistics">
-        <h2 class="side-menu-header mat-display-small">Inhalte von {{ topic() }}</h2>
+      <ng-container
+        *ngIf="selectedMenuItem === ('TOPIC_PAGE.SIDE_MENU.STATISTICS.LABEL' | translate)"
+      >
+        <h2 class="side-menu-header mat-display-small">
+          {{ 'TOPIC_PAGE.SIDE_MENU.STATISTICS.HEADING' | translate: { topic: topic() } }}
+        </h2>
         <wlo-statistics-summary
           *ngIf="statisticsInitiallyLoaded(); else loadingIndicator"
           [maxNumberOfStatisticItems]="maxNumberOfStatisticItems"
@@ -180,7 +195,11 @@
                   (click)="navigateToFragment(SWIMLANE_ID_PREFIX + anchor.id)"
                   class="item-container"
                 >
-                  {{ anchor.heading ?? 'Swimlane ' + i }}
+                  {{
+                    anchor.heading && anchor.heading !== ''
+                      ? anchor.heading
+                      : ('TOPIC_PAGE.ANCHOR_FALLBACK_PREFIX' | translate) + ' ' + (i + 1)
+                  }}
                 </button>
                 <ng-container
                   *ngVar="anchor | swimlaneSearchCount: searchCountTrigger as searchCount"
@@ -220,7 +239,7 @@
                     class="action-btn"
                     [disabled]="i === 0 || requestInProgress()"
                     (click)="moveSwimlanePosition(i, i - 1)"
-                    aria-label="Move swimlane upwards"
+                    [attr.aria-label]="'TOPIC_PAGE.SWIMLANE.POSITION_UP' | translate"
                   >
                     <i esIcon="arrow_upward"></i>
                   </button>
@@ -229,7 +248,7 @@
                     class="action-btn"
                     [disabled]="i === swimlanes.length - 1 || requestInProgress()"
                     (click)="moveSwimlanePosition(i, i + 1)"
-                    aria-label="Move swimlane downwards"
+                    [attr.aria-label]="'TOPIC_PAGE.SWIMLANE.POSITION_DOWN' | translate"
                   >
                     <i esIcon="arrow_downward"></i>
                   </button>
@@ -241,7 +260,7 @@
                     class="action-btn btn-modify"
                     [disabled]="requestInProgress()"
                     (click)="editSwimlane(swimlane, i)"
-                    aria-label="Edit swimlane"
+                    [attr.aria-label]="'TOPIC_PAGE.SWIMLANE.EDIT.ARIA_LABEL' | translate"
                   >
                     <i esIcon="tune"></i>
                   </button>
@@ -250,7 +269,7 @@
                     class="action-btn"
                     [disabled]="requestInProgress()"
                     (click)="deleteSwimlane(i)"
-                    aria-label="Delete swimlane"
+                    [attr.aria-label]="'TOPIC_PAGE.SWIMLANE.DELETE' | translate"
                   >
                     <i esIcon="delete"></i>
                   </button>
@@ -357,7 +376,7 @@
             [applyTextareaPadding]="false"
             [editable]="editMode"
             [headerElement]="'h2'"
-            [label]="'Überschrift'"
+            [label]="'TOPIC_PAGE.SWIMLANE.HEADING_LABEL' | translate"
             [nonEditText]="swimlane.heading"
             [text]="swimlane.heading"
             (copyClicked)="copySwimlaneLink($event, index)"
@@ -372,7 +391,7 @@
               *ngIf="editMode"
             ></app-add-swimlane-border-button>
             <div class="wlo-container">
-              Bisher wurden noch keine Swimlanes mit Inhalten erstellt.
+              {{ 'TOPIC_PAGE.NO_SWIMLANES' | translate }}
             </div>
           </div>
         </ng-template>
@@ -385,8 +404,7 @@
 <!-- failed to load page config -> currently, no further action possible -->
 <ng-template #pageConfigCheckFailedMessage>
   <p class="alert-warning">
-    <strong>Hinweis:</strong>
-    Für diese Seite konnte keine Seiten-Konfiguration gefunden werden. Bitte wenden Sie sich an
-    Ihren Systemadministrator.
+    <strong> {{ 'TOPIC_PAGE.HINT' | translate }}: </strong>
+    {{ 'TOPIC_PAGE.NO_PAGE_CONFIG' | translate }}
   </p>
 </ng-template>

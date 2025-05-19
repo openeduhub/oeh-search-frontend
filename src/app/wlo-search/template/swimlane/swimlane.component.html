@@ -20,7 +20,7 @@
         [swimlaneIndex]="swimlaneIndex"
         [topic]="topic"
         [widgetClasses]="gridItem.classNames"
-        [widgetNodeId]="gridItem.nodeId?.includes(workspaceSpacesStorePrefix) ? gridItem.nodeId.split('/')?.[gridItem.nodeId.split('/').length - 1] : gridItem.nodeId"
+        [widgetNodeId]="gridItem.nodeId && gridItem.nodeId.includes(workspaceSpacesStorePrefix) ? gridItem.nodeId.split('/')?.[gridItem.nodeId.split('/').length - 1] : gridItem.nodeId"
         [widgetType]="gridItem.item"
         (nodeClicked)="clickedNode($event)"
         (nodeStatisticsChanged)="changeNodeStatistics($event, i)"

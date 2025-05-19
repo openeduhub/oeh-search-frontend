@@ -9,7 +9,7 @@ import {
     provideHttpClient,
     withInterceptorsFromDi,
 } from '@angular/common/http';
-import { inject, NgModule, Provider } from '@angular/core';
+import { Inject, inject, NgModule, Optional, Provider } from '@angular/core';
 import { MAT_DIALOG_SCROLL_STRATEGY } from '@angular/material/dialog';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -46,6 +46,8 @@ import {
     TranslationLoader,
     Toast as ToastAbstract,
     OptionsHelperService as OptionsHelperServiceAbstract,
+    ADDITIONAL_I18N_PROVIDER,
+    ASSETS_BASE_PATH,
 } from 'ngx-edu-sharing-ui';
 import {
     GlobalWidgetConfigService,
@@ -210,6 +212,12 @@ const eduSharingApiModuleWithProviders = environment.production
             provide: 'DEFAULT_USER_CONFIGURABLE_WIDGET_NODE_ID',
             useValue: defaultUserConfigurableNodeId,
         },
+        {
+            provide: ADDITIONAL_I18N_PROVIDER,
+            useValue: (lang: string) => {
+                return ['/assets/i18n/' + lang + '.json'];
+            },
+        },
         GlobalWidgetConfigService,
         eduSharingApiModuleWithProviders.providers,
         EduSharingUiModule.forRoot({
@@ -223,7 +231,13 @@ const eduSharingApiModuleWithProviders = environment.production
             loader: {
                 provide: TranslateLoader,
                 useFactory: TranslationLoader.create,
-                deps: [HttpClient, ConfigService, EduSharingUiConfiguration],
+                deps: [
+                    HttpClient,
+                    ConfigService,
+                    EduSharingUiConfiguration,
+                    [new Inject(ASSETS_BASE_PATH), new Optional()],
+                    [new Inject(ADDITIONAL_I18N_PROVIDER), new Optional()],
+                ],
             },
             missingTranslationHandler: {
                 provide: MissingTranslationHandler,

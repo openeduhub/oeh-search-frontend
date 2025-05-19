@@ -1,19 +1,32 @@
-<h2 mat-dialog-title><span i18n>Configure</span> "{{ data.swimlane.heading }}"</h2>
+<h2 mat-dialog-title>
+  {{ 'TOPIC_PAGE.SWIMLANE.EDIT.HEADING' | translate: { heading: data.swimlane.heading } }}
+</h2>
 
 <div mat-dialog-content [formGroup]="form" class="content settings-form">
   <mat-form-field appearance="outline">
-    <mat-label i18n>Heading</mat-label>
-    <input matInput type="text" placeholder="Heading of the swimlane" formControlName="heading" />
+    <mat-label>
+      {{ 'TOPIC_PAGE.SWIMLANE.EDIT.HEADING_LABEL' | translate }}
+    </mat-label>
+    <input
+      matInput
+      type="text"
+      [placeholder]="'TOPIC_PAGE.SWIMLANE.EDIT.HEADING_PLACEHOLDER' | translate"
+      formControlName="heading"
+    />
   </mat-form-field>
   <mat-form-field appearance="outline">
-    <mat-label i18n>Type</mat-label>
+    <mat-label>
+      {{ 'TOPIC_PAGE.SWIMLANE.EDIT.TYPE_LABEL' | translate }}
+    </mat-label>
     <mat-select formControlName="type">
       <mat-option [value]="option.value" *ngFor="let option of swimlaneTypeOptions">
-        {{ option.viewValue }}
+        {{ 'TOPIC_PAGE.SWIMLANE.SELECT_ELEMENT.' + option.viewValue | translate }}
       </mat-option>
     </mat-select>
   </mat-form-field>
-  <mat-label i18n>Grid-Definition</mat-label>
+  <mat-label>
+    {{ 'TOPIC_PAGE.SWIMLANE.EDIT.GRID_DEFINITION_LABEL' | translate }}
+  </mat-label>
   <div
     cdkDropList
     cdkDropListOrientation="mixed"
@@ -47,11 +60,16 @@
           class="grid-border-container flex-direction-column"
         >
           <div class="grid-label">
-            Aktueller Widget-Typ:
+            {{ 'TOPIC_PAGE.SWIMLANE.SELECT_WIDGET.CURRENT_TYPE' | translate }}:
             <strong>
-              {{ widgetTypeToTextMap.get(gridItem.item) }}
+              {{
+                'TOPIC_PAGE.SWIMLANE.SELECT_WIDGET.' + widgetTypeToTextMap.get(gridItem.item)
+                  | translate
+              }}
             </strong>
-            <ng-container *ngIf="!!gridItem.nodeId"> (bereits konfiguriert) </ng-container>
+            <ng-container *ngIf="!!gridItem.nodeId">
+              ({{ 'TOPIC_PAGE.SWIMLANE.SELECT_WIDGET.CONFIG_EXISTS' | translate }})
+            </ng-container>
           </div>
           <app-select-widget-type-dialog
             [grid]="gridItems"
@@ -62,7 +80,9 @@
         <ng-template #selectWidgetTypeDialog>
           <!-- display a form to select it when being in edit mode -->
           <div class="grid-border-container flex-direction-column">
-            <div class="grid-label">Noch kein Widget vorhanden</div>
+            <div class="grid-label">
+              {{ 'TOPIC_PAGE.SWIMLANE.NO_WIDGET_AVAILABLE' | translate }}
+            </div>
             <app-select-widget-type-dialog
               [grid]="gridItems"
               [tileIndex]="i"
@@ -90,10 +110,8 @@
     <div class="wlo-col-span-6 text-center">
       <hr />
       <div class="alert-warning grid-label">
-        <strong>Achtung:</strong> Wenn Sie den Grid-Typ ändern, können Widgets, die auf später
-        nichtmehr vorhandenen Positionen am Ende des Grids hinzugefügt wurden, verloren gehen.
-        Verschieben Sie daher bitte zuerst die jeweiligen Widgets, bevor Sie mit der Grid-Anpassung
-        fortfahren.
+        <strong>{{ 'TOPIC_PAGE.ATTENTION' | translate }}:</strong>
+        {{ 'TOPIC_PAGE.SWIMLANE.EDIT.CHANGE_GRID_HINT' | translate }}
       </div>
       <!-- reconfigure grid dialog -->
       <app-configure-grid-dialog
@@ -104,6 +122,10 @@
   </ng-template>
 </div>
 <div mat-dialog-actions align="end">
-  <button mat-flat-button color="primary" mat-dialog-close>Abbrechen</button>
-  <button mat-flat-button color="primary" [mat-dialog-close]="form">Anwenden</button>
+  <button mat-flat-button color="primary" mat-dialog-close>
+    {{ 'CANCEL' | translate }}
+  </button>
+  <button mat-flat-button color="primary" [mat-dialog-close]="form">
+    {{ 'APPLY' | translate }}
+  </button>
 </div>

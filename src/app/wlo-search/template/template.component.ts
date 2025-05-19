@@ -19,7 +19,7 @@ import { MatSnackBarRef, TextOnlySnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MdsValue, MdsWidget, Node, NodeEntries } from 'ngx-edu-sharing-api';
 import { ParentEntries } from 'ngx-edu-sharing-api/lib/api/models/parent-entries';
-import { SpinnerComponent } from 'ngx-edu-sharing-ui';
+import { TranslationsService } from 'ngx-edu-sharing-ui';
 import {
     BreadcrumbComponent,
     checkUserAccess,
@@ -47,7 +47,6 @@ import { SearchModule } from '../search/search.module';
 import { SharedModule } from '../shared/shared.module';
 import { AddSwimlaneBorderButtonComponent } from './add-swimlane-button/add-swimlane-border-button.component';
 import {
-    actionItems,
     defaultMds,
     defaultTopicsColumnBrowserNodeId,
     disciplineKey,
@@ -55,7 +54,6 @@ import {
     ioType,
     mapType,
     maxNumberOfStatisticItems,
-    menuItems,
     pageConfigRefType,
     pageConfigType,
     pageVariantConfigType,
@@ -109,7 +107,6 @@ import { SwimlaneSettingsDialogComponent } from './swimlane/swimlane-settings-di
         SharedModule,
         SideMenuItemComponent,
         SideMenuWrapperComponent,
-        SpinnerComponent,
         StatisticsSummaryComponent,
         SwimlaneComponent,
         SwimlaneSearchCountPipe,
@@ -138,6 +135,7 @@ export class TemplateComponent implements OnDestroy, OnInit {
         private router: Router,
         private statisticsHelperService: StatisticsHelperService,
         private templateHelperService: TemplateHelperService,
+        private translationsService: TranslationsService,
     ) {}
 
     @Input() set collectionId(value: string) {
@@ -196,8 +194,6 @@ export class TemplateComponent implements OnDestroy, OnInit {
     selectDimensionsLoaded: boolean = false;
 
     selectedMenuItem: string = '';
-    actionItems = actionItems;
-    menuItems = menuItems;
 
     // statistics related variables
     maxNumberOfStatisticItems: number = maxNumberOfStatisticItems;
@@ -221,6 +217,8 @@ export class TemplateComponent implements OnDestroy, OnInit {
      * page config and statistics.
      */
     async ngOnInit(): Promise<void> {
+        // initialize the translationsService
+        this.translationsService.initialize().subscribe(() => {});
         // retrieve the search URL
         this.searchUrl = retrieveSearchUrl();
         // set the default language for API requests

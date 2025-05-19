@@ -31,6 +31,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { EduSharingUiCommonModule } from 'ngx-edu-sharing-ui';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { DisplayNamePipe } from './display-name.pipe';
@@ -76,6 +77,7 @@ import { SkipTargetDirective } from './skip-target.directive';
         MatTabsModule,
         MatTooltipModule,
         SlickCarouselModule,
+        TranslateModule,
     ],
     exports: [
         RouterModule,
@@ -117,6 +119,7 @@ import { SkipTargetDirective } from './skip-target.directive';
         SkipTargetDirective,
         SlickCarouselModule,
         ReportClickDirective,
+        TranslateModule,
     ],
 })
 export class SharedModule {}

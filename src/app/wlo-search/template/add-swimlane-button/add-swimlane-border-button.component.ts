@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { v4 as uuidv4 } from 'uuid';
 import { SharedModule } from '../../shared/shared.module';
 import { swimlaneGridOptions, swimlaneTypeOptions } from '../shared/custom-definitions';
@@ -18,6 +19,8 @@ export class AddSwimlaneBorderButtonComponent {
     @Output() addSwimlaneTriggered: EventEmitter<Swimlane> = new EventEmitter<Swimlane>();
     supportedSwimlaneTypes: string[] = swimlaneTypeOptions.map((type: SelectOption) => type.value);
 
+    constructor(private translate: TranslateService) {}
+
     /**
      * Configures the swimlane and grid by emitting a newly created swimlane.
      *
@@ -30,7 +33,7 @@ export class AddSwimlaneBorderButtonComponent {
         }
         const newSwimlane: Swimlane = {
             id: uuidv4(),
-            heading: 'Eine beispielhafte Überschrift',
+            heading: this.translate.instant('TOPIC_PAGE.SWIMLANE.DEFAULT_HEADING'),
             type: swimlaneType,
             grid: [],
         };

@@ -6,18 +6,26 @@
   <div class="container-border"></div>
   <!-- TODO: currently static options due to missing context in [matMenuTriggerFor] -->
   <mat-menu #addComponentMenu="matMenu">
-    <div class="mat-menu-header-container">Inhaltselement hinzufügen</div>
+    <div class="mat-menu-header-container">
+      {{ 'TOPIC_PAGE.SWIMLANE.SELECT_ELEMENT.HEADING' | translate }}
+    </div>
     <button mat-menu-item [matMenuTriggerFor]="containerGrid">
       <mat-icon svgIcon="one_column"></mat-icon>
-      <span>Bereichselement</span>
+      <span>
+        {{ 'TOPIC_PAGE.SWIMLANE.SELECT_ELEMENT.CONTAINER_ELEMENT' | translate }}
+      </span>
     </button>
     <button mat-menu-item [matMenuTriggerFor]="accordionGrid">
       <mat-icon svgIcon="storage"></mat-icon>
-      <span>Akkordeonelement</span>
+      <span>
+        {{ 'TOPIC_PAGE.SWIMLANE.SELECT_ELEMENT.ACCORDION_ELEMENT' | translate }}
+      </span>
     </button>
     <button mat-menu-item [matMenuTriggerFor]="anchorGrid">
       <mat-icon svgIcon="anchor"></mat-icon>
-      <span>Ankermenü</span>
+      <span>
+        {{ 'TOPIC_PAGE.SWIMLANE.SELECT_ELEMENT.ANCHOR_MENU' | translate }}
+      </span>
     </button>
   </mat-menu>
 
@@ -39,7 +47,9 @@
   </mat-menu>
 
   <ng-template #gridConfiguration let-type="type">
-    <div class="mat-menu-header-container">Layout auswählen</div>
+    <div class="mat-menu-header-container">
+      {{ 'TOPIC_PAGE.SWIMLANE.SELECT_LAYOUT.HEADING' | translate }}
+    </div>
     <button
       mat-menu-item
       *ngFor="let option of swimlaneGridOptions"
@@ -53,7 +63,7 @@
       <ng-template #checkSvgIcon>
         <mat-icon *ngIf="!!option.svgIcon" [svgIcon]="option.svgIcon"></mat-icon>
       </ng-template>
-      {{ option.viewValue }}
+      {{ 'TOPIC_PAGE.SWIMLANE.SELECT_LAYOUT.' + option.viewValue | translate }}
     </button>
   </ng-template>
 </div>

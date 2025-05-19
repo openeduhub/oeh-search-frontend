@@ -2,11 +2,6 @@ import type { Node } from 'ngx-edu-sharing-api';
 import { StatisticChart } from 'ngx-edu-sharing-wlo-pages';
 import { SelectOption } from './types/select-option';
 
-export const actionItems = {
-    editMode: 'Seite bearbeiten',
-    previewMode: 'Zurück zur Vorschau',
-};
-
 export const cdnLink: string =
     'https://cdn.jsdelivr.net/gh/openeduhub/oeh-search-frontend@feature/embedding/output/wlo-pages/20250124/';
 
@@ -73,13 +68,6 @@ export const lrtIdsDidacticConcepts: string[] = [
 export const mapType: string = 'ccm:map';
 export const maxNumberOfStatisticItems: number = 8;
 
-export const menuItems = {
-    feedback: 'Feedback',
-    profiling: 'Profilierung',
-    statistics: 'Statistiken',
-    topicTree: 'Themenbaum',
-};
-
 export const pageConfigAspect: string = 'ccm:page';
 
 export const pageConfigPrefix: string = 'PAGE_';
@@ -124,46 +112,45 @@ export const retrieveCustomUrl = (node: Node): string => {
     return '';
 };
 
-// TODO: find better option for line breaks than <br>
 export const statistics: StatisticChart[] = [
-    new StatisticChart('Berufe', 'work', lrtIdsWork),
-    new StatisticChart('Bildungs-<br>angebote', 'school', lrtIdsEducationalOffer),
-    new StatisticChart('Veranstaltungen', 'theater_comedy', lrtIdsEvents),
-    new StatisticChart('Materialien', 'menu_book', lrtIdsMaterials),
-    new StatisticChart('Quellen', 'language', lrtIdsSources),
-    new StatisticChart('Organisa-<br>tionen', 'domain', lrtIdsOrganizations, additionalLrtUrl),
-    new StatisticChart('Personen', 'group', lrtIdsPeople, additionalLrtUrl),
-    new StatisticChart('Tools', 'home_repair_service', lrtIdsTools),
-    new StatisticChart('Prompts', 'terminal', lrtIdsPrompts),
-    new StatisticChart('Handlungs-<br>felder', 'interests', lrtIdsFieldsOfAction),
-    new StatisticChart('Didaktische<br>Konzepte', 'lightbulb', lrtIdsDidacticConcepts),
+    new StatisticChart('WORK', 'work', lrtIdsWork),
+    new StatisticChart('EDUCATIONAL_OFFERS', 'school', lrtIdsEducationalOffer),
+    new StatisticChart('EVENTS', 'theater_comedy', lrtIdsEvents),
+    new StatisticChart('MATERIALS', 'menu_book', lrtIdsMaterials),
+    new StatisticChart('SOURCES', 'language', lrtIdsSources),
+    new StatisticChart('ORGANIZATIONS', 'domain', lrtIdsOrganizations, additionalLrtUrl),
+    new StatisticChart('PEOPLE', 'group', lrtIdsPeople, additionalLrtUrl),
+    new StatisticChart('TOOLS', 'home_repair_service', lrtIdsTools),
+    new StatisticChart('PROMPTS', 'terminal', lrtIdsPrompts),
+    new StatisticChart('FIELDS_OF_ACTION', 'interests', lrtIdsFieldsOfAction),
+    new StatisticChart('DIDACTIC_CONCEPTS', 'lightbulb', lrtIdsDidacticConcepts),
 ];
 
 export const swimlaneGridOptions: SelectOption[] = [
     {
         svgIcon: 'one_column',
         value: 'one_column',
-        viewValue: 'Eine Spalte',
+        viewValue: 'ONE_COLUMN',
     },
     {
         svgIcon: 'two_columns',
         value: 'two_columns',
-        viewValue: 'Zwei Spalten',
+        viewValue: 'TWO_COLUMNS',
     },
     {
         svgIcon: 'three_columns',
         value: 'three_columns',
-        viewValue: 'Drei Spalten',
+        viewValue: 'THREE_COLUMNS',
     },
     {
         svgIcon: 'left_side_panel',
         value: 'left_side_panel',
-        viewValue: 'Linke Seitenleiste',
+        viewValue: 'LEFT_SIDE_PANEL',
     },
     {
         svgIcon: 'right_side_panel',
         value: 'right_side_panel',
-        viewValue: 'Rechte Seitenleiste',
+        viewValue: 'RIGHT_SIDE_PANEL',
     },
 ];
 
@@ -171,17 +158,17 @@ export const swimlaneTypeOptions: SelectOption[] = [
     {
         svgIcon: 'one_column',
         value: 'container',
-        viewValue: 'Bereichselement',
+        viewValue: 'CONTAINER_ELEMENT',
     },
     {
         svgIcon: 'storage',
         value: 'accordion',
-        viewValue: 'Akkordeonelement',
+        viewValue: 'ACCORDION_ELEMENT',
     },
     {
         svgIcon: 'anchor',
         value: 'anchor',
-        viewValue: 'Ankermenü',
+        viewValue: 'ANCHOR_MENU',
     },
 ];
 
@@ -190,27 +177,27 @@ export const widgetConfigAspect: string = 'ccm:widget';
 export const widgetTypeOptions: SelectOption[] = [
     {
         value: 'wlo-collection-chips',
-        viewValue: 'Navigationspillen',
+        viewValue: 'COLLECTION_CHIPS',
     },
     {
         value: 'wlo-topics-column-browser',
-        viewValue: 'Themenbaum (ausklappbar)',
+        viewValue: 'TOPICS_COLUMN_BROWSER',
     },
     {
         value: 'wlo-user-configurable',
-        viewValue: 'Inhalte-Teaser',
+        viewValue: 'USER_CONFIGURABLE',
     },
     {
         value: 'wlo-media-rendering',
-        viewValue: 'Medien-Widget',
+        viewValue: 'MEDIA_RENDERING',
     },
     {
         value: 'wlo-text-widget',
-        viewValue: 'Text-Widget',
+        viewValue: 'TEXT_WIDGET',
     },
     {
         value: 'wlo-ai-text-widget',
-        viewValue: 'KI-Widget',
+        viewValue: 'AI_TEXT_WIDGET',
     },
 ];
 

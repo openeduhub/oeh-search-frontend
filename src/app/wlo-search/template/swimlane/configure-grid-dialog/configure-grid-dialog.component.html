@@ -4,7 +4,12 @@
   color="primary"
   [matMenuTriggerFor]="configureGridMenu"
 >
-  <i esIcon="settings"></i> Grid {{ grid?.length > 0 ? 'anpassen' : 'konfigurieren' }}
+  <i esIcon="settings"></i>
+  {{
+    grid?.length > 0
+      ? ('TOPIC_PAGE.SWIMLANE.ADJUST_GRID' | translate)
+      : ('TOPIC_PAGE.SWIMLANE.CONFIGURE_GRID' | translate)
+  }}
 </button>
 <mat-menu #configureGridMenu="matMenu">
   <button
@@ -20,6 +25,6 @@
     <ng-template #checkSvgIcon>
       <mat-icon *ngIf="!!option.svgIcon" [svgIcon]="option.svgIcon"></mat-icon>
     </ng-template>
-    {{ option.viewValue }}
+    {{ 'TOPIC_PAGE.SWIMLANE.SELECT_LAYOUT.' + option.viewValue | translate }}
   </button>
 </mat-menu>
