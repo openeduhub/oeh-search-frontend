@@ -1,10 +1,16 @@
-<h2 mat-dialog-title i18n>Report Problem</h2>
+<h2 mat-dialog-title>
+  {{ 'TOPIC_PAGE.PREVIEW_PANEL.REPORT_PROBLEM.LABEL' | translate }}
+</h2>
 <div mat-dialog-content [formGroup]="form" class="content">
-  <p i18n>Report a problem with "{{ data.element | nodeProperty: 'title' }}".</p>
+  <p>
+    {{
+      'TOPIC_PAGE.PREVIEW_PANEL.REPORT_PROBLEM.DESCRIPTION'
+        | translate: { title: (data.element | nodeProperty: 'title') }
+    }}
+  </p>
   <mat-radio-group
     class="problem-kind-group"
-    i18n-aria-label
-    aria-label="Problem kind"
+    [attr.aria-label]="'TOPIC_PAGE.PREVIEW_PANEL.REPORT_PROBLEM.PROBLEM_KIND_LABEL' | translate"
     formControlName="problemKind"
   >
     <mat-radio-button
@@ -13,11 +19,13 @@
       color="primary"
       [value]="kind.key"
     >
-      {{ kind.value }}
+      {{ 'TOPIC_PAGE.PREVIEW_PANEL.REPORT_PROBLEM.' + kind.value | translate }}
     </mat-radio-button>
   </mat-radio-group>
   <mat-form-field appearance="outline">
-    <mat-label i18n>Describe what's wrong</mat-label>
+    <mat-label>
+      {{ 'TOPIC_PAGE.PREVIEW_PANEL.REPORT_PROBLEM.DESCRIBE_PROBLEM_LABEL' | translate }}
+    </mat-label>
     <textarea
       matInput
       formControlName="message"
@@ -26,19 +34,17 @@
     ></textarea>
   </mat-form-field>
   <mat-form-field appearance="outline">
-    <mat-label i18n>Your e-mail address (optional)</mat-label>
+    <mat-label>
+      {{ 'TOPIC_PAGE.PREVIEW_PANEL.REPORT_PROBLEM.EMAIL_LABEL_OPTIONAL' | translate }}
+    </mat-label>
     <input matInput formControlName="email" />
   </mat-form-field>
 </div>
 <div mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close i18n>Cancel</button>
-  <button
-    mat-flat-button
-    color="primary"
-    [disabled]="!form.valid"
-    [mat-dialog-close]="form.value"
-    i18n
-  >
-    Report
+  <button mat-button mat-dialog-close>
+    {{ 'CANCEL' | translate }}
+  </button>
+  <button mat-flat-button color="primary" [disabled]="!form.valid" [mat-dialog-close]="form.value">
+    {{ 'TOPIC_PAGE.PREVIEW_PANEL.REPORT_PROBLEM.REPORT' | translate }}
   </button>
 </div>

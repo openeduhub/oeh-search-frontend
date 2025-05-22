@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { TranslateService } from '@ngx-translate/core';
 import { Node } from 'ngx-edu-sharing-api';
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
@@ -14,10 +15,10 @@ export interface DialogData {
 }
 
 export const problemKinds = {
-    UNAVAILABLE: $localize`Object not available`,
-    INAPPROPRIATE_CONTENT: $localize`Problematic content`,
-    INVALID_METADATA: $localize`Incorrect description`,
-    OTHER: $localize`Something else`,
+    UNAVAILABLE: 'UNAVAILABLE',
+    INAPPROPRIATE_CONTENT: 'INAPPROPRIATE_CONTENT',
+    INVALID_METADATA: 'INVALID_METADATA',
+    OTHER: 'OTHER',
 };
 
 export interface ResultData {
@@ -32,7 +33,11 @@ const eduSharingRepository = 'local';
     providedIn: 'root',
 })
 export class ReportProblemService {
-    constructor(private dialog: MatDialog, private httpClient: HttpClient) {}
+    constructor(
+        private dialog: MatDialog,
+        private httpClient: HttpClient,
+        private translate: TranslateService,
+    ) {}
 
     openDialog(element: Node): Observable<WrappedResponse<void> | null> {
         // open dialog
@@ -63,7 +68,13 @@ export class ReportProblemService {
         localStorage.setItem(reportProblemItemKey, JSON.stringify({ element, data }));
         // return report response
         return this.apiSendReport(eduSharingRepository, element.ref.id, {
-            reason: `${problemKinds[data.problemKind]} (${data.problemKind})`,
+            reason:
+                this.translate.instant(
+                    'TOPIC_PAGE.PREVIEW_PANEL.REPORT_PROBLEM.' + problemKinds[data.problemKind],
+                ) +
+                ' (' +
+                data.problemKind +
+                ')',
             userComment: data.message,
             userEmail: data.email,
         });
@@ -74,6 +85,7 @@ export class ReportProblemService {
         id: string,
         params: { reason: string; userEmail: string; userComment: string },
     ): Observable<void> {
+        // TODO: Replace by possible existing service?
         const url =
             environment.eduSharingApiUrl + '/node/v1/nodes/' + repository + '/' + id + '/report';
         return this.httpClient.post<void>(url, null, { params });

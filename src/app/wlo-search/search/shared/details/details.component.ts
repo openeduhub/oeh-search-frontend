@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { Node } from 'ngx-edu-sharing-api';
 import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -51,6 +52,7 @@ export class DetailsComponent implements OnDestroy {
         nextArrow: '.app-preview-slick-next',
     };
     descriptionExpanded = false;
+    emptyLanguageValues: string[] = ['', 'null', null];
     showEmbedButton$ = this.pageMode.getPageConfig('showEmbedButton');
     reportProblemResult$: Observable<WrappedResponse<void>>;
 
@@ -60,6 +62,7 @@ export class DetailsComponent implements OnDestroy {
         private config: ConfigService,
         private pageMode: PageModeService,
         private reportProblemService: ReportProblemService,
+        private translate: TranslateService,
     ) {
         this.hit$.subscribe(() => this.reset());
     }
@@ -81,7 +84,9 @@ export class DetailsComponent implements OnDestroy {
     }
 
     contactSupport(): void {
-        let mailText: string = 'mailto:WLO Support<portal@jointly.info>?subject=Problem melden';
+        let mailText: string =
+            'mailto:WLO Support<portal@jointly.info>?subject=' +
+            this.translate.instant('TOPIC_PAGE.PREVIEW_PANEL.REPORT_PROBLEM.LABEL');
         // TODO: there might be better options than using localStorage
         const latestReportData: { element: Node; data: ResultData } = localStorage.getItem(
             reportProblemItemKey,
@@ -94,16 +99,18 @@ export class DetailsComponent implements OnDestroy {
             const resultData: ResultData = latestReportData.data;
             // https://stackoverflow.com/a/22765878
             const br: string = '%0D%0A';
+            const reason: string = this.translate.instant(
+                'TOPIC_PAGE.PREVIEW_PANEL.REPORT_PROBLEM.' + problemKinds[resultData.problemKind],
+            );
             mailText +=
-                `&body=` +
-                `Ich möchte ein Problem mit dem Element "${element.name}" melden.${br}${br}${br}` +
-                `----- Die nachfolgenden Informationen dienen zum Debugging.` +
-                ` Bitte nicht löschen. -----${br}${br}` +
-                `Primäre ID: ${element.ref.id}${br}${br}` +
-                `Die Begründung der Meldung: ${problemKinds[resultData.problemKind]}` +
-                ` (${resultData.problemKind})${br}${br}` +
-                `Weitere Informationen vom Nutzer:${br}` +
-                resultData.message;
+                '&body=' +
+                this.translate.instant('TOPIC_PAGE.PREVIEW_PANEL.REPORT_PROBLEM.EMAIL_BODY', {
+                    br,
+                    name: element.name,
+                    id: element.ref.id,
+                    reason,
+                    message: resultData.message,
+                });
         }
 
         window.location.href = mailText;
