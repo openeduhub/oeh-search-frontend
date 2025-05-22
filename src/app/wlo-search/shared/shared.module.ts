@@ -33,6 +33,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { EduSharingUiCommonModule } from 'ngx-edu-sharing-ui';
+import { VarDirective } from 'ngx-edu-sharing-wlo-pages';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { DisplayNamePipe } from './display-name.pipe';
 import { FocusStateDirective } from './focus-state.directive';
@@ -78,6 +79,7 @@ import { SkipTargetDirective } from './skip-target.directive';
         MatTooltipModule,
         SlickCarouselModule,
         TranslateModule,
+        VarDirective,
     ],
     exports: [
         RouterModule,
@@ -120,6 +122,7 @@ import { SkipTargetDirective } from './skip-target.directive';
         SlickCarouselModule,
         ReportClickDirective,
         TranslateModule,
+        VarDirective,
     ],
 })
 export class SharedModule {}

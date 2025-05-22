@@ -182,7 +182,7 @@
     <!-- metadata listing -->
     <div
       class="app-preview-panel-metadata app-preview-panel-metadata-icon"
-      *ngIf="hit | nodeProperty: 'discipline' as disciplines"
+      *ngVar="hit | nodeProperty: 'discipline' as disciplines"
     >
       <i
         esIcon="school"
@@ -192,7 +192,7 @@
       <span class="cdk-visually-hidden">
         {{ 'TOPIC_PAGE.WIDGET.USER_CONFIGURABLE.TAXONID_LABEL' | translate }}
       </span>
-      <div>
+      <div *ngIf="disciplines; else emptyState">
         <span *ngFor="let discipline of disciplines">
           {{ discipline.displayName }}
         </span>
@@ -200,7 +200,7 @@
     </div>
     <div
       class="app-preview-panel-metadata app-preview-panel-metadata-icon"
-      *ngIf="hit | nodeProperty: 'educationalContext' as educationalContexts"
+      *ngVar="hit | nodeProperty: 'educationalContext' as educationalContexts"
     >
       <i
         esIcon="group"
@@ -210,7 +210,7 @@
       <span class="cdk-visually-hidden">
         {{ 'TOPIC_PAGE.WIDGET.USER_CONFIGURABLE.EDUCATIONAL_CONTEXT_LABEL' | translate }}
       </span>
-      <div>
+      <div *ngIf="educationalContexts; else emptyState">
         <span *ngFor="let context of educationalContexts">
           {{ context.displayName }}
         </span>
@@ -218,7 +218,7 @@
     </div>
     <div
       class="app-preview-panel-metadata app-preview-panel-metadata-icon"
-      *ngIf="hit | nodeProperty: 'author'"
+      *ngVar="hit | nodeProperty: 'author' as author"
     >
       <mat-icon
         [matTooltip]="'TOPIC_PAGE.WIDGET.USER_CONFIGURABLE.AUTHOR_LABEL' | translate"
@@ -228,8 +228,9 @@
       <span class="cdk-visually-hidden">
         {{ 'TOPIC_PAGE.WIDGET.USER_CONFIGURABLE.AUTHOR_LABEL' | translate }}
       </span>
-      <span>
-        {{ hit | nodeProperty: 'author' }}
+      <span *ngIf="author; else emptyState"
+        >>
+        {{ author }}
       </span>
     </div>
     <div
@@ -362,6 +363,9 @@
         </span>
       </ng-container>
     </div>
+    <ng-template #emptyState>
+      <span>-</span>
+    </ng-template>
     <div
       *ngIf="reportProblemResult$ | async as result"
       class="app-details-report-problem-state app-details-report-problem-state-{{ result.state }}"
