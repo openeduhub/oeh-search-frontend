@@ -215,14 +215,14 @@ const eduSharingApiModuleWithProviders = environment.production
         },
         {
             provide: ADDITIONAL_I18N_PROVIDER,
-            useValue: (lang: string) => {
-                return [
-                    inject(PlatformLocation).getBaseHrefFromDOM() +
-                        '/assets/i18n/' +
-                        lang +
-                        '.json',
-                ];
+            useFactory: (platformLocation: PlatformLocation) => {
+                return (lang: string) => {
+                    return [
+                        platformLocation.getBaseHrefFromDOM() + '/assets/i18n/' + lang + '.json',
+                    ];
+                };
             },
+            deps: [PlatformLocation],
         },
         GlobalWidgetConfigService,
         eduSharingApiModuleWithProviders.providers,
