@@ -75,6 +75,9 @@ export class PreviewPanelComponent implements OnDestroy {
         });
         // this.registerCloseOnBackNav();
         this.registerCloseOnNavigation();
+        this.dialogRef.backdropClick().subscribe(() => {
+            this.dialogClosed.emit(true);
+        });
         this.dialogRef.beforeClosed().subscribe((dialogResult) => {
             if (dialogResult !== 'mode-change') {
                 this.view.selectItem(null);
