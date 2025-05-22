@@ -1,4 +1,5 @@
 import { ScrollStrategyOptions } from '@angular/cdk/overlay';
+import { PlatformLocation } from '@angular/common';
 import {
     HttpClient,
     HttpEvent,
@@ -215,7 +216,12 @@ const eduSharingApiModuleWithProviders = environment.production
         {
             provide: ADDITIONAL_I18N_PROVIDER,
             useValue: (lang: string) => {
-                return ['/assets/i18n/' + lang + '.json'];
+                return [
+                    inject(PlatformLocation).getBaseHrefFromDOM() +
+                        '/assets/i18n/' +
+                        lang +
+                        '.json',
+                ];
             },
         },
         GlobalWidgetConfigService,
