@@ -98,12 +98,7 @@ export class NodePropertyPipe implements PipeTransform {
         property: string,
         zipDisplayNames = this.zipDisplayNames,
     ): IdentifiedValue[] | null {
-        const values = [
-            ...(zipDisplayNames(node, property) ?? []),
-            ...node.usedInCollections
-                .filter((collection) => collectionHasType(collection, 'EDITORIAL'))
-                .flatMap((collection) => zipDisplayNames(collection, property) ?? []),
-        ];
+        const values = [...(zipDisplayNames(node, property) ?? [])];
         if (values.length > 0) {
             return this.removeDuplicates(values, (lhs, rhs) => lhs.id === rhs.id);
         } else {
