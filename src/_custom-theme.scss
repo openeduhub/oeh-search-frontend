@@ -234,6 +234,28 @@ $light-theme: mat.define-theme(
     )
 );
 
+//$light-theme: mat.define-theme(
+//        (
+//            color: (
+//                theme-type: light,
+//                primary: $primary-palette,
+//                tertiary: $tertiary-palette,
+//                use-system-variables: true,
+//            ),
+//            density: (
+//                scale: -1,
+//            ),
+//            typography: (
+//                plain-family: 'open_sansregular',
+//                brand-family: 'open_sansregular',
+//                bold-weight: 600,
+//                medium-weight: 500,
+//                regular-weight: 400,
+//                use-system-variables: true,
+//            ),
+//        )
+//);
+
 $dark-theme: mat.define-theme(
     (
         color: (
