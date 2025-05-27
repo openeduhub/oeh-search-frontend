@@ -5,7 +5,7 @@ import { SelectOption } from './types/select-option';
 export const cdnLink: string =
     'https://cdn.jsdelivr.net/gh/openeduhub/oeh-search-frontend@feature/embedding/output/wlo-pages/20250124/';
 
-export const defaultIconPath: string = 'assets/wlo-search/icons/';
+export const defaultIconPath: string = 'assets/images/icons/';
 
 export const defaultMds: string = 'mds_oeh';
 

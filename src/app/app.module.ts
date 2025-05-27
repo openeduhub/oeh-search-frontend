@@ -62,6 +62,7 @@ import {
     defaultAiTextWidgetNodeId,
     defaultBreadcrumbWidgetNodeId,
     defaultCollectionChipsNodeId,
+    defaultIconPath,
     defaultMediaRenderingNodeId,
     defaultParentPageConfigNodeId,
     defaultParentWidgetConfigNodeId,
@@ -184,6 +185,7 @@ const eduSharingApiModuleWithProviders = environment.production
         // global configurations
         { provide: 'CDN_LINK', useValue: cdnLink },
         { provide: 'EDU_REPO_URL', useValue: eduSharingUrl },
+        { provide: 'ICON_PATH', useValue: defaultIconPath },
         { provide: 'PARENT_PAGE_CONFIG_NODE_ID', useValue: defaultParentPageConfigNodeId },
         { provide: 'PARENT_WIDGET_CONFIG_NODE_ID', useValue: defaultParentWidgetConfigNodeId },
         { provide: 'DEFAULT_AI_TEXT_WIDGET_NODE_ID', useValue: defaultAiTextWidgetNodeId },
@@ -218,7 +220,12 @@ const eduSharingApiModuleWithProviders = environment.production
             useFactory: (platformLocation: PlatformLocation) => {
                 return (lang: string) => {
                     return [
-                        platformLocation.getBaseHrefFromDOM() + '/assets/i18n/' + lang + '.json',
+                        (platformLocation.getBaseHrefFromDOM()
+                            ? platformLocation.getBaseHrefFromDOM()?.replace(/\/$/, '')
+                            : '') +
+                            '/assets/i18n/' +
+                            lang +
+                            '.json',
                     ];
                 };
             },

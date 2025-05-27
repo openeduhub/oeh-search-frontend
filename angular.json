@@ -40,9 +40,14 @@
               "src/assets",
               "src/env.js",
               {
-                "glob": "**/*",
+                "glob": "*",
                 "input": "node_modules/ngx-edu-sharing-wlo-pages/assets",
                 "output": "/assets/"
+              },
+              {
+                "glob": "*",
+                "input": "node_modules/ngx-edu-sharing-wlo-pages/assets/icons",
+                "output": "assets/images/icons/"
               }
             ],
             "styles": [
@@ -138,9 +143,14 @@
               "src/assets",
               "src/env.js",
               {
-                "glob": "**/*",
+                "glob": "*",
                 "input": "node_modules/ngx-edu-sharing-wlo-pages/assets",
                 "output": "/assets/"
+              },
+              {
+                "glob": "*",
+                "input": "node_modules/ngx-edu-sharing-wlo-pages/assets/icons",
+                "output": "assets/images/icons/"
               }
             ],
             "styles": [
@@ -201,13 +211,18 @@
               "projects/web-components/src/assets",
               {
                 "glob": "*",
-                "input": "src/assets/wlo-search/icons",
-                "output": "assets/icons/"
+                "input": "src/assets/images/icons",
+                "output": "assets/images/icons/"
               },
               {
-                "glob": "**/*",
+                "glob": "*",
                 "input": "node_modules/ngx-edu-sharing-wlo-pages/assets",
                 "output": "/assets/"
+              },
+              {
+                "glob": "*",
+                "input": "node_modules/ngx-edu-sharing-wlo-pages/assets/icons",
+                "output": "assets/images/icons/"
               }
             ],
             "styles": [
