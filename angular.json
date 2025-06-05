@@ -41,8 +41,8 @@
               "src/env.js",
               {
                 "glob": "*",
-                "input": "node_modules/ngx-edu-sharing-wlo-pages/assets",
-                "output": "/assets/"
+                "input": "node_modules/ngx-edu-sharing-wlo-pages/assets/images",
+                "output": "/assets/images/"
               },
               {
                 "glob": "*",
@@ -144,8 +144,8 @@
               "src/env.js",
               {
                 "glob": "*",
-                "input": "node_modules/ngx-edu-sharing-wlo-pages/assets",
-                "output": "/assets/"
+                "input": "node_modules/ngx-edu-sharing-wlo-pages/assets/images",
+                "output": "/assets/images/"
               },
               {
                 "glob": "*",
@@ -216,8 +216,8 @@
               },
               {
                 "glob": "*",
-                "input": "node_modules/ngx-edu-sharing-wlo-pages/assets",
-                "output": "/assets/"
+                "input": "node_modules/ngx-edu-sharing-wlo-pages/assets/images",
+                "output": "/assets/images/"
               },
               {
                 "glob": "*",
