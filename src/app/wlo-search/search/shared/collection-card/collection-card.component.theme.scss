@@ -1,11 +1,10 @@
-@use '@angular/material' as mat;
-@import '../../../functions';
+@use 'variables' as *;
 
-@mixin collection-card-theme($theme) {
+@mixin collection-card-theme() {
     app-collection-card {
         .app-collection-card-container {
-            color: mat.get-theme-color($theme, on-primary);
-            background: mat.get-theme-color($theme, primary);
+            color: $on-primary;
+            background: $primary;
             transition: box-shadow 0.3s, transform 0.3s;
             &:hover {
                 transform: translate(0, -4px);
@@ -15,20 +14,22 @@
     }
 }
 
-@mixin collection-card-typography($typography) {
+@mixin collection-card-typography() {
     app-collection-card {
+        // decrease font-size of icon
+        .app-collection-card-icon-container > .editorial-icon {
+            font-size: $font-size-small;
+        }
         // bold font-weight for title
         h4.app-collection-card-title {
-            font-family: var(--sys-headline-large-font);
-            font-size: var(--sys-body-large-size);
-            font-weight: var(--sys-label-large-weight-prominent);
+            font-size: $font-size-medium;
+            font-weight: $font-weight-bold;
         }
         // decrease font-size for metadata
         .app-collection-card-metadata-item {
-            font-size: var(--sys-body-medium-size);
-            .mat-icon,
-            .mat-mdc-icon {
-                font-size: var(--sys-body-small-size);
+            font-size: $font-size-small;
+            .mat-icon {
+                font-size: 80%;
             }
         }
     }

@@ -52,8 +52,8 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        gap: 8px;
         span {
-            margin-right: 0.8em;
             @media screen and (max-width: 450px) {
                 display: none;
             }
@@ -61,14 +61,4 @@
     }
     // slightly adjust padding of badge container
     --mat-badge-container-padding: 3px 8px;
-}
-
-.experiments {
-    position: absolute;
-    top: 2px;
-    right: 8px;
-    a {
-        text-decoration: none;
-        font-weight: bold;
-    }
 }

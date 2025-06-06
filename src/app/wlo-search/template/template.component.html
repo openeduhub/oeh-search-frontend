@@ -45,7 +45,7 @@
           ></wlo-topic-header>
         </div>
         <div class="template-search-container">
-          <h2>
+          <h2 class="mat-heading-2">
             {{ 'TOPIC_PAGE.SEARCH_HEADING' | translate }}
           </h2>
           <wlo-search-widget (searchTermChanged)="searchTermChanged($event)"></wlo-search-widget>
@@ -127,7 +127,7 @@
       <!-- [hidden] is used to load the component, even when the menu item is not selected -->
       <!-- This is important to successfully read the selectedDimensionValueIds -->
       <div [hidden]="selectedMenuItem !== ('TOPIC_PAGE.SIDE_MENU.PROFILING.LABEL' | translate)">
-        <h2 class="side-menu-header mat-display-small">
+        <h2 class="side-menu-header mat-heading-3 font-bold">
           {{ 'TOPIC_PAGE.SIDE_MENU.PROFILING.HEADING' | translate }}
         </h2>
         <wlo-filter-bar
@@ -144,7 +144,7 @@
       <ng-container
         *ngIf="selectedMenuItem === ('TOPIC_PAGE.SIDE_MENU.TOPIC_TREE.LABEL' | translate)"
       >
-        <h2 class="side-menu-header mat-display-small">
+        <h2 class="side-menu-header mat-heading-3 font-bold">
           {{ 'TOPIC_PAGE.SIDE_MENU.TOPIC_TREE.HEADING' | translate: { topic: topic() } }}
         </h2>
         <wlo-topics-column-browser
@@ -159,7 +159,7 @@
       <ng-container
         *ngIf="selectedMenuItem === ('TOPIC_PAGE.SIDE_MENU.STATISTICS.LABEL' | translate)"
       >
-        <h2 class="side-menu-header mat-display-small">
+        <h2 class="side-menu-header mat-heading-3 font-bold">
           {{ 'TOPIC_PAGE.SIDE_MENU.STATISTICS.HEADING' | translate: { topic: topic() } }}
         </h2>
         <wlo-statistics-summary
@@ -299,8 +299,8 @@
                       *ngTemplateOutlet="swimlaneHeading; context: { swimlane, index: i }"
                     ></ng-container>
                     <span class="wlo-accordion-item-description">
-                      <mat-icon *ngIf="accordionItem.expanded">expand_less</mat-icon>
-                      <mat-icon *ngIf="!accordionItem.expanded">expand_more</mat-icon>
+                      <i *ngIf="accordionItem.expanded" esIcon="expand_less"></i>
+                      <i *ngIf="!accordionItem.expanded" esIcon="expand_more"></i>
                     </span>
                   </div>
                   <div

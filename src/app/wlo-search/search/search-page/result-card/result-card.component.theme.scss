@@ -1,11 +1,9 @@
-@use '@angular/material' as mat;
-@import '../../../functions';
+@use 'variables' as *;
 
-@mixin result-card-theme($theme) {
+@mixin result-card-theme() {
     app-result-card {
         mat-card {
-            // surface-container-lowest is equal to #fff in light mode
-            background: mat.get-theme-color($theme, surface-container-lowest);
+            background: $surface;
             box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.25) !important;
             transition: box-shadow 0.3s, transform 0.3s;
             &:hover {
@@ -14,56 +12,51 @@
             }
         }
         .app-result-card-selected::after {
-            border-color: mat.get-theme-color($theme, primary);
+            border-color: $primary;
         }
         .app-result-card-title button {
-            color: mat.get-theme-color($theme, on-surface);
+            color: $on-surface;
         }
-        // TODO: neutral, 35 might be replaced by on-surface-variant
         .body mat-icon,
         .metadata,
         .source {
-            @if mat.get-theme-type($theme) == light {
-                color: mat.get-theme-color($theme, neutral, 35);
-            } @else {
-                color: mat.get-theme-color($theme, neutral, 99);
-            }
+            color: $secondary-text;
         }
     }
     app-result-card-content-compact {
-        // TODO: Change static color
         .editorial-hint {
-            color: #106029;
+            color: $success;
         }
     }
 }
 
-@mixin result-card-typography($typography) {
+@mixin result-card-typography() {
     app-result-card {
-        // even though the h3 style is already applied to h2 through classes, further decrease the font-size
         h2.app-result-card-title {
-            font-size: var(--sys-headline-large-size) !important;
+            font-size: $font-size-large !important;
+            line-height: $line-height-medium;
         }
         // decrease font-size + line-height of description
         .description {
-            font-size: var(--sys-body-medium-size);
-            line-height: var(--sys-body-medium-line-height);
+            font-size: $font-size-x-small;
+            line-height: $line-height-medium;
         }
         // decrease font-size + line-height of metadata
         .metadata,
         .source {
-            font-size: var(--sys-body-small-size);
-            line-height: var(--sys-body-small-line-height);
+            font-size: 75%;
+            line-height: $line-height-small;
+            // restore 1em font-size of mat-icon
             .mat-icon,
             .mat-mdc-icon {
-                font-size: var(--sys-body-small-size);
+                font-size: 1em;
             }
         }
     }
     app-result-card-content-compact {
         // decrease font-size of card-content
         .mat-mdc-card-content {
-            font-size: var(--sys-body-medium-size);
+            font-size: $font-size-small;
         }
     }
 }

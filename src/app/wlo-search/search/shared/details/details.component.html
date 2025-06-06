@@ -114,7 +114,9 @@
         <span class="app-preview-panel-source">{{ hit | nodeProperty: 'source' }}</span>
       </ng-template>
     </div>
-    <h2 class="app-preview-panel-title">{{ hit | nodeProperty: 'title' }}</h2>
+    <h2 class="app-preview-panel-title mat-heading-2 font-bold">
+      {{ hit | nodeProperty: 'title' }}
+    </h2>
     <p
       class="app-preview-panel-description"
       *ngIf="hit | nodeProperty: 'description' as description"
@@ -220,16 +222,15 @@
       class="app-preview-panel-metadata app-preview-panel-metadata-icon"
       *ngVar="hit | nodeProperty: 'author' as author"
     >
-      <mat-icon
-        [matTooltip]="'TOPIC_PAGE.WIDGET.USER_CONFIGURABLE.AUTHOR_LABEL' | translate"
-        svgIcon="author"
+      <i
+        esIcon="svg-author"
         class="icon-gray"
-      ></mat-icon>
+        [matTooltip]="'TOPIC_PAGE.WIDGET.USER_CONFIGURABLE.AUTHOR_LABEL' | translate"
+      ></i>
       <span class="cdk-visually-hidden">
         {{ 'TOPIC_PAGE.WIDGET.USER_CONFIGURABLE.AUTHOR_LABEL' | translate }}
       </span>
-      <span *ngIf="author; else emptyState"
-        >>
+      <span *ngIf="author; else emptyState">
         {{ author }}
       </span>
     </div>
@@ -256,32 +257,32 @@
       *ngIf="hit | nodeProperty: 'conditionsOfAccess' as conditionsOfAccess"
       [ngSwitch]="conditionsOfAccess.id"
     >
-      <mat-icon
+      <i
         *ngSwitchCase="'http://w3id.org/openeduhub/vocabs/conditionsOfAccess/no_login'"
-        svgIcon="login"
+        esIcon="svg-login"
         class="icon-green"
         [matTooltip]="'TOPIC_PAGE.PREVIEW_PANEL.CONDITIONS_OF_ACCESS' | translate"
-      ></mat-icon>
-      <mat-icon
+      ></i>
+      <i
         *ngSwitchCase="
           'http://w3id.org/openeduhub/vocabs/conditionsOfAccess/login_for_additional_features'
         "
-        svgIcon="login"
+        esIcon="svg-login"
         class="icon-orange"
         [matTooltip]="'TOPIC_PAGE.PREVIEW_PANEL.CONDITIONS_OF_ACCESS' | translate"
-      ></mat-icon>
-      <mat-icon
+      ></i>
+      <i
         *ngSwitchCase="'http://w3id.org/openeduhub/vocabs/conditionsOfAccess/login'"
-        svgIcon="login"
+        esIcon="svg-login"
         class="icon-red"
         [matTooltip]="'TOPIC_PAGE.PREVIEW_PANEL.CONDITIONS_OF_ACCESS' | translate"
-      ></mat-icon>
-      <mat-icon
+      ></i>
+      <i
         *ngSwitchDefault
-        svgIcon="login"
+        esIcon="svg-login"
         class="icon-gray"
         [matTooltip]="'TOPIC_PAGE.PREVIEW_PANEL.CONDITIONS_OF_ACCESS' | translate"
-      ></mat-icon>
+      ></i>
       <span>{{ conditionsOfAccess.displayName | capitalizeFirstLetter }}</span>
     </div>
     <div
@@ -290,39 +291,39 @@
       [ngSwitch]="price.id"
     >
       <ng-container *ngSwitchCase="'http://w3id.org/openeduhub/vocabs/price/no'">
-        <mat-icon
-          svgIcon="price"
+        <i
+          esIcon="svg-price"
           class="icon-green"
           [matTooltip]="'TOPIC_PAGE.PREVIEW_PANEL.PRICE' | translate"
-        ></mat-icon>
+        ></i>
         <span>
           {{ 'TOPIC_PAGE.PREVIEW_PANEL.FREE_OF_CHARGE' | translate }}
         </span>
       </ng-container>
       <ng-container *ngSwitchCase="'http://w3id.org/openeduhub/vocabs/price/yes'">
-        <mat-icon
-          svgIcon="price"
+        <i
+          esIcon="svg-price"
           class="icon-red"
           [matTooltip]="'TOPIC_PAGE.PREVIEW_PANEL.PRICE' | translate"
-        ></mat-icon>
+        ></i>
         <span>
           {{ 'TOPIC_PAGE.PREVIEW_PANEL.PAID_CONTENT' | translate }}
         </span>
       </ng-container>
       <ng-container *ngSwitchCase="'http://w3id.org/openeduhub/vocabs/price/yes_for_additional'">
-        <mat-icon
-          svgIcon="price"
+        <i
+          esIcon="svg-price"
           class="icon-orange"
           [matTooltip]="'TOPIC_PAGE.PREVIEW_PANEL.PRICE' | translate"
-        ></mat-icon>
+        ></i>
         <span>{{ price.displayName }}</span>
       </ng-container>
       <ng-container *ngSwitchDefault>
-        <mat-icon
-          svgIcon="price"
+        <i
+          esIcon="svg-price"
           class="icon-gray"
           [matTooltip]="'TOPIC_PAGE.PREVIEW_PANEL.PRICE' | translate"
-        ></mat-icon>
+        ></i>
         <span>{{ 'TOPIC_PAGE.PREVIEW_PANEL.PRICE' | translate }}: {{ price.displayName }}</span>
       </ng-container>
     </div>
@@ -332,31 +333,31 @@
       [ngSwitch]="containsAdvertisement.id"
     >
       <ng-container *ngSwitchCase="'http://w3id.org/openeduhub/vocabs/containsAdvertisement/no'">
-        <mat-icon
-          svgIcon="advertisement"
+        <i
+          esIcon="svg-advertisement"
           class="icon-green"
           [matTooltip]="'TOPIC_PAGE.PREVIEW_PANEL.CONTAINS_ADVERTISEMENT' | translate"
-        ></mat-icon>
+        ></i>
         <span>
           {{ 'TOPIC_PAGE.PREVIEW_PANEL.NO_ADVERTISEMENT' | translate }}
         </span>
       </ng-container>
       <ng-container *ngSwitchCase="'http://w3id.org/openeduhub/vocabs/containsAdvertisement/yes'">
-        <mat-icon
-          svgIcon="advertisement"
+        <i
+          esIcon="svg-advertisement"
           class="icon-red"
           [matTooltip]="'TOPIC_PAGE.PREVIEW_PANEL.CONTAINS_ADVERTISEMENT' | translate"
-        ></mat-icon>
+        ></i>
         <span>
           {{ 'TOPIC_PAGE.PREVIEW_PANEL.ADVERTISEMENT_CONTAINED' | translate }}
         </span>
       </ng-container>
       <ng-container *ngSwitchDefault>
-        <mat-icon
-          svgIcon="advertisement"
+        <i
+          esIcon="svg-advertisement"
           class="icon-gray"
           [matTooltip]="'TOPIC_PAGE.PREVIEW_PANEL.CONTAINS_ADVERTISEMENT' | translate"
-        ></mat-icon>
+        ></i>
         <span>
           {{ 'TOPIC_PAGE.PREVIEW_PANEL.ADVERTISEMENT_CONTAINED' | translate }}:
           {{ containsAdvertisement.displayName }}
@@ -394,17 +395,19 @@
         </button>
       </span>
     </div>
-    <a href="javascript:void(0)" (click)="reportProblem()" class="report-problem-link">
-      <span class="app-preview-panel-button-wrapper">
-        <span>
-          {{ 'TOPIC_PAGE.PREVIEW_PANEL.REPORT_PROBLEM.LABEL' | translate }}
-        </span>
-        <i esIcon="announcement"></i>
+    <a
+      href="javascript:void(0)"
+      (click)="reportProblem()"
+      class="app-preview-panel-button-wrapper report-problem-link"
+    >
+      <span>
+        {{ 'TOPIC_PAGE.PREVIEW_PANEL.REPORT_PROBLEM.LABEL' | translate }}
       </span>
+      <i esIcon="announcement"></i>
     </a>
   </div>
   <div class="app-preview-related-items" *ngIf="usedInCollections$ | async as usedInCollections">
-    <h3 class="app-preview-related-items-heading">
+    <h3 class="app-preview-related-items-heading mat-heading-3">
       {{ 'TOPIC_PAGE.PREVIEW_PANEL.RELATED_SUBJECT_PAGES' | translate }}
     </h3>
     <div class="app-preview-related-items-carousel-container">

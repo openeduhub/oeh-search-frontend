@@ -10,19 +10,19 @@
       {{ 'TOPIC_PAGE.SWIMLANE.SELECT_ELEMENT.HEADING' | translate }}
     </div>
     <button mat-menu-item [matMenuTriggerFor]="containerGrid">
-      <mat-icon svgIcon="one_column"></mat-icon>
+      <i esIcon="svg-one_column"></i>
       <span>
         {{ 'TOPIC_PAGE.SWIMLANE.SELECT_ELEMENT.CONTAINER_ELEMENT' | translate }}
       </span>
     </button>
     <button mat-menu-item [matMenuTriggerFor]="accordionGrid">
-      <mat-icon svgIcon="storage"></mat-icon>
+      <i esIcon="svg-storage"></i>
       <span>
         {{ 'TOPIC_PAGE.SWIMLANE.SELECT_ELEMENT.ACCORDION_ELEMENT' | translate }}
       </span>
     </button>
     <button mat-menu-item [matMenuTriggerFor]="anchorGrid">
-      <mat-icon svgIcon="anchor"></mat-icon>
+      <i esIcon="svg-anchor"></i>
       <span>
         {{ 'TOPIC_PAGE.SWIMLANE.SELECT_ELEMENT.ANCHOR_MENU' | translate }}
       </span>
@@ -55,14 +55,7 @@
       *ngFor="let option of swimlaneGridOptions"
       (click)="configureSwimlaneAndGrid(type, option.value)"
     >
-      <i
-        class="material-icons-outlined"
-        *ngIf="!!option.icon; else checkSvgIcon"
-        [esIcon]="option.icon"
-      ></i>
-      <ng-template #checkSvgIcon>
-        <mat-icon *ngIf="!!option.svgIcon" [svgIcon]="option.svgIcon"></mat-icon>
-      </ng-template>
+      <i class="material-icons-outlined" *ngIf="option.icon" [esIcon]="option.icon"></i>
       {{ 'TOPIC_PAGE.SWIMLANE.SELECT_LAYOUT.' + option.viewValue | translate }}
     </button>
   </ng-template>

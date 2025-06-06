@@ -19,7 +19,6 @@ import { MatSnackBarRef, TextOnlySnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { MdsValue, MdsWidget, Node, NodeEntries } from 'ngx-edu-sharing-api';
 import { ParentEntries } from 'ngx-edu-sharing-api/lib/api/models/parent-entries';
-import { TranslationsService } from 'ngx-edu-sharing-ui';
 import {
     BreadcrumbComponent,
     checkUserAccess,
@@ -135,7 +134,6 @@ export class TemplateComponent implements OnDestroy, OnInit {
         private router: Router,
         private statisticsHelperService: StatisticsHelperService,
         private templateHelperService: TemplateHelperService,
-        private translationsService: TranslationsService,
     ) {}
 
     @Input() set collectionId(value: string) {
@@ -217,8 +215,6 @@ export class TemplateComponent implements OnDestroy, OnInit {
      * page config and statistics.
      */
     async ngOnInit(): Promise<void> {
-        // initialize the translationsService
-        this.translationsService.initialize().subscribe(() => {});
         // retrieve the search URL
         this.searchUrl = retrieveSearchUrl();
         // set the default language for API requests

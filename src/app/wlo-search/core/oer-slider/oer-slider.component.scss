@@ -24,10 +24,15 @@
             }
         }
 
-        // fix position of switch button
+        // fix position + border-radius of unselected switch button
         &.mdc-switch--unselected .mdc-switch__handle {
             margin-left: -5px !important;
-            border-radius: 15px;
+            border-radius: 50%;
+        }
+
+        // fix border-radius of selected switch button
+        &.mdc-switch--selected .mdc-switch__handle {
+            border-radius: 50%;
         }
     }
     // change height and width of the toggle button itself

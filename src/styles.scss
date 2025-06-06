@@ -1,46 +1,23 @@
-@use '@angular/material' as mat;
+// import of material theme used by Edu-Sharing
+@use 'ngx-edu-sharing-ui/assets/scss/material-theme' as *;
+// import of individual component themes
 @use 'app/wlo-search';
-@use 'custom-theme' as custom-theme;
-
-@import './additional-colors';
+@use 'global-theme-overrides';
+// imports of variables + fonts
+@import '_variables';
 @import './fonts';
-// TODO: Remove, as those are the incorrect styles
-$material-icons-font-path: 'material-icons/iconfont/';
-@import 'material-icons/iconfont/material-icons';
-@import 'ngx-edu-sharing-ui/assets/scss/variables';
-@import 'global-overrides.theme';
 
-// Include the common styles for Angular Material
-// The core mixin that includes prerequisite styles for common features used by multiple components
-@include mat.core();
-// TODO: Comment out due to ugly focus indicators on click
-//@include mat.strong-focus-indicators();
-
-@mixin apply-theme($theme) {
-    // Emit styles for color, typography and density to all components.
-    // Alternatives: all-component-colors, all-component-typographies, all-component-densities
-    //
-    // You might reduce size by only including the styles used in the application,
-    // e.g. mat.core-theme and mat.button-theme instead of mat.all-component-theme
-    @include mat.all-component-themes($theme);
-    //@include mat.strong-focus-indicators-theme($theme);
+@mixin adjust-theme() {
     // include global material overrides
-    @include angular-material-theme-overrides($theme);
-    // include search component themes
-    @include wlo-search.components-themes($theme);
-    @include mat.all-component-typographies($theme);
-    @include mat.typography-hierarchy($theme);
-    @include wlo-search.components-typographies($theme);
-    // system variables: --sys-<pre_typescale_level>-<variation>-<property_token>
-    @include mat.system-level-colors($theme);
-    @include mat.system-level-typography($theme);
-    @include angular-material-typography-overrides($theme);
+    @include global-theme-overrides.angular-material-theme-overrides();
+    // include topic page component themes + typographies
+    @include wlo-search.components-themes();
+    @include wlo-search.components-typographies();
 }
 
 :root {
-    $selected-theme: custom-theme.$light-theme;
-    @include apply-theme($selected-theme);
-    // make CSS variable accessable for further applications
+    @include adjust-theme();
+    // make CSS variable accessible for further applications using role names of Material 3
     // valid role names: background, error, error-container, inverse-on-surface, inverse-primary,
     //                   inverse-surface, on-background, on-error, on-error-container, on-primary,
     //                   on-primary-container, on-primary-fixed, on-primary-fixed-variant,
@@ -55,72 +32,55 @@ $material-icons-font-path: 'material-icons/iconfont/';
     //                   tertiary, tertiary-container, tertiary-fixed, tertiary-fixed-dim
     // currently, only selected roles are made available globally
     // in future versions, system variables might replace this: https://material.angular.io/guide/system-variables
-    // theming color roles
-    --inverse-surface: #{mat.get-theme-color($selected-theme, inverse-surface)};
-    --on-primary: #{mat.get-theme-color($selected-theme, on-primary)};
-    --on-surface: #{mat.get-theme-color($selected-theme, on-surface)};
-    --outline: #{mat.get-theme-color($selected-theme, outline-variant)};
-    --primary: #{mat.get-theme-color($selected-theme, primary)};
-    --primary-container: #{mat.get-theme-color($selected-theme, primary-container)};
-    --secondary: #{mat.get-theme-color($selected-theme, secondary)};
-    --surface: #{mat.get-theme-color($selected-theme, surface)};
-    --surface-container-highest: #{mat.get-theme-color($selected-theme, surface-container-highest)};
-    --surface-container-low: #{mat.get-theme-color($selected-theme, surface-container-low)};
+    // directly matching theming color roles
+    // MATERIAL COLOR ROLE VARIABLES
+    --inverse-surface: #{$inverse-surface};
+    --on-primary: #{$on-primary};
+    --on-surface: #{$on-surface};
+    --outline: #{$outline};
+    //--primary: #{$primary};
+    --secondary: #{$secondary};
+    --surface: #{$surface};
+    --surface-dim: #{$surface-dim};
+    --surface-container-highest: #{$surface-container-highest};
+    --surface-container-high: #{$surface-container-high};
+    --surface-container: #{$surface-container};
+    --surface-container-low: #{$surface-container-low};
+    --surface-container-lowest: #{$surface-container-lowest};
 
-    @if mat.get-theme-type($selected-theme) == light {
-        --sidebar-button: #{mat.get-theme-color($selected-theme, neutral, 99)};
-        --secondary-text: #{mat.get-theme-color($selected-theme, neutral, 35)};
-        --tile-text: #333;
-    } @else {
-        --sidebar-button: #{mat.get-theme-color($selected-theme, secondary, 25)};
-        --secondary-text: #{mat.get-theme-color($selected-theme, neutral, 99)};
-        --tile-text: #f7f7f7;
-    }
-
+    // EXTENDED COLOR VARIABLES
     --neon-default: #{$neon-default};
     --neon-medium: #{$neon-medium};
+    --outline-light: #{$outline-light};
+    --pink-default: #{$pink-default};
+    --secondary-text: #{$secondary-text};
 
-    // theming typography
-    // note: using #{mat.get-theme-typography($selected-theme, body-medium)} did not worked,
-    //       so the system variables are used
-    // valid typescales are: display-large, display-medium, display-small, headline-large,
-    //                       headline-medium, headline-small, title-large, title-medium,
-    //                       title-small, label-large, label-medium, label-small, body-large,
-    //                       body-medium, body-small.
-    // font-size
-    --display-small-size: #{var(--sys-display-small-size)};
-    --headline-large-size: #{var(--sys-headline-large-size)};
-    --headline-medium-size: #{var(--sys-headline-medium-size)};
-    --headline-small-size: #{var(--sys-headline-small-size)};
-    --body-large-size: #{var(--sys-body-large-size)};
-    --body-medium-size: #{var(--sys-body-medium-size)};
-    --body-small-size: #{var(--sys-body-small-size)};
-    --body-extra-small-size: 0.625rem;
+    // TYPOGRAPHY VARIABLES
     // font-family
-    --body-large-font: #{var(--sys-body-large-font)};
-    --display-small-font: #{var(--sys-display-small-font)};
-    --headline-large-font: #{var(--sys-headline-large-font)};
+    --primary-font-family: #{$primary-font-family};
+    --brand-font-family: #{$brand-font-family};
+    // font-size
+    --font-size-x-large: #{$font-size-x-large};
+    --font-size-large: #{$font-size-large};
+    --font-size-medium: #{$font-size-medium};
+    --font-size-small: #{$font-size-small};
+    --font-size-x-small: #{$font-size-x-small};
     // font-weight
-    --body-large-weight: #{var(--sys-body-large-weight)};
-    --label-large-weight: #{var(--sys-label-large-weight)};
-    --label-large-weight-prominent: #{var(--sys-label-large-weight-prominent)};
+    --font-weight-x-bold: #{$font-weight-x-bold};
+    --font-weight-bold: #{$font-weight-bold};
+    --font-weight-medium: #{$font-weight-medium};
+    --font-weight-regular: #{$font-weight-regular};
     // line-height
-    --body-large-line-height: #{var(--sys-body-large-line-height)};
-    --body-medium-line-height: #{var(--sys-body-medium-line-height)};
-    --body-small-line-height: #{var(--sys-body-small-line-height)};
+    --line-height-large: #{$line-height-large};
+    --line-height-medium: #{$line-height-medium};
+    --line-height-small: #{$line-height-small};
 }
-
-// TODO: This will enable dark mode, if selected by the system
-// for dark mode, we only want to swap the colors and every other style should remain the same
-//@media (prefers-color-scheme: dark) {
-//    :root {
-//        @include mat.all-component-colors(custom-theme.$dark-theme);
-//    }
-//}
 
 // CUSTOM GLOBAL STYLES
 html,
 body {
+    font-family: $primary-font-family !important;
+    -webkit-font-smoothing: antialiased;
     height: 100%;
 }
 
@@ -180,7 +140,7 @@ button,
 // further style definitions
 .alert-warning {
     padding: 16px;
-    font-size: var(--sys-body-large-size);
+    font-size: $font-size-medium;
     text-align: center;
     border-width: 1px;
     border-style: solid;
@@ -274,4 +234,76 @@ html.cdk-global-scrollblock {
 :focus-visible {
     outline-offset: 2px;
     outline: currentcolor solid 3px;
+}
+
+// Static fix for now to override 1em defined in material theme CSS
+i.mat-icon {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+    &::before {
+        display: inline-block;
+    }
+}
+
+// STYLES RETRIEVED AND ADJUSTED FROM app/core-ui-module/styles/globals.scss
+.display-none {
+    display: none !important;
+}
+.opacity-invisible {
+    opacity: 0;
+}
+
+.mat-typography {
+    .mat-heading-1,
+    .mat-heading-2,
+    .mat-heading-3,
+    .mat-heading-4,
+    .mat-heading-5,
+    .mat-heading-6 {
+        display: flex;
+        align-items: center;
+        font-weight: normal;
+        i {
+            margin: 0 5px;
+        }
+        > span {
+            flex-grow: 1;
+        }
+        &.font-bold {
+            font-weight: bold;
+        }
+    }
+
+    .mat-heading-1 {
+        font-size: 220%;
+        &.important {
+            font-size: 220% !important;
+        }
+    }
+    .mat-heading-2 {
+        font-size: 170%;
+        &.important {
+            font-size: 170% !important;
+        }
+    }
+    .mat-heading-3 {
+        font-size: 150%;
+        &.important {
+            font-size: 150% !important;
+        }
+    }
+    .mat-heading-4 {
+        font-size: 120%;
+        font-weight: bold;
+    }
+    .mat-heading-5 {
+        font-size: 100%;
+        font-weight: bold;
+        line-height: 1.3;
+    }
+    .mat-heading-6 {
+        font-size: 90%;
+        font-weight: bold;
+    }
 }

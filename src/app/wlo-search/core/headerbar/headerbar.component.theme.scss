@@ -1,48 +1,36 @@
-@use '@angular/material' as mat;
-@import '../../functions';
-@import '../../../../additional-colors';
+@use 'variables' as *;
 
-@mixin headerbar-theme($theme) {
+@mixin headerbar-theme() {
     app-headerbar {
         // Note: this should not change, even when being in dark mode
-        border-color: mat.get-theme-color($theme, primary, 25);
+        border-color: $primary-dark;
         // Compact mode for the headerbar
         &[data-style='compact'] {
             // Note: this should not change, even when being in dark mode
-            background-color: mat.get-theme-color($theme, primary, 40);
+            background-color: $primary;
         }
         .filter-button {
-            color: mat.get-theme-color($theme, primary);
-            background-color: mat.get-theme-color($theme, on-primary);
+            color: $primary;
+            background-color: $on-primary;
             &:hover,
             &:active,
             &:focus {
-                @if mat.get-theme-type($theme) == light {
-                    background-color: mat.get-theme-color($theme, secondary, 95);
-                } @else {
-                    background-color: mat.get-theme-color($theme, primary, 10);
-                }
+                background-color: $on-primary;
             }
             .mat-badge-content {
-                color: mat.get-theme-color($theme, primary, 100);
+                color: $on-primary;
                 background-color: $pink-default;
-            }
-        }
-        .experiments {
-            &,
-            > a {
-                // Note: this should not change, even when being in dark mode
-                color: mat.get-theme-color($theme, primary, 95);
             }
         }
     }
 }
 
-@mixin headerbar-typography($typography) {
+@mixin headerbar-typography() {
     app-headerbar {
-        // increase font-size of filter button
+        // increase font-size and font-weight of filter button
         .filter-button {
-            font-size: var(--sys-body-large-size);
+            font-size: $font-size-medium;
+            font-weight: $font-weight-bold;
         }
     }
 }

@@ -1,14 +1,10 @@
-@use '@angular/material' as mat;
-@import '../../../../additional-colors';
-@import '../../functions';
+@use 'variables' as *;
 
-@mixin swimlane-theme($theme) {
+@mixin swimlane-theme() {
     app-swimlane {
-        .text-widget {
-            background: mat.get-theme-color($theme, surface-container-low);
-        }
         .grid-container {
-            border-color: rgba(mat.get-theme-color($theme, outline), 0.7);
+            // lighten does not work here, as outline is retrieved from variables
+            border-color: rgba($outline, 0.7);
         }
     }
 }

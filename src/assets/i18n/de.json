@@ -236,9 +236,10 @@
       },
       "EDIT": {
         "ARIA_LABEL": "Abschnitt bearbeiten",
-        "HEADING": "Konfiguriere \"{{heading}}\"",
+        "HEADING": "Konfiguriere {{heading}}",
         "HEADING_LABEL": "Überschrift",
         "HEADING_PLACEHOLDER": "Überschrift des Abschnitts",
+        "SWIMLANE_DEFAULT": "Abschnitt",
         "TYPE_LABEL": "Typ",
         "GRID_DEFINITION_LABEL": "Grid-Definition",
         "CHANGE_GRID_HINT": "Wenn Sie den Grid-Typ ändern, können Widgets, die auf später nichtmehr vorhandenen Positionen am Ende des Grids hinzugefügt wurden, verloren gehen. Verschieben Sie daher bitte zuerst die jeweiligen Widgets, bevor Sie mit der Grid-Anpassung fortfahren."

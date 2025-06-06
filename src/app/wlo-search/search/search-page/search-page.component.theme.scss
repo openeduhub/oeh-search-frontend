@@ -1,14 +1,12 @@
-@use '@angular/material' as mat;
-@import '../../../../additional-colors';
-@import '../../functions';
+@use 'variables' as *;
 
-@mixin search-page-theme($theme) {
+@mixin search-page-theme() {
     app-search {
         .did-you-mean a {
-            color: mat.get-theme-color($theme, primary);
+            color: $primary;
         }
         .participate-button {
-            color: mat.get-theme-color($theme, primary, 40);
+            color: $primary;
             background-color: $neon-default;
 
             &:hover {
@@ -17,60 +15,30 @@
         }
         // change color of tabs for all search results and search results by content type
         .search-result-options {
-            --mat-tab-header-active-label-text-color: #{mat.get-theme-color($theme, primary)};
-            --mat-tab-header-active-focus-label-text-color: #{mat.get-theme-color($theme, primary)};
-            @if mat.get-theme-type($theme) == light {
-                --mat-tab-header-inactive-label-text-color: #{mat.get-theme-color(
-                        $theme,
-                        neutral,
-                        35
-                    )};
-                --mat-tab-header-inactive-hover-label-text-color: #{mat.get-theme-color(
-                        $theme,
-                        neutral,
-                        35
-                    )};
-            } @else {
-                --mat-tab-header-inactive-label-text-color: #{mat.get-theme-color(
-                        $theme,
-                        neutral,
-                        80
-                    )};
-                --mat-tab-header-inactive-hover-label-text-color: #{mat.get-theme-color(
-                        $theme,
-                        neutral,
-                        80
-                    )};
-            }
+            --mat-tab-header-active-label-text-color: #{$primary};
+            --mat-tab-header-active-focus-label-text-color: #{$primary};
+            --mat-tab-header-inactive-label-text-color: #{$secondary-text};
+            --mat-tab-header-inactive-hover-label-text-color: #{$secondary-text};
         }
         // change background color of view mode toggle button
         .style-toggle {
-            @if mat.get-theme-type($theme) == light {
-                --mat-standard-button-toggle-selected-state-background-color: #{mat.get-theme-color(
-                        $theme,
-                        neutral,
-                        80
-                    )};
-            } @else {
-                --mat-standard-button-toggle-selected-state-background-color: #{mat.get-theme-color(
-                        $theme,
-                        neutral,
-                        35
-                    )};
+            --mat-standard-button-toggle-divider-color: #{$outline};
+
+            .mat-button-toggle-appearance-standard.mat-button-toggle-checked {
+                background-color: lighten($secondary, 10%);
             }
         }
     }
 }
 
-@mixin search-page-typography($typography) {
+@mixin search-page-typography() {
     app-search {
-        // use system variable to overwrite: https://github.com/angular/components/issues/30055#issuecomment-2492003358
         .did-you-mean em,
         .summary em {
-            font-weight: var(--sys-label-large-weight-prominent);
+            font-weight: $font-weight-x-bold;
         }
         .participate-button {
-            font-weight: var(--sys-label-large-weight-prominent);
+            font-weight: $font-weight-x-bold;
         }
     }
 }

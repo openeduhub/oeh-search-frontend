@@ -1,56 +1,56 @@
-@import 'core/footerbar/footerbar.component.theme.scss';
-@import 'core/headerbar/headerbar.component.theme.scss';
-@import 'core/menubar/menubar.component.theme.scss';
-@import 'core/oer-slider/oer-slider.component.theme.scss';
-@import 'core/search-field/search-field.component.theme.scss';
-@import 'search/search-page/badges/badges.component.theme.scss';
-@import 'search/search-page/multivalue-checkbox/multivalue-checkbox.component.theme.scss';
-@import 'search/search-page/paginator/paginator.component.theme.scss';
-@import 'search/search-page/result-card/result-card.component.theme.scss';
-@import 'search/search-page/search-filterbar/search-filterbar.component.theme.scss';
-@import 'search/search-page/search-page.component.theme.scss';
-@import 'search/shared/collection-card/collection-card.component.theme.scss';
-@import 'search/shared/details/details.component.theme.scss';
-@import 'template/add-swimlane-button/add-swimlane-border-button.component.theme.scss';
-@import 'template/swimlane/swimlane.component.theme.scss';
-@import 'template/swimlane/swimlane-settings-dialog/swimlane-settings-dialog.component.theme.scss';
-@import 'template/template.component.theme.scss';
-@import 'wlo-search.component.theme.scss';
+@use 'core/footerbar/footerbar.component.theme' as *;
+@use 'core/headerbar/headerbar.component.theme' as *;
+@use 'core/menubar/menubar.component.theme' as *;
+@use 'core/oer-slider/oer-slider.component.theme' as *;
+@use 'core/search-field/search-field.component.theme' as *;
+@use 'search/search-page/badges/badges.component.theme' as *;
+@use 'search/search-page/multivalue-checkbox/multivalue-checkbox.component.theme' as *;
+@use 'search/search-page/paginator/paginator.component.theme' as *;
+@use 'search/search-page/result-card/result-card.component.theme' as *;
+@use 'search/search-page/search-filterbar/search-filterbar.component.theme' as *;
+@use 'search/search-page/search-page.component.theme' as *;
+@use 'search/shared/collection-card/collection-card.component.theme' as *;
+@use 'search/shared/details/details.component.theme' as *;
+@use 'template/add-swimlane-button/add-swimlane-border-button.component.theme' as *;
+@use 'template/swimlane/swimlane.component.theme' as *;
+@use 'template/swimlane/swimlane-settings-dialog/swimlane-settings-dialog.component.theme' as *;
+@use 'template/template.component.theme' as *;
+@use 'wlo-search.component.theme' as *;
 
 // list of replacements used:
 // * primary -> primary (role)
 // * primary, 400 -> primary, 25
 // * secondary-text -> neutral, 35
 // * transparent background -> rgba(surface (role), .5)
-@mixin components-themes($theme) {
-    @include add-swimlane-border-theme($theme);
-    @include badges-theme($theme);
-    @include collection-card-theme($theme);
-    @include details-theme($theme);
-    @include footerbar-theme($theme);
-    @include headerbar-theme($theme);
-    @include menubar-theme($theme);
-    @include multivalue-checkbox-theme($theme);
-    @include oer-slider-theme($theme);
-    @include paginator-theme($theme);
-    @include result-card-theme($theme);
-    @include search-field-theme($theme);
-    @include search-filterbar-theme($theme);
-    @include search-page-theme($theme);
-    @include swimlane-settings-dialog-theme($theme);
-    @include swimlane-theme($theme);
-    @include template-page-theme($theme);
-    @include wlo-search-theme($theme);
+@mixin components-themes() {
+    @include add-swimlane-border-theme();
+    @include badges-theme();
+    @include collection-card-theme();
+    @include details-theme();
+    @include footerbar-theme();
+    @include headerbar-theme();
+    @include menubar-theme();
+    @include multivalue-checkbox-theme();
+    @include oer-slider-theme();
+    @include paginator-theme();
+    @include result-card-theme();
+    @include search-field-theme();
+    @include search-filterbar-theme();
+    @include search-page-theme();
+    @include swimlane-settings-dialog-theme();
+    @include swimlane-theme();
+    @include template-page-theme();
+    @include wlo-search-theme();
 }
 
-@mixin components-typographies($typography) {
-    @include collection-card-typography($typography);
-    @include details-typography($typography);
-    @include headerbar-typography($typography);
-    @include multivalue-checkbox-typography($typography);
-    @include result-card-typography($typography);
-    @include search-field-typography($typography);
-    @include search-filterbar-typography($typography);
-    @include search-page-typography($typography);
-    @include template-page-typography($typography);
+@mixin components-typographies() {
+    @include collection-card-typography();
+    @include headerbar-typography();
+    @include menubar-typography();
+    @include multivalue-checkbox-typography();
+    @include result-card-typography();
+    @include search-field-typography();
+    @include search-filterbar-typography();
+    @include search-page-typography();
+    @include template-page-typography();
 }

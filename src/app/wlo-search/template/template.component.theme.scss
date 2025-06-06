@@ -1,105 +1,86 @@
-@use '@angular/material' as mat;
-@import '../../../additional-colors';
-@import '../functions';
+@use 'variables' as *;
 
-@mixin template-page-theme($theme) {
+@mixin template-page-theme() {
     app-template {
         .action-btn {
-            @if mat.get-theme-type($theme) == light {
-                color: mat.get-theme-color($theme, neutral, 35);
-                background: mat.get-theme-color($theme, neutral, 99);
-            } @else {
-                color: mat.get-theme-color($theme, neutral, 99);
-                background: mat.get-theme-color($theme, neutral, 35);
-            }
+            color: $secondary-text;
+            background: $surface;
 
             &.btn-modify {
-                color: mat.get-theme-color($theme, on-primary);
-                background: mat.get-theme-color($theme, primary);
+                color: $on-primary;
+                background: $primary;
             }
         }
 
         .reloading-indicator-bg {
-            background: mat.get-theme-color($theme, surface);
+            background: $surface;
 
             &.transparent-bg {
-                background: rgba(mat.get-theme-color($theme, inverse-surface), 0.5);
+                background: rgba($inverse-surface, 0.5);
             }
         }
 
         .breadcrumb-navbar-overflow-container {
-            @if mat.get-theme-type($theme) == light {
-                background: mat.get-theme-color($theme, neutral, 99);
-            } @else {
-                background: mat.get-theme-color($theme, neutral, 0);
-            }
+            background: $surface;
         }
 
         .template-breadcrumb {
-            @if mat.get-theme-type($theme) == light {
-                background: mat.get-theme-color($theme, primary, 25);
-            } @else {
-                background: mat.get-theme-color($theme, primary);
-            }
+            background: $primary-dark;
 
             a,
             i,
             p {
-                color: mat.get-theme-color($theme, on-primary) !important;
+                color: $on-primary !important;
             }
         }
 
         .template-search-container h2 {
-            color: mat.get-theme-color($theme, on-primary);
+            color: $on-primary;
         }
 
         .template-header-container,
         .portal-wrapper-left {
-            background: mat.get-theme-color($theme, surface);
+            background: $surface;
         }
 
         .wlo-swimlane {
-            background-color: mat.get-theme-color($theme, surface-container-low);
+            background-color: $surface-container-low;
         }
 
         .anchor-container .anchor-menu .anchor-item {
             .item-container {
-                @if mat.get-theme-type($theme) == light {
-                    background: mat.get-theme-color($theme, neutral, 99);
-                } @else {
-                    background: mat.get-theme-color($theme, neutral, 35);
-                }
+                background: $surface;
             }
 
             .total-count {
-                color: mat.get-theme-color($theme, primary, 100);
+                color: $on-primary;
                 background-color: $pink-default;
             }
         }
     }
 }
 
-@mixin template-page-typography($theme) {
+@mixin template-page-typography() {
     // increase size of accordion caret icon
     .wlo-accordion-item-description {
         .mat-icon,
         .mat-mdc-icon {
-            font-size: 1.875rem;
+            font-size: 187.5%;
         }
     }
 
-    // use medium font-size with reduced line-height
     .anchor-container .anchor-menu .anchor-item {
+        // decrease font-size + line-height of anchor item container
         .item-container {
-            font-family: var(--sys-body-large-font);
-            font-size: var(--sys-body-medium-size);
-            line-height: var(--body-small-line-height);
+            font-size: $font-size-x-small;
+            line-height: $line-height-small;
         }
 
+        // adjust font-size, line-height + font-weight of total count
         .total-count {
-            font-family: var(--sys-display-small-font);
-            font-size: var(--body-extra-small-size);
-            line-height: var(--body-small-line-height);
+            font-size: 62.5%;
+            font-weight: $font-weight-x-bold;
+            line-height: $line-height-small;
         }
     }
 }

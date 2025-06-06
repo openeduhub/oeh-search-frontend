@@ -1,32 +1,5 @@
-//@import 'src/assets/fonts/opensans_regular/stylesheet.css';
-//@import 'src/assets/fonts/opensans_bold/stylesheet.css';
-@font-face {
-    font-family: 'Montserrat-Medium';
-    src: url('src/assets/fonts/Montserrat-Medium.ttf') format('truetype');
-    font-weight: 500;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'Montserrat-SemiBold';
-    src: url('src/assets/fonts/Montserrat-SemiBold.ttf') format('truetype');
-    font-weight: 600;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'Montserrat-Bold';
-    src: url('src/assets/fonts/Montserrat-Bold.ttf') format('truetype');
-    font-weight: bold;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'Source-Sans-Pro-Regular';
-    src: url('src/assets/fonts/SourceSansPro-Regular.ttf') format('truetype');
-    font-weight: 400;
-    font-style: normal;
-}
-@font-face {
-    font-family: 'Source-Sans-Pro-Bold';
-    src: url('src/assets/fonts/SourceSansPro-Bold.ttf') format('truetype');
-    font-weight: 600;
-    font-style: normal;
-}
+@import 'src/assets/fonts/opensans_regular/stylesheet.css';
+@import 'src/assets/fonts/opensans_bold/stylesheet.css';
+@import 'src/assets/fonts/material-design-icons/material-icons.css';
+@import 'src/assets/fonts/edu-icons/edu-icons.css';
+@import 'src/assets/fonts/custom-icons/custom-icons.scss';

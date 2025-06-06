@@ -236,9 +236,10 @@
       },
       "EDIT": {
         "ARIA_LABEL": "Edit section",
-        "HEADING": "Configure \"{{heading}}\"",
+        "HEADING": "Configure {{heading}}",
         "HEADING_LABEL": "Heading",
         "HEADING_PLACEHOLDER": "Heading of the section",
+        "SWIMLANE_DEFAULT": "Swimlane",
         "TYPE_LABEL": "Type",
         "GRID_DEFINITION_LABEL": "Grid definition",
         "CHANGE_GRID_HINT": "If you change the grid type, widgets added to positions that no longer exist at the end of the grid may be lost. Please move the respective widgets first before proceeding with grid adjustment."

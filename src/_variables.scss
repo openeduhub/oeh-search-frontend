@@ -1,0 +1,105 @@
+@import 'ngx-edu-sharing-ui/assets/scss/variables-scss';
+
+// MATERIAL COLOR ROLE VARIABLES
+// define a set of variables for the topic pages from Material, Edu-Sharing and WLO based on Material v3 role names
+$inverse-surface: #000;
+$on-primary: var(--light-primary-text, #fff);
+$on-surface: if(
+    global-variable-exists('textMain'),
+    $textMain,
+    #var(--palette-foreground-text, #1a1c1c)
+);
+$outline: var(
+    --mdc-outlined-text-field-outline-color,
+    var(--mat-app-outline)
+); // $inputBorderColor is not equal to the border color of form-fields
+$primary: var(--primary, #003b7c);
+$primary-medium: #3da6ee;
+$secondary: #515f7a;
+// the following colors are retrieved from Materials neutral palette (tone value as comment)
+$surface: #faf9f9; // N-98 (possible replacement: $cardLightBackground)
+$surface-dim: #dadada; // N-87
+$surface-container-highest: #e3e2e2; // N-90
+$surface-container-high: #e8e8e8; // N-92
+$surface-container: #eee; // N-94 (possible replacement: $actionDialogBackground)
+$surface-container-low: #f4f3f3; // N-96 (possible replacement: $actionDialogBackground)
+$surface-container-lowest: if(global-variable-exists('backgroundColor'), $backgroundColor, #fff);
+
+// EXTENDED COLOR VARIABLES
+// status colors
+$error: if(global-variable-exists('warning'), darken($warning, 10%), #ba1a1a); // E-40
+$error-container: if(global-variable-exists('warning'), lighten($warning, 45%), #ffdad6); // E-90
+$success: if(
+    global-variable-exists('colorStatusPositive'),
+    darken($colorStatusPositive, 15%),
+    #43a047
+);
+$success-container: if(
+    global-variable-exists('colorStatusPositive'),
+    lighten($colorStatusPositive, 40%),
+    #e8f5e9
+);
+$warn: if(global-variable-exists('warningMedium'), darken($warningMedium, 10%), #ffb930);
+$warn-container: if(global-variable-exists('warningMedium'), lighten($warningMedium, 40%), #fff1d6);
+// chip colors
+$chip-color-discipline: if(
+    map-has-key($chip-colors, 'ccm_taxonid'),
+    map-get($chip-colors, 'ccm_taxonid'),
+    #a6d6ae
+);
+$chip-color-educationalContext: if(
+    map-has-key($chip-colors, 'ccm_educationalcontext'),
+    map-get($chip-colors, 'ccm_educationalcontext'),
+    #d6a6a6
+);
+$chip-color-intendedEndUserRole: if(
+    map-has-key($chip-colors, 'ccm_educationalintendedenduserrole'),
+    map-get($chip-colors, 'ccm_educationalintendedenduserrole'),
+    #d3d6a6
+);
+$chip-color-learningResourceType: if(
+    map-has-key($chip-colors, 'ccm_educationallearningresourcetype'),
+    map-get($chip-colors, 'ccm_educationallearningresourcetype'),
+    #d6c1a6
+);
+$chip-color-oer: #d6a6d6;
+$chip-color-source: #d0a6d6;
+$chip-color-type: if(
+    map-has-key($chip-colors, 'ccm_objecttype'),
+    map-get($chip-colors, 'ccm_objecttype'),
+    #a6c0d6
+);
+// further colors
+$neon-default: #e4f700;
+$neon-medium: #b4da1c;
+$outline-light: if(
+    global-variable-exists('searchInputBorderColor'),
+    $searchInputBorderColor,
+    #c3c6d2
+);
+$pink-default: #ec4a70;
+$primary-dark: var(
+    --palette-primary-900,
+    #032850
+); // --palette-primary-900 is currently equal to #00194b, but should be #032850
+$secondary-text: if(global-variable-exists('textLight'), $textLight, #545454); // N-35
+
+// TYPOGRAPHY VARIABLES
+// font-family
+$primary-font-family: 'open_sansregular' !default;
+$brand-font-family: 'open_sansbold' !default;
+// font-size (partly copied from variables-scss of Edu-Sharing)
+$font-size-x-large: if(global-variable-exists('fontSizeXLarge'), $fontSizeXLarge, 120%);
+$font-size-large: if(global-variable-exists('fontSizeLarge'), $fontSizeLarge, 110%);
+$font-size-medium: 100% !default;
+$font-size-small: if(global-variable-exists('fontSizeSmall'), $fontSizeSmall, 90%);
+$font-size-x-small: if(global-variable-exists('fontSizeXSmall'), $fontSizeXSmall, 85%);
+// font-weight
+$font-weight-x-bold: 700;
+$font-weight-bold: 600;
+$font-weight-medium: 500;
+$font-weight-regular: 400;
+// line-height
+$line-height-large: 150%;
+$line-height-medium: 125%;
+$line-height-small: 100%;

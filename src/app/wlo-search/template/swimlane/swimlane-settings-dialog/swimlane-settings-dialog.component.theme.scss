@@ -1,20 +1,14 @@
-@use '@angular/material' as mat;
-@import '../../../../../additional-colors';
-@import '../../../functions';
+@use 'variables' as *;
 
-@mixin swimlane-settings-dialog-theme($theme) {
+@mixin swimlane-settings-dialog-theme() {
     app-swimlane-settings-dialog {
         // adjust color of drag handle
         .drag-handle {
-            @if mat.get-theme-type($theme) == light {
-                color: mat.get-theme-color($theme, neutral, 35);
-            } @else {
-                color: mat.get-theme-color($theme, neutral, 99);
-            }
+            color: $secondary-text;
         }
         // adjust border-color of horizontal line
         hr {
-            border-color: mat.get-theme-color($theme, outline);
+            border-color: $outline;
         }
     }
 }

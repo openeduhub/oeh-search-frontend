@@ -33,16 +33,16 @@ import { TemplateComponent } from '../../../../src/app/wlo-search/template/templ
 import { environment } from '../environments/environment';
 import { DetailsEmbeddedComponent } from './details-embedded/details-embedded.component';
 import { TemplateEmbeddedComponent } from './template-embedded/template-embedded.component';
+import { MaterialCssVarsModule } from 'angular-material-css-vars';
 
 const wloSearchConfig: WloSearchConfig = {
     routerPath: '',
-    showExperiments: false,
     wordpressUrl: '',
 };
 
-const eduSharingApiModuleWithProviders = EduSharingApiModule.forRoot({
-    rootUrl: environment.eduSharingApiUrl,
-});
+const eduSharingApiModuleWithProviders = environment.production
+    ? EduSharingApiModule.forRoot({ rootUrl: environment.eduSharingApiUrl })
+    : EduSharingApiModule.forRoot();
 
 @NgModule({
     declarations: [DetailsEmbeddedComponent, TemplateEmbeddedComponent],
@@ -50,7 +50,8 @@ const eduSharingApiModuleWithProviders = EduSharingApiModule.forRoot({
         AppRoutingModule,
         BrowserModule,
         BrowserAnimationsModule,
-        EduSharingApiModule.forRoot({ rootUrl: environment.eduSharingApiUrl }),
+        MaterialCssVarsModule.forRoot({ isAutoContrast: true }),
+        eduSharingApiModuleWithProviders,
         TemplateComponent,
         SearchModule,
     ],
@@ -60,7 +61,6 @@ const eduSharingApiModuleWithProviders = EduSharingApiModule.forRoot({
             useValue: wloSearchConfig,
         },
         // from here on dependencies of wlo-pages (edu-sharing web-components)
-        { provide: 'ICON_PATH', useValue: 'assets/icons/' },
         { provide: 'IMAGE_PATH', useValue: 'assets/images/' },
         { provide: 'PERSIST_FILTERS', useValue: false },
         GlobalTemplateConfigService,

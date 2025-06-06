@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CoreModule } from './core/core.module';
-import { PreferencesModule } from './preferences/preferences.module';
 import { SearchModule } from './search/search.module';
 import { SharedModule } from './shared/shared.module';
 import { SwimlaneComponent } from './template/swimlane/swimlane.component';
@@ -13,7 +12,6 @@ import { WloSearchComponent } from './wlo-search.component';
     declarations: [WloSearchComponent],
     imports: [
         CoreModule,
-        PreferencesModule,
         SearchModule,
         SharedModule,
         SwimlaneComponent,

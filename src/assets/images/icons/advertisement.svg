@@ -1,25 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg viewBox="0 0 326.49 326.49" version="1.1" id="svg23" sodipodi:docname="advertisement.svg" inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-   <defs id="defs4">
-      <style id="style2">
+<svg viewBox="0 0 326.49 326.49" xmlns="http://www.w3.org/2000/svg">
+   <defs>
+      <style>
          .cls-2 { fill:#fff; }
       </style>
    </defs>
-   <g id="WERBUNG">
-      <g id="_BG-2" data-name="_BG">
-         <rect width="326.49" height="326.49" rx="30" id="rect6" />
+   <g>
+      <g>
+         <rect width="326.49" height="326.49" rx="30" fill="currentColor" />
       </g>
-      <g id="ICON-2" data-name="ICON">
-         <path class="cls-2" d="M105.58,186.44H39.74V120.6h65.84Zm-48.84-17H88.58V137.6H56.74Z" id="path9" />
-         <path class="cls-2" d="M211.35,238,88.58,183.46V123.57L211.35,69ZM105.58,172.42l88.77,39.45V95.17l-88.77,39.45Z" id="path11" />
-         <rect class="cls-2" x="46.6" y="169.44" width="28.82" height="83.46" id="rect13" />
-         <rect class="cls-2" x="64.33" y="169.44" width="28.82" height="48.01" id="rect15" />
-         <path class="cls-2" d="M222.81,186.44v-17a15.92,15.92,0,0,0,0-31.84v-17a32.92,32.92,0,0,1,0,65.84Z" id="path17" />
-         <path class="cls-2" d="M222.81,217.45v-17a46.93,46.93,0,1,0,0-93.86v-17a63.93,63.93,0,1,1,0,127.86Z" id="path19" />
+      <g>
+         <path class="cls-2" d="M105.58,186.44H39.74V120.6h65.84Zm-48.84-17H88.58V137.6H56.74Z" />
+         <path class="cls-2" d="M211.35,238,88.58,183.46V123.57L211.35,69ZM105.58,172.42l88.77,39.45V95.17l-88.77,39.45Z" />
+         <rect class="cls-2" x="46.6" y="169.44" width="28.82" height="83.46" />
+         <rect class="cls-2" x="64.33" y="169.44" width="28.82" height="48.01" />
+         <path class="cls-2" d="M222.81,186.44v-17a15.92,15.92,0,0,0,0-31.84v-17a32.92,32.92,0,0,1,0,65.84Z" />
+         <path class="cls-2" d="M222.81,217.45v-17a46.93,46.93,0,1,0,0-93.86v-17a63.93,63.93,0,1,1,0,127.86Z" />
       </g>
    </g>
 </svg>

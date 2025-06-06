@@ -2,7 +2,7 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-import { ExtendedWindow, readBoolean } from './env';
+import { ExtendedWindow } from './env';
 
 declare var window: ExtendedWindow;
 
@@ -12,7 +12,6 @@ export const environment = {
     eduSharingUsername: window.__env?.EDU_SHARING_USERNAME,
     eduSharingPassword: window.__env?.EDU_SHARING_PASSWORD,
     wordpressUrl: window.__env?.WORDPRESS_URL ?? 'https://wordpress.staging.openeduhub.net',
-    showExperiments: readBoolean(window.__env?.SHOW_EXPERIMENTS, true),
     analyticsUrl: window.__env?.ANALYTICS_URL,
 };
 

@@ -1,21 +1,14 @@
-@use '@angular/material' as mat;
-@import '../../../../additional-colors';
-@import '../../functions';
+@use 'variables' as *;
 
-@mixin footerbar-theme($theme) {
+@mixin footerbar-theme() {
     // custom theme created for extracted styles, thus, the same order and selectors are used
     // single selectors might be combined (e.g., a{}) or combined (e.g., &:hover)
     // ::after selectors might require !important
     app-footerbar {
         @media all {
             a {
-                color: mat.get-theme-color($theme, primary);
+                color: $primary;
                 background-color: transparent;
-
-                // TODO: Add, if necessary
-                //&:hover, &:focus {
-                //    color: #003570;
-                //}
             }
 
             // TODO: Change, if necessary
@@ -44,26 +37,17 @@
             }
 
             *:focus {
-                outline: 1px dotted mat.get-theme-color($theme, primary);
+                outline: 1px dotted $primary;
             }
 
             .site-footer {
-                @if mat.get-theme-type($theme) == light {
-                    color: mat.get-theme-color($theme, primary, 100);
-                    background-color: mat.get-theme-color($theme, primary, 25);
-                } @else {
-                    color: mat.get-theme-color($theme, on-background);
-                    background: mat.get-theme-color($theme, surface-container-lowest);
-                }
+                color: $on-primary;
+                background-color: $primary-dark;
             }
 
             .site-footer .footer-wrapper .footer-main .footer-menu a,
             .site-footer .footer-wrapper .footer-right .footer-license a {
-                @if mat.get-theme-type($theme) == light {
-                    color: mat.get-theme-color($theme, primary, 100);
-                } @else {
-                    color: mat.get-theme-color($theme, primary);
-                }
+                color: $on-primary;
 
                 &:hover {
                     color: $neon-default;
@@ -71,15 +55,11 @@
             }
 
             .site-footer .footer-wrapper .footer-right .footer-bmbf {
-                @if mat.get-theme-type($theme) == light {
-                    background: mat.get-theme-color($theme, surface-container-lowest);
-                } @else {
-                    background: mat.get-theme-color($theme, inverse-surface);
-                }
+                background: $surface;
             }
 
             .site-footer .footer-wrapper .footer-btn {
-                color: mat.get-theme-color($theme, primary, 40);
+                color: $primary;
                 background: $neon-default;
 
                 &:hover {

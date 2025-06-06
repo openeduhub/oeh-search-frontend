@@ -16,7 +16,6 @@ export class HeaderbarComponent implements OnInit, OnDestroy {
     @HostBinding('attr.data-style') headerStyle: PageConfig['headerStyle'];
 
     readonly routerPath = this.config.get().routerPath;
-    readonly showExperiments = this.config.get().showExperiments;
     showFiltersButton: boolean;
     filterCount: number = 0;
     private readonly destroyed$ = new ReplaySubject<void>();

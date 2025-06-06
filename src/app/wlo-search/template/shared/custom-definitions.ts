@@ -5,8 +5,6 @@ import { SelectOption } from './types/select-option';
 export const cdnLink: string =
     'https://cdn.jsdelivr.net/gh/openeduhub/oeh-search-frontend@feature/embedding/output/wlo-pages/20250124/';
 
-export const defaultIconPath: string = 'assets/images/icons/';
-
 export const defaultMds: string = 'mds_oeh';
 
 export const defaultAiTextWidgetNodeId: string = '10d5ec39-907a-43f6-a024-344300e6a4c8';
@@ -115,40 +113,40 @@ export const retrieveCustomUrl = (node: Node): string => {
 export const statistics: StatisticChart[] = [
     new StatisticChart('WORK', 'work', lrtIdsWork),
     new StatisticChart('EDUCATIONAL_OFFERS', 'school', lrtIdsEducationalOffer),
-    new StatisticChart('EVENTS', 'theater_comedy', lrtIdsEvents),
-    new StatisticChart('MATERIALS', 'menu_book', lrtIdsMaterials),
+    new StatisticChart('EVENTS', 'svg-theatre', lrtIdsEvents),
+    new StatisticChart('MATERIALS', 'svg-material', lrtIdsMaterials),
     new StatisticChart('SOURCES', 'language', lrtIdsSources),
     new StatisticChart('ORGANIZATIONS', 'domain', lrtIdsOrganizations, additionalLrtUrl),
     new StatisticChart('PEOPLE', 'group', lrtIdsPeople, additionalLrtUrl),
-    new StatisticChart('TOOLS', 'home_repair_service', lrtIdsTools),
-    new StatisticChart('PROMPTS', 'terminal', lrtIdsPrompts),
-    new StatisticChart('FIELDS_OF_ACTION', 'interests', lrtIdsFieldsOfAction),
-    new StatisticChart('DIDACTIC_CONCEPTS', 'lightbulb', lrtIdsDidacticConcepts),
+    new StatisticChart('TOOLS', 'svg-tools', lrtIdsTools),
+    new StatisticChart('PROMPTS', 'svg-prompts', lrtIdsPrompts),
+    new StatisticChart('FIELDS_OF_ACTION', 'widgets', lrtIdsFieldsOfAction),
+    new StatisticChart('DIDACTIC_CONCEPTS', 'svg-route', lrtIdsDidacticConcepts),
 ];
 
 export const swimlaneGridOptions: SelectOption[] = [
     {
-        svgIcon: 'one_column',
+        icon: 'svg-one_column',
         value: 'one_column',
         viewValue: 'ONE_COLUMN',
     },
     {
-        svgIcon: 'two_columns',
+        icon: 'svg-two_columns',
         value: 'two_columns',
         viewValue: 'TWO_COLUMNS',
     },
     {
-        svgIcon: 'three_columns',
+        icon: 'svg-three_columns',
         value: 'three_columns',
         viewValue: 'THREE_COLUMNS',
     },
     {
-        svgIcon: 'left_side_panel',
+        icon: 'svg-left_side_panel',
         value: 'left_side_panel',
         viewValue: 'LEFT_SIDE_PANEL',
     },
     {
-        svgIcon: 'right_side_panel',
+        icon: 'svg-right_side_panel',
         value: 'right_side_panel',
         viewValue: 'RIGHT_SIDE_PANEL',
     },
@@ -156,17 +154,17 @@ export const swimlaneGridOptions: SelectOption[] = [
 
 export const swimlaneTypeOptions: SelectOption[] = [
     {
-        svgIcon: 'one_column',
+        icon: 'svg-one_column',
         value: 'container',
         viewValue: 'CONTAINER_ELEMENT',
     },
     {
-        svgIcon: 'storage',
+        icon: 'svg-storage',
         value: 'accordion',
         viewValue: 'ACCORDION_ELEMENT',
     },
     {
-        svgIcon: 'anchor',
+        icon: 'svg-anchor',
         value: 'anchor',
         viewValue: 'ANCHOR_MENU',
     },

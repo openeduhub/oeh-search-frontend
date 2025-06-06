@@ -17,6 +17,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InMemoryCache } from '@apollo/client/core';
 import { ApolloModule, APOLLO_NAMED_OPTIONS } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
+import { MaterialCssVarsModule } from 'angular-material-css-vars';
 import { ConfigService, EduSharingApiModule } from 'ngx-edu-sharing-api';
 import { Observable, of, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -62,7 +63,6 @@ import {
     defaultAiTextWidgetNodeId,
     defaultBreadcrumbWidgetNodeId,
     defaultCollectionChipsNodeId,
-    defaultIconPath,
     defaultMediaRenderingNodeId,
     defaultParentPageConfigNodeId,
     defaultParentWidgetConfigNodeId,
@@ -76,7 +76,6 @@ import {
 
 const wloSearchConfig: WloSearchConfig = {
     routerPath: ROOT_PATH + WLO_SEARCH_PATH_COMPONENT,
-    showExperiments: environment.showExperiments,
     wordpressUrl: environment.wordpressUrl,
 };
 
@@ -153,6 +152,7 @@ const eduSharingApiModuleWithProviders = environment.production
         AppRoutingModule,
         BrowserAnimationsModule,
         BrowserModule,
+        MaterialCssVarsModule.forRoot({ isAutoContrast: true }),
         eduSharingApiModuleWithProviders,
         ApolloModule,
     ],
@@ -185,7 +185,6 @@ const eduSharingApiModuleWithProviders = environment.production
         // global configurations
         { provide: 'CDN_LINK', useValue: cdnLink },
         { provide: 'EDU_REPO_URL', useValue: eduSharingUrl },
-        { provide: 'ICON_PATH', useValue: defaultIconPath },
         { provide: 'PARENT_PAGE_CONFIG_NODE_ID', useValue: defaultParentPageConfigNodeId },
         { provide: 'PARENT_WIDGET_CONFIG_NODE_ID', useValue: defaultParentWidgetConfigNodeId },
         { provide: 'DEFAULT_AI_TEXT_WIDGET_NODE_ID', useValue: defaultAiTextWidgetNodeId },

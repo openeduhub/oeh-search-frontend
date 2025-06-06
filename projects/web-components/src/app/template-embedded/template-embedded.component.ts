@@ -22,7 +22,6 @@ export class TemplateEmbeddedComponent implements OnInit {
     @Input() defaultTopicsColumnBrowserWidgetNodeId?: string;
     @Input() defaultUserConfigurableWidgetNodeId?: string;
     @Input() eduRepoUrl?: string;
-    @Input() iconPath?: string;
     @Input() imagePath?: string;
     @Input() parentPageConfigNodeId?: string;
     @Input() parentWidgetConfigNodeId?: string;
@@ -78,10 +77,6 @@ export class TemplateEmbeddedComponent implements OnInit {
         }
         if (this.eduRepoUrl) {
             this.globalWidgetConfigService.eduRepoUrl = this.eduRepoUrl;
-        }
-        if (this.iconPath) {
-            this.globalTemplateConfigService.iconPath = this.iconPath;
-            this.globalWidgetConfigService.iconPath = this.iconPath;
         }
         if (this.imagePath) {
             this.globalWidgetConfigService.imagePath = this.imagePath;

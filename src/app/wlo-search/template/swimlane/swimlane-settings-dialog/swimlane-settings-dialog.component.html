@@ -1,5 +1,13 @@
-<h2 mat-dialog-title>
-  {{ 'TOPIC_PAGE.SWIMLANE.EDIT.HEADING' | translate: { heading: data.swimlane.heading } }}
+<h2 class="dialog-title-heading mat-heading-3 important font-bold" mat-dialog-title>
+  {{
+    'TOPIC_PAGE.SWIMLANE.EDIT.HEADING'
+      | translate
+        : {
+            heading: data.swimlane.heading
+              ? '"' + data.swimlane.heading + '"'
+              : ('TOPIC_PAGE.SWIMLANE.EDIT.SWIMLANE_DEFAULT' | translate)
+          }
+  }}
 </h2>
 
 <div mat-dialog-content [formGroup]="form" class="content settings-form">
