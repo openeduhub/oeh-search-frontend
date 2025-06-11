@@ -120,7 +120,7 @@ export const statistics: StatisticChart[] = [
     new StatisticChart('PEOPLE', 'group', lrtIdsPeople, additionalLrtUrl),
     new StatisticChart('TOOLS', 'svg-tools', lrtIdsTools),
     new StatisticChart('PROMPTS', 'svg-prompts', lrtIdsPrompts),
-    new StatisticChart('FIELDS_OF_ACTION', 'widgets', lrtIdsFieldsOfAction),
+    new StatisticChart('FIELDS_OF_ACTION', 'lightbulb_outline', lrtIdsFieldsOfAction),
     new StatisticChart('DIDACTIC_CONCEPTS', 'svg-route', lrtIdsDidacticConcepts),
 ];
 
