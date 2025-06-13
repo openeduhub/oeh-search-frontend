@@ -11,6 +11,7 @@ import {
     TranslateStore,
 } from '@ngx-translate/core';
 import { ConfigService, EduSharingApiModule } from 'ngx-edu-sharing-api';
+import { BApiModule } from 'ngx-edu-sharing-b-api';
 import {
     EduSharingUiConfiguration,
     EduSharingUiModule,
@@ -28,7 +29,6 @@ import {
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { SearchModule } from 'src/app/wlo-search/search/search.module';
 import { WloSearchConfig, WLO_SEARCH_CONFIG } from 'src/app/wlo-search/wlo-search-config';
-import { GlobalTemplateConfigService } from '../../../../src/app/wlo-search/template/shared/services/global-template-config.service';
 import { TemplateComponent } from '../../../../src/app/wlo-search/template/template.component';
 import { environment } from '../environments/environment';
 import { DetailsEmbeddedComponent } from './details-embedded/details-embedded.component';
@@ -52,6 +52,7 @@ const eduSharingApiModuleWithProviders = environment.production
         BrowserAnimationsModule,
         MaterialCssVarsModule.forRoot({ isAutoContrast: true }),
         eduSharingApiModuleWithProviders,
+        BApiModule.forRoot({ rootUrl: '/edu-sharing/rest/bapi' }),
         TemplateComponent,
         SearchModule,
     ],
@@ -63,7 +64,6 @@ const eduSharingApiModuleWithProviders = environment.production
         // from here on dependencies of wlo-pages (edu-sharing web-components)
         { provide: 'IMAGE_PATH', useValue: 'assets/images/' },
         { provide: 'PERSIST_FILTERS', useValue: false },
-        GlobalTemplateConfigService,
         GlobalWidgetConfigService,
         eduSharingApiModuleWithProviders.providers,
         EduSharingUiModule.forRoot({

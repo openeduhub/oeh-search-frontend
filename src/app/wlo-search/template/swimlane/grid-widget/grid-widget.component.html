@@ -46,6 +46,7 @@
   <ng-container *ngSwitchCase="'wlo-text-widget'">
     <wlo-text-widget
       [class]="widgetClasses ? widgetClasses : ''"
+      [contextNodeId]="contextNodeId"
       [editMode]="editMode"
       [gridIndex]="gridIndex"
       [nodeId]="widgetNodeId"

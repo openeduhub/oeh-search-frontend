@@ -28,9 +28,8 @@ function isCacheable(req: HttpRequest<any>): boolean {
     // avoid caching the node API, except of the parents endpoint
     const nodeApi: boolean =
         req.url?.includes('/edu-sharing/rest/node/v1/nodes/') && !req.url?.includes('/parents');
-    const imagePromptApi: boolean = req.url?.includes('/ai/prompt/image/public/');
-    const textPromptApi: boolean = req.url?.includes('/ai/prompt/text/public/');
-    return !nodeApi && !imagePromptApi && !textPromptApi;
+    const promptToBapi: boolean = req.url?.includes('/edu-sharing/rest/bapi/');
+    return !nodeApi && !promptToBapi;
 }
 
 /**

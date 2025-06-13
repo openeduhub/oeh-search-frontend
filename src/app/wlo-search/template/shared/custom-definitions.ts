@@ -7,21 +7,19 @@ export const cdnLink: string =
 
 export const defaultMds: string = 'mds_oeh';
 
-export const defaultAiTextWidgetNodeId: string = '10d5ec39-907a-43f6-a024-344300e6a4c8';
-export const defaultBreadcrumbWidgetNodeId: string = '5fa2c8a5-aa05-4828-a2c8-a5aa05d8281f';
-export const defaultCollectionChipsNodeId: string = 'd43cfd0e-ce5a-4428-a3bb-2c37a155bf32';
-export const defaultMediaRenderingNodeId: string = '23919818-2e20-415c-9198-182e20415ce7';
-export const defaultTextWidgetNodeId: string = '34540708-5743-4259-9407-085743725957';
-export const defaultTopicHeaderImageNodeId: string = 'f5e62bb7-6c84-4ede-a62b-b76c845ede88';
-export const defaultTopicHeaderTextNodeId: string = '2340e5cf-4e9d-4b42-b6df-e64087be7961';
-export const defaultTopicsColumnBrowserNodeId: string = '4f46b4cd-19df-4139-bbb1-bfc3aea08d39';
-export const defaultUserConfigurableNodeId: string = '89653b20-516c-43a2-9042-382aef5ae087';
+// currently used default config IDs (for AI prompts)
+export const defaultAiConfigId: string = 'topic_page_ai_default';
+export const defaultAiChatCompletionConfigId: string = 'topic_page_ai_chat_completion';
+export const defaultAiImageCreateConfigId: string = 'topic_page_ai_create_image';
+export const defaultAiClearCacheConfigId: string = 'topic_page_ai_clear_cache';
+export const defaultAiTextWidgetConfigId: string = 'topic_page_ai_text_widget';
+export const defaultTopicHeaderImageConfigId: string = 'topic_page_ai_topic_header_image';
+export const defaultTopicHeaderTextConfigId: string = 'topic_page_ai_topic_header_text';
+export const defaultUserConfigurableConfigId: string = 'topic_page_ai_user_configurable';
 
-export const defaultParentPageConfigNodeId: string = '25e341e1-7058-4210-b0d3-838255884682';
-export const defaultParentWidgetConfigNodeId: string = '80bb0eab-d64f-466b-94c6-2eccc4045c6b';
 export const disciplineKey: string = 'ccm:taxonid';
 
-export const eduSharingUrl: string = 'https://repository.staging.openeduhub.net/edu-sharing/';
+export const eduSharingUrl: string = 'https://repository.pre-staging.openeduhub.net/edu-sharing/';
 
 export const initialLocaleString: string = 'de_DE';
 

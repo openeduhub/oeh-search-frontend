@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { GlobalWidgetConfigService } from 'ngx-edu-sharing-wlo-pages';
 import { CoreService } from '../../../../../src/app/wlo-search/core/core.service';
-import { GlobalTemplateConfigService } from '../../../../../src/app/wlo-search/template/shared/services/global-template-config.service';
 
 @Component({
     selector: 'app-template-embedded',
@@ -12,24 +11,20 @@ export class TemplateEmbeddedComponent implements OnInit {
     @Input() collectionId: string;
     // global template + widget configuration
     @Input() cdnLink?: string;
-    @Input() defaultAiTextWidgetNodeId?: string;
-    @Input() defaultBreadcrumbWidgetNodeId?: string;
-    @Input() defaultCollectionChipsWidgetNodeId?: string;
-    @Input() defaultMediaRenderingWidgetNodeId?: string;
-    @Input() defaultTextWidgetNodeId?: string;
+    @Input() defaultAiConfigId?: string;
+    @Input() defaultAiChatCompletionConfigId?: string;
+    @Input() defaultAiImageCreateConfigId?: string;
+    @Input() defaultAiClearCacheConfigId?: string;
+    @Input() defaultAiTextWidgetConfigId?: string;
     @Input() defaultTopicHeaderImageWidgetNodeId?: string;
     @Input() defaultTopicHeaderTextWidgetNodeId?: string;
-    @Input() defaultTopicsColumnBrowserWidgetNodeId?: string;
     @Input() defaultUserConfigurableWidgetNodeId?: string;
     @Input() eduRepoUrl?: string;
     @Input() imagePath?: string;
-    @Input() parentPageConfigNodeId?: string;
-    @Input() parentWidgetConfigNodeId?: string;
     @Input() persistFilters?: boolean;
 
     constructor(
         private coreService: CoreService,
-        private globalTemplateConfigService: GlobalTemplateConfigService,
         private globalWidgetConfigService: GlobalWidgetConfigService,
     ) {}
 
@@ -40,24 +35,24 @@ export class TemplateEmbeddedComponent implements OnInit {
         if (this.cdnLink) {
             this.globalWidgetConfigService.cdnLink = this.cdnLink;
         }
-        if (this.defaultAiTextWidgetNodeId) {
-            this.globalWidgetConfigService.defaultAiTextWidgetNodeId =
-                this.defaultAiTextWidgetNodeId;
+        if (this.defaultAiConfigId) {
+            this.globalWidgetConfigService.defaultAiConfigId = this.defaultAiConfigId;
         }
-        if (this.defaultBreadcrumbWidgetNodeId) {
-            this.globalWidgetConfigService.defaultBreadcrumbWidgetNodeId =
-                this.defaultBreadcrumbWidgetNodeId;
+        if (this.defaultAiChatCompletionConfigId) {
+            this.globalWidgetConfigService.defaultAiChatCompletionConfigId =
+                this.defaultAiChatCompletionConfigId;
         }
-        if (this.defaultCollectionChipsWidgetNodeId) {
-            this.globalWidgetConfigService.defaultCollectionChipsWidgetNodeId =
-                this.defaultCollectionChipsWidgetNodeId;
+        if (this.defaultAiImageCreateConfigId) {
+            this.globalWidgetConfigService.defaultAiImageCreateConfigId =
+                this.defaultAiImageCreateConfigId;
         }
-        if (this.defaultMediaRenderingWidgetNodeId) {
-            this.globalWidgetConfigService.defaultMediaRenderingWidgetNodeId =
-                this.defaultMediaRenderingWidgetNodeId;
+        if (this.defaultAiClearCacheConfigId) {
+            this.globalWidgetConfigService.defaultAiClearCacheConfigId =
+                this.defaultAiClearCacheConfigId;
         }
-        if (this.defaultTextWidgetNodeId) {
-            this.globalWidgetConfigService.defaultTextWidgetNodeId = this.defaultTextWidgetNodeId;
+        if (this.defaultAiTextWidgetConfigId) {
+            this.globalWidgetConfigService.defaultAiTextWidgetConfigId =
+                this.defaultAiTextWidgetConfigId;
         }
         if (this.defaultTopicHeaderImageWidgetNodeId) {
             this.globalWidgetConfigService.defaultTopicHeaderImageWidgetNodeId =
@@ -66,10 +61,6 @@ export class TemplateEmbeddedComponent implements OnInit {
         if (this.defaultTopicHeaderTextWidgetNodeId) {
             this.globalWidgetConfigService.defaultTopicHeaderTextWidgetNodeId =
                 this.defaultTopicHeaderTextWidgetNodeId;
-        }
-        if (this.defaultTopicsColumnBrowserWidgetNodeId) {
-            this.globalWidgetConfigService.defaultTopicsColumnBrowserWidgetNodeId =
-                this.defaultTopicsColumnBrowserWidgetNodeId;
         }
         if (this.defaultUserConfigurableWidgetNodeId) {
             this.globalWidgetConfigService.defaultUserConfigurableWidgetNodeId =
@@ -80,12 +71,6 @@ export class TemplateEmbeddedComponent implements OnInit {
         }
         if (this.imagePath) {
             this.globalWidgetConfigService.imagePath = this.imagePath;
-        }
-        if (this.parentPageConfigNodeId) {
-            this.globalTemplateConfigService.parentPageConfigNodeId = this.parentPageConfigNodeId;
-        }
-        if (this.parentWidgetConfigNodeId) {
-            this.globalWidgetConfigService.parentWidgetConfigNodeId = this.parentWidgetConfigNodeId;
         }
         if (this.persistFilters !== undefined) {
             this.globalWidgetConfigService.persistFilters = this.persistFilters;

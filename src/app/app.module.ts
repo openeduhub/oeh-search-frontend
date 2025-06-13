@@ -19,6 +19,7 @@ import { ApolloModule, APOLLO_NAMED_OPTIONS } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { MaterialCssVarsModule } from 'angular-material-css-vars';
 import { ConfigService, EduSharingApiModule } from 'ngx-edu-sharing-api';
+import { BApiModule } from 'ngx-edu-sharing-b-api';
 import { Observable, of, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import {
@@ -60,17 +61,14 @@ import {
 } from 'ngx-edu-sharing-wlo-pages';
 import {
     cdnLink,
-    defaultAiTextWidgetNodeId,
-    defaultBreadcrumbWidgetNodeId,
-    defaultCollectionChipsNodeId,
-    defaultMediaRenderingNodeId,
-    defaultParentPageConfigNodeId,
-    defaultParentWidgetConfigNodeId,
-    defaultTextWidgetNodeId,
-    defaultTopicHeaderImageNodeId,
-    defaultTopicHeaderTextNodeId,
-    defaultTopicsColumnBrowserNodeId,
-    defaultUserConfigurableNodeId,
+    defaultAiConfigId,
+    defaultAiChatCompletionConfigId,
+    defaultAiImageCreateConfigId,
+    defaultAiClearCacheConfigId,
+    defaultAiTextWidgetConfigId,
+    defaultTopicHeaderImageConfigId,
+    defaultTopicHeaderTextConfigId,
+    defaultUserConfigurableConfigId,
     eduSharingUrl,
 } from './wlo-search/template/shared/custom-definitions';
 
@@ -154,6 +152,7 @@ const eduSharingApiModuleWithProviders = environment.production
         BrowserModule,
         MaterialCssVarsModule.forRoot({ isAutoContrast: true }),
         eduSharingApiModuleWithProviders,
+        BApiModule.forRoot({ rootUrl: '/edu-sharing/rest/bapi' }),
         ApolloModule,
     ],
     providers: [
@@ -185,34 +184,33 @@ const eduSharingApiModuleWithProviders = environment.production
         // global configurations
         { provide: 'CDN_LINK', useValue: cdnLink },
         { provide: 'EDU_REPO_URL', useValue: eduSharingUrl },
-        { provide: 'PARENT_PAGE_CONFIG_NODE_ID', useValue: defaultParentPageConfigNodeId },
-        { provide: 'PARENT_WIDGET_CONFIG_NODE_ID', useValue: defaultParentWidgetConfigNodeId },
-        { provide: 'DEFAULT_AI_TEXT_WIDGET_NODE_ID', useValue: defaultAiTextWidgetNodeId },
-        { provide: 'DEFAULT_BREADCRUMB_WIDGET_NODE_ID', useValue: defaultBreadcrumbWidgetNodeId },
+        // global AI default configs
+        { provide: 'DEFAULT_AI_CONFIG_ID', useValue: defaultAiConfigId },
         {
-            provide: 'DEFAULT_COLLECTION_CHIPS_WIDGET_NODE_ID',
-            useValue: defaultCollectionChipsNodeId,
+            provide: 'DEFAULT_AI_CHAT_COMPLETION_CONFIG_ID',
+            useValue: defaultAiChatCompletionConfigId,
         },
         {
-            provide: 'DEFAULT_MEDIA_RENDERING_WIDGET_NODE_ID',
-            useValue: defaultMediaRenderingNodeId,
-        },
-        { provide: 'DEFAULT_TEXT_WIDGET_NODE_ID', useValue: defaultTextWidgetNodeId },
-        {
-            provide: 'DEFAULT_TOPIC_HEADER_IMAGE_WIDGET_NODE_ID',
-            useValue: defaultTopicHeaderImageNodeId,
+            provide: 'DEFAULT_AI_IMAGE_CREATE_CONFIG_ID',
+            useValue: defaultAiImageCreateConfigId,
         },
         {
-            provide: 'DEFAULT_TOPIC_HEADER_TEXT_WIDGET_NODE_ID',
-            useValue: defaultTopicHeaderTextNodeId,
+            provide: 'DEFAULT_AI_CLEAR_CACHE_CONFIG_ID',
+            useValue: defaultAiClearCacheConfigId,
+        },
+        // global widget default configs
+        { provide: 'DEFAULT_AI_TEXT_WIDGET_CONFIG_ID', useValue: defaultAiTextWidgetConfigId },
+        {
+            provide: 'DEFAULT_TOPIC_HEADER_IMAGE_WIDGET_CONFIG_ID',
+            useValue: defaultTopicHeaderImageConfigId,
         },
         {
-            provide: 'DEFAULT_TOPICS_COLUMN_BROWSER_WIDGET_NODE_ID',
-            useValue: defaultTopicsColumnBrowserNodeId,
+            provide: 'DEFAULT_TOPIC_HEADER_TEXT_WIDGET_CONFIG_ID',
+            useValue: defaultTopicHeaderTextConfigId,
         },
         {
-            provide: 'DEFAULT_USER_CONFIGURABLE_WIDGET_NODE_ID',
-            useValue: defaultUserConfigurableNodeId,
+            provide: 'DEFAULT_USER_CONFIGURABLE_WIDGET_CONFIG_ID',
+            useValue: defaultUserConfigurableConfigId,
         },
         {
             provide: ADDITIONAL_I18N_PROVIDER,

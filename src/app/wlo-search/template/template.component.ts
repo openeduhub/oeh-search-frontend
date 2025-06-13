@@ -47,7 +47,6 @@ import { SharedModule } from '../shared/shared.module';
 import { AddSwimlaneBorderButtonComponent } from './add-swimlane-button/add-swimlane-border-button.component';
 import {
     defaultMds,
-    defaultTopicsColumnBrowserNodeId,
     disciplineKey,
     initialTopicColor,
     ioType,
@@ -67,7 +66,6 @@ import {
 } from './shared/custom-definitions';
 import { FilterSwimlaneTypePipe } from './shared/pipes/filter-swimlane-type.pipe';
 import { SwimlaneSearchCountPipe } from './shared/pipes/swimlane-search-count.pipe';
-import { GlobalTemplateConfigService } from './shared/services/global-template-config.service';
 import { StatisticsHelperService } from './shared/services/statistics-helper.service';
 import { TemplateHelperService } from './shared/services/template-helper.service';
 import { GridTileToStatisticsMapping } from './shared/types/grid-tile-to-statistics-mapping';
@@ -128,7 +126,6 @@ export class TemplateComponent implements OnDestroy, OnInit {
         private clipboard: Clipboard,
         private config: ConfigService,
         private dialog: MatDialog,
-        private globalTemplateConfigService: GlobalTemplateConfigService,
         private globalWidgetConfigService: GlobalWidgetConfigService,
         private route: ActivatedRoute,
         private router: Router,
@@ -1018,10 +1015,10 @@ export class TemplateComponent implements OnDestroy, OnInit {
         }
         // changes are detected using the URL params to also include values of different filterbars
         // convert both select dimension keys and params into the same format
-        // Map<$virtual:key$, ...> => [key, ...]
-        const convertedSelectDimensionKeys: string[] = Array.from(this.selectDimensions.keys())
-            .map((key: string) => key.split('$')?.[1] ?? key)
-            .map((key: string) => key.split('virtual:')?.[1] ?? key);
+        // Map<virtual:key, ...> => [key, ...]
+        const convertedSelectDimensionKeys: string[] = Array.from(this.selectDimensions.keys()).map(
+            (key: string) => key.split('virtual:')?.[1] ?? key,
+        );
         const selectedDimensionValues: MdsValue[] = [];
         if (persistFilters) {
             const latestParamKeys: string[] = Object.keys(this.latestParams);
@@ -1193,7 +1190,7 @@ export class TemplateComponent implements OnDestroy, OnInit {
             console.log('checkForCustomPageNodeExistence no page config');
             // page ccm:map for page config node
             this.pageConfigNode = await this.templateHelperService.createChild(
-                this.globalTemplateConfigService.parentPageConfigNodeId,
+                this.collectionNode.ref.id,
                 mapType,
                 pageConfigPrefix + uuidv4(),
                 pageConfigAspect,
@@ -1335,7 +1332,6 @@ export class TemplateComponent implements OnDestroy, OnInit {
     }
 
     protected readonly defaultMds: string = defaultMds;
-    protected readonly defaultTopicsColumnBrowserNodeId: string = defaultTopicsColumnBrowserNodeId;
     protected readonly profilingFilterbarDimensionKeys: string[] = profilingFilterbarDimensionKeys;
     protected readonly retrieveCustomUrl = retrieveCustomUrl;
     protected readonly wordpressUrl: string = this.config.get().wordpressUrl;
