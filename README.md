@@ -44,7 +44,6 @@ or [install the specified version manually](https://nodejs.org/en/download).
 ### Setup
 
 ```bash
-$ git submodule update --init
 $ npm install
 ```
 
@@ -119,14 +118,12 @@ When started as Docker container, the file `src/env.js` will be populated with t
 
 The following variables are available:
 
-| Variable             | Description                                                     | Default value (dev)              | Default value (prod)         |
-| -------------------- | --------------------------------------------------------------- | -------------------------------- | ---------------------------- |
-| EDU_SHARING_API_URL  | URL of the Edu-Sharing API to connect to.                       | `/edu-sharing-api'`              | `/edu-sharing-api'`          |
-| EDU_SHARING_USERNAME | Username to login during development.                           | (`undefined`)                    | (`undefined`)                |
-| EDU_SHARING_PASSWORD | Password to login during development.                           | (`undefined`)                    | (`undefined`)                |
-| WORDPRESS_URL        | Base URL of the corresponding WLO Wordpress page.               | `https://dev.wirlernenonline.de` | `https://wirlernenonline.de` |
-| SHOW_EXPERIMENTS     | Display a link to experimental-feature toggles in the frontend. | `true`                           | `false`                      |
-| ANALYTICS_URL        | URL of the analytics backend to connect to.                     | (`undefined`)                    | `/analytics'`                |
+| Variable             | Description                                       | Default value (dev)              | Default value (prod)         |
+| -------------------- | ------------------------------------------------- | -------------------------------- | ---------------------------- | --- | --- |
+| EDU_SHARING_API_URL  | URL of the Edu-Sharing API to connect to.         | `/edu-sharing-api'`              | `/edu-sharing-api'`          |
+| EDU_SHARING_USERNAME | Username to login during development.             | (`undefined`)                    | (`undefined`)                |
+| EDU_SHARING_PASSWORD | Password to login during development.             | (`undefined`)                    | (`undefined`)                |
+| WORDPRESS_URL        | Base URL of the corresponding WLO Wordpress page. | `https://dev.wirlernenonline.de` | `https://wirlernenonline.de` |     |     |
 
 For example, to run your locally built Docker image against the staging environment of
 WirLernenOnline, run
@@ -256,15 +253,6 @@ ng serve --configuration=de
 When built with `ng build --localize`, angular creates a directory for each language in `dist`. The
 `Dockerfile` configures an Nginx to serve the browser's preferred language by redirecting into one
 of these directories.
-
-## GraphQL
-
-Start `elasticsearch-relay` as dev server and install `apollographql.vscode-apollo` to get IDE
-features for GraphQL queries in VSCode.
-
-```
-ext install apollographql.vscode-apollo
-```
 
 ## Wordpress integration
 

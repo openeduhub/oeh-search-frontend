@@ -2,38 +2,22 @@ import { ScrollStrategyOptions } from '@angular/cdk/overlay';
 import { PlatformLocation } from '@angular/common';
 import {
     HttpClient,
-    HttpEvent,
-    HttpEventType,
-    HttpHandler,
-    HttpRequest,
     HTTP_INTERCEPTORS,
     provideHttpClient,
     withInterceptorsFromDi,
 } from '@angular/common/http';
-import { Inject, inject, NgModule, Optional, Provider } from '@angular/core';
+import { Inject, NgModule, Optional, Provider } from '@angular/core';
 import { MAT_DIALOG_SCROLL_STRATEGY } from '@angular/material/dialog';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { InMemoryCache } from '@apollo/client/core';
-import { APOLLO_NAMED_OPTIONS } from 'apollo-angular';
-import { HttpLink } from 'apollo-angular/http';
 import { MaterialCssVarsModule } from 'angular-material-css-vars';
 import { ConfigService, EduSharingApiModule } from 'ngx-edu-sharing-api';
 import { BApiModule } from 'ngx-edu-sharing-b-api';
-import { Observable, of, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import {
-    OpenAnalyticsSessionGQL,
-    ReportLifecycleEventGQL,
-    ReportResultClickGQL,
-    ReportSearchRequestGQL,
-} from 'src/generated/graphql';
 import { AppRoutingModule, ROOT_PATH, WLO_SEARCH_PATH_COMPONENT } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CachingInterceptor } from './caching.interceptor';
 import { LanguageHeaderInterceptor } from './language-header.interceptor';
-import { TelemetryApiWrapper } from './telemetry-api-wrapper';
-import { TELEMETRY_API } from './wlo-search/telemetry-api';
 import { WloSearchConfig, WLO_SEARCH_CONFIG } from './wlo-search/wlo-search-config';
 import {
     MissingTranslationHandler,
@@ -87,58 +71,6 @@ const httpInterceptorProviders = [
     },
 ];
 
-const telemetryProviders = environment.analyticsUrl
-    ? [
-          {
-              provide: TELEMETRY_API,
-              useFactory: () =>
-                  new TelemetryApiWrapper(
-                      inject(OpenAnalyticsSessionGQL),
-                      inject(ReportLifecycleEventGQL),
-                      inject(ReportResultClickGQL),
-                      inject(ReportSearchRequestGQL),
-                  ),
-          },
-          {
-              provide: APOLLO_NAMED_OPTIONS,
-              deps: [HttpLink],
-              useFactory: (httpLink: HttpLink) => ({
-                  analytics: {
-                      link: httpLink.create({
-                          uri: environment.analyticsUrl + '/graphql',
-                      }),
-                      cache: new InMemoryCache(),
-                  },
-                  analyticsBeacon: {
-                      link: httpLinkBeacon.create({
-                          uri: environment.analyticsUrl + '/graphql',
-                      }),
-                      cache: new InMemoryCache(),
-                  },
-              }),
-          },
-      ]
-    : [];
-
-const httpLinkBeacon = (() => {
-    class BeaconHttpHandler implements HttpHandler {
-        handle(req: HttpRequest<any>): Observable<HttpEvent<any>> {
-            const headers = {
-                type: 'application/json',
-            };
-            const blob = new Blob([JSON.stringify(req.body)], headers);
-            const success = navigator.sendBeacon(req.url, blob);
-            if (success) {
-                return of({ type: HttpEventType.Sent });
-            } else {
-                return throwError({ message: 'Failed to queue request' });
-            }
-        }
-    }
-    const httpClient = new HttpClient(new BeaconHttpHandler());
-    return new HttpLink(httpClient);
-})();
-
 const eduSharingApiModuleWithProviders = environment.production
     ? EduSharingApiModule.forRoot({ rootUrl: environment.eduSharingApiUrl })
     : EduSharingApiModule.forRoot();
@@ -160,7 +92,6 @@ const eduSharingApiModuleWithProviders = environment.production
             provide: WLO_SEARCH_CONFIG,
             useValue: wloSearchConfig,
         },
-        ...telemetryProviders,
         ((): Provider => {
             // From
             // https://stackoverflow.com/questions/7944460/detect-safari-browser/23522755#23522755

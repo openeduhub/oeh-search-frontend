@@ -4,7 +4,6 @@ import { ActivatedRoute } from '@angular/router';
 import { SearchResults } from 'ngx-edu-sharing-api';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
-import { AnalyticsService } from '../../core/analytics.service';
 import { ConfigService } from '../../core/config.service';
 import { EduSharingService, Facet } from '../../core/edu-sharing.service';
 import { PageModeService } from '../../core/page-mode.service';
@@ -37,7 +36,6 @@ export class SearchPageComponent implements OnInit, OnDestroy {
     private readonly destroyed$ = new Subject<void>();
 
     constructor(
-        private analyticsService: AnalyticsService,
         private config: ConfigService,
         private eduSharing: EduSharingService,
         private pageMode: PageModeService,
@@ -80,9 +78,6 @@ export class SearchPageComponent implements OnInit, OnDestroy {
                 this.results = results;
                 this.searchResults.results.next(this.results);
                 this.resultPageNumbers = this.getResultPageNumbers();
-                this.analyticsService.reportSearchRequest({
-                    numberResults: this.results.pagination.total,
-                });
                 // TODO: switch to tab 0 even if the user clicks on "show more" on the currently active
                 // filter.
                 this.view.searchTabSubject.next(0);

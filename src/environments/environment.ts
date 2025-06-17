@@ -12,7 +12,6 @@ export const environment = {
     eduSharingUsername: window.__env?.EDU_SHARING_USERNAME,
     eduSharingPassword: window.__env?.EDU_SHARING_PASSWORD,
     wordpressUrl: window.__env?.WORDPRESS_URL ?? 'https://wordpress.staging.openeduhub.net',
-    analyticsUrl: window.__env?.ANALYTICS_URL,
 };
 
 /*

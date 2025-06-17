@@ -37,11 +37,10 @@ import { VarDirective } from 'ngx-edu-sharing-wlo-pages';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { DisplayNamePipe } from './display-name.pipe';
 import { FocusStateDirective } from './focus-state.directive';
-import { ReportClickDirective } from './report-click.directive';
 import { SkipTargetDirective } from './skip-target.directive';
 
 @NgModule({
-    declarations: [DisplayNamePipe, SkipTargetDirective, ReportClickDirective, FocusStateDirective],
+    declarations: [DisplayNamePipe, SkipTargetDirective, FocusStateDirective],
     imports: [
         RouterModule,
         CommonModule,
@@ -120,7 +119,6 @@ import { SkipTargetDirective } from './skip-target.directive';
         MatTooltipModule,
         SkipTargetDirective,
         SlickCarouselModule,
-        ReportClickDirective,
         TranslateModule,
         VarDirective,
     ],
