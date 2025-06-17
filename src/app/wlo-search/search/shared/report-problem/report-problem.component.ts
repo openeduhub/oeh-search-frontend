@@ -7,6 +7,7 @@ import { DialogData, problemKinds } from './report-problem.service';
     selector: 'app-report-problem',
     templateUrl: './report-problem.component.html',
     styleUrls: ['./report-problem.component.scss'],
+    standalone: false,
 })
 export class ReportProblemComponent {
     readonly problemKinds = problemKinds;

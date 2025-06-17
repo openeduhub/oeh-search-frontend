@@ -14,6 +14,7 @@ import { ViewService } from '../../../core/view.service';
     selector: 'app-search-filterbar',
     templateUrl: './search-filterbar.component.html',
     styleUrls: ['./search-filterbar.component.scss'],
+    standalone: false,
 })
 export class SearchFilterbarComponent implements OnInit, OnDestroy {
     readonly routerPath = this.config.get().routerPath;

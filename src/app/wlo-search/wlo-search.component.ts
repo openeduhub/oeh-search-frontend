@@ -19,6 +19,7 @@ import { ViewService } from './core/view.service';
     selector: 'app-wlo-search',
     templateUrl: './wlo-search.component.html',
     styleUrls: ['./wlo-search.component.scss'],
+    standalone: false,
 })
 export class WloSearchComponent implements OnInit, OnDestroy {
     readonly headerStyle$ = this.pageMode.getPageConfig('headerStyle');

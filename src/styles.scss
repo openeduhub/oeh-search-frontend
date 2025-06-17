@@ -4,8 +4,8 @@
 @use 'app/wlo-search';
 @use 'global-theme-overrides';
 // imports of variables + fonts
-@import '_variables';
-@import './fonts';
+@use '_variables' as *;
+@use './fonts' as *;
 
 @mixin adjust-theme() {
     // include global material overrides
@@ -16,7 +16,7 @@
 }
 
 :root {
-    @include adjust-theme();
+    // variables have to be defined before nested rules are applied
     // make CSS variable accessible for further applications using role names of Material 3
     // valid role names: background, error, error-container, inverse-on-surface, inverse-primary,
     //                   inverse-surface, on-background, on-error, on-error-container, on-primary,
@@ -74,6 +74,8 @@
     --line-height-large: #{$line-height-large};
     --line-height-medium: #{$line-height-medium};
     --line-height-small: #{$line-height-small};
+    // adjust the theme
+    @include adjust-theme();
 }
 
 // CUSTOM GLOBAL STYLES

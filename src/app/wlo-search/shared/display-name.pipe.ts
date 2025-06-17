@@ -7,6 +7,7 @@ import { facetProperties } from '../core/facet-properties';
 @Pipe({
     name: 'displayName',
     pure: false,
+    standalone: false,
 })
 export class DisplayNamePipe implements PipeTransform {
     // Since `valueMapping.getDisplayName` returns an Observable, we basically do what Angular's own

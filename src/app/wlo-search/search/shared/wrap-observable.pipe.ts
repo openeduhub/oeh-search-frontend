@@ -17,6 +17,7 @@ export function wrapResponse<T>(): UnaryFunction<Observable<T>, Observable<Wrapp
 
 @Pipe({
     name: 'wrapObservable',
+    standalone: false,
 })
 export class WrapObservablePipe implements PipeTransform {
     transform<T>(value: Observable<T>): Observable<WrappedResponse<T>> {

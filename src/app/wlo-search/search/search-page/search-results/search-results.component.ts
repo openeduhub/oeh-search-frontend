@@ -11,6 +11,7 @@ import { SearchResultsService } from './search-results.service';
     selector: 'app-search-results',
     templateUrl: './search-results.component.html',
     styleUrls: ['./search-results.component.scss'],
+    standalone: false,
 })
 export class SearchResultsComponent implements OnInit, OnDestroy {
     results$ = this.searchResults.results;

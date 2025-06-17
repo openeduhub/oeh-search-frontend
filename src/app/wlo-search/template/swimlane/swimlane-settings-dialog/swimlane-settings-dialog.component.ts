@@ -12,7 +12,6 @@ import { SelectWidgetTypeDialogComponent } from '../select-widget-type-dialog/se
 
 @Component({
     selector: 'app-swimlane-settings-dialog',
-    standalone: true,
     imports: [
         ConfigureGridDialogComponent,
         DragDropModule,

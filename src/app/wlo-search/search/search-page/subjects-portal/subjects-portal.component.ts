@@ -15,6 +15,7 @@ import {
     selector: 'app-subjects-portal',
     templateUrl: './subjects-portal.component.html',
     styleUrls: ['./subjects-portal.component.scss'],
+    standalone: false,
 })
 export class SubjectsPortalComponent implements OnInit, OnDestroy {
     readonly routerPath = this.config.get().routerPath;

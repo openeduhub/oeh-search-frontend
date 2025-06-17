@@ -6,6 +6,7 @@ import { SearchParametersService } from '../../../core/search-parameters.service
     selector: 'app-paginator',
     templateUrl: './paginator.component.html',
     styleUrls: ['./paginator.component.scss'],
+    standalone: false,
 })
 export class PaginatorComponent implements OnInit, OnChanges {
     @Input() length: number;

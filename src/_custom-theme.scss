@@ -219,6 +219,7 @@ $light-theme: mat.define-theme(
             primary: $primary-palette,
             tertiary: $tertiary-palette,
             use-system-variables: true,
+            system-variables-prefix: sys,
         ),
         density: (
             scale: -1,
@@ -230,6 +231,7 @@ $light-theme: mat.define-theme(
             medium-weight: 600,
             regular-weight: 400,
             use-system-variables: true,
+            system-variables-prefix: sys,
         ),
     )
 );
@@ -241,6 +243,7 @@ $light-theme: mat.define-theme(
 //                primary: $primary-palette,
 //                tertiary: $tertiary-palette,
 //                use-system-variables: true,
+//                system-variables-prefix: sys,
 //            ),
 //            density: (
 //                scale: -1,
@@ -252,6 +255,7 @@ $light-theme: mat.define-theme(
 //                medium-weight: 500,
 //                regular-weight: 400,
 //                use-system-variables: true,
+//                system-variables-prefix: sys,
 //            ),
 //        )
 //);

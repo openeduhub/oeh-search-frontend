@@ -31,7 +31,8 @@
             },
             "index": "src/index.html",
             "polyfills": [
-              "src/polyfills.ts"
+              "src/polyfills.ts",
+              "@angular/localize/init"
             ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
@@ -56,8 +57,8 @@
               ]
             },
             "styles": [
-              "node_modules/slick-carousel/slick/slick.scss",
-              "node_modules/slick-carousel/slick/slick-theme.scss",
+              "node_modules/slick-carousel/slick/slick.css",
+              "node_modules/slick-carousel/slick/slick-theme.css",
               "src/styles.scss"
             ],
             "scripts": [
@@ -164,8 +165,8 @@
               ]
             },
             "styles": [
-              "node_modules/slick-carousel/slick/slick.scss",
-              "node_modules/slick-carousel/slick/slick-theme.scss",
+              "node_modules/slick-carousel/slick/slick.css",
+              "node_modules/slick-carousel/slick/slick-theme.css",
               "src/styles.scss"
             ],
             "scripts": [
@@ -212,7 +213,8 @@
             },
             "index": "projects/web-components/src/index.html",
             "polyfills": [
-              "projects/web-components/src/polyfills.ts"
+              "projects/web-components/src/polyfills.ts",
+              "@angular/localize/init"
             ],
             "tsConfig": "projects/web-components/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
@@ -241,8 +243,8 @@
               ]
             },
             "styles": [
-              "node_modules/slick-carousel/slick/slick.scss",
-              "node_modules/slick-carousel/slick/slick-theme.scss",
+              "node_modules/slick-carousel/slick/slick.css",
+              "node_modules/slick-carousel/slick/slick-theme.css",
               "src/styles.scss",
               "projects/web-components/src/styles.scss"
             ],
@@ -323,8 +325,8 @@
               ]
             },
             "styles": [
-              "node_modules/slick-carousel/slick/slick.scss",
-              "node_modules/slick-carousel/slick/slick-theme.scss",
+              "node_modules/slick-carousel/slick/slick.css",
+              "node_modules/slick-carousel/slick/slick-theme.css",
               "src/styles.scss",
               "projects/web-components/src/styles.scss"
             ],

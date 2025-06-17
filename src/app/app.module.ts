@@ -15,7 +15,7 @@ import { MAT_DIALOG_SCROLL_STRATEGY } from '@angular/material/dialog';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { InMemoryCache } from '@apollo/client/core';
-import { ApolloModule, APOLLO_NAMED_OPTIONS } from 'apollo-angular';
+import { APOLLO_NAMED_OPTIONS } from 'apollo-angular';
 import { HttpLink } from 'apollo-angular/http';
 import { MaterialCssVarsModule } from 'angular-material-css-vars';
 import { ConfigService, EduSharingApiModule } from 'ngx-edu-sharing-api';
@@ -153,7 +153,6 @@ const eduSharingApiModuleWithProviders = environment.production
         MaterialCssVarsModule.forRoot({ isAutoContrast: true }),
         eduSharingApiModuleWithProviders,
         BApiModule.forRoot({ rootUrl: '/edu-sharing/rest/bapi' }),
-        ApolloModule,
     ],
     providers: [
         httpInterceptorProviders,

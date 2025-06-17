@@ -5,6 +5,7 @@ import { ClickKind } from '../telemetry-api';
 
 @Directive({
     selector: '[appReportClick]',
+    standalone: false,
 })
 export class ReportClickDirective {
     @Input('appReportClick') hit: Node;

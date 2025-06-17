@@ -11,6 +11,7 @@ import { ViewService } from '../view.service';
     selector: 'app-headerbar',
     templateUrl: './headerbar.component.html',
     styleUrls: ['./headerbar.component.scss'],
+    standalone: false,
 })
 export class HeaderbarComponent implements OnInit, OnDestroy {
     @HostBinding('attr.data-style') headerStyle: PageConfig['headerStyle'];

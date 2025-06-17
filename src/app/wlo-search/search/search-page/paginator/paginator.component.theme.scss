@@ -1,3 +1,4 @@
+@use 'sass:color';
 @use 'variables' as *;
 
 @mixin paginator-theme() {
@@ -8,7 +9,7 @@
             color: $primary-dark;
         }
         .page-number.active {
-            background-color: lighten($secondary, 40%);
+            background-color: color.adjust($secondary, $lightness: 40%);
         }
     }
 }

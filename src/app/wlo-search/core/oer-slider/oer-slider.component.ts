@@ -8,6 +8,7 @@ import { SearchParametersService } from '../search-parameters.service';
     selector: 'app-oer-slider',
     templateUrl: './oer-slider.component.html',
     styleUrls: ['./oer-slider.component.scss'],
+    standalone: false,
 })
 export class OerSliderComponent implements OnInit, OnDestroy {
     readonly wordpressUrl = this.config.get().wordpressUrl;

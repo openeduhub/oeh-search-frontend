@@ -1,5 +1,5 @@
-@import 'src/assets/fonts/opensans_regular/stylesheet.css';
-@import 'src/assets/fonts/opensans_bold/stylesheet.css';
-@import 'src/assets/fonts/material-design-icons/material-icons.css';
-@import 'src/assets/fonts/edu-icons/edu-icons.css';
-@import 'src/assets/fonts/custom-icons/custom-icons.scss';
+@use 'src/assets/fonts/opensans_regular/stylesheet.css' as *;
+@use 'src/assets/fonts/opensans_bold/stylesheet.css' as *;
+@use 'src/assets/fonts/material-design-icons/material-icons.css' as *;
+@use 'src/assets/fonts/edu-icons/edu-icons.css' as *;
+@use 'src/assets/fonts/custom-icons/custom-icons.scss' as *;

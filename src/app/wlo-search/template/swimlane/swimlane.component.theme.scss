@@ -3,7 +3,7 @@
 @mixin swimlane-theme() {
     app-swimlane {
         .grid-container {
-            // lighten does not work here, as outline is retrieved from variables
+            // color.adjust does not work here, as outline is retrieved from variables
             border-color: rgba($outline, 0.7);
         }
     }

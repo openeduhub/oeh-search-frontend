@@ -11,6 +11,7 @@ import { ResultCardContentStandardComponent } from '../result-card-content-stand
     selector: 'app-result-card',
     templateUrl: './result-card.component.html',
     styleUrls: ['./result-card.component.scss'],
+    standalone: false,
 })
 export class ResultCardComponent implements OnInit, OnDestroy {
     @Input() hit: Node;

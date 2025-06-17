@@ -6,6 +6,7 @@ import { TranslationsService } from 'ngx-edu-sharing-ui';
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
+    standalone: false,
 })
 export class AppComponent implements DoCheck {
     private static readonly CHECKS_PER_SECOND_WARNING_THRESHOLD = 0;

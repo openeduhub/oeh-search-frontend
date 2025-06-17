@@ -6,7 +6,6 @@ import { SelectOption } from '../../shared/types/select-option';
 
 @Component({
     selector: 'app-configure-grid-dialog',
-    standalone: true,
     imports: [SharedModule],
     templateUrl: './configure-grid-dialog.component.html',
     styleUrls: ['./configure-grid-dialog.component.scss'],

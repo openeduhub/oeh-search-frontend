@@ -18,6 +18,7 @@ import { WrappedResponse } from '../wrap-observable.pipe';
     selector: 'app-details',
     templateUrl: './details.component.html',
     styleUrls: ['./details.component.scss'],
+    standalone: false,
 })
 export class DetailsComponent implements OnDestroy {
     readonly routerPath = this.config.get().routerPath;

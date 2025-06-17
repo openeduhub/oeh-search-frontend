@@ -1,3 +1,4 @@
+@use 'sass:color';
 @use 'variables' as *;
 
 @mixin oer-slider-theme() {
@@ -13,7 +14,7 @@
         // change background color of switch track
         .mat-mdc-slide-toggle .mdc-switch__track {
             &::before {
-                background: lighten($secondary, 20%) !important;
+                background: color.adjust($secondary, $lightness: 20%) !important;
             }
             &::after {
                 background: $surface !important;

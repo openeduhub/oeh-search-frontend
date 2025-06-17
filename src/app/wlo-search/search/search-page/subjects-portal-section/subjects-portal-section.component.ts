@@ -9,7 +9,7 @@ import {
     ViewChild,
 } from '@angular/core';
 import { Node } from 'ngx-edu-sharing-api';
-import { SlickCarouselComponent } from 'ngx-slick-carousel';
+// import { SlickCarouselComponent } from 'ngx-slick-carousel';
 import { ReplaySubject } from 'rxjs';
 import { delay, distinctUntilChanged, map, takeUntil } from 'rxjs/operators';
 import { ConfigService } from '../../../core/config.service';
@@ -20,6 +20,7 @@ import { ViewService } from '../../../core/view.service';
     selector: 'app-subjects-portal-section',
     templateUrl: './subjects-portal-section.component.html',
     styleUrls: ['./subjects-portal-section.component.scss'],
+    standalone: false,
 })
 export class SubjectsPortalSectionComponent implements OnDestroy, AfterViewInit {
     readonly routerPath = this.config.get().routerPath;
@@ -34,7 +35,7 @@ export class SubjectsPortalSectionComponent implements OnDestroy, AfterViewInit 
     @Input() filters: Filters;
     @Input() type: string;
 
-    @ViewChild(SlickCarouselComponent) slickCarousel: SlickCarouselComponent;
+    // @ViewChild(SlickCarouselComponent) slickCarousel: SlickCarouselComponent;
 
     private destroyed$ = new ReplaySubject<void>(1);
     private slickConfigUpdateTrigger = new ReplaySubject<void>(1);
@@ -85,12 +86,12 @@ export class SubjectsPortalSectionComponent implements OnDestroy, AfterViewInit 
     }
 
     private updateSlickOptions(slidesToShow: number): void {
-        this.slickCarousel.$instance?.slick(
-            'slickSetOption',
-            'slidesToScroll',
-            slidesToShow,
-            false,
-        );
-        this.slickCarousel.$instance?.slick('slickSetOption', 'slidesToShow', slidesToShow, true);
+        // this.slickCarousel.$instance?.slick(
+        //     'slickSetOption',
+        //     'slidesToScroll',
+        //     slidesToShow,
+        //     false,
+        // );
+        // this.slickCarousel.$instance?.slick('slickSetOption', 'slidesToShow', slidesToShow, true);
     }
 }

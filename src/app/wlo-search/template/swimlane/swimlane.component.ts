@@ -21,7 +21,6 @@ import { SelectWidgetTypeDialogComponent } from './select-widget-type-dialog/sel
 
 @Component({
     selector: 'app-swimlane',
-    standalone: true,
     imports: [
         ConfigureGridDialogComponent,
         GridWidgetComponent,

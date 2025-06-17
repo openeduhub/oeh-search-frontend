@@ -1,3 +1,4 @@
+@use 'sass:color';
 @use 'variables' as *;
 
 @mixin search-filterbar-theme() {
@@ -11,7 +12,7 @@
                 }
             }
             > .header {
-                background-color: lighten($secondary, 45%);
+                background-color: color.adjust($secondary, $lightness: 45%);
                 border-color: $outline;
             }
             > .body {

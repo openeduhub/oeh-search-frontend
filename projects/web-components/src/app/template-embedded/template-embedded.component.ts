@@ -6,6 +6,7 @@ import { CoreService } from '../../../../../src/app/wlo-search/core/core.service
     selector: 'app-template-embedded',
     templateUrl: './template-embedded.component.html',
     styleUrls: ['./template-embedded.component.scss'],
+    standalone: false,
 })
 export class TemplateEmbeddedComponent implements OnInit {
     @Input() collectionId: string;

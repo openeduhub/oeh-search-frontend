@@ -1,3 +1,4 @@
+@use 'sass:color';
 @import 'ngx-edu-sharing-ui/assets/scss/variables-scss';
 
 // MATERIAL COLOR ROLE VARIABLES
@@ -27,20 +28,36 @@ $surface-container-lowest: if(global-variable-exists('backgroundColor'), $backgr
 
 // EXTENDED COLOR VARIABLES
 // status colors
-$error: if(global-variable-exists('warning'), darken($warning, 10%), #ba1a1a); // E-40
-$error-container: if(global-variable-exists('warning'), lighten($warning, 45%), #ffdad6); // E-90
+$error: if(
+    global-variable-exists('warning'),
+    color.adjust($warning, $lightness: -10%),
+    #ba1a1a
+); // E-40
+$error-container: if(
+    global-variable-exists('warning'),
+    color.adjust($warning, $lightness: 45%),
+    #ffdad6
+); // E-90
 $success: if(
     global-variable-exists('colorStatusPositive'),
-    darken($colorStatusPositive, 15%),
+    color.adjust($colorStatusPositive, $lightness: -15%),
     #43a047
 );
 $success-container: if(
     global-variable-exists('colorStatusPositive'),
-    lighten($colorStatusPositive, 40%),
+    color.adjust($colorStatusPositive, $lightness: 40%),
     #e8f5e9
 );
-$warn: if(global-variable-exists('warningMedium'), darken($warningMedium, 10%), #ffb930);
-$warn-container: if(global-variable-exists('warningMedium'), lighten($warningMedium, 40%), #fff1d6);
+$warn: if(
+    global-variable-exists('warningMedium'),
+    color.adjust($warningMedium, $lightness: -10%),
+    #ffb930
+);
+$warn-container: if(
+    global-variable-exists('warningMedium'),
+    color.adjust($warningMedium, $lightness: 40%),
+    #fff1d6
+);
 // chip colors
 $chip-color-discipline: if(
     map-has-key($chip-colors, 'ccm_taxonid'),

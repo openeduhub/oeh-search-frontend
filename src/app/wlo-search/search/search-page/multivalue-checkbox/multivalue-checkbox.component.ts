@@ -14,6 +14,7 @@ import { FacetValue } from 'ngx-edu-sharing-api';
             useExisting: forwardRef(() => MultivalueCheckboxComponent),
         },
     ],
+    standalone: false,
 })
 export class MultivalueCheckboxComponent implements ControlValueAccessor {
     @Input() buckets: FacetValue[];

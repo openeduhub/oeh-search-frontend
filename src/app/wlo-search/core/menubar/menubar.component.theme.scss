@@ -1,3 +1,4 @@
+@use 'sass:color';
 @use 'variables' as *;
 
 @mixin menubar-theme() {
@@ -121,7 +122,7 @@
             }
 
             .is-dropdown-submenu-item:hover {
-                background-color: lighten($secondary, 40%) !important;
+                background-color: color.adjust($secondary, $lightness: 40%) !important;
             }
 
             .skip-link {

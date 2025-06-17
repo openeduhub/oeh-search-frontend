@@ -1,3 +1,4 @@
+@use 'sass:color';
 @use 'variables' as *;
 
 @mixin details-theme() {
@@ -7,7 +8,7 @@
         }
         .app-preview-panel-info-bar,
         .app-preview-related-items {
-            background-color: lighten($secondary, 45%);
+            background-color: color.adjust($secondary, $lightness: 45%);
         }
         .app-preview-panel-body {
             background-color: $surface-container-high;

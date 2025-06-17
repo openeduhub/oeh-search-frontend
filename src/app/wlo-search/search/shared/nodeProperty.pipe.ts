@@ -11,6 +11,7 @@ export interface IdentifiedValue {
 
 @Pipe({
     name: 'nodeProperty',
+    standalone: false,
 })
 export class NodePropertyPipe implements PipeTransform {
     private readonly propertyMappings = {

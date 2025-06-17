@@ -8,7 +8,6 @@ import { SelectOption } from '../shared/types/select-option';
 import { Swimlane } from '../shared/types/swimlane';
 
 @Component({
-    standalone: true,
     imports: [SharedModule],
     selector: 'app-add-swimlane-border-button',
     templateUrl: './add-swimlane-border-button.component.html',

@@ -92,7 +92,6 @@ import { SwimlaneComponent } from './swimlane/swimlane.component';
 import { SwimlaneSettingsDialogComponent } from './swimlane/swimlane-settings-dialog/swimlane-settings-dialog.component';
 
 @Component({
-    standalone: true,
     imports: [
         AddSwimlaneBorderButtonComponent,
         BreadcrumbComponent,

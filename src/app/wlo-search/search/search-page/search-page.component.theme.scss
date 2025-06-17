@@ -1,3 +1,4 @@
+@use 'sass:color';
 @use 'variables' as *;
 
 @mixin search-page-theme() {
@@ -25,7 +26,7 @@
             --mat-standard-button-toggle-divider-color: #{$outline};
 
             .mat-button-toggle-appearance-standard.mat-button-toggle-checked {
-                background-color: lighten($secondary, 10%);
+                background-color: color.adjust($secondary, $lightness: 10%);
             }
         }
     }

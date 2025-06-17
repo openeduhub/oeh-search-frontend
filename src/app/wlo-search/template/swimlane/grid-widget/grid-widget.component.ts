@@ -14,7 +14,6 @@ import { retrieveCustomUrl } from '../../shared/custom-definitions';
 
 @Component({
     selector: 'app-grid-widget',
-    standalone: true,
     imports: [
         SharedModule,
         AiTextWidgetComponent,

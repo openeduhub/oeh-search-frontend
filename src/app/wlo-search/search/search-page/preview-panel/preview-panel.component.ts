@@ -11,6 +11,7 @@ import { DetailsComponent } from '../../shared/details/details.component';
     selector: 'app-preview-panel',
     templateUrl: './preview-panel.component.html',
     styleUrls: ['./preview-panel.component.scss'],
+    standalone: false,
 })
 export class PreviewPanelComponent implements OnDestroy {
     @ViewChild('dialogContent') dialogContentRef: TemplateRef<PreviewPanelComponent>;

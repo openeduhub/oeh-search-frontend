@@ -48,6 +48,8 @@
     height: 30px;
     line-height: 30px;
     border-radius: 15px;
+    // slightly adjust padding of badge container
+    --mat-badge-container-padding: 3px 8px;
     .button-wrapper {
         display: flex;
         align-items: center;
@@ -59,6 +61,4 @@
             }
         }
     }
-    // slightly adjust padding of badge container
-    --mat-badge-container-padding: 3px 8px;
 }

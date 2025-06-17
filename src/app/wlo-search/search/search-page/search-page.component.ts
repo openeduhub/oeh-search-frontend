@@ -18,6 +18,7 @@ import { SearchResultsService } from './search-results/search-results.service';
     selector: 'app-search',
     templateUrl: './search-page.component.html',
     styleUrls: ['./search-page.component.scss'],
+    standalone: false,
 })
 export class SearchPageComponent implements OnInit, OnDestroy {
     readonly routerPath = this.config.get().routerPath;
