@@ -82,6 +82,7 @@
         "EXHIBITIONS": "Ausstellungen",
         "IS_LOADING": "Die Map-Ansicht wird geladen",
         "IS_PENDING": "Die Map-Ansicht wird aktualisiert.",
+        "NO_DATA_AVAILABLE": "Es konnte keine Daten für die Kartenansicht gefunden werden.",
         "NO_INFORMATION_AVAILABLE": "Keine Informationen vorhanden."
       },
       "MEDIA_RENDERING": {

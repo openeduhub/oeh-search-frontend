@@ -82,6 +82,7 @@
         "EXHIBITIONS": "Exhibitions",
         "IS_LOADING": "The map view is loading",
         "IS_PENDING": "The map view is updating.",
+        "NO_DATA_AVAILABLE": "No data could be found for the map view.",
         "NO_INFORMATION_AVAILABLE": "No information available."
       },
       "MEDIA_RENDERING": {
