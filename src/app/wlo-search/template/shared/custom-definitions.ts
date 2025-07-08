@@ -68,7 +68,7 @@ export const pageConfigAspect: string = 'ccm:page';
 
 export const pageConfigPrefix: string = 'PAGE_';
 
-export const pageConfigPropagateType: string = 'ccm:page_config_propagate';
+export const pageConfigPropagateRefType: string = 'ccm:page_config_propagate_ref';
 
 export const pageConfigRefType: string = 'ccm:page_config_ref';
 

@@ -75,7 +75,6 @@ import { PageConfig } from './shared/types/page-config';
 import { PageVariantConfig } from './shared/types/page-variant-config';
 import { Swimlane } from './shared/types/swimlane';
 import {
-    checkPageConfigPropagate,
     closeToastWithDelay,
     convertNodeRefIntoNodeId,
     getTopicColor,
@@ -83,6 +82,7 @@ import {
     removeNodeIdsFromPageVariantConfig,
     retrieveNodeId,
     retrievePageConfig,
+    retrievePageConfigPropagateRef,
     retrievePageConfigRef,
     retrievePageVariantConfig,
     retrieveSearchUrl,
@@ -1152,16 +1152,16 @@ export class TemplateComponent implements OnDestroy, OnInit {
         // check, whether the node itself has a pageConfigRef
         let pageRef: string = retrievePageConfigRef(node);
         this.collectionNodeHasPageConfig = !!pageRef;
-        // otherwise, iterate the parents to retrieve the pageConfigRef, if pageConfigPropagate is set
+        // otherwise, iterate the parents to retrieve the pageConfigPropagateRef if set
         if (!pageRef) {
             const parents: ParentEntries = await this.templateHelperService.getNodeParents(
                 retrieveNodeId(node),
             );
-            const propagatingParent: Node = parents.nodes.find((parent: Node) =>
-                checkPageConfigPropagate(parent),
+            const propagatingParent: Node = parents.nodes.find(
+                (parent: Node) => !!retrievePageConfigPropagateRef(parent),
             );
             if (propagatingParent) {
-                pageRef = retrievePageConfigRef(propagatingParent);
+                pageRef = retrievePageConfigPropagateRef(propagatingParent);
             }
         }
         if (pageRef) {

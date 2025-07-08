@@ -1,7 +1,7 @@
 import { MatSnackBarRef, TextOnlySnackBar } from '@angular/material/snack-bar';
 import { Node } from 'ngx-edu-sharing-api';
 import {
-    pageConfigPropagateType,
+    pageConfigPropagateRefType,
     pageConfigRefType,
     pageConfigType,
     pageVariantConfigType,
@@ -166,12 +166,12 @@ export const retrievePageConfig = (node: Node): PageConfig => {
 };
 
 /**
- * Checks, whether a given (collection) node propagates its config to the children.
+ * Retrieves the page config propagate ref from a given (collection) node.
  *
  * @param node
  */
-export const checkPageConfigPropagate = (node: Node): boolean => {
-    return node.properties?.[pageConfigPropagateType]?.[0] === 'true';
+export const retrievePageConfigPropagateRef = (node: Node): string => {
+    return node.properties?.[pageConfigPropagateRefType]?.[0];
 };
 
 /**
