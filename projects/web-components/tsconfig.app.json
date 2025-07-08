@@ -4,7 +4,7 @@
   "compilerOptions": {
     // "strict": true,
     "outDir": "../../out-tsc/app",
-    "types": []
+    "types": ["jquery", "slick-carousel"]
   },
   "files": [
     "src/main.ts",
