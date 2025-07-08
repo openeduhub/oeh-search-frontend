@@ -19,7 +19,7 @@ export const defaultUserConfigurableConfigId: string = 'topic_page_ai_user_confi
 
 export const disciplineKey: string = 'ccm:taxonid';
 
-export const eduSharingUrl: string = 'https://repository.pre-staging.openeduhub.net/edu-sharing/';
+export const eduSharingUrl: string = 'https://repository.staging.openeduhub.net/edu-sharing/';
 
 export const initialLocaleString: string = 'de_DE';
 
