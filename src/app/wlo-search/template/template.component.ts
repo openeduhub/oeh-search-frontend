@@ -17,8 +17,18 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBarRef, TextOnlySnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { MdsValue, MdsWidget, Node, NodeEntries } from 'ngx-edu-sharing-api';
+import {
+    CONTENT_TYPE_ALL,
+    HOME_REPOSITORY,
+    MdsValue,
+    MdsWidget,
+    Node,
+    NodeEntries,
+    PROPERTY_FILTER_ALL,
+    SearchService,
+} from 'ngx-edu-sharing-api';
 import { ParentEntries } from 'ngx-edu-sharing-api/lib/api/models/parent-entries';
+import { SearchResultNode } from 'ngx-edu-sharing-api/lib/api/models/search-result-node';
 import {
     BreadcrumbComponent,
     checkUserAccess,
@@ -37,7 +47,7 @@ import {
     WidgetNodeAddedEvent,
 } from 'ngx-edu-sharing-wlo-pages';
 import * as qs from 'qs';
-import { Subject } from 'rxjs';
+import { firstValueFrom, Subject } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
 import { v4 as uuidv4 } from 'uuid';
 import { ConfigService } from '../core/config.service';
@@ -128,6 +138,7 @@ export class TemplateComponent implements OnDestroy, OnInit {
         private globalWidgetConfigService: GlobalWidgetConfigService,
         private route: ActivatedRoute,
         private router: Router,
+        private searchService: SearchService,
         private statisticsHelperService: StatisticsHelperService,
         private templateHelperService: TemplateHelperService,
     ) {}
@@ -168,6 +179,9 @@ export class TemplateComponent implements OnDestroy, OnInit {
     headerNodeId: WritableSignal<string> = signal(null);
     private pageConfigNode: Node;
     pageConfigCheckFailed: WritableSignal<boolean> = signal(false);
+    defaultPageVariantNodes: Node[];
+    selectedDefaultConfigNode: Node;
+    createCustomConfigInProgress: WritableSignal<boolean> = signal(false);
     pageVariantConfigs: NodeEntries;
     private pageVariantDefaultPosition: number = -1;
     pageVariantNode: Node;
@@ -1194,7 +1208,57 @@ export class TemplateComponent implements OnDestroy, OnInit {
             }
         }
         this.pageConfigCheckFailed.set(true);
+        // retrieve page variant templates to be chosen by the user
+        const searchResult: SearchResultNode = await firstValueFrom(
+            this.searchService.search({
+                query: 'page_variant',
+                repository: HOME_REPOSITORY,
+                maxItems: 10,
+                propertyFilter: [PROPERTY_FILTER_ALL],
+                contentType: CONTENT_TYPE_ALL,
+                metadataset: defaultMds,
+                body: {
+                    criteria: [
+                        {
+                            property: pageVariantIsTemplateType,
+                            values: ['true'],
+                        },
+                    ],
+                },
+            }),
+        );
+        this.defaultPageVariantNodes = searchResult.nodes;
         return null;
+    }
+
+    /**
+     * Creates a custom page config from the selected default config node.
+     */
+    async createCustomConfig() {
+        try {
+            this.createCustomConfigInProgress.set(true);
+            // fake page variant config nodes
+            this.pageVariantConfigs = {
+                nodes: [],
+                pagination: {
+                    count: 1,
+                    from: 1,
+                    total: 1,
+                },
+            };
+            this.selectedVariantPosition = 0;
+            this.pageVariantConfigs.nodes = [this.selectedDefaultConfigNode];
+            // create config node + link
+            await this.checkForCustomPageNodeExistence();
+            // reset values + reinitialize the component
+            this.pageConfigCheckFailed.set(false);
+            await this.initializeComponent();
+        } catch (err) {
+            console.error(err);
+            this.templateHelperService.displayErrorToast();
+        } finally {
+            this.createCustomConfigInProgress.set(false);
+        }
     }
 
     /**

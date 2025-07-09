@@ -283,7 +283,14 @@
       "RELATED_SUBJECT_PAGES": "Related subject pages"
     },
     "NO_SWIMLANES": "No swimlanes with content have been created yet.",
-    "NO_PAGE_CONFIG": "No page configuration could be found for this page. Please contact your system administrator.",
+    "NO_PAGE_CONFIG": {
+      "DEFAULT_MESSAGE": "No page configuration could be found for this page.",
+      "VIEW_MESSAGE": "Please contact your system administrator.",
+      "EDIT_MESSAGE": "However, you can select a page configuration that you want to use via the menu.",
+      "SELECT_LABEL": "Page config",
+      "SELECT_PLACEHOLDER": "Select page config",
+      "CREATE_PAGE": "Create page"
+    },
     "HINT": "Hint",
     "ATTENTION": "Attention"
   }

@@ -283,7 +283,14 @@
       "RELATED_SUBJECT_PAGES": "Verwandte Themenseiten"
     },
     "NO_SWIMLANES": "Bisher wurden noch keine Swimlanes mit Inhalten erstellt.",
-    "NO_PAGE_CONFIG": "Für diese Seite konnte keine Seiten-Konfiguration gefunden werden. Bitte wenden Sie sich an Ihren Systemadministrator.",
+    "NO_PAGE_CONFIG": {
+      "DEFAULT_MESSAGE": "Für diese Seite konnte keine Seiten-Konfiguration gefunden werden.",
+      "VIEW_MESSAGE": "Bitte wenden Sie sich an Ihren Systemadministrator.",
+      "EDIT_MESSAGE": "Sie können jedoch über das Menü eine Seiten-Konfiguration auswählen, die Sie verwenden wollen.",
+      "SELECT_LABEL": "Seiten-Konfiguration",
+      "SELECT_PLACEHOLDER": "Seiten-Konfiguration auswählen",
+      "CREATE_PAGE": "Seite anlegen"
+    },
     "HINT": "Hinweis",
     "ATTENTION": "Achtung"
   }

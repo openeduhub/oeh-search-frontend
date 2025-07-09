@@ -16,8 +16,21 @@
     flex-direction: column;
 }
 
-.alert-warning {
-    margin: 24px 24px 0 24px !important;
+.missing-page-config {
+    padding: 24px;
+
+    .config-selection-container {
+        display: flex;
+        gap: 16px;
+
+        mat-form-field {
+            flex: 1;
+        }
+
+        .create-button > button {
+            min-height: 100%;
+        }
+    }
 }
 
 .reloading-indicator-bg {

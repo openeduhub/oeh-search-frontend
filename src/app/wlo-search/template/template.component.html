@@ -409,8 +409,45 @@
 
 <!-- failed to load page config -> currently, no further action possible -->
 <ng-template #pageConfigCheckFailedMessage>
-  <p class="alert-warning">
-    <strong> {{ 'TOPIC_PAGE.HINT' | translate }}: </strong>
-    {{ 'TOPIC_PAGE.NO_PAGE_CONFIG' | translate }}
-  </p>
+  <div class="missing-page-config">
+    <p class="alert-warning">
+      <strong> {{ 'TOPIC_PAGE.HINT' | translate }}: </strong>
+      {{ 'TOPIC_PAGE.NO_PAGE_CONFIG.DEFAULT_MESSAGE' | translate }}
+      {{
+        userHasEditRights()
+          ? ('TOPIC_PAGE.NO_PAGE_CONFIG.EDIT_MESSAGE' | translate)
+          : ('TOPIC_PAGE.NO_PAGE_CONFIG.VIEW_MESSAGE' | translate)
+      }}
+    </p>
+
+    <div class="config-selection-container">
+      <mat-form-field
+        *ngIf="defaultPageVariantNodes?.length"
+        appearance="outline"
+        subscriptSizing="dynamic"
+      >
+        <mat-label>{{ 'TOPIC_PAGE.NO_PAGE_CONFIG.SELECT_PLACEHOLDER' | translate }}</mat-label>
+        <mat-select
+          [(ngModel)]="selectedDefaultConfigNode"
+          [disabled]="createCustomConfigInProgress()"
+        >
+          <mat-option *ngFor="let node of defaultPageVariantNodes; let i = index" [value]="node">
+            {{ 'TOPIC_PAGE.NO_PAGE_CONFIG.SELECT_LABEL' | translate }} {{ i + 1 }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- the div is necessary for the button to be full height -->
+      <div class="create-button">
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!selectedDefaultConfigNode || createCustomConfigInProgress()"
+          (click)="createCustomConfig()"
+        >
+          {{ 'TOPIC_PAGE.NO_PAGE_CONFIG.CREATE_PAGE' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
 </ng-template>
