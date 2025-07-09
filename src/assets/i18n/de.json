@@ -186,7 +186,10 @@
       "EDIT_PAGE": "Seite bearbeiten",
       "BACK_TO_PREVIEW": "Zurück zur Vorschau",
       "NEW": "Neu",
-      "PAGE_VARIANT": "Seiten-Variante",
+      "PAGE_VARIANT": {
+        "LABEL": "Seiten-Variante",
+        "SUBSCRIPTION": "Abonnement"
+      },
       "PROFILING": {
         "LABEL": "Profilierung",
         "HEADING": "Wer bist du?"

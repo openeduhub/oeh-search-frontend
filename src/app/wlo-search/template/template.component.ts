@@ -483,9 +483,7 @@ export class TemplateComponent implements OnDestroy, OnInit {
             return;
         }
         // retrieve the (potentially updated) page variant configs
-        this.pageVariantConfigs = await this.templateHelperService.getNodeChildren(
-            retrieveNodeId(this.pageConfigNode),
-        );
+        await this.reloadPageVariantConfigs();
         // default the ID with the default or the first occurrence
         this.pageVariantDefaultPosition = pageConfig.variants.indexOf(pageConfig.default);
         // select the proper variant (initialize with default or first variant)
@@ -618,9 +616,7 @@ export class TemplateComponent implements OnDestroy, OnInit {
                         JSON.stringify(pageConfig),
                     );
                 // reload page variant configs
-                this.pageVariantConfigs = await this.templateHelperService.getNodeChildren(
-                    retrieveNodeId(this.pageConfigNode),
-                );
+                await this.reloadPageVariantConfigs();
                 // navigate to the newly created variant
                 await this.navigateToVariant(retrieveNodeId(pageConfigVariantNode));
                 this.endEditing(toastContainer);
@@ -684,11 +680,15 @@ export class TemplateComponent implements OnDestroy, OnInit {
             const swimlanesCopy = JSON.parse(JSON.stringify(this.swimlanes ?? []));
             swimlanesCopy.splice(positionToAdd, 0, newSwimlane);
             pageVariant.structure.swimlanes = swimlanesCopy;
+            const reloadNecessary: boolean = this.updatePageVariantLastModified(pageVariant);
             await this.templateHelperService.setProperty(
                 retrieveNodeId(this.pageVariantNode),
                 pageVariantConfigType,
                 JSON.stringify(pageVariant),
             );
+            if (reloadNecessary) {
+                await this.reloadPageVariantConfigs();
+            }
             // add swimlane visually as soon as the requests are done
             this.swimlanes.splice(positionToAdd, 0, newSwimlane);
             this.endEditing(toastContainer);
@@ -715,11 +715,15 @@ export class TemplateComponent implements OnDestroy, OnInit {
                 const swimlanesCopy = JSON.parse(JSON.stringify(this.swimlanes ?? []));
                 moveItemInArray(swimlanesCopy, oldIndex, newIndex);
                 pageVariant.structure.swimlanes = swimlanesCopy;
+                const reloadNecessary: boolean = this.updatePageVariantLastModified(pageVariant);
                 await this.templateHelperService.setProperty(
                     retrieveNodeId(this.pageVariantNode),
                     pageVariantConfigType,
                     JSON.stringify(pageVariant),
                 );
+                if (reloadNecessary) {
+                    await this.reloadPageVariantConfigs();
+                }
                 // move swimlane position visually as soon as the requests are done
                 moveItemInArray(this.swimlanes, oldIndex, newIndex);
                 this.endEditing(toastContainer);
@@ -816,11 +820,14 @@ export class TemplateComponent implements OnDestroy, OnInit {
                 if (editedSwimlane.grid) {
                     editedSwimlane.grid = JSON.parse(editedSwimlane.grid);
                 }
-                // TODO: detect, whether a change was made
                 if (JSON.stringify(editedSwimlane) === JSON.stringify(swimlane)) {
                     console.log('DEBUG: Return, because no change was made.');
                     return;
                 }
+                // detect whether a structural change has been made (type or grid was changed)
+                const structuralChange: boolean =
+                    editedSwimlane.type !== swimlane.type ||
+                    JSON.stringify(editedSwimlane.grid) !== JSON.stringify(swimlane.grid);
                 const toastContainer: MatSnackBarRef<TextOnlySnackBar> = this.startEditing();
                 try {
                     await this.checkForCustomPageNodeExistence();
@@ -850,11 +857,18 @@ export class TemplateComponent implements OnDestroy, OnInit {
                     swimlanesCopy[index] = editedSwimlane;
                     // overwrite swimlanes
                     pageVariant.structure.swimlanes = swimlanesCopy;
+                    let reloadNecessary: boolean = false;
+                    if (structuralChange) {
+                        reloadNecessary = this.updatePageVariantLastModified(pageVariant);
+                    }
                     await this.templateHelperService.setProperty(
                         retrieveNodeId(this.pageVariantNode),
                         pageVariantConfigType,
                         JSON.stringify(pageVariant),
                     );
+                    if (reloadNecessary) {
+                        await this.reloadPageVariantConfigs();
+                    }
                     // afterward, delete config nodes of removed widgets
                     for (const nodeId of deletedWidgetNodeIds) {
                         // retrieve correct nodeId
@@ -908,11 +922,15 @@ export class TemplateComponent implements OnDestroy, OnInit {
                 const swimlanesCopy = JSON.parse(JSON.stringify(this.swimlanes ?? []));
                 swimlanesCopy.splice(index, 1);
                 pageVariant.structure.swimlanes = swimlanesCopy;
+                const reloadNecessary: boolean = this.updatePageVariantLastModified(pageVariant);
                 await this.templateHelperService.setProperty(
                     retrieveNodeId(this.pageVariantNode),
                     pageVariantConfigType,
                     JSON.stringify(pageVariant),
                 );
+                if (reloadNecessary) {
+                    await this.reloadPageVariantConfigs();
+                }
                 // delete swimlane visually as soon as the requests are done
                 this.swimlanes.splice(index, 1);
                 this.endEditing(toastContainer);
@@ -944,11 +962,15 @@ export class TemplateComponent implements OnDestroy, OnInit {
                 // TODO: rollback necessary
             }
             pageVariant.structure.swimlanes = this.swimlanes;
+            const reloadNecessary: boolean = this.updatePageVariantLastModified(pageVariant);
             await this.templateHelperService.setProperty(
                 retrieveNodeId(this.pageVariantNode),
                 pageVariantConfigType,
                 JSON.stringify(pageVariant),
             );
+            if (reloadNecessary) {
+                await this.reloadPageVariantConfigs();
+            }
             // TODO: rollback necessary, if the request is not successful
         } catch (err) {
             console.error(err);
@@ -1250,9 +1272,7 @@ export class TemplateComponent implements OnDestroy, OnInit {
                     JSON.stringify(pageConfig),
                 );
             // get page variant configs
-            this.pageVariantConfigs = await this.templateHelperService.getNodeChildren(
-                retrieveNodeId(this.pageConfigNode),
-            );
+            await this.reloadPageVariantConfigs();
             // parse the page config ref again
             const pageVariant: PageVariantConfig = this.retrievePageVariant();
             this.breadcrumbNodeId.set(pageVariant.structure.breadcrumbNodeId);
@@ -1310,6 +1330,29 @@ export class TemplateComponent implements OnDestroy, OnInit {
     }
 
     /**
+     * Helper function to reload the page variant configs.
+     */
+    private async reloadPageVariantConfigs(): Promise<void> {
+        this.pageVariantConfigs = await this.templateHelperService.getNodeChildren(
+            retrieveNodeId(this.pageConfigNode),
+        );
+    }
+
+    /**
+     * Helper function to update the last modified attribute of a given page variant.
+     *
+     * @param pageVariant
+     */
+    private updatePageVariantLastModified(pageVariant: PageVariantConfig): boolean {
+        let reloadVariantsNecessary: boolean = false;
+        if (pageVariant.template) {
+            reloadVariantsNecessary = !pageVariant.template?.lastModified;
+            pageVariant.template.lastModified = Date.now().toString();
+        }
+        return reloadVariantsNecessary;
+    }
+
+    /**
      * Helper function to start an editing process by setting requestInProgress to true and opening a toast to inform the user about it.
      *
      * @param msg
@@ -1333,5 +1376,6 @@ export class TemplateComponent implements OnDestroy, OnInit {
     protected readonly defaultMds: string = defaultMds;
     protected readonly profilingFilterbarDimensionKeys: string[] = profilingFilterbarDimensionKeys;
     protected readonly retrieveCustomUrl = retrieveCustomUrl;
+    protected readonly retrievePageVariantConfig = retrievePageVariantConfig;
     protected readonly wordpressUrl: string = this.config.get().wordpressUrl;
 }

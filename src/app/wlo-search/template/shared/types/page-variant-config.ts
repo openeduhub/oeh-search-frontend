@@ -4,6 +4,7 @@ export interface PageVariantConfig {
     variables?: { [key: string]: string };
     template: {
         id: string;
+        lastModified?: string;
         version: string;
     };
     structure: PageStructure;

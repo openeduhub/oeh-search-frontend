@@ -186,7 +186,10 @@
       "EDIT_PAGE": "Edit page",
       "BACK_TO_PREVIEW": "Back to preview",
       "NEW": "New",
-      "PAGE_VARIANT": "Page variant",
+      "PAGE_VARIANT": {
+        "LABEL": "Page variant",
+        "SUBSCRIPTION": "Subscription"
+      },
       "PROFILING": {
         "LABEL": "Profiling",
         "HEADING": "Who are you?"
