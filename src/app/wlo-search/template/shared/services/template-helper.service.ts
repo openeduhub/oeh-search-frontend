@@ -49,7 +49,7 @@ export class TemplateHelperService {
         private viewService: ViewService,
     ) {
         this.authService
-            .observeAutoLogoutTime()
+            .observeAutoLogout()
             .pipe(takeUntilDestroyed())
             .subscribe(() => {
                 console.log('observeAutoLogoutTime', this.redirectInProgress);
