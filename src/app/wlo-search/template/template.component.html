@@ -432,7 +432,11 @@
           [disabled]="createCustomConfigInProgress()"
         >
           <mat-option *ngFor="let node of defaultPageVariantNodes; let i = index" [value]="node">
-            {{ 'TOPIC_PAGE.NO_PAGE_CONFIG.SELECT_LABEL' | translate }} {{ i + 1 }}
+            {{
+              node.title
+                ? node.title
+                : ('TOPIC_PAGE.NO_PAGE_CONFIG.SELECT_LABEL' | translate) + ' ' + (i + 1)
+            }}
           </mat-option>
         </mat-select>
       </mat-form-field>
