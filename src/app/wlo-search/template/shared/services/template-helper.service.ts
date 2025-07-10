@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
     MatSnackBar,
     MatSnackBarConfig,
     MatSnackBarRef,
     TextOnlySnackBar,
 } from '@angular/material/snack-bar';
+import { TranslateService } from '@ngx-translate/core';
 import {
     ApiRequestConfiguration,
     AuthenticationService,
+    LoginInfo,
     Node,
     NodeEntries,
     NodeService,
@@ -34,14 +37,46 @@ export class TemplateHelperService {
     private readonly SAVE_CONFIG_ERROR_ACTION: string = 'Seite neuladen';
     private readonly SAVE_CONFIG_ERROR_MESSAGE: string =
         'Beim Laden einer Ressource ist ein Fehler aufgetreten. Bitte laden Sie die Seite neu.';
+    private initializedWithAuthorityName: boolean = false;
+    private redirectInProgress: boolean = false;
 
     constructor(
         private apiRequestConfig: ApiRequestConfiguration,
         private authService: AuthenticationService,
         private nodeApi: NodeService,
         private snackbar: MatSnackBar,
+        private translate: TranslateService,
         private viewService: ViewService,
-    ) {}
+    ) {
+        this.authService
+            .observeAutoLogoutTime()
+            .pipe(takeUntilDestroyed())
+            .subscribe(() => {
+                console.log('observeAutoLogoutTime', this.redirectInProgress);
+                if (!this.redirectInProgress) {
+                    this.redirectInProgress = true;
+                    window.confirm(this.translate.instant('TOPIC_PAGE.LOGOUT_INFO'));
+                    window.location.reload();
+                }
+            });
+        this.authService
+            .observeLoginInfo()
+            .pipe(takeUntilDestroyed())
+            .subscribe((data: LoginInfo) => {
+                console.log('observeLoginInfo', this.redirectInProgress);
+                if (data.authorityName) {
+                    this.initializedWithAuthorityName = true;
+                } else if (
+                    !data.authorityName &&
+                    this.initializedWithAuthorityName &&
+                    !this.redirectInProgress
+                ) {
+                    this.redirectInProgress = true;
+                    window.confirm(this.translate.instant('TOPIC_PAGE.LOGOUT_INFO'));
+                    window.location.reload();
+                }
+            });
+    }
 
     /**
      * Helper function to handle login for local development.

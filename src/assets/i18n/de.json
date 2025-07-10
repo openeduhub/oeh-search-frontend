@@ -291,6 +291,7 @@
       "SELECT_PLACEHOLDER": "Seiten-Konfiguration auswählen",
       "CREATE_PAGE": "Seite anlegen"
     },
+    "LOGOUT_INFO": "Ihre Sitzung wurde beendet. Die Seite wird anschließend neu geladen.",
     "HINT": "Hinweis",
     "ATTENTION": "Achtung"
   }

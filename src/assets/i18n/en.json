@@ -291,6 +291,7 @@
       "SELECT_PLACEHOLDER": "Select page config",
       "CREATE_PAGE": "Create page"
     },
+    "LOGOUT_INFO": "Your session has terminated. The page will be reloaded automatically.",
     "HINT": "Hint",
     "ATTENTION": "Attention"
   }
