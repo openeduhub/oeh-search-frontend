@@ -1438,6 +1438,7 @@ export class TemplateComponent implements OnDestroy, OnInit {
     }
 
     protected readonly defaultMds: string = defaultMds;
+    protected readonly pageVariantConfigPrefix = pageVariantConfigPrefix;
     protected readonly profilingFilterbarDimensionKeys: string[] = profilingFilterbarDimensionKeys;
     protected readonly retrieveCustomUrl = retrieveCustomUrl;
     protected readonly retrievePageVariantConfig = retrievePageVariantConfig;

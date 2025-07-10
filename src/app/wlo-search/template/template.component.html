@@ -91,7 +91,11 @@
           (click)="navigateToVariant(variant.ref.id)"
         >
           <i esIcon="check" *ngIf="variant.ref.id === pageVariantNode?.ref.id"></i>
-          {{ 'TOPIC_PAGE.SIDE_MENU.PAGE_VARIANT.LABEL' | translate }} {{ i + 1 }}
+          {{
+            variant.title && !variant.title.includes(pageVariantConfigPrefix)
+              ? variant.title
+              : ('TOPIC_PAGE.SIDE_MENU.PAGE_VARIANT.LABEL' | translate) + ' ' + (i + 1)
+          }}
           {{
             retrievePageVariantConfig(variant)?.template?.lastModified
               ? ''
@@ -433,7 +437,7 @@
         >
           <mat-option *ngFor="let node of defaultPageVariantNodes; let i = index" [value]="node">
             {{
-              node.title
+              node.title && !node.title.includes(pageVariantConfigPrefix)
                 ? node.title
                 : ('TOPIC_PAGE.NO_PAGE_CONFIG.SELECT_LABEL' | translate) + ' ' + (i + 1)
             }}
