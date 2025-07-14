@@ -62,6 +62,19 @@
         "CHANGES_SAVED": "Your changes have been saved.",
         "CHANGES_RESET": "Your changes have been reset."
       },
+      "IFRAME_WIDGET": {
+        "SOURCE": "Source (src)",
+        "WIDTH": "Width",
+        "HEIGHT": "Height",
+        "TITLE": "Title (for accessibility)",
+        "SHOW_BORDER": "Show border?",
+        "SHOW_PREVIEW": "Show preview",
+        "UPDATE_PREVIEW": "Update preview",
+        "PREVIEW_TITLE": "iframe preview",
+        "SAVE_CONFIG": "Save config",
+        "NOT_SUPPORTED": "Your browser does not support iframes.",
+        "MISSING_SRC": "No source was specified, therefore no iframe can be displayed."
+      },
       "IMAGE_WRAPPER": {
         "BACKDROP": "Blurred background of the image",
         "ALT": "Image to motivate the topic",
@@ -236,6 +249,7 @@
         "USER_CONFIGURABLE": "Content teaser",
         "MEDIA_RENDERING": "Media widget",
         "TEXT_WIDGET": "Text widget",
+        "IFRAME_WIDGET": "iframe widget",
         "AI_TEXT_WIDGET": "AI widget"
       },
       "EDIT": {

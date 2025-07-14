@@ -3,6 +3,7 @@ import { MdsValue, MdsWidget, Node } from 'ngx-edu-sharing-api';
 import {
     AiTextWidgetComponent,
     CollectionChipsComponent,
+    IframeWidgetComponent,
     MediaRenderingComponent,
     TextWidgetComponent,
     StatisticNode,
@@ -18,6 +19,7 @@ import { retrieveCustomUrl } from '../../shared/custom-definitions';
         SharedModule,
         AiTextWidgetComponent,
         CollectionChipsComponent,
+        IframeWidgetComponent,
         MediaRenderingComponent,
         TextWidgetComponent,
         TopicsColumnBrowserComponent,

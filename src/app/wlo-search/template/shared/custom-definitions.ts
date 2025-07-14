@@ -192,6 +192,10 @@ export const widgetTypeOptions: SelectOption[] = [
         viewValue: 'TEXT_WIDGET',
     },
     {
+        value: 'wlo-iframe-widget',
+        viewValue: 'IFRAME_WIDGET',
+    },
+    {
         value: 'wlo-ai-text-widget',
         viewValue: 'AI_TEXT_WIDGET',
     },

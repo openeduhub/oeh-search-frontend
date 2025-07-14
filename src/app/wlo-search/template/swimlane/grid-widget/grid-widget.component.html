@@ -28,6 +28,18 @@
       [swimlaneIndex]="swimlaneIndex"
     ></wlo-collection-chips>
   </ng-container>
+  <ng-container *ngSwitchCase="'wlo-iframe-widget'">
+    <wlo-iframe-widget
+      [class]="widgetClasses ? widgetClasses : ''"
+      [contextNodeId]="contextNodeId"
+      [editMode]="editMode"
+      [gridIndex]="gridIndex"
+      [nodeId]="widgetNodeId"
+      [pageVariantNode]="pageVariantNode"
+      [swimlaneColor]="backgroundColor"
+      [swimlaneIndex]="swimlaneIndex"
+    ></wlo-iframe-widget>
+  </ng-container>
   <ng-container *ngSwitchCase="'wlo-media-rendering'">
     <wlo-media-rendering
       class="media-rendering"
