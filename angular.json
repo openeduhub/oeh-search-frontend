@@ -223,6 +223,11 @@
               "projects/web-components/src/assets",
               {
                 "glob": "*",
+                "input": "src/assets/i18n",
+                "output": "assets/i18n/"
+              },
+              {
+                "glob": "*",
                 "input": "src/assets/images/icons",
                 "output": "assets/images/icons/"
               },

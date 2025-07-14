@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { MaterialCssVarsService } from 'angular-material-css-vars';
+import { TranslationsService } from 'ngx-edu-sharing-ui';
 import { GlobalWidgetConfigService } from 'ngx-edu-sharing-wlo-pages';
 import { CoreService } from '../../../../../src/app/wlo-search/core/core.service';
 
@@ -27,7 +29,15 @@ export class TemplateEmbeddedComponent implements OnInit {
     constructor(
         private coreService: CoreService,
         private globalWidgetConfigService: GlobalWidgetConfigService,
-    ) {}
+        private materialCssVarsService: MaterialCssVarsService,
+        private translationsService: TranslationsService,
+    ) {
+        // initialize the translationsService
+        this.translationsService.initialize().subscribe(() => {});
+        // initialize the materialCssVarsService
+        this.materialCssVarsService.setPrimaryColor('#003b7c');
+        this.materialCssVarsService.setAccentColor('#003b7c');
+    }
 
     /**
      * Sets the global widget configuration on component initialization.
