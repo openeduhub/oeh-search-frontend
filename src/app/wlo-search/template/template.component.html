@@ -424,7 +424,7 @@
       }}
     </p>
 
-    <div class="config-selection-container">
+    <div class="config-selection-container" *ngIf="userHasEditRights()">
       <mat-form-field
         *ngIf="defaultPageVariantNodes?.length"
         appearance="outline"
