@@ -2,12 +2,15 @@
     display: grid;
     > mat-checkbox {
         // TODO: could not yet reproduce the old style without spacing on the left
-        padding: 3px 4px 3px 0;
+        padding: 0 4px 0 0;
         min-width: 0;
-        height: 24px;
+        min-height: 24px;
 
+        margin: -4px 0;
         ::ng-deep .mdc-label {
             padding-left: 0;
+            padding-top: 5px;
+            padding-bottom: 5px;
         }
 
         ::ng-deep .mat-mdc-checkbox-ripple.mat-mdc-focus-indicator::before {
