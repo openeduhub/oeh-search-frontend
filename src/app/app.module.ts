@@ -50,6 +50,7 @@ import {
     defaultAiImageCreateConfigId,
     defaultAiClearCacheConfigId,
     defaultAiTextWidgetConfigId,
+    defaultTopicHeaderDescriptionConfigId,
     defaultTopicHeaderImageConfigId,
     defaultTopicHeaderTextConfigId,
     defaultUserConfigurableConfigId,
@@ -130,6 +131,10 @@ const eduSharingApiModuleWithProviders = environment.production
         },
         // global widget default configs
         { provide: 'DEFAULT_AI_TEXT_WIDGET_CONFIG_ID', useValue: defaultAiTextWidgetConfigId },
+        {
+            provide: 'DEFAULT_TOPIC_HEADER_DESCRIPTION_WIDGET_CONFIG_ID',
+            useValue: defaultTopicHeaderDescriptionConfigId,
+        },
         {
             provide: 'DEFAULT_TOPIC_HEADER_IMAGE_WIDGET_CONFIG_ID',
             useValue: defaultTopicHeaderImageConfigId,

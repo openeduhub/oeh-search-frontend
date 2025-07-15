@@ -13,6 +13,8 @@ export const defaultAiChatCompletionConfigId: string = 'topic_page_ai_chat_compl
 export const defaultAiImageCreateConfigId: string = 'topic_page_ai_create_image';
 export const defaultAiClearCacheConfigId: string = 'topic_page_ai_clear_cache';
 export const defaultAiTextWidgetConfigId: string = 'topic_page_ai_text_widget';
+export const defaultTopicHeaderDescriptionConfigId: string =
+    'topic_page_ai_topic_header_description';
 export const defaultTopicHeaderImageConfigId: string = 'topic_page_ai_topic_header_image';
 export const defaultTopicHeaderTextConfigId: string = 'topic_page_ai_topic_header_text';
 export const defaultUserConfigurableConfigId: string = 'topic_page_ai_user_configurable';
