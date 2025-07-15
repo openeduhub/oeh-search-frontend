@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { EduSharingUiCommonModule } from 'ngx-edu-sharing-ui';
 import { SharedModule } from '../../../shared/shared.module';
 import { swimlaneGridOptions } from '../../shared/custom-definitions';
 import { GridTile } from '../../shared/types/grid-tile';
@@ -7,8 +6,7 @@ import { SelectOption } from '../../shared/types/select-option';
 
 @Component({
     selector: 'app-configure-grid-dialog',
-    standalone: true,
-    imports: [EduSharingUiCommonModule, SharedModule],
+    imports: [SharedModule],
     templateUrl: './configure-grid-dialog.component.html',
     styleUrls: ['./configure-grid-dialog.component.scss'],
 })

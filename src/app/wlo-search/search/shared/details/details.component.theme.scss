@@ -1,55 +1,50 @@
-@use '@angular/material' as mat;
-@import '../../../functions';
-@import '../../../../../additional-colors';
+@use 'sass:color';
+@use 'variables' as *;
 
-@mixin details-theme($theme) {
+@mixin details-theme() {
     app-details {
         .app-preview-panel-close-button {
-            background-color: mat.get-theme-color($theme, surface-container-high);
+            background-color: $surface-container-high;
         }
         .app-preview-panel-info-bar,
         .app-preview-related-items {
-            background-color: mat.get-theme-color($theme, surface-variant);
+            background-color: color.adjust($secondary, $lightness: 45%);
         }
         .app-preview-panel-body {
-            background-color: mat.get-theme-color($theme, surface-container-high);
+            background-color: $surface-container-high;
         }
         // source link above large title
         .app-preview-panel-source {
-            @if mat.get-theme-type($theme) == light {
-                color: mat.get-theme-color($theme, neutral, 35);
-            } @else {
-                color: mat.get-theme-color($theme, neutral, 99);
-            }
+            color: $secondary-text;
         }
         // more button
         .app-preview-panel-expand-description-button {
-            color: mat.get-theme-color($theme, primary);
+            color: $primary;
         }
         .report-problem-link {
-            color: mat.get-theme-color($theme, primary);
+            color: $primary;
         }
         // success + error states
         .app-details-report-problem-state-success {
-            color: $green-dark;
-            border-color: $green-dark;
-            background-color: $green-light;
+            color: $success;
+            border-color: $success;
+            background-color: $success-container;
         }
         .app-details-report-problem-state-error {
-            color: mat.get-theme-color($theme, error);
-            border-color: mat.get-theme-color($theme, error);
-            background-color: mat.get-theme-color($theme, error-container);
+            color: $error;
+            border-color: $error;
+            background-color: $error-container;
         }
         // slick buttons for related topic pages
         .app-preview-slick-next,
         .app-preview-slick-prev {
-            color: mat.get-theme-color($theme, primary);
-            background-color: mat.get-theme-color($theme, surface);
+            color: $primary;
+            background-color: $surface;
         }
         // outline buttons (primary + warn)
         .mdc-button--outlined.btn-outline-primary:not(:disabled) {
-            color: mat.get-theme-color($theme, primary);
-            border: 1.5px solid mat.get-theme-color($theme, primary);
+            color: $primary;
+            border: 1.5px solid $primary;
 
             .mat-icon,
             .mat-mdc-icon {
@@ -61,13 +56,13 @@
             }
 
             &:hover {
-                color: mat.get-theme-color($theme, on-primary);
-                background: mat.get-theme-color($theme, primary);
+                color: $on-primary;
+                background: $primary;
             }
         }
         .mdc-button--outlined.btn-outline-warn:not(:disabled) {
-            color: mat.get-theme-color($theme, error);
-            border: 1.5px solid mat.get-theme-color($theme, error);
+            color: $error;
+            border: 1.5px solid $error;
 
             .mat-icon,
             .mat-mdc-icon {
@@ -79,48 +74,24 @@
             }
 
             &:hover {
-                color: mat.get-theme-color($theme, on-error);
-                background: mat.get-theme-color($theme, error);
+                color: $on-primary;
+                background: $error;
             }
         }
         .icon-green {
-            color: $icon-green;
+            color: $success;
         }
 
         .icon-orange {
-            color: $icon-orange;
+            color: $warn;
         }
 
         .icon-red {
-            color: $icon-red;
+            color: $error;
         }
 
         .icon-gray {
-            color: $icon-gray;
-        }
-    }
-}
-
-@mixin details-typography($typography) {
-    app-details {
-        .app-preview-panel-title {
-            // slightly increase the font-size of the title
-            font-size: 1.75rem;
-        }
-        .app-preview-panel-metadata {
-            // adjust the font-size of the metadata icons
-            > .mat-icon,
-            > .mat-mdc-icon {
-                font-size: var(--sys-title-large-size);
-            }
-        }
-        .app-details-report-problem-state {
-            // increase the font-size of the icons
-            .mat-mdc-progress-spinner,
-            .mat-icon,
-            .mat-mdc-icon {
-                font-size: 2rem;
-            }
+            color: $on-surface;
         }
     }
 }

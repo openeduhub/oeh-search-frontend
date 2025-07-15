@@ -9,6 +9,7 @@ import { IdentifiedValue } from './nodeProperty.pipe';
  */
 @Pipe({
     name: 'generateFilters',
+    standalone: false,
 })
 export class GenerateFiltersPipe implements PipeTransform {
     private static knownMissingTranslations: IdentifiedValue[] = [];

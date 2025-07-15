@@ -1,0 +1,120 @@
+@use '_variables' as *;
+
+// global overrides
+@mixin angular-material-theme-overrides() {
+    // overwrite variables
+    // badge background-color
+    --mat-badge-background-color: #{$pink-default};
+
+    // snack action button color
+    --mat-snack-bar-button-color: #{$primary-medium};
+
+    // overwrite border radius for template page
+    app-template {
+        --mdc-fab-small-container-shape: 4px;
+    }
+
+    // overwrite chips default color, background-color + radius for search-field component + suggestion-card dropdown
+    app-search-field,
+    .suggestion-card {
+        --mdc-chip-label-text-color: #{$secondary-text};
+        --mdc-chip-with-trailing-icon-trailing-icon-color: #{$secondary-text};
+        --mdc-chip-container-shape-radius: 16px;
+
+        .mat-mdc-chip.chip-group-oer {
+            background-color: #{$chip-color-oer} !important;
+        }
+        .mat-mdc-chip.chip-group-type {
+            background-color: #{$chip-color-type} !important;
+        }
+        .mat-mdc-chip.chip-group-discipline {
+            background-color: #{$chip-color-discipline} !important;
+        }
+        .mat-mdc-chip.chip-group-educationalContext {
+            background-color: #{$chip-color-educationalContext} !important;
+        }
+        .mat-mdc-chip.chip-group-intendedEndUserRole {
+            background-color: #{$chip-color-intendedEndUserRole} !important;
+        }
+        .mat-mdc-chip.chip-group-learningResourceType {
+            background-color: #{$chip-color-learningResourceType} !important;
+        }
+        .mat-mdc-chip.chip-group-source {
+            background-color: #{$chip-color-source} !important;
+        }
+    }
+
+    // overwrite suggestion dropdown background-color
+    .suggestion-card {
+        background-color: $surface;
+    }
+
+    // override slick arrow color
+    .slick-prev::before,
+    .slick-next::before {
+        color: $secondary-text;
+    }
+
+    // override .grid-border-container border color
+    .grid-border-container {
+        border-color: $outline;
+    }
+
+    // override .grid-border-container background when being dragged
+    .cdk-drag .grid-border-container {
+        background: $surface;
+    }
+
+    // global styles for custom elements
+    // custom mat-menu-header-container theme
+    .mat-menu-header-container {
+        color: $secondary-text;
+    }
+
+    // custom button accent theme
+    button.btn-accent {
+        color: $primary;
+        background: $neon-default;
+
+        &:hover {
+            background: $neon-medium;
+        }
+    }
+
+    // custom alert warning theme
+    .alert-warning {
+        border: 1px solid $warn;
+        background: $warn-container;
+    }
+}
+
+@mixin angular-material-typography-overrides($typography) {
+    // custom overrides
+    .mat-typography {
+        // reset letter-spacing
+        letter-spacing: 0;
+        // change font-family of buttons
+        button,
+        .mat-mdc-button {
+            &:not(.mat-button-toggle-button) {
+                font-family: 'Montserrat-SemiBold', sans-serif;
+            }
+        }
+    }
+
+    // overwrite material CSS variables
+    // increase font-size of switch labels, e.g., OER switch button
+    --mat-switch-label-text-size: $font-size-medium;
+    // increase font-size of tab headers, e.g., the tabs for all search results and search results sorted by content type
+    --mat-tab-header-label-text-size: $font-size-medium;
+
+    // custom menu-header weight
+    .mat-menu-header-container {
+        font-weight: var(--sys-display-small-weight);
+    }
+
+    // override mat-toggle-button font-weight
+    .mat-button-toggle-button {
+        font-weight: var(--sys-body-small-weight);
+    }
+}

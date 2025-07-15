@@ -11,6 +11,7 @@ const REPOSITORY = 'local';
     selector: 'app-details-embedded',
     templateUrl: './details-embedded.component.html',
     styleUrls: ['./details-embedded.component.scss'],
+    standalone: false,
 })
 export class DetailsEmbeddedComponent implements OnInit {
     @Input()

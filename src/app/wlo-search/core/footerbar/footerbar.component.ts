@@ -6,6 +6,7 @@ import { PageModeService } from '../page-mode.service';
     selector: 'app-footerbar',
     templateUrl: './footerbar.component.html',
     styleUrls: ['./footerbar.component.scss'],
+    standalone: false,
 })
 export class FooterbarComponent {
     readonly wordpressUrl = this.config.get().wordpressUrl;

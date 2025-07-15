@@ -7,6 +7,7 @@ import { ViewService } from '../../../core/view.service';
     selector: 'app-result-card-content-compact',
     templateUrl: './result-card-content-compact.component.html',
     styleUrls: ['./result-card-content-compact.component.scss'],
+    standalone: false,
 })
 export class ResultCardContentCompactComponent {
     @Input() hit: Node;

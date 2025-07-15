@@ -7,6 +7,7 @@ import { retrieveCustomUrl } from '../../../template/shared/custom-definitions';
     selector: 'app-collection-card',
     templateUrl: './collection-card.component.html',
     styleUrls: ['./collection-card.component.scss'],
+    standalone: false,
 })
 export class CollectionCardComponent {
     @Input() collection: Collection;

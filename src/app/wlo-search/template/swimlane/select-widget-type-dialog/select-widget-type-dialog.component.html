@@ -7,9 +7,11 @@
   <ng-container
     *ngIf="!grid[tileIndex].item || grid[tileIndex].item === ''; else changeExistingTypeTemplate"
   >
-    <i esIcon="add"></i> Widget hinzufügen
+    <i esIcon="add"></i> {{ 'TOPIC_PAGE.SWIMLANE.SELECT_WIDGET.HEADING' | translate }}
   </ng-container>
-  <ng-template #changeExistingTypeTemplate> <i esIcon="edit"></i> Widget-Typ ändern </ng-template>
+  <ng-template #changeExistingTypeTemplate>
+    <i esIcon="edit"></i> {{ 'TOPIC_PAGE.SWIMLANE.SELECT_WIDGET.CHANGE_TYPE' | translate }}
+  </ng-template>
 </button>
 <mat-menu #selectWidgetTypeMenu="matMenu">
   <button
@@ -17,6 +19,6 @@
     *ngFor="let option of widgetTypeOptions"
     (click)="selectWidgetType(option.value, tileIndex)"
   >
-    {{ option.viewValue }}
+    {{ 'TOPIC_PAGE.SWIMLANE.SELECT_WIDGET.' + option.viewValue | translate }}
   </button>
 </mat-menu>

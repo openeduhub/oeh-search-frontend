@@ -1,23 +1,15 @@
-@use '@angular/material' as mat;
-@import '../../../functions';
+@use 'sass:color';
+@use 'variables' as *;
 
-@mixin paginator-theme($theme) {
+@mixin paginator-theme() {
     app-paginator {
         .ellipsis,
         .page-number,
         .arrow:not(.mat-mdc-button-disabled) {
-            @if mat.get-theme-type($theme) == light {
-                color: mat.get-theme-color($theme, primary, 25);
-            } @else {
-                color: mat.get-theme-color($theme, primary);
-            }
+            color: $primary-dark;
         }
         .page-number.active {
-            @if mat.get-theme-type($theme) == light {
-                background-color: rgba(mat.get-theme-color($theme, secondary, 70), 0.5);
-            } @else {
-                background-color: mat.get-theme-color($theme, neutral, 30);
-            }
+            background-color: color.adjust($secondary, $lightness: 40%);
         }
     }
 }

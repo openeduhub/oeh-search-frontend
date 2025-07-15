@@ -7,44 +7,77 @@
   <es-spinner *ngIf="!initialLoadSuccessfully()"></es-spinner>
 </div>
 <ng-container *ngIf="!pageConfigCheckFailed(); else pageConfigCheckFailedMessage">
-  <!-- TOPIC HERO HEADER -->
-  <!-- wait until the initial load is successfully to retrieve the correct nodeID for the header -->
-  <header class="template-header" *ngIf="initialLoadSuccessfully()">
-    <div class="template-header-wrapper">
-      <div class="template-header-container">
-        <wlo-topic-header
+  <ng-container *ngIf="initialLoadSuccessfully()">
+    <!-- WORKAROUND FOR VISUAL NAVBAR OVERFLOW -->
+    <div class="breadcrumb-navbar-overflow-container"></div>
+    <!-- BREADCRUMBS -->
+    <div class="template-breadcrumb" [class.reserve-space-left]="userHasEditRights()">
+      <div class="template-breadcrumb-wrapper">
+        <wlo-breadcrumb
           [contextNodeId]="topicCollectionID()"
-          [defaultNodeId]="defaultTopicTextNodeId"
+          [customUrl]="retrieveCustomUrl"
           [editMode]="editMode"
-          [nodeId]="convertedHeaderNodeId()"
+          [nodeId]="convertedBreadcrumbNodeId()"
           [pageVariantNode]="pageVariantNode"
-          [topic]="topic()"
-        ></wlo-topic-header>
+          [rootLink]="wordpressUrl + '/fachportale'"
+        ></wlo-breadcrumb>
       </div>
     </div>
-  </header>
+    <!-- TOPIC HERO HEADER -->
+    <!-- wait until the initial load is successfully to retrieve the correct nodeID for the header -->
+    <div
+      class="template-header"
+      [class.extra-padding-bottom]="
+        (swimlanes | filterSwimlaneType : 'anchor' : anchorTrigger)?.length > 0
+      "
+      [class.view-mode]="!editMode"
+      [class.reserve-space-left]="userHasEditRights()"
+    >
+      <div class="template-header-wrapper">
+        <div class="template-header-container">
+          <wlo-topic-header
+            [collectionNode]="collectionNode"
+            [contextNodeId]="topicCollectionID()"
+            [editMode]="editMode"
+            [nodeId]="convertedHeaderNodeId()"
+            [pageVariantNode]="pageVariantNode"
+            [topic]="topic()"
+          ></wlo-topic-header>
+        </div>
+        <div class="template-search-container">
+          <h2 class="mat-heading-2">
+            {{ 'TOPIC_PAGE.SEARCH_HEADING' | translate }}
+          </h2>
+          <wlo-search-widget (searchTermChanged)="searchTermChanged($event)"></wlo-search-widget>
+        </div>
+      </div>
+    </div>
+  </ng-container>
 
   <!-- LEFT SIDE MENU WITH ACTION BUTTONS -->
   <wlo-side-menu-wrapper position="left" *ngIf="userHasEditRights()">
     <ng-container slot="menu">
       <wlo-side-menu-item
-        *ngIf="pageVariantConfigs?.nodes?.length > 1"
+        *ngIf="pageVariantConfigs?.nodes?.length > 0"
         position="left"
         [icon]="'layers'"
-        [title]="'Switch variant'"
+        [title]="'TOPIC_PAGE.SIDE_MENU.SWITCH_VARIANT' | translate"
         [matMenuTriggerFor]="menu"
       ></wlo-side-menu-item>
       <wlo-side-menu-item
-        [attr.aria-label]="editMode ? 'Switch into preview mode' : 'Switch into edit mode'"
         color="primary"
         position="left"
-        [title]="editMode ? actionItems.previewMode : actionItems.editMode"
+        [title]="
+          editMode
+            ? ('TOPIC_PAGE.SIDE_MENU.BACK_TO_PREVIEW' | translate)
+            : ('TOPIC_PAGE.SIDE_MENU.EDIT_PAGE' | translate)
+        "
         (itemClicked)="toggleEditMode()"
       ></wlo-side-menu-item>
       <wlo-side-menu-item
         *ngIf="collectionNodeHasPageConfig"
         position="left"
-        [title]="'Neu'"
+        [title]="'TOPIC_PAGE.SIDE_MENU.NEW' | translate"
         (itemClicked)="createPageVariant()"
       ></wlo-side-menu-item>
     </ng-container>
@@ -58,7 +91,16 @@
           (click)="navigateToVariant(variant.ref.id)"
         >
           <i esIcon="check" *ngIf="variant.ref.id === pageVariantNode?.ref.id"></i>
-          Seiten-Variante {{ i + 1 }}
+          {{
+            variant.title && !variant.title.includes(pageVariantConfigPrefix)
+              ? variant.title
+              : ('TOPIC_PAGE.SIDE_MENU.PAGE_VARIANT.LABEL' | translate) + ' ' + (i + 1)
+          }}
+          {{
+            retrievePageVariantConfig(variant)?.template?.lastModified
+              ? ''
+              : '(' + ('TOPIC_PAGE.SIDE_MENU.PAGE_VARIANT.SUBSCRIPTION' | translate) + ')'
+          }}
         </button>
       </ng-container>
     </mat-menu>
@@ -73,17 +115,17 @@
       <wlo-side-menu-item
         [icon]="'person'"
         [selectedMenuItem]="selectedMenuItem"
-        [title]="menuItems.profiling"
+        [title]="'TOPIC_PAGE.SIDE_MENU.PROFILING.LABEL' | translate"
         (itemClicked)="collapsibleItemClicked($event)"
       ></wlo-side-menu-item>
       <wlo-side-menu-item
         [selectedMenuItem]="selectedMenuItem"
-        [title]="menuItems.topicTree"
+        [title]="'TOPIC_PAGE.SIDE_MENU.TOPIC_TREE.LABEL' | translate"
         (itemClicked)="collapsibleItemClicked($event)"
       ></wlo-side-menu-item>
       <wlo-side-menu-item
         [selectedMenuItem]="selectedMenuItem"
-        [title]="menuItems.statistics"
+        [title]="'TOPIC_PAGE.SIDE_MENU.STATISTICS.LABEL' | translate"
         (itemClicked)="collapsibleItemClicked($event)"
       ></wlo-side-menu-item>
     </ng-container>
@@ -93,8 +135,10 @@
       <!--       A workaround using a delay conflicts with the variant selection -->
       <!-- [hidden] is used to load the component, even when the menu item is not selected -->
       <!-- This is important to successfully read the selectedDimensionValueIds -->
-      <div [hidden]="selectedMenuItem !== menuItems.profiling">
-        <h2 class="side-menu-header mat-display-small">Wer bist du?</h2>
+      <div [hidden]="selectedMenuItem !== ('TOPIC_PAGE.SIDE_MENU.PROFILING.LABEL' | translate)">
+        <h2 class="side-menu-header mat-heading-3 font-bold">
+          {{ 'TOPIC_PAGE.SIDE_MENU.PROFILING.HEADING' | translate }}
+        </h2>
         <wlo-filter-bar
           alignment="vertical"
           [requestInProgress]="requestInProgress()"
@@ -103,26 +147,36 @@
           [selectDimensionKeysOfInterest]="profilingFilterbarDimensionKeys"
           [viewModes]="['radio', 'checkbox']"
           (selectDimensionsChanged)="selectDimensionsChanged($event)"
-          (selectValuesChanged)="selectValuesChanged()"
+          (selectValuesChanged)="selectValuesChanged($event)"
         ></wlo-filter-bar>
       </div>
-      <ng-container *ngIf="selectedMenuItem === menuItems.topicTree">
-        <h2 class="side-menu-header mat-display-small">Themenbaum von {{ topic() }}</h2>
+      <ng-container
+        *ngIf="selectedMenuItem === ('TOPIC_PAGE.SIDE_MENU.TOPIC_TREE.LABEL' | translate)"
+      >
+        <h2 class="side-menu-header mat-heading-3 font-bold">
+          {{ 'TOPIC_PAGE.SIDE_MENU.TOPIC_TREE.HEADING' | translate : { topic: topic() } }}
+        </h2>
         <wlo-topics-column-browser
           *ngIf="topicCollectionID(); else loadingIndicator"
           [contextNodeId]="topicCollectionID()"
           [customUrl]="retrieveCustomUrl"
-          [defaultNodeId]="defaultTopicsColumnBrowserNodeId"
           [height]="'400'"
+          [sidebarEmbedding]="true"
         ></wlo-topics-column-browser>
       </ng-container>
-      <ng-container *ngIf="selectedMenuItem === menuItems.statistics">
-        <h2 class="side-menu-header mat-display-small">Inhalte von {{ topic() }}</h2>
+      <ng-container
+        *ngIf="selectedMenuItem === ('TOPIC_PAGE.SIDE_MENU.STATISTICS.LABEL' | translate)"
+      >
+        <h2 class="side-menu-header mat-heading-3 font-bold">
+          {{ 'TOPIC_PAGE.SIDE_MENU.STATISTICS.HEADING' | translate : { topic: topic() } }}
+        </h2>
         <wlo-statistics-summary
-          *ngIf="statisticsLoaded(); else loadingIndicator"
+          *ngIf="statisticsInitiallyLoaded(); else loadingIndicator"
+          [maxNumberOfStatisticItems]="maxNumberOfStatisticItems"
           [searchResultCount]="searchResultCount"
           [searchUrl]="searchUrl"
           [statistics]="statistics"
+          [taxonIds]="collectionTaxonIds"
           [topic]="topic()"
         ></wlo-statistics-summary>
       </ng-container>
@@ -134,33 +188,60 @@
 
   <div class="portal-outer-wrapper" [class.reserve-space-left]="userHasEditRights()">
     <div class="portal-wrapper">
-      <div class="portal-wrapper-left">
+      <div
+        class="portal-wrapper-left"
+        [class.extra-padding-top]="anchorSwimlanes.length > 0 && editMode"
+        *ngVar="
+          (swimlanes | filterSwimlaneType : 'anchor' : anchorTrigger) ?? [] as anchorSwimlanes
+        "
+      >
+        <!-- ANCHOR MENU -->
+        <ng-container *ngIf="anchorSwimlanes.length > 0">
+          <div class="anchor-container" [class.edit-mode]="editMode">
+            <div class="anchor-menu">
+              <div class="anchor-item" *ngFor="let anchor of anchorSwimlanes; let i = index">
+                <button
+                  type="button"
+                  (click)="navigateToFragment(SWIMLANE_ID_PREFIX + anchor.id)"
+                  class="item-container"
+                >
+                  {{
+                    anchor.heading && anchor.heading !== ''
+                      ? anchor.heading
+                      : ('TOPIC_PAGE.ANCHOR_FALLBACK_PREFIX' | translate) + ' ' + (i + 1)
+                  }}
+                </button>
+                <ng-container
+                  *ngVar="anchor | swimlaneSearchCount : searchCountTrigger as searchCount"
+                >
+                  <div class="total-count" *ngIf="searchCount > 0">
+                    {{ searchCount }}
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </ng-container>
         <ng-container *ngIf="swimlanes.length > 0; else noSwimlanesCreatedYet">
           <!-- note: do not show empty swimlanes to users -->
           <ng-container *ngFor="let swimlane of swimlanes; let i = index">
+            <!-- border with button to add a swimlane -->
+            <app-add-swimlane-border-button
+              [requestInProgress]="requestInProgress()"
+              (addSwimlaneTriggered)="addSwimlane($event, i)"
+              *ngIf="swimlane.grid?.length > 0 && userHasEditRights() && editMode"
+            ></app-add-swimlane-border-button>
+            <!-- swimlane content -->
             <div
               *ngIf="swimlane.grid?.length > 0 || editMode"
-              [attr.id]="swimlane.id ? 'swimlane-' + swimlane.id : null"
+              [attr.id]="swimlane.id ? SWIMLANE_ID_PREFIX + swimlane.id : null"
               class="wlo-swimlane"
-              [class.swimlane-edit-mode]="editMode"
+              [class.edit-mode]="editMode"
+              [class.extra-padding-top]="anchorSwimlanes.length > 0 && i === 0 && !editMode"
               [style.background-color]="swimlane.backgroundColor ?? swimlane.backgroundColor"
             >
               <!-- edit privileges -->
               <ng-container *ngIf="userHasEditRights()">
-                <!-- border with button to add a swimlane -->
-                <app-add-swimlane-border-button
-                  [requestInProgress]="requestInProgress()"
-                  (addSwimlaneTriggered)="addSwimlane($event, i)"
-                  *ngIf="editMode"
-                ></app-add-swimlane-border-button>
-                <!-- special case for last element -->
-                <app-add-swimlane-border-button
-                  position="bottom"
-                  [requestInProgress]="requestInProgress()"
-                  (addSwimlaneTriggered)="addSwimlane($event, i + 1)"
-                  *ngIf="editMode && i === swimlanes.length - 1"
-                ></app-add-swimlane-border-button>
-
                 <!-- action buttons for moving -->
                 <div class="wlo-move-buttons" *ngIf="editMode">
                   <button
@@ -168,7 +249,7 @@
                     class="action-btn"
                     [disabled]="i === 0 || requestInProgress()"
                     (click)="moveSwimlanePosition(i, i - 1)"
-                    aria-label="Move swimlane upwards"
+                    [attr.aria-label]="'TOPIC_PAGE.SWIMLANE.POSITION_UP' | translate"
                   >
                     <i esIcon="arrow_upward"></i>
                   </button>
@@ -177,7 +258,7 @@
                     class="action-btn"
                     [disabled]="i === swimlanes.length - 1 || requestInProgress()"
                     (click)="moveSwimlanePosition(i, i + 1)"
-                    aria-label="Move swimlane downwards"
+                    [attr.aria-label]="'TOPIC_PAGE.SWIMLANE.POSITION_DOWN' | translate"
                   >
                     <i esIcon="arrow_downward"></i>
                   </button>
@@ -189,7 +270,7 @@
                     class="action-btn btn-modify"
                     [disabled]="requestInProgress()"
                     (click)="editSwimlane(swimlane, i)"
-                    aria-label="Edit swimlane"
+                    [attr.aria-label]="'TOPIC_PAGE.SWIMLANE.EDIT.ARIA_LABEL' | translate"
                   >
                     <i esIcon="tune"></i>
                   </button>
@@ -198,7 +279,7 @@
                     class="action-btn"
                     [disabled]="requestInProgress()"
                     (click)="deleteSwimlane(i)"
-                    aria-label="Delete swimlane"
+                    [attr.aria-label]="'TOPIC_PAGE.SWIMLANE.DELETE' | translate"
                   >
                     <i esIcon="delete"></i>
                   </button>
@@ -218,7 +299,7 @@
                   [attr.id]="'accordion-header-' + i"
                   [attr.aria-expanded]="accordionItem.expanded"
                   [attr.aria-controls]="'accordion-body-' + i"
-                  expanded="true"
+                  expanded="false"
                 >
                   <div
                     class="wlo-accordion-item-header"
@@ -228,8 +309,8 @@
                       *ngTemplateOutlet="swimlaneHeading; context: { swimlane, index: i }"
                     ></ng-container>
                     <span class="wlo-accordion-item-description">
-                      <mat-icon *ngIf="accordionItem.expanded">expand_less</mat-icon>
-                      <mat-icon *ngIf="!accordionItem.expanded">expand_more</mat-icon>
+                      <i *ngIf="accordionItem.expanded" esIcon="expand_less"></i>
+                      <i *ngIf="!accordionItem.expanded" esIcon="expand_more"></i>
                     </span>
                   </div>
                   <div
@@ -252,13 +333,18 @@
                       [topicWidgets]="topicWidgets"
                       (gridUpdated)="handleGridUpdate($event, i)"
                       (nodeClicked)="handleNodeChange($event)"
+                      (nodeStatisticsChanged)="updateStatistics($event, i)"
+                      (totalSearchResultCountChanged)="updateGridItemSearchCount($event, i)"
                     ></app-swimlane>
                   </div>
                 </cdk-accordion-item>
               </cdk-accordion>
 
               <!-- type: container -->
-              <div class="wlo-container" *ngIf="swimlane.type === 'container'">
+              <div
+                class="wlo-container"
+                *ngIf="swimlane.type === 'container' || swimlane.type === 'anchor'"
+              >
                 <ng-container
                   *ngTemplateOutlet="swimlaneHeading; context: { swimlane, index: i }"
                 ></ng-container>
@@ -275,25 +361,49 @@
                   [topicWidgets]="topicWidgets"
                   (gridUpdated)="handleGridUpdate($event, i)"
                   (nodeClicked)="handleNodeChange($event)"
+                  (nodeStatisticsChanged)="updateStatistics($event, i)"
+                  (totalSearchResultCountChanged)="updateGridItemSearchCount($event, i)"
                 ></app-swimlane>
               </div>
             </div>
+            <!-- border with button to add a swimlane (special case for last element) -->
+            <app-add-swimlane-border-button
+              [requestInProgress]="requestInProgress()"
+              (addSwimlaneTriggered)="addSwimlane($event, i + 1)"
+              *ngIf="
+                swimlane.grid?.length > 0 &&
+                userHasEditRights() &&
+                editMode &&
+                i === swimlanes.length - 1
+              "
+            ></app-add-swimlane-border-button>
           </ng-container>
         </ng-container>
         <ng-template #swimlaneHeading let-swimlane="swimlane" let-index="index">
           <wlo-editable-text
+            [addCopyButton]="true"
             [alignCenter]="true"
             [applyTextareaPadding]="false"
             [editable]="editMode"
             [headerElement]="'h2'"
-            [label]="'Überschrift'"
+            [label]="'TOPIC_PAGE.SWIMLANE.HEADING_LABEL' | translate"
             [nonEditText]="swimlane.heading"
             [text]="swimlane.heading"
+            (copyClicked)="copySwimlaneLink($event, index)"
             (textChange)="swimlaneTitleChanged($event, index)"
           ></wlo-editable-text>
         </ng-template>
         <ng-template #noSwimlanesCreatedYet>
-          <p class="no-swimlanes">Bisher wurden noch keine Swimlanes mit Inhalten erstellt.</p>
+          <div class="wlo-swimlane is-empty" [class.edit-mode]="editMode">
+            <app-add-swimlane-border-button
+              [requestInProgress]="requestInProgress()"
+              (addSwimlaneTriggered)="addSwimlane($event, 0)"
+              *ngIf="editMode"
+            ></app-add-swimlane-border-button>
+            <div class="wlo-container">
+              {{ 'TOPIC_PAGE.NO_SWIMLANES' | translate }}
+            </div>
+          </div>
         </ng-template>
       </div>
       <app-preview-panel (dialogClosed)="handleNodeChange(null)"></app-preview-panel>
@@ -303,9 +413,49 @@
 
 <!-- failed to load page config -> currently, no further action possible -->
 <ng-template #pageConfigCheckFailedMessage>
-  <p class="alert-warning">
-    <strong>Hinweis:</strong>
-    Für diese Seite konnte keine Seiten-Konfiguration gefunden werden. Bitte wenden Sie sich an
-    Ihren Systemadministrator.
-  </p>
+  <div class="missing-page-config">
+    <p class="alert-warning">
+      <strong> {{ 'TOPIC_PAGE.HINT' | translate }}: </strong>
+      {{ 'TOPIC_PAGE.NO_PAGE_CONFIG.DEFAULT_MESSAGE' | translate }}
+      {{
+        userHasEditRights()
+          ? ('TOPIC_PAGE.NO_PAGE_CONFIG.EDIT_MESSAGE' | translate)
+          : ('TOPIC_PAGE.NO_PAGE_CONFIG.VIEW_MESSAGE' | translate)
+      }}
+    </p>
+
+    <div class="config-selection-container" *ngIf="userHasEditRights()">
+      <mat-form-field
+        *ngIf="defaultPageVariantNodes?.length"
+        appearance="outline"
+        subscriptSizing="dynamic"
+      >
+        <mat-label>{{ 'TOPIC_PAGE.NO_PAGE_CONFIG.SELECT_PLACEHOLDER' | translate }}</mat-label>
+        <mat-select
+          [(ngModel)]="selectedDefaultConfigNode"
+          [disabled]="createCustomConfigInProgress()"
+        >
+          <mat-option *ngFor="let node of defaultPageVariantNodes; let i = index" [value]="node">
+            {{
+              node.title && !node.title.includes(pageVariantConfigPrefix)
+                ? node.title
+                : ('TOPIC_PAGE.NO_PAGE_CONFIG.SELECT_LABEL' | translate) + ' ' + (i + 1)
+            }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- the div is necessary for the button to be full height -->
+      <div class="create-button">
+        <button
+          mat-raised-button
+          color="primary"
+          [disabled]="!selectedDefaultConfigNode || createCustomConfigInProgress()"
+          (click)="createCustomConfig()"
+        >
+          {{ 'TOPIC_PAGE.NO_PAGE_CONFIG.CREATE_PAGE' | translate }}
+        </button>
+      </div>
+    </div>
+  </div>
 </ng-template>

@@ -11,6 +11,7 @@ import { DetailsComponent } from '../../shared/details/details.component';
     selector: 'app-preview-panel',
     templateUrl: './preview-panel.component.html',
     styleUrls: ['./preview-panel.component.scss'],
+    standalone: false,
 })
 export class PreviewPanelComponent implements OnDestroy {
     @ViewChild('dialogContent') dialogContentRef: TemplateRef<PreviewPanelComponent>;
@@ -75,6 +76,9 @@ export class PreviewPanelComponent implements OnDestroy {
         });
         // this.registerCloseOnBackNav();
         this.registerCloseOnNavigation();
+        this.dialogRef.backdropClick().subscribe(() => {
+            this.dialogClosed.emit(true);
+        });
         this.dialogRef.beforeClosed().subscribe((dialogResult) => {
             if (dialogResult !== 'mode-change') {
                 this.view.selectItem(null);

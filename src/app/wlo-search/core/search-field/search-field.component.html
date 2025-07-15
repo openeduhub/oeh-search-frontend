@@ -18,7 +18,7 @@
             cdkMonitorElementFocus
           >
             {{ filter | displayName: category }}
-            <mat-icon matChipRemove>cancel</mat-icon>
+            <i esIcon="cancel" matChipRemove></i>
           </mat-chip-row>
         </ng-container>
         <div class="search-field-input-wrapper">
@@ -46,7 +46,7 @@
             (click)="clear()"
             type="button"
           >
-            <mat-icon>close</mat-icon>
+            <i esIcon="close"></i>
           </button>
           <button mat-flat-button color="primary" class="submit-button" type="submit" i18n>
             Search

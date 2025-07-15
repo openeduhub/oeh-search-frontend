@@ -31,15 +31,16 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { EduSharingUiCommonModule } from 'ngx-edu-sharing-ui';
+import { VarDirective } from 'ngx-edu-sharing-wlo-pages';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
 import { DisplayNamePipe } from './display-name.pipe';
 import { FocusStateDirective } from './focus-state.directive';
-import { ReportClickDirective } from './report-click.directive';
 import { SkipTargetDirective } from './skip-target.directive';
 
 @NgModule({
-    declarations: [DisplayNamePipe, SkipTargetDirective, ReportClickDirective, FocusStateDirective],
+    declarations: [DisplayNamePipe, SkipTargetDirective, FocusStateDirective],
     imports: [
         RouterModule,
         CommonModule,
@@ -76,6 +77,8 @@ import { SkipTargetDirective } from './skip-target.directive';
         MatTabsModule,
         MatTooltipModule,
         SlickCarouselModule,
+        TranslateModule,
+        VarDirective,
     ],
     exports: [
         RouterModule,
@@ -116,7 +119,8 @@ import { SkipTargetDirective } from './skip-target.directive';
         MatTooltipModule,
         SkipTargetDirective,
         SlickCarouselModule,
-        ReportClickDirective,
+        TranslateModule,
+        VarDirective,
     ],
 })
 export class SharedModule {}

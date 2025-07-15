@@ -1,19 +1,14 @@
-@use '@angular/material' as mat;
-@import '../../../../additional-colors';
-@import '../../functions';
+@use 'sass:color';
+@use 'variables' as *;
 
-@mixin menubar-theme($theme) {
+@mixin menubar-theme() {
     // custom theme created for extracted styles, thus, the same order and selectors are used
     // single selectors might be combined (e.g., a{}) or combined (e.g., &:hover)
     // ::after selectors might require !important
     app-menubar {
         @media screen and (max-width: 1023px) {
             .top-bar {
-                @if mat.get-theme-type($theme) == light {
-                    background: mat.get-theme-color($theme, neutral, 95) !important;
-                } @else {
-                    background: mat.get-theme-color($theme, neutral, 0) !important;
-                }
+                background: $surface-container !important;
                 // TODO: Change, if necessary
                 box-shadow: 0 8px 12px -2px rgb(0 0 0 / 40%);
             }
@@ -21,13 +16,8 @@
 
         @media all {
             a {
-                color: mat.get-theme-color($theme, primary);
+                color: $primary;
                 background-color: transparent;
-
-                // TODO: Add, if necessary
-                //&:hover, &:focus {
-                //    color: #003570;
-                //}
             }
 
             button:-moz-focusring,
@@ -66,45 +56,35 @@
 
             .menu-icon::after,
             .menu-icon:hover::after {
-                background: mat.get-theme-color($theme, primary) !important;
-                box-shadow: 0 7px 0 mat.get-theme-color($theme, primary),
-                    0 14px 0 mat.get-theme-color($theme, primary) !important;
+                background: $primary !important;
+                box-shadow: 0 7px 0 $primary, 0 14px 0 $primary !important;
             }
 
             .dropdown.menu > li.is-dropdown-submenu-parent > a::after {
-                border-color: mat.get-theme-color($theme, primary) transparent transparent !important;
+                border-color: $primary transparent transparent !important;
             }
 
             .dropdown.menu.vertical > li.opens-right > a::after {
-                border-color: transparent transparent transparent
-                    mat.get-theme-color($theme, primary) !important;
+                border-color: transparent transparent transparent $primary !important;
             }
 
             @media print, screen and (min-width: 64em) {
                 .dropdown.menu.large-horizontal > li.is-dropdown-submenu-parent > a::after {
-                    border-color: mat.get-theme-color($theme, primary) transparent transparent !important;
+                    border-color: $primary transparent transparent !important;
                 }
             }
 
             .is-dropdown-submenu {
-                @if mat.get-theme-type($theme) == light {
-                    background: mat.get-theme-color($theme, neutral, 99);
-                } @else {
-                    background: mat.get-theme-color($theme, neutral, 0);
-                }
+                background: $surface;
             }
 
             .title-bar {
-                color: mat.get-theme-color($theme, primary);
+                color: $primary;
             }
 
             .title-bar,
             .site-header {
-                @if mat.get-theme-type($theme) == light {
-                    background: mat.get-theme-color($theme, neutral, 99);
-                } @else {
-                    background: mat.get-theme-color($theme, neutral, 0);
-                }
+                background: $surface;
             }
 
             .top-bar,
@@ -113,45 +93,24 @@
             }
 
             *:focus {
-                outline: 1px dotted mat.get-theme-color($theme, primary);
-            }
-
-            .site-header {
-                // TODO: Replace (border-bottom-color: #ececec;)
-                @if mat.get-theme-type($theme) == light {
-                    border-bottom-color: mat.get-theme-color($theme, neutral, 95);
-                } @else {
-                    border-bottom-color: mat.get-theme-color($theme, neutral, 0);
-                }
+                outline: 1px dotted $primary;
             }
 
             @media print, screen and (max-width: 39.99875em) {
                 .site-header .top-bar {
-                    @if mat.get-theme-type($theme) == light {
-                        background-color: mat.get-theme-color($theme, neutral, 95);
-                    } @else {
-                        background-color: mat.get-theme-color($theme, neutral, 0);
-                    }
+                    background-color: $surface-container;
                 }
             }
 
             @media print, screen and (min-width: 40em) and (max-width: 63.99875em) {
                 .site-header .top-bar {
-                    @if mat.get-theme-type($theme) == light {
-                        background-color: mat.get-theme-color($theme, neutral, 95);
-                    } @else {
-                        background-color: mat.get-theme-color($theme, neutral, 0);
-                    }
+                    background-color: $surface-container;
                 }
             }
 
             .top-call-to-action-menu li a {
                 background-color: $neon-default;
-                @if mat.get-theme-type($theme) == light {
-                    color: mat.get-theme-color($theme, primary);
-                } @else {
-                    color: mat.get-theme-color($theme, primary, 40);
-                }
+                color: $primary;
 
                 &:hover {
                     background: $neon-medium;
@@ -159,33 +118,21 @@
             }
 
             .is-dropdown-submenu {
-                @if mat.get-theme-type($theme) == light {
-                    background-color: mat.get-theme-color($theme, neutral, 99) !important;
-                } @else {
-                    background-color: mat.get-theme-color($theme, neutral, 0) !important;
-                }
+                background-color: $surface !important;
             }
 
             .is-dropdown-submenu-item:hover {
-                @if mat.get-theme-type($theme) == light {
-                    // rgba is used to simulate the existing color of WLO
-                    background-color: rgba(
-                        mat.get-theme-color($theme, secondary, 70),
-                        0.3
-                    ) !important;
-                } @else {
-                    background-color: mat.get-theme-color($theme, secondary, 10) !important;
-                }
+                background-color: color.adjust($secondary, $lightness: 40%) !important;
             }
 
             .skip-link {
                 // TODO: Change, if necessary
                 background-color: #f1f1f1;
                 box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.6);
-                color: mat.get-theme-color($theme, primary);
+                color: $primary;
 
                 &:focus {
-                    color: mat.get-theme-color($theme, primary);
+                    color: $primary;
                 }
             }
 
@@ -201,21 +148,29 @@
 
         .drilldown a,
         .drilldown .is-drilldown-submenu {
-            @if mat.get-theme-type($theme) == light {
-                background: mat.get-theme-color($theme, neutral, 95);
-            } @else {
-                background: mat.get-theme-color($theme, neutral, 0);
-            }
+            background: $surface-container;
         }
 
         .drilldown .is-drilldown-submenu-parent > a::after,
         .drilldown.align-left .is-drilldown-submenu-parent > a::after {
-            border-color: transparent transparent transparent mat.get-theme-color($theme, primary) !important;
+            border-color: transparent transparent transparent $primary !important;
         }
 
         .drilldown.align-right .is-drilldown-submenu-parent > a::after,
         .drilldown .js-drilldown-back > a::before {
-            border-color: transparent mat.get-theme-color($theme, primary) transparent transparent !important;
+            border-color: transparent $primary transparent transparent !important;
         }
+    }
+}
+
+@mixin menubar-typography() {
+    // adjust font weight of top menu
+    // first level menu items
+    .top-menu > .menu-item > a {
+        font-weight: $font-weight-x-bold;
+    }
+    // second level menu items
+    .submenu > .menu-item > a {
+        font-weight: $font-weight-medium;
     }
 }

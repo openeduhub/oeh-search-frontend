@@ -31,7 +31,8 @@
             },
             "index": "src/index.html",
             "polyfills": [
-              "src/polyfills.ts"
+              "src/polyfills.ts",
+              "@angular/localize/init"
             ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
@@ -40,14 +41,24 @@
               "src/assets",
               "src/env.js",
               {
-                "glob": "**/*",
-                "input": "node_modules/ngx-edu-sharing-wlo-pages/assets",
-                "output": "/assets/"
+                "glob": "*",
+                "input": "node_modules/ngx-edu-sharing-wlo-pages/assets/images",
+                "output": "/assets/images/"
+              },
+              {
+                "glob": "*",
+                "input": "node_modules/ngx-edu-sharing-wlo-pages/assets/icons",
+                "output": "assets/images/icons/"
               }
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src"
+              ]
+            },
             "styles": [
-              "node_modules/slick-carousel/slick/slick.scss",
-              "node_modules/slick-carousel/slick/slick-theme.scss",
+              "node_modules/slick-carousel/slick/slick.css",
+              "node_modules/slick-carousel/slick/slick-theme.css",
               "src/styles.scss"
             ],
             "scripts": [
@@ -63,7 +74,7 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kb",
-                  "maximumError": "3000kb"
+                  "maximumError": "4500kb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -138,14 +149,24 @@
               "src/assets",
               "src/env.js",
               {
-                "glob": "**/*",
-                "input": "node_modules/ngx-edu-sharing-wlo-pages/assets",
-                "output": "/assets/"
+                "glob": "*",
+                "input": "node_modules/ngx-edu-sharing-wlo-pages/assets/images",
+                "output": "/assets/images/"
+              },
+              {
+                "glob": "*",
+                "input": "node_modules/ngx-edu-sharing-wlo-pages/assets/icons",
+                "output": "assets/images/icons/"
               }
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src"
+              ]
+            },
             "styles": [
-              "node_modules/slick-carousel/slick/slick.scss",
-              "node_modules/slick-carousel/slick/slick-theme.scss",
+              "node_modules/slick-carousel/slick/slick.css",
+              "node_modules/slick-carousel/slick/slick-theme.css",
               "src/styles.scss"
             ],
             "scripts": [
@@ -177,7 +198,10 @@
       "prefix": "app",
       "i18n": {
         "locales": {
-          "de": "src/locale/messages.de.xlf"
+          "de": {
+            "baseHref": "",
+            "translation": "src/locale/messages.de.xlf"
+          }
         }
       },
       "architect": {
@@ -189,17 +213,43 @@
             },
             "index": "projects/web-components/src/index.html",
             "polyfills": [
-              "projects/web-components/src/polyfills.ts"
+              "projects/web-components/src/polyfills.ts",
+              "@angular/localize/init"
             ],
             "tsConfig": "projects/web-components/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
               "projects/web-components/src/favicon.ico",
-              "projects/web-components/src/assets"
+              "projects/web-components/src/assets",
+              {
+                "glob": "*",
+                "input": "src/assets/i18n",
+                "output": "assets/i18n/"
+              },
+              {
+                "glob": "*",
+                "input": "src/assets/images/icons",
+                "output": "assets/images/icons/"
+              },
+              {
+                "glob": "*",
+                "input": "node_modules/ngx-edu-sharing-wlo-pages/assets/images",
+                "output": "/assets/images/"
+              },
+              {
+                "glob": "*",
+                "input": "node_modules/ngx-edu-sharing-wlo-pages/assets/icons",
+                "output": "assets/images/icons/"
+              }
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src"
+              ]
+            },
             "styles": [
-              "node_modules/slick-carousel/slick/slick.scss",
-              "node_modules/slick-carousel/slick/slick-theme.scss",
+              "node_modules/slick-carousel/slick/slick.css",
+              "node_modules/slick-carousel/slick/slick-theme.css",
               "src/styles.scss",
               "projects/web-components/src/styles.scss"
             ],
@@ -216,7 +266,7 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kb",
-                  "maximumError": "3000kb"
+                  "maximumError": "4500kb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -274,9 +324,14 @@
               "projects/web-components/src/favicon.ico",
               "projects/web-components/src/assets"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src"
+              ]
+            },
             "styles": [
-              "node_modules/slick-carousel/slick/slick.scss",
-              "node_modules/slick-carousel/slick/slick-theme.scss",
+              "node_modules/slick-carousel/slick/slick.css",
+              "node_modules/slick-carousel/slick/slick-theme.css",
               "src/styles.scss",
               "projects/web-components/src/styles.scss"
             ],

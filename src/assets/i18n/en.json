@@ -1,0 +1,312 @@
+{
+  "TOPIC_PAGE": {
+    "AI": {
+      "GENERATED": "AI-generated"
+    },
+    "WIDGET": {
+      "SUB_HEADING_LABEL_OPTIONAL": "Subheading (optional)",
+      "DESCRIPTION_LABEL": "Description",
+      "DESCRIPTION_LABEL_OPTIONAL": "Description (optional)",
+      "NO_SUBCOLLECTIONS": "No sub-collections were found for this collection.",
+      "SAVE_CONFIG_ACTION": "Close",
+      "SAVE_CONFIG_MESSAGE": "Your changes will be saved.",
+      "SAVE_CONFIG_ERROR_ACTION": "Reload page",
+      "SAVE_CONFIG_ERROR_MESSAGE": "Your changes could not be saved.",
+      "NODE_NOT_PUBLIC": "The selected content is not public.",
+      "AI_WIDGET": {
+        "HEADING": "Request",
+        "PROMPT_DESCRIPTION": "Formulate a request to the AI.",
+        "PLACEHOLDER_DESCRIPTION": "You can use the following placeholders, which will be automatically replaced by the respective values set on the page:",
+        "AND": "and",
+        "PROMPT_LABEL": "Prompt for the AI",
+        "PROMPT_PLACEHOLDER": "AI prompt",
+        "PROMPT_ADJUSTED_HINT": "The prompt has been adjusted, but the responses have not yet been updated.",
+        "SEND_HINT": "When you click \"Send\", the currently saved request will be overwritten and all previously defined texts will be reset.",
+        "SEND": "Send",
+        "ANSWERS_LABEL": "Answers",
+        "ANSWERS_DESCRIPTION": "Here you have the opportunity to define answers for different combinations of placeholder values. You can also generate a text using AI for the current selection.",
+        "SELECT_PLACEHOLDER": "-- Please select --",
+        "GENERATE_TEXT": "Generate a new AI text",
+        "GENERATE_TEXT_HINT": "A text will be generated using AI. This may take some time.",
+        "CURRENT_SELECTION_ANSWER_LABEL": "Answer for the current selection",
+        "NO_ANSWER_DEFINED": "No text has been defined for the selection yet."
+      },
+      "BREADCRUMB": {
+        "DEFAULT_ROOT_NAME": "Subject portals",
+        "EDITORIAL_TEAM": "Editorial team",
+        "ADD_MEMBER": "Add member",
+        "REMOVE_MEMBER": "Remove member"
+      },
+      "COLLECTION_CHIPS": {
+        "DEFAULT_ICON": "Default icon",
+        "UPLOADED_ICON": "Uploaded icon",
+        "CONFIG_ARIA": "Choose the layout of the navigation pills",
+        "CHANGE_FILTER_OR_SEARCH": "Change filter or search",
+        "EMBED": "Embed",
+        "EMBED_TOOLTIP": "Note: Your domain must be whitelisted by WLO for successful embedding."
+      },
+      "EDITABLE_TEXT": {
+        "SHOW_MORE": "Show more",
+        "SHOW_LESS": "Show less",
+        "COPY_LINK_TO_CLIPBOARD": "Copy link to clipboard",
+        "BOLD": "Bold",
+        "ITALIC": "Italic",
+        "QUOTE": "Quote",
+        "CODE": "Code",
+        "LINK": "Link",
+        "UNORDERED_LIST": "Unordered list",
+        "ORDERED_LIST": "Ordered list"
+      },
+      "FILTER_BAR": {
+        "NO_DATA": "No data found to filter.",
+        "CHANGES_SAVED": "Your changes have been saved.",
+        "CHANGES_RESET": "Your changes have been reset."
+      },
+      "IFRAME_WIDGET": {
+        "SOURCE": "Source (src)",
+        "WIDTH": "Width",
+        "HEIGHT": "Height",
+        "TITLE": "Title (for accessibility)",
+        "SHOW_BORDER": "Show border?",
+        "SHOW_PREVIEW": "Show preview",
+        "UPDATE_PREVIEW": "Update preview",
+        "PREVIEW_TITLE": "iframe preview",
+        "SAVE_CONFIG": "Save config",
+        "NOT_SUPPORTED": "Your browser does not support iframes.",
+        "MISSING_SRC": "No source was specified, therefore no iframe can be displayed."
+      },
+      "IMAGE_WRAPPER": {
+        "BACKDROP": "Blurred background of the image",
+        "ALT": "Image to motivate the topic",
+        "GENERATE": "Generate image",
+        "REGENERATE": "Regenerate image",
+        "UPLOAD": "Upload image",
+        "DELETE": "Delete image",
+        "NO_IMAGE_SELECTED": "No image has been selected yet."
+      },
+      "MAP_VIEW": {
+        "HEADING": "Filter the map view",
+        "GERMANY": "Germany",
+        "YOUR_REGION": "Your region (nearby)",
+        "CONTENT_TYPES": "Content types",
+        "JOB_DAYS": "Job information days",
+        "STUDY_DAYS": "Study information days",
+        "EVENTS": "Events",
+        "EXHIBITIONS": "Exhibitions",
+        "IS_LOADING": "The map view is loading",
+        "IS_PENDING": "The map view is updating.",
+        "NO_DATA_AVAILABLE": "No data could be found for the map view.",
+        "NO_INFORMATION_AVAILABLE": "No information available."
+      },
+      "MEDIA_RENDERING": {
+        "NO_ELEMENT_SELECTED": "No element has been selected for display yet.",
+        "TO_ORIGINAL_PAGE": "To original page",
+        "SHOW_DETAILS": "Show details",
+        "HIDE_DETAILS": "Hide details",
+        "CONFIG_ARIA": "Choose the layout of the media widget",
+        "CHANGE_CONTENT": "Change content",
+        "SELECT_CONTENT": "Select content",
+        "SELECT_CONTENT_TOOLTIP": "Note: Select a public content via the editorial environment and then click 'Apply'."
+      },
+      "PROPOSE_CONTENT": {
+        "TITLE": "Propose content",
+        "NO_CONTENT_QUESTION": "No content yet?",
+        "SHARING_MAKES_YOU_HAPPY": "Sharing makes you happy",
+        "CONTENT_QUESTION": "Do you know a great piece of content that should definitely appear here?",
+        "POINTING_OWL": "The WLO-owl pointing in your direction."
+      },
+      "SEARCH_WIDGET": {
+        "SEARCH": "Search",
+        "SEARCH_PLACEHOLDER": "Find suitable content, tools, and sources for your lessons..."
+      },
+      "SIDE_MENU": "Side menu",
+      "STATISTICS": {
+        "ALL_LABEL": "All content on this topic page",
+        "EDITORIAL_LABEL": "Editorially reviewed content",
+        "OER_LABEL": "OER content",
+        "MORE_RESULTS_SINGLE": "The search finds more: 1 content",
+        "MORE_RESULTS_MULTIPLE": "The search finds more: {{count}} contents in total",
+        "WORK": "Jobs",
+        "EDUCATIONAL_OFFERS": "Educational offers",
+        "EVENTS": "Events",
+        "MATERIALS": "Materials",
+        "SOURCES": "Sources",
+        "ORGANIZATIONS": "Organizations",
+        "PEOPLE": "People",
+        "TOOLS": "Tools",
+        "PROMPTS": "Prompts",
+        "FIELDS_OF_ACTION": "Fields of action",
+        "DIDACTIC_CONCEPTS": "Didactic concepts"
+      },
+      "TOPIC_HEADER": {
+        "COLLECTION_DESCRIPTION_LABEL": "Collection description",
+        "IMPORTANCE_HEADER": "Why is that important?",
+        "IMPORTANCE_LABEL": "Description of importance"
+      },
+      "TOPICS_COLUMN_BROWSER": {
+        "ERROR_RECEIVING_DATA": "Error receiving data"
+      },
+      "USER_CONFIGURABLE": {
+        "CONFIG_ARIA": "Choose the layout of the content teaser",
+        "CHANGE_FILTER_OR_SEARCH": "Change filter or search",
+        "EMBED": "Embed",
+        "EMBED_TOOLTIP": "Note: To successfully embed, your domain must be whitelisted by WLO.",
+        "EMBED_CODE_COPIED": "The code for embedding the content has been copied to your clipboard.",
+        "SWITCH_INTO_EDIT_MODE": "Switch to edit mode",
+        "SWITCH_INTO_VIEW_MODE": "Switch to view mode",
+        "NO_CONTENTS": "No contents yet",
+        "TITLE_LABEL": "Title",
+        "LRT_LABEL": "Material type",
+        "TAXONID_LABEL": "Subject area",
+        "EDUCATIONAL_CONTEXT_LABEL": "Educational level",
+        "SOURCE_LABEL": "Source",
+        "AUTHOR_LABEL": "Author",
+        "WEBSITE_LABEL": "Website",
+        "CHANGE_ON_INSPECTION_TABLE": "Change object on inspection table",
+        "REMOVE_FROM_WIDGET": "Hide object",
+        "ADD_TO_WIDGET": "Show object"
+      },
+      "CHOOSE_LAYOUT": "Choose Layout",
+      "COLOR": "Color",
+      "LAYOUT": {
+        "PREVIEW": "Preview",
+        "PREVIEW_ARIA": "Show as pure preview",
+        "PREVIEW_TITLE": "With title",
+        "PREVIEW_TITLE_ARIA": "Show as preview with title",
+        "PREVIEW_TITLE_BUTTONS": "Expanded",
+        "PREVIEW_TITLE_BUTTONS_ARIA": "Show as preview with title and buttons",
+        "SINGLE_VIEW": "Single",
+        "SINGLE_VIEW_ARIA": "Single view",
+        "SPLIT_VIEW": "Split",
+        "SPLIT_VIEW_ARIA": "Split view",
+        "STANDARD_VIEW": "Standard",
+        "STANDARD_VIEW_ARIA": "Standard view",
+        "COMPACT_VIEW": "Compact",
+        "COMPACT_VIEW_ARIA": "Compact view",
+        "LIST_VIEW": "List",
+        "LIST_VIEW_ARIA": "List view",
+        "MAP_VIEW": "Map",
+        "MAP_VIEW_ARIA": "Map view",
+        "BUTTONS": "Buttons",
+        "BUTTONS_ARIA": "Display as buttons",
+        "GRID": "Tiles",
+        "GRID_ARIA": "Display as tiles"
+      }
+    },
+    "SEARCH_HEADING": "Search in the subject area of the topic page",
+    "SIDE_MENU": {
+      "SWITCH_VARIANT": "Switch page variant",
+      "EDIT_PAGE": "Edit page",
+      "BACK_TO_PREVIEW": "Back to preview",
+      "NEW": "New",
+      "PAGE_VARIANT": {
+        "LABEL": "Page variant",
+        "SUBSCRIPTION": "Subscription"
+      },
+      "PROFILING": {
+        "LABEL": "Profiling",
+        "HEADING": "Who are you?"
+      },
+      "TOPIC_TREE": {
+        "LABEL": "Topic Tree",
+        "HEADING": "Topic tree of {{topic}}"
+      },
+      "STATISTICS": {
+        "LABEL": "Statistics",
+        "HEADING": "Contents of {{topic}}"
+      }
+    },
+    "ANCHOR_FALLBACK_PREFIX": "Section",
+    "SWIMLANE": {
+      "HEADING_LABEL": "Heading",
+      "DEFAULT_HEADING": "An example heading",
+      "POSITION_UP": "Move section up",
+      "POSITION_DOWN": "Move section down",
+      "SELECT_ELEMENT": {
+        "HEADING": "Add content element",
+        "CONTAINER_ELEMENT": "Container element",
+        "ACCORDION_ELEMENT": "Accordion element",
+        "ANCHOR_MENU": "Anchor menu"
+      },
+      "SELECT_LAYOUT": {
+        "HEADING": "Select layout",
+        "ONE_COLUMN": "One column",
+        "TWO_COLUMNS": "Two columns",
+        "THREE_COLUMNS": "Three columns",
+        "LEFT_SIDE_PANEL": "Left sidebar",
+        "RIGHT_SIDE_PANEL": "Right sidebar"
+      },
+      "CONFIGURE_GRID": "Configure grid",
+      "ADJUST_GRID": "Adjust grid",
+      "NO_WIDGET_AVAILABLE": "No widget available yet",
+      "SELECT_WIDGET": {
+        "HEADING": "Add widget",
+        "CURRENT_TYPE": "Current widget type",
+        "CONFIG_EXISTS": "already configured",
+        "CHANGE_TYPE": "Change widget type",
+        "COLLECTION_CHIPS": "Navigation pills",
+        "TOPICS_COLUMN_BROWSER": "Topic tree (collapsible)",
+        "USER_CONFIGURABLE": "Content teaser",
+        "MEDIA_RENDERING": "Media widget",
+        "TEXT_WIDGET": "Text widget",
+        "IFRAME_WIDGET": "iframe widget",
+        "AI_TEXT_WIDGET": "AI widget"
+      },
+      "EDIT": {
+        "ARIA_LABEL": "Edit section",
+        "HEADING": "Configure {{heading}}",
+        "HEADING_LABEL": "Heading",
+        "HEADING_PLACEHOLDER": "Heading of the section",
+        "SWIMLANE_DEFAULT": "Swimlane",
+        "TYPE_LABEL": "Type",
+        "GRID_DEFINITION_LABEL": "Grid definition",
+        "CHANGE_GRID_HINT": "If you change the grid type, widgets added to positions that no longer exist at the end of the grid may be lost. Please move the respective widgets first before proceeding with grid adjustment."
+      },
+      "DELETE": "Delete section"
+    },
+    "PREVIEW_PANEL": {
+      "CLOSE": "Close preview panel",
+      "DURATION_LABEL": "Duration",
+      "LANGUAGES_LABEL": "Language(s)",
+      "ALL_DETAILS": "All details",
+      "EMBED_ELEMENT": "Embed element",
+      "LICENSE_LABEL": "License",
+      "CONDITIONS_OF_ACCESS": "Access requirements",
+      "PRICE": "Cost",
+      "FREE_OF_CHARGE": "Free of charge",
+      "PAID_CONTENT": "Paid content",
+      "CONTAINS_ADVERTISEMENT": "Contains advertisement?",
+      "NO_ADVERTISEMENT": "No advertisement",
+      "ADVERTISEMENT_CONTAINED": "Contains advertisement",
+      "REPORT_PROBLEM": {
+        "LABEL": "Report problem",
+        "DESCRIPTION": "Report a problem with \"{{title}}\".",
+        "PROBLEM_KIND_LABEL": "Type of problem",
+        "UNAVAILABLE": "Content not available",
+        "INAPPROPRIATE_CONTENT": "Inappropriate content",
+        "INVALID_METADATA": "Invalid description",
+        "OTHER": "Something else",
+        "DESCRIBE_PROBLEM_LABEL": "Describe the problem",
+        "EMAIL_LABEL_OPTIONAL": "Your email address (optional)",
+        "REPORT": "Report",
+        "SUCCESS": "Your report has been successfully submitted. Thank you for your help!",
+        "ERROR": "Sorry, we could not submit your report.",
+        "CONTACT_SUPPORT": "Contact support",
+        "EMAIL_BODY": "I would like to report a problem with the element \"{{name}}\".{{br}}{{br}}{{br}}----- The following information is for debugging. Please do not delete. -----{{br}}{{br}}Primary ID: {{id}}{{br}}{{br}}Reason for the report: {{reason}}{{br}}{{br}}Additional information from the user:{{br}}{{message}}"
+      },
+      "RELATED_SUBJECT_PAGES": "Related subject pages"
+    },
+    "NO_SWIMLANES": "No swimlanes with content have been created yet.",
+    "NO_PAGE_CONFIG": {
+      "DEFAULT_MESSAGE": "No page configuration could be found for this page.",
+      "VIEW_MESSAGE": "Please contact your system administrator.",
+      "EDIT_MESSAGE": "However, you can select a page configuration that you want to use via the menu.",
+      "SELECT_LABEL": "Page config",
+      "SELECT_PLACEHOLDER": "Select page config",
+      "CREATE_PAGE": "Create page"
+    },
+    "LOGOUT_INFO": "Your session has terminated. The page will be reloaded automatically.",
+    "HINT": "Hint",
+    "ATTENTION": "Attention"
+  }
+}

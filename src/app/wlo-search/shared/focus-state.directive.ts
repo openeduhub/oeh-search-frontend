@@ -3,6 +3,7 @@ import { Directive, HostListener } from '@angular/core';
 @Directive({
     selector: '[appFocusState]',
     exportAs: 'appFocusState',
+    standalone: false,
 })
 export class FocusStateDirective {
     /** Either the element or one of its descendants has focus. */

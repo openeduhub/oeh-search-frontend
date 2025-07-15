@@ -5,5 +5,4 @@ export const WLO_SEARCH_CONFIG = new InjectionToken<WloSearchConfig>('WLO_SEARCH
 export interface WloSearchConfig {
     readonly routerPath: string;
     readonly wordpressUrl: string;
-    readonly showExperiments: boolean;
 }

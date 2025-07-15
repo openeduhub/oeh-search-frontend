@@ -63,7 +63,7 @@ a:not(:hover) {
         display: flex;
         align-items: center;
         &:not(:last-child) {
-            padding-bottom: 4px;
+            padding-bottom: 8px;
         }
         > .mat-icon,
         > .mat-mdc-icon {

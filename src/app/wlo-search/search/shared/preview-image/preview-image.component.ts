@@ -7,6 +7,7 @@ export type PreviewImage = Node['preview'];
     selector: 'app-preview-image',
     templateUrl: './preview-image.component.html',
     styleUrls: ['./preview-image.component.scss'],
+    standalone: false,
 })
 export class PreviewImageComponent {
     @Input() previewImage: PreviewImage;

@@ -1,46 +1,40 @@
-@use '@angular/material' as mat;
+@use 'sass:color';
+@use 'variables' as *;
 
-@mixin search-field-theme($theme) {
+@mixin search-field-theme() {
     app-search-field {
         form .search-field-wrapper {
-            background-color: mat.get-theme-color($theme, surface);
+            background-color: $surface;
 
             .search-field-input-wrapper {
-                @if mat.get-theme-type($theme) == light {
-                    background-color: rgba(mat.get-theme-color($theme, secondary, 60), 0.3);
-                } @else {
-                    background-color: mat.get-theme-color($theme, surface-container);
-                }
+                background-color: color.adjust($secondary, $lightness: 50%);
                 input {
-                    @if mat.get-theme-type($theme) == light {
-                        color: mat.get-theme-color($theme, primary, 25);
-                    } @else {
-                        color: mat.get-theme-color($theme, primary);
-                    }
+                    color: $primary-dark;
 
                     &::placeholder {
-                        color: mat.get-theme-color($theme, secondary);
+                        color: $secondary;
                     }
                 }
                 .search-icon {
-                    color: mat.get-theme-color($theme, primary);
+                    color: $primary;
                 }
             }
         }
     }
 }
 
-@mixin search-field-typography($typography) {
+@mixin search-field-typography() {
     // this has to be placed outside, as is it opened within a cdk-overlay
     .suggestion-group {
-        // slightly decrease font-size of category-label
+        // slightly decrease font-size + increase font-weight of category-label
         .category-label {
-            font-size: var(--sys-body-medium-size);
+            font-size: $font-size-x-small;
+            font-weight: $font-weight-bold;
         }
-        // adjust font-family + font-weight of chips
+        // adjust font-size + font-weight of chips
         .suggestion-mat-chip-listbox .mdc-evolution-chip__text-label {
-            font-family: var(--sys-headline-large-font);
-            font-weight: var(--sys-label-large-weight-prominent);
+            font-size: $font-size-small;
+            font-weight: $font-weight-x-bold;
         }
     }
     app-search-field {
@@ -49,11 +43,16 @@
         // https://stackoverflow.com/a/43273285
         .mat-mdc-form-field,
         .mat-mdc-form-field.mat-mdc-form-field {
-            font-size: 1.075rem;
+            font-size: 107.5%;
         }
         // slightly increase the font-size of the submit-button
         .submit-button {
-            font-size: 0.95rem;
+            font-size: 95%;
+        }
+        // adjust font-size + font-weight of chips
+        .category-chip .mdc-evolution-chip__text-label {
+            font-size: $font-size-small;
+            font-weight: $font-weight-x-bold;
         }
     }
 }

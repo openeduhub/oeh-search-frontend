@@ -3,26 +3,25 @@ import { MdsValue, MdsWidget, Node } from 'ngx-edu-sharing-api';
 import {
     AiTextWidgetComponent,
     CollectionChipsComponent,
+    IframeWidgetComponent,
+    MediaRenderingComponent,
+    TextWidgetComponent,
+    StatisticNode,
     TopicsColumnBrowserComponent,
     UserConfigurableComponent,
 } from 'ngx-edu-sharing-wlo-pages';
 import { SharedModule } from '../../../shared/shared.module';
-import {
-    defaultAiTextWidgetNodeId,
-    defaultCollectionChipsNodeId,
-    defaultTopicsColumnBrowserNodeId,
-    defaultUserConfigurableNodeId,
-    parentWidgetConfigNodeId,
-    retrieveCustomUrl,
-} from '../../shared/custom-definitions';
+import { retrieveCustomUrl } from '../../shared/custom-definitions';
 
 @Component({
     selector: 'app-grid-widget',
-    standalone: true,
     imports: [
+        SharedModule,
         AiTextWidgetComponent,
         CollectionChipsComponent,
-        SharedModule,
+        IframeWidgetComponent,
+        MediaRenderingComponent,
+        TextWidgetComponent,
         TopicsColumnBrowserComponent,
         UserConfigurableComponent,
     ],
@@ -43,12 +42,10 @@ export class GridWidgetComponent {
     @Input() widgetNodeId: string;
     @Input() widgetType: string;
     @Output() nodeClicked: EventEmitter<Node> = new EventEmitter<Node>();
-
-    readonly defaultAiTextWidgetNodeId: string = defaultAiTextWidgetNodeId;
-    readonly defaultCollectionChipsNodeId: string = defaultCollectionChipsNodeId;
-    readonly defaultTopicsColumnBrowserNodeId: string = defaultTopicsColumnBrowserNodeId;
-    readonly defaultUserConfigurableNodeId: string = defaultUserConfigurableNodeId;
-    readonly parentWidgetConfigNodeId: string = parentWidgetConfigNodeId;
+    @Output() nodeStatisticsChanged: EventEmitter<StatisticNode[]> = new EventEmitter<
+        StatisticNode[]
+    >();
+    @Output() totalSearchResultCountChanged: EventEmitter<number> = new EventEmitter<number>();
 
     constructor() {}
 
@@ -68,5 +65,25 @@ export class GridWidgetComponent {
      */
     clickedItem(node: any): void {
         this.nodeClicked.emit(node as Node);
+    }
+
+    /**
+     * Called by wlo-user-configurable totalSearchResultCountChanged output event.
+     * Emits the count.
+     *
+     * @param count
+     */
+    changeTotalSearchResultCount(count: number): void {
+        this.totalSearchResultCountChanged.emit(count);
+    }
+
+    /**
+     * Called by wlo-media-rendering and wlo-user-configurable nodeStatisticsChanged output event.
+     * Emits the statistics.
+     *
+     * @param statistics
+     */
+    changeNodeStatistics(statistics: StatisticNode[]): void {
+        this.nodeStatisticsChanged.emit(statistics);
     }
 }

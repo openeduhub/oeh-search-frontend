@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ErrorPageComponent } from './core/error-page/error-page.component';
-import { ExperimentsTogglesComponent } from './preferences/experiments-toggles/experiments-toggles.component';
 import { DetailsPageResolverService } from './search/details-page/details-page-resolver.service';
 import { DetailsPageComponent } from './search/details-page/details-page.component';
 // import { SearchPageResolverService } from './search/search-page/search-page-resolver.service';
@@ -44,7 +43,6 @@ const routes: Routes = [
                 component: DetailsPageComponent,
                 resolve: { entry: DetailsPageResolverService },
             },
-            { path: 'experiments', component: ExperimentsTogglesComponent },
             { path: 'template', component: TemplateComponent },
             { path: '', redirectTo: 'search', pathMatch: 'full' },
             { path: 'error', component: ErrorPageComponent },

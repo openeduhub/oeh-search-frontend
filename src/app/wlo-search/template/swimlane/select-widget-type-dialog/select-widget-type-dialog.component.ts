@@ -7,7 +7,6 @@ import { SelectOption } from '../../shared/types/select-option';
 
 @Component({
     selector: 'app-select-widget-type-dialog',
-    standalone: true,
     imports: [EduSharingUiCommonModule, SharedModule],
     templateUrl: './select-widget-type-dialog.component.html',
     styleUrls: ['./select-widget-type-dialog.component.scss'],

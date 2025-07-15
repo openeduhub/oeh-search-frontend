@@ -11,7 +11,7 @@
     justify-content: center;
     align-items: center;
     &[data-style='standard'] {
-        background-image: url('../../../../assets/wlo-search/images/header-bg.svg');
+        background-image: url('../../../../assets/images/header-bg.svg');
         min-height: 325px;
         border-top-width: 45px;
         border-top-style: solid;
@@ -48,27 +48,17 @@
     height: 30px;
     line-height: 30px;
     border-radius: 15px;
+    // slightly adjust padding of badge container
+    --mat-badge-container-padding: 3px 8px;
     .button-wrapper {
         display: flex;
         align-items: center;
         justify-content: center;
+        gap: 8px;
         span {
-            margin-right: 0.8em;
             @media screen and (max-width: 450px) {
                 display: none;
             }
         }
-    }
-    // slightly adjust padding of badge container
-    --mat-badge-container-padding: 3px 8px;
-}
-
-.experiments {
-    position: absolute;
-    top: 2px;
-    right: 8px;
-    a {
-        text-decoration: none;
-        font-weight: bold;
     }
 }

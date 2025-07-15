@@ -1,9 +1,12 @@
 import { Component, DoCheck, NgZone } from '@angular/core';
+import { MaterialCssVarsService } from 'angular-material-css-vars';
+import { TranslationsService } from 'ngx-edu-sharing-ui';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss'],
+    standalone: false,
 })
 export class AppComponent implements DoCheck {
     private static readonly CHECKS_PER_SECOND_WARNING_THRESHOLD = 0;
@@ -13,10 +16,22 @@ export class AppComponent implements DoCheck {
     private consecutiveTransgression = 0;
     private checksMonitorInterval: number;
 
-    constructor(ngZone: NgZone) {
-        ngZone.runOutsideAngular(() => {
+    constructor(
+        private materialCssVarsService: MaterialCssVarsService,
+        private ngZone: NgZone,
+        private translationsService: TranslationsService,
+    ) {
+        this.ngZone.runOutsideAngular(() => {
             this.checksMonitorInterval = window.setInterval(() => this.monitorChecks(), 1000);
         });
+        // initialize the translationsService
+        this.translationsService.initialize().subscribe(() => {});
+        // initialize the materialCssVarsService
+        this.materialCssVarsService.setPrimaryColor('#003b7c');
+        this.materialCssVarsService.setAccentColor('#003b7c');
+        // this.materialCssVarsService.setDarkTheme(true);
+        // this.themeService.setColor(Variable.Primary, '#003b7c');
+        // this.themeService.setColor(Variable.Accent, '#e4f700');
     }
 
     ngDoCheck(): void {

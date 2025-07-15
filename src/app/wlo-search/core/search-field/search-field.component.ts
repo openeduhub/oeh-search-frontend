@@ -24,6 +24,7 @@ type Suggestions = { [key in Facet]?: string[] };
     selector: 'app-search-field',
     templateUrl: './search-field.component.html',
     styleUrls: ['./search-field.component.scss'],
+    standalone: false,
 })
 export class SearchFieldComponent implements AfterViewInit, OnInit, OnDestroy {
     @ViewChild(CdkConnectedOverlay) overlay: CdkConnectedOverlay;

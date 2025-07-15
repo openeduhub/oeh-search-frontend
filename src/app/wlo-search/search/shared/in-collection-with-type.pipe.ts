@@ -10,6 +10,7 @@ export function collectionHasType(collection: Collection, type: CollectionType):
 
 @Pipe({
     name: 'inCollectionWithType',
+    standalone: false,
 })
 export class InCollectionWithTypePipe implements PipeTransform {
     transform(value: Node, type: CollectionType): boolean {

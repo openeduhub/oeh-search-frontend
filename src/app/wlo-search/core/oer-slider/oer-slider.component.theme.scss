@@ -1,8 +1,7 @@
-@use '@angular/material' as mat;
-@import '../../functions';
-@import '../../../../additional-colors';
+@use 'sass:color';
+@use 'variables' as *;
 
-@mixin oer-slider-theme($theme) {
+@mixin oer-slider-theme() {
     // custom theme created for the oer-slider
     // Note: the colors should not change, even when being in dark mode
     app-oer-slider {
@@ -10,15 +9,15 @@
         .mdc-label,
         .help-button .mat-icon,
         .help-button .mat-mdc-icon {
-            color: mat.get-theme-color($theme, neutral, 99);
+            color: $on-primary;
         }
         // change background color of switch track
         .mat-mdc-slide-toggle .mdc-switch__track {
             &::before {
-                background: rgba(mat.get-theme-color($theme, secondary, 70), 0.6) !important;
+                background: color.adjust($secondary, $lightness: 20%) !important;
             }
             &::after {
-                background: mat.get-theme-color($theme, neutral, 99) !important;
+                background: $surface !important;
             }
         }
         // change color of the toggle button
@@ -28,7 +27,7 @@
         .mat-mdc-slide-toggle
             .mdc-switch.mdc-switch--unselected:enabled
             .mdc-switch__handle::after {
-            background: mat.get-theme-color($theme, neutral, 99) !important;
+            background: $surface !important;
         }
     }
 }

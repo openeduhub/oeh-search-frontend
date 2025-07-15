@@ -15,6 +15,7 @@ import { SkipNavService, SkipTarget } from '../skip-nav.service';
     selector: 'app-menubar',
     templateUrl: './menubar.component.html',
     styleUrls: ['./menubar.component.scss'],
+    standalone: false,
 })
 export class MenubarComponent {
     readonly routerPath: string = this.config.get().routerPath;

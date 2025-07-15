@@ -6,6 +6,7 @@ import { PreviewImage } from './preview-image.component';
     // eslint-disable-next-line @angular-eslint/component-selector
     selector: '[appPreviewImageInner]',
     template: '',
+    standalone: false,
 })
 export class PreviewImageInnerComponent implements OnInit {
     // Use an alias for a property input that is equal to the component selector.

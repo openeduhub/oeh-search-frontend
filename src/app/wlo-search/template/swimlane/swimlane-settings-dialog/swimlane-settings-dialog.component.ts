@@ -12,7 +12,6 @@ import { SelectWidgetTypeDialogComponent } from '../select-widget-type-dialog/se
 
 @Component({
     selector: 'app-swimlane-settings-dialog',
-    standalone: true,
     imports: [
         ConfigureGridDialogComponent,
         DragDropModule,
@@ -33,9 +32,6 @@ export class SwimlaneSettingsDialogComponent implements OnInit {
         this.form = new UntypedFormGroup({
             type: new UntypedFormControl(this.data.swimlane.type),
             heading: new UntypedFormControl(this.data.swimlane.heading),
-            backgroundColor: new UntypedFormControl(
-                this.initializeBackgroundColor(this.data.swimlane.backgroundColor),
-            ),
             grid: new UntypedFormControl(JSON.stringify(this.data.swimlane.grid ?? '[]')),
         });
         // note: using a copy is essentially at the point to not overwrite the parent data
@@ -47,41 +43,6 @@ export class SwimlaneSettingsDialogComponent implements OnInit {
                 this.widgetTypeToTextMap.set(option.value, option.viewValue);
             }
         });
-    }
-
-    /**
-     * Ensure that a given colorString is converted into a valid hex string.
-     *
-     * @param colorString
-     */
-    private initializeBackgroundColor(colorString: string) {
-        // TODO: Input default value based on theme type
-        if (!colorString || colorString === '') {
-            return '#f4f4f4';
-        }
-        if (colorString.includes('rgb')) {
-            // https://stackoverflow.com/a/35663683
-            const values = colorString
-                .replace(/rgba?\(/, '')
-                .replace(/rgb?\(/, '')
-                .replace(/\)/, '')
-                .replace(/[\s+]/g, '')
-                .split(',');
-            if (values.length > 2) {
-                return this.rgbToHex(parseInt(values[0]), parseInt(values[1]), parseInt(values[2]));
-            }
-        }
-        return colorString;
-    }
-
-    // https://stackoverflow.com/a/5624139
-    private componentToHex(c: number) {
-        const hex = c.toString(16);
-        return hex.length == 1 ? '0' + hex : hex;
-    }
-
-    private rgbToHex(r: number, g: number, b: number) {
-        return '#' + this.componentToHex(r) + this.componentToHex(g) + this.componentToHex(b);
     }
 
     /**

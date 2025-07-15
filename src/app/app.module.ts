@@ -1,36 +1,23 @@
 import { ScrollStrategyOptions } from '@angular/cdk/overlay';
+import { PlatformLocation } from '@angular/common';
 import {
     HttpClient,
-    HttpEvent,
-    HttpEventType,
-    HttpHandler,
-    HttpRequest,
     HTTP_INTERCEPTORS,
     provideHttpClient,
     withInterceptorsFromDi,
 } from '@angular/common/http';
-import { inject, NgModule, Provider } from '@angular/core';
+import { Inject, NgModule, Optional, Provider } from '@angular/core';
 import { MAT_DIALOG_SCROLL_STRATEGY } from '@angular/material/dialog';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { InMemoryCache } from '@apollo/client/core';
-import { ApolloModule, APOLLO_NAMED_OPTIONS } from 'apollo-angular';
-import { HttpLink } from 'apollo-angular/http';
+import { MaterialCssVarsModule } from 'angular-material-css-vars';
 import { ConfigService, EduSharingApiModule } from 'ngx-edu-sharing-api';
-import { Observable, of, throwError } from 'rxjs';
+import { BApiModule } from 'ngx-edu-sharing-b-api';
 import { environment } from 'src/environments/environment';
-import {
-    OpenAnalyticsSessionGQL,
-    ReportLifecycleEventGQL,
-    ReportResultClickGQL,
-    ReportSearchRequestGQL,
-} from 'src/generated/graphql';
 import { AppRoutingModule, ROOT_PATH, WLO_SEARCH_PATH_COMPONENT } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CachingInterceptor } from './caching.interceptor';
 import { LanguageHeaderInterceptor } from './language-header.interceptor';
-import { TelemetryApiWrapper } from './telemetry-api-wrapper';
-import { TELEMETRY_API } from './wlo-search/telemetry-api';
 import { WloSearchConfig, WLO_SEARCH_CONFIG } from './wlo-search/wlo-search-config';
 import {
     MissingTranslationHandler,
@@ -46,17 +33,31 @@ import {
     TranslationLoader,
     Toast as ToastAbstract,
     OptionsHelperService as OptionsHelperServiceAbstract,
+    ADDITIONAL_I18N_PROVIDER,
+    ASSETS_BASE_PATH,
 } from 'ngx-edu-sharing-ui';
 import {
+    GlobalWidgetConfigService,
     OptionsHelperService,
     TicketAuthInterceptor,
     TicketService,
     ToastService,
 } from 'ngx-edu-sharing-wlo-pages';
+import {
+    cdnLink,
+    defaultAiConfigId,
+    defaultAiChatCompletionConfigId,
+    defaultAiImageCreateConfigId,
+    defaultAiClearCacheConfigId,
+    defaultAiTextWidgetConfigId,
+    defaultTopicHeaderImageConfigId,
+    defaultTopicHeaderTextConfigId,
+    defaultUserConfigurableConfigId,
+    eduSharingUrl,
+} from './wlo-search/template/shared/custom-definitions';
 
 const wloSearchConfig: WloSearchConfig = {
     routerPath: ROOT_PATH + WLO_SEARCH_PATH_COMPONENT,
-    showExperiments: environment.showExperiments,
     wordpressUrl: environment.wordpressUrl,
 };
 
@@ -70,61 +71,9 @@ const httpInterceptorProviders = [
     },
 ];
 
-const telemetryProviders = environment.analyticsUrl
-    ? [
-          {
-              provide: TELEMETRY_API,
-              useFactory: () =>
-                  new TelemetryApiWrapper(
-                      inject(OpenAnalyticsSessionGQL),
-                      inject(ReportLifecycleEventGQL),
-                      inject(ReportResultClickGQL),
-                      inject(ReportSearchRequestGQL),
-                  ),
-          },
-          {
-              provide: APOLLO_NAMED_OPTIONS,
-              deps: [HttpLink],
-              useFactory: (httpLink: HttpLink) => ({
-                  analytics: {
-                      link: httpLink.create({
-                          uri: environment.analyticsUrl + '/graphql',
-                      }),
-                      cache: new InMemoryCache(),
-                  },
-                  analyticsBeacon: {
-                      link: httpLinkBeacon.create({
-                          uri: environment.analyticsUrl + '/graphql',
-                      }),
-                      cache: new InMemoryCache(),
-                  },
-              }),
-          },
-      ]
-    : [];
-
-const httpLinkBeacon = (() => {
-    class BeaconHttpHandler implements HttpHandler {
-        handle(req: HttpRequest<any>): Observable<HttpEvent<any>> {
-            const headers = {
-                type: 'application/json',
-            };
-            const blob = new Blob([JSON.stringify(req.body)], headers);
-            const success = navigator.sendBeacon(req.url, blob);
-            if (success) {
-                return of({ type: HttpEventType.Sent });
-            } else {
-                return throwError({ message: 'Failed to queue request' });
-            }
-        }
-    }
-    const httpClient = new HttpClient(new BeaconHttpHandler());
-    return new HttpLink(httpClient);
-})();
-
-const eduSharingApiModuleWithProviders = EduSharingApiModule.forRoot({
-    rootUrl: environment.eduSharingApiUrl,
-});
+const eduSharingApiModuleWithProviders = environment.production
+    ? EduSharingApiModule.forRoot({ rootUrl: environment.eduSharingApiUrl })
+    : EduSharingApiModule.forRoot();
 
 @NgModule({
     declarations: [AppComponent],
@@ -133,8 +82,9 @@ const eduSharingApiModuleWithProviders = EduSharingApiModule.forRoot({
         AppRoutingModule,
         BrowserAnimationsModule,
         BrowserModule,
+        MaterialCssVarsModule.forRoot({ isAutoContrast: true }),
         eduSharingApiModuleWithProviders,
-        ApolloModule,
+        BApiModule.forRoot({ rootUrl: '/edu-sharing/rest/bapi' }),
     ],
     providers: [
         httpInterceptorProviders,
@@ -142,7 +92,6 @@ const eduSharingApiModuleWithProviders = EduSharingApiModule.forRoot({
             provide: WLO_SEARCH_CONFIG,
             useValue: wloSearchConfig,
         },
-        ...telemetryProviders,
         ((): Provider => {
             // From
             // https://stackoverflow.com/questions/7944460/detect-safari-browser/23522755#23522755
@@ -162,6 +111,54 @@ const eduSharingApiModuleWithProviders = EduSharingApiModule.forRoot({
             }
         })(),
         // from here on dependencies of wlo-pages (edu-sharing web-components)
+        // global configurations
+        { provide: 'CDN_LINK', useValue: cdnLink },
+        { provide: 'EDU_REPO_URL', useValue: eduSharingUrl },
+        // global AI default configs
+        { provide: 'DEFAULT_AI_CONFIG_ID', useValue: defaultAiConfigId },
+        {
+            provide: 'DEFAULT_AI_CHAT_COMPLETION_CONFIG_ID',
+            useValue: defaultAiChatCompletionConfigId,
+        },
+        {
+            provide: 'DEFAULT_AI_IMAGE_CREATE_CONFIG_ID',
+            useValue: defaultAiImageCreateConfigId,
+        },
+        {
+            provide: 'DEFAULT_AI_CLEAR_CACHE_CONFIG_ID',
+            useValue: defaultAiClearCacheConfigId,
+        },
+        // global widget default configs
+        { provide: 'DEFAULT_AI_TEXT_WIDGET_CONFIG_ID', useValue: defaultAiTextWidgetConfigId },
+        {
+            provide: 'DEFAULT_TOPIC_HEADER_IMAGE_WIDGET_CONFIG_ID',
+            useValue: defaultTopicHeaderImageConfigId,
+        },
+        {
+            provide: 'DEFAULT_TOPIC_HEADER_TEXT_WIDGET_CONFIG_ID',
+            useValue: defaultTopicHeaderTextConfigId,
+        },
+        {
+            provide: 'DEFAULT_USER_CONFIGURABLE_WIDGET_CONFIG_ID',
+            useValue: defaultUserConfigurableConfigId,
+        },
+        {
+            provide: ADDITIONAL_I18N_PROVIDER,
+            useFactory: (platformLocation: PlatformLocation) => {
+                return (lang: string) => {
+                    return [
+                        (platformLocation.getBaseHrefFromDOM()
+                            ? platformLocation.getBaseHrefFromDOM()?.replace(/\/$/, '')
+                            : '') +
+                            '/assets/i18n/' +
+                            lang +
+                            '.json',
+                    ];
+                };
+            },
+            deps: [PlatformLocation],
+        },
+        GlobalWidgetConfigService,
         eduSharingApiModuleWithProviders.providers,
         EduSharingUiModule.forRoot({
             production: true,
@@ -174,7 +171,13 @@ const eduSharingApiModuleWithProviders = EduSharingApiModule.forRoot({
             loader: {
                 provide: TranslateLoader,
                 useFactory: TranslationLoader.create,
-                deps: [HttpClient, ConfigService, EduSharingUiConfiguration],
+                deps: [
+                    HttpClient,
+                    ConfigService,
+                    EduSharingUiConfiguration,
+                    [new Inject(ASSETS_BASE_PATH), new Optional()],
+                    [new Inject(ADDITIONAL_I18N_PROVIDER), new Optional()],
+                ],
             },
             missingTranslationHandler: {
                 provide: MissingTranslationHandler,

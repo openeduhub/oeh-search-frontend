@@ -2,7 +2,7 @@
   <img
     *ngIf="headerStyle === 'compact'"
     class="logo"
-    src="./assets/wlo-search/images/wlo-logo-acronym-negative.svg"
+    src="assets/images/wlo-logo-acronym-negative.svg"
     alt="WLO"
   />
   <app-search-field></app-search-field>
@@ -17,13 +17,9 @@
     >
       <span class="button-wrapper">
         <span i18n>Filters</span>
-        <mat-icon>tune</mat-icon>
+        <i esIcon="tune"></i>
       </span>
     </button>
     <app-oer-slider></app-oer-slider>
   </div>
-  <span class="experiments" *ngIf="showExperiments">
-    <ng-container i18n>Try our </ng-container>
-    <a routerLink="{{ routerPath }}/experiments" i18n>experimental features</a>!
-  </span>
 </div>

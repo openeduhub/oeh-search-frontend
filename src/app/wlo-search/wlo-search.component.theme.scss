@@ -1,13 +1,12 @@
-@use '@angular/material' as mat;
-@import './functions';
+@use 'variables' as *;
 
-@mixin wlo-search-theme($theme) {
+@mixin wlo-search-theme() {
     app-wlo-search {
         > .loading-spinner {
-            background-color: rgba(mat.get-theme-color($theme, surface), 0.5);
+            background-color: rgba($surface, 0.5);
 
             .mat-mdc-progress-spinner circle {
-                stroke: mat.get-theme-color($theme, primary);
+                stroke: $primary;
             }
         }
     }

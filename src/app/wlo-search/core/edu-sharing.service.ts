@@ -4,6 +4,7 @@ import {
     FacetsDict,
     MdsIdentifier,
     MdsLabelService,
+    MdsValue,
     Node,
     NodeService,
     SearchRequestParams,
@@ -106,7 +107,10 @@ export class EduSharingService {
         return this.didYouMeanSuggestion$;
     }
 
-    getDisplayName(property: string, key: string): Observable<string> {
+    getDisplayName(
+        property: string,
+        key: string,
+    ): Observable<{ mdsValue: MdsValue; label: string }> {
         return this.mdsLabelService.getLabel(this.getMdsIdentifier(), property, key);
     }
 

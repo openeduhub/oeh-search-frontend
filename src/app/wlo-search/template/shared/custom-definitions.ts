@@ -2,20 +2,24 @@ import type { Node } from 'ngx-edu-sharing-api';
 import { StatisticChart } from 'ngx-edu-sharing-wlo-pages';
 import { SelectOption } from './types/select-option';
 
-export const actionItems = {
-    editMode: 'Seite bearbeiten',
-    previewMode: 'Zurück zur Vorschau',
-};
-
-export const defaultLrt: string = 'ccm:oeh_lrt';
+export const cdnLink: string =
+    'https://cdn.jsdelivr.net/gh/openeduhub/oeh-search-frontend@feature/embedding/output/wlo-pages/20250124/';
 
 export const defaultMds: string = 'mds_oeh';
 
-export const defaultAiTextWidgetNodeId: string = '10d5ec39-907a-43f6-a024-344300e6a4c8';
-export const defaultCollectionChipsNodeId: string = 'd43cfd0e-ce5a-4428-a3bb-2c37a155bf32';
-export const defaultTopicsColumnBrowserNodeId: string = '4f46b4cd-19df-4139-bbb1-bfc3aea08d39';
-export const defaultTopicTextNodeId: string = '2340e5cf-4e9d-4b42-b6df-e64087be7961';
-export const defaultUserConfigurableNodeId: string = '89653b20-516c-43a2-9042-382aef5ae087';
+// currently used default config IDs (for AI prompts)
+export const defaultAiConfigId: string = 'topic_page_ai_default';
+export const defaultAiChatCompletionConfigId: string = 'topic_page_ai_chat_completion';
+export const defaultAiImageCreateConfigId: string = 'topic_page_ai_create_image';
+export const defaultAiClearCacheConfigId: string = 'topic_page_ai_clear_cache';
+export const defaultAiTextWidgetConfigId: string = 'topic_page_ai_text_widget';
+export const defaultTopicHeaderImageConfigId: string = 'topic_page_ai_topic_header_image';
+export const defaultTopicHeaderTextConfigId: string = 'topic_page_ai_topic_header_text';
+export const defaultUserConfigurableConfigId: string = 'topic_page_ai_user_configurable';
+
+export const disciplineKey: string = 'ccm:taxonid';
+
+export const eduSharingUrl: string = 'https://repository.staging.openeduhub.net/edu-sharing/';
 
 export const initialLocaleString: string = 'de_DE';
 
@@ -25,55 +29,46 @@ export const ioType: string = 'ccm:io';
 
 export const lrtBaseUrl: string =
     'https://vocabs.openeduhub.de/w3id.org/openeduhub/vocabs/new_lrt/';
+export const additionalLrtUrl: string =
+    'https://vocabs.openeduhub.de/w3id.org/openeduhub/vocabs/oehMetadatasets/';
 
-export const lrtIdsEvents: string[] = [
+export const lrtIdsWork: string[] = [];
+export const lrtIdsEducationalOffer: string[] = [
     '03ab835b-c39c-48d1-b5af-7611de2f6464', // educational offer vocab
+];
+export const lrtIdsEvents: string[] = [
     '955590ae-5f06-4513-98e9-91dfa8d5a05e', // event meeting vocab
 ];
-
-export const lrtIdsLessonPlanning: string[] = [
-    '7381f17f-50a6-4ce1-b3a0-9d85a482eec0', // methods vocab
-    '0a79a1d0-583b-47ce-86a7-517ab352d796', // lesson planning vocab
+export const lrtIdsMaterials: string[] = [
+    '1846d876-d8fd-476a-b540-b8ffd713fedb', // materials vocab
 ];
-
-export const lrtIdsMedia: string[] = [
-    'a6d1ac52-c557-4151-bc6f-0d99b0b96fb9', // images vocab
-    '7a6e9608-2554-4981-95dc-47ab9ba924de', // video vocab
-    'ec2682af-08a9-4ab1-a324-9dca5151e99f', // audio vocab
-    '4665caac-99d7-4da3-b9fb-498d8ece034f', // interactive vocab
-];
-
-export const lrtIdsPracticeMaterials: string[] = [
-    'cd625d33-5d7b-4a86-a54a-9a897ded729f', // questionnaire vocab
-    '588efe4f-976f-48eb-84aa-8bcb45679f85', // learning materials vocab
-];
-
 export const lrtIdsSources: string[] = [
     '3869b453-d3c1-4b34-8f25-9127e9d68766', // sources vocab
 ];
-
+export const lrtIdsOrganizations: string[] = [
+    '9aedab42-062c-4e11-aba4-f9accb1a9e9a', // organisations vocab
+];
+export const lrtIdsPeople: string[] = [
+    'a59b2fb1-f22f-4521-a4ec-e2a101dce473', // people vocab
+];
 export const lrtIdsTools: string[] = [
     'cefccf75-cba3-427d-9a0f-35b4fedcbba1', // tools vocab
 ];
+export const lrtIdsPrompts: string[] = [];
+export const lrtIdsFieldsOfAction: string[] = [];
+export const lrtIdsDidacticConcepts: string[] = [
+    '0a79a1d0-583b-47ce-86a7-517ab352d796', // methods vocab
+    '7381f17f-50a6-4ce1-b3a0-9d85a482eec0', // material lesson planning
+];
 
 export const mapType: string = 'ccm:map';
-
-export const menuItems = {
-    feedback: 'Feedback',
-    profiling: 'Profilierung',
-    statistics: 'Statistiken',
-    topicTree: 'Themenbaum',
-};
-
-export const nodeLicenseKey: string = 'ccm:commonlicense_key';
-
-export const oerLicenses: string[] = ['CC_0', 'CC_BY', 'CC_BY_SA', 'PDM'];
+export const maxNumberOfStatisticItems: number = 8;
 
 export const pageConfigAspect: string = 'ccm:page';
 
 export const pageConfigPrefix: string = 'PAGE_';
 
-export const pageConfigPropagateType: string = 'ccm:page_config_propagate';
+export const pageConfigPropagateRefType: string = 'ccm:page_config_propagate_ref';
 
 export const pageConfigRefType: string = 'ccm:page_config_ref';
 
@@ -86,10 +81,6 @@ export const pageVariantConfigPrefix: string = 'PAGE_VARIANT_';
 export const pageVariantConfigType: string = 'ccm:page_variant_config';
 
 export const pageVariantIsTemplateType: string = 'ccm:page_variant_is_template';
-
-export const parentPageConfigNodeId: string = '25e341e1-7058-4210-b0d3-838255884682';
-
-export const parentWidgetConfigNodeId: string = '80bb0eab-d64f-466b-94c6-2eccc4045c6b';
 
 export const profilingFilterbarDimensionKeys: string[] = [
     'virtual:profiling_widget_intention',
@@ -117,60 +108,63 @@ export const retrieveCustomUrl = (node: Node): string => {
     return '';
 };
 
-// TODO: find better option for line breaks than <br>
 export const statistics: StatisticChart[] = [
-    new StatisticChart('Medien', 'collections', lrtIdsMedia),
-    new StatisticChart('Unterrichts<br>planung', 'import_contacts', lrtIdsLessonPlanning),
-    new StatisticChart('Praxis<br>materialien', 'sentiment_satisfied_alt', lrtIdsPracticeMaterials),
-    new StatisticChart('Quellen', 'language', lrtIdsSources),
-    new StatisticChart('Tools', 'home_repair_service', lrtIdsTools),
-    new StatisticChart('Bildungs<br>angebote', 'school', lrtIdsEvents),
+    new StatisticChart('WORK', 'work', lrtIdsWork),
+    new StatisticChart('EDUCATIONAL_OFFERS', 'school', lrtIdsEducationalOffer),
+    new StatisticChart('EVENTS', 'svg-theatre', lrtIdsEvents),
+    new StatisticChart('MATERIALS', 'svg-material', lrtIdsMaterials),
+    new StatisticChart('SOURCES', 'language', lrtIdsSources),
+    new StatisticChart('ORGANIZATIONS', 'domain', lrtIdsOrganizations, additionalLrtUrl),
+    new StatisticChart('PEOPLE', 'group', lrtIdsPeople, additionalLrtUrl),
+    new StatisticChart('TOOLS', 'svg-tools', lrtIdsTools),
+    new StatisticChart('PROMPTS', 'svg-prompts', lrtIdsPrompts),
+    new StatisticChart('FIELDS_OF_ACTION', 'lightbulb_outline', lrtIdsFieldsOfAction),
+    new StatisticChart('DIDACTIC_CONCEPTS', 'svg-route', lrtIdsDidacticConcepts),
 ];
 
 export const swimlaneGridOptions: SelectOption[] = [
     {
-        icon: 'rectangle',
+        icon: 'svg-one_column',
         value: 'one_column',
-        viewValue: 'Eine Spalte',
+        viewValue: 'ONE_COLUMN',
     },
     {
-        svgIcon: 'two_columns',
+        icon: 'svg-two_columns',
         value: 'two_columns',
-        viewValue: 'Zwei Spalten',
+        viewValue: 'TWO_COLUMNS',
     },
     {
-        icon: 'view_column',
+        icon: 'svg-three_columns',
         value: 'three_columns',
-        viewValue: 'Drei Spalten',
+        viewValue: 'THREE_COLUMNS',
     },
     {
-        svgIcon: 'left_side_panel',
+        icon: 'svg-left_side_panel',
         value: 'left_side_panel',
-        viewValue: 'Linke Seitenleiste',
+        viewValue: 'LEFT_SIDE_PANEL',
     },
     {
-        svgIcon: 'right_side_panel',
+        icon: 'svg-right_side_panel',
         value: 'right_side_panel',
-        viewValue: 'Rechte Seitenleiste',
+        viewValue: 'RIGHT_SIDE_PANEL',
     },
 ];
 
 export const swimlaneTypeOptions: SelectOption[] = [
     {
-        icon: 'rectangle',
+        icon: 'svg-one_column',
         value: 'container',
-        viewValue: 'Bereichselement',
+        viewValue: 'CONTAINER_ELEMENT',
     },
     {
-        icon: 'storage',
+        icon: 'svg-storage',
         value: 'accordion',
-        viewValue: 'Akkordeonelement',
+        viewValue: 'ACCORDION_ELEMENT',
     },
     {
-        icon: 'anchor',
-        isDisabled: true,
+        icon: 'svg-anchor',
         value: 'anchor',
-        viewValue: 'Ankermenü',
+        viewValue: 'ANCHOR_MENU',
     },
 ];
 
@@ -179,19 +173,31 @@ export const widgetConfigAspect: string = 'ccm:widget';
 export const widgetTypeOptions: SelectOption[] = [
     {
         value: 'wlo-collection-chips',
-        viewValue: 'Navigationspillen',
+        viewValue: 'COLLECTION_CHIPS',
     },
     {
         value: 'wlo-topics-column-browser',
-        viewValue: 'Themenbaum (ausklappbar)',
+        viewValue: 'TOPICS_COLUMN_BROWSER',
     },
     {
         value: 'wlo-user-configurable',
-        viewValue: 'Inhalte-Teaser',
+        viewValue: 'USER_CONFIGURABLE',
+    },
+    {
+        value: 'wlo-media-rendering',
+        viewValue: 'MEDIA_RENDERING',
+    },
+    {
+        value: 'wlo-text-widget',
+        viewValue: 'TEXT_WIDGET',
+    },
+    {
+        value: 'wlo-iframe-widget',
+        viewValue: 'IFRAME_WIDGET',
     },
     {
         value: 'wlo-ai-text-widget',
-        viewValue: 'KI-Widget',
+        viewValue: 'AI_TEXT_WIDGET',
     },
 ];
 

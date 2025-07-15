@@ -11,12 +11,12 @@ import { ViewService } from '../view.service';
     selector: 'app-headerbar',
     templateUrl: './headerbar.component.html',
     styleUrls: ['./headerbar.component.scss'],
+    standalone: false,
 })
 export class HeaderbarComponent implements OnInit, OnDestroy {
     @HostBinding('attr.data-style') headerStyle: PageConfig['headerStyle'];
 
     readonly routerPath = this.config.get().routerPath;
-    readonly showExperiments = this.config.get().showExperiments;
     showFiltersButton: boolean;
     filterCount: number = 0;
     private readonly destroyed$ = new ReplaySubject<void>();

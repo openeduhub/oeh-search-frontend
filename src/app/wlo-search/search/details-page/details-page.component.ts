@@ -6,6 +6,7 @@ import { Node } from 'ngx-edu-sharing-api';
     selector: 'app-details-page',
     templateUrl: './details-page.component.html',
     styleUrls: ['./details-page.component.scss'],
+    standalone: false,
 })
 export class DetailsPageComponent implements OnInit {
     entry: Node;

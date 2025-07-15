@@ -9,12 +9,6 @@ import { PageModeService } from './page-mode.service';
 
 export type ResultCardStyle = 'standard' | 'compact';
 
-class AvailableExperiments {
-    // newSearchField = true;
-}
-
-export type Experiments = Partial<AvailableExperiments>;
-
 @Injectable({
     providedIn: 'root',
 })
@@ -30,7 +24,6 @@ export class ViewService {
     private readonly isLoadingCounter = new BehaviorSubject<number>(0);
     private showFilterBarSubject: BehaviorSubject<boolean>;
     private resultCardStyleSubject: BehaviorSubject<ResultCardStyle>;
-    private experimentsSubject: BehaviorSubject<Experiments>;
     /**
      * When an item is selected, it is highlighted and depending on the screen size, previewed in a
      * sidebar or a dialog. Unselecting the item means closing the preview.
@@ -67,12 +60,6 @@ export class ViewService {
             (localStorage.getItem('resultCardStyle') as ResultCardStyle) ||
                 (isMobile ? 'compact' : 'standard'),
         );
-        this.experimentsSubject = new BehaviorSubject({
-            ...new AvailableExperiments(),
-            ...((localStorage.getItem('experiments') &&
-                (JSON.parse(localStorage.getItem('experiments')) as Experiments)) ||
-                {}),
-        });
     }
 
     private registerBehaviorHooks(): void {
@@ -126,23 +113,6 @@ export class ViewService {
     setResultCardStyle(value: ResultCardStyle) {
         this.resultCardStyleSubject.next(value);
         localStorage.setItem('resultCardStyle', value);
-    }
-
-    getExperiment(
-        key: keyof AvailableExperiments,
-    ): Observable<AvailableExperiments[typeof key] | undefined> {
-        return this.experimentsSubject.pipe(map((experiments) => experiments[key]));
-    }
-
-    getExperiments(): Observable<Experiments> {
-        return this.experimentsSubject.asObservable();
-    }
-
-    setExperiment(key: keyof AvailableExperiments, value: AvailableExperiments[typeof key]): void {
-        const experiments = this.experimentsSubject.value;
-        experiments[key] = value;
-        this.experimentsSubject.next(experiments);
-        localStorage.setItem('experiments', JSON.stringify(experiments));
     }
 
     selectItem(item: Node): void {

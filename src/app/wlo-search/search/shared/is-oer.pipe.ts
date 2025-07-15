@@ -11,6 +11,7 @@ enum CommonLicenseKey {
 
 @Pipe({
     name: 'isOer',
+    standalone: false,
 })
 export class IsOerPipe implements PipeTransform {
     private readonly sufficientValues: Array<{ property: string; terms: string[] }> = [

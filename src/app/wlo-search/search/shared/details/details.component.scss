@@ -45,8 +45,7 @@
 
     > .mat-icon,
     > .mat-mdc-icon {
-        margin-right: 8px;
-        min-width: 28px;
+        margin-right: 10px;
     }
 }
 
@@ -81,11 +80,16 @@
         margin-top: 10px;
         margin-left: auto;
 
-        .app-preview-panel-button-wrapper {
+        &.app-preview-panel-button-wrapper {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 4px;
+            text-decoration: none;
+
+            span {
+                text-decoration: underline;
+            }
         }
     }
 }
@@ -126,10 +130,6 @@
     gap: 20px 15px;
 
     .app-preview-panel-button {
-        height: 30px;
-        line-height: 30px;
-        border-radius: 15px;
-
         .mat-icon,
         .mat-mdc-icon {
             margin-left: 10px;
@@ -186,9 +186,8 @@
 
     > .mat-icon,
     > .mat-mdc-icon {
-        margin-right: 8px;
-        min-width: 28px;
-        height: 22px;
+        margin-right: 12px;
+        font-size: 22px;
     }
 
     span {

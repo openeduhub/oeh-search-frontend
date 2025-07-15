@@ -20,6 +20,7 @@ export function getCollectionProperty<P extends keyof typeof collectionMappings>
 
 @Pipe({
     name: 'collectionProperty',
+    standalone: false,
 })
 export class CollectionPropertyPipe implements PipeTransform {
     transform<P extends keyof typeof collectionMappings>(

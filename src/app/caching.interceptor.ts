@@ -25,10 +25,11 @@ export class CachingInterceptor implements HttpInterceptor {
 }
 
 function isCacheable(req: HttpRequest<any>): boolean {
-    return (
-        !req.url?.includes('/edu-sharing/rest/node/v1/nodes/') &&
-        !req.url?.includes('/ai/prompt/text/public/')
-    );
+    // avoid caching the node API, except of the parents endpoint
+    const nodeApi: boolean =
+        req.url?.includes('/edu-sharing/rest/node/v1/nodes/') && !req.url?.includes('/parents');
+    const promptToBapi: boolean = req.url?.includes('/edu-sharing/rest/bapi/');
+    return !nodeApi && !promptToBapi;
 }
 
 /**

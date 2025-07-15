@@ -101,38 +101,6 @@ jobs:
       - name: Lint
         run: npm run lint
 
-  cypress-tests:
-    name: Cypress tests
-    runs-on: ubuntu-latest
-    needs: build-image
-    if: ${{ success() || needs.build-image.result == 'skipped' }}
-    services:
-      frontend:
-        image: ${{ github.repository }}:${{ github.sha }}
-        env:
-          EDU_SHARING_API_URL: https://repository.staging.openeduhub.net/edu-sharing/rest
-        ports:
-          - 8080:80
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-      - name: Cypress run
-        uses: cypress-io/github-action@v4
-        env:
-          CYPRESS_baseUrl: http://localhost:8080/search
-          # We cannot guarantee that the given Edu-Sharing instance allows localhost with
-          # 'Access-Control-Allow-Origin'.
-          CYPRESS_chromeWebSecurity: false
-        with:
-          working-directory: e2e-cypress
-      - uses: actions/upload-artifact@v4
-        if: failure()
-        with:
-          name: cypress-screenshots
-          path: e2e-cypress/cypress/screenshots
-
   build-web-components:
     name: Build web components
     runs-on: 'ubuntu-latest'

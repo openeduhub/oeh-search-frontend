@@ -1,49 +1,86 @@
-@use '@angular/material' as mat;
-@import '../../../additional-colors';
-@import '../functions';
+@use 'variables' as *;
 
-@mixin template-page-theme($theme) {
+@mixin template-page-theme() {
     app-template {
         .action-btn {
-            @if mat.get-theme-type($theme) == light {
-                color: mat.get-theme-color($theme, neutral, 35);
-                background: mat.get-theme-color($theme, neutral, 99);
-            } @else {
-                color: mat.get-theme-color($theme, neutral, 99);
-                background: mat.get-theme-color($theme, neutral, 35);
-            }
+            color: $secondary-text;
+            background: $surface;
 
             &.btn-modify {
-                color: mat.get-theme-color($theme, on-primary);
-                background: mat.get-theme-color($theme, primary);
+                color: $on-primary;
+                background: $primary;
             }
         }
 
         .reloading-indicator-bg {
-            background: mat.get-theme-color($theme, surface);
+            background: $surface;
 
             &.transparent-bg {
-                background: rgba(mat.get-theme-color($theme, inverse-surface), 0.5);
+                background: rgba($inverse-surface, 0.5);
             }
+        }
+
+        .breadcrumb-navbar-overflow-container {
+            background: $surface;
+        }
+
+        .template-breadcrumb {
+            background: $primary-dark;
+
+            a,
+            i,
+            p {
+                color: $on-primary !important;
+            }
+        }
+
+        .template-search-container h2 {
+            color: $on-primary;
         }
 
         .template-header-container,
         .portal-wrapper-left {
-            background: mat.get-theme-color($theme, surface);
+            background: $surface;
         }
 
         .wlo-swimlane {
-            background-color: mat.get-theme-color($theme, surface-container-low);
+            background-color: $surface-container-low;
+        }
+
+        .anchor-container .anchor-menu .anchor-item {
+            .item-container {
+                background: $surface;
+            }
+
+            .total-count {
+                color: $on-primary;
+                background-color: $pink-default;
+            }
         }
     }
 }
 
-@mixin template-page-typography($theme) {
+@mixin template-page-typography() {
     // increase size of accordion caret icon
     .wlo-accordion-item-description {
         .mat-icon,
         .mat-mdc-icon {
-            font-size: 1.875rem;
+            font-size: 187.5%;
+        }
+    }
+
+    .anchor-container .anchor-menu .anchor-item {
+        // decrease font-size + line-height of anchor item container
+        .item-container {
+            font-size: $font-size-x-small;
+            line-height: $line-height-small;
+        }
+
+        // adjust font-size, line-height + font-weight of total count
+        .total-count {
+            font-size: 62.5%;
+            font-weight: $font-weight-x-bold;
+            line-height: $line-height-small;
         }
     }
 }
