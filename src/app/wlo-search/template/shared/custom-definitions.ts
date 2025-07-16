@@ -22,7 +22,7 @@ export const defaultUserConfigurableConfigId: string = 'topic_page_ai_user_confi
 export const disciplineKey: string = 'ccm:taxonid';
 
 export const eduSharingUrlDev: string = 'https://repository.staging.openeduhub.net/edu-sharing/';
-export const eduSharingUrlProd: string = 'https://suche.staging.openeduhub.net/edu-sharing/';
+export const eduSharingUrlProd: string = 'https://suche.wirlernenonline.de/edu-sharing/';
 
 export const initialLocaleString: string = 'de_DE';
 
