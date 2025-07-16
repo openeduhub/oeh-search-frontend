@@ -54,7 +54,8 @@ import {
     defaultTopicHeaderImageConfigId,
     defaultTopicHeaderTextConfigId,
     defaultUserConfigurableConfigId,
-    eduSharingUrl,
+    eduSharingUrlDev,
+    eduSharingUrlProd,
 } from './wlo-search/template/shared/custom-definitions';
 
 const wloSearchConfig: WloSearchConfig = {
@@ -75,6 +76,8 @@ const httpInterceptorProviders = [
 const eduSharingApiModuleWithProviders = environment.production
     ? EduSharingApiModule.forRoot({ rootUrl: environment.eduSharingApiUrl })
     : EduSharingApiModule.forRoot();
+
+const eduSharingUrl = environment.production ? eduSharingUrlProd : eduSharingUrlDev;
 
 @NgModule({
     declarations: [AppComponent],

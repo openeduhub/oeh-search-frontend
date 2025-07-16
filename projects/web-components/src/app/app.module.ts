@@ -46,7 +46,8 @@ import {
     defaultTopicHeaderImageConfigId,
     defaultTopicHeaderTextConfigId,
     defaultUserConfigurableConfigId,
-    eduSharingUrl,
+    eduSharingUrlDev,
+    eduSharingUrlProd,
 } from '../../../../src/app/wlo-search/template/shared/custom-definitions';
 import { TemplateComponent } from '../../../../src/app/wlo-search/template/template.component';
 import { environment } from '../environments/environment';
@@ -65,6 +66,8 @@ const eduSharingApiModuleWithProviders = environment.production
 const eduSharingBapiModuleWithProviders = environment.production
     ? BApiModule.forRoot({ rootUrl: environment.eduSharingApiUrl + '/bapi' })
     : BApiModule.forRoot({ rootUrl: '/edu-sharing/rest/bapi' });
+
+const eduSharingUrl = environment.production ? eduSharingUrlProd : eduSharingUrlDev;
 
 @NgModule({
     declarations: [DetailsEmbeddedComponent, TemplateEmbeddedComponent],
