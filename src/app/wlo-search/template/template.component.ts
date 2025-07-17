@@ -522,6 +522,7 @@ export class TemplateComponent implements OnDestroy, OnInit {
                     });
                     // select the variant with the most matches
                     if (matchesCount > highestNumberOfMatches) {
+                        highestNumberOfMatches = matchesCount;
                         selectedVariantId = retrieveNodeId(variantNode);
                     }
                 }
