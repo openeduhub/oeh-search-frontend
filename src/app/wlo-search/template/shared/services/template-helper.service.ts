@@ -10,11 +10,14 @@ import { TranslateService } from '@ngx-translate/core';
 import {
     ApiRequestConfiguration,
     AuthenticationService,
+    HOME_REPOSITORY,
     LoginInfo,
     Node,
     NodeEntries,
     NodeService,
+    NodeServiceUnwrapped,
 } from 'ngx-edu-sharing-api';
+import { NodeEntry } from 'ngx-edu-sharing-api/lib/api/models/node-entry';
 import { ParentEntries } from 'ngx-edu-sharing-api/lib/api/models/parent-entries';
 import { firstValueFrom } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
@@ -44,6 +47,7 @@ export class TemplateHelperService {
         private apiRequestConfig: ApiRequestConfiguration,
         private authService: AuthenticationService,
         private nodeApi: NodeService,
+        private nodeApiUnwrapped: NodeServiceUnwrapped,
         private snackbar: MatSnackBar,
         private translate: TranslateService,
         private viewService: ViewService,
@@ -175,6 +179,19 @@ export class TemplateHelperService {
     ): Promise<Node> {
         await this.setProperty(nodeId, propertyName, value);
         return this.getNode(nodeId);
+    }
+
+    /**
+     * Helper function to move a node with a given ID into a folder with a given ID.
+     */
+    async moveNode(nodeId: string, updatedParentId: string): Promise<NodeEntry> {
+        return firstValueFrom(
+            this.nodeApiUnwrapped.createChildByMoving({
+                repository: HOME_REPOSITORY,
+                node: updatedParentId,
+                source: nodeId,
+            }),
+        );
     }
 
     /**
