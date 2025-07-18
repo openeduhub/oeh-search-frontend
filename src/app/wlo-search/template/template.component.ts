@@ -732,7 +732,9 @@ export class TemplateComponent implements OnDestroy, OnInit {
                         retrieveNodeId(this.pageVariantNode),
                     );
                     // reload the page without parameters
-                    await this.reloadWithoutParameters();
+                    setTimeout(() => {
+                        void this.reloadWithoutParameters();
+                    }, 1000);
                     // await this.reloadPageVariantConfigs();
                     // // navigate to default variant
                     // await this.navigateToVariant(convertNodeRefIntoNodeId(pageConfig.default));
@@ -747,7 +749,9 @@ export class TemplateComponent implements OnDestroy, OnInit {
                         retrieveNodeId(this.pageConfigNode),
                     );
                     // reload the page without parameters
-                    await this.reloadWithoutParameters();
+                    setTimeout(() => {
+                        void this.reloadWithoutParameters();
+                    }, 1000);
                 }
                 this.endEditing(toastContainer);
             } catch (err) {
