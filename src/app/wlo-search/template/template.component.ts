@@ -437,10 +437,7 @@ export class TemplateComponent implements OnDestroy, OnInit {
                     }
                 }
                 // workaround: move the widget node into the (created) page variant node
-                await this.templateHelperService.moveNode(
-                    widgetNodeId,
-                    this.pageVariantNode.ref.id,
-                );
+                await this.templateHelperService.moveNode(widgetNodeId, this.pageConfigNode.ref.id);
                 // note: if it exists but cannot be added in the grid, we might want to delete the node again
                 if (validWidgetNodeId && !addedSuccessfully) {
                     const nodeIdToDelete: string = convertNodeRefIntoNodeId(widgetNodeId);
