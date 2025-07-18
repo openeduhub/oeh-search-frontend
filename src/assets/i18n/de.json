@@ -195,10 +195,11 @@
     },
     "SEARCH_HEADING": "Im Fachgebiet der Themenseite suchen",
     "SIDE_MENU": {
-      "SWITCH_VARIANT": "Seite-Variante wechseln",
+      "SWITCH_VARIANT": "Seiten-Variante auswählen",
       "EDIT_PAGE": "Seite bearbeiten",
       "BACK_TO_PREVIEW": "Zurück zur Vorschau",
       "NEW": "Neu",
+      "DELETE": "Aktuelle Seiten-Variante löschen",
       "PAGE_VARIANT": {
         "LABEL": "Seiten-Variante",
         "SUBSCRIPTION": "Abonnement"
@@ -214,6 +215,26 @@
       "STATISTICS": {
         "LABEL": "Statistiken",
         "HEADING": "Inhalte von {{topic}}"
+      }
+    },
+    "CONFIG_PAGE_VARIANT": {
+      "HEADING": "Bearbeitung der Seitenvorlage und deren Parameter",
+      "ACTIVE_SUBSCRIPTION": "Abo aktiv",
+      "RECOMMENDED": "Empfohlen",
+      "CHOOSE_OPTION": {
+        "LABEL": "Aktion auswählen",
+        "SUBSCRIPTION_ACTIVE_INFO": "Du bist dabei eine Originalseite zu verändern. Bei strukturellen Änderungen verlierst du dein Abonnement der Vorlage, wodurch diese keine Updates der Vorlage mehr erhält.",
+        "SUBSCRIPTION_INACTIVE_INFO": "Du bearbeitest gerade eine eigene Vorlage. Änderungen dieser Vorlage wirken sich nicht auf andere Seiten aus.",
+        "HOW_TO_PROCEED": "Wie möchtest du fortfahren?",
+        "OPTION_FORM_LABEL": "Name und Parameter anpassen",
+        "OPTION_FORM_DESCRIPTION": "Definiere den Namen sowie die Zielgruppe deiner Seite.",
+        "OPTION_EDITOR_LABEL": "Seite bearbeiten",
+        "OPTION_EDITOR_DESCRIPTION": "Du wechselst in den Editiermodus und kannst die Texte sowie die Struktur deiner Seite bearbeiten."
+      },
+      "DEFINE_PARAMETERS": {
+        "LABEL": "Parameter definieren",
+        "TITLE": "Titel",
+        "TITLE_PLACEHOLDER": "Titel der Seiten-Vorlage"
       }
     },
     "ANCHOR_FALLBACK_PREFIX": "Abschnitt",
@@ -305,6 +326,7 @@
       "SELECT_PLACEHOLDER": "Seiten-Konfiguration auswählen",
       "CREATE_PAGE": "Seite anlegen"
     },
+    "RESET_URL_PARAMETER": "Seite ohne Parameter laden",
     "LOGOUT_INFO": "Ihre Sitzung wurde beendet. Die Seite wird anschließend neu geladen.",
     "HINT": "Hinweis",
     "ATTENTION": "Achtung"

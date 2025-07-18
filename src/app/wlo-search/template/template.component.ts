@@ -24,6 +24,7 @@ import {
     MdsWidget,
     Node,
     NodeEntries,
+    NodeService,
     PROPERTY_FILTER_ALL,
     SearchService,
 } from 'ngx-edu-sharing-api';
@@ -55,6 +56,7 @@ import { Filters } from '../core/edu-sharing.service';
 import { SearchModule } from '../search/search.module';
 import { SharedModule } from '../shared/shared.module';
 import { AddSwimlaneBorderButtonComponent } from './add-swimlane-button/add-swimlane-border-button.component';
+import { ConfigurePageVariantDialogComponent } from './configure-page-variant-dialog/configure-page-variant-dialog.component';
 import {
     defaultMds,
     disciplineKey,
@@ -73,6 +75,7 @@ import {
     profilingFilterbarDimensionKeys,
     retrieveCustomUrl,
     statistics,
+    titleKey,
 } from './shared/custom-definitions';
 import { FilterSwimlaneTypePipe } from './shared/pipes/filter-swimlane-type.pipe';
 import { SwimlaneSearchCountPipe } from './shared/pipes/swimlane-search-count.pipe';
@@ -82,6 +85,7 @@ import { GridTileToStatisticsMapping } from './shared/types/grid-tile-to-statist
 import { GridSearchCount } from './shared/types/grid-search-count';
 import { GridTile } from './shared/types/grid-tile';
 import { PageConfig } from './shared/types/page-config';
+import { PageStructure } from './shared/types/page-structure';
 import { PageVariantConfig } from './shared/types/page-variant-config';
 import { Swimlane } from './shared/types/swimlane';
 import {
@@ -125,10 +129,15 @@ import { SwimlaneSettingsDialogComponent } from './swimlane/swimlane-settings-di
     styleUrls: ['./template.component.scss'],
 })
 export class TemplateComponent implements OnDestroy, OnInit {
+    // TODO: i18n
+    private readonly CONFIRM_DELETE_PAGE_VARIANT: string =
+        'Willst du wirklich die aktuell gewählte Variante löschen?';
     private readonly CONFIRM_CREATE_PAGE_VARIANT: string =
-        'Wollen Sie wirklich auf Grundlage der Seiten-Struktur der aktuell gewählten Variante eine neue Seiten-Variante erstellen?';
+        'Willst du wirklich auf Grundlage der Seiten-Struktur der aktuell gewählten Variante eine neue Seiten-Variante erstellen?';
     private readonly PAGE_VARIANT_CREATION_STARTED: string =
         'Eine neue Seiten-Variante wird erstellt und geladen.';
+    private readonly PAGE_VARIANT_DELETION_STARTED: string =
+        'Die Seiten-Variante wird samt aller Anpassungen gelöscht.';
     readonly SWIMLANE_ID_PREFIX: string = 'swimlane-';
 
     constructor(
@@ -645,6 +654,123 @@ export class TemplateComponent implements OnDestroy, OnInit {
     }
 
     /**
+     * Deletes the currently selected page variant, adjusts the page config properties and
+     * deletes the page config and its link as well if it is the last item.
+     */
+    async deletePageVariant(): Promise<void> {
+        if (!this.collectionNodeHasPageConfig || !this.userHasEditRights()) {
+            return;
+        }
+        if (confirm(this.CONFIRM_DELETE_PAGE_VARIANT)) {
+            // parse the page config from the properties
+            const pageConfig: PageConfig = retrievePageConfig(this.pageConfigNode);
+            // check for pageConfig variant existence
+            if (!pageConfig.variants || !this.pageVariantNode) {
+                console.error(
+                    'pageConfig does not include variants or no page variant node exists',
+                    pageConfig,
+                    this.pageVariantNode,
+                );
+                return;
+            }
+            try {
+                // create child for variant node
+                const toastContainer: MatSnackBarRef<TextOnlySnackBar> = this.startEditing(
+                    this.PAGE_VARIANT_DELETION_STARTED,
+                );
+                // remove from variants first to ensure that no inconsistency occurs
+                pageConfig.variants = pageConfig.variants.filter(
+                    (v) => !v.includes(this.pageVariantNode.ref.id),
+                );
+                const atLeastOneRemainingVariant = pageConfig.variants.length > 0;
+                if (atLeastOneRemainingVariant) {
+                    // check if the default is set correctly
+                    if (pageConfig.default?.includes(this.pageVariantNode.ref.id)) {
+                        pageConfig.default = pageConfig.variants[0];
+                    }
+                }
+                // Note: this could be removed if the widgets are created as children of the pageVariantNode
+                // delete widget nodes from the page structure, i.e., grid widgets, breadcrumb widget, header widget
+                const pageStructure: PageStructure = retrievePageVariantConfig(
+                    this.pageVariantNode,
+                )?.structure;
+                // iterate the page variant swimlanes and delete widgets
+                if (pageStructure.swimlanes?.length > 0) {
+                    for (const swimlane of pageStructure.swimlanes) {
+                        if (swimlane.grid) {
+                            for (const widget of swimlane.grid) {
+                                if (widget.nodeId) {
+                                    await this.templateHelperService.deleteNode(
+                                        convertNodeRefIntoNodeId(widget.nodeId),
+                                    );
+                                }
+                            }
+                        }
+                    }
+                }
+                // delete potential widget nodes of breadcrumb + header
+                if (pageStructure?.breadcrumbNodeId) {
+                    await this.templateHelperService.deleteNode(
+                        convertNodeRefIntoNodeId(pageStructure.breadcrumbNodeId),
+                    );
+                }
+                if (pageStructure?.headerNodeId) {
+                    await this.templateHelperService.deleteNode(
+                        convertNodeRefIntoNodeId(pageStructure.headerNodeId),
+                    );
+                }
+                // update the pageConfig
+                if (atLeastOneRemainingVariant) {
+                    this.pageConfigNode =
+                        await this.templateHelperService.setPropertyAndRetrieveUpdatedNode(
+                            retrieveNodeId(this.pageConfigNode),
+                            pageConfigType,
+                            JSON.stringify(pageConfig),
+                        );
+                    // delete the page variant node
+                    await this.templateHelperService.deleteNode(
+                        retrieveNodeId(this.pageVariantNode),
+                    );
+                    // reload the page without parameters
+                    await this.reloadWithoutParameters();
+                    // await this.reloadPageVariantConfigs();
+                    // // navigate to default variant
+                    // await this.navigateToVariant(convertNodeRefIntoNodeId(pageConfig.default));
+                } else {
+                    // remove the page config ref from the collectionNode
+                    await this.templateHelperService.resetProperty(
+                        retrieveNodeId(this.pageConfigNode),
+                        pageConfigRefType,
+                    );
+                    // delete the pageConfig node as well
+                    await this.templateHelperService.deleteNode(
+                        retrieveNodeId(this.pageConfigNode),
+                    );
+                    // reload the page without parameters
+                    await this.reloadWithoutParameters();
+                }
+                this.endEditing(toastContainer);
+            } catch (err) {
+                console.error(err);
+                this.templateHelperService.displayErrorToast();
+            }
+        }
+    }
+
+    /**
+     * Reloads the page without parameters.
+     */
+    async reloadWithoutParameters(): Promise<void> {
+        // navigate to default variant
+        await this.router.navigate([], {
+            queryParams: { collectionId: this.latestParams.collectionId },
+            replaceUrl: true,
+        });
+        // TODO: remove, if not necessary anymore
+        window.location.reload();
+    }
+
+    /**
      * Navigates to a given variantId and reloads the page structure accordingly.
      *
      * @param variantId
@@ -1155,13 +1281,83 @@ export class TemplateComponent implements OnDestroy, OnInit {
      * Called by left wlo-side-menu-item itemClicked output event.
      */
     toggleEditMode(): void {
-        this.editMode = !this.editMode;
+        // switch into preview mode and return
         if (this.editMode) {
-            // when switching into edit mode, open all accordions
-            this.accordions?.forEach((accordion: CdkAccordionItem): void => {
-                accordion.open();
-            });
+            this.editMode = false;
+            return;
         }
+
+        const pageVariantConfig: PageVariantConfig = retrievePageVariantConfig(
+            this.pageVariantNode,
+        );
+        const parameters = pageVariantConfig?.variables ?? {};
+        const subscriptionActive: boolean = !pageVariantConfig?.template?.lastModified;
+        const dialogRef = this.dialog.open(ConfigurePageVariantDialogComponent, {
+            data: {
+                parameters,
+                selectDimensions: this.selectDimensions,
+                subscriptionActive,
+                title: this.pageVariantNode.title,
+            },
+            width: '800px',
+            panelClass: 'page-structure-dialog',
+        });
+
+        dialogRef.afterClosed().subscribe(async (result) => {
+            if (result?.mode === 'editor') {
+                this.editMode = !this.editMode;
+                // when switching into edit mode, open all accordions
+                this.accordions?.forEach((accordion: CdkAccordionItem): void => {
+                    accordion.open();
+                });
+            } else if (result?.mode === 'form') {
+                const value = result.value;
+                const titleChanged: boolean =
+                    value.title && value.title !== this.pageVariantNode.title;
+                let parametersChanged: boolean = false;
+                Object.keys(parameters).forEach((key) => {
+                    if (value[key] && value[key] !== parameters[key]) {
+                        pageVariantConfig.variables[key] = value[key];
+                        parametersChanged = true;
+                    }
+                });
+                if (parametersChanged || titleChanged) {
+                    const toastContainer: MatSnackBarRef<TextOnlySnackBar> = this.startEditing();
+                    try {
+                        await this.checkForCustomPageNodeExistence();
+                        // this only updates this.pageVariantNode
+                        const pageVariant: PageVariantConfig = this.retrievePageVariant();
+                        if (!pageVariant) {
+                            this.endEditing(toastContainer);
+                            return;
+                        }
+                        if (parametersChanged) {
+                            // console.log('DEBUG: Parameters changed', pageVariantConfig.variables);
+                            this.pageVariantNode =
+                                await this.templateHelperService.setPropertyAndRetrieveUpdatedNode(
+                                    retrieveNodeId(this.pageVariantNode),
+                                    pageVariantConfigType,
+                                    JSON.stringify(pageVariantConfig),
+                                );
+                            await this.reloadPageVariantConfigs();
+                        }
+                        if (titleChanged) {
+                            await this.templateHelperService.setProperty(
+                                retrieveNodeId(this.pageVariantNode),
+                                titleKey,
+                                value.title,
+                            );
+                            this.pageVariantNode.title = value.title;
+                        }
+                        this.endEditing(toastContainer);
+                    } catch (err) {
+                        console.error(err);
+                        this.endEditing(toastContainer);
+                        this.templateHelperService.displayErrorToast();
+                    }
+                }
+            }
+        });
     }
 
     /**

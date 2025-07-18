@@ -171,6 +171,8 @@ export const swimlaneTypeOptions: SelectOption[] = [
     },
 ];
 
+export const titleKey: string = 'cclom:title';
+
 export const widgetConfigAspect: string = 'ccm:widget';
 
 export const widgetTypeOptions: SelectOption[] = [

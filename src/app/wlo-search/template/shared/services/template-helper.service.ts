@@ -140,7 +140,7 @@ export class TemplateHelperService {
         const aspects: string[] = aspect ? [aspect] : [widgetConfigAspect];
         return await firstValueFrom(
             this.nodeApi.createChild({
-                repository: '-home-',
+                repository: HOME_REPOSITORY,
                 node: parentId,
                 type,
                 aspects,
@@ -166,7 +166,9 @@ export class TemplateHelperService {
             });
             value = JSON.stringify(parsedValue);
         }
-        return firstValueFrom(this.nodeApi.setProperty('-home-', nodeId, propertyName, [value]));
+        return firstValueFrom(
+            this.nodeApi.setProperty(HOME_REPOSITORY, nodeId, propertyName, [value]),
+        );
     }
 
     /**
@@ -179,6 +181,13 @@ export class TemplateHelperService {
     ): Promise<Node> {
         await this.setProperty(nodeId, propertyName, value);
         return this.getNode(nodeId);
+    }
+
+    /**
+     * Helper function to reset a given property for a given node ID.
+     */
+    async resetProperty(nodeId: string, propertyName: string): Promise<void> {
+        return firstValueFrom(this.nodeApi.setProperty(HOME_REPOSITORY, nodeId, propertyName));
     }
 
     /**

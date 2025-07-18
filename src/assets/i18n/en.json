@@ -199,6 +199,7 @@
       "EDIT_PAGE": "Edit page",
       "BACK_TO_PREVIEW": "Back to preview",
       "NEW": "New",
+      "DELETE": "Delete current page variant",
       "PAGE_VARIANT": {
         "LABEL": "Page variant",
         "SUBSCRIPTION": "Subscription"
@@ -214,6 +215,26 @@
       "STATISTICS": {
         "LABEL": "Statistics",
         "HEADING": "Contents of {{topic}}"
+      }
+    },
+    "CONFIG_PAGE_VARIANT": {
+      "HEADING": "Edit page variant and its parameters",
+      "ACTIVE_SUBSCRIPTION": "Subscription active",
+      "RECOMMENDED": "Recommended",
+      "CHOOSE_OPTION": {
+        "LABEL": "Select action",
+        "SUBSCRIPTION_ACTIVE_INFO": "You are about to modify an original page. With structural changes you will lose your template subscription, which means it will no longer receive template updates.",
+        "SUBSCRIPTION_INACTIVE_INFO": "You are currently editing your own template. Changes to this template will not affect other pages.",
+        "HOW_TO_PROCEED": "How would you like to proceed?",
+        "OPTION_FORM_LABEL": "Adjust name and parameters",
+        "OPTION_FORM_DESCRIPTION": "Define the name and target group of your page.",
+        "OPTION_EDITOR_LABEL": "Edit page",
+        "OPTION_EDITOR_DESCRIPTION": "You switch to edit mode and can modify the texts and structure of your page."
+      },
+      "DEFINE_PARAMETERS": {
+        "LABEL": "Define parameters",
+        "TITLE": "Title",
+        "TITLE_PLACEHOLDER": "Title of the page template"
       }
     },
     "ANCHOR_FALLBACK_PREFIX": "Section",
@@ -305,6 +326,7 @@
       "SELECT_PLACEHOLDER": "Select page config",
       "CREATE_PAGE": "Create page"
     },
+    "RESET_URL_PARAMETER": "Load page without parameters",
     "LOGOUT_INFO": "Your session has terminated. The page will be reloaded automatically.",
     "HINT": "Hint",
     "ATTENTION": "Attention"

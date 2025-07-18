@@ -55,7 +55,7 @@
   </ng-container>
 
   <!-- LEFT SIDE MENU WITH ACTION BUTTONS -->
-  <wlo-side-menu-wrapper position="left" *ngIf="userHasEditRights()">
+  <wlo-side-menu-wrapper position="left">
     <ng-container slot="menu">
       <wlo-side-menu-item
         *ngIf="pageVariantConfigs?.nodes?.length > 0"
@@ -65,6 +65,7 @@
         [matMenuTriggerFor]="menu"
       ></wlo-side-menu-item>
       <wlo-side-menu-item
+        *ngIf="userHasEditRights()"
         color="primary"
         position="left"
         [title]="
@@ -75,10 +76,24 @@
         (itemClicked)="toggleEditMode()"
       ></wlo-side-menu-item>
       <wlo-side-menu-item
-        *ngIf="collectionNodeHasPageConfig"
+        *ngIf="collectionNodeHasPageConfig && userHasEditRights()"
         position="left"
         [title]="'TOPIC_PAGE.SIDE_MENU.NEW' | translate"
         (itemClicked)="createPageVariant()"
+      ></wlo-side-menu-item>
+      <wlo-side-menu-item
+        *ngIf="collectionNodeHasPageConfig && userHasEditRights()"
+        position="left"
+        [icon]="'delete'"
+        [title]="'TOPIC_PAGE.SIDE_MENU.DELETE' | translate"
+        (itemClicked)="deletePageVariant()"
+      ></wlo-side-menu-item>
+      <wlo-side-menu-item
+        *ngIf="!!latestParams.variantId"
+        position="left"
+        [icon]="'replay'"
+        [title]="'TOPIC_PAGE.RESET_URL_PARAMETER' | translate"
+        (itemClicked)="reloadWithoutParameters()"
       ></wlo-side-menu-item>
     </ng-container>
     <!-- Note: [xPosition]="'after'" might not work due to absolute positioning of the side-menu -->
@@ -97,7 +112,7 @@
               : ('TOPIC_PAGE.SIDE_MENU.PAGE_VARIANT.LABEL' | translate) + ' ' + (i + 1)
           }}
           {{
-            retrievePageVariantConfig(variant)?.template?.lastModified
+            !userHasEditRights() || retrievePageVariantConfig(variant)?.template?.lastModified
               ? ''
               : '(' + ('TOPIC_PAGE.SIDE_MENU.PAGE_VARIANT.SUBSCRIPTION' | translate) + ')'
           }}

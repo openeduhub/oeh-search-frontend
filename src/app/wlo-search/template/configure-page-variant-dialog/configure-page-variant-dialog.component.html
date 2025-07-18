@@ -1,0 +1,126 @@
+<div class="dialog-header">
+  <h2 mat-dialog-title>
+    {{ i18nPrefix + 'HEADING' | translate }}
+    <span class="abo-label" *ngIf="subscriptionActive">
+      {{ i18nPrefix + 'ACTIVE_SUBSCRIPTION' | translate }}
+    </span>
+  </h2>
+  <button mat-icon-button (click)="dialogRef.close()" class="close-button">
+    <i esIcon="close"></i>
+  </button>
+</div>
+
+<mat-dialog-content>
+  <mat-stepper class="stepper" labelPosition="bottom" [linear]="true" #stepper>
+    <mat-step
+      [label]="i18nPrefix + 'CHOOSE_OPTION.LABEL' | translate"
+      [completed]="isOptionSelected"
+    >
+      <div class="step-content">
+        <div class="hint-container">
+          <div class="info-icon">
+            <i esIcon="info"></i>
+          </div>
+          <div class="info-text">
+            <ng-container *ngIf="subscriptionActive; else subscriptionNotActive">
+              {{ i18nPrefix + 'CHOOSE_OPTION.SUBSCRIPTION_ACTIVE_INFO' | translate }}
+            </ng-container>
+            <ng-template #subscriptionNotActive>
+              {{ i18nPrefix + 'CHOOSE_OPTION.SUBSCRIPTION_INACTIVE_INFO' | translate }}
+            </ng-template>
+            <br /><br />
+            {{ i18nPrefix + 'CHOOSE_OPTION.HOW_TO_PROCEED' | translate }}
+          </div>
+        </div>
+
+        <div class="options-container">
+          <button
+            mat-stroked-button
+            class="option-button recommended"
+            (click)="selectOption('form')"
+          >
+            <div class="option-icon">
+              <i esIcon="code"></i>
+            </div>
+            <div class="option-text">
+              <h3>
+                {{ i18nPrefix + 'CHOOSE_OPTION.OPTION_FORM_LABEL' | translate }}
+              </h3>
+              <p>
+                {{ i18nPrefix + 'CHOOSE_OPTION.OPTION_FORM_DESCRIPTION' | translate }}
+              </p>
+            </div>
+            <div class="recommended-label">
+              {{ i18nPrefix + 'RECOMMENDED' | translate }}
+            </div>
+          </button>
+          <button mat-stroked-button class="option-button" (click)="selectOption('editor')">
+            <div class="option-icon">
+              <i esIcon="edit"></i>
+            </div>
+            <div class="option-text">
+              <h3>
+                {{ i18nPrefix + 'CHOOSE_OPTION.OPTION_EDITOR_LABEL' | translate }}
+              </h3>
+              <p>
+                {{ i18nPrefix + 'CHOOSE_OPTION.OPTION_EDITOR_DESCRIPTION' | translate }}
+              </p>
+            </div>
+          </button>
+        </div>
+      </div>
+    </mat-step>
+
+    <mat-step [label]="i18nPrefix + 'DEFINE_PARAMETERS.LABEL' | translate" [optional]="true">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <mat-form-field
+          appearance="outline"
+          subscriptSizing="dynamic"
+          class="page-variant-parameter"
+        >
+          <mat-label>
+            {{ i18nPrefix + 'DEFINE_PARAMETERS.TITLE' | translate }}
+          </mat-label>
+          <input
+            matInput
+            type="text"
+            [placeholder]="i18nPrefix + 'DEFINE_PARAMETERS.TITLE_PLACEHOLDER' | translate"
+            formControlName="title"
+          />
+        </mat-form-field>
+        <ng-container *ngIf="selectDimensions">
+          <div *ngFor="let dimension of selectDimensions | keyvalue">
+            <ng-container *ngIf="dimension.value.values && dimension.value.values.length > 0">
+              <div class="radio-group">
+                <label>{{ dimension.value.caption }}</label>
+                <mat-radio-group [formControlName]="dimension.key">
+                  <mat-radio-button *ngFor="let value of dimension.value.values" [value]="value.id">
+                    {{ value.caption }}
+                  </mat-radio-button>
+                </mat-radio-group>
+              </div>
+            </ng-container>
+          </div>
+        </ng-container>
+        <div class="submit-button">
+          <button
+            type="submit"
+            mat-flat-button
+            color="primary"
+            class="submit-button"
+            [disabled]="!form.valid"
+          >
+            {{ 'APPLY' | translate }}
+          </button>
+        </div>
+      </form>
+    </mat-step>
+  </mat-stepper>
+</mat-dialog-content>
+
+<!--<mat-dialog-actions>-->
+<!--  <a mat-button class="help-link" href="#">Hilfe zur Seitenstruktur</a>-->
+<!--  <button mat-stroked-button color="warn" (click)="dialogRef.close()">-->
+<!--    Bearbeitung abbrechen-->
+<!--  </button>-->
+<!--</mat-dialog-actions>-->
