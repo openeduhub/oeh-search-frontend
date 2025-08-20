@@ -43,7 +43,6 @@ const routes: Routes = [
                 component: DetailsPageComponent,
                 resolve: { entry: DetailsPageResolverService },
             },
-            { path: 'template', component: TemplateComponent },
             { path: '', redirectTo: 'search', pathMatch: 'full' },
             { path: 'error', component: ErrorPageComponent },
         ],
