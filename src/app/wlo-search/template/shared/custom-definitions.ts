@@ -95,18 +95,11 @@ export const reportProblemItemKey: string = 'latestReport';
 export const retrieveCustomUrl = (node: Node): string => {
     const collectionId = node.properties?.['sys:node-uuid']?.[0];
     if (collectionId) {
-        // take into account potential sub-paths, e.g., due to language switch
-        const pathNameArray: string[] = window.location.pathname.split('/');
-        // example pathNameArray = [ "", "search", "de", "template" ]
-        let suffix: string = '';
-        if (pathNameArray.length > 2) {
-            pathNameArray.forEach((subPath: string, index: number): void => {
-                if (index > 0 && !['', 'template'].includes(subPath)) {
-                    suffix += '/' + subPath;
-                }
-            });
-        }
-        return window.location.origin + suffix + '/template?collectionId=' + collectionId;
+        return (
+            window.location.origin +
+            '/edu-sharing/components/topic-pages?collectionId=' +
+            collectionId
+        );
     }
     return '';
 };
