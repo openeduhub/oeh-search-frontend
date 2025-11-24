@@ -40,7 +40,7 @@
     "jquery": "^3.6.0",
     "material-icons": "^1.12.1",
     "ngx-colors": "^3.6.0",
-    "ngx-edu-sharing-api": "^10.0.8",
+    "ngx-edu-sharing-api": "^10.0.10",
     "ngx-edu-sharing-b-api": "^0.0.7",
     "ngx-edu-sharing-ui": "^10.0.25",
     "ngx-edu-sharing-wlo-pages": "^0.2.3",

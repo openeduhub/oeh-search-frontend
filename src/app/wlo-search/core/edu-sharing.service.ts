@@ -91,14 +91,18 @@ export class EduSharingService {
     loadMoreFacetValues(facet: Facet, size: number): void {
         this.facetUpdateInFlightSubject.next(true);
         this.searchService
-            .loadMoreFacets(facetProperties[facet], size)
+            .loadMoreFacets({ property: facetProperties[facet] }, size)
             .subscribe(() => this.facetUpdateInFlightSubject.next(false));
     }
 
     getFacetSuggestions(inputString: string): Observable<FacetsDict> {
         return this.searchService.getAsYouTypeFacetSuggestions(
             inputString,
-            Object.values(facetProperties),
+            Object.values(facetProperties).map((property) => {
+                return {
+                    property,
+                };
+            }),
             5,
         );
     }
