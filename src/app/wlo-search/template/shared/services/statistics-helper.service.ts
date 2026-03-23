@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HOME_REPOSITORY, SearchService } from 'ngx-edu-sharing-api';
+import { HOME_REPOSITORY, Node, SearchResultGeneric, SearchService } from 'ngx-edu-sharing-api';
 import { SearchResultNode } from 'ngx-edu-sharing-api/lib/api/models/search-result-node';
 import { StatisticChart, StatisticNode, StatisticSummaryData } from 'ngx-edu-sharing-wlo-pages';
 import {
@@ -168,7 +168,7 @@ export class StatisticsHelperService {
             },
         ];
         return this.searchService
-            .search({
+            .search<SearchResultGeneric<Node>>({
                 query: 'ngsearch',
                 repository: HOME_REPOSITORY,
                 maxItems,

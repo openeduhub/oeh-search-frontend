@@ -110,6 +110,7 @@ export class SearchFilterbarComponent implements OnInit, OnDestroy {
     }
 
     private updateFacets(facets: FacetsDict) {
+        console.log(facets);
         if (!facets) {
             return;
         }

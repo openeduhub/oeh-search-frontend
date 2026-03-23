@@ -8,6 +8,7 @@ import {
     Node,
     NodeService,
     SearchRequestParams,
+    SearchResultGeneric,
     SearchResults,
     SearchService,
 } from 'ngx-edu-sharing-api';
@@ -62,7 +63,7 @@ export class EduSharingService {
         this.facetUpdateInFlightSubject.next(true);
         const requestParams = this.getSearchRequestParams(this.searchParameters.getCurrentValue());
         return this.searchService
-            .search(requestParams)
+            .search<SearchResultGeneric<Node>>(requestParams)
             .pipe(tap(() => this.facetUpdateInFlightSubject.next(false)));
     }
 
@@ -71,7 +72,7 @@ export class EduSharingService {
      */
     requestSearch(params: ParsedParams): Observable<SearchResults> {
         const requestParams = this.getSearchRequestParams(params);
-        return this.searchService.requestSearch(requestParams);
+        return this.searchService.requestSearch(requestParams) as Observable<SearchResults>;
     }
 
     getNode(id: string): Observable<Node> {
