@@ -56,7 +56,8 @@ export class HeaderbarComponent implements OnInit, OnDestroy {
                     this.filterCount = Object.entries(filters)
                         // Ignore the OER filter for the button-badge count since the OER filter is
                         // not handled by the filter sidebar toggled by the button.
-                        .filter(([k]) => k !== 'oer')
+                        // Ignore the audit filter as well
+                        .filter(([k]) => k !== 'oer' && k !== 'auditFilter')
                         .reduce((acc, [_, values]) => acc + values.length, 0);
                 }
             });

@@ -6,4 +6,5 @@ export const facetProperties = {
     educationalContext: 'ccm:educationalcontext',
     intendedEndUserRole: 'ccm:educationalintendedenduserrole',
     type: 'ccm:objecttype',
+    auditFilter: 'virtual:audit_filter',
 };
