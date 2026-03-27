@@ -3,11 +3,15 @@ import {
     computed,
     ElementRef,
     HostListener,
+    OnDestroy,
     Signal,
     signal,
     ViewChild,
     WritableSignal,
 } from '@angular/core';
+import { ConfigService as EduSharingConfigService } from 'ngx-edu-sharing-api';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { ConfigService } from '../config.service';
 import { SkipNavService, SkipTarget } from '../skip-nav.service';
 
@@ -17,9 +21,9 @@ import { SkipNavService, SkipTarget } from '../skip-nav.service';
     styleUrls: ['./menubar.component.scss'],
     standalone: false,
 })
-export class MenubarComponent {
+export class MenubarComponent implements OnDestroy {
     readonly routerPath: string = this.config.get().routerPath;
-    readonly wordpressUrl: string = this.config.get().wordpressUrl;
+    wordpressUrl: string = this.config.get().wordpressUrl;
     private readonly MOBILE_WIDTH: number = 1024;
 
     @HostListener('window:resize') onResize(): void {
@@ -38,11 +42,29 @@ export class MenubarComponent {
     private newsTimeout: ReturnType<typeof setTimeout> | null;
     private width: WritableSignal<number> = signal(window.innerWidth);
     private wloTimeout: ReturnType<typeof setTimeout> | null;
+    private readonly destroyed$ = new Subject<void>();
 
-    constructor(private config: ConfigService, private skipNav: SkipNavService) {
+    constructor(
+        private config: ConfigService,
+        private eduConfigService: EduSharingConfigService,
+        private skipNav: SkipNavService,
+    ) {
+        eduConfigService
+            .observeVariables()
+            .pipe(takeUntil(this.destroyed$))
+            .subscribe((v) => {
+                if (v.wordpressUrl) {
+                    this.wordpressUrl = v.wordpressUrl;
+                }
+            });
         this.isTouchDevice =
             // From https://stackoverflow.com/a/4819886
             'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    }
+
+    ngOnDestroy(): void {
+        this.destroyed$.next();
+        this.destroyed$.complete();
     }
 
     /**
