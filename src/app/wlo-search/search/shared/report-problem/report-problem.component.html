@@ -1,31 +1,24 @@
 <h2 class="dialog-title-heading mat-heading-3 important font-bold" mat-dialog-title>
-  {{ 'TOPIC_PAGE.PREVIEW_PANEL.REPORT_PROBLEM.LABEL' | translate }}
+  Problem melden
 </h2>
 <div mat-dialog-content [formGroup]="form" class="content">
-  <p>
-    {{
-      'TOPIC_PAGE.PREVIEW_PANEL.REPORT_PROBLEM.DESCRIPTION'
-        | translate: { title: (data.element | nodeProperty: 'title') }
-    }}
-  </p>
+  <p>Ein Problem mit "{{ data.element | nodeProperty : 'title' }}" melden.</p>
   <mat-radio-group
     class="problem-kind-group"
-    [attr.aria-label]="'TOPIC_PAGE.PREVIEW_PANEL.REPORT_PROBLEM.PROBLEM_KIND_LABEL' | translate"
+    aria-label="Art des Problems"
     formControlName="problemKind"
   >
     <mat-radio-button
-      *ngFor="let kind of problemKinds | keyvalue: dummyCompare"
+      *ngFor="let kind of problemKinds | keyvalue : dummyCompare"
       class="problem-kind-radio-button"
       color="primary"
       [value]="kind.key"
     >
-      {{ 'TOPIC_PAGE.PREVIEW_PANEL.REPORT_PROBLEM.' + kind.value | translate }}
+      {{ kind.value }}
     </mat-radio-button>
   </mat-radio-group>
   <mat-form-field appearance="outline">
-    <mat-label>
-      {{ 'TOPIC_PAGE.PREVIEW_PANEL.REPORT_PROBLEM.DESCRIBE_PROBLEM_LABEL' | translate }}
-    </mat-label>
+    <mat-label> Beschreibe, was nicht stimmt </mat-label>
     <textarea
       matInput
       formControlName="message"
@@ -34,17 +27,13 @@
     ></textarea>
   </mat-form-field>
   <mat-form-field appearance="outline">
-    <mat-label>
-      {{ 'TOPIC_PAGE.PREVIEW_PANEL.REPORT_PROBLEM.EMAIL_LABEL_OPTIONAL' | translate }}
-    </mat-label>
+    <mat-label> Deine E-Mail-Adresse (optional) </mat-label>
     <input matInput formControlName="email" />
   </mat-form-field>
 </div>
 <div mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>
-    {{ 'CANCEL' | translate }}
-  </button>
+  <button mat-button mat-dialog-close>Abbrechen</button>
   <button mat-flat-button color="primary" [disabled]="!form.valid" [mat-dialog-close]="form.value">
-    {{ 'TOPIC_PAGE.PREVIEW_PANEL.REPORT_PROBLEM.REPORT' | translate }}
+    Melden
   </button>
 </div>

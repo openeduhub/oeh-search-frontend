@@ -85,9 +85,7 @@ export class DetailsComponent implements OnDestroy {
     }
 
     contactSupport(): void {
-        let mailText: string =
-            'mailto:WLO Support<portal@jointly.info>?subject=' +
-            this.translate.instant('TOPIC_PAGE.PREVIEW_PANEL.REPORT_PROBLEM.LABEL');
+        let mailText: string = 'mailto:WLO Support<portal@jointly.info>?subject=Problem melden';
         // TODO: there might be better options than using localStorage
         const latestReportData: { element: Node; data: ResultData } = localStorage.getItem(
             reportProblemItemKey,
@@ -100,18 +98,8 @@ export class DetailsComponent implements OnDestroy {
             const resultData: ResultData = latestReportData.data;
             // https://stackoverflow.com/a/22765878
             const br: string = '%0D%0A';
-            const reason: string = this.translate.instant(
-                'TOPIC_PAGE.PREVIEW_PANEL.REPORT_PROBLEM.' + problemKinds[resultData.problemKind],
-            );
-            mailText +=
-                '&body=' +
-                this.translate.instant('TOPIC_PAGE.PREVIEW_PANEL.REPORT_PROBLEM.EMAIL_BODY', {
-                    br,
-                    name: element.name,
-                    id: element.ref.id,
-                    reason,
-                    message: resultData.message,
-                });
+            const reason: string = problemKinds[resultData.problemKind];
+            mailText += `&body=Ich möchte ein Problem mit dem Element "${element.name}" melden.${br}${br}${br}----- Die nachfolgenden Informationen dienen zum Debugging. Bitte nicht löschen. -----${br}${br}Primäre ID: ${element.ref.id}${br}${br}Die Begründung der Meldung: ${reason}${br}${br}Weitere Informationen vom Nutzer:${br}${resultData.message}`;
         }
 
         window.location.href = mailText;

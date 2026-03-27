@@ -15,10 +15,10 @@ export interface DialogData {
 }
 
 export const problemKinds = {
-    UNAVAILABLE: 'UNAVAILABLE',
-    INAPPROPRIATE_CONTENT: 'INAPPROPRIATE_CONTENT',
-    INVALID_METADATA: 'INVALID_METADATA',
-    OTHER: 'OTHER',
+    UNAVAILABLE: 'Medium nicht verfügbar',
+    INAPPROPRIATE_CONTENT: 'Problematischer Inhalt',
+    INVALID_METADATA: 'Fehlerhafte Beschreibung',
+    OTHER: 'Anderer Fehler',
 };
 
 export interface ResultData {
@@ -68,13 +68,7 @@ export class ReportProblemService {
         localStorage.setItem(reportProblemItemKey, JSON.stringify({ element, data }));
         // return report response
         return this.apiSendReport(eduSharingRepository, element.ref.id, {
-            reason:
-                this.translate.instant(
-                    'TOPIC_PAGE.PREVIEW_PANEL.REPORT_PROBLEM.' + problemKinds[data.problemKind],
-                ) +
-                ' (' +
-                data.problemKind +
-                ')',
+            reason: problemKinds[data.problemKind] + ' (' + data.problemKind + ')',
             userComment: data.message,
             userEmail: data.email,
         });
