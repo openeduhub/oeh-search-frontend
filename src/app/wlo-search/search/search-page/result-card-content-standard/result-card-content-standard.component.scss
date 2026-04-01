@@ -73,12 +73,17 @@ a:not(:hover) {
             max-width: 12px;
             height: 12px;
         }
+        > div {
+            max-height: 2.5em;
+            line-height: 1.25em;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
         span {
-            display: inline-flex;
-            white-space: nowrap;
+            display: inline;
+            white-space: wrap;
             &:not(:last-child)::after {
-                margin-right: 0.4em;
-                content: ',';
+                content: ', ';
             }
         }
     }

@@ -9,7 +9,7 @@
 <mat-card-content>
   <div class="pre-heading">
     <span class="source">
-      <ng-container *ngIf="hit | nodeProperty: 'source' as source">
+      <ng-container *ngIf="hit | nodeProperty : 'source' as source">
         {{ source }}
       </ng-container>
     </span>
@@ -17,36 +17,34 @@
   </div>
   <h2 class="app-result-card-title mat-heading-3 font-bold">
     <button (click)="onClick()" #cardButton>
-      {{ hit | nodeProperty: 'title' | truncate: 42 }}
+      {{ hit | nodeProperty : 'title' | truncate : 42 }}
     </button>
   </h2>
   <div class="body">
-    <p class="description" *ngIf="hit | nodeProperty: 'description' as description">
-      {{ description | trim | truncate: 65 }}
+    <p class="description" *ngIf="hit | nodeProperty : 'description' as description">
+      {{ description | trim | truncate : 65 }}
     </p>
-    <div class="metadata" *ngIf="hit | nodeProperty: 'oehLrtAggregated' as lrts">
+    <div class="metadata" *ngIf="hit | nodeProperty : 'oehLrtAggregated' as lrts">
       <i esIcon="perm_media" i18n-matTooltip matTooltip="Learning resource type"></i>
       <span class="cdk-visually-hidden" i18n>Learning resource type</span>
       <div>
         <span *ngFor="let lrt of lrts">{{ lrt.displayName }}</span>
       </div>
     </div>
-    <div class="metadata" *ngIf="hit | nodeProperty: 'discipline' as disciplines">
+    <div class="metadata" *ngIf="hit | nodeProperty : 'discipline' as disciplines">
       <i esIcon="book_icon" i18n-matTooltip matTooltip="Discipline"></i>
       <span class="cdk-visually-hidden" i18n>Discipline</span>
       <div>
-        <span *ngFor="let discipline of disciplines | slice: 0:5">
-          {{ discipline.displayName }}
-        </span>
+        <span *ngFor="let discipline of disciplines | slice : 0 : 5">{{
+          discipline.displayName
+        }}</span>
       </div>
     </div>
-    <div class="metadata" *ngIf="hit | nodeProperty: 'educationalContext' as educationalContexts">
+    <div class="metadata" *ngIf="hit | nodeProperty : 'educationalContext' as educationalContexts">
       <i esIcon="school" i18n-matTooltip matTooltip="Educational level"></i>
       <span class="cdk-visually-hidden" i18n>Educational level</span>
       <div>
-        <span *ngFor="let context of educationalContexts">
-          {{ context.displayName }}
-        </span>
+        <span *ngFor="let context of educationalContexts">{{ context.displayName }}</span>
       </div>
     </div>
   </div>
